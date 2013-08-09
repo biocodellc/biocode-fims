@@ -1,0 +1,30 @@
+1. Project (Adapt from BCID code)
+NOTE: Pull this part out from BCID and put in FIMS system
+NOTE: Still use BCID login components though
+NOTE: Spot for ORCID on each user?
+NOTE: each of these validation/mapping/spreadsheet fields should be versioned (implement these in BCID system -- ARKs for each?)
+   - automatically defines identifier roots and classes to use for project
+   - specify a mapping file.
+   - specify a validation file
+   - specify a spreadsheet (URL)
+
+2. Create Spreadsheet Sample w/ Tabs
+  - E.g. agent, event, specimen, informationContentEntity
+
+3. Service calls
+  - Load
+       - LOAD
+       - VALIDATE spreadsheet using validation file (bioValidator)
+       - CSV from spreadsheet & archive in Merritt (Java/Apache POI)
+       - RDF from CSV using mapping file (XLWrap)
+  - Extract
+       - EXPORT-RDF to spreadsheet (Java)
+  - Query
+       - Accept Headers determine Rendering type (rdf+xml, json, html)
+       - Parameterized queries (Java/Sparql)
+  - Resolver
+       - Agent, Event, etc... resolve each element (Java/Sparql)
+
+
+Development
+First iteration will be simply series of curl calls the user can implement.
