@@ -1,0 +1,39 @@
+@prefix map: <> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+
+map:database a d2rq:Database;
+	d2rq:jdbcDriver "org.sqlite.JDBC";
+	d2rq:jdbcDSN "jdbc:sqlite:/tmp/ms_tmp/biocode_template.sqlite";
+	d2rq:fetchSize "500";
+	.
+map:Collecting_Events_Coll_EventID_collector a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+   # d2rq:uriPattern "@@Collecting_Events.Coll_EventID_collector@@";
+    d2rq:uriSqlExpression "rowid";
+	d2rq:class <http://rs.tdwg.org/dwc/terms/Event>;
+	.
+map:Collecting_Events_Coll_EventID_collector_Collector a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Collecting_Events_Coll_EventID_collector;
+	d2rq:property <http://purl.org/dsw/hasIdentification>;
+	d2rq:column "Collecting_Events.Collector";
+        # add this condition to avoid blanks-- they are useless here
+        d2rq:condition "Collecting_Events.Collector <> ''";
+	.
+map:Specimens_Specimen_Num_Collector a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+    d2rq:uriPattern "@@Specimens.Specimen_Num_Collector@@";
+	d2rq:class <http://rs.tdwg.org/dwc/terms/Occurrence>;
+        # add this condition to avoid blanks-- they are useless here
+        d2rq:condition "Specimens.Specimen_Num_Collector <> ''";
+	.
+map:Collecting_Events_Coll_EventID_collector_Specimen_Num_Collector_rel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Collecting_Events_Coll_EventID_collector;
+	d2rq:property ma:isSourceOf;
+	d2rq:refersToClassMap map:Specimens_Specimen_Num_Collector;
+	d2rq:join "Collecting_Events.Coll_EventID_collector => Specimens.Coll_EventID_collector";
+	.
