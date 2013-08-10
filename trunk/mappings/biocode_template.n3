@@ -8,7 +8,7 @@
 
 map:database a d2rq:Database;
 	d2rq:jdbcDriver "org.sqlite.JDBC";
-	d2rq:jdbcDSN "jdbc:sqlite:/tmp/ms_tmp/biocode_template.sqlite";
+	d2rq:jdbcDSN "jdbc:sqlite:/tmp/biocode_template.sqlite";
 	d2rq:fetchSize "500";
 	.
 map:Collecting_Events_Coll_EventID_collector a d2rq:ClassMap;
