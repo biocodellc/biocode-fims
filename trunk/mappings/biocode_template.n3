@@ -13,8 +13,7 @@ map:database a d2rq:Database;
 	.
 map:Collecting_Events_Coll_EventID_collector a d2rq:ClassMap;
 	d2rq:dataStorage map:database;
-   # d2rq:uriPattern "@@Collecting_Events.Coll_EventID_collector@@";
-    d2rq:uriSqlExpression "rowid";
+    d2rq:uriPattern "@@Collecting_Events.Coll_EventID_collector@@";
 	d2rq:class <http://rs.tdwg.org/dwc/terms/Event>;
 	.
 map:Collecting_Events_Coll_EventID_collector_Collector a d2rq:PropertyBridge;
