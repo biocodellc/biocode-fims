@@ -9,14 +9,40 @@ NOTE: each of these validation/mapping/spreadsheet fields should be versioned (i
    - specify a spreadsheet (URL)
 
 2. Create Spreadsheet Sample w/ Tabs
-  - E.g. agent, event, specimen, informationContentEntity
+    - Agent ID:{};Class:{Foaf?}
+    - Event ID:{};Class:{CollectingEvent}
+    - Specimen ID:{};Class:{VoucherSpecimen, MaterialSample}
+    - InformationContentEntity ID:{};Class:{Photo, Video, Audio}
 
+3. Service calls
+  - AUTHENTICATE
+  - LOAD (performs all of the following)
+       - VALIDATE client-side
+       - UPLOAD spreadsheet
+       - VALIDATE server-side
+       - BULK-LOAD into mysql [NOTE: Mysql mimics the spreadsheet while the triplification maintains the structure]
+       - TRIPLIFY as RDF using D2RQ
+       - ARCHIVE loaded data and assign DOI
+  - EXTRACT
+       - EXPORT to spreadsheet (Java)
+  - QUERY
+       - RETURN TYPE uses accept headers to determine Rendering type (rdf+xml, json, html)
+       - Parameterized queries (Java/Sparql)
+  - RESOLVER
+       - Agent, Event, etc... resolve each element (Java/Sparql)
+
+
+Development
+First iteration will be simply series of curl calls the user can implement.
+
+
+OLDER VERSION (RDF)
 3. Service calls
   - Load
        - LOAD
        - VALIDATE spreadsheet using validation file (bioValidator)
-       - CSV from spreadsheet & archive in Merritt (Java/Apache POI)
-       - RDF from CSV using mapping file (XLWrap)
+       - TRIPLIFY using mapping file (Triplifier)
+       - STORE triplified file (Triplifier)
   - Extract
        - EXPORT-RDF to spreadsheet (Java)
   - Query
@@ -24,7 +50,3 @@ NOTE: each of these validation/mapping/spreadsheet fields should be versioned (i
        - Parameterized queries (Java/Sparql)
   - Resolver
        - Agent, Event, etc... resolve each element (Java/Sparql)
-
-
-Development
-First iteration will be simply series of curl calls the user can implement.

@@ -1,0 +1,99 @@
+@prefix map: <> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+@prefix dwc: <http://rs.tdwg.org/dwc/terms/#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+map:database a d2rq:Database;
+	d2rq:jdbcDriver "com.mysql.jdbc.Driver";
+	d2rq:jdbcDSN "jdbc:mysql://localhost:3306/fims";
+	d2rq:username "root";
+	d2rq:password "";
+	d2rq:fetchSize "-2147483648";
+	.
+map:Specimen a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+    d2rq:join "project.project_id => specimen.project_id";
+    d2rq:uriSqlExpression "CONCAT(project.specimen_key, '_', specimen.local_id)";
+	d2rq:class obo:OBI_0100051;
+	.
+map:Event a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+    d2rq:join "project.project_id => event.project_id";
+    d2rq:uriSqlExpression "CONCAT(project.event_key, '_', event.local_id)";
+	d2rq:class <http://purl.org/dc/dcmitype/Event>;
+	.
+map:Tissue a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+    d2rq:join "project.project_id => specimen.project_id";
+    d2rq:uriSqlExpression "CONCAT(project.tissue_key, '_', specimen.local_id, '.', specimen.tissue_num)";
+	d2rq:class obo:OBI_0100051;
+	.
+map:Specimen_rel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Specimen;
+    d2rq:join "specimen.event_id => event.event_id";
+    d2rq:join "project.project_id => event.project_id";
+	d2rq:property <http://biscicol.org/terms/index.html#depends_on>;
+    d2rq:uriSqlExpression "CONCAT(project.event_key, '_', event.local_id)";
+    d2rq:condition "event.local_id <> ''";
+	.
+map:Tissue_rel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tissue;
+    d2rq:join "project.project_id => specimen.project_id";
+	d2rq:property <http://www.obofoundry.org/ro/ro.owl#derives_from>;
+    d2rq:uriSqlExpression "CONCAT(project.tissue_key, '_', specimen.local_id, '.', specimen.tissue_num)";
+    d2rq:condition "specimen.local_id <> ''";
+	.
+map:recordedByAgent a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Specimen;
+	d2rq:property dwc:recordedBy;
+    d2rq:column "specimen.recordedByAgent";
+    d2rq:condition "specimen.recordedByAgent <> ''";
+    .
+map:lifeStage a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Specimen;
+	d2rq:property dwc:lifeStage;
+    d2rq:column "specimen.lifeStage";
+    d2rq:condition "specimen.lifeStage <> ''";
+    .
+map:sex a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Specimen;
+	d2rq:property dwc:sex;
+    d2rq:column "specimen.sex";
+    d2rq:condition "specimen.sex <> ''";
+    .
+map:year a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Event;
+	d2rq:property dwc:year;
+    d2rq:column "event.year";
+    d2rq:condition "event.year <> ''";
+    .
+map:month a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Event;
+	d2rq:property dwc:month;
+    d2rq:column "event.month";
+    d2rq:condition "event.month <> ''";
+    .
+map:day a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Event;
+	d2rq:property dwc:day;
+    d2rq:column "event.day";
+    d2rq:condition "event.day <> ''";
+    .
+# NEED A REAL PROPERTY FOR PLATE_NAME
+map:plate_name a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Tissue;
+	d2rq:property dwc:plate_name;
+    d2rq:column "specimen.plate_name";
+    d2rq:condition "specimen.plate_name <> ''";
+    .
+# NEED A REAL PROPERTY FOR WELL_NUMBER
+map:well_number a d2rq:PropertyBridge;
+    d2rq:belongsToClassMap map:Tissue;
+	d2rq:property dwc:well_number;
+    d2rq:column "specimen.well_number";
+    d2rq:condition "specimen.well_number <> ''";
+    .
