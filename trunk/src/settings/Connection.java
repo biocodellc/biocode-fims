@@ -1,4 +1,4 @@
-package triplifyEngine;
+package settings;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -78,7 +78,7 @@ public class Connection {
      *
      * @param pw PrintWriter used to write output to.
      */
-	void printD2RQ(PrintWriter pw) throws SQLException {
+	public void printD2RQ(PrintWriter pw) throws SQLException {
 		pw.println("map:database a d2rq:Database;");
 		pw.println("\td2rq:jdbcDriver \"" + system.driver + "\";");
 		pw.println("\td2rq:jdbcDSN \"" + getJdbcUrl() + "\";");

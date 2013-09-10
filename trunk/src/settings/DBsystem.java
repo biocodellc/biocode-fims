@@ -1,4 +1,4 @@
-package triplifyEngine;
+package settings;
 
 /**
  * Enumerates supported database systems with their JDBC drivers.
