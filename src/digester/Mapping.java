@@ -1,5 +1,6 @@
 package digester;
 
+import triplify.triplifier;
 import settings.Connection;
 
 import java.io.PrintWriter;
@@ -16,17 +17,31 @@ public class Mapping {
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
 
+     public Mapping(triplifier t) throws Exception {
+        // Create a connection to a SQL Lite Instance
+        try {
+            this.connection = new Connection(t.createSqlLite());
+        } catch (Exception e) {
+            throw new Exception("unable to establish connection to SQLLite");
+        }
+    }
+
+    /**
+     * Add an Entity to this Mapping by appending to the LinkedList of entities
+     * @param e
+     */
     public void addEntity(Entity e) {
         entities.addLast(e);
     }
 
+    /**
+     * Add a Relation to this Mapping by appending to the LinkedListr of relations
+     * @param r
+     */
     public void addRelation(Relation r) {
         relations.addLast(r);
     }
 
-    public Mapping(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Find Entity defined by given worksheet and worksheetUniqueKey
@@ -86,7 +101,6 @@ public class Mapping {
             entity.printD2RQ(pw, this);
         for (Relation relation : relations)
             relation.printD2RQ(pw, this);
-
         //Join results to Dataset.... may not be necessary here
         //dataseturi.printD2RQ(pw, this);
     }
@@ -107,5 +121,6 @@ public class Mapping {
         pw.println("@prefix bsc: <http://biscicol.org/terms/index.html#> .");
         pw.println();
     }
+
 
 }

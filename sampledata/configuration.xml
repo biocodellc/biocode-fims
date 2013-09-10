@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fims xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation='bioValidator-0.9.xsd'>
+
+    <metadata
+            doi=""
+            shortname=""
+            eml_location="">
+
+        <db_storage_location
+                host="somehost"
+                driver="somedriver"
+                port=""/>
+
+        <abstract>Some abstract describing this</abstract>
+
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Specimens'>
+
+            <rule type='uniqueValue' column='Specimen_Num_Collector' level='error'></rule>
+
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>Coll_EventID_collector</field>
+                <field>EnteredBy</field>
+                <field>Specimen_Num_Collector</field>
+                <field>HoldingInstitution</field>
+                <field>Phylum</field>
+            </rule>
+
+            <rule type='lookupList' column='relaxant' list='relaxant' level='warning'></rule>
+
+            <rule type='lookupList' column='preservative' list='preservative' level='warning'></rule>
+
+        </worksheet>
+
+        <worksheet sheetname='Collecting_Events'>
+
+            <rule type='uniqueValue' column='Coll_EventID_collector' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='HorizontalDatum' list='horizontalDatum' level='warning'></rule>
+
+            <rule type='isNumber' column='MinElevationMeters' level='error'></rule>
+
+        </worksheet>
+
+    </validation>
+
+    <mapping>
+
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptName="identificationProcess"
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
+                bcid="ark:/21547/TEMPIdentificationProcess2"
+                entityId="1">
+            <attribute column="IdentifiedBy" uri="dwc:identifiedBy"/>
+        </entity>
+
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptName="tissue"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                bcid="ark:/21547/Q2"
+                entityId="2">
+            <attribute column="format_name96" uri="bsc:plate"/>
+            <attribute column="well_number96" uri="bsc:well"/>
+        </entity>
+
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptName="specimen"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                bcid="ark:/21547/R2"
+                entityId="3">
+            <attribute column="preservative" uri="bsc:preservative"/>
+            <attribute column="host" uri="dwc:host"/>
+            <attribute column="relaxant" uri="bsc:relaxant"/>
+        </entity>
+
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptName="informationContentEntity"
+                conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
+                bcid="ark:/21547/TEMPICE2"
+                entityId="4">
+            <attribute column="SpecificEpithet" uri="dwc:scientificName"/>
+            <attribute column="Phylum" uri="dwc:phylum"/>
+        </entity>
+
+        <relation>
+            <subject>1</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>3</object>
+        </relation>
+
+        <relation>
+            <subject>4</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>1</object>
+        </relation>
+
+        <relation>
+            <subject>2</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>3</object>
+        </relation>
+
+    </mapping>
+
+    <lists>
+
+        <list alias='preservative'>
+            <field>10% formalin</field>
+            <field>100% ethanol</field>
+            <field>75% ethanol</field>
+            <field>80% ethanol</field>
+            <field>RNAlater</field>
+            <field>silica gel</field>
+        </list>
+
+        <list alias='relaxant'>
+            <field>chloretone</field>
+            <field>clove oil</field>
+            <field>ethyl acetate</field>
+            <field>ethylene glycol</field>
+            <field>freezer</field>
+        </list>
+
+        <list alias='horizontalDatum'>
+            <field>WGS1984</field>
+            <field>NAD1927</field>
+            <field>NAD1983</field>
+            <field>unknown</field>
+        </list>
+
+    </lists>
+
+</fims>
+
