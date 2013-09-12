@@ -1,4 +1,4 @@
-package settings;
+package renderers;
 
 
 import digester.Rule;

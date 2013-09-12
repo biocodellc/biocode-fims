@@ -15,15 +15,12 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: jdeck
- * Date: 9/10/13
- * Time: 10:21 AM
- * To change this template use File | Settings | File Templates.
+ * Triplify source file, using generally code adapted from the BiSciCol Triplifier
+ * http://code.google.com/p/triplifier
  */
 public class triplifier {
 
-       private String outputFolder;
+    private String outputFolder;
     private String inputFilename;
 
     public triplifier(String inputFilename, String outputFolder) {
@@ -31,7 +28,7 @@ public class triplifier {
         this.inputFilename = inputFilename;
     }
 
-    public  File createSqlLite() throws Exception {
+    public File createSqlLite() throws Exception {
         // Create the ReaderManager and load the plugins.
         ReaderManager rm = new ReaderManager();
         try {
@@ -87,7 +84,7 @@ public class triplifier {
      * @param pFilename Name of the file.
      * @return The new file.
      */
-    private  File createUniqueFile(String pFilename) throws Exception {
+    private File createUniqueFile(String pFilename) throws Exception {
 
         // Get just the filename
         File fileFilename = new File(pFilename);
@@ -106,7 +103,7 @@ public class triplifier {
         return file;
     }
 
-    public  String getTriples(Mapping mapping) throws Exception {
+    public String getTriples(Mapping mapping) throws Exception {
         String filenamePrefix = new File(inputFilename).getName();
         System.gc();
 
@@ -119,13 +116,13 @@ public class triplifier {
         return outputFolder + tripleFile.getName();
     }
 
-    private  String getMapping(String filenamePrefix, Mapping mapping, Boolean verifyFile) throws Exception {
+    private String getMapping(String filenamePrefix, Mapping mapping, Boolean verifyFile) throws Exception {
         if (verifyFile)
             mapping.connection.verifyFile();
 
         File mapFile = createUniqueFile(filenamePrefix + ".mapping.n3");
         PrintWriter pw = new PrintWriter(mapFile);
-        mapping.printD2RQ(pw,mapping);
+        mapping.printD2RQ(pw, mapping);
         pw.close();
         return outputFolder + mapFile.getName();
     }
