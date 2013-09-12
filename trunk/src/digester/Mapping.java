@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * digester.Validation class holds all worksheets that are part of this validator
  */
-public class Mapping {
+public class Mapping implements MappingInterface {
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
@@ -85,7 +85,7 @@ public class Mapping {
 
         for (Iterator<Relation> i = relations.iterator(); i.hasNext(); ) {
             Relation r = i.next();
-            r.print(this);
+            r.print();
         }
     }
 
@@ -94,7 +94,7 @@ public class Mapping {
      *
      * @param pw PrintWriter used to write output to.
      */
-    public void printD2RQ(PrintWriter pw) throws SQLException {
+    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
         printPrefixes(pw);
         connection.printD2RQ(pw);
         for (Entity entity : entities)

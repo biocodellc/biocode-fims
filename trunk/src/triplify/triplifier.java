@@ -125,7 +125,7 @@ public class triplifier {
 
         File mapFile = createUniqueFile(filenamePrefix + ".mapping.n3");
         PrintWriter pw = new PrintWriter(mapFile);
-        mapping.printD2RQ(pw);
+        mapping.printD2RQ(pw,mapping);
         pw.close();
         return outputFolder + mapFile.getName();
     }
