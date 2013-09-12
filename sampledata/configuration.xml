@@ -3,17 +3,13 @@
       xsi:noNamespaceSchemaLocation='bioValidator-0.9.xsd'>
 
     <metadata
-            doi=""
-            shortname=""
-            eml_location="">
-
-        <db_storage_location
-                host="somehost"
-                driver="somedriver"
-                port=""/>
-
-        <abstract>Some abstract describing this</abstract>
-
+            doi="a doi"
+            shortname="shortname"
+            eml_location="eml_location"
+            sdb_user="a user"
+            sdb_driver="a driver"
+            sdb_configuration_file="a configuration file for sdb">
+        <![CDATA[Some text with abstract]]>
     </metadata>
 
     <validation>
@@ -45,6 +41,34 @@
             <rule type='isNumber' column='MinElevationMeters' level='error'></rule>
 
         </worksheet>
+
+        <lists>
+
+            <list alias='preservative'>
+                <field>10% formalin</field>
+                <field>100% ethanol</field>
+                <field>75% ethanol</field>
+                <field>80% ethanol</field>
+                <field>RNAlater</field>
+                <field>silica gel</field>
+            </list>
+
+            <list alias='relaxant'>
+                <field>chloretone</field>
+                <field>clove oil</field>
+                <field>ethyl acetate</field>
+                <field>ethylene glycol</field>
+                <field>freezer</field>
+            </list>
+
+            <list alias='horizontalDatum'>
+                <field>WGS1984</field>
+                <field>NAD1927</field>
+                <field>NAD1983</field>
+                <field>unknown</field>
+            </list>
+
+        </lists>
 
     </validation>
 
@@ -114,33 +138,6 @@
 
     </mapping>
 
-    <lists>
-
-        <list alias='preservative'>
-            <field>10% formalin</field>
-            <field>100% ethanol</field>
-            <field>75% ethanol</field>
-            <field>80% ethanol</field>
-            <field>RNAlater</field>
-            <field>silica gel</field>
-        </list>
-
-        <list alias='relaxant'>
-            <field>chloretone</field>
-            <field>clove oil</field>
-            <field>ethyl acetate</field>
-            <field>ethylene glycol</field>
-            <field>freezer</field>
-        </list>
-
-        <list alias='horizontalDatum'>
-            <field>WGS1984</field>
-            <field>NAD1927</field>
-            <field>NAD1983</field>
-            <field>unknown</field>
-        </list>
-
-    </lists>
 
 </fims>
 

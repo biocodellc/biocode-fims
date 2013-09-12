@@ -1,4 +1,7 @@
+import com.hp.hpl.jena.rdf.model.Model;
 import digester.*;
+//import org.jopendocument.sample.Metadata;
+import org.xml.sax.SAXException;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -22,43 +25,43 @@ public class fims {
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
-        // Digester setup
-        Digester d = new Digester();
-
-        triplifier t = new triplifier(inputFilename, outputFolder);
-
         try {
+            // Initializing
             System.out.println("Initializing ...");
+            System.out.println("\tinputFilename = " + inputFilename);
+            System.out.println("\tconfigFilename = " + configFilename);
 
-            // Setup validation
-            //Validation validation = new Validation();
-            //d.push(validation);
-            //addValidationRules(d);
+            // Create a triplifier instance
+            triplifier t = new triplifier(inputFilename, outputFolder);
 
-            // Setup triplifier mapping
+            // Initialize digesters, one for each core object
+            Digester validationDigester = new Digester();
+            Digester mappingDigester = new Digester();
+            Digester fimsDigester = new Digester();
+
+            // Create core objects
+            Fims fims = new Fims();
+            Validation validation = new Validation();
             Mapping mapping = new Mapping(t);
-            d.push(mapping);
-            addMappingRules(d);
 
-            System.out.println("\tSuccess!");
+            // Read Metadata
+            System.out.println("Reading metadata ...");
+            addFimsRules(fimsDigester, fims);
 
-            // Digester Parsing configuration File
-            System.out.println("Parse configuration ...");
-            d.parse(new File(configFilename));
-            System.out.println("\tSuccess!");
-
-            // Validate
+            // Validation
             System.out.println("Validate ...");
-            System.out.println("\tNot yet implemented");
+            addValidationRules(validationDigester, validation);
+            System.out.println("\tTODO: output validation results here");
 
             // Triplify
             System.out.println("Triplify ...");
+            addMappingRules(mappingDigester, mapping);
             String results = t.getTriples(mapping);
             System.out.println("\tSuccess! see: " + results);
 
             // Upload
             System.out.println("Upload ...");
-            System.out.println("\tNot yet implemented");
+            System.out.println("\tConnect using Jena SDB to Mysql (use connector details in configuration file)");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -69,11 +72,28 @@ public class fims {
 
 
     /**
+     * Process metadata component rules
+     *
+     * @param d
+     */
+    private static void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+        d.push(fims);
+        d.addObjectCreate("fims/metadata", Metadata.class);
+        d.addSetProperties("fims/metadata");
+        d.addCallMethod("fims/metadata", "addText_abstract", 0);
+        d.addSetNext("fims/metadata", "addMetadata");
+
+        d.parse(new File(configFilename));
+    }
+
+    /**
      * Process validation component rules
      *
      * @param d
      */
-    private static void addValidationRules(Digester d) {
+    private static void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+        d.push(validation);
+
         // Create worksheet objects
         d.addObjectCreate("fims/validation/worksheet", Worksheet.class);
         d.addSetProperties("fims/validation/worksheet");
@@ -84,6 +104,8 @@ public class fims {
         d.addSetProperties("fims/validation/worksheet/rule");
         d.addSetNext("fims/validation/worksheet/rule", "addRule");
         d.addCallMethod("fims/validation/worksheet/rule/field", "addField", 0);
+
+        d.parse(new File(configFilename));
     }
 
     /**
@@ -91,26 +113,28 @@ public class fims {
      *
      * @param d
      */
-    private static void addMappingRules(Digester d) {
+    private static void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+        d.push(mapping);
+
         // Create entity objects
         d.addObjectCreate("fims/mapping/entity", Entity.class);
         d.addSetProperties("fims/mapping/entity");
         d.addSetNext("fims/mapping/entity", "addEntity");
 
+        // Add attributes associated with this entity
+        d.addObjectCreate("fims/mapping/entity/attribute", Attribute.class);
+        d.addSetProperties("fims/mapping/entity/attribute");
+        d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
+
+
         // Create relation objects
         d.addObjectCreate("fims/mapping/relation", Relation.class);
         d.addSetNext("fims/mapping/relation", "addRelation");
-        //d.addCallMethod("fims/mapping/relation/subject", "addSubject", 0);
-
-        //d.addObjectCreate("fims/mapping/relation/subject", Entity.class);
-        //d.addSetProperties("fims/mapping/relation/subject");
         d.addCallMethod("fims/mapping/relation/subject", "addSubject", 0);
         d.addCallMethod("fims/mapping/relation/predicate", "addPredicate", 0);
-
-
-        //d.addObjectCreate("fims/mapping/relation/object", Entity.class);
-        //d.addSetProperties("fims/mapping/relation/object");
         d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
+
+        d.parse(new File(configFilename));
 
     }
 

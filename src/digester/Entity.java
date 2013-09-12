@@ -1,6 +1,9 @@
 package digester;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Entity representation
@@ -13,6 +16,17 @@ public class Entity {
     private String conceptURI;
     private String bcid;
     private String entityId;
+
+    private final LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+
+    /**
+     * Add an Attribute to this Entity by appending to the LinkedList of attributes
+     *
+     * @param a
+     */
+    public void addAttribute(Attribute a) {
+        attributes.addLast(a);
+    }
 
     public String getEntityId() {
         return entityId;
@@ -62,7 +76,7 @@ public class Entity {
         this.bcid = bcid;
     }
 
-       /**
+    /**
      * Get the table.column notation
      *
      * @return
@@ -105,16 +119,15 @@ public class Entity {
         // ensures non-null values
         pw.println("\td2rq:condition \"" + getColumn() + " <> ''\";");
 
-        // TODO: add in extra conditions (do i need this???)
+        // TODO: add in extra conditions (May not be necessary)
         //pw.println(getExtraConditions());
         pw.println("\t.");
 
-        // TODO: Join in Attributes
-        /*pw.println("\t.");
-        if (attributes != null) {
+        // Loop through attributes associated with this Entity
+        if (attributes.size() > 0) {
             for (Attribute attribute : attributes)
-                attribute.printD2RQ(pw, classMap(), table);
-        } */
+                attribute.printD2RQ(pw, classMap(), this.getWorksheet());
+        }
     }
 
 }
