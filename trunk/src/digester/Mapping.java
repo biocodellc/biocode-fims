@@ -16,8 +16,10 @@ public class Mapping implements MappingInterface {
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
+    private triplifier triplifier;
 
-     public Mapping(triplifier t) throws Exception {
+    public Mapping(triplifier t) throws Exception {
+        triplifier = t;
         // Create a connection to a SQL Lite Instance
         try {
             this.connection = new Connection(t.createSqlLite());
@@ -28,6 +30,7 @@ public class Mapping implements MappingInterface {
 
     /**
      * Add an Entity to this Mapping by appending to the LinkedList of entities
+     *
      * @param e
      */
     public void addEntity(Entity e) {
@@ -36,6 +39,7 @@ public class Mapping implements MappingInterface {
 
     /**
      * Add a Relation to this Mapping by appending to the LinkedListr of relations
+     *
      * @param r
      */
     public void addRelation(Relation r) {
@@ -120,6 +124,14 @@ public class Mapping implements MappingInterface {
         pw.println("@prefix ro: <http://www.obofoundry.org/ro/ro.owl#> .");
         pw.println("@prefix bsc: <http://biscicol.org/terms/index.html#> .");
         pw.println();
+    }
+
+    /**
+     * Run the triplifier using this class
+     * @throws Exception
+     */
+    public void run() throws Exception {
+        triplifier.getTriples(this);
     }
 
 

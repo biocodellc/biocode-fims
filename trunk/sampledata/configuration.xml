@@ -81,7 +81,7 @@
                 worksheetUniqueKey="Specimen_Num_Collector"
                 conceptName="identificationProcess"
                 conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
-                bcid="ark:/21547/TEMPIdentificationProcess2"
+                bcid="ark:/21547/TEMP_identification2"
                 entityId="1">
             <attribute column="IdentifiedBy" uri="dwc:identifiedBy"/>
         </entity>
@@ -91,7 +91,7 @@
                 worksheetUniqueKey="Specimen_Num_Collector"
                 conceptName="tissue"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
-                bcid="ark:/21547/Q2"
+                bcid="ark:/21547/TEMP_tissue2"
                 entityId="2">
             <attribute column="format_name96" uri="bsc:plate"/>
             <attribute column="well_number96" uri="bsc:well"/>
@@ -102,7 +102,7 @@
                 worksheetUniqueKey="Specimen_Num_Collector"
                 conceptName="specimen"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
-                bcid="ark:/21547/R2"
+                bcid="ark:/21547/TEMP_specimen2"
                 entityId="3">
             <attribute column="preservative" uri="bsc:preservative"/>
             <attribute column="host" uri="dwc:host"/>
@@ -114,7 +114,7 @@
                 worksheetUniqueKey="Specimen_Num_Collector"
                 conceptName="informationContentEntity"
                 conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
-                bcid="ark:/21547/TEMPICE2"
+                bcid="ark:/21547/TEMP_informationcontententity2"
                 entityId="4">
             <attribute column="SpecificEpithet" uri="dwc:scientificName"/>
             <attribute column="Phylum" uri="dwc:phylum"/>
@@ -139,7 +139,5 @@
         </relation>
 
     </mapping>
-
-
 </fims>
 

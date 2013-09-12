@@ -1,6 +1,7 @@
-package settings;
+package renderers;
 
 import digester.Rule;
+import renderers.Message;
 
 public class warning extends Message {
     public warning(int row, Rule r, String message) {

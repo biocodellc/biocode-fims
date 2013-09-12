@@ -1,6 +1,9 @@
 package digester;
 
 
+import renderers.Message;
+import renderers.error;
+import renderers.warning;
 import settings.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

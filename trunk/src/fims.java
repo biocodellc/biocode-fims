@@ -1,6 +1,4 @@
-import com.hp.hpl.jena.rdf.model.Model;
 import digester.*;
-//import org.jopendocument.sample.Metadata;
 import org.xml.sax.SAXException;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
@@ -8,31 +6,37 @@ import org.apache.log4j.Level;
 
 import java.io.*;
 
-
 /**
- * Test the Apache Digester
+ * Core fims class for running fims processes.
  */
 public class fims {
 
-    static String configFilename = "sampledata/configuration.xml";
-    static String inputFilename = "sampledata/biocode_template.xls";
-    static String outputFolder = System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator;
+    String configFilename;
+    String inputFilename;
+    String outputFolder;
 
-    //public static Mapping mapping;
+    public fims(String configFilename, String inputFilename, String outputFolder) {
+         // Set class variables
+        this.configFilename = configFilename;
+        this.inputFilename = inputFilename;
+        this.outputFolder = outputFolder;
 
-
-    public static void main(String args[]) {
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
+        // Run the fims
+        runAll();
+    }
+
+    /**
+     * Go through entire fims process: validate, triplify, upload
+     */
+    public void runAll() {
         try {
             // Initializing
             System.out.println("Initializing ...");
             System.out.println("\tinputFilename = " + inputFilename);
             System.out.println("\tconfigFilename = " + configFilename);
-
-            // Create a triplifier instance
-            triplifier t = new triplifier(inputFilename, outputFolder);
 
             // Initialize digesters, one for each core object
             Digester validationDigester = new Digester();
@@ -42,23 +46,22 @@ public class fims {
             // Create core objects
             Fims fims = new Fims();
             Validation validation = new Validation();
-            Mapping mapping = new Mapping(t);
+            Mapping mapping = new Mapping(new triplifier(inputFilename, outputFolder));
 
             // Read Metadata
-            System.out.println("Reading metadata ...");
             addFimsRules(fimsDigester, fims);
 
             // Validation
             System.out.println("Validate ...");
             addValidationRules(validationDigester, validation);
-            System.out.println("\tTODO: output validation results here");
+            //System.out.println("\tTODO: output validation results here");
             validation.run(null);
 
             // Triplify
             System.out.println("Triplify ...");
             addMappingRules(mappingDigester, mapping);
-            String results = t.getTriples(mapping);
-            System.out.println("\tSuccess! see: " + results);
+            mapping.run();
+            //System.out.println("\toutput stored at: " + t.getTriples(mapping));
 
             // Upload
             System.out.println("Upload ...");
@@ -71,13 +74,18 @@ public class fims {
         }
     }
 
+    public static void main(String args[]) {
+        fims f = new fims("sampledata/configuration.xml",
+                "sampledata/biocode_template.xls",
+                System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator);
+    }
 
     /**
      * Process metadata component rules
      *
      * @param d
      */
-    private static void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+    private  void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
         d.push(fims);
         d.addObjectCreate("fims/metadata", Metadata.class);
         d.addSetProperties("fims/metadata");
@@ -92,7 +100,7 @@ public class fims {
      *
      * @param d
      */
-    private static void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+    private  void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
         d.push(validation);
 
         // Create worksheet objects
@@ -120,7 +128,7 @@ public class fims {
      *
      * @param d
      */
-    private static void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+    private  void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
         d.push(mapping);
 
         // Create entity objects
