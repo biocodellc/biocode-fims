@@ -78,7 +78,6 @@ public class Rule {
     }
 
     public void addField(String field) {
-       // System.out.println("add "+field);
         fields.add(field);
     }
 
