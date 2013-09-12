@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Entity representation
  */
-public class Entity {
+public class Entity implements MappingInterface {
 
     private String worksheet;
     private String worksheetUniqueKey;
@@ -111,10 +111,10 @@ public class Entity {
      *
      * @param pw PrintWriter used to write output to.
      */
-    void printD2RQ(PrintWriter pw, Mapping mapping) {
+    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
         pw.println("map:" + classMap() + " a d2rq:ClassMap;");
         pw.println("\td2rq:dataStorage " + "map:database;");
-        pw.println(mapping.getPersistentIdentifier(this));
+        pw.println(((Mapping)parent).getPersistentIdentifier(this));
         pw.println("\td2rq:class <" + this.conceptURI + ">;");
         // ensures non-null values
         pw.println("\td2rq:condition \"" + getColumn() + " <> ''\";");
@@ -126,7 +126,7 @@ public class Entity {
         // Loop through attributes associated with this Entity
         if (attributes.size() > 0) {
             for (Attribute attribute : attributes)
-                attribute.printD2RQ(pw, classMap(), this.getWorksheet());
+                attribute.printD2RQ(pw, this);
         }
     }
 

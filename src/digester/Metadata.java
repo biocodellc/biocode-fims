@@ -3,7 +3,7 @@ package digester;
 /**
  * Metadata defines metadata for this FIMS installation
  */
-public class Metadata {
+public class Metadata  {
     private String doi;
     private String shortname;
     private String eml_location;

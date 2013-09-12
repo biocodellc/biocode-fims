@@ -34,6 +34,8 @@
 
         <worksheet sheetname='Collecting_Events'>
 
+            <rule type='checkValidNumber' column="YearCollected" level='error'></rule>
+
             <rule type='uniqueValue' column='Coll_EventID_collector' level='error'></rule>
 
             <rule type='checkInXMLFields' column='HorizontalDatum' list='horizontalDatum' level='warning'></rule>

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 /**
  * Attribute representation
  */
-public class Attribute {
+public class Attribute implements MappingInterface {
     private String column;
     private String uri;
 
@@ -35,13 +35,15 @@ public class Attribute {
     }
 
     /**
-     * Generate D2RQ Mapping Language representation of this Attribute.
+     * * Generate D2RQ Mapping Language representation of this Attribute.
      *
      * @param pw       PrintWriter used to write output to.
-     * @param classMap D2RQ Mapping Language ClassMap that this Attribute belongs to.
-     * @param table    Database table that this Attribute comes from.
+     * @param parent
      */
-    void printD2RQ(PrintWriter pw, String classMap, String table) {
+    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
+        String classMap = ((Entity) parent).classMap();
+        String table = ((Entity) parent).getWorksheet();
+
         pw.println("map:" + classMap + "_" + column + " a d2rq:PropertyBridge;");
         pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
         pw.println("\td2rq:property <" + uri + ">;");

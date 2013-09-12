@@ -52,6 +52,7 @@ public class fims {
             System.out.println("Validate ...");
             addValidationRules(validationDigester, validation);
             System.out.println("\tTODO: output validation results here");
+            validation.run(null);
 
             // Triplify
             System.out.println("Triplify ...");
@@ -104,6 +105,12 @@ public class fims {
         d.addSetProperties("fims/validation/worksheet/rule");
         d.addSetNext("fims/validation/worksheet/rule", "addRule");
         d.addCallMethod("fims/validation/worksheet/rule/field", "addField", 0);
+
+        // Create list objects
+        d.addObjectCreate("fims/validation/lists/list", List.class);
+        d.addSetProperties("fims/validation/lists/list");
+        d.addSetNext("fims/validation/lists/list", "addList");
+        d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
 
         d.parse(new File(configFilename));
     }

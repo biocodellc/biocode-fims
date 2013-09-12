@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 /**
  * Relation representation
  */
-public class Relation {
+public class Relation implements MappingInterface {
     private String subject;
     private String predicate;
     private String object;
@@ -41,7 +41,7 @@ public class Relation {
         this.object = object;
     }
 
-    public void print(Mapping mapping) {
+    public void print() {
         System.out.println("  Relation:");
         System.out.println("    subject=" + subject.toString());
         System.out.println("    predicate=" + predicate.toString());
@@ -51,11 +51,12 @@ public class Relation {
     /**
      * Generate D2RQ Mapping Language representation of this Relation.
      *
-     * @param pw      PrintWriter used to write output to.
-     * @param mapping Mapping containing related Entities (and the Join if the related Entities come from different tables).
+     * @param pw     PrintWriter used to write output to.
+     * @param parent Reference to parent entity (a Mapping)
      */
     public void printD2RQ(PrintWriter
-                           pw, Mapping mapping) {
+                                  pw, Object parent) {
+        Mapping mapping = (Mapping) parent;
 
         Entity subjEntity = mapping.findEntity(subject.toString());
         Entity objEntity = mapping.findEntity(object.toString());
