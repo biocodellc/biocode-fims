@@ -1,5 +1,7 @@
 import digester.*;
 import org.xml.sax.SAXException;
+import reader.ReaderManager;
+import reader.plugins.TabularDataReader;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -16,7 +18,7 @@ public class fims {
     String outputFolder;
 
     public fims(String configFilename, String inputFilename, String outputFolder) {
-         // Set class variables
+        // Set class variables
         this.configFilename = configFilename;
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
@@ -43,25 +45,30 @@ public class fims {
             Digester mappingDigester = new Digester();
             Digester fimsDigester = new Digester();
 
+            // Read the input file
+            // Create the ReaderManager and load the plugins.
+            ReaderManager rm = new ReaderManager();
+            rm.loadReaders();
+            TabularDataReader tdr = rm.openFile(inputFilename);
+
             // Create core objects
             Fims fims = new Fims();
-            Validation validation = new Validation();
-            Mapping mapping = new Mapping(new triplifier(inputFilename, outputFolder));
+            Validation validation = new Validation(tdr);
+            Mapping mapping = new Mapping(new triplifier(tdr,outputFolder));
 
             // Read Metadata
             addFimsRules(fimsDigester, fims);
+            fims.printCommand();
 
             // Validation
-            System.out.println("Validate ...");
             addValidationRules(validationDigester, validation);
-            //System.out.println("\tTODO: output validation results here");
             validation.run(null);
+            validation.printCommand();
 
             // Triplify
-            System.out.println("Triplify ...");
             addMappingRules(mappingDigester, mapping);
             mapping.run();
-            //System.out.println("\toutput stored at: " + t.getTriples(mapping));
+            mapping.printCommand();
 
             // Upload
             System.out.println("Upload ...");
@@ -85,7 +92,7 @@ public class fims {
      *
      * @param d
      */
-    private  void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+    private void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
         d.push(fims);
         d.addObjectCreate("fims/metadata", Metadata.class);
         d.addSetProperties("fims/metadata");
@@ -100,7 +107,7 @@ public class fims {
      *
      * @param d
      */
-    private  void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+    private void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
         d.push(validation);
 
         // Create worksheet objects
@@ -128,7 +135,7 @@ public class fims {
      *
      * @param d
      */
-    private  void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+    private void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
         d.push(mapping);
 
         // Create entity objects

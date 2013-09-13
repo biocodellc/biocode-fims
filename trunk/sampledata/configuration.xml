@@ -26,15 +26,15 @@
                 <field>Phylum</field>
             </rule>
 
-            <rule type='lookupList' column='relaxant' list='relaxant' level='warning'></rule>
+            <rule type='checkInXMLFields' column='relaxant' list='relaxant' level='warning'></rule>
 
-            <rule type='lookupList' column='preservative' list='preservative' level='warning'></rule>
+            <rule type='checkInXMLFields' column='preservative' list='preservative' level='warning'></rule>
 
         </worksheet>
 
         <worksheet sheetname='Collecting_Events'>
 
-            <rule type='checkValidNumber' column="YearCollected" level='error'></rule>
+            <rule type='isNumber' column="YearCollected" level='error'></rule>
 
             <rule type='uniqueValue' column='Coll_EventID_collector' level='error'></rule>
 

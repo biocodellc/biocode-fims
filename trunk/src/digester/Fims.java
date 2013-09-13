@@ -1,9 +1,11 @@
 package digester;
 
+import renderers.RendererInterface;
+
 /**
  * Add the core FIMS object
  */
-public class Fims {
+public class Fims implements RendererInterface{
     private Metadata metadata;
 
     public void addMetadata(Metadata m) {
@@ -13,4 +15,8 @@ public class Fims {
     public void print() {
         metadata.print();
     }
+    public void printCommand() {
+        System.out.println("Reading metadata ...");
+    }
+
 }
