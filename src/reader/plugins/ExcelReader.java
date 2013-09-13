@@ -3,10 +3,15 @@ package reader.plugins;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import digester.List;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -47,8 +52,19 @@ public class ExcelReader implements TabularDataReader {
     private DataFormatter df;
     private FormulaEvaluator fe;
 
+    // The row # that the header values are on
+    // TODO: make this adjustable in case header rows appear on another line besides the first (see bioValidator code)
+    private int numHeaderRows = 0;
+
+    // A reference to the file that opened this reader
+    private File inputFile;
+
     public String getShortFormatDesc() {
         return "Microsoft Excel";
+    }
+
+    public File getInputFile() {
+        return inputFile;
     }
 
     public String getFormatString() {
@@ -93,6 +109,7 @@ public class ExcelReader implements TabularDataReader {
     }
 
     public boolean openFile(String filepath) {
+
         //System.out.println(filepath);
         FileInputStream is;
 
@@ -114,6 +131,9 @@ public class ExcelReader implements TabularDataReader {
         // formulas.
         df = new DataFormatter();
         fe = excelwb.getCreationHelper().createFormulaEvaluator();
+
+        // Set the input file
+        inputFile = new File(filepath);
 
         return true;
     }
@@ -160,6 +180,186 @@ public class ExcelReader implements TabularDataReader {
         }
 
         hasnext = lastcellnum > 0;
+    }
+
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     *
+     * @return
+     */
+    public java.util.List<String> getColNames() {
+        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+
+        java.util.List<String> listColumnNames = new ArrayList<String>();
+        Iterator<Row> rows = wsh.rowIterator();
+        int count = 0;
+        while (rows.hasNext()) {
+            if (count == numHeaderRows) {
+                break;
+            }
+            rows.next();
+            count++;
+        }
+        HSSFRow row = (HSSFRow) rows.next();
+
+        Iterator<Cell> cells = row.cellIterator();
+        while (cells.hasNext()) {
+            HSSFCell cell = (HSSFCell) cells.next();
+            if (cell.toString().trim() != "" && cell.toString() != null) {
+                // System.out.println(cell.toString());
+                listColumnNames.add(cell.toString());
+            }
+        }
+
+        return listColumnNames;
+    }
+
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     * @return
+     */
+    public Sheet getSheet() {
+        return excelwb.getSheet(getCurrentTableName());
+    }
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the count--- this
+     * means there can be no blank rows.
+     *
+     * @return
+     */
+    public Integer getNumRows() {
+        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+
+        Iterator it = wsh.rowIterator();
+        int count = 0;
+        while (it.hasNext()) {
+            Row row = (Row) it.next();
+            Iterator cellit = row.cellIterator();
+            String rowContents = "";
+            while (cellit.hasNext()) {
+                Cell cell = (Cell) cellit.next();
+                if (cell.getCellType() == Cell.CELL_TYPE_STRING || cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    rowContents += cell.toString();
+                }
+            }
+
+            if (rowContents.equals("")) {
+                // The count to return should be minus 1 to account for title
+                return count - 1 - numHeaderRows;
+            }
+            count++;
+        }
+        Integer numRows = count - 1 - numHeaderRows;
+        //System.out.println("this is the number of rows!" + numRows);
+        // The count to return should be minus 1 to account for title
+        return count - 1 - numHeaderRows;
+    }
+
+
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     *
+     * @param column
+     * @param row
+     * @return
+     * @throws Exception
+     */
+    public String getStringValue(String column, int row) throws Exception {
+        String strValue = null;
+        try {
+            strValue = getStringValue(getColumnPosition(column), row);
+        } catch (Exception e) {
+            return null;
+        }
+        return strValue;
+    }
+         /**
+     * Returns string values for all cells regardless of whether they are cast as numeric or
+     * String.  Does not handle boolean cell types currently.
+     *
+     * @param col
+     * @param row
+     * @return
+     */
+    public String getStringValue(int col, int row) {
+        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+
+        row = row + this.numHeaderRows;
+
+        Row hrow = wsh.getRow(row);
+        Cell cell = hrow.getCell(col);
+        try {
+            if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+                return null;
+            } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                if (cell.getStringCellValue().trim().equals("")) {
+                    return null;
+                } else {
+                    return cell.toString();
+                }
+                // Handle Numeric Cell values--- this is a bit strange since we have no way of
+                // knowing if the numeric cell value is integer or double.  Thus, "5.0" gets interpreted
+                // as "5"... this is probably preferable to "5" getting displayed as "5.0", which is the
+                // default HSSFCell value behaviour
+            } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                if (new Double(cell.getNumericCellValue()).toString().trim().equals("")) {
+                    return null;
+                } else {
+                    String value = Double.toString(cell.getNumericCellValue()); //toString();
+
+                    if (value.indexOf(".0") == value.length() - 2) {
+                        Double D = (Double.parseDouble(value));
+                        Integer I = D.intValue();
+                        return I.toString();
+                    } else {
+                        return value;
+                    }
+                }
+            } else {
+                return null;
+            }
+        } catch (NullPointerException e) {
+            return null;
+            // case where this may be a numeric cell lets still try and return a string
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     * @param column
+     * @param row
+     * @return
+     * @throws Exception
+     */
+        public Double getDoubleValue(String column, int row) throws Exception {
+        Double dblValue = null;
+        try {
+            dblValue = Double.parseDouble(getStringValue(column, row));
+        } catch (Exception e) {
+            return null;
+        }
+        return dblValue;
+    }
+    /**
+     * TODO: sanitize this, JBD imported from bioValidator
+     *
+     * @param colName
+     * @return
+     * @throws Exception
+     */
+    public Integer getColumnPosition(String colName) throws Exception {
+        java.util.List<String> listColumns = this.getColNames();
+        for (int i = 0; i < listColumns.size(); i++) {
+            if (this.getColNames().toArray()[i].toString().equals(colName)) {
+                return i;
+            }
+        }
+        // if not found then throw exception
+        return null;
     }
 
     public String[] tableGetNextRow() {

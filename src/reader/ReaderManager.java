@@ -149,7 +149,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * @return A new instance of a reader if an appropriate reader is found that
      *         opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath) {
+    public TabularDataReader openFile(String filepath) throws Exception {
         // Check all readers to see if we have one that can read the
         // specified file.
         for (TabularDataReader reader : readers) {
@@ -159,17 +159,18 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                     // the reader, open the file with it, and return it.
                     TabularDataReader newreader = reader.getClass().newInstance();
                     newreader.openFile(filepath);
-
+                    // Set input file
                     return newreader;
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
+                    throw new Exception(e.getMessage());
+                    //e.printStackTrace();
+                    //return null;
                 }
             }
         }
 
         // no matching reader was found
-        return null;
+        throw new Exception("No matching reader found for this file");
     }
 
     /**

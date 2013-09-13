@@ -1,6 +1,10 @@
 package reader.plugins;
 
 
+import org.apache.poi.ss.usermodel.Sheet;
+
+import java.io.File;
+
 /**
  * The interface for data reader plugins in the triplifier system.  This
  * interface considers a data source to be a set of tables, each of which
@@ -9,15 +13,30 @@ package reader.plugins;
  * methods tableHasNextRow() and tableGetNextRow() are used to iterate through
  * all rows in the active table.
  */
-public interface TabularDataReader
-{
+public interface TabularDataReader {
+    public java.util.List<String> getColNames();
+
+    public Sheet getSheet();
+
+    public Integer getNumRows();
+
+    public File getInputFile();
+
+    public String getStringValue(String column, int row) throws Exception;
+
+    public String getStringValue(int col, int row);
+
+    public Double getDoubleValue(String column, int row) throws Exception;
+
+    public Integer getColumnPosition(String colName) throws Exception;
+
     /**
      * Get a short string identifying the file format(s) supported by this
      * reader.  This string can be treated as a constant that is used to request
      * this reader from a ReaderManager, via ReaderManager's getReader() method.
      *
      * @return A short string that identifies the file format(s) supported by
-     * this reader.
+     *         this reader.
      */
     public String getFormatString();
 
@@ -27,7 +46,7 @@ public interface TabularDataReader
      * for use in dialogs, such as file choosers.
      *
      * @return A short, human-readable description of the file format(s)
-     * supported by this reader.
+     *         supported by this reader.
      */
     public String getShortFormatDesc();
 
@@ -37,7 +56,7 @@ public interface TabularDataReader
      * value returned by getFormatString().
      *
      * @return A human-readable description of the file format(s) supported by
-     * this reader.
+     *         this reader.
      */
     public String getFormatDescription();
 
@@ -46,7 +65,7 @@ public interface TabularDataReader
      * TabularDataReader.
      *
      * @return An array of file extensions (given as Strings) for the file
-     * formats supported by this reader.
+     *         formats supported by this reader.
      */
     public String[] getFileExtensions();
 
@@ -56,7 +75,7 @@ public interface TabularDataReader
      *
      * @param filepath The path to a source data file.
      * @return True if the file format is supported by this reader, false
-     * otherwise.
+     *         otherwise.
      */
     public boolean testFile(String filepath);
 
@@ -66,7 +85,7 @@ public interface TabularDataReader
      *
      * @param filepath A file from which to read data.
      * @return True if the file was opened and is ready to read data from; false
-     * otherwise.
+     *         otherwise.
      */
     public boolean openFile(String filepath);
 
@@ -76,7 +95,7 @@ public interface TabularDataReader
      * source is opened (i.e., before any data has been read).
      *
      * @return True if the data source has at least one more table waiting to be
-     * processed; false otherwise.
+     *         processed; false otherwise.
      */
     public boolean hasNextTable();
 
@@ -100,7 +119,7 @@ public interface TabularDataReader
      * the active table of the opened data source.
      *
      * @return True if the data source has at least one more row of data to
-     * read; false otherwise.
+     *         read; false otherwise.
      */
     public boolean tableHasNextRow();
 

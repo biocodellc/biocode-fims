@@ -1,25 +1,38 @@
 package digester;
 
+import reader.plugins.ExcelReader;
+import reader.plugins.TabularDataReader;
+import renderers.Message;
+
+import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * digester.Worksheet class holds all elements pertaining to worksheets
  */
-public class Worksheet implements ValidationInterface {
+public class Worksheet  implements ValidationInterface  {
 
     // the name of this worksheet (as defined by the spreadsheet)
     private String sheetname;
     // store the rules associated with this worksheet
     private final List<Rule> rules = new ArrayList<Rule>();
-
     private Validation validation = null;
+    // Store all messages related to this Worksheet
+    private LinkedList<Message> messages = new LinkedList<Message>();
+
+    public LinkedList<Message> getMessages() {
+        return messages;
+    }
 
     /**
      * Get a reference to the validation object.  This is useful when working with
      * worksheets and rules to reference objects belonging to the validation object,
      * in particular lists.
+     *
      * @return
      */
     public Validation getValidation() {
@@ -28,6 +41,7 @@ public class Worksheet implements ValidationInterface {
 
     /**
      * Set the name of this worksheet
+     *
      * @param sheetname
      */
     public void setSheetname(String sheetname) {
@@ -36,6 +50,7 @@ public class Worksheet implements ValidationInterface {
 
     /**
      * Get the name of this worksheet
+     *
      * @return
      */
     public String getSheetname() {
@@ -44,6 +59,7 @@ public class Worksheet implements ValidationInterface {
 
     /**
      * Add a rule for this worksheet
+     *
      * @param r
      */
     public void addRule(Rule r) {
@@ -59,13 +75,38 @@ public class Worksheet implements ValidationInterface {
         }
     }
 
-    public void run(Object parent)  {
+    public void run(Object parent) {
         // Set a reference to the validation parent
-        validation = (Validation)parent;
+        validation = (Validation) parent;
 
-         for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
+        for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
             Rule r = i.next();
-            r.run(this);
+
+            // Run this particular rule
+            try {
+                // Call the Rule's run method to pass in TabularDataReader reference
+                //r.run(validation.getTabularDataReader());
+                // Set the digester worksheet instance for this Rule
+                r.setDigesterWorksheet(this);
+                // Set the TabularDataReader worksheet instance this Rule
+                r.setWorksheet(validation.getTabularDataReader());
+
+                Method method = r.getClass().getMethod(r.getType());
+                if (method != null) {
+                    method.invoke(r);
+                } else {
+                    System.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
+                }
+            } catch (Exception e) {
+                //e.getCause();
+                //e.printStackTrace();
+                System.out.println("\tInternal exception attempting to run rule = " + r.getType() + ", for column = " + r.getColumn() + ")");
+            }
+
+            // Display warnings/etc...
+            messages.addAll(r.getMessages());
+
         }
     }
+
 }

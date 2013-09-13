@@ -4,13 +4,11 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.util.FileUtils;
 import de.fuberlin.wiwiss.d2rq.jena.ModelD2RQ;
 import digester.Mapping;
-import reader.ReaderManager;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import settings.PathManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
@@ -21,20 +19,35 @@ import java.io.PrintWriter;
 public class triplifier {
 
     private String outputFolder;
-    private String inputFilename;
+    //private String inputFilename;
+    private File inputFile;
+    private TabularDataReader tdr;
 
-    public triplifier(String inputFilename, String outputFolder) {
+    public triplifier(TabularDataReader tdr, String outputFolder) throws Exception {
         this.outputFolder = outputFolder;
-        this.inputFilename = inputFilename;
+        //this.inputFilename = tdr.inputFilename;
+        //PathManager pm = new PathManager();
+        this.tdr = tdr;
+        inputFile = tdr.getInputFile();
+        System.out.println(tdr.getInputFile().getAbsolutePath());
+        /*try {
+            inputFile = pm.setFile(tdr.getInputFileName());
+        } catch (Exception e) {
+            throw new Exception("unable to read " + inputFilename);
+        } */
     }
 
+
+
     public File createSqlLite() throws Exception {
-        // Create the ReaderManager and load the plugins.
-        ReaderManager rm = new ReaderManager();
+
+        PathManager pm = new PathManager();
+        File processDirectory = null;
+
         try {
-            rm.loadReaders();
-        } catch (FileNotFoundException e) {
-            throw new Exception("could not load data reader plugins.");
+            processDirectory = pm.setDirectory(outputFolder);
+        } catch (Exception e) {
+            throw new Exception("unable to set output directory " + processDirectory);
         }
 
         // Load the SQLite JDBC driver.
@@ -42,27 +55,6 @@ public class triplifier {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
             throw new Exception("could not load the SQLite JDBC driver.");
-        }
-
-        PathManager pm = new PathManager();
-        File processDirectory = null;
-        File inputFile = null;
-
-        try {
-            inputFile = pm.setFile(inputFilename);
-        } catch (Exception e) {
-            throw new Exception("unable to read " + inputFilename);
-        }
-
-        TabularDataReader tdr = rm.openFile(inputFile.getAbsolutePath());
-        if (tdr == null) {
-            throw new Exception("unable to open input file " + inputFile.getAbsolutePath());
-        }
-
-        try {
-            processDirectory = pm.setDirectory(outputFolder);
-        } catch (Exception e) {
-            throw new Exception("unable to set output directory " + processDirectory);
         }
 
         // Create SQLite file
@@ -104,7 +96,7 @@ public class triplifier {
     }
 
     public String getTriples(Mapping mapping) throws Exception {
-        String filenamePrefix = new File(inputFilename).getName();
+        String filenamePrefix = inputFile.getName();
         System.gc();
 
         Model model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),

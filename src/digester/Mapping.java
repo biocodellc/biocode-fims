@@ -1,5 +1,7 @@
 package digester;
 
+import reader.plugins.TabularDataReader;
+import renderers.RendererInterface;
 import triplify.triplifier;
 import settings.Connection;
 
@@ -11,12 +13,13 @@ import java.util.LinkedList;
 /**
  * digester.Validation class holds all worksheets that are part of this validator
  */
-public class Mapping implements MappingInterface {
+public class Mapping implements MappingInterface, RendererInterface {
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
+    private String outputFile;
 
     public Mapping(triplifier t) throws Exception {
         triplifier = t;
@@ -24,6 +27,7 @@ public class Mapping implements MappingInterface {
         try {
             this.connection = new Connection(t.createSqlLite());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("unable to establish connection to SQLLite");
         }
     }
@@ -67,30 +71,7 @@ public class Mapping implements MappingInterface {
      * @return
      */
     public String getPersistentIdentifier(Entity entity) {
-        //String result = "";
-        //if (entity.getWorksheetUniqueKey().equalsIgnoreCase("") || entity.getWorksheetUniqueKey() == null) {
-        //  result += "\td2rq:uriColumn \"" + entity.getColumn() + "\";";
-        // This assigns the default urn:x-biscicol: pattern before the identifier, ensuring it is a URI.
-        //} else {
-        //  result += "\td2rq:uriPattern \"" + entity.getBcid() + "@@" + entity.getColumn() + "@@\";";
-        //}
-        //return result;
         return "\td2rq:uriPattern \"" + entity.getBcid() + "_@@" + entity.getColumn() + "@@\";";
-    }
-
-
-    public void print() {
-        System.out.println("Mapping has " + entities.size() + " entries");
-
-        for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
-            Entity e = i.next();
-            e.print();
-        }
-
-        for (Iterator<Relation> i = relations.iterator(); i.hasNext(); ) {
-            Relation r = i.next();
-            r.print();
-        }
     }
 
     /**
@@ -128,11 +109,29 @@ public class Mapping implements MappingInterface {
 
     /**
      * Run the triplifier using this class
+     *
      * @throws Exception
      */
     public void run() throws Exception {
-        triplifier.getTriples(this);
+        outputFile = triplifier.getTriples(this);
     }
 
+    public void print() {
+        System.out.println("Mapping has " + entities.size() + " entries");
 
+        for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
+            Entity e = i.next();
+            e.print();
+        }
+
+        for (Iterator<Relation> i = relations.iterator(); i.hasNext(); ) {
+            Relation r = i.next();
+            r.print();
+        }
+    }
+
+    public void printCommand() {
+        System.out.println("Triplify ...");
+        System.out.println("\toutput stored in " + outputFile);
+    }
 }
