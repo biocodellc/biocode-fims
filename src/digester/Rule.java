@@ -5,13 +5,12 @@ import renderers.Message;
 import settings.RegEx;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Rule does the heavy lift for the Validation Components. This is where the code is written for each of the rules
  * encountered in the XML configuration file.
  */
-public class Rule implements ValidationInterface {
+public class Rule {
 
     // General values
     private String level;
@@ -49,7 +48,7 @@ public class Rule implements ValidationInterface {
         return digesterWorksheet;
     }
 
-    public void setDigesterWorksheet(Worksheet digesterWorksheet) {
+    public void setDigesterWorksheet(Worksheet digesterWorksheet) throws Exception {
         this.digesterWorksheet = digesterWorksheet;
     }
 
@@ -57,8 +56,11 @@ public class Rule implements ValidationInterface {
         return worksheet;
     }
 
-    public void setWorksheet(TabularDataReader worksheet) {
+    public void setWorksheet(TabularDataReader worksheet) throws Exception {
         this.worksheet = worksheet;
+         // Synchronize the Excel Worksheet instance with the digester worksheet instance
+        //System.out.println("setting to "+ digesterWorksheet.getSheetname());
+        worksheet.setTable(digesterWorksheet.getSheetname());
     }
 
     public String getDecimalLatitude() {
@@ -151,7 +153,7 @@ public class Rule implements ValidationInterface {
 
 
     public void print() {
-        System.out.println("    rule type = " + this.type + "; column = " + this.column + "; level = " + this.level);
+        //System.out.println("    rule type = " + this.type + "; column = " + this.column + "; level = " + this.level);
 
         for (Iterator i = fields.iterator(); i.hasNext(); ) {
             String field = (String) i.next();
@@ -727,6 +729,7 @@ public class Rule implements ValidationInterface {
         String colName = "";
 
         //try {
+       //System.out.println("looking at  = " + worksheet.getSheet()+ this.getType() + this.getColumn() + this.getList());
 
         // Check that photoListRow Data matches Field Definitions
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
@@ -754,6 +757,8 @@ public class Rule implements ValidationInterface {
                         if (rowValue.equals(field)) {
                             booFound = true;
                         }
+
+                        //System.out.println(field + " _ " + rowValue);
                     }
                     if (!booFound) {
                         msg = "Did not find " + rowValues[m] + " " + rowValue;

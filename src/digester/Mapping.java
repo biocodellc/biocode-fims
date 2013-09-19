@@ -1,25 +1,22 @@
 package digester;
 
-import reader.plugins.TabularDataReader;
 import renderers.RendererInterface;
 import triplify.triplifier;
 import settings.Connection;
 
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  * digester.Validation class holds all worksheets that are part of this validator
  */
-public class Mapping implements MappingInterface, RendererInterface {
+public class Mapping implements RendererInterface{
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
-    private String outputFile;
 
     public Mapping(triplifier t) throws Exception {
         triplifier = t;
@@ -30,6 +27,10 @@ public class Mapping implements MappingInterface, RendererInterface {
             e.printStackTrace();
             throw new Exception("unable to establish connection to SQLLite");
         }
+    }
+
+    public triplifier getTriplifier() {
+        return triplifier;
     }
 
     /**
@@ -112,11 +113,24 @@ public class Mapping implements MappingInterface, RendererInterface {
      *
      * @throws Exception
      */
-    public void run() throws Exception {
-        outputFile = triplifier.getTriples(this);
+    public boolean run() throws Exception {
+        triplifier.getTriples(this);
+        return true;
     }
 
+    /**
+     * Just tell us where the file is stored...
+     */
     public void print() {
+        System.out.println("Triplify ...");
+        System.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
+        System.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
+    }
+
+    /**
+     * Loop through the entities and relations we have defined...
+     */
+    public void printObject() {
         System.out.println("Mapping has " + entities.size() + " entries");
 
         for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
@@ -128,10 +142,5 @@ public class Mapping implements MappingInterface, RendererInterface {
             Relation r = i.next();
             r.print();
         }
-    }
-
-    public void printCommand() {
-        System.out.println("Triplify ...");
-        System.out.println("\toutput stored in " + outputFile);
     }
 }

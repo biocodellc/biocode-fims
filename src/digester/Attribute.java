@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 /**
  * Attribute representation
  */
-public class Attribute implements MappingInterface {
+public class Attribute {
     private String column;
     private String uri;
 

@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 /**
  * Relation representation
  */
-public class Relation implements MappingInterface {
+public class Relation {
     private String subject;
     private String predicate;
     private String object;
