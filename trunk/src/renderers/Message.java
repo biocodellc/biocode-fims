@@ -2,10 +2,8 @@ package renderers;
 
 import digester.Rule;
 
-import java.util.logging.Level;
-
 /**
- * Special class to handle messages for reading Spreadsheet files
+ * Handle messaging for
  */
 public class Message {
     private String message;
@@ -46,15 +44,18 @@ public class Message {
         String msg = "";
         if (this.row != null) {
             Integer msgRow = this.row + 1;
-            return "Level=" + getLevel() + ": Row " + (msgRow).toString() + ": " + message + listString;
+            return getLevelAsString() + ": Row " + (msgRow).toString() + ": " + message + listString;
         }
-        return "Level=" + getLevel() + ": " + message + listString;
+        return getLevelAsString() + ": " + message + listString;
     }
 
-    private String getLevel() {
+    public String getLevelAsString() {
         if (level == 0) return "Warning";
         else return "Error";
     }
 
+    public Integer getLevel() {
+        return level;
+    }
 }
 

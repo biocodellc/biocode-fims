@@ -6,9 +6,7 @@
             doi="a doi"
             shortname="shortname"
             eml_location="eml_location"
-            sdb_user="a user"
-            sdb_driver="a driver"
-            sdb_configuration_file="a configuration file for sdb">
+            target="http://biscicol.org:3030/ds/update">
         <![CDATA[Some text with abstract]]>
     </metadata>
 
@@ -139,5 +137,7 @@
         </relation>
 
     </mapping>
+
+
 </fims>
 

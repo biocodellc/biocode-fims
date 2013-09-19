@@ -11,13 +11,19 @@ import java.io.*;
 /**
  * Core fims class for running fims processes.
  */
-public class fims {
+public class process {
 
     String configFilename;
     String inputFilename;
     String outputFolder;
 
-    public fims(String configFilename, String inputFilename, String outputFolder) {
+    /**
+     * process is the main function for validating, triplifying, & uploading fims data
+     * @param configFilename
+     * @param inputFilename
+     * @param outputFolder
+     */
+    public process(String configFilename, String inputFilename, String outputFolder) {
         // Set class variables
         this.configFilename = configFilename;
         this.inputFilename = inputFilename;
@@ -25,54 +31,47 @@ public class fims {
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
-
-        // Run the fims
-        runAll();
     }
 
     /**
      * Go through entire fims process: validate, triplify, upload
      */
     public void runAll() {
+        boolean validationGood = true;
+        boolean triplifyGood = true;
+
         try {
             // Initializing
             System.out.println("Initializing ...");
             System.out.println("\tinputFilename = " + inputFilename);
             System.out.println("\tconfigFilename = " + configFilename);
 
-            // Initialize digesters, one for each core object
-            Digester validationDigester = new Digester();
-            Digester mappingDigester = new Digester();
-            Digester fimsDigester = new Digester();
-
-            // Read the input file
-            // Create the ReaderManager and load the plugins.
+            // Read the input file & create the ReaderManager and load the plugins.
             ReaderManager rm = new ReaderManager();
             rm.loadReaders();
             TabularDataReader tdr = rm.openFile(inputFilename);
 
-            // Create core objects
-            Fims fims = new Fims();
-            Validation validation = new Validation(tdr);
-            Mapping mapping = new Mapping(new triplifier(tdr,outputFolder));
-
-            // Read Metadata
-            addFimsRules(fimsDigester, fims);
-            fims.printCommand();
-
             // Validation
-            addValidationRules(validationDigester, validation);
-            validation.run(null);
-            validation.printCommand();
+            Validation validation = new Validation(tdr);
+            addValidationRules(new Digester(), validation);
+            validationGood = validation.run();
+            validation.print();
 
-            // Triplify
-            addMappingRules(mappingDigester, mapping);
-            mapping.run();
-            mapping.printCommand();
+            // Triplify if we validate
+            if (validationGood) {
+                Mapping mapping = new Mapping(new triplifier(tdr, outputFolder));
+                addMappingRules(new Digester(), mapping);
+                triplifyGood = mapping.run();
+                mapping.print();
 
-            // Upload
-            System.out.println("Upload ...");
-            System.out.println("\tConnect using Jena SDB to Mysql (use connector details in configuration file)");
+                // Upload after triplifying
+                if (triplifyGood) {
+                    Fims fims = new Fims(mapping);
+                    addFimsRules(new Digester(), fims);
+                    fims.run();
+                    fims.print();
+                }
+            }
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -81,11 +80,6 @@ public class fims {
         }
     }
 
-    public static void main(String args[]) {
-        fims f = new fims("sampledata/configuration.xml",
-                "sampledata/biocode_template.xls",
-                System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator);
-    }
 
     /**
      * Process metadata component rules
@@ -148,7 +142,6 @@ public class fims {
         d.addSetProperties("fims/mapping/entity/attribute");
         d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
 
-
         // Create relation objects
         d.addObjectCreate("fims/mapping/relation", Relation.class);
         d.addSetNext("fims/mapping/relation", "addRelation");
@@ -157,8 +150,15 @@ public class fims {
         d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
 
         d.parse(new File(configFilename));
-
     }
 
+    public static void main(String args[]) {
+        process p = new process(
+                "sampledata/configuration.xml",
+                "sampledata/biocode_template.xls",
+                System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator
+        );
 
+        p.runAll();
+    }
 }

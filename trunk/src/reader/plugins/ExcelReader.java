@@ -145,6 +145,18 @@ public class ExcelReader implements TabularDataReader {
             return (currsheet < excelwb.getNumberOfSheets());
     }
 
+    public void setTable(String worksheet) {
+        try {
+            Sheet exsheet = excelwb.getSheet(worksheet);
+            currsheet = excelwb.getSheetIndex(worksheet) + 1;
+            rowiter = exsheet.rowIterator();
+            numcols = -1;
+            testNext();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void moveToNextTable() {
         if (hasNextTable()) {
             Sheet exsheet = excelwb.getSheetAt(currsheet++);
@@ -216,11 +228,13 @@ public class ExcelReader implements TabularDataReader {
 
     /**
      * TODO: sanitize this, JBD imported from bioValidator
+     *
      * @return
      */
     public Sheet getSheet() {
         return excelwb.getSheet(getCurrentTableName());
     }
+
     /**
      * TODO: sanitize this, JBD imported from bioValidator
      * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the count--- this
@@ -267,14 +281,24 @@ public class ExcelReader implements TabularDataReader {
      */
     public String getStringValue(String column, int row) throws Exception {
         String strValue = null;
+        /*System.out.println("checking out column = " + column + " at row = " + row);
+        try {
+            System.out.println("\tcolumn position = " + getColumnPosition(column));
+        System.out.println("\tstring value = " + getStringValue(getColumnPosition(column), row));
+        } catch (Exception e) {
+            System.out.println("Message = " + e.getMessage());
+        }
+        */
         try {
             strValue = getStringValue(getColumnPosition(column), row);
         } catch (Exception e) {
+            //e.printStackTrace();
             return null;
         }
         return strValue;
     }
-         /**
+
+    /**
      * Returns string values for all cells regardless of whether they are cast as numeric or
      * String.  Does not handle boolean cell types currently.
      *
@@ -330,12 +354,13 @@ public class ExcelReader implements TabularDataReader {
 
     /**
      * TODO: sanitize this, JBD imported from bioValidator
+     *
      * @param column
      * @param row
      * @return
      * @throws Exception
      */
-        public Double getDoubleValue(String column, int row) throws Exception {
+    public Double getDoubleValue(String column, int row) throws Exception {
         Double dblValue = null;
         try {
             dblValue = Double.parseDouble(getStringValue(column, row));
@@ -344,6 +369,7 @@ public class ExcelReader implements TabularDataReader {
         }
         return dblValue;
     }
+
     /**
      * TODO: sanitize this, JBD imported from bioValidator
      *
@@ -354,6 +380,7 @@ public class ExcelReader implements TabularDataReader {
     public Integer getColumnPosition(String colName) throws Exception {
         java.util.List<String> listColumns = this.getColNames();
         for (int i = 0; i < listColumns.size(); i++) {
+            //System.out.println("\tarray val = " + this.getColNames().toArray()[i].toString());
             if (this.getColNames().toArray()[i].toString().equals(colName)) {
                 return i;
             }

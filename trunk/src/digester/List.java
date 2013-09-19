@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A list of data to use in the validator.  We store data in lists because we find that different rules can refer
  * to the same list, and so we need only define them once.
  */
-public class List implements ValidationInterface {
+public class List {
     private String alias;
     private java.util.List fields = new ArrayList();
 

@@ -3,14 +3,13 @@ package digester;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
 import renderers.RendererInterface;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  * digester.Validation class holds all worksheets that are part of this validator
  */
-public class Validation implements ValidationInterface, RendererInterface {
+public class Validation implements RendererInterface {
     private final LinkedList<Worksheet> worksheets = new LinkedList<Worksheet>();
     private final LinkedList<List> lists = new LinkedList<List>();
     private TabularDataReader tabularDataReader = null;
@@ -65,32 +64,46 @@ public class Validation implements ValidationInterface, RendererInterface {
         return null;
     }
 
-    public void print() {
+    /**
+     * Loop through worksheets and print out object data
+     */
+    public void printObject() {
+        System.out.println("Validate");
+
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
             Worksheet w = i.next();
             w.print();
         }
     }
 
-
     /**
-     * Print Command lists all messages
+     * Print output for the commandline
      */
-    public void printCommand() {
+    public void print() {
+        System.out.println("Validate ...");
+
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
-            System.out.println("\tProcessing sheet = " + worksheet.getSheetname());
+            System.out.println("\t" + worksheet.getSheetname() + " worksheet");
             for (Iterator<Message> m = worksheet.getMessages().iterator(); m.hasNext(); ) {
                 Message message = m.next();
                 System.out.println("\t\t" + message.print());
             }
+            if (!worksheet.errorFree())  {
+                System.out.println("\tErrors found on " + worksheet.getSheetname()+ " worksheet.  Must fix to continue.");
+            }
         }
+
     }
 
-    public void run(Object parent) {
+    public boolean run() throws Exception {
+        boolean errorFree = true;
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
-            Worksheet w = i.next();
-            w.run(this);
+            digester.Worksheet w = i.next();
+            boolean thisError = w.run(this);
+            if (errorFree)
+                errorFree = thisError;
         }
+        return errorFree;
     }
 }

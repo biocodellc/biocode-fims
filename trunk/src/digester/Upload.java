@@ -6,21 +6,38 @@ import com.hp.hpl.jena.update.UpdateProcessor;
 import com.hp.hpl.jena.update.UpdateRequest;
 import renderers.RendererInterface;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
- * Add the core FIMS object
+ * Upload target specification
  */
-public class Fims implements RendererInterface {
-    private Metadata metadata;
+public class Upload implements RendererInterface {
+    private String target;
     private Mapping mapping;
 
-    public Fims(Mapping mapping) {
+    public Upload(Mapping mapping) {
         this.mapping = mapping;
     }
 
-    public void addMetadata(Metadata m) {
-        metadata = m;
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    /**
+     * Print output
+     */
+    public void print() {
+        System.out.println("Upload ...");
+        System.out.println("\tuploaded data to " + target);
+    }
+
+    /**
+     * Object details for this object
+     */
+    public void printObject() {
+        System.out.println("Upload object target = " + target);
     }
 
     public boolean run() throws Exception {
@@ -36,7 +53,7 @@ public class Fims implements RendererInterface {
         // Upload to Fuseki
         try {
             UpdateRequest updateRequest = UpdateFactory.read(mapping.getTriplifier().getUpdateOutputFile());
-            UpdateProcessor qexec = UpdateExecutionFactory.createRemote(updateRequest, metadata.getTarget());
+            UpdateProcessor qexec = UpdateExecutionFactory.createRemote(updateRequest, target);
             qexec.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,19 +61,4 @@ public class Fims implements RendererInterface {
         }
         return true;
     }
-
-    /**
-     * Print out command prompt data
-     */
-    public void print() {
-        System.out.println("Uploading to FIMS ...");
-    }
-
-    /**
-     * Print out metadata object
-     */
-    public void printObject() {
-        metadata.print();
-    }
-
 }

@@ -1,10 +1,8 @@
 package digester;
 
-import reader.plugins.ExcelReader;
-import reader.plugins.TabularDataReader;
+import ognl.IteratorElementsAccessor;
 import renderers.Message;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +12,7 @@ import java.util.List;
 /**
  * digester.Worksheet class holds all elements pertaining to worksheets
  */
-public class Worksheet  implements ValidationInterface  {
+public class Worksheet {
 
     // the name of this worksheet (as defined by the spreadsheet)
     private String sheetname;
@@ -75,7 +73,7 @@ public class Worksheet  implements ValidationInterface  {
         }
     }
 
-    public void run(Object parent) {
+    public boolean run(Object parent) {
         // Set a reference to the validation parent
         validation = (Validation) parent;
 
@@ -90,6 +88,7 @@ public class Worksheet  implements ValidationInterface  {
                 r.setDigesterWorksheet(this);
                 // Set the TabularDataReader worksheet instance this Rule
                 r.setWorksheet(validation.getTabularDataReader());
+                //System.out.println("current tablename = " + r.getWorksheet().getCurrentTableName());
 
                 Method method = r.getClass().getMethod(r.getType());
                 if (method != null) {
@@ -107,6 +106,19 @@ public class Worksheet  implements ValidationInterface  {
             messages.addAll(r.getMessages());
 
         }
+        return errorFree();
     }
 
+    /**
+     * Indicate whether this worksheet is error free or not
+     * @return true if this worksheet is clean
+     */
+    public boolean errorFree() {
+         // Check all messages to see if any type of error has been found
+        for (Iterator<Message> m = messages.iterator(); m.hasNext(); ) {
+            if (m.next().getLevel() == Message.ERROR)
+                return false;
+        }
+        return true;
+    }
 }

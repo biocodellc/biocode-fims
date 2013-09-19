@@ -30,6 +30,7 @@ public interface TabularDataReader {
 
     public Integer getColumnPosition(String colName) throws Exception;
 
+    public void setTable(String table) throws Exception;
     /**
      * Get a short string identifying the file format(s) supported by this
      * reader.  This string can be treated as a constant that is used to request

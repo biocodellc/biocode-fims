@@ -1,16 +1,29 @@
 package renderers;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
- * Define the types of renderer functions there are for appropriate objects
+ * Renderer Interface
  */
 public interface RendererInterface {
+
     /**
-     * Print metadata about objects themselves
+     * Print output
      */
     public void print();
 
     /**
-     * Print output suitable for a command prompt
+     * Print Object Metadata
      */
-    public void printCommand();
+    public void printObject();
+
+    /**
+     * require a run method that calls a renderer
+     * An exception is thrown if some strange processing error occur.
+     * @return true if successful and OK to progress to next step, e.g. in Validation return true if
+     * validation rules have passed
+     *
+     */
+    public boolean run() throws Exception;
+
 }

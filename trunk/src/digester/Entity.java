@@ -1,14 +1,12 @@
 package digester;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Entity representation
  */
-public class Entity implements MappingInterface {
+public class Entity {
 
     private String worksheet;
     private String worksheetUniqueKey;
