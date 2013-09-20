@@ -6,7 +6,7 @@
             doi="a doi"
             shortname="shortname"
             eml_location="eml_location"
-            target="http://biscicol.org:3030/ds/update">
+            target="http://localhost:3030/ds">
         <![CDATA[Some text with abstract]]>
     </metadata>
 
@@ -77,9 +77,8 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptName="identificationProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
-                bcid="ark:/21547/TEMP_identification2"
+                conceptAlias="identificationProcess"
+                conceptURI="http://purl.org/dc/dcmitype/Event"
                 entityId="1">
             <attribute column="IdentifiedBy" uri="dwc:identifiedBy"/>
         </entity>
@@ -87,9 +86,8 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptName="tissue"
+                conceptAlias="tissue"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
-                bcid="ark:/21547/TEMP_tissue2"
                 entityId="2">
             <attribute column="format_name96" uri="bsc:plate"/>
             <attribute column="well_number96" uri="bsc:well"/>
@@ -98,9 +96,8 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptName="specimen"
+                conceptAlias="specimen"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
-                bcid="ark:/21547/TEMP_specimen2"
                 entityId="3">
             <attribute column="preservative" uri="bsc:preservative"/>
             <attribute column="host" uri="dwc:host"/>
@@ -110,9 +107,8 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptName="informationContentEntity"
+                conceptAlias="informationContentEntity"
                 conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
-                bcid="ark:/21547/TEMP_informationcontententity2"
                 entityId="4">
             <attribute column="SpecificEpithet" uri="dwc:scientificName"/>
             <attribute column="Phylum" uri="dwc:phylum"/>

@@ -1,11 +1,12 @@
 package digester;
 
-import com.hp.hpl.jena.update.UpdateExecutionFactory;
-import com.hp.hpl.jena.update.UpdateFactory;
-import com.hp.hpl.jena.update.UpdateProcessor;
-import com.hp.hpl.jena.update.UpdateRequest;
+import com.hp.hpl.jena.update.*;
+import com.sun.jdi.InvocationException;
 import renderers.RendererInterface;
+import sun.awt.CausedFocusEvent;
+import uploader.uploader;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -14,6 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 public class Fims implements RendererInterface {
     private Metadata metadata;
     private Mapping mapping;
+    private boolean updateGood = true;
+    uploader uploader;
+    private String graph;
 
     public Fims(Mapping mapping) {
         this.mapping = mapping;
@@ -23,33 +27,41 @@ public class Fims implements RendererInterface {
         metadata = m;
     }
 
-    public boolean run() throws Exception {
-        // Using TDB -- good to keep this stub code in case we want to write TDB to client
-        // String directory = outputFolder + File.pathSeparator + "Dataset1";
-        // DatasetGraph dataset = TDBFactory.createDatasetGraph(directory);
-        // Model tdb = FileManager.get().loadModel(mapping.getOutputFile());
+    /**
+     * running the fims uploads the file to the target into a new graph
+     * @return
+     */
+    public boolean run() {
+        uploader = new uploader(
+                metadata.getTarget(),
+                //new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/biocode_template.xls.triples.80.ttl"));
+                new File(mapping.getTriplifier().getTripleOutputFile()));
 
-        // Perform a simple query on our dataset
-        // String sparqlQueryString = "SELECT * { ?s ?p ?o }";
-        // com.hp.hpl.jena.query.Query query = QueryFactory.create(sparqlQueryString);
-
-        // Upload to Fuseki
         try {
-            UpdateRequest updateRequest = UpdateFactory.read(mapping.getTriplifier().getUpdateOutputFile());
-            UpdateProcessor qexec = UpdateExecutionFactory.createRemote(updateRequest, metadata.getTarget());
-            qexec.execute();
+            graph = uploader.execute();
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            //System.out.println("Exception occurred while attempting to upload data. " + e.getMessage());
+            updateGood = false;
         }
-        return true;
+        return updateGood;
     }
 
     /**
      * Print out command prompt data
      */
     public void print() {
-        System.out.println("Uploading to FIMS ...");
+        if (updateGood) {
+            System.out.println("Uploading to FIMS ...");
+            System.out.println("\ttarget = " + metadata.getTarget());
+            System.out.println("\tgraph =  " + uploader.getGraph());
+            System.out.println("\tquery = " + uploader.getService() + "/query" +
+                    "?query=select+*+%7Bgraph+ " + uploader.getEncodedGraph() + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
+                    "&output=text" +
+                    "&stylesheet=%2Fxml-to-html.xsl");
+        } else {
+            System.out.println("Uploading to FIMS ...");
+            System.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". Try later ...");
+        }
     }
 
     /**
