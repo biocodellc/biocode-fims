@@ -13,21 +13,24 @@ import java.io.*;
  */
 public class process {
 
-    String configFilename;
-    String inputFilename;
-    String outputFolder;
+    String configFilename;  // A configuration file in XML format for a group of projects
+    String inputFilename;   // The data to process, usually an Excel spreadsheet
+    String outputFolder;    // Where to store output files
+    String project_code;    // A distinct code for the project being loaded
 
     /**
      * process is the main function for validating, triplifying, & uploading fims data
+     *
      * @param configFilename
      * @param inputFilename
      * @param outputFolder
      */
-    public process(String configFilename, String inputFilename, String outputFolder) {
+    public process(String configFilename, String inputFilename, String outputFolder, String project_code) {
         // Set class variables
         this.configFilename = configFilename;
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
+        this.project_code = project_code;
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -39,6 +42,7 @@ public class process {
     public void runAll() {
         boolean validationGood = true;
         boolean triplifyGood = true;
+        boolean updateGood = true;
 
         try {
             // Initializing
@@ -59,7 +63,7 @@ public class process {
 
             // Triplify if we validate
             if (validationGood) {
-                Mapping mapping = new Mapping(new triplifier(tdr, outputFolder));
+                Mapping mapping = new Mapping(new triplifier(tdr, outputFolder), project_code);
                 addMappingRules(new Digester(), mapping);
                 triplifyGood = mapping.run();
                 mapping.print();
@@ -152,11 +156,22 @@ public class process {
         d.parse(new File(configFilename));
     }
 
+    /**
+     * Run the program from the command-line
+     *
+     * @param args
+     */
     public static void main(String args[]) {
+        String project_code = "DEMOH";
+        String configuration = "sampledata/configuration.xml";
+        String input_file = "sampledata/biocode_template.xls";
+        String output_directory = System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator;
+
         process p = new process(
-                "sampledata/configuration.xml",
-                "sampledata/biocode_template.xls",
-                System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator
+                configuration,
+                input_file,
+                output_directory,
+                project_code
         );
 
         p.runAll();

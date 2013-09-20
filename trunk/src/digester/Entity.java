@@ -10,9 +10,9 @@ public class Entity {
 
     private String worksheet;
     private String worksheetUniqueKey;
-    private String conceptName;
+    private String conceptAlias;
     private String conceptURI;
-    private String bcid;
+    //private String bcid;
     private String entityId;
 
     private final LinkedList<Attribute> attributes = new LinkedList<Attribute>();
@@ -50,12 +50,12 @@ public class Entity {
         this.worksheetUniqueKey = worksheetUniqueKey;
     }
 
-    public String getConceptName() {
-        return conceptName;
+    public String getConceptAlias() {
+        return conceptAlias;
     }
 
-    public void setConceptName(String conceptName) {
-        this.conceptName = conceptName;
+    public void setConceptAlias(String conceptAlias) {
+        this.conceptAlias = conceptAlias;
     }
 
     public String getConceptURI() {
@@ -66,13 +66,13 @@ public class Entity {
         this.conceptURI = conceptURI;
     }
 
-    public String getBcid() {
+    /*public String getBcid() {
         return bcid;
     }
 
     public void setBcid(String bcid) {
         this.bcid = bcid;
-    }
+    }*/
 
     /**
      * Get the table.column notation
@@ -89,7 +89,7 @@ public class Entity {
      * @return D2RQ Mapping ClassMap name.
      */
     String classMap() {
-        return worksheet + "_" + worksheetUniqueKey + "_" + conceptName;
+        return worksheet + "_" + worksheetUniqueKey + "_" + conceptAlias;
     }
 
     /**
@@ -99,9 +99,9 @@ public class Entity {
         System.out.println("  EntityId:" + entityId);
         System.out.println("    worksheet=" + worksheet);
         System.out.println("    worksheetUniqueKey=" + worksheetUniqueKey);
-        System.out.println("    conceptName=" + conceptName);
+        System.out.println("    conceptName=" + conceptAlias);
         System.out.println("    conceptURI=" + conceptURI);
-        System.out.println("    bcid=" + bcid);
+        //System.out.println("    bcid=" + bcid);
     }
 
     /**

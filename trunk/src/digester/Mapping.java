@@ -1,24 +1,30 @@
 package digester;
 
 import renderers.RendererInterface;
+import settings.BCIDDatabase;
 import triplify.triplifier;
 import settings.Connection;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  * digester.Validation class holds all worksheets that are part of this validator
  */
-public class Mapping implements RendererInterface{
+public class Mapping implements RendererInterface {
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
+    private String project_code;
 
-    public Mapping(triplifier t) throws Exception {
+    public Mapping(triplifier t, String project_code) throws Exception {
+        this.project_code = project_code;
         triplifier = t;
         // Create a connection to a SQL Lite Instance
         try {
@@ -51,7 +57,6 @@ public class Mapping implements RendererInterface{
         relations.addLast(r);
     }
 
-
     /**
      * Find Entity defined by given worksheet and worksheetUniqueKey
      *
@@ -72,7 +77,43 @@ public class Mapping implements RendererInterface{
      * @return
      */
     public String getPersistentIdentifier(Entity entity) {
-        return "\td2rq:uriPattern \"" + entity.getBcid() + "_@@" + entity.getColumn() + "@@\";";
+        String bcid = lookupBCID(project_code, entity.getConceptURI());
+        //return "\td2rq:uriPattern \"" + entity.getBcid() + "_@@" + entity.getColumn() + "@@\";";
+        return "\td2rq:uriPattern \"" + bcid + "_@@" + entity.getColumn() + "@@\";";
+    }
+
+    /**
+     * Find the appropriate BCID for this project
+     * TODO: Make this a REST service call, FOR NOW ...  hardcoding database connection
+     * @param project_code defines the BCID project_code to lookup
+     * @param conceptURI   defines the conceptURI to narrow this to
+     * @return returns the BCID for this project and conceptURI combination
+     */
+    private String lookupBCID(String project_code, String conceptURI) {
+        //
+        String bcid = null;
+        try {
+            BCIDDatabase db = new BCIDDatabase();
+            Statement stmt = db.conn.createStatement();
+
+            String query = "select \n" +
+                    "d.prefix as prefix \n" +
+                    "from \n" +
+                    "datasets d, projectsBCIDs pb, projects p \n" +
+                    "where \n" +
+                    "d.datasets_id=pb.datasets_id && \n" +
+                    "pb.project_id=p.project_id && \n" +
+                    "p.project_code='" + project_code + "' && \n" +
+                    "d.resourceType='" + conceptURI + "'";
+            ResultSet rs= stmt.executeQuery(query);
+            rs.next();
+            bcid = rs.getString("prefix");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bcid;
     }
 
     /**
