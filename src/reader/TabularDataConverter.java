@@ -142,14 +142,17 @@ public final class TabularDataConverter {
      * @throws SQLException
      */
     public void convert(boolean fixDwCA) throws SQLException {
-        int tablecnt = 0;
-        String tname;
+        //int tablecnt = 0;
+        // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
+        String tname = source.getCurrentTableName();
+
         Connection conn = DriverManager.getConnection(dest);
 
-        while (source.hasNextTable()) {
+        if (source.tableHasNextRow())
+                buildTable(conn, fixSQLiteIdentifierName(tname));
+        /*while (source.hasNextTable()) {
             source.moveToNextTable();
             tablecnt++;
-
             // If the user supplied a name for the first table in the data
             // source, use it.  Otherwise, take the table name from the data
             // source.
@@ -160,7 +163,7 @@ public final class TabularDataConverter {
 
             if (source.tableHasNextRow())
                 buildTable(conn, fixSQLiteIdentifierName(tname));
-        }
+        }  */
 
         conn.close();
     }

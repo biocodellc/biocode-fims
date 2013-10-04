@@ -9,21 +9,26 @@ import org.apache.log4j.Level;
 import java.io.*;
 
 /**
- * Core fims class for running fims processes.
+ * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
+ * a project code, which is used to specify identifier roots in the BCID (http://code.google.com/p/bcid/) system.
+ * The main class is configured to run this from the command-line while the class constructor can also be adapted
+ * to any future REST interface calls.
  */
 public class process {
 
-    String configFilename;  // A configuration file in XML format for a group of projects
-    String inputFilename;   // The data to process, usually an Excel spreadsheet
-    String outputFolder;    // Where to store output files
-    String project_code;    // A distinct code for the project being loaded
+    String configFilename;
+    String inputFilename;
+    String outputFolder;
+    String project_code;
 
     /**
      * process is the main function for validating, triplifying, & uploading fims data
      *
-     * @param configFilename
-     * @param inputFilename
-     * @param outputFolder
+     * @param configFilename A configuration file in XML format for a group of projects
+     * @param inputFilename The data to process, usually an Excel spreadsheet
+     * @param outputFolder  Where to store output files
+     * @param project_code A distinct project code for the project being loaded, used to lookup projects in the BCID system
+    for assigning identifier roots.
      */
     public process(String configFilename, String inputFilename, String outputFolder, String project_code) {
         // Set class variables
@@ -37,7 +42,7 @@ public class process {
     }
 
     /**
-     * Go through entire fims process: validate, triplify, upload
+     * runAll method is designed to go through entire fims process: validate, triplify, upload
      */
     public void runAll() {
         boolean validationGood = true;
@@ -68,18 +73,22 @@ public class process {
                 triplifyGood = mapping.run();
                 mapping.print();
 
+
                 // Upload after triplifying
                 if (triplifyGood) {
                     Fims fims = new Fims(mapping);
                     addFimsRules(new Digester(), fims);
                     fims.run();
                     fims.print();
+
+                    System.out.println("\tspreadsheet = " + fims.write());
+
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Stopping Execution, Error: " + e.getMessage());
+            //e.printStackTrace();
             System.exit(-1);
         }
     }
@@ -125,6 +134,11 @@ public class process {
         d.addSetNext("fims/validation/lists/list", "addList");
         d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
 
+         // Create column objects
+        d.addObjectCreate("fims/validation/worksheet/column", Column_trash.class);
+        d.addSetProperties("fims/validation/worksheet/column");
+        d.addSetNext("fims/validation/worksheet/column", "addColumn");
+
         d.parse(new File(configFilename));
     }
 
@@ -163,8 +177,10 @@ public class process {
      */
     public static void main(String args[]) {
         String project_code = "DEMOH";
-        String configuration = "sampledata/configuration.xml";
-        String input_file = "sampledata/biocode_template.xls";
+        String configuration = "sampledata/indoPacificConfiguration_v2.xml";
+        String input_file = "sampledata/indoPacificTemplate_v2.xlsx";
+        //String configuration = "sampledata/configuration.xml";
+        //String input_file = "sampledata/biocode_template.xls";
         String output_directory = System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator;
 
         process p = new process(

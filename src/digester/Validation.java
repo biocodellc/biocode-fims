@@ -10,14 +10,25 @@ import java.util.LinkedList;
  * digester.Validation class holds all worksheets that are part of this validator
  */
 public class Validation implements RendererInterface {
+    // Loop all the worksheets associated with the validation element
     private final LinkedList<Worksheet> worksheets = new LinkedList<Worksheet>();
+    // Loop all the lists associated with the validation element
     private final LinkedList<List> lists = new LinkedList<List>();
+    // Create a tabularDataReader for reading the data source associated with the validation element
     private TabularDataReader tabularDataReader = null;
 
+    /**
+     * Construct using tabularDataReader object, defining how to read the incoming tabular data
+     * @param tabularDataReader
+     */
     public Validation(TabularDataReader tabularDataReader) {
         this.tabularDataReader = tabularDataReader;
     }
 
+    /**
+     * Return the tabularDataReader object
+     * @return the tabularDataReader object associated with the validation element
+     */
     public TabularDataReader getTabularDataReader() {
         return tabularDataReader;
     }
@@ -29,6 +40,10 @@ public class Validation implements RendererInterface {
      */
     public void addWorksheet(Worksheet w) {
         worksheets.addLast(w);
+    }
+
+    public LinkedList<Worksheet> getWorksheets() {
+        return worksheets;
     }
 
     /**
@@ -80,7 +95,6 @@ public class Validation implements RendererInterface {
      * Print output for the commandline
      */
     public void print() {
-        System.out.println("Validate ...");
 
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
@@ -96,7 +110,14 @@ public class Validation implements RendererInterface {
 
     }
 
+    /**
+     * Begin the validation process, looping through worksheets
+     * @return
+     * @throws Exception
+     */
     public boolean run() throws Exception {
+        System.out.println("Validate ...");
+
         boolean errorFree = true;
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
             digester.Worksheet w = i.next();

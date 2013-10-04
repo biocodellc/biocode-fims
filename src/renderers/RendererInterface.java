@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 public interface RendererInterface {
 
     /**
-     * Print output
+     * Print output for command prompt
      */
     public void print();
 

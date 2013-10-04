@@ -3,6 +3,7 @@ package reader.plugins;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -100,7 +101,6 @@ public class ExcelReader implements TabularDataReader {
         if (index != -1 && index != (filepath.length() - 1)) {
             // get the extension
             String ext = filepath.substring(index + 1);
-
             if (ext.equals("xls") || ext.equals("xlsx"))
                 return true;
         }
@@ -195,9 +195,9 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
+     * Get the column names associated with a particular sheet
      *
-     * @return
+     * @return List of Column names
      */
     public java.util.List<String> getColNames() {
         Sheet wsh = excelwb.getSheet(getCurrentTableName());
@@ -227,7 +227,7 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
+     * get a particular sheet
      *
      * @return
      */
@@ -236,11 +236,10 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
      * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the count--- this
      * means there can be no blank rows.
      *
-     * @return
+     * @return  a count of number of rows
      */
     public Integer getNumRows() {
         Sheet wsh = excelwb.getSheet(getCurrentTableName());
@@ -272,23 +271,15 @@ public class ExcelReader implements TabularDataReader {
 
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
+     * Get the value of a particular row for a particular column
      *
      * @param column
      * @param row
-     * @return
+     * @return value of this cell
      * @throws Exception
      */
     public String getStringValue(String column, int row) throws Exception {
         String strValue = null;
-        /*System.out.println("checking out column = " + column + " at row = " + row);
-        try {
-            System.out.println("\tcolumn position = " + getColumnPosition(column));
-        System.out.println("\tstring value = " + getStringValue(getColumnPosition(column), row));
-        } catch (Exception e) {
-            System.out.println("Message = " + e.getMessage());
-        }
-        */
         try {
             strValue = getStringValue(getColumnPosition(column), row);
         } catch (Exception e) {
@@ -331,7 +322,6 @@ public class ExcelReader implements TabularDataReader {
                     return null;
                 } else {
                     String value = Double.toString(cell.getNumericCellValue()); //toString();
-
                     if (value.indexOf(".0") == value.length() - 2) {
                         Double D = (Double.parseDouble(value));
                         Integer I = D.intValue();
@@ -353,11 +343,11 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
+     * Get the value of a cell as a double
      *
      * @param column
      * @param row
-     * @return
+     * @return  double value in this cell
      * @throws Exception
      */
     public Double getDoubleValue(String column, int row) throws Exception {
@@ -371,10 +361,10 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * TODO: sanitize this, JBD imported from bioValidator
+     * find the position of a column as an integer
      *
      * @param colName
-     * @return
+     * @return integer of the column position
      * @throws Exception
      */
     public Integer getColumnPosition(String colName) throws Exception {
@@ -409,7 +399,6 @@ public class ExcelReader implements TabularDataReader {
         // silently skip blank cells.
         for (int cnt = 0; cnt < numcols; cnt++) {
             cell = row.getCell(cnt, Row.CREATE_NULL_AS_BLANK);
-
             // inspect the data type of this cell and act accordingly
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_STRING:
@@ -424,8 +413,12 @@ public class ExcelReader implements TabularDataReader {
                         DateTime date;
                         date = new DateTime(cell.getDateCellValue());
                         ret[cnt] = date.toString();
-                    } else
-                        ret[cnt] = Double.toString(cell.getNumericCellValue());
+                    } else {
+                        // Set celltype back to String here since this is a more reliable rendering of the input data,
+                        // as Excel actually sees it.  The Numeric type adds additional ".0"'s on the end...
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                        ret[cnt] = cell.getStringCellValue();
+                    }
                     break;
                 case Cell.CELL_TYPE_BOOLEAN:
                     if (cell.getBooleanCellValue())

@@ -30,6 +30,18 @@
 
         </worksheet>
 
+        <worksheet sheetname='Collecting_Events'>
+
+            <rule type='isNumber' column="YearCollected" level='error'></rule>
+
+            <rule type='uniqueValue' column='Coll_EventID_collector' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='HorizontalDatum' list='horizontalDatum' level='warning'></rule>
+
+            <rule type='isNumber' column='MinElevationMeters' level='error'></rule>
+
+        </worksheet>
+
         <lists>
 
             <list alias='preservative'>
@@ -64,7 +76,7 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptAlias="Record"
+                conceptAlias="rowTerm"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="5">
             <attribute column="Specimen_Num_Collector" uri="rdfs:Label"/>
@@ -72,7 +84,7 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptAlias="Identification"
+                conceptAlias="identificationProcess"
                 conceptURI="http://purl.org/dc/dcmitype/Event"
                 entityId="1">
             <attribute column="IdentifiedBy" uri="dwc:identifiedBy"/>
@@ -80,7 +92,7 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptAlias="Taxon"
+                conceptAlias="informationContentEntity"
                 conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
                 entityId="4">
             <attribute column="SpecificEpithet" uri="dwc:scientificName"/>
@@ -89,7 +101,7 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="format_name96"
-                conceptAlias="MaterialSample"
+                conceptAlias="tissue"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
                 entityId="2">
             <attribute column="format_name96" uri="bsc:plate"/>
@@ -99,7 +111,7 @@
         <entity
                 worksheet="Specimens"
                 worksheetUniqueKey="Specimen_Num_Collector"
-                conceptAlias="MaterialSample"
+                conceptAlias="specimen"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
                 entityId="3">
             <attribute column="preservative" uri="bsc:preservative"/>

@@ -1,19 +1,19 @@
 package digester;
 
+import org.jdom.Document;
+import org.jsoup.Jsoup;
 import renderers.RendererInterface;
-import settings.BCIDDatabase;
 import triplify.triplifier;
 import settings.Connection;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * digester.Validation class holds all worksheets that are part of this validator
+ * Mapping builds the D2RQ structure for converting between relational format to RDF.
  */
 public class Mapping implements RendererInterface {
     public Connection connection;
@@ -37,6 +37,21 @@ public class Mapping implements RendererInterface {
 
     public triplifier getTriplifier() {
         return triplifier;
+    }
+
+    /**
+     * The default sheetname is the one referenced by the first entity
+     * TODO: set defaultSheetName in a more formal manner, currently we're basing this on a "single" spreadsheet model
+     *
+     * @return
+     */
+    public String getDefaultSheetName() {
+        Iterator it = entities.iterator();
+        while (it.hasNext()) {
+            Entity entity = (Entity) it.next();
+            return entity.getWorksheet();
+        }
+        return null;
     }
 
     /**
@@ -76,44 +91,27 @@ public class Mapping implements RendererInterface {
      * @param entity
      * @return
      */
-    public String getPersistentIdentifier(Entity entity) {
-        String bcid = lookupBCID(project_code, entity.getConceptURI());
-        //return "\td2rq:uriPattern \"" + entity.getBcid() + "_@@" + entity.getColumn() + "@@\";";
+    public String getPersistentIdentifier(Entity entity) throws Exception {
+        String bcid = lookupBCID(project_code, entity.getConceptAlias());
         return "\td2rq:uriPattern \"" + bcid + "_@@" + entity.getColumn() + "@@\";";
     }
 
     /**
-     * Find the appropriate BCID for this project
-     * TODO: Make this a REST service call, FOR NOW ...  hardcoding database connection
+     * Find the appropriate BCID for this project, calling the BCID projectService to find it.
+     *
      * @param project_code defines the BCID project_code to lookup
-     * @param conceptURI   defines the conceptURI to narrow this to
+     * @param conceptAlias defines the alias to narrow this,  a one-word reference denoting a BCID
      * @return returns the BCID for this project and conceptURI combination
      */
-    private String lookupBCID(String project_code, String conceptURI) {
-        //
-        String bcid = null;
+    private String lookupBCID(String project_code, String conceptAlias) throws Exception {
+        String html = null;
+        String projectService = "http://biscicol.org/id/projectService/";
         try {
-            BCIDDatabase db = new BCIDDatabase();
-            Statement stmt = db.conn.createStatement();
-
-            String query = "select \n" +
-                    "d.prefix as prefix \n" +
-                    "from \n" +
-                    "datasets d, projectsBCIDs pb, projects p \n" +
-                    "where \n" +
-                    "d.datasets_id=pb.datasets_id && \n" +
-                    "pb.project_id=p.project_id && \n" +
-                    "p.project_code='" + project_code + "' && \n" +
-                    "d.resourceType='" + conceptURI + "'";
-            ResultSet rs= stmt.executeQuery(query);
-            rs.next();
-            bcid = rs.getString("prefix");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            html = Jsoup.connect(projectService + project_code + "/" + conceptAlias).get().body().html();
+        } catch (IOException e) {
+            throw new Exception(e.getMessage());
         }
-        return bcid;
+        return html;
     }
 
     /**
@@ -155,6 +153,7 @@ public class Mapping implements RendererInterface {
      * @throws Exception
      */
     public boolean run() throws Exception {
+        System.out.println("Triplify ...");
         triplifier.getTriples(this);
         return true;
     }
@@ -163,7 +162,6 @@ public class Mapping implements RendererInterface {
      * Just tell us where the file is stored...
      */
     public void print() {
-        System.out.println("Triplify ...");
         System.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
         System.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
     }
@@ -183,5 +181,20 @@ public class Mapping implements RendererInterface {
             Relation r = i.next();
             r.print();
         }
+    }
+
+    /**
+     * Return a list of ALL attributes defined for entities for a particular worksheet
+     *
+     * @return
+     */
+    public ArrayList<Attribute> getAllAttributes(String worksheet) {
+        ArrayList<Attribute> a = new ArrayList<Attribute>();
+        for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
+            Entity e = i.next();
+            if (e.getWorksheet().equals(worksheet))
+                a.addAll(e.getAttributes());
+        }
+        return a;
     }
 }

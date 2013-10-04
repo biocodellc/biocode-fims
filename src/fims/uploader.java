@@ -1,4 +1,4 @@
-package uploader;
+package fims;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -25,7 +25,7 @@ public class uploader {
      * Constructor for the uploader, currently just takes a file
      *
      * @param service the fuseki service, e.g. http://localhost:3030/ds
-     * @param graph          the name of the graph we want to use, should be in URI form, e.g. http://biscicol.org/graph1
+     * @param graph          the name of the graph we want to use, should ttbe in URI form, e.g. http://biscicol.org/graph1
      *                       use "default" for the default graph
      * @param file           for now the file is always a turtle format file
      */
@@ -106,9 +106,13 @@ public class uploader {
      * Return an encoding of this graph so it can be packed up and sent to a service
      * @return
      */
-    public String getEncodedGraph() {
+    public String getEncodedGraph(boolean brackets) {
         try {
-            return URLEncoder.encode("<" + graph + ">",encoding);
+            String toEncode = "";
+            if (brackets) toEncode += "<";
+            toEncode += graph;
+            if (brackets) toEncode += ">";
+            return URLEncoder.encode(toEncode,encoding);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
