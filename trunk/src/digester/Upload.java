@@ -1,13 +1,7 @@
 package digester;
 
-import com.hp.hpl.jena.update.UpdateExecutionFactory;
-import com.hp.hpl.jena.update.UpdateFactory;
-import com.hp.hpl.jena.update.UpdateProcessor;
-import com.hp.hpl.jena.update.UpdateRequest;
 import renderers.RendererInterface;
-import uploader.uploader;
-
-import java.io.File;
+import fims.uploader;
 
 /**
  * Upload target specification

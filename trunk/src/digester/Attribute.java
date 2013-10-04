@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 public class Attribute {
     private String column;
     private String uri;
+    private String datatype = "string";  // string is default type
 
     public String getColumn() {
         return column;
@@ -15,6 +16,14 @@ public class Attribute {
 
     public void setColumn(String column) {
         this.column = column;
+    }
+
+    public String getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
     }
 
     public String getUri() {
@@ -32,6 +41,8 @@ public class Attribute {
         System.out.println("  Attribute:");
         System.out.println("    column=" + column);
         System.out.println("    uri=" + uri);
+        System.out.println("    datatype=" + datatype);
+
     }
 
     /**
@@ -48,6 +59,9 @@ public class Attribute {
         pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
         pw.println("\td2rq:property <" + uri + ">;");
         pw.println("\td2rq:column \"" + table + "." + column + "\";");
+        //if (datatype != null) {
+        //    pw.println("\td2rq:datatype " + datatype + ";");
+        //}
         pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
         pw.println("\t.");
     }

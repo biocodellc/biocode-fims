@@ -1,13 +1,21 @@
 package digester;
 
-import com.hp.hpl.jena.update.*;
-import com.sun.jdi.InvocationException;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.util.FileManager;
+import fims.fimsModel;
+import org.apache.log4j.Level;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
 import renderers.RendererInterface;
-import sun.awt.CausedFocusEvent;
-import uploader.uploader;
+import fims.uploader;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.String;
+import java.util.*;
 
 /**
  * Add the core FIMS object
@@ -23,15 +31,22 @@ public class Fims implements RendererInterface {
         this.mapping = mapping;
     }
 
+    public Mapping getMapping() {
+        return mapping;
+    }
+
     public void addMetadata(Metadata m) {
         metadata = m;
     }
 
     /**
      * running the fims uploads the file to the target into a new graph
+     *
      * @return
      */
     public boolean run() {
+        System.out.println("Uploading to FIMS ...");
+
         uploader = new uploader(
                 metadata.getTarget(),
                 //new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/biocode_template.xls.triples.80.ttl"));
@@ -51,15 +66,13 @@ public class Fims implements RendererInterface {
      */
     public void print() {
         if (updateGood) {
-            System.out.println("Uploading to FIMS ...");
             System.out.println("\ttarget = " + metadata.getTarget());
             System.out.println("\tgraph =  " + uploader.getGraph());
             System.out.println("\tquery = " + uploader.getService() + "/query" +
-                    "?query=select+*+%7Bgraph+ " + uploader.getEncodedGraph() + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
+                    "?query=select+*+%7Bgraph+" + uploader.getEncodedGraph(true) + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
                     "&output=text" +
                     "&stylesheet=%2Fxml-to-html.xsl");
         } else {
-            System.out.println("Uploading to FIMS ...");
             System.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". Try later ...");
         }
     }
@@ -71,4 +84,44 @@ public class Fims implements RendererInterface {
         metadata.print();
     }
 
+    /**
+     * Write FIMS output to a spreadsheet
+     */
+    public String write() throws Exception {
+        String sheetname = mapping.getDefaultSheetName();
+        // Create a queryWriter object
+        QueryWriter queryWriter = new QueryWriter(
+                mapping.getAllAttributes(sheetname),
+                sheetname,
+                "tripleOutput/workbook.xls");
+        // Construct the FIMS model
+        fimsModel fimsModel = new fimsModel(
+                FileManager.get().loadModel("http://localhost:3030/ds/data?graph=" + uploader.getEncodedGraph(false)),
+                queryWriter);
+        // Read rows starting at the Resource node
+        fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
+        // Send the filename back to the caller
+        return fimsModel.toExcel();
+    }
+
+    /**
+     * For Testing the FIMS query engine only
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        // Setup logging
+        org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
+
+        // Create model
+        /*
+        Just used for testing
+        Model model = FileManager.get().loadModel("http://localhost:3030/ds/data?graph=urn:uuid:75959876-c944-4ad6-a173-d605f176bfae");
+        fimsModel fimsModel = new fimsModel(model);
+        // Read the rows starting with a specified class, Note: the assumption here is that row level metadata is a "Resource"
+        fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
+        // Write output to JSON
+        System.out.println(fimsModel.toJSON());
+        */
+    }
 }

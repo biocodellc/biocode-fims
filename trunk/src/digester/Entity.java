@@ -26,6 +26,10 @@ public class Entity {
         attributes.addLast(a);
     }
 
+    public LinkedList<Attribute> getAttributes() {
+        return attributes;
+    }
+
     public String getEntityId() {
         return entityId;
     }
@@ -102,6 +106,7 @@ public class Entity {
         System.out.println("    conceptName=" + conceptAlias);
         System.out.println("    conceptURI=" + conceptURI);
         //System.out.println("    bcid=" + bcid);
+
     }
 
     /**
