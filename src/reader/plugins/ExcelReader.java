@@ -20,6 +20,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.joda.time.DateTime;
 
 /**
@@ -212,13 +214,12 @@ public class ExcelReader implements TabularDataReader {
             rows.next();
             count++;
         }
-        HSSFRow row = (HSSFRow) rows.next();
+        XSSFRow row = (XSSFRow) rows.next();
 
         Iterator<Cell> cells = row.cellIterator();
         while (cells.hasNext()) {
-            HSSFCell cell = (HSSFCell) cells.next();
+            XSSFCell cell = (XSSFCell) cells.next();
             if (cell.toString().trim() != "" && cell.toString() != null) {
-                // System.out.println(cell.toString());
                 listColumnNames.add(cell.toString());
             }
         }

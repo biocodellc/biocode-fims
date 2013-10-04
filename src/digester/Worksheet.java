@@ -130,7 +130,7 @@ public class Worksheet {
             } catch (Exception e) {
                 //e.getCause();
                 //e.printStackTrace();
-                System.out.println("\tInternal exception attempting to run rule = " + r.getType() + ", for column = " + r.getColumn() + ")");
+                System.out.println("\tInternal exception attempting to run rule = " + r.getType() + ", for column = " + r.getColumn() + ", message = " + e.getMessage());
             }
 
             // Display warnings/etc...
