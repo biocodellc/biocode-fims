@@ -18,7 +18,6 @@
 
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>materialSampleID</field>
-                <field>origInstitution</field>
                 <field>yearCollected</field>
                 <field>decimalLatitude</field>
                 <field>decimalLongitude</field>
@@ -115,7 +114,6 @@
                 entityId="1">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="basisOfID" uri="urn:basisOfID"/>
-            <attribute column="origInstitution" uri="urn:origInstitution"/>
             <attribute column="enteredBy" uri="urn:enteredBy"/>
             <attribute column='yearEntered' datatype="integer" uri='urn:yearEntered'/>
             <attribute column='monthEntered' datatype="integer" uri='urn:monthEntered'/>
@@ -138,6 +136,7 @@
             <attribute column='samplingProtocol' uri='http://rs.tdwg.org/dwc/terms/samplingProtocol'/>
             <attribute column='minimumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'/>
             <attribute column='maximumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'/>
+            <attribute column='eventRemarks' uri='http://rs.tdwg.org/dwc/terms/eventRemarks' />
         </entity>
         <entity
                 worksheet="Samples"
@@ -163,7 +162,6 @@
             <attribute column='yearIdentified' datatype="integer" uri='urn:yearIdentified'/>
             <attribute column='monthIdentified' datatype="integer" uri='urn:monthIdentified'/>
             <attribute column='dayIdentified' datatype="integer" uri='urn:dayIdentified'/>
-            <attribute column='typeStatus' uri='http://rs.tdwg.org/dwc/terms/typeStatus'/>
         </entity>
         <entity
                 worksheet="Samples"
@@ -190,7 +188,6 @@
             <attribute column='occurrenceID' uri='http://rs.tdwg.org/dwc/terms/occurrenceID'/>
             <attribute column='photograph' uri='http://purl.obolibrary.org/obo/IAO_0000185'/>
             <attribute column='preservative' uri='http://rs.tdwg.org/dwc/terms/preparations'/>
-            <attribute column='nucleicAcidDisposition' uri='urn:nucleicAcidDisposition'/>
             <attribute column='previousIdentifications' uri='http://rs.tdwg.org/dwc/terms/previousIdentifications'/>
             <attribute column='lifeStage' uri='http://rs.tdwg.org/dwc/terms/lifeStage'/>
             <attribute column='weight' uri='http://purl.obolibrary.org/obo/PATO_0000128'/>
