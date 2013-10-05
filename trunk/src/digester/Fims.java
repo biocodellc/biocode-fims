@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 import renderers.RendererInterface;
 import fims.uploader;
+import settings.PathManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,15 +86,18 @@ public class Fims implements RendererInterface {
     }
 
     /**
-     * Write FIMS output to a spreadsheet
+     * Write FIMS output to a spreadsheet, using the filename input/output data from the mapping/triplifier instance
      */
     public String write() throws Exception {
+        File file = PathManager.createUniqueFile(
+                mapping.getTriplifier().getFilenamePrefix() + ".xls",
+                mapping.getTriplifier().getOutputFolder());
         String sheetname = mapping.getDefaultSheetName();
         // Create a queryWriter object
         QueryWriter queryWriter = new QueryWriter(
                 mapping.getAllAttributes(sheetname),
                 sheetname,
-                "tripleOutput/workbook.xls");
+                file.getAbsolutePath());
         // Construct the FIMS model
         fimsModel fimsModel = new fimsModel(
                 FileManager.get().loadModel("http://localhost:3030/ds/data?graph=" + uploader.getEncodedGraph(false)),
