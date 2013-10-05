@@ -27,11 +27,28 @@ public class triplifier {
     private Model model;
     private String tripleOutputFile;
     private String updateOutputFile;
+    private String filenamePrefix;
 
-    public triplifier(TabularDataReader tdr, String outputFolder) throws Exception {
+    /**
+     * triplify dataset on the tabularDataReader, writing output to the specified outputFolder and filenamePrefix
+     * @param tdr
+     * @param filenamePrefix
+     * @param outputFolder
+     * @throws Exception
+     */
+    public triplifier(TabularDataReader tdr, String filenamePrefix, String outputFolder) throws Exception {
         this.outputFolder = outputFolder;
         this.tdr = tdr;
+        this.filenamePrefix = filenamePrefix;
         inputFile = tdr.getInputFile();
+    }
+
+    public String getOutputFolder() {
+        return outputFolder;
+    }
+
+    public String getFilenamePrefix() {
+        return filenamePrefix;
     }
 
     public Model getModel() {
@@ -64,8 +81,9 @@ public class triplifier {
         }
 
         // Create SQLite file
-        String pathPrefix = processDirectory + File.separator + inputFile.getName();
-        File sqlitefile = createUniqueFile(pathPrefix + ".sqlite");
+        //String pathPrefix = processDirectory + File.separator + inputFile.getName();
+        String pathPrefix = processDirectory + File.separator + filenamePrefix;
+        File sqlitefile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
 
         TabularDataConverter tdc = new TabularDataConverter(tdr, "jdbc:sqlite:" + sqlitefile.getAbsolutePath());
         tdc.convert(false);
@@ -74,30 +92,7 @@ public class triplifier {
         return sqlitefile;
     }
 
-    /**
-     * Create new file in given folder, add incremental number to base if filename already exists.
-     *
-     * @param pFilename Name of the file.
-     * @return The new file.
-     */
-    private File createUniqueFile(String pFilename) throws Exception {
 
-        // Get just the filename
-        File fileFilename = new File(pFilename);
-        String fileName = fileFilename.getName();
-
-        int dotIndex = fileName.lastIndexOf('.');
-        if (dotIndex == -1)
-            dotIndex = fileName.length();
-        String base = fileName.substring(0, dotIndex);
-        String ext = fileName.substring(dotIndex);
-
-        File file = new File(outputFolder + fileName);
-        int i = 1;
-        while (file.exists())
-            file = new File(outputFolder + base + "." + i++ + ext);
-        return file;
-    }
 
     /**
      * Return triples
@@ -107,7 +102,7 @@ public class triplifier {
      * @throws Exception
      */
     public void getTriples(Mapping mapping) throws Exception {
-        String filenamePrefix = inputFile.getName();
+        //String filenamePrefix = inputFile.getName();
         System.gc();
 
         // Write the model
@@ -115,14 +110,14 @@ public class triplifier {
                 FileUtils.langN3, "urn:x-biscicol:");
 
         // Write the model as simply a Turtle file
-        File tripleFile = createUniqueFile(filenamePrefix + ".triples.n3");
+        File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".ttl", outputFolder);
         FileOutputStream fos = new FileOutputStream(tripleFile);
         model.write(fos, FileUtils.langTurtle);
         fos.close();
         tripleOutputFile = outputFolder + tripleFile.getName();
 
         // Write out as a Sparql Update Statement
-        File updateFile = createUniqueFile(filenamePrefix + ".update.n3");
+        File updateFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
         FileOutputStream fosUpdateFile = new FileOutputStream(updateFile);
         fosUpdateFile.write("INSERT DATA {\n".getBytes());
         StmtIterator stmtIterator = model.listStatements();
@@ -150,7 +145,6 @@ public class triplifier {
 
         //return outputFolder + tripleFile.getName();
         updateOutputFile =  outputFolder + updateFile.getName();
-
     }
 
     /**
@@ -166,7 +160,7 @@ public class triplifier {
         if (verifyFile)
             mapping.connection.verifyFile();
 
-        File mapFile = createUniqueFile(filenamePrefix + ".mapping.n3");
+        File mapFile = PathManager.createUniqueFile(filenamePrefix + ".mapping.n3", outputFolder);
         PrintWriter pw = new PrintWriter(mapFile);
         mapping.printD2RQ(pw, mapping);
         pw.close();

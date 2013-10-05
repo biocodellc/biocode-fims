@@ -2,6 +2,7 @@ import digester.*;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
+import settings.PathManager;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -68,7 +69,7 @@ public class process {
 
             // Triplify if we validate
             if (validationGood) {
-                Mapping mapping = new Mapping(new triplifier(tdr, outputFolder), project_code);
+                Mapping mapping = new Mapping(new triplifier(tdr, project_code + "_output", outputFolder), project_code);
                 addMappingRules(new Digester(), mapping);
                 triplifyGood = mapping.run();
                 mapping.print();

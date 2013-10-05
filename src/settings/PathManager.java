@@ -55,20 +55,44 @@ public class PathManager {
         if (!theDir.exists()) {
             boolean result = theDir.mkdirs();
 
-            if (result) {
+            if (!result) {
                 throw new FileNotFoundException("Unable to create directory " + theDir.getAbsolutePath());
             }
         }
         return theDir;
     }
 
+        /**
+     * Create new file in given folder, add incremental number to base if filename already exists.
+     *
+     * @param pFilename Name of the file.
+     * @return The new file.
+     */
+    public static File createUniqueFile(String pFilename, String pOutputFolder) throws Exception {
+
+        // Get just the filename
+        File fileFilename = new File(pFilename);
+        String fileName = fileFilename.getName();
+
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex == -1)
+            dotIndex = fileName.length();
+        String base = fileName.substring(0, dotIndex);
+        String ext = fileName.substring(dotIndex);
+
+        File file = new File(pOutputFolder + fileName);
+        int i = 1;
+        while (file.exists())
+            file = new File(pOutputFolder + base + "." + i++ + ext);
+        return file;
+    }
     public static void main(String args[]) {
         PathManager pm = new PathManager();
         try {
-            System.out.println(pm.setFile("sampledata/biocode_template.xls").getName());
-            System.out.println(pm.setFile("../../../sampledata/biocode_template.xls"));
+            //System.out.println(pm.setFile("sampledata/biocode_template.xls").getName());
+            //System.out.println(pm.setFile("../../../sampledata/biocode_template.xls"));
             System.out.println(pm.setDirectory("/Users/jdeck/tripleOutput/"));
-            System.out.println(pm.setDirectory("."));
+            //System.out.println(pm.setDirectory("."));
         } catch (Exception e) {
             e.printStackTrace();
         }
