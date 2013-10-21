@@ -26,7 +26,7 @@ public final class TabularDataConverter {
      * @param source A TabularDataReader with an open data source.
      * @throws ClassNotFoundException
      */
-    public TabularDataConverter(TabularDataReader source) throws ClassNotFoundException {
+    public TabularDataConverter(TabularDataReader source) throws ClassNotFoundException, SQLException {
         this(source, "");
     }
 
@@ -38,12 +38,13 @@ public final class TabularDataConverter {
      * @param dest   A valid SQLIte JDBC connection string.
      * @throws ClassNotFoundException
      */
-    public TabularDataConverter(TabularDataReader source, String dest) throws ClassNotFoundException {
+    public TabularDataConverter(TabularDataReader source, String dest) throws ClassNotFoundException, SQLException {
         // load the Sqlite JDBC driver
         //Class.forName("org.sqlite.JDBC");
 
         setSource(source);
         setDestination(dest);
+
     }
 
     /**
@@ -145,11 +146,11 @@ public final class TabularDataConverter {
         //int tablecnt = 0;
         // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
         String tname = source.getCurrentTableName();
+        Connection connection = DriverManager.getConnection(dest);
 
-        Connection conn = DriverManager.getConnection(dest);
 
         if (source.tableHasNextRow())
-                buildTable(conn, fixSQLiteIdentifierName(tname));
+            buildTable(connection, fixSQLiteIdentifierName(tname));
         /*while (source.hasNextTable()) {
             source.moveToNextTable();
             tablecnt++;
@@ -164,8 +165,7 @@ public final class TabularDataConverter {
             if (source.tableHasNextRow())
                 buildTable(conn, fixSQLiteIdentifierName(tname));
         }  */
-
-        conn.close();
+        connection.close();
     }
 
     /**
