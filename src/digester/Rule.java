@@ -1,9 +1,14 @@
 package digester;
 
 import reader.plugins.TabularDataReader;
-import renderers.Message;
+import renderers.RowMessage;
+import settings.Connection;
 import settings.RegEx;
 
+import javax.xml.transform.Result;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -21,8 +26,11 @@ public class Rule {
     // A reference to the validation object this rule belongs to
     //private Validation validation;
     // A reference to the worksheet object this rule belongs to
+    // TODO: Remove the remaining references to worksheet.  We are transitioning to using a SQLlite database connection
     private TabularDataReader worksheet;
     private Worksheet digesterWorksheet;
+    // Now a reference to a SQLLite connection
+    private java.sql.Connection connection;
 
     // Rules can also own their own fields
     private final LinkedList<String> fields = new LinkedList<String>();
@@ -38,9 +46,9 @@ public class Rule {
     private String plateName;
     private String wellNumber;
 
-    private LinkedList<Message> messages = new LinkedList<Message>();
+    private LinkedList<RowMessage> messages = new LinkedList<RowMessage>();
 
-    public LinkedList<Message> getMessages() {
+    public LinkedList<RowMessage> getMessages() {
         return messages;
     }
 
@@ -52,16 +60,21 @@ public class Rule {
         this.digesterWorksheet = digesterWorksheet;
     }
 
+    public void setConnection(java.sql.Connection connection) {
+        this.connection = connection;
+    }
+
     public TabularDataReader getWorksheet() {
         return worksheet;
     }
 
     public void setWorksheet(TabularDataReader worksheet) throws Exception {
         this.worksheet = worksheet;
-         // Synchronize the Excel Worksheet instance with the digester worksheet instance
+        // Synchronize the Excel Worksheet instance with the digester worksheet instance
         //System.out.println("setting to "+ digesterWorksheet.getSheetname());
         worksheet.setTable(digesterWorksheet.getSheetname());
     }
+
 
     public String getDecimalLatitude() {
         return decimalLatitude;
@@ -176,15 +189,6 @@ public class Rule {
     */
 
     /**
-     * Make sure this column contains unique values
-     */
-    /*
-    public void uniqueValue() {
-        System.out.println("\tunique value rule " + worksheet.getSheetname());
-    }
-    */
-
-    /**
      * Lookup the fields belonging to a particular list
      */
     /*
@@ -202,7 +206,6 @@ public class Rule {
     /**
      * Warn user if the number of rows the application is looking at differs from what is on the spreadsheet
      */
-
     public void rowNumMismatch() {
         int bVRows = worksheet.getNumRows();
         int poiRows = worksheet.getSheet().getLastRowNum();
@@ -210,19 +213,15 @@ public class Rule {
             String theWarning = "bioValidator processed " + bVRows + " rows, but it appears there may be " + poiRows +
                     " rows on your sheet. This usually occurs when cell formatting has extended below the area of data but " +
                     "may also occur when you have left blank rows in the data.";
-            messages.addLast(new Message(theWarning, Message.WARNING));
+            messages.addLast(new RowMessage(theWarning, RowMessage.WARNING));
         }
     }
 
     /**
-     * Check to see if there duplicateColumn Headers in this sheet
+     * Check to see if there duplicateColumn Headers on a worksheet
      */
 
     public void duplicateColumnNames() {
-
-        // Create a list of Column Names in Worksheet
-
-        // List<String> listSheetColumns = worksheet.getSheet().getColNames();
         java.util.List<String> listSheetColumns = worksheet.getColNames();
         Set<String> output = new HashSet<String>();  // Set does not allow duplicates
 
@@ -246,55 +245,43 @@ public class Rule {
         Iterator outputit = output.iterator();
         while (outputit.hasNext()) {
             String message = (String) outputit.next();
-            messages.addLast(new Message(message, Message.WARNING));
+            messages.addLast(new RowMessage(message, RowMessage.WARNING));
         }
     }
 
 
+    /**
+     * Check a particular column to see if all the values are unique
+     *
+     * @throws Exception
+     */
     public void uniqueValue() throws Exception {
-        String cellValue = "";
-        java.util.List values = new ArrayList();
-        java.util.List<String> listFields = getFields();
+        Statement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.createStatement();
+            rs = null;
+            rs = statement.executeQuery(
+                    "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
+                            " group by " + getColumn() +
+                            " having count(*) > 1");
 
-        String rowValue = "";
-        String field = "";
-
-        // populate the ArrayList
-        for (int j = 0; j <= worksheet.getNumRows(); j++) {
-            String[] rowValues = getColumn().split(",");
-
-            rowValue = "";
-            for (int m = 0; m < rowValues.length; m++) {
-                String cell = null;
-                try {
-                    cell = worksheet.getStringValue(rowValues[m], j);
-                } catch (NullPointerException e1) {
-                    break;
-                }
-                if (cell != null) {
-                    rowValue += cell;
-                }
-
+            StringBuilder values = new StringBuilder();
+            int count = 0;
+            while (rs.next()) {
+                if (count > 0) values.append(", ");
+                values.append(rs.getString(getColumn()));
+                count++;
             }
-            if (rowValue != "") {
-                values.add(rowValue);
-                //System.out.println(rowValue);
+            if (count > 0) {
+                addMessage(getColumn() + " column is defined as unique but some values used more than once: " + values.toString());
             }
-        }
-
-        // Loop all the values in this list and be sure they are all unique
-        for (int j = 1; j < values.size(); j++) {
-            for (int i = 1; i < values.size(); i++) {
-                if (j != i) {
-                    if (values.get(j) != null) {
-                        if (values.get(j).equals(values.get(i))) {
-                            addMessage(j, values.get(j) + " used more than once in " + getColumn() + " column");
-                            // increment to end of loop
-                            i = values.size();
-                        }
-                    }
-                }
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+        } finally {
+            statement.close();
+            rs.close();
         }
     }
 
@@ -713,62 +700,53 @@ public class Rule {
      * checkInXMLFields checks that Rows under the "name" attribute column in Excel Spreadsheet
      * match values in the XML <field> categories
      */
-    public void checkInXMLFields() {
-        String rowValue = "", field = "", msg = "";
-        boolean booFound = false;
+    public void checkInXMLFields() throws Exception {
+        StringBuilder lookupSB = new StringBuilder();
         java.util.List<String> listFields;
+        String msg;
+        ResultSet resultSet = null;
+        Statement statement = null;
 
-        // Build List of XML Fields, but check first to see if it is pointing
-        // to the metadata list element
+        // Convert XML Field values to a Stringified list
         try {
             listFields = getListElements();
         } catch (Exception e) {
             listFields = getFields();
         }
+        // Loop the fields and put in a StringBuilder
+        int count = 0;
+        for (int k = 0; k < listFields.size(); k++) {
+            try {
+                if (count > 0)
+                    lookupSB.append(",");
+                lookupSB.append("\'" + listFields.get(k).toString() + "\'");
+                count++;
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
 
-        String colName = "";
+        // Query the SQLlite instance to see if these values are contained in a particular row
+        try {
+            statement = connection.createStatement();
+            String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
+                    " where " + getColumn() + " not in (" + lookupSB.toString() + ")";
 
-        //try {
-       //System.out.println("looking at  = " + worksheet.getSheet()+ this.getType() + this.getColumn() + this.getList());
-
-        // Check that photoListRow Data matches Field Definitions
-        for (int j = 1; j <= worksheet.getNumRows(); j++) {
-            // handle case where name is separated by commas (allowing multiple fields to
-            // be parsed at once)
-            String[] rowValues = getColumn().split(",");
-            for (int m = 0; m < rowValues.length; m++) {
-                colName = rowValues[m];
-                rowValue = "";
-                try {
-                    rowValue = worksheet.getStringValue(colName, j);
-                } catch (Exception e) {
-                    // Do nothing for exception, likely this indicates null values or not found
-                    // columns, which is OK--- they are caught by other rules
-                }
-                if (rowValue != null && !rowValue.equals("")) {
-                    booFound = false;
-                    for (int k = 0; k < listFields.size(); k++) {
-                        field = "";
-                        try {
-                            field = listFields.get(k).toString();
-                        } catch (Exception e) {
-                            // do nothing
-                        }
-                        if (rowValue.equals(field)) {
-                            booFound = true;
-                        }
-
-                        //System.out.println(field + " _ " + rowValue);
-                    }
-                    if (!booFound) {
-                        msg = "Did not find " + rowValues[m] + " " + rowValue;
-
-                         //" <a href='" + rowValues[m] + " acceptable values\n\n" + listFields.toString().replaceAll("'", "&rsquo;") + "' target='popup'>View List</a>";
-                        addMessage(msg, listFields, j);
-                    }
-                }
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
+                addMessage(msg, listFields, null);
             }
 
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            throw new Exception("SQL exception processing checkInXMLFields rule " + e.getMessage());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            throw new Exception("Unhandled exception processing checkInXMLFields for " + getColumn());
+        } finally {
+            statement.close();
+            resultSet.close();
         }
     }
 
@@ -776,33 +754,29 @@ public class Rule {
      * RequiredColumns looks for required columns in spreadsheet by looking for them in the <field> tags
      */
     public void RequiredColumns() {
+        Statement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         String strNotFound = "", reqFieldName = "", msg = "";
         boolean booFound = false;
-        // Create a list of Column Names in Worksheet
-        //List<String> listSheetColumns = worksheet.getSheet().getColNames();
-        java.util.List<String> listSheetColumns = worksheet.getColNames();
-
+        // Create a hashset of column names for easy lookup
+        Set<String> hashset = new HashSet<String>(worksheet.getColNames());
         // Loop through the list of required fields using the iterator
         Iterator itRequiredField = getFields().iterator();
         while (itRequiredField.hasNext()) {
+            booFound = false;
+
             // Get the next required field name
             reqFieldName = itRequiredField.next().toString().trim();
-            booFound = false;
-            // Loop all the columns in the sheet
-            for (int i = 0; i < listSheetColumns.size(); i++) {
-                String columnValue = null;
-                try {
-                    columnValue = worksheet.getStringValue(reqFieldName, 0);
-                } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
 
-                if (columnValue != null) {
-                    columnValue = columnValue.trim();
-                    if (reqFieldName.equals(columnValue)) {
-                        booFound = true;
-                    }
-                }
+            // Simple search in hashset for required field name
+            if (hashset.contains(reqFieldName)) {
+                booFound = true;
             }
 
             // Error message if column not found
@@ -810,17 +784,14 @@ public class Rule {
                 strNotFound += reqFieldName + " ";
                 // Examine column contents -- required columns need some content
             } else {
-                for (int i = 0; i <= worksheet.getNumRows(); i++) {
-                    String rowValue = null;
-                    try {
-                        rowValue = worksheet.getStringValue(reqFieldName, i);
-                    } catch (Exception e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                try {
+
+                    rs = statement.executeQuery("select count(*) from " + digesterWorksheet.getSheetname() + " where " + reqFieldName + "='' or " + reqFieldName + " is null");
+                    if (rs.getInt(1) > 0) {
+                        addMessage("Required column " + reqFieldName + " has a missing cell value");
                     }
-                    //System.out.println(i + "=" + rowValue + "="+ reqFieldName);
-                    if (rowValue == null || rowValue.trim().equals("")) {
-                        addMessage(i, reqFieldName + " has missing cell value");
-                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -828,6 +799,11 @@ public class Rule {
         if (!strNotFound.equals("")) {
             msg = "Did not find columns: " + strNotFound + " (make sure no spaces at end of name)";
             addMessage(msg);
+        }
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -842,34 +818,44 @@ public class Rule {
 
     /**
      * Add a message with a given row and message
+     *
      * @param row
      * @param message
      */
     private void addMessage(Integer row, String message) {
-        messages.addLast(new Message(message, getMessageLevel(), row));
+        messages.addLast(new RowMessage(message, getMessageLevel(), row));
     }
 
     /**
      * Add a message with just a message and no row assigned
+     *
      * @param message
      */
     private void addMessage(String message) {
-        messages.addLast(new Message(message, getMessageLevel()));
+        messages.addLast(new RowMessage(message, getMessageLevel()));
     }
 
     private void addMessage(String message, java.util.List list, Integer row) {
-        messages.addLast(new Message(message, list,getMessageLevel(),row));
+        messages.addLast(new RowMessage(message, list, getMessageLevel(), row));
     }
 
     /**
      * Get the message level we're working with for this rule
+     *
      * @return
      */
     private Integer getMessageLevel() {
         if (this.getLevel().equals("warning"))
-            return Message.WARNING;
+            return RowMessage.WARNING;
         else
-            return Message.ERROR;
+            return RowMessage.ERROR;
     }
 
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

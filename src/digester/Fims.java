@@ -1,22 +1,14 @@
 package digester;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.util.FileManager;
 import fims.fimsModel;
 import org.apache.log4j.Level;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Row;
 import renderers.RendererInterface;
 import fims.uploader;
 import settings.PathManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.String;
-import java.util.*;
 
 /**
  * Add the core FIMS object
@@ -99,8 +91,9 @@ public class Fims implements RendererInterface {
                 sheetname,
                 file.getAbsolutePath());
         // Construct the FIMS model
+
         fimsModel fimsModel = new fimsModel(
-                FileManager.get().loadModel("http://localhost:3030/ds/data?graph=" + uploader.getEncodedGraph(false)),
+                FileManager.get().loadModel(metadata.getTarget() + "/data?graph=" + uploader.getEncodedGraph(false)),
                 queryWriter);
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
@@ -127,5 +120,11 @@ public class Fims implements RendererInterface {
         // Write output to JSON
         System.out.println(fimsModel.toJSON());
         */
+
+        /*
+
+
+         */
+
     }
 }

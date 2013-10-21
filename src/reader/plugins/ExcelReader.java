@@ -300,7 +300,6 @@ public class ExcelReader implements TabularDataReader {
      */
     public String getStringValue(int col, int row) {
         Sheet wsh = excelwb.getSheet(getCurrentTableName());
-
         row = row + this.numHeaderRows;
 
         Row hrow = wsh.getRow(row);
@@ -403,7 +402,8 @@ public class ExcelReader implements TabularDataReader {
             // inspect the data type of this cell and act accordingly
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_STRING:
-                    ret[cnt] = cell.getStringCellValue();
+                    // Always trim spaces from before and after data, makes data processing easier later
+                    ret[cnt] = cell.getStringCellValue().trim();
                     break;
                 case Cell.CELL_TYPE_NUMERIC:
                     // There is no date data type in Excel, so we have to check

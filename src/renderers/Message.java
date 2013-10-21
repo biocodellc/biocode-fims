@@ -1,35 +1,41 @@
 package renderers;
 
-import digester.Rule;
+import java.util.List;
 
 /**
- * Handle messaging for
+ * Generic class to handle messages
  */
 public class Message {
-    private String message;
-    private java.util.List list;
-
-    private Rule r;
-    private Integer row;
-
-    private Integer level;
-
+    protected String message;
+    protected Integer level;
+    protected java.util.List list;
     public static final Integer WARNING = 0;
     public static final Integer ERROR = 1;
 
-    public Message(String message, Integer level) {
-        this(message, level, null);
+    public String getLevelAsString() {
+        if (level == 0) return "Warning";
+        else return "Error";
     }
 
-    public Message(String message, Integer level, Integer row) {
-        this(message, null, level, row);
+    public Integer getLevel() {
+        return level;
     }
 
-    public Message(String message, java.util.List list, Integer level, Integer row) {
+    public Message() {
+    }
+
+    public Message(String message, Integer level, List list) {
         this.message = message;
-        this.row = row;
-        this.list = list;
         this.level = level;
+        this.list = list;
+    }
+
+    public List getList() {
+        return list;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     /**
@@ -40,22 +46,8 @@ public class Message {
         // Check that there is stuff in this list
         String listString = "";
         if (list != null)
-            listString = list.toString();
-        String msg = "";
-        if (this.row != null) {
-            Integer msgRow = this.row + 1;
-            return getLevelAsString() + ": Row " + (msgRow).toString() + ": " + message + listString;
-        }
+            listString = " " + list.toString();
+
         return getLevelAsString() + ": " + message + listString;
     }
-
-    public String getLevelAsString() {
-        if (level == 0) return "Warning";
-        else return "Error";
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
 }
-

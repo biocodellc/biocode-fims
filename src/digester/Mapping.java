@@ -15,7 +15,7 @@ import java.util.LinkedList;
 /**
  * Mapping builds the D2RQ structure for converting between relational format to RDF.
  */
-public class Mapping implements RendererInterface {
+public class Mapping implements  RendererInterface {
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
@@ -23,16 +23,8 @@ public class Mapping implements RendererInterface {
     private triplifier triplifier;
     private String project_code;
 
-    public Mapping(triplifier t, String project_code) throws Exception {
-        this.project_code = project_code;
-        triplifier = t;
-        // Create a connection to a SQL Lite Instance
-        try {
-            this.connection = new Connection(t.createSqlLite());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("unable to establish connection to SQLLite");
-        }
+    public Mapping() throws Exception {
+
     }
 
     public triplifier getTriplifier() {
@@ -109,7 +101,9 @@ public class Mapping implements RendererInterface {
         try {
             html = Jsoup.connect(projectService + project_code + "/" + conceptAlias).get().body().html();
         } catch (IOException e) {
-            throw new Exception(e.getMessage());
+            throw new Exception("Unable to connect to BCID service to get your project's unique ID.  " +
+                    "This is a required part of the triplification process.  Check your internet connection and try again");
+            //return "urn:x-biocode-fims";
         }
         return html;
     }
@@ -152,8 +146,17 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run() throws Exception {
-        System.out.println("Triplify ...");
+    public boolean run(Validation v, triplifier t, String project_code) throws Exception {
+        System.out.println("Converting to RDF Triples ...");
+        this.project_code = project_code;
+        triplifier = t;
+        // Create a connection to a SQL Lite Instance
+        try {
+            this.connection = new Connection(v.getSqliteFile());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("unable to establish connection to SQLLite");
+        }
         triplifier.getTriples(this);
         return true;
     }
