@@ -44,7 +44,7 @@ public class Connection {
 	 * 
      * @return JDBC URL.
 	 */
-	String getJdbcUrl() {
+	public String getJdbcUrl() {
 		switch(system) {
 			case mysql:
 				return "jdbc:mysql://" + host + "/" + database;

@@ -22,8 +22,7 @@ import java.io.PrintWriter;
 public class triplifier {
 
     private String outputFolder;
-    private File inputFile;
-    private TabularDataReader tdr;
+
     private Model model;
     private String tripleOutputFile;
     private String updateOutputFile;
@@ -31,16 +30,13 @@ public class triplifier {
 
     /**
      * triplify dataset on the tabularDataReader, writing output to the specified outputFolder and filenamePrefix
-     * @param tdr
      * @param filenamePrefix
      * @param outputFolder
      * @throws Exception
      */
-    public triplifier(TabularDataReader tdr, String filenamePrefix, String outputFolder) throws Exception {
+    public triplifier(String filenamePrefix, String outputFolder) throws Exception {
         this.outputFolder = outputFolder;
-        this.tdr = tdr;
         this.filenamePrefix = filenamePrefix;
-        inputFile = tdr.getInputFile();
     }
 
     public String getOutputFolder() {
@@ -62,36 +58,6 @@ public class triplifier {
     public String getUpdateOutputFile() {
         return updateOutputFile;
     }
-
-    public File createSqlLite() throws Exception {
-        PathManager pm = new PathManager();
-        File processDirectory = null;
-
-        try {
-            processDirectory = pm.setDirectory(outputFolder);
-        } catch (Exception e) {
-            throw new Exception("unable to set output directory " + processDirectory);
-        }
-
-        // Load the SQLite JDBC driver.
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException ex) {
-            throw new Exception("could not load the SQLite JDBC driver.");
-        }
-
-        // Create SQLite file
-        //String pathPrefix = processDirectory + File.separator + inputFile.getName();
-        String pathPrefix = processDirectory + File.separator + filenamePrefix;
-        File sqlitefile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
-
-        TabularDataConverter tdc = new TabularDataConverter(tdr, "jdbc:sqlite:" + sqlitefile.getAbsolutePath());
-        tdc.convert(false);
-        tdr.closeFile();
-
-        return sqlitefile;
-    }
-
 
 
     /**
