@@ -1,4 +1,4 @@
 Start with jena-fuseki-0.2.1-incubating
 Install at /usr/local/src/jena-fuseki-0.2.1-incubating
 cd /usr/local/src/jena-fuseki-0.2.1-incubating
-./fuseki-server --update --mem /ds
+./fuseki-server --update --mem /ds  &

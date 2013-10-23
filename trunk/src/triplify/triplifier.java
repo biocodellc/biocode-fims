@@ -70,6 +70,8 @@ public class triplifier {
     public void getTriples(Mapping mapping) throws Exception {
         //String filenamePrefix = inputFile.getName();
         System.gc();
+        System.out.println("\tWriting D2RQ model file");
+
 
         // Write the model
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),
@@ -130,6 +132,6 @@ public class triplifier {
         PrintWriter pw = new PrintWriter(mapFile);
         mapping.printD2RQ(pw, mapping);
         pw.close();
-        return outputFolder + mapFile.getName();
+        return outputFolder + File.separator + mapFile.getName();
     }
 }
