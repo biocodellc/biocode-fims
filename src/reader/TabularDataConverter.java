@@ -44,7 +44,6 @@ public final class TabularDataConverter {
 
         setSource(source);
         setDestination(dest);
-
     }
 
     /**

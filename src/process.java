@@ -80,6 +80,7 @@ public class process {
             ReaderManager rm = new ReaderManager();
             rm.loadReaders();
             TabularDataReader tdr = rm.openFile(inputFilename);
+
             // TODO: find a way to set the active sheet programitcally, probably by reading the validation worksheet template and using that value, for now HARDCODING THIs value
             //tdr.setTable("Samples");
 
@@ -250,7 +251,7 @@ public class process {
         if (cl.hasOption("h") ||
                 (cl.hasOption("d") && !cl.hasOption("i")) ||
                 (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("c") || !cl.hasOption("i")))) {
-            helpf.printHelp("java process ", options, true);
+            helpf.printHelp("fims ", options, true);
             return;
         }
 
