@@ -6,6 +6,7 @@ import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
 import settings.PathManager;
+import settings.fimsPrinter;
 
 import java.io.File;
 import java.lang.String;
@@ -38,7 +39,7 @@ public class Fims implements RendererInterface {
      * @return
      */
     public boolean run() {
-        System.out.println("Uploading to FIMS ...");
+        fimsPrinter.out.println("Uploading to FIMS ...");
 
         uploader = new uploader(
                 metadata.getTarget(),
@@ -48,7 +49,7 @@ public class Fims implements RendererInterface {
         try {
             graph = uploader.execute();
         } catch (Exception e) {
-            //System.out.println("Exception occurred while attempting to upload data. " + e.getMessage());
+            //fimsPrinter.out.println("Exception occurred while attempting to upload data. " + e.getMessage());
             updateGood = false;
         }
         return updateGood;
@@ -59,14 +60,14 @@ public class Fims implements RendererInterface {
      */
     public void print() {
         if (updateGood) {
-            System.out.println("\ttarget = " + metadata.getTarget());
-            System.out.println("\tgraph =  " + uploader.getGraph());
-            System.out.println("\tquery = " + uploader.getService() + "/query" +
+            fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
+            fimsPrinter.out.println("\tgraph =  " + uploader.getGraph());
+            fimsPrinter.out.println("\tquery = " + uploader.getService() + "/query" +
                     "?query=select+*+%7Bgraph+" + uploader.getEncodedGraph(true) + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
                     "&output=text" +
                     "&stylesheet=%2Fxml-to-html.xsl");
         } else {
-            System.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". Try later ...");
+            fimsPrinter.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". Try later ...");
         }
     }
 
@@ -118,7 +119,7 @@ public class Fims implements RendererInterface {
         // Read the rows starting with a specified class, Note: the assumption here is that row level metadata is a "Resource"
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
         // Write output to JSON
-        System.out.println(fimsModel.toJSON());
+        fimsPrinter.out.println(fimsModel.toJSON());
         */
 
         /*

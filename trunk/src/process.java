@@ -4,6 +4,8 @@ import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.PathManager;
+import settings.fimsPrinter;
+import settings.standardPrinter;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -27,7 +29,7 @@ public class process {
     Boolean write_spreadsheet;
     Boolean triplify;
     Boolean upload;
-    static String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput" + File.separator;
+    static String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
 
 
     /**
@@ -59,6 +61,9 @@ public class process {
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
+
+        // Direct output using the standardPrinter subClass of fimsPrinter which send to fimsPrinter.out (for command-line usage)
+        fimsPrinter.out = new standardPrinter();
     }
 
     /**
@@ -72,9 +77,9 @@ public class process {
         Validation validation = null;
         try {
             // Initializing
-            System.out.println("Initializing ...");
-            System.out.println("\tinputFilename = " + inputFilename);
-            System.out.println("\tconfigFilename = " + configFilename);
+            fimsPrinter.out.println("Initializing ...");
+            fimsPrinter.out.println("\tinputFilename = " + inputFilename);
+            fimsPrinter.out.println("\tconfigFilename = " + configFilename);
 
             // Read the input file & create the ReaderManager and load the plugins.
             ReaderManager rm = new ReaderManager();
@@ -104,12 +109,12 @@ public class process {
                     fims.run();
                     fims.print();
                     if (write_spreadsheet)
-                        System.out.println("\tspreadsheet = " + fims.write());
+                        fimsPrinter.out.println("\tspreadsheet = " + fims.write());
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Stopping Execution, Error: " + e.getMessage());
+            fimsPrinter.out.println("Stopping Execution, Error: " + e.getMessage());
             //e.printStackTrace();
             System.exit(-1);
         } finally {
@@ -240,10 +245,10 @@ public class process {
         try {
             cl = clp.parse(options, args);
         } catch (UnrecognizedOptionException e) {
-            System.out.println("Error: " + e.getMessage());
+            fimsPrinter.out.println("Error: " + e.getMessage());
             return;
         } catch (ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            fimsPrinter.out.println("Error: " + e.getMessage());
             return;
         }
 
@@ -278,18 +283,18 @@ public class process {
         if (cl.hasOption("u"))
             upload = true;
         if (!cl.hasOption("o") && !cl.hasOption("d")) {
-            System.out.println("Using default output directory " + defaultOutputDirectory);
+            fimsPrinter.out.println("Using default output directory " + defaultOutputDirectory);
             output_directory = defaultOutputDirectory;
         }
         // Need to choose "triplify" if you choose "update"
         if (cl.hasOption("u") && !cl.hasOption("t")) {
-            System.out.println("Must specify 'triplify' option if you choose to 'upload'");
+            fimsPrinter.out.println("Must specify 'triplify' option if you choose to 'upload'");
             return;
         }
 
         // Check that output directory is writable
         if (!new File(output_directory).canWrite()) {
-            System.out.println("Unable to write to output directory " + output_directory);
+            fimsPrinter.out.println("Unable to write to output directory " + output_directory);
             return;
         }
 

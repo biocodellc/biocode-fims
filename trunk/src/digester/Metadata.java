@@ -1,5 +1,7 @@
 package digester;
 
+import settings.fimsPrinter;
+
 /**
  * Metadata defines metadata for this FIMS installation
  */
@@ -52,11 +54,11 @@ public class Metadata {
     }
 
     public void print() {
-        System.out.println("\tMetadata");
-        System.out.println("\t\tdoi = " + doi);
-        System.out.println("\t\tshortname = " + shortname);
-        System.out.println("\t\teml_locaiton = " + eml_location);
-        System.out.println("\t\ttarget = " + target);
-        System.out.println("\t\ttext_abstract = " + text_abstract);
+        fimsPrinter.out.println("\tMetadata");
+        fimsPrinter.out.println("\t\tdoi = " + doi);
+        fimsPrinter.out.println("\t\tshortname = " + shortname);
+        fimsPrinter.out.println("\t\teml_locaiton = " + eml_location);
+        fimsPrinter.out.println("\t\ttarget = " + target);
+        fimsPrinter.out.println("\t\ttext_abstract = " + text_abstract);
     }
 }

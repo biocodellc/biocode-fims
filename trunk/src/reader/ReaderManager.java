@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import reader.plugins.TabularDataReader;
+import settings.fimsPrinter;
 
 
 /**
@@ -69,7 +70,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
         for (File classfile : classfiles) {
             classname = classfile.getName();
             classname = classname.substring(0, classname.length() - 6);
-            //System.out.println(classname);
+            //fimsPrinter.out.println(classname);
 
             try {
                 // load the class file and instantiate the class
@@ -82,7 +83,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                     readers.add((TabularDataReader) newreader);
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                fimsPrinter.out.println(e.getMessage());
             }
         }
     }

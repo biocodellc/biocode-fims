@@ -9,6 +9,7 @@ import digester.Mapping;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import settings.PathManager;
+import settings.fimsPrinter;
 
 import javax.print.DocFlavor;
 import java.io.File;
@@ -70,7 +71,7 @@ public class triplifier {
     public void getTriples(Mapping mapping) throws Exception {
         //String filenamePrefix = inputFile.getName();
         System.gc();
-        System.out.println("\tWriting D2RQ model file");
+        fimsPrinter.out.println("\tWriting D2RQ model file");
 
 
         // Write the model
@@ -82,7 +83,7 @@ public class triplifier {
         FileOutputStream fos = new FileOutputStream(tripleFile);
         model.write(fos, FileUtils.langTurtle);
         fos.close();
-        tripleOutputFile = outputFolder + tripleFile.getName();
+        tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 
         // Write out as a Sparql Update Statement
         File updateFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
@@ -112,7 +113,7 @@ public class triplifier {
         fosUpdateFile.close();
 
         //return outputFolder + tripleFile.getName();
-        updateOutputFile =  outputFolder + updateFile.getName();
+        updateOutputFile =  outputFolder + File.separator + updateFile.getName();
     }
 
     /**

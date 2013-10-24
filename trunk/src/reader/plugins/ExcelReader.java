@@ -112,7 +112,7 @@ public class ExcelReader implements TabularDataReader {
 
     public boolean openFile(String filepath) {
 
-        //System.out.println(filepath);
+        //fimsPrinter.out.println(filepath);
         FileInputStream is;
 
         try {
@@ -265,7 +265,7 @@ public class ExcelReader implements TabularDataReader {
             count++;
         }
         Integer numRows = count - 1 - numHeaderRows;
-        //System.out.println("this is the number of rows!" + numRows);
+        //fimsPrinter.out.println("this is the number of rows!" + numRows);
         // The count to return should be minus 1 to account for title
         return count - 1 - numHeaderRows;
     }
@@ -370,7 +370,7 @@ public class ExcelReader implements TabularDataReader {
     public Integer getColumnPosition(String colName) throws Exception {
         java.util.List<String> listColumns = this.getColNames();
         for (int i = 0; i < listColumns.size(); i++) {
-            //System.out.println("\tarray val = " + this.getColNames().toArray()[i].toString());
+            //fimsPrinter.out.println("\tarray val = " + this.getColNames().toArray()[i].toString());
             if (this.getColNames().toArray()[i].toString().equals(colName)) {
                 return i;
             }

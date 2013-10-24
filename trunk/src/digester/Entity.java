@@ -1,5 +1,7 @@
 package digester;
 
+import settings.fimsPrinter;
+
 import java.io.PrintWriter;
 import java.util.LinkedList;
 
@@ -100,12 +102,12 @@ public class Entity {
      * Basic Text printer
      */
     public void print() {
-        System.out.println("  EntityId:" + entityId);
-        System.out.println("    worksheet=" + worksheet);
-        System.out.println("    worksheetUniqueKey=" + worksheetUniqueKey);
-        System.out.println("    conceptName=" + conceptAlias);
-        System.out.println("    conceptURI=" + conceptURI);
-        //System.out.println("    bcid=" + bcid);
+        fimsPrinter.out.println("  EntityId:" + entityId);
+        fimsPrinter.out.println("    worksheet=" + worksheet);
+        fimsPrinter.out.println("    worksheetUniqueKey=" + worksheetUniqueKey);
+        fimsPrinter.out.println("    conceptName=" + conceptAlias);
+        fimsPrinter.out.println("    conceptURI=" + conceptURI);
+        //fimsPrinter.out.println("    bcid=" + bcid);
 
     }
 

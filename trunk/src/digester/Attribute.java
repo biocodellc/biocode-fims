@@ -1,5 +1,7 @@
 package digester;
 
+import settings.fimsPrinter;
+
 import java.io.PrintWriter;
 
 /**
@@ -38,10 +40,10 @@ public class Attribute {
      * Basic Text printer
      */
     public void print() {
-        System.out.println("  Attribute:");
-        System.out.println("    column=" + column);
-        System.out.println("    uri=" + uri);
-        System.out.println("    datatype=" + datatype);
+        fimsPrinter.out.println("  Attribute:");
+        fimsPrinter.out.println("    column=" + column);
+        fimsPrinter.out.println("    uri=" + uri);
+        fimsPrinter.out.println("    datatype=" + datatype);
 
     }
 

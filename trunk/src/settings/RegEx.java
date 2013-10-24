@@ -34,7 +34,7 @@ public class RegEx {
     }
 
     public static void main(String[] args) {
-          System.out.println(run("<.xml version=.1.0. encoding=.utf-8...>","<?xml version=\"1.0\" encoding=\"utf-8\"?>hallo"));
+          fimsPrinter.out.println(run("<.xml version=.1.0. encoding=.utf-8...>","<?xml version=\"1.0\" encoding=\"utf-8\"?>hallo"));
          /*if($well_number96 =~ /(^[A-Ha-h])(\d+)$/) {
             my $letter = $1;
             my $number = $2;
@@ -46,15 +46,15 @@ public class RegEx {
             //String letter = well.substring(0,1);
             String number = well.substring(1,3);
             if (checkValidNumber(number)) {
-                System.out.println("number is OK");
+                fimsPrinter.out.println("number is OK");
             } else {
-                System.out.println("number is not OK");
+                fimsPrinter.out.println("number is not OK");
             }
 
 
-            System.out.println("match");
+            fimsPrinter.out.println("match");
         } else {
-            System.out.println("nomatch");
+            fimsPrinter.out.println("nomatch");
         }
         */
     }

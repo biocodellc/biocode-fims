@@ -89,10 +89,10 @@ public class PathManager {
     public static void main(String args[]) {
         PathManager pm = new PathManager();
         try {
-            //System.out.println(pm.setFile("sampledata/biocode_template.xls").getName());
-            //System.out.println(pm.setFile("../../../sampledata/biocode_template.xls"));
-            System.out.println(pm.setDirectory("/Users/jdeck/tripleOutput/"));
-            //System.out.println(pm.setDirectory("."));
+            //fimsPrinter.out.println(pm.setFile("sampledata/biocode_template.xls").getName());
+            //fimsPrinter.out.println(pm.setFile("../../../sampledata/biocode_template.xls"));
+            fimsPrinter.out.println(pm.setDirectory("/Users/jdeck/tripleOutput/").toString());
+            //fimsPrinter.out.println(pm.setDirectory("."));
         } catch (Exception e) {
             e.printStackTrace();
         }

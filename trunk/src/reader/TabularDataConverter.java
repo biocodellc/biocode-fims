@@ -217,7 +217,7 @@ public final class TabularDataConverter {
             query += "\"" + colname + "\"";
         }
         query += ")";
-        //System.out.println(query);
+        //fimsPrinter.out.println(query);
 
         // create the table
         stmt.executeUpdate(query);
@@ -230,7 +230,7 @@ public final class TabularDataConverter {
             query += "?";
         }
         query += ")";
-        //System.out.println(query);
+        //fimsPrinter.out.println(query);
         PreparedStatement insstmt = conn.prepareStatement(query);
 
         // Start a new transaction for all of the INSERT statements.  This
@@ -242,7 +242,7 @@ public final class TabularDataConverter {
         while (source.tableHasNextRow()) {
             cnt = 0;
             for (String dataval : source.tableGetNextRow()) {
-                //System.out.println(dataval);
+                //fimsPrinter.out.println(dataval);
                 insstmt.setString(++cnt, dataval);
             }
 
