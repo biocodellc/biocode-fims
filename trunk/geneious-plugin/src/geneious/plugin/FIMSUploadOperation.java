@@ -2,18 +2,16 @@ package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.documents.AnnotatedPluginDocument;
+import com.biomatters.geneious.publicapi.documents.DocumentUtilities;
 import com.biomatters.geneious.publicapi.plugin.*;
-import com.biomatters.geneious.publicapi.utilities.ThreadUtilities;
 import jebl.util.ProgressListener;
-import org.virion.jam.util.SimpleListener;
 import run.process;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
-import java.util.Collections;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Matthew Cheung
@@ -42,20 +40,23 @@ public class FIMSUploadOperation extends DocumentOperation {
 
     @Override
     public List<AnnotatedPluginDocument> performOperation(AnnotatedPluginDocument[] annotatedPluginDocuments, final ProgressListener progressListener, Options options) throws DocumentOperationException {
+        final StringBuilder log = new StringBuilder();
 
         fimsPrinter.out = new fimsPrinter() {
 
-            private int linesToKeep = 80;
+            private int linesToKeep = 20;
             LinkedList<String> message = new LinkedList<String>();
 
             @Override
             public void print(String content) {
+                log.append(content);
                 message.set(message.size()-1, message.getLast() + content);
                 setMessage();
             }
 
             @Override
             public void println(String content) {
+                log.append(content).append("\n");
                 if(message.size() < linesToKeep) {
                     message.addFirst(content);
                 } else {
@@ -85,8 +86,9 @@ public class FIMSUploadOperation extends DocumentOperation {
         fimsInputter.in = new fimsInputter() {
             @Override
             public boolean continueOperation(String question) {
-                question = "<html>" + question.replace("Warning:", "<b>Warning</b>:") + "</html>";
-                return Dialogs.showYesNoDialog(question + "\nContinue?", "Continue?", null, Dialogs.DialogIcon.QUESTION);
+                question = question.replace("Warning:", "<b>Warning</b>:");
+                log.append("\n\n").append(question).append("\n\n");
+                return Dialogs.showYesNoDialog("<html>" + question + "\nContinue?</html>", "Continue?", null, Dialogs.DialogIcon.QUESTION);
             }
         };
 
@@ -106,22 +108,18 @@ public class FIMSUploadOperation extends DocumentOperation {
                 throw new DocumentOperationException("FIMS operation failed", e);
             }
 
+            String fileName = sampleDataFile;
+            if(fileName.endsWith(File.separator)) {
+                fileName = fileName.substring(0, fileName.length()-2);
+            }
+            if(fileName.contains(File.separator)) {
+                fileName = sampleDataFile.substring(sampleDataFile.lastIndexOf(File.separator)+1);
+            }
+
+            return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));
         } else {
             throw new IllegalStateException("Bad options");
         }
-        progressListener.setProgress(0.99);
-        fimsPrinter.out.println("Complete!");
-        final AtomicBoolean keepProgressUp = new AtomicBoolean(true);
-        progressListener.addFeedbackAction("Dismiss", new SimpleListener() {
-            @Override
-            public void objectChanged() {
-                keepProgressUp.set(false);
-            }
-        });
-        while(keepProgressUp.get() || progressListener.isCanceled()) {
-            ThreadUtilities.sleep(1000);
-        }
-        return Collections.emptyList();
     }
 
 
