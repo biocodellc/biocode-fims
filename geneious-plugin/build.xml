@@ -10,7 +10,7 @@
     <property name="src" location="src"/>
 
     <path id="classpath">
-        <fileset dir="GeneiousFiles/lib">
+        <fileset dir="lib">
             <include name="GeneiousPublicAPI.jar"/>
             <include name="jdom.jar"/>
             <include name="jebl.jar"/>
