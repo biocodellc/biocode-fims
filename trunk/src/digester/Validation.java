@@ -147,7 +147,7 @@ public class Validation implements RendererInterface {
             connection = java.sql.DriverManager.getConnection(localConnection.getJdbcUrl());
         } catch (Exception e) {
             // e.printStackTrace();
-            throw new Exception("Trouble finding SQLLite Connection");
+            throw new Exception("Trouble finding SQLLite Connection", e);
         }
 
     }
@@ -227,7 +227,7 @@ public class Validation implements RendererInterface {
         try {
             createSqlLite(filenamePrefix, outputFolder);
         } catch (Exception e) {
-            throw new Exception("Unable to create SQLLite DB instance");
+            throw new Exception("Unable to create SQLLite DB instance", e);
         }
 
         boolean errorFree = true;

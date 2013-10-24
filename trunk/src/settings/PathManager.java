@@ -80,10 +80,10 @@ public class PathManager {
         String base = fileName.substring(0, dotIndex);
         String ext = fileName.substring(dotIndex);
 
-        File file = new File(pOutputFolder + fileName);
+        File file = new File(pOutputFolder, fileName);
         int i = 1;
         while (file.exists())
-            file = new File(pOutputFolder + base + "." + i++ + ext);
+            file = new File(pOutputFolder, base + "." + i++ + ext);
         return file;
     }
     public static void main(String args[]) {
