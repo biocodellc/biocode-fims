@@ -3,21 +3,26 @@ package geneious.plugin;
 import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.documents.AnnotatedPluginDocument;
 import com.biomatters.geneious.publicapi.plugin.*;
+import com.biomatters.geneious.publicapi.utilities.ThreadUtilities;
 import digester.*;
 import jebl.util.ProgressListener;
 import org.apache.commons.digester3.Digester;
+import org.virion.jam.util.SimpleListener;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
 import settings.CommandLineInputReader;
+import settings.fimsPrinter;
 import triplify.triplifier;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Matthew Cheung
@@ -52,7 +57,46 @@ public class FIMSUploadOperation extends DocumentOperation {
     }
 
     @Override
-    public List<AnnotatedPluginDocument> performOperation(AnnotatedPluginDocument[] annotatedPluginDocuments, ProgressListener progressListener, Options options) throws DocumentOperationException {
+    public List<AnnotatedPluginDocument> performOperation(AnnotatedPluginDocument[] annotatedPluginDocuments, final ProgressListener progressListener, Options options) throws DocumentOperationException {
+
+        fimsPrinter.out = new fimsPrinter() {
+
+            private int linesToKeep = 80;
+            LinkedList<String> message = new LinkedList<String>();
+
+            @Override
+            public void print(String content) {
+                message.set(message.size()-1, message.getLast() + content);
+                setMessage();
+            }
+
+            @Override
+            public void println(String content) {
+                if(message.size() < linesToKeep) {
+                    message.addFirst(content);
+                } else {
+                    message.removeLast();
+                    message.addFirst(content);
+                }
+
+                setMessage();
+            }
+
+            private void setMessage() {
+                StringBuilder text = new StringBuilder();
+
+                for (int i=message.size()-1; i>=0; i--) {
+                    if(i != 0) {
+                        text.append("<font color=\"gray\">");
+                    }
+                    text.append(message.get(i)).append("\n");
+                    if(i != 0) {
+                        text.append("</font>");
+                    }
+                }
+                progressListener.setMessage("<html>" + text.toString() + "</html>");
+            }
+        };
         if(options instanceof FIMSUploadOptions) {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions)options;
             String project_code = uploadOptions.projectCodeOption.getValue();
@@ -105,6 +149,18 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
         } else {
             throw new IllegalStateException("Bad options");
+        }
+        progressListener.setIndeterminateProgress();
+        fimsPrinter.out.println("Complete!");
+        final AtomicBoolean keepProgressUp = new AtomicBoolean(true);
+        progressListener.addFeedbackAction("Dismiss", new SimpleListener() {
+            @Override
+            public void objectChanged() {
+                keepProgressUp.set(false);
+            }
+        });
+        while(keepProgressUp.get()) {
+            ThreadUtilities.sleep(1000);
         }
         return Collections.emptyList();
     }
