@@ -5,10 +5,7 @@ import reader.plugins.TabularDataReader;
 import renderers.Message;
 import renderers.RowMessage;
 import renderers.RendererInterface;
-import settings.CommandLineInputReader;
-import settings.Connection;
-import settings.PathManager;
-import settings.fimsPrinter;
+import settings.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -193,8 +190,8 @@ public class Validation implements RendererInterface {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
                     fimsPrinter.out.println("\tWarnings found on " + worksheet.getSheetname() + " worksheet. ");
-                    fimsPrinter.out.print("\tIf you wish to continue loading with warnings, enter 'Y': ");
-                    try {
+                    return fimsInputter.in.continueOperation("\tIf you wish to continue loading with warnings, enter 'Y': ");
+                    /*try {
                         String response = new CommandLineInputReader().getResponse();
                         if (response.equalsIgnoreCase("Y")) {
                             return true;
@@ -203,6 +200,7 @@ public class Validation implements RendererInterface {
                         e.printStackTrace();
                         return false;
                     }
+                    */
                 //Worksheet has no errors or warnings
                 } else {
                     return true;
@@ -213,7 +211,7 @@ public class Validation implements RendererInterface {
     }
 
     /**
-     * Begin the validation process, looping through worksheets
+     * Begin the validation run.process, looping through worksheets
      *
      * @return
      * @throws Exception
