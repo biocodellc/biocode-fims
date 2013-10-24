@@ -12,7 +12,8 @@ import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
-import settings.CommandLineInputReader;
+import run.process;
+import settings.fimsInputter;
 import settings.fimsPrinter;
 import triplify.triplifier;
 
@@ -97,56 +98,27 @@ public class FIMSUploadOperation extends DocumentOperation {
                 progressListener.setMessage("<html>" + text.toString() + "</html>");
             }
         };
+
+        fimsInputter.in = new fimsInputter() {
+            @Override
+            public boolean continueOperation(String question) {
+                question = "<html>" + question.replace("Warning:", "<b>Warning</b>:") + "</html>";
+                return Dialogs.showYesNoDialog(question + "\nContinue?", "Continue?", null, Dialogs.DialogIcon.QUESTION);
+            }
+        };
+
         if(options instanceof FIMSUploadOptions) {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions)options;
             String project_code = uploadOptions.projectCodeOption.getValue();
+            String sampleDataFile = uploadOptions.sampleDataOption.getValue();
             String outputFolder = uploadOptions.outputFolderOption.getValue();
             String configFile = uploadOptions.configOption.getValue();
+            boolean upload = uploadOptions.uploadOption.getValue();
+            boolean export = uploadOptions.exportOption.getValue();
             boolean triplify = uploadOptions.triplifyOption.getValue();
+            process process = new process(configFile, sampleDataFile, outputFolder, project_code, export, triplify, upload);
+            process.runAll();
 
-            boolean validationGood = true;
-            boolean triplifyGood = true;
-            boolean updateGood = true;
-            Validation validation = null;
-            try {
-                // Read the input file & create the ReaderManager and load the plugins.
-                ReaderManager rm = new ReaderManager();
-                rm.loadReaders();
-                TabularDataReader tdr = rm.openFile(uploadOptions.sampleDataOption.getValue());
-                // TODO: find a way to set the active sheet programitcally, probably by reading the validation worksheet template and using that value, for now HARDCODING THIs value
-                //tdr.setTable("Samples");
-
-                // Validation
-                validation = new Validation();
-                addValidationRules(new Digester(), validation, configFile);
-                validation.run(tdr, uploadOptions.projectCodeOption.getValue() + "_output", outputFolder);
-//            validationGood = validation.printMessages();
-                validationGood = checkValidation(validation);
-
-                // Triplify if we validate
-                if (triplify & validationGood) {
-                    Mapping mapping = new Mapping();
-                    addMappingRules(new Digester(), mapping, configFile);
-                    triplifyGood = mapping.run(validation, new triplifier(project_code + "_output", outputFolder), project_code);
-                    mapping.print();
-
-                    // Upload after triplifying
-                    if (uploadOptions.uploadOption.getValue() & triplifyGood) {
-                        Fims fims = new Fims(mapping);
-                        addFimsRules(new Digester(), fims, configFile);
-                        fims.run();
-                        fims.print();
-                        if (uploadOptions.exportOption.getValue())
-                            System.out.println("\tspreadsheet = " + fims.write());
-                    }
-                }
-
-            } catch (Exception e) {
-                throw new DocumentOperationException(e);
-            } finally {
-                if(validation != null)
-                    validation.close();
-            }
         } else {
             throw new IllegalStateException("Bad options");
         }
@@ -159,118 +131,11 @@ public class FIMSUploadOperation extends DocumentOperation {
                 keepProgressUp.set(false);
             }
         });
-        while(keepProgressUp.get()) {
+        while(keepProgressUp.get() || progressListener.isCanceled()) {
             ThreadUtilities.sleep(1000);
         }
         return Collections.emptyList();
     }
 
-    private boolean checkValidation(Validation validation) {
-        StringBuilder errors = new StringBuilder();
-        StringBuilder warnings = new StringBuilder();
 
-        for (Iterator<Worksheet> w = validation.getWorksheets().iterator(); w.hasNext(); ) {
-            Worksheet worksheet = w.next();
-            System.out.println("\t" + worksheet.getSheetname() + " worksheet results");
-            for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
-                errors.append(msg).append("\n");
-            }
-            for (String msg : worksheet.getUniqueMessages(Message.WARNING)) {
-                warnings.append(msg).append("\n");
-            }
-            // Worksheet has errors
-            if (!worksheet.errorFree()) {
-                Dialogs.showMessageDialog("Errors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue."
-                , "Errors Found", null, Dialogs.DialogIcon.INFORMATION);
-                return false;
-            } else {
-                // Worksheet has no errors but does have some warnings
-                if (!worksheet.warningFree()) {
-                    return Dialogs.showYesNoDialog("<html>Warnings found on " + worksheet.getSheetname() + " worksheet.\n" +
-                            "\n" + warnings.toString().replace("Warning:", "<b>Warning</b>:") + "\n" +
-                            "Do you wish to continue loading with warnings?</html>", "Warnings Found", null, Dialogs.DialogIcon.QUESTION);
-                } else {
-                    //Worksheet has no errors or warnings
-                    return true;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Process validation component rules
-     *
-     * @param d
-     */
-    private void addValidationRules(Digester d, Validation validation, String configFilename) throws IOException, SAXException {
-        d.push(validation);
-
-        // Create worksheet objects
-        d.addObjectCreate("fims/validation/worksheet", Worksheet.class);
-        d.addSetProperties("fims/validation/worksheet");
-        d.addSetNext("fims/validation/worksheet", "addWorksheet");
-
-        // Create rule objects
-        d.addObjectCreate("fims/validation/worksheet/rule", Rule.class);
-        d.addSetProperties("fims/validation/worksheet/rule");
-        d.addSetNext("fims/validation/worksheet/rule", "addRule");
-        d.addCallMethod("fims/validation/worksheet/rule/field", "addField", 0);
-
-        // Create list objects
-        d.addObjectCreate("fims/validation/lists/list", digester.List.class);
-        d.addSetProperties("fims/validation/lists/list");
-        d.addSetNext("fims/validation/lists/list", "addList");
-        d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
-
-        // Create column objects
-        d.addObjectCreate("fims/validation/worksheet/column", Column_trash.class);
-        d.addSetProperties("fims/validation/worksheet/column");
-        d.addSetNext("fims/validation/worksheet/column", "addColumn");
-
-        d.parse(new File(configFilename));
-    }
-
-    /**
-     * Process mapping component rules
-     *
-     * @param d
-     */
-    private void addMappingRules(Digester d, Mapping mapping, String configFilename) throws IOException, SAXException {
-        d.push(mapping);
-
-        // Create entity objects
-        d.addObjectCreate("fims/mapping/entity", Entity.class);
-        d.addSetProperties("fims/mapping/entity");
-        d.addSetNext("fims/mapping/entity", "addEntity");
-
-        // Add attributes associated with this entity
-        d.addObjectCreate("fims/mapping/entity/attribute", Attribute.class);
-        d.addSetProperties("fims/mapping/entity/attribute");
-        d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
-
-        // Create relation objects
-        d.addObjectCreate("fims/mapping/relation", Relation.class);
-        d.addSetNext("fims/mapping/relation", "addRelation");
-        d.addCallMethod("fims/mapping/relation/subject", "addSubject", 0);
-        d.addCallMethod("fims/mapping/relation/predicate", "addPredicate", 0);
-        d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
-
-        d.parse(new File(configFilename));
-    }
-
-    /**
-     * Process metadata component rules
-     *
-     * @param d
-     */
-    private void addFimsRules(Digester d, Fims fims, String configFilename) throws IOException, SAXException {
-        d.push(fims);
-        d.addObjectCreate("fims/metadata", Metadata.class);
-        d.addSetProperties("fims/metadata");
-        d.addCallMethod("fims/metadata", "addText_abstract", 0);
-        d.addSetNext("fims/metadata", "addMetadata");
-
-        d.parse(new File(configFilename));
-    }
 }

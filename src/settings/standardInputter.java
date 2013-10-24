@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
  */
 public class standardInputter extends fimsInputter {
     @Override
-    public boolean continueOperation(String question) {
-        fimsPrinter.out.print(question);
+    public boolean continueOperation(String message) {
+        fimsPrinter.out.print(message + "\n\nIf you wish to continue, enter 'Y': ");
         //  open up standard input
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //  read the response from the command-line; need to use try/catch with the
