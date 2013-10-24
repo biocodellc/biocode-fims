@@ -61,11 +61,11 @@ public class FastaReader {
         FastaReader fastaReader = new FastaReader("sampledata/A.doe.CO1.fasta",2);
 
         // TODO:, see the following list to integrate FASTA sequence files into database
-        // think about how to integrate this with larger process...
+        // think about how to integrate this with larger run.process...
         // 1. assign BCID to accession ID, making a globally unique identifier
         // 2. assign some "hasSequence" property to the sequence itself
         // 3. create a triple file and upload to database (using upload script)
-        // 4. create a sequence upload process (loop through files)
+        // 4. create a sequence upload run.process (loop through files)
 
         /*
         new SequenceReader("sampledata/A.doe.CO1.fasta",2);
@@ -92,7 +92,7 @@ public class FastaReader {
                         inStream,
                         new GenericFastaHeaderParser<ProteinSequence, AminoAcidCompound>(),
                         new ProteinSequenceCreator(AminoAcidCompoundSet.getAminoAcidCompoundSet()));
-        LinkedHashMap<String, ProteinSequence> b = fastaReader.process();
+        LinkedHashMap<String, ProteinSequence> b = fastaReader.run.process();
         for (Entry<String, ProteinSequence> entry : b.entrySet()) {
             fimsPrinter.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
         }

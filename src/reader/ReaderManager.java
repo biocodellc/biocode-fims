@@ -66,7 +66,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
         Class newclass;
         Object newreader;
 
-        // process each class file
+        // run.process each class file
         for (File classfile : classfiles) {
             classname = classfile.getName();
             classname = classname.substring(0, classname.length() - 6);

@@ -1,10 +1,13 @@
+package run;
+
 import digester.*;
 import org.apache.commons.cli.*;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
-import settings.PathManager;
+import settings.fimsInputter;
 import settings.fimsPrinter;
+import settings.standardInputter;
 import settings.standardPrinter;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
@@ -17,8 +20,9 @@ import java.io.*;
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
  * a project code, which is used to specify identifier roots in the BCID (http://code.google.com/p/bcid/) system.
- * The main class is configured to run this from the command-line while the class constructor can also be adapted
- * to any future REST interface calls.
+ * The main class is configured to run this from the command-line while the class itself can be extended to run
+ * in different situations, while specifying  fimsPrinter and fimsInputter classes for a variety of styles of output and
+ * input
  */
 public class process {
 
@@ -33,10 +37,10 @@ public class process {
 
 
     /**
-     * process is the main function for validating, triplifying, & uploading fims data
+     * run.process is the main function for validating, triplifying, & uploading fims data
      *
      * @param configFilename    A configuration file in XML format for a group of projects
-     * @param inputFilename     The data to process, usually an Excel spreadsheet
+     * @param inputFilename     The data to run.process, usually an Excel spreadsheet
      * @param outputFolder      Where to store output files
      * @param project_code      A distinct project code for the project being loaded, used to lookup projects in the BCID system
      *                          for assigning identifier roots.
@@ -62,12 +66,12 @@ public class process {
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
-        // Direct output using the standardPrinter subClass of fimsPrinter which send to fimsPrinter.out (for command-line usage)
-        fimsPrinter.out = new standardPrinter();
+
+
     }
 
     /**
-     * runAll method is designed to go through entire fims process: validate, triplify, upload
+     * runAll method is designed to go through entire fims run.process: validate, triplify, upload
      */
     public void runAll() {
 
@@ -207,6 +211,11 @@ public class process {
     public static void main(String args[]) {
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
+
+        // Direct output using the standardPrinter subClass of fimsPrinter which send to fimsPrinter.out (for command-line usage)
+        fimsPrinter.out = new standardPrinter();
+        // Set the input format
+        fimsInputter.in = new standardInputter();
 
         // Some classes to help us
         CommandLineParser clp = new GnuParser();

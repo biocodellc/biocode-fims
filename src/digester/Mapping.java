@@ -107,7 +107,7 @@ public class Mapping implements  RendererInterface {
         } catch (IOException e) {
             throw new Exception("Unable to connect to BCID service to get your project's unique ID using connectionURL =  " +
                     connectionURL +
-                    ". This is a required part of the triplification process.  Check your internet connection and try again",e);
+                    ". This is a required part of the triplification run.process.  Check your internet connection and try again",e);
             //return "urn:x-biocode-fims";
         }
         return html;
