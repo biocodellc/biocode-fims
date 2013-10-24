@@ -38,7 +38,9 @@ public class PathManager {
                     endCharacter = File.separator;
             }
             // Test beginning character and determine if this should be relative or not
-            if (path.startsWith(File.separator)) {
+            String operatingSystemName = System.getProperty("os.name");
+            if (path.startsWith(File.separator) ||
+                    (operatingSystemName != null && operatingSystemName.toLowerCase().contains("windows") && path.charAt(1) == ':')) {
                 fullPath = path + endCharacter;
             } else {
                 fullPath = System.getProperty("user.dir") + File.separator + path + endCharacter;
