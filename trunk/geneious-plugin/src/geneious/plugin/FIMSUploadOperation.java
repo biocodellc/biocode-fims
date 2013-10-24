@@ -117,7 +117,11 @@ public class FIMSUploadOperation extends DocumentOperation {
             boolean export = uploadOptions.exportOption.getValue();
             boolean triplify = uploadOptions.triplifyOption.getValue();
             process process = new process(configFile, sampleDataFile, outputFolder, project_code, export, triplify, upload);
-            process.runAll();
+            try {
+                process.runAll();
+            } catch (Exception e) {
+                throw new DocumentOperationException("FIMS operation failed", e);
+            }
 
         } else {
             throw new IllegalStateException("Bad options");

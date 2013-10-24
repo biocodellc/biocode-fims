@@ -2,7 +2,7 @@
 
 <project name="FIMSUploadPlugin" default="distribute" basedir=".">
 
-    <property file="plugin.properties"/>
+    <property name="plugin-name" value="geneious.plugin.FIMSUploadPlugin"/>
     <property name="short-plugin-name" value="FIMSUpload"/>
 
     <property name="build" location="build"/>

@@ -73,7 +73,7 @@ public class process {
     /**
      * runAll method is designed to go through entire fims run.process: validate, triplify, upload
      */
-    public void runAll() {
+    public void runAll() throws Exception {
 
         boolean validationGood = true;
         boolean triplifyGood = true;
@@ -117,10 +117,6 @@ public class process {
                 }
             }
 
-        } catch (Exception e) {
-            fimsPrinter.out.println("Stopping Execution, Error: " + e.getMessage());
-            //e.printStackTrace();
-            System.exit(-1);
         } finally {
             validation.close();
         }
@@ -318,6 +314,12 @@ public class process {
                 upload
         );
 
-        p.runAll();
+        try {
+            p.runAll();
+        } catch (Exception e) {
+            fimsPrinter.out.println("Stopping Execution, Error: " + e.getMessage());
+            //e.printStackTrace();
+            System.exit(-1);
+        }
     }
 }
