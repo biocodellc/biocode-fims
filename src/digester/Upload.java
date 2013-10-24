@@ -2,6 +2,7 @@ package digester;
 
 import renderers.RendererInterface;
 import fims.uploader;
+import settings.fimsPrinter;
 
 /**
  * Upload target specification
@@ -28,15 +29,15 @@ public class Upload implements RendererInterface {
      * Print output
      */
     public void print() {
-        System.out.println("Upload ...");
-        System.out.println("\tdoes this do anything??");
+        fimsPrinter.out.println("Upload ...");
+        fimsPrinter.out.println("\tdoes this do anything??");
     }
 
     /**
      * Object details for this object
      */
     public void printObject() {
-        System.out.println("Upload object target = " + target);
+        fimsPrinter.out.println("Upload object target = " + target);
     }
 
     public boolean run() {

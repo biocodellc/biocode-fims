@@ -4,6 +4,7 @@ import reader.plugins.TabularDataReader;
 import renderers.RowMessage;
 import settings.Connection;
 import settings.RegEx;
+import settings.fimsPrinter;
 
 import javax.xml.transform.Result;
 import java.sql.ResultSet;
@@ -71,7 +72,7 @@ public class Rule {
     public void setWorksheet(TabularDataReader worksheet) throws Exception {
         this.worksheet = worksheet;
         // Synchronize the Excel Worksheet instance with the digester worksheet instance
-        //System.out.println("setting to "+ digesterWorksheet.getSheetname());
+        //fimsPrinter.out.println("setting to "+ digesterWorksheet.getSheetname());
         worksheet.setTable(digesterWorksheet.getSheetname());
     }
 
@@ -166,11 +167,11 @@ public class Rule {
 
 
     public void print() {
-        //System.out.println("    rule type = " + this.type + "; column = " + this.column + "; level = " + this.level);
+        //fimsPrinter.out.println("    rule type = " + this.type + "; column = " + this.column + "; level = " + this.level);
 
         for (Iterator i = fields.iterator(); i.hasNext(); ) {
             String field = (String) i.next();
-            System.out.println("      field data : " + field);
+            fimsPrinter.out.println("      field data : " + field);
         }
     }
 
@@ -193,12 +194,12 @@ public class Rule {
      */
     /*
     public void lookupList() {
-        System.out.println("\tlookupList rule for list=" + getList() + " on column " + getColumn());
+        fimsPrinter.out.println("\tlookupList rule for list=" + getList() + " on column " + getColumn());
         // Fetch the fields belonging to this list and create a List object
        java.util.List list = digesterWorksheet.getValidation().findList(getList()).getFields();
         // Loop values
         for (Iterator i = list.iterator(); i.hasNext(); ) {
-            System.out.println("\t\t" + i.next());
+            fimsPrinter.out.println("\t\t" + i.next());
         }
     }  */
 

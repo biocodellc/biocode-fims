@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.filter.ClientFilter;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.representation.Form;
+import settings.fimsPrinter;
 
 import javax.ws.rs.core.Cookie;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class createProject {
         final ClientResponse blogResponse = service.cookie(cookie).post(ClientResponse.class);
         final String response = blogResponse.getEntity(String.class);
 
-        System.out.println(response);
+        fimsPrinter.out.println(response);
         */
     }
 
@@ -81,13 +82,13 @@ public class createProject {
         form.putSingle("j_password", password);
         webResource.type("application/x-www-form-urlencoded").post(form);
 
-        System.out.println(webResource.get(String.class));
+        fimsPrinter.out.println(webResource.get(String.class));
 
         // Get the protected web page:
         webResource = client.resource(URL_DATA);
         String response = webResource.get(String.class);
 
-        System.out.println("response = " + response + webResource.toString());
+        fimsPrinter.out.println("response = " + response);
     }
 
 }

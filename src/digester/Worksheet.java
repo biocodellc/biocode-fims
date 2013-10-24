@@ -3,6 +3,7 @@ package digester;
 import org.openjena.riot.pipeline.SinkTripleNodeTransform;
 import renderers.Message;
 import renderers.RowMessage;
+import settings.fimsPrinter;
 import sun.rmi.transport.Connection;
 
 import java.lang.reflect.Method;
@@ -106,15 +107,15 @@ public class Worksheet {
 
 
     public void print() {
-        System.out.println("  sheetname=" + sheetname);
+        fimsPrinter.out.println("  sheetname=" + sheetname);
 
-        System.out.println("  rules ... ");
+        fimsPrinter.out.println("  rules ... ");
         for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
             Rule r = i.next();
             r.print();
         }
 
-        System.out.println("  columns ... ");
+        fimsPrinter.out.println("  columns ... ");
         for (Iterator<Column_trash> i = columns.iterator(); i.hasNext(); ) {
             Column_trash c = i.next();
             c.print();
@@ -141,7 +142,7 @@ public class Worksheet {
                 // Create a special connection to use here
                 if (r.getColumn() != null)
                     message += " for " + r.getColumn();
-                System.out.println(message);
+                fimsPrinter.out.println(message);
                 // Set the digester worksheet instance for this Rule
                 r.setDigesterWorksheet(this);
                 // Set the SQLLite reference for this Rule
@@ -153,7 +154,7 @@ public class Worksheet {
                 if (method != null) {
                     method.invoke(r);
                 } else {
-                    System.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
+                    fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
                 }
 
                 // Close the connection
@@ -162,7 +163,7 @@ public class Worksheet {
                 String message = "\t\tInternal exception attempting to run rule = " + r.getType() + ", for column = " + r.getColumn();
                 if (e.getMessage() != null)
                     message += ", message = " + e.getMessage();
-                System.out.println(message);
+                fimsPrinter.out.println(message);
                 return false;
             }
 

@@ -8,6 +8,7 @@ import reader.ReaderManager;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import settings.PathManager;
+import settings.fimsPrinter;
 
 public class FastaReader {
      int limit;
@@ -27,9 +28,9 @@ public class FastaReader {
         LinkedHashMap<String, ProteinSequence> a = FastaReaderHelper.readFastaProteinSequence(file);
         int count = 0;
         for (Entry<String, ProteinSequence> entry : a.entrySet()) {
-            System.out.println( count + " of " +a.size() + " for " + file.getName());
-            System.out.println("\tAccessionID = " + entry.getValue().getAccession().getID());
-            System.out.println("\tSequence = " + entry.getValue().getSequenceAsString());
+            fimsPrinter.out.println( count + " of " +a.size() + " for " + file.getName());
+            fimsPrinter.out.println("\tAccessionID = " + entry.getValue().getAccession().getID());
+            fimsPrinter.out.println("\tSequence = " + entry.getValue().getSequenceAsString());
             count++;
             if (count > limit) break;
         }
@@ -81,7 +82,7 @@ public class FastaReader {
         //FastaReaderHelper.readFastaDNASequence for DNA sequences
 
         for (Entry<String, ProteinSequence> entry : a.entrySet()) {
-            System.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
+            fimsPrinter.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
         }
 
         //Try reading with the FastaReader
@@ -93,7 +94,7 @@ public class FastaReader {
                         new ProteinSequenceCreator(AminoAcidCompoundSet.getAminoAcidCompoundSet()));
         LinkedHashMap<String, ProteinSequence> b = fastaReader.process();
         for (Entry<String, ProteinSequence> entry : b.entrySet()) {
-            System.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
+            fimsPrinter.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
         }
         */
     }

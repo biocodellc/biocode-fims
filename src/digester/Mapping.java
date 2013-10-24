@@ -3,6 +3,7 @@ package digester;
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
+import settings.fimsPrinter;
 import triplify.triplifier;
 import settings.Connection;
 
@@ -98,11 +99,15 @@ public class Mapping implements  RendererInterface {
     private String lookupBCID(String project_code, String conceptAlias) throws Exception {
         String html = null;
         String projectService = "http://biscicol.org/id/projectService/";
+        String connectionURL = "";
         try {
-            html = Jsoup.connect(projectService + project_code + "/" + conceptAlias).get().body().html();
+             connectionURL = projectService + project_code + "/" + conceptAlias;
+            // set a 10 second timeout on this connection
+            html = Jsoup.connect(connectionURL).timeout(10000).get().body().html();
         } catch (IOException e) {
-            throw new Exception("Unable to connect to BCID service to get your project's unique ID.  " +
-                    "This is a required part of the triplification process.  Check your internet connection and try again");
+            throw new Exception("Unable to connect to BCID service to get your project's unique ID using connectionURL =  " +
+                    connectionURL +
+                    ". This is a required part of the triplification process.  Check your internet connection and try again",e);
             //return "urn:x-biocode-fims";
         }
         return html;
@@ -147,7 +152,7 @@ public class Mapping implements  RendererInterface {
      * @throws Exception
      */
     public boolean run(Validation v, triplifier t, String project_code) throws Exception {
-        System.out.println("Converting to RDF Triples ...");
+        fimsPrinter.out.println("Converting to RDF Triples ...");
         this.project_code = project_code;
         triplifier = t;
         // Create a connection to a SQL Lite Instance
@@ -165,15 +170,15 @@ public class Mapping implements  RendererInterface {
      * Just tell us where the file is stored...
      */
     public void print() {
-        System.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
-        System.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
+        fimsPrinter.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
+        fimsPrinter.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
     }
 
     /**
      * Loop through the entities and relations we have defined...
      */
     public void printObject() {
-        System.out.println("Mapping has " + entities.size() + " entries");
+        fimsPrinter.out.println("Mapping has " + entities.size() + " entries");
 
         for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
             Entity e = i.next();

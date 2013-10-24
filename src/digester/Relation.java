@@ -1,5 +1,7 @@
 package digester;
 
+import settings.fimsPrinter;
+
 import java.io.PrintWriter;
 
 /**
@@ -42,10 +44,10 @@ public class Relation {
     }
 
     public void print() {
-        System.out.println("  Relation:");
-        System.out.println("    subject=" + subject.toString());
-        System.out.println("    predicate=" + predicate.toString());
-        System.out.println("    object=" + object.toString());
+        fimsPrinter.out.println("  Relation:");
+        fimsPrinter.out.println("    subject=" + subject.toString());
+        fimsPrinter.out.println("    predicate=" + predicate.toString());
+        fimsPrinter.out.println("    object=" + object.toString());
     }
 
     /**

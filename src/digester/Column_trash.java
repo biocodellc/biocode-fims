@@ -1,5 +1,7 @@
 package digester;
 
+import settings.fimsPrinter;
+
 import java.util.Iterator;
 
 /**
@@ -31,6 +33,6 @@ public class Column_trash {
     }
 
     public void print() {
-        System.out.println("      name : " + name + ", uri : " + uri);
+        fimsPrinter.out.println("      name : " + name + ", uri : " + uri);
     }
 }

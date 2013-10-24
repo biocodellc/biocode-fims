@@ -16,9 +16,9 @@ public class CommandLineInputReader {
 
     public static void main(String[] args) {
         //  prompt the user to enter their name
-        System.out.print("Enter your name: ");
+        fimsPrinter.out.print("Enter your name: ");
         try {
-            System.out.println("Thanks for the name, " + new CommandLineInputReader().getResponse());
+            fimsPrinter.out.println("Thanks for the name, " + new CommandLineInputReader().getResponse());
         } catch (IOException e) {
             e.printStackTrace();
         }

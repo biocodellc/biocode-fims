@@ -3,7 +3,7 @@ package settings;
 import settings.fimsPrinter;
 
 /**
- * Send output to System.out (for command-line applications)
+ * Send output to fimsPrinter.out (for command-line applications)
  */
 public class standardPrinter extends fimsPrinter {
     public void print(String content) {

@@ -8,6 +8,7 @@ import renderers.RendererInterface;
 import settings.CommandLineInputReader;
 import settings.Connection;
 import settings.PathManager;
+import settings.fimsPrinter;
 
 import java.io.File;
 import java.io.IOException;
@@ -156,7 +157,7 @@ public class Validation implements RendererInterface {
      * Loop through worksheets and print out object data
      */
     public void printObject() {
-        System.out.println("Validate");
+        fimsPrinter.out.println("Validate");
 
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
             Worksheet w = i.next();
@@ -177,22 +178,22 @@ public class Validation implements RendererInterface {
 
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
-            System.out.println("\t" + worksheet.getSheetname() + " worksheet results");
+            fimsPrinter.out.println("\t" + worksheet.getSheetname() + " worksheet results");
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
-                System.out.println("\t\t" + msg);
+                fimsPrinter.out.println("\t\t" + msg);
             }
             for (String msg : worksheet.getUniqueMessages(Message.WARNING)) {
-                System.out.println("\t\t" + msg);
+                fimsPrinter.out.println("\t\t" + msg);
             }
             // Worksheet has errors
             if (!worksheet.errorFree()) {
-                System.out.println("\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.");
+                fimsPrinter.out.println("\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.");
                 return false;
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    System.out.println("\tWarnings found on " + worksheet.getSheetname() + " worksheet. ");
-                    System.out.print("\tIf you wish to continue loading with warnings, enter 'Y': ");
+                    fimsPrinter.out.println("\tWarnings found on " + worksheet.getSheetname() + " worksheet. ");
+                    fimsPrinter.out.print("\tIf you wish to continue loading with warnings, enter 'Y': ");
                     try {
                         String response = new CommandLineInputReader().getResponse();
                         if (response.equalsIgnoreCase("Y")) {
@@ -218,7 +219,7 @@ public class Validation implements RendererInterface {
      * @throws Exception
      */
     public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder) throws Exception {
-        System.out.println("Validate ...");
+        fimsPrinter.out.println("Validate ...");
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
           this.tabularDataReader = tabularDataReader;
@@ -246,7 +247,7 @@ public class Validation implements RendererInterface {
      */
     public void close() {
         try {
-            connection.close();
+                connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
