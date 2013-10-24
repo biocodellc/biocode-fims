@@ -118,7 +118,8 @@ public class process {
             }
 
         } finally {
-            validation.close();
+            if(validation != null)
+                validation.close();
         }
     }
 
