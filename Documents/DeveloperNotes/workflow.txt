@@ -1,52 +1,32 @@
-1. Project (Adapt from BCID code)
-NOTE: Pull this part out from BCID and put in FIMS system
-NOTE: Still use BCID login components though
-NOTE: Spot for ORCID on each user?
-NOTE: each of these validation/mapping/spreadsheet fields should be versioned (implement these in BCID system -- ARKs for each?)
-   - automatically defines identifier roots and classes to use for project
-   - specify a mapping file.
-   - specify a validation file
-   - specify a spreadsheet (URL)
+1. Initiation
+    - create project, make a project code: used to request/assign identifiers
+    - specify a configuration file
+        - validation
+        - mapping
+    - specify a spreadsheet template based on DwC /MIxS properties, clumped by classes
 
-2. Create Spreadsheet Sample w/ Tabs
-    - Agent ID:{};Class:{Foaf?}
-    - Event ID:{};Class:{CollectingEvent}
-    - Specimen ID:{};Class:{VoucherSpecimen, MaterialSample}
-    - InformationContentEntity ID:{};Class:{Photo, Video, Audio}
+2. Loading Sample Data
+    - AUTHENTICATE
+    - VALIDATE
+    - TRIPLIFY (as RDF using D2RQ)
+    - UPLOAD spreadsheet
+    - ARCHIVE loaded data, assign DOI, store in GitHub
 
-3. Service calls
-  - AUTHENTICATE
-  - LOAD (performs all of the following)
-       - VALIDATE client-side
-       - UPLOAD spreadsheet
-       - VALIDATE server-side
-       - BULK-LOAD into mysql [NOTE: Mysql mimics the spreadsheet while the triplification maintains the structure]
-       - TRIPLIFY as RDF using D2RQ
-       - ARCHIVE loaded data and assign DOI
-  - EXTRACT
-       - EXPORT to spreadsheet (Java)
-  - QUERY
-       - RETURN TYPE uses accept headers to determine Rendering type (rdf+xml, json, html)
+3. Loading Sequence Data
+Relies on loaded sampleData, must exist there first before continuing
+    - FASTA (containing many sampleIDs) + Locus + Project code
+    - SNP data (containing many loci) + Project code + SampleID
+    - NextGen data (containing many loci) + Project code + SampleID
+
+3. Query & Extract
+    - Return spreadsheet
        - Parameterized queries (Java/Sparql)
-  - RESOLVER
-       - Agent, Event, etc... resolve each element (Java/Sparql)
+
+4. Resolver
+    - Use EZIDs for resolution
 
 
 Development
 First iteration will be simply series of curl calls the user can implement.
+Then REST service
 
-
-OLDER VERSION (RDF)
-3. Service calls
-  - Load
-       - LOAD
-       - VALIDATE spreadsheet using validation file (bioValidator)
-       - TRIPLIFY using mapping file (Triplifier)
-       - STORE triplified file (Triplifier)
-  - Extract
-       - EXPORT-RDF to spreadsheet (Java)
-  - Query
-       - Accept Headers determine Rendering type (rdf+xml, json, html)
-       - Parameterized queries (Java/Sparql)
-  - Resolver
-       - Agent, Event, etc... resolve each element (Java/Sparql)
