@@ -10,6 +10,7 @@ import settings.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -173,6 +174,8 @@ public class Validation implements RendererInterface {
      */
     public boolean printMessages() {
 
+        java.util.List<String> warnings = new ArrayList<String>();
+
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
             fimsPrinter.out.println("\t" + worksheet.getSheetname() + " worksheet results");
@@ -180,7 +183,7 @@ public class Validation implements RendererInterface {
                 fimsPrinter.out.println("\t\t" + msg);
             }
             for (String msg : worksheet.getUniqueMessages(Message.WARNING)) {
-                fimsPrinter.out.println("\t\t" + msg);
+                warnings.add(msg);
             }
             // Worksheet has errors
             if (!worksheet.errorFree()) {
@@ -189,8 +192,11 @@ public class Validation implements RendererInterface {
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    fimsPrinter.out.println("\tWarnings found on " + worksheet.getSheetname() + " worksheet. ");
-                    return fimsInputter.in.continueOperation("\tIf you wish to continue loading with warnings, enter 'Y': ");
+                    String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n";
+                    for (String warning : warnings) {
+                        message += "\t\t" + warning + "\n";
+                    }
+                    return fimsInputter.in.continueOperation(message);
                     /*try {
                         String response = new CommandLineInputReader().getResponse();
                         if (response.equalsIgnoreCase("Y")) {
