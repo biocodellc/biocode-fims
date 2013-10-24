@@ -3,10 +3,11 @@ package reader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import reader.plugins.TabularDataReader;
 import settings.fimsPrinter;
@@ -39,11 +40,20 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      *
      * @throws FileNotFoundException
      */
-    public void loadReaders() throws FileNotFoundException {
+    public void loadReaders() throws IOException {
+        URL resource = getClass().getResource("plugins");
+        if(resource != null && resource.getFile().contains(".jar!")) {
+            loadReaderPluginsFromJar(resource);
+        } else {
+            loadReaderPluginsFromDirectory();
+        }
+    }
+
+    private void loadReaderPluginsFromDirectory() throws FileNotFoundException {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
         // get location of the plugins package
-        URL rsc = cl.getResource("reader/plugins");
+        URL rsc = cl.getResource(PACKAGE_PATH);
         if (rsc == null)
             throw new FileNotFoundException("Could not locate plugins directory.");
 
@@ -74,7 +84,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
 
             try {
                 // load the class file and instantiate the class
-                newclass = cl.loadClass("reader.plugins." + classname);
+                newclass = cl.loadClass(getClassNameWithReaderPluginsPackage(classname));
                 newreader = newclass.newInstance();
 
                 // make sure this class implements the reader interface
@@ -86,6 +96,41 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                 fimsPrinter.out.println(e.getMessage());
             }
         }
+    }
+
+    private static final String PACKAGE_PATH = "reader/plugins";
+
+    private void loadReaderPluginsFromJar(URL resource) throws IOException {
+
+
+        List<String> classNames = new ArrayList<String>();
+        String pathToJar = resource.getFile().substring(0, resource.getFile().indexOf("!"));
+        ZipInputStream zipStream = new ZipInputStream(new URL(pathToJar).openStream());
+        ZipEntry entry = zipStream.getNextEntry();
+        while(entry != null) {
+            String toFind = PACKAGE_PATH + "/";
+            int indexOfPackages = entry.getName().indexOf(toFind);
+            if(indexOfPackages != -1) {
+                classNames.add(entry.getName().substring(indexOfPackages + toFind.length()).replace(".class", ""));
+            }
+            entry = zipStream.getNextEntry();
+        }
+
+        for (String classname : classNames) {
+            try {
+                Class<?> clazz = Class.forName(getClassNameWithReaderPluginsPackage(classname));
+                Object newInstance = clazz.newInstance();
+                if(newInstance instanceof TabularDataReader) {
+                    readers.add((TabularDataReader) newInstance);
+                }
+            } catch (Exception e) {
+                fimsPrinter.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private String getClassNameWithReaderPluginsPackage(String classname) {
+        return PACKAGE_PATH.replace("/", ".") + "." + classname;
     }
 
     /**

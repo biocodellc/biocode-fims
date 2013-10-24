@@ -4,23 +4,13 @@ import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.documents.AnnotatedPluginDocument;
 import com.biomatters.geneious.publicapi.plugin.*;
 import com.biomatters.geneious.publicapi.utilities.ThreadUtilities;
-import digester.*;
 import jebl.util.ProgressListener;
-import org.apache.commons.digester3.Digester;
 import org.virion.jam.util.SimpleListener;
-import org.xml.sax.SAXException;
-import reader.ReaderManager;
-import reader.plugins.TabularDataReader;
-import renderers.Message;
 import run.process;
 import settings.fimsInputter;
 import settings.fimsPrinter;
-import triplify.triplifier;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -44,13 +34,6 @@ public class FIMSUploadOperation extends DocumentOperation {
     public DocumentSelectionSignature[] getSelectionSignatures() {
         return new DocumentSelectionSignature[0];
     }
-
-    public static final String CODE = "projectCode";
-    public static final String DATA = "sampleData";
-    public static final String CONFIG = "configurationFile";
-    public static final String TRIPLIFY = "triplify";
-    public static final String UPLOAD = "upload";
-    public static final String EXPORT = "export";
 
     @Override
     public Options getOptions(AnnotatedPluginDocument... annotatedPluginDocuments) throws DocumentOperationException {
@@ -126,7 +109,7 @@ public class FIMSUploadOperation extends DocumentOperation {
         } else {
             throw new IllegalStateException("Bad options");
         }
-        progressListener.setIndeterminateProgress();
+        progressListener.setProgress(0.99);
         fimsPrinter.out.println("Complete!");
         final AtomicBoolean keepProgressUp = new AtomicBoolean(true);
         progressListener.addFeedbackAction("Dismiss", new SimpleListener() {
