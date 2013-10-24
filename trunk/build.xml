@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+
+<project name="biocode-fims" default="build" basedir=".">
+
+    <property name="jar-name" value="biocode-fims"/>
+
+    <property name="build" location="build"/>
+    <property name="classes" location="classes"/>
+    <property name="src" location="src"/>
+
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+
+    <target name="build" depends="compile">
+        <jar jarfile="${build}/${jar-name}.jar">
+            <fileset dir="${classes}"/>
+        </jar>
+    </target>
+
+    <target name="compile" depends="prepare">
+        <javac target="1.6" source="1.6" destdir="${classes}" debug="true">
+            <classpath refid="classpath"/>
+            <src path="${src}"/>
+        </javac>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${classes}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+        <delete dir="${classes}"/>
+    </target>
+
+</project>
