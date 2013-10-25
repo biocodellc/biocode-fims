@@ -4,12 +4,14 @@ import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.documents.AnnotatedPluginDocument;
 import com.biomatters.geneious.publicapi.documents.DocumentUtilities;
 import com.biomatters.geneious.publicapi.plugin.*;
+import com.biomatters.geneious.publicapi.utilities.FileUtilities;
 import jebl.util.ProgressListener;
 import run.process;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,11 +98,19 @@ public class FIMSUploadOperation extends DocumentOperation {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions)options;
             String project_code = uploadOptions.projectCodeOption.getValue();
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
-            String outputFolder = uploadOptions.outputFolderOption.getValue();
-            String configFile = uploadOptions.configOption.getValue();
             boolean upload = uploadOptions.uploadOption.getValue();
             boolean export = uploadOptions.exportOption.getValue();
             boolean triplify = uploadOptions.triplifyOption.getValue();
+
+            File tempDir = null;
+            try {
+                tempDir = FileUtilities.createTempDir(true);
+            } catch (IOException e) {
+                throw new DocumentOperationException("Failed to create temp output directory: " + e.getMessage(), e);
+            }
+            String outputFolder = tempDir.getAbsolutePath();
+            String configFile = uploadOptions.configOption.getValue();
+
             process process = new process(configFile, sampleDataFile, outputFolder, project_code, export, triplify, upload);
             try {
                 process.runAll();
