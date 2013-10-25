@@ -2,12 +2,14 @@ package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.plugin.Options;
 
+import java.io.File;
+import java.net.URL;
+
 public class FIMSUploadOptions extends Options {
 
     StringOption projectCodeOption;
     FileSelectionOption sampleDataOption;
     FileSelectionOption configOption;
-    FileSelectionOption outputFolderOption;
     BooleanOption triplifyOption;
     BooleanOption uploadOption;
     BooleanOption exportOption;
@@ -20,10 +22,15 @@ public class FIMSUploadOptions extends Options {
         uploadOption = addBooleanOption("upload", "Upload", false);
         exportOption = addBooleanOption("export", "Export to spreadsheet", false);
 
-        configOption = addFileSelectionOption("configFile", "Configuration File:", "../../sampledata/indoPacificConfiguration_v2.xml");
+        String defaultConfigPath = "sampledata/indoPacificConfiguration_v2.xml";
+        URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
+        if(resource != null) {
+            File configFile = new File(resource.getFile().replace("%20", " "));
+            if(configFile.exists()) {
+                defaultConfigPath = configFile.getAbsolutePath();
+            }
+        }
+        configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
         configOption.setAdvanced(true);
-
-        outputFolderOption = addFileSelectionOption("outputFolder", "Output Folder:", "../../tripleOutput");
-        outputFolderOption.setAdvanced(true);
     }
 }
