@@ -58,9 +58,15 @@ public class LogDocument implements PluginDocument {
     @Override
     public String toHTML() {
         StringBuilder builder = new StringBuilder();
+        boolean hasErrors = logText.contains("Error:");
         builder.append("<html>");
         builder.append("<h2>").append(name).append("</h2>");
-        builder.append(logText.replace("\n", "<br>"));
+        if(hasErrors) {
+            builder.append("<b><font color=\"red\">Validation failed, see below for errors.</font></b><br><br>");
+        } else {
+            builder.append("<b><font color=\"green\">Validation succeeded.</font></b><br><br>");
+        }
+        builder.append(logText.replace("\n", "<br>").replace("Error:", "<b><font color=\"red\">Error</font></b>:"));
         builder.append("</html>");
         return builder.toString();
     }
