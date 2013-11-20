@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fims xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation='bioValidator-0.9.xsd'>
+
+    <metadata
+            doi="a doi"
+            shortname="shortname"
+            eml_location="eml_location"
+            target="http://biscicol.org:3030/ds">
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>materialSampleID</field>
+                <field>yearCollected</field>
+                <field>decimalLatitude</field>
+                <field>decimalLongitude</field>
+                <field>country</field>
+                <field>genus</field>
+                <field>species</field>
+            </rule>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='country' list='country' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='basisOfID' list='basisOfID' level='warning'></rule>
+
+            <rule type='checkInXMLFields' column='preservative' list='preservative' level='warning'></rule>
+
+            <rule type='checkInXMLFields' column='habitat' list='habitat' level='warning'></rule>
+
+            <rule type='checkInXMLFields' column='biome' list='biome' level='warning'></rule>
+
+            <rule type='checkInXMLFields' column='ownerInstitutionCode' list='ownerInstitutionCode' level='warning'></rule>
+
+
+        </worksheet>
+
+        <lists>
+
+            <list alias='preservative'>
+                <field>99% EtOH</field>
+                <field>95% EtOH</field>
+                <field>90% EtOH</field>
+                <field>Dessicated</field>
+                <field>DMSO</field>
+                <field>Frozen</field>
+            </list>
+
+            <list alias='habitat'>
+                <field>Coral Reef</field>
+                <field>Intertidal</field>
+                <field>Fouling</field>
+                <field>Macroalgae</field>
+                <field>Mangrove</field>
+                <field>Mud</field>
+                <field>Continental shelf</field>
+                <field>Pelagic zone</field>
+                <field>Planktonic</field>
+                <field>Rock</field>
+                <field>Sand</field>
+                <field>Seagrass</field>
+            </list>
+
+            <list alias='biome'>
+                <field>Red Sea and Gulf of Aden</field>
+                <field>Somali/Arabian</field>
+                <field>Western Indian Ocean</field>
+                <field>West and South Indian Shelf</field>
+                <field>Central Indian Ocean Islands</field>
+                <field>Bay of Bengal</field>
+                <field>Andaman</field>
+                <field>South China Sea</field>
+                <field>Sunda Shelf</field>
+                <field>Java Transitional</field>
+                <field>South Kuroshio</field>
+                <field>Tropical Northwestern Pacific</field>
+                <field>Western Coral Triangle</field>
+                <field>Eastern Coral Triangle</field>
+                <field>Sahul Shelf</field>
+                <field>Northeast Australian Shelf</field>
+                <field>Northwest Australian Shelf</field>
+                <field>Tropical Southwestern Pacific</field>
+                <field>Lord Howe and Norfolk Islands</field>
+                <field>Hawaii</field>
+                <field>Marshall, Gilbert, and Ellice Islands</field>
+                <field>Central Polynesia</field>
+                <field>Southeast Polynesia</field>
+                <field>Marquesas</field>
+                <field>Easter Island</field>
+            </list>
+            <list alias='ownerInstitutionCode'>
+                <field>CAS</field>
+                <field>IBRC</field>
+                <field>KAUST</field>
+                <field>ODU</field>
+                <field>StellenboschU</field>
+                <field>STRI</field>
+                <field>TAMU</field>
+                <field>UCLA</field>
+                <field>UH</field>
+                <field>UPMSI</field>
+                <field>UQ</field>
+            </list>
+            <list alias='basisOfID'>
+                <field>Genetics</field>
+                <field>Morphology</field>
+            </list>
+            <list alias='country'>
+                <field>Afghanistan</field>
+                <field>American Samoa</field>
+                <field>Argentina</field>
+                <field>Australia</field>
+                <field>Belau</field>
+                <field>Belize</field>
+                <field>Bolivia</field>
+                <field>Brazil</field>
+                <field>Canada</field>
+                <field>Caroline Islands</field>
+                <field>Central African Republic</field>
+                <field>China</field>
+                <field>Comoros</field>
+                <field>Cook Islands</field>
+                <field>Costa Rica</field>
+                <field>Ecuador</field>
+                <field>Fiji</field>
+                <field>French Polynesia</field>
+                <field>Guadeloupe</field>
+                <field>Guatemala</field>
+                <field>Guyana</field>
+                <field>Hawaii</field>
+                <field>Indonesia</field>
+                <field>Iraq</field>
+                <field>Japan</field>
+                <field>Kenya</field>
+                <field>Kiribati</field>
+                <field>Liberia</field>
+                <field>Locality Unknown</field>
+                <field>Madagascar</field>
+                <field>Malaysia</field>
+                <field>Mexico</field>
+                <field>Micronesia, Federated States of</field>
+                <field>Myanmar</field>
+                <field>New Zealand</field>
+                <field>North Pacific Ocean</field>
+                <field>Northern Mariana Islands</field>
+                <field>Palau</field>
+                <field>Panama</field>
+                <field>Papua New Guinea</field>
+                <field>Peru</field>
+                <field>Philippines</field>
+                <field>Saint Vincent and the Grenadines</field>
+                <field>Samoa</field>
+                <field>Solomon Islands</field>
+                <field>South Africa</field>
+                <field>South Atlantic Ocean</field>
+                <field>South Pacific Ocean</field>
+                <field>Taiwan</field>
+                <field>Tonga</field>
+                <field>Uganda</field>
+                <field>United States</field>
+                <field>Vanuatu</field>
+                <field>Venezuela</field>
+                <field>Vietnam</field>
+            </list>
+
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Record"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="basisOfID" uri="urn:basisOfID"/>
+            <attribute column="enteredBy" uri="urn:enteredBy"/>
+            <attribute column='yearEntered' datatype="integer" uri='urn:yearEntered'/>
+            <attribute column='monthEntered' datatype="integer" uri='urn:monthEntered'/>
+            <attribute column='dayEntered' datatype="integer" uri='urn:dayEntered'/>
+            <attribute column="ownerInstitutionCode" uri="http://rs.tdwg.org/dwc/terms/ownerInstitutionCode"/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Event"
+                conceptURI="http://rs.tdwg.org/dwc/terms/Event"
+                entityId="2">
+            <attribute column='yearCollected' datatype="integer" uri='urn:yearCollected'/>
+            <attribute column='monthCollected' datatype="integer" uri='urn:monthCollected'/>
+            <attribute column='dayCollected' datatype="integer" uri='urn:dayCollected'/>
+            <attribute column="permitInformation" uri="urn:permitInformation"/>
+            <attribute column='biome' uri='http://purl.obolibrary.org/obo/ENVO_00000428'/>
+            <attribute column='habitat' uri='http://purl.obolibrary.org/obo/ENVO_00002036'/>
+            <attribute column='material' uri='http://purl.obolibrary.org/obo/ENVO_00010483'/>
+            <attribute column='samplingProtocol' uri='http://rs.tdwg.org/dwc/terms/samplingProtocol'/>
+            <attribute column='minimumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'/>
+            <attribute column='maximumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'/>
+            <attribute column='eventRemarks' uri='http://rs.tdwg.org/dwc/terms/eventRemarks'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Location"
+                conceptURI="http://purl.org/dc/terms/Location"
+                entityId="3">
+            <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+            <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+            <attribute column="coordinateUncertaintyInMeters"
+                       uri="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
+            <attribute column="country" uri="http://rs.tdwg.org/dwc/terms/country"/>
+            <attribute column='stateProvince' uri='http://rs.tdwg.org/dwc/terms/stateProvince'/>
+            <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Identification"
+                conceptURI="http://rs.tdwg.org/dwc/terms/Identification"
+                entityId="4">
+            <attribute column='identifiedBy' uri='http://rs.tdwg.org/dwc/terms/identifiedBy'/>
+            <attribute column='yearIdentified' datatype="integer" uri='urn:yearIdentified'/>
+            <attribute column='monthIdentified' datatype="integer" uri='urn:monthIdentified'/>
+            <attribute column='dayIdentified' datatype="integer" uri='urn:dayIdentified'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Taxon"
+                conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
+                entityId="5">
+            <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'/>
+            <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'/>
+            <attribute column='vernacularName' uri='http://rs.tdwg.org/dwc/terms/vernacularName'/>
+            <attribute column='kingdom' uri='http://rs.tdwg.org/dwc/terms/kingdom'/>
+            <attribute column='phylum' uri='http://rs.tdwg.org/dwc/terms/phylum'/>
+            <attribute column='class' uri='http://rs.tdwg.org/dwc/terms/class'/>
+            <attribute column='order' uri='http://rs.tdwg.org/dwc/terms/order'/>
+            <attribute column='family' uri='http://rs.tdwg.org/dwc/terms/family'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="MaterialSample"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                entityId="6">
+            <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'/>
+            <attribute column='occurrenceID' uri='http://rs.tdwg.org/dwc/terms/occurrenceID'/>
+            <attribute column='photograph' uri='http://purl.obolibrary.org/obo/IAO_0000185'/>
+            <attribute column='preservative' uri='http://rs.tdwg.org/dwc/terms/preparations'/>
+            <attribute column='previousIdentifications' uri='http://rs.tdwg.org/dwc/terms/previousIdentifications'/>
+            <attribute column='lifeStage' uri='http://rs.tdwg.org/dwc/terms/lifeStage'/>
+            <attribute column='weight' uri='http://purl.obolibrary.org/obo/PATO_0000128'/>
+            <attribute column='weightUnit' uri='http://purl.obolibrary.org/obo/UO_0000002'/>
+            <attribute column='length' uri='http://purl.obolibrary.org/obo/PATO_0000122'/>
+            <attribute column='lengthUnit' uri='http://purl.obolibrary.org/obo/UO_0000001'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="NucleicAcidSequenceSource"
+                conceptURI="http://gensc.org/ns/mixs/NucleicAcidSequenceSource"
+                entityId="7">
+            <attribute column="geneticTissueType" uri="urn:geneticTissueType"/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Sequencing"
+                conceptURI="http://gensc.org/ns/mixs/Sequencing"
+                entityId="8">
+            <attribute column="associatedSequences" uri="http://rs.tdwg.org/dwc/terms/associatedSequences"/>
+            <attribute column="nucleicAcidExtraction" uri="http://gensc.org/ns/mixs/nucleicAcidExtraction"/>
+            <attribute column="loci" uri="http://gensc.org/ns/mixs/targetGene"/>
+        </entity>
+        <!--
+         1=Record
+        2=Event
+        3=Location
+        4=Identification
+        5=Taxon
+        6=MaterialSample
+        7=NucleicAcidSequenceSource
+        8=Sequencing
+        -->
+        <relation>
+            <subject>2</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>1</object>
+        </relation>
+        <relation>
+            <subject>3</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>2</object>
+        </relation>
+        <relation>
+            <subject>4</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>6</object>
+        </relation>
+        <relation>
+            <subject>5</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>4</object>
+        </relation>
+        <relation>
+            <subject>6</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>2</object>
+        </relation>
+        <relation>
+            <subject>7</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>6</object>
+        </relation>
+        <relation>
+            <subject>8</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>7</object>
+        </relation>
+    </mapping>
+
+
+</fims>
+

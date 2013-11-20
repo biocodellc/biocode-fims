@@ -726,7 +726,6 @@ public class Rule {
                 // do nothing
             }
         }
-
         // Query the SQLlite instance to see if these values are contained in a particular row
         try {
             statement = connection.createStatement();

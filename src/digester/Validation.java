@@ -135,8 +135,7 @@ public class Validation implements RendererInterface {
             tdc.convert(false);
             tabularDataReader.closeFile();
         } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("Trouble creating SQLlite file");
+            throw new Exception(e.getMessage(),e);
         }
 
 
@@ -232,7 +231,8 @@ public class Validation implements RendererInterface {
         try {
             createSqlLite(filenamePrefix, outputFolder);
         } catch (Exception e) {
-            throw new Exception("Unable to create SQLLite DB instance", e);
+            //e.printStackTrace();
+            throw new Exception(e.getMessage(),e);
         }
 
         boolean errorFree = true;

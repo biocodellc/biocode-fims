@@ -10,18 +10,19 @@ public class FIMSUploadOptions extends Options {
     StringOption projectCodeOption;
     FileSelectionOption sampleDataOption;
     FileSelectionOption configOption;
-    BooleanOption triplifyOption;
+    //BooleanOption triplifyOption;
     BooleanOption uploadOption;
-    BooleanOption exportOption;
+    //BooleanOption exportOption;
 
     public FIMSUploadOptions() {
         super(FIMSUploadOptions.class);
-        projectCodeOption = addStringOption("projectCode", "Project Code:", "DEMOH");
+        projectCodeOption = addStringOption("projectCode", "Biocode FIMS Project Code:", "DEMOH");
         sampleDataOption = addFileSelectionOption("sampleData", "Sample Data:", "");
-        triplifyOption = addBooleanOption("triplify", "Triplify", true);
+        //triplifyOption = addBooleanOption("triplify", "Triplify", true);
         uploadOption = addBooleanOption("upload", "Upload", false);
-        exportOption = addBooleanOption("export", "Export to spreadsheet", false);
+        //exportOption = addBooleanOption("export", "Export to spreadsheet", false);
 
+        /*
         String defaultConfigPath = "sampledata/indoPacificConfiguration_v2.xml";
         URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
         if(resource != null) {
@@ -31,6 +32,7 @@ public class FIMSUploadOptions extends Options {
             }
         }
         configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
-        configOption.setAdvanced(true);
+        */
+        //configOption.setAdvanced(true);
     }
 }
