@@ -12,6 +12,7 @@ import settings.fimsPrinter;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,14 +53,14 @@ public class FIMSUploadOperation extends DocumentOperation {
             @Override
             public void print(String content) {
                 log.append(content);
-                message.set(message.size()-1, message.getLast() + content);
+                message.set(message.size() - 1, message.getLast() + content);
                 setMessage();
             }
 
             @Override
             public void println(String content) {
                 log.append(content).append("\n");
-                if(message.size() < linesToKeep) {
+                if (message.size() < linesToKeep) {
                     message.addFirst(content);
                 } else {
                     message.removeLast();
@@ -72,12 +73,12 @@ public class FIMSUploadOperation extends DocumentOperation {
             private void setMessage() {
                 StringBuilder text = new StringBuilder();
 
-                for (int i=message.size()-1; i>=0; i--) {
-                    if(i != 0) {
+                for (int i = message.size() - 1; i >= 0; i--) {
+                    if (i != 0) {
                         text.append("<font color=\"gray\">");
                     }
                     text.append(message.get(i)).append("\n");
-                    if(i != 0) {
+                    if (i != 0) {
                         text.append("</font>");
                     }
                 }
@@ -94,13 +95,18 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
         };
 
-        if(options instanceof FIMSUploadOptions) {
-            FIMSUploadOptions uploadOptions = (FIMSUploadOptions)options;
+        if (options instanceof FIMSUploadOptions) {
+            FIMSUploadOptions uploadOptions = (FIMSUploadOptions) options;
             String project_code = uploadOptions.projectCodeOption.getValue();
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
             boolean upload = uploadOptions.uploadOption.getValue();
-            boolean export = uploadOptions.exportOption.getValue();
-            boolean triplify = uploadOptions.triplifyOption.getValue();
+            // For the plugin we probably never need to write directly back out to a spreadsheet, this is used for testing
+            //boolean export = uploadOptions.exportOption.getValue();
+            boolean export = false;
+
+            // We always want to triplify if we upload.  By the same token we don't need to triplify if we're not uploading
+            //boolean triplify = uploadOptions.triplifyOption.getValue();
+            boolean triplify = upload;
 
             File tempDir = null;
             try {
@@ -109,9 +115,23 @@ public class FIMSUploadOperation extends DocumentOperation {
                 throw new DocumentOperationException("Failed to create temp output directory: " + e.getMessage(), e);
             }
             String outputFolder = tempDir.getAbsolutePath();
-            String configFile = uploadOptions.configOption.getValue();
 
-            process process = new process(configFile, sampleDataFile, outputFolder, project_code, export, triplify, upload);
+            // HardCode Configuration File Path, pointing to geneious-plugin/resources/geneious/plugin/indoPacificConfiguration_v2.xml
+            String defaultConfigPath = "sampledata/indoPacificConfiguration_v2.xml";
+            //String defaultConfigPath = "";
+            URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
+           // URL resource = getClass().getResource(defaultConfigPath);
+            File configFile = null;
+            if (resource != null) {
+                configFile = new File(resource.getFile().replace("%20", " "));
+                if (configFile.exists()) {
+                    defaultConfigPath = configFile.getAbsolutePath();
+                }
+            }
+            // configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
+            String configFileString = configFile.toString();
+
+            process process = new process(configFileString, sampleDataFile, outputFolder, project_code, export, triplify, upload);
             try {
                 process.runAll();
             } catch (Exception e) {
@@ -119,11 +139,11 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
 
             String fileName = sampleDataFile;
-            if(fileName.endsWith(File.separator)) {
-                fileName = fileName.substring(0, fileName.length()-2);
+            if (fileName.endsWith(File.separator)) {
+                fileName = fileName.substring(0, fileName.length() - 2);
             }
-            if(fileName.contains(File.separator)) {
-                fileName = sampleDataFile.substring(sampleDataFile.lastIndexOf(File.separator)+1);
+            if (fileName.contains(File.separator)) {
+                fileName = sampleDataFile.substring(sampleDataFile.lastIndexOf(File.separator) + 1);
             }
 
             return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));

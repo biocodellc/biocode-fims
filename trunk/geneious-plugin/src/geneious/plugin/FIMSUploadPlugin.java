@@ -24,12 +24,12 @@ public class FIMSUploadPlugin extends GeneiousPlugin {
 
     @Override
     public String getAuthors() {
-        return "Mathew Cheung";
+        return "Mathew Cheung, John Deck";
     }
 
     @Override
     public String getVersion() {
-        return "0.1";
+        return "0.2";
     }
 
     @Override

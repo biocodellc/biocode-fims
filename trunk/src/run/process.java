@@ -66,8 +66,6 @@ public class process {
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
-
-
     }
 
     /**
@@ -318,7 +316,7 @@ public class process {
         try {
             p.runAll();
         } catch (Exception e) {
-            fimsPrinter.out.println("Stopping Execution, Error: " + e.getMessage());
+            fimsPrinter.out.println("\nError: " + e.getMessage() );
             //e.printStackTrace();
             System.exit(-1);
         }
