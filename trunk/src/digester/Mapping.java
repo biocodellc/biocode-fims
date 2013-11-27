@@ -85,8 +85,9 @@ public class Mapping implements  RendererInterface {
      * @return
      */
     public String getPersistentIdentifier(Entity entity) throws Exception {
+        //System.out.println(entity.getConceptAlias() + " " + entity.toString() + " " + entity.getColumn() + " " + entity.getConceptURI() + " " + entity.getWorksheetUniqueKey());
         String bcid = lookupBCID(project_code, entity.getConceptAlias());
-        return "\td2rq:uriPattern \"" + bcid + "_@@" + entity.getColumn() + "@@\";";
+        return "\td2rq:uriPattern \"" + bcid + "@@" + entity.getColumn() + "@@\";";
     }
 
     /**

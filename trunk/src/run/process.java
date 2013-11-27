@@ -5,10 +5,7 @@ import org.apache.commons.cli.*;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
-import settings.fimsInputter;
-import settings.fimsPrinter;
-import settings.standardInputter;
-import settings.standardPrinter;
+import settings.*;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -26,20 +23,20 @@ import java.io.*;
  */
 public class process {
 
-    String configFilename;
+    File configFile;
     String inputFilename;
     String outputFolder;
     String project_code;
     Boolean write_spreadsheet;
     Boolean triplify;
     Boolean upload;
-    static String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
+    String username;
+    String password;
 
 
     /**
      * run.process is the main function for validating, triplifying, & uploading fims data
      *
-     * @param configFilename    A configuration file in XML format for a group of projects
      * @param inputFilename     The data to run.process, usually an Excel spreadsheet
      * @param outputFolder      Where to store output files
      * @param project_code      A distinct project code for the project being loaded, used to lookup projects in the BCID system
@@ -47,21 +44,23 @@ public class process {
      * @param write_spreadsheet Write back a spreadsheet to test to the entire cycle
      */
     public process(
-            String configFilename,
             String inputFilename,
             String outputFolder,
             String project_code,
             Boolean write_spreadsheet,
             Boolean triplify,
-            Boolean upload) {
+            Boolean upload,
+            String username,
+            String password) throws Exception {
         // Set class variables
-        this.configFilename = configFilename;
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
         this.project_code = project_code;
         this.write_spreadsheet = write_spreadsheet;
         this.triplify = triplify;
         this.upload = upload;
+        this.username = username;
+        this.password = password;
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -77,19 +76,29 @@ public class process {
         boolean triplifyGood = true;
         boolean updateGood = true;
         Validation validation = null;
+
+        // If the user wants to upload, first authenticate to see if we have the credentials correct!
+        bcidConnector bcidConnector = null;
+        if (upload) {
+            fimsPrinter.out.println("Authenticating ...");
+            bcidConnector = new bcidConnector();
+            boolean authenticationSuccess = bcidConnector.authenticate(username, password);
+            if (!authenticationSuccess)
+                throw new Exception("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
+        }
+
         try {
             // Initializing
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
-            fimsPrinter.out.println("\tconfigFilename = " + configFilename);
+
+            configFile = new configurationFileFetcher(project_code, outputFolder).getOutputFile();
+            fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
             // Read the input file & create the ReaderManager and load the plugins.
             ReaderManager rm = new ReaderManager();
             rm.loadReaders();
             TabularDataReader tdr = rm.openFile(inputFilename);
-
-            // TODO: find a way to set the active sheet programitcally, probably by reading the validation worksheet template and using that value, for now HARDCODING THIs value
-            //tdr.setTable("Samples");
 
             // Validation
             validation = new Validation();
@@ -99,6 +108,7 @@ public class process {
 
             // Triplify if we validate
             if (triplify & validationGood) {
+
                 Mapping mapping = new Mapping();
                 addMappingRules(new Digester(), mapping);
                 triplifyGood = mapping.run(validation, new triplifier(project_code + "_output", outputFolder), project_code);
@@ -108,15 +118,16 @@ public class process {
                 if (upload & triplifyGood) {
                     Fims fims = new Fims(mapping);
                     addFimsRules(new Digester(), fims);
-                    fims.run();
+                    fims.run(bcidConnector);
                     fims.print();
+
                     if (write_spreadsheet)
                         fimsPrinter.out.println("\tspreadsheet = " + fims.write());
                 }
             }
 
         } finally {
-            if(validation != null)
+            if (validation != null)
                 validation.close();
         }
     }
@@ -127,14 +138,14 @@ public class process {
      *
      * @param d
      */
-    private void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+    private synchronized void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
         d.push(fims);
         d.addObjectCreate("fims/metadata", Metadata.class);
         d.addSetProperties("fims/metadata");
         d.addCallMethod("fims/metadata", "addText_abstract", 0);
         d.addSetNext("fims/metadata", "addMetadata");
 
-        d.parse(new File(configFilename));
+        d.parse(configFile);
     }
 
     /**
@@ -142,7 +153,7 @@ public class process {
      *
      * @param d
      */
-    private void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+    private synchronized void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
         d.push(validation);
 
         // Create worksheet objects
@@ -167,7 +178,7 @@ public class process {
         d.addSetProperties("fims/validation/worksheet/column");
         d.addSetNext("fims/validation/worksheet/column", "addColumn");
 
-        d.parse(new File(configFilename));
+        d.parse(configFile);
     }
 
     /**
@@ -175,7 +186,7 @@ public class process {
      *
      * @param d
      */
-    private void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+    private synchronized void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
         d.push(mapping);
 
         // Create entity objects
@@ -195,7 +206,7 @@ public class process {
         d.addCallMethod("fims/mapping/relation/predicate", "addPredicate", 0);
         d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
 
-        d.parse(new File(configFilename));
+        d.parse(configFile);
     }
 
     /**
@@ -204,6 +215,8 @@ public class process {
      * @param args
      */
     public static void main(String args[]) {
+        String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
+
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
 
@@ -220,7 +233,7 @@ public class process {
         // The project code corresponds to a project recognized by BCID
         String project_code = "";
         // The configuration template
-        String configuration = "";
+        //String configuration = "";
         // The input file
         String input_file = "";
         // The directory that we write all our files to
@@ -236,7 +249,6 @@ public class process {
         options.addOption("h", "help", false, "print this help message and exit");
         options.addOption("p", "project_code", true, "Project code.  You will need to obtain a project code before " +
                 "loading data, or use the demo_mode.");
-        options.addOption("c", "configuration", true, "Configuration File");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
         options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify project_code, " +
@@ -259,14 +271,14 @@ public class process {
         // If help was requested, print the help message and exit.
         if (cl.hasOption("h") ||
                 (cl.hasOption("d") && !cl.hasOption("i")) ||
-                (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("c") || !cl.hasOption("i")))) {
+                (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
             helpf.printHelp("fims ", options, true);
             return;
         }
 
         if (cl.hasOption("d")) {
             project_code = "DEMOH";
-            configuration = "sampledata/indoPacificConfiguration_v2.xml";
+            //configuration = "sampledata/indoPacificConfiguration.xml";
             //input_file = "sampledata/Apogon_indoPacificTemplate_v3.xlsx";
             output_directory = defaultOutputDirectory;
             triplify = true;
@@ -276,8 +288,6 @@ public class process {
             input_file = cl.getOptionValue("i");
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
-        if (cl.hasOption("c"))
-            configuration = cl.getOptionValue("c");
         if (cl.hasOption("p"))
             project_code = cl.getOptionValue("p");
         if (cl.hasOption("w"))
@@ -302,23 +312,32 @@ public class process {
             return;
         }
 
+        // TODO: create username/password combinations for upload script
         // Run the processor
-        process p = new process(
-                configuration,
-                input_file,
-                output_directory,
-                project_code,
-                write_spreadsheet,
-                triplify,
-                upload
-        );
+        process p = null;
+        try {
+            p = new process(
+                    input_file,
+                    output_directory,
+                    project_code,
+                    write_spreadsheet,
+                    triplify,
+                    upload,
+                    "demo",
+                    "demo"
+            );
+        } catch (Exception e) {
+            fimsPrinter.out.println("\nError: " + e.getMessage());
+            System.exit(-1);
+        }
 
         try {
             p.runAll();
         } catch (Exception e) {
-            fimsPrinter.out.println("\nError: " + e.getMessage() );
+            fimsPrinter.out.println("\nError: " + e.getMessage());
             //e.printStackTrace();
             System.exit(-1);
         }
     }
+
 }

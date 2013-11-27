@@ -23,8 +23,8 @@ public class FIMSUploadOptions extends Options {
         //exportOption = addBooleanOption("export", "Export to spreadsheet", false);
 
         /*
-        String defaultConfigPath = "sampledata/indoPacificConfiguration_v2.xml";
-        URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
+        String defaultConfigPath = "sampledata/indoPacificConfiguration.xml";
+        URL resource = getClass().getResource("indoPacificConfiguration.xml");
         if(resource != null) {
             File configFile = new File(resource.getFile().replace("%20", " "));
             if(configFile.exists()) {
