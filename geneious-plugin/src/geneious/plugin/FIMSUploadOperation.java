@@ -116,8 +116,9 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
             String outputFolder = tempDir.getAbsolutePath();
 
-            // HardCode Configuration File Path, pointing to geneious-plugin/resources/geneious/plugin/indoPacificConfiguration_v2.xml
-            String defaultConfigPath = "sampledata/indoPacificConfiguration_v2.xml";
+            /*
+            // HardCode Configuration File Path, pointing to geneious-plugin/resources/geneious/plugin/indoPacificConfiguration.xml
+            String defaultConfigPath = "sampledata/indoPacificConfiguration.xml";
             //String defaultConfigPath = "";
             URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
            // URL resource = getClass().getResource(defaultConfigPath);
@@ -130,9 +131,11 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
             // configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
             String configFileString = configFile.toString();
+            */
 
-            process process = new process(configFileString, sampleDataFile, outputFolder, project_code, export, triplify, upload);
             try {
+                //TODO: create username/password in dialog box
+                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, "demo","demo");
                 process.runAll();
             } catch (Exception e) {
                 throw new DocumentOperationException("FIMS operation failed", e);

@@ -71,7 +71,7 @@ public class triplifier {
     public void getTriples(Mapping mapping) throws Exception {
         //String filenamePrefix = inputFile.getName();
         System.gc();
-        fimsPrinter.out.println("\tWriting D2RQ model file");
+        fimsPrinter.out.println("\tProcessing...");
 
 
         // Write the model

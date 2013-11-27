@@ -6,6 +6,7 @@ import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
 import settings.PathManager;
+import settings.bcidConnector;
 import settings.fimsPrinter;
 
 import java.io.File;
@@ -19,7 +20,7 @@ public class Fims implements RendererInterface {
     private Mapping mapping;
     private boolean updateGood = true;
     uploader uploader;
-    private String graph;
+    private String bcid;
 
     public Fims(Mapping mapping) {
         this.mapping = mapping;
@@ -38,19 +39,29 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public boolean run() {
-        fimsPrinter.out.println("Uploading to FIMS ...");
+    public boolean run(bcidConnector bcidConnector) throws Exception {
+
 
         uploader = new uploader(
                 metadata.getTarget(),
-                //new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/biocode_template.xls.triples.80.ttl"));
                 new File(mapping.getTriplifier().getTripleOutputFile()));
 
         try {
-            graph = uploader.execute();
+            uploader.execute();
         } catch (Exception e) {
-            //fimsPrinter.out.println("Exception occurred while attempting to upload data. " + e.getMessage());
             updateGood = false;
+        }
+
+        // If the update worked then set a BCID to refer to it
+        if (updateGood) {
+            try {
+                bcid = bcidConnector.createBCID(uploader.getEndpoint());
+                // Create the BCID to use for upload service
+                fimsPrinter.out.println("\tCreate BCID =" + bcid + ", representing your uploaded dataset");
+
+            } catch (Exception e) {
+                throw new Exception("Unable to create BCID", e);
+            }
         }
         return updateGood;
     }
@@ -60,12 +71,11 @@ public class Fims implements RendererInterface {
      */
     public void print() {
         if (updateGood) {
-            fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
-            fimsPrinter.out.println("\tgraph =  " + uploader.getGraph());
-            fimsPrinter.out.println("\tquery = " + uploader.getService() + "/query" +
-                    "?query=select+*+%7Bgraph+" + uploader.getEncodedGraph(true) + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
-                    "&output=text" +
-                    "&stylesheet=%2Fxml-to-html.xsl");
+            //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
+            //fimsPrinter.out.println("\tBCID =  " + bcid);
+            fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/"  + bcid);
+            fimsPrinter.out.println("\tSample query = " + uploader.getConnectionPoint());
+            //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
         } else {
             fimsPrinter.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". Try later ...");
         }
