@@ -13,45 +13,40 @@
 
         <worksheet sheetname='Samples'>
 
+            <rule type='duplicateColumnNames' level='error'></rule>
             <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
-
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>materialSampleID</field>
+                <field>principalInvestigator</field>
+                <field>phylum</field>
+            </rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
                 <field>yearCollected</field>
-                <field>decimalLatitude</field>
-                <field>decimalLongitude</field>
-                <field>country</field>
-                <field>genus</field>
-                <field>species</field>
+                <field>permitInformation</field>
+                <field>coordinateUncertaintyInMeters</field>
+                <field>georeferenceProtocol</field>
+                <field>basisOfIdentification</field>
             </rule>
 
-            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
+                  level='error'></rule>
+            <rule type='minimumMaximumNumberCheck'
+                  column='minimumDistanceAboveSurfaceInMeters,maximumDistanceAboveSurfaceInMeters' level='error'></rule>
 
-            <rule type='checkInXMLFields' column='country' list='country' level='error'></rule>
+            <rule type='isNumber' column='weight' level='error'></rule>
+            <rule type='isNumber' column='length' level='error'></rule>
 
-            <rule type='checkInXMLFields' column='basisOfID' list='basisOfID' level='warning'></rule>
-
-            <rule type='checkInXMLFields' column='preservative' list='preservative' level='warning'></rule>
-
+            <rule type='checkInXMLFields' column='phylum' list='phylum' level='error'></rule>
             <rule type='checkInXMLFields' column='habitat' list='habitat' level='warning'></rule>
-
-            <rule type='checkInXMLFields' column='biome' list='biome' level='warning'></rule>
-
-            <rule type='checkInXMLFields' column='ownerInstitutionCode' list='ownerInstitutionCode' level='warning'></rule>
-
-
+            <rule type='checkInXMLFields' column='basisOfIdentification' list='basisOfIdentification'
+                  level='warning'></rule>
+            <rule type='checkInXMLFields' column='sex' list='sex' level='warning'></rule>
+            <rule type='checkInXMLFields' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
+            <rule type='checkInXMLFields' column='lifeStage' list='lifeStage' level='warning'></rule>
+            <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
         </worksheet>
 
         <lists>
-
-            <list alias='preservative'>
-                <field>99% EtOH</field>
-                <field>95% EtOH</field>
-                <field>90% EtOH</field>
-                <field>Dessicated</field>
-                <field>DMSO</field>
-                <field>Frozen</field>
-            </list>
 
             <list alias='habitat'>
                 <field>Coral Reef</field>
@@ -61,57 +56,74 @@
                 <field>Mangrove</field>
                 <field>Mud</field>
                 <field>Continental shelf</field>
-                <field>Pelagic zone</field>
+                <field>Pelagic</field>
                 <field>Planktonic</field>
                 <field>Rock</field>
                 <field>Sand</field>
                 <field>Seagrass</field>
             </list>
-
-            <list alias='biome'>
-                <field>Red Sea and Gulf of Aden</field>
-                <field>Somali/Arabian</field>
-                <field>Western Indian Ocean</field>
-                <field>West and South Indian Shelf</field>
-                <field>Central Indian Ocean Islands</field>
-                <field>Bay of Bengal</field>
-                <field>Andaman</field>
-                <field>South China Sea</field>
-                <field>Sunda Shelf</field>
-                <field>Java Transitional</field>
-                <field>South Kuroshio</field>
-                <field>Tropical Northwestern Pacific</field>
-                <field>Western Coral Triangle</field>
-                <field>Eastern Coral Triangle</field>
-                <field>Sahul Shelf</field>
-                <field>Northeast Australian Shelf</field>
-                <field>Northwest Australian Shelf</field>
-                <field>Tropical Southwestern Pacific</field>
-                <field>Lord Howe and Norfolk Islands</field>
-                <field>Hawaii</field>
-                <field>Marshall, Gilbert, and Ellice Islands</field>
-                <field>Central Polynesia</field>
-                <field>Southeast Polynesia</field>
-                <field>Marquesas</field>
-                <field>Easter Island</field>
-            </list>
-            <list alias='ownerInstitutionCode'>
-                <field>CAS</field>
-                <field>IBRC</field>
-                <field>KAUST</field>
-                <field>ODU</field>
-                <field>StellenboschU</field>
-                <field>STRI</field>
-                <field>TAMU</field>
-                <field>UCLA</field>
-                <field>UH</field>
-                <field>UPMSI</field>
-                <field>UQ</field>
-            </list>
-            <list alias='basisOfID'>
+            <list alias='basisOfIdentification'>
                 <field>Genetics</field>
                 <field>Morphology</field>
+                <field>Other</field>
             </list>
+            <list alias='sex'>
+                <field>Male</field>
+                <field>Female</field>
+                <field>Simultaneous Hermaphrodite</field>
+                <field>Protogynous</field>
+                <field>Protandrous</field>
+            </list>
+            <list alias='establishmentMeans'>
+                <field>native</field>
+                <field>introduced</field>
+                <field>naturalized</field>
+                <field>invasive</field>
+                <field>managed</field>
+            </list>
+
+            <list alias='lifeStage'>
+                <field>larva</field>
+                <field>juvenile</field>
+                <field>adult</field>
+            </list>
+            <list alias='phylum'>
+                <field>Acoelomorpha</field>
+                <field>Annelida</field>
+                <field>Arthropoda</field>
+                <field>Brachiopoda</field>
+                <field>Bryozoa</field>
+                <field>Chaetognatha</field>
+                <field>Chordata</field>
+                <field>Cnidaria</field>
+                <field>Ctenophora</field>
+                <field>Cycliophora</field>
+                <field>Echinodermata</field>
+                <field>Entoprocta</field>
+                <field>Gastrotricha</field>
+                <field>Gnathostomulida</field>
+                <field>Hemichordata</field>
+                <field>Kinorhyncha</field>
+                <field>Loricifera</field>
+                <field>Micrognathozoa</field>
+                <field>Mollusca</field>
+                <field>Nematoda</field>
+                <field>Nematomorpha</field>
+                <field>Nemertea</field>
+                <field>Onychophora</field>
+                <field>Orthonectida</field>
+                <field>Phoronida</field>
+                <field>Placozoa</field>
+                <field>Platyhelminthes</field>
+                <field>Porifera</field>
+                <field>Priapulida</field>
+                <field>Rhombozoa</field>
+                <field>Rotifera</field>
+                <field>Sipuncula</field>
+                <field>Tardigrada</field>
+                <field>Xenoturbellida</field>
+            </list>
+
             <list alias='country'>
                 <field>Afghanistan</field>
                 <field>American Samoa</field>
@@ -169,7 +181,6 @@
                 <field>Venezuela</field>
                 <field>Vietnam</field>
             </list>
-
         </lists>
 
     </validation>
