@@ -25,6 +25,8 @@ public class bcidConnector {
 
     private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
     private String arkCreationURL = "http://biscicol.org/id/groupService";
+    private String associateURL = "http://biscicol.org/id/projectService/associate";
+
     private String connectionPoint;
 
     public static void main(String[] args) {
@@ -54,6 +56,13 @@ public class bcidConnector {
             }
         else
             message = "Unable to authenticate";
+
+        try {
+
+            System.out.println(bcid.associateBCID("DEMOH","ark:/21547/Fu2"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         System.out.println(message);
 
@@ -98,12 +107,29 @@ public class bcidConnector {
     public String createBCID(String webaddress) throws Exception {
         String createBCIDDatasetPostParams =
                 "title=Loaded Dataset from Biocode-FIMS&" +
-                "resourceTypesMinusDataset=1&" +
-                "suffixPassThrough=false&" +
-                "webaddress=" + webaddress;
+                        "resourceTypesMinusDataset=1&" +
+                        "suffixPassThrough=false&" +
+                        "webaddress=" + webaddress;
 
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
+
+        return response.toString();
+    }
+
+    /**
+     * Asscociate a project_code to a BCID
+     *
+     * @return
+     * @throws Exception
+     */
+    public String associateBCID(String project_code, String bcid) throws Exception {
+        String createPostParams =
+                "project_code=" + project_code + "&" +
+                        "bcid=" + bcid;
+
+        URL url = new URL(associateURL);
+        String response = createPOSTConnnection(url, createPostParams);
 
         return response.toString();
     }

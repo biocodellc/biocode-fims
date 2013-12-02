@@ -1,5 +1,6 @@
 package digester;
 
+import com.sun.org.apache.xpath.internal.operations.*;
 import reader.plugins.TabularDataReader;
 import renderers.RowMessage;
 import settings.Connection;
@@ -7,6 +8,7 @@ import settings.RegEx;
 import settings.fimsPrinter;
 
 import javax.xml.transform.Result;
+import java.lang.String;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -334,10 +336,60 @@ public class Rule {
 
 
     /**
+     * Check the depthInMeters Numbers are entered correctly
+     *
+     * @throws Exception
+     */
+    public void minimumMaximumNumberCheck() throws Exception {
+        String minimum = getColumn().split(",")[0];
+        String maximum = getColumn().split(",")[1];
+        String minMaxArray[] = new String[]{minimum, maximum};
+
+        Statement statement;
+        ResultSet resultSet;
+        String msg;
+        statement = connection.createStatement();
+
+        // Look for non numeric values in minimum & maximum columns
+        for (String thisColumn : Arrays.asList(minMaxArray)) {
+            try {
+                String sql = "select " + thisColumn + " from  " + digesterWorksheet.getSheetname() +
+                        " where abs(" + thisColumn + ") == 0 AND trim(" + thisColumn + ") != '0'";
+                resultSet = statement.executeQuery(sql);
+                while (resultSet.next()) {
+                    msg = "non-numeric value " + resultSet.getString(thisColumn);
+                    addMessage(msg);
+                }
+            } catch (Exception e) {
+                throw new Exception("minimumMaximumCheck exception", e);
+            }
+        }
+
+        // Check to see that minimum is less than maximum
+        try {
+            String sql = "select " + minimum + "," + maximum + " from " + digesterWorksheet.getSheetname() +
+                    " where abs(" + minimum + ") > abs(" + maximum + ")";
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                msg = "minimum " + minimum + " " +
+                        resultSet.getString(minimum) +
+                        " must be less than  " +
+                        resultSet.getString(maximum);
+                addMessage(msg);
+            }
+
+        } catch (Exception e) {
+            throw new Exception("minimumMaximumCheck exception", e);
+        }
+
+    }
+
+    /**
      * Check that lowestTaxonLevel and LowestTaxon are entered correctly
      *
      * @throws Exception
      */
+
     public void checkLowestTaxonLevel() throws Exception {
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
