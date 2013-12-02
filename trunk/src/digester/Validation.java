@@ -113,7 +113,7 @@ public class Validation implements RendererInterface {
         try {
             processDirectory = pm.setDirectory(outputFolder);
         } catch (Exception e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
             throw new Exception("unable to set output directory " + processDirectory);
         }
 
@@ -135,7 +135,7 @@ public class Validation implements RendererInterface {
             tdc.convert(false);
             tabularDataReader.closeFile();
         } catch (Exception e) {
-            throw new Exception(e.getMessage(),e);
+            throw new Exception(e.getMessage(), e);
         }
 
 
@@ -168,10 +168,13 @@ public class Validation implements RendererInterface {
     public void print() {
 
     }
+
     /**
      * Print output for the commandline
      */
     public boolean printMessages() {
+        StringBuilder errorSB = new StringBuilder();
+        StringBuilder warningSB = new StringBuilder();
 
         java.util.List<String> warnings = new ArrayList<String>();
 
@@ -179,34 +182,32 @@ public class Validation implements RendererInterface {
             Worksheet worksheet = w.next();
             fimsPrinter.out.println("\t" + worksheet.getSheetname() + " worksheet results");
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
-                fimsPrinter.out.println("\t\t" + msg);
+                errorSB.append("\t\t" + msg + "\n");
+                //fimsPrinter.out.println("\t\t" + msg);
             }
             for (String msg : worksheet.getUniqueMessages(Message.WARNING)) {
-                warnings.add(msg);
+                warningSB.append("\t\t" + msg + "\n");
+                //warnings.add(msg);
             }
             // Worksheet has errors
             if (!worksheet.errorFree()) {
+                fimsPrinter.out.println(errorSB.toString());
+                fimsPrinter.out.println(warningSB.toString());
                 fimsPrinter.out.println("\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.");
                 return false;
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n";
+                    String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n" + warningSB.toString();
+                    /*
                     for (String warning : warnings) {
                         message += "\t\t" + warning + "\n";
                     }
                     return fimsInputter.in.continueOperation(message);
-                    /*try {
-                        String response = new CommandLineInputReader().getResponse();
-                        if (response.equalsIgnoreCase("Y")) {
-                            return true;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return false;
-                    }
                     */
-                //Worksheet has no errors or warnings
+                    return fimsInputter.in.continueOperation(message);
+
+                    //Worksheet has no errors or warnings
                 } else {
                     return true;
                 }
@@ -225,14 +226,14 @@ public class Validation implements RendererInterface {
         fimsPrinter.out.println("Validate ...");
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
-          this.tabularDataReader = tabularDataReader;
+        this.tabularDataReader = tabularDataReader;
         tabularDataReader.setTable(worksheets.get(0).getSheetname());
 
         try {
             createSqlLite(filenamePrefix, outputFolder);
         } catch (Exception e) {
             //e.printStackTrace();
-            throw new Exception(e.getMessage(),e);
+            throw new Exception(e.getMessage(), e);
         }
 
         boolean errorFree = true;
@@ -251,7 +252,7 @@ public class Validation implements RendererInterface {
      */
     public void close() {
         try {
-            if(connection != null) {
+            if (connection != null) {
                 connection.close();
             }
         } catch (SQLException e) {
