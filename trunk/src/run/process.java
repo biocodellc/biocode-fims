@@ -118,7 +118,7 @@ public class process {
                 if (upload & triplifyGood) {
                     Fims fims = new Fims(mapping);
                     addFimsRules(new Digester(), fims);
-                    fims.run(bcidConnector);
+                    fims.run(bcidConnector, project_code);
                     fims.print();
 
                     if (write_spreadsheet)
