@@ -193,7 +193,7 @@
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
-            <attribute column="basisOfID" uri="urn:basisOfID"/>
+            <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="enteredBy" uri="urn:enteredBy"/>
             <attribute column='yearEntered' datatype="integer" uri='urn:yearEntered'/>
             <attribute column='monthEntered' datatype="integer" uri='urn:monthEntered'/>

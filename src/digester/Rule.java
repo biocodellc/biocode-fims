@@ -345,6 +345,25 @@ public class Rule {
         String maximum = getColumn().split(",")[1];
         String minMaxArray[] = new String[]{minimum, maximum};
 
+        // Don't run this method if one of these columns doesn't exist
+        Boolean minimumExists = checkColumnExists(minimum);
+        Boolean maximumExists = checkColumnExists(maximum);
+        // No warning message if neither exist
+        if (!minimumExists && !maximumExists) {
+            messages.addLast(new RowMessage(
+                    "Unable to run minimumMaximumNumberCheck rule since Neither " + minimum + " or " + maximum + " columns exist",
+                    RowMessage.WARNING));
+            return;
+        } else if (!minimumExists && maximumExists) {
+            messages.addLast(new RowMessage("Unable to run minimumMaximumNumber check because " + minimum +
+                    " does not exist", RowMessage.WARNING));
+            return;
+        } else if (minimumExists && !maximumExists) {
+            messages.addLast(new RowMessage("Unable to run minimumMaximumNumber check because " + maximum +
+                    " does not exist", RowMessage.WARNING));
+            return;
+        }
+
         Statement statement;
         ResultSet resultSet;
         String msg;
@@ -354,10 +373,12 @@ public class Rule {
         for (String thisColumn : Arrays.asList(minMaxArray)) {
             try {
                 String sql = "select " + thisColumn + " from  " + digesterWorksheet.getSheetname() +
-                        " where abs(" + thisColumn + ") == 0 AND trim(" + thisColumn + ") != '0'";
+                        " where abs(" + thisColumn + ") == 0 AND " +
+                        "trim(" + thisColumn + ") != '0' AND " +
+                        thisColumn + " != \"\";";
                 resultSet = statement.executeQuery(sql);
                 while (resultSet.next()) {
-                    msg = "non-numeric value " + resultSet.getString(thisColumn);
+                    msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
                     addMessage(msg);
                 }
             } catch (Exception e) {
@@ -371,9 +392,9 @@ public class Rule {
                     " where abs(" + minimum + ") > abs(" + maximum + ")";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                msg = "minimum " + minimum + " " +
+                msg = "Illegal values! " + minimum + " = " +
                         resultSet.getString(minimum) +
-                        " must be less than  " +
+                        " while " + maximum + " = " +
                         resultSet.getString(maximum);
                 addMessage(msg);
             }
@@ -760,6 +781,14 @@ public class Rule {
         ResultSet resultSet = null;
         Statement statement = null;
 
+        // First check that this column exists before running this rule
+        Boolean columnExists = checkColumnExists(getColumn());
+        if (!columnExists) {
+            System.out.println("NOT EXISTS" + getColumn());
+            messages.addLast(new RowMessage("Unable to run checkInXMLFields since column name " + getColumn() + " does not exist", RowMessage.WARNING));
+            return;
+        }
+
         // Convert XML Field values to a Stringified list
         try {
             listFields = getListElements();
@@ -814,6 +843,12 @@ public class Rule {
             e.printStackTrace();
         }
 
+           // Set text for this warning values
+        String levelValue = "required";
+        if (getMessageLevel() == RowMessage.WARNING) {
+            levelValue = "suggested";
+        }
+
         String strNotFound = "", reqFieldName = "", msg = "";
         boolean booFound = false;
         // Create a hashset of column names for easy lookup
@@ -836,20 +871,22 @@ public class Rule {
                 strNotFound += reqFieldName + " ";
                 // Examine column contents -- required columns need some content
             } else {
-                try {
 
+                try {
                     rs = statement.executeQuery("select count(*) from " + digesterWorksheet.getSheetname() + " where " + reqFieldName + "='' or " + reqFieldName + " is null");
                     if (rs.getInt(1) > 0) {
-                        addMessage("Required column " + reqFieldName + " has a missing cell value");
+                        addMessage(levelValue + " column " + reqFieldName + " has a missing cell value");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
             }
         }
 
+
         if (!strNotFound.equals("")) {
-            msg = "Did not find columns: " + strNotFound + " (make sure no spaces at end of name)";
+            msg = "Did not find " + levelValue + " columns: " + strNotFound + " (make sure no spaces at end of name)";
             addMessage(msg);
         }
         try {
@@ -901,6 +938,24 @@ public class Rule {
             return RowMessage.WARNING;
         else
             return RowMessage.ERROR;
+    }
+
+    /**
+     * A simple check to see if a column exists in the SQLLite database
+     *
+     * @param column
+     * @return
+     * @throws SQLException
+     */
+    private boolean checkColumnExists(String column) throws SQLException {
+
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT sql FROM sqlite_master WHERE sql like '%" + column + "%'");
+
+        if (rs.next())
+            return true;
+        else
+            return false;
     }
 
     public void close() {

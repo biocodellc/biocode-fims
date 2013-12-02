@@ -162,7 +162,7 @@ public class Worksheet {
 
                 // Close the connection
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 String message = "\t\tInternal exception attempting to run rule = " + r.getType() + ", for column = " + r.getColumn();
                 if (e.getMessage() != null)
                     message += ", message = " + e.getMessage();
