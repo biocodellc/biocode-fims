@@ -55,7 +55,7 @@ public class Fims implements RendererInterface {
         // If the update worked then set a BCID to refer to it
         if (updateGood) {
             try {
-                bcid = bcidConnector.createBCID(uploader.getEndpoint());
+                bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint());
                 // Create the BCID to use for upload service
                 fimsPrinter.out.println("\tCreated BCID =" + bcid + " to represent your uploaded dataset");
                 // Associate the project_code with this bcid
