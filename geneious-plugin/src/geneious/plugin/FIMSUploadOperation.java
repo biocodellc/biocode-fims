@@ -99,13 +99,13 @@ public class FIMSUploadOperation extends DocumentOperation {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions) options;
             String project_code = uploadOptions.projectCodeOption.getValue();
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
+            String username = uploadOptions.usernameOption.getValue();
+            String password = uploadOptions.passwordOption.getValue();
             boolean upload = uploadOptions.uploadOption.getValue();
             // For the plugin we probably never need to write directly back out to a spreadsheet, this is used for testing
-            //boolean export = uploadOptions.exportOption.getValue();
             boolean export = false;
 
             // We always want to triplify if we upload.  By the same token we don't need to triplify if we're not uploading
-            //boolean triplify = uploadOptions.triplifyOption.getValue();
             boolean triplify = upload;
 
             File tempDir = null;
@@ -116,26 +116,9 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
             String outputFolder = tempDir.getAbsolutePath();
 
-            /*
-            // HardCode Configuration File Path, pointing to geneious-plugin/resources/geneious/plugin/indoPacificConfiguration.xml
-            String defaultConfigPath = "sampledata/indoPacificConfiguration.xml";
-            //String defaultConfigPath = "";
-            URL resource = getClass().getResource("indoPacificConfiguration_v2.xml");
-           // URL resource = getClass().getResource(defaultConfigPath);
-            File configFile = null;
-            if (resource != null) {
-                configFile = new File(resource.getFile().replace("%20", " "));
-                if (configFile.exists()) {
-                    defaultConfigPath = configFile.getAbsolutePath();
-                }
-            }
-            // configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
-            String configFileString = configFile.toString();
-            */
 
             try {
-                //TODO: create username/password in dialog box
-                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, "demo","demo");
+                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password);
                 process.runAll();
             } catch (Exception e) {
                 throw new DocumentOperationException("FIMS operation failed", e);

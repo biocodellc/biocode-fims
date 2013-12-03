@@ -784,7 +784,6 @@ public class Rule {
         // First check that this column exists before running this rule
         Boolean columnExists = checkColumnExists(getColumn());
         if (!columnExists) {
-            System.out.println("NOT EXISTS" + getColumn());
             messages.addLast(new RowMessage("Unable to run checkInXMLFields since column name " + getColumn() + " does not exist", RowMessage.WARNING));
             return;
         }

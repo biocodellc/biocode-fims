@@ -9,30 +9,23 @@ public class FIMSUploadOptions extends Options {
 
     StringOption projectCodeOption;
     FileSelectionOption sampleDataOption;
-    FileSelectionOption configOption;
-    //BooleanOption triplifyOption;
     BooleanOption uploadOption;
-    //BooleanOption exportOption;
+    StringOption passwordOption;
+    StringOption usernameOption;
+    LabelOption labelOption;
 
     public FIMSUploadOptions() {
         super(FIMSUploadOptions.class);
+
         projectCodeOption = addStringOption("projectCode", "Biocode FIMS Project Code:", "DEMOH");
         sampleDataOption = addFileSelectionOption("sampleData", "Sample Data:", "");
-        //triplifyOption = addBooleanOption("triplify", "Triplify", true);
         uploadOption = addBooleanOption("upload", "Upload", false);
-        //exportOption = addBooleanOption("export", "Export to spreadsheet", false);
 
-        /*
-        String defaultConfigPath = "sampledata/indoPacificConfiguration.xml";
-        URL resource = getClass().getResource("indoPacificConfiguration.xml");
-        if(resource != null) {
-            File configFile = new File(resource.getFile().replace("%20", " "));
-            if(configFile.exists()) {
-                defaultConfigPath = configFile.getAbsolutePath();
-            }
-        }
-        configOption = addFileSelectionOption("configFile", "Configuration File:", defaultConfigPath);
-        */
+        labelOption = (LabelOption) addLabel("Username/password only necessary for uploading");
+        usernameOption = addStringOption("username", "Username:", "");
+        passwordOption = addStringOption("password", "Password:", "");
+
+
         //configOption.setAdvanced(true);
     }
 }
