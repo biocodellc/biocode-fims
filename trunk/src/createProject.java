@@ -5,90 +5,91 @@ import com.sun.jersey.api.client.filter.ClientFilter;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.representation.Form;
-import settings.fimsPrinter;
 
+  import settings.*;
 import javax.ws.rs.core.Cookie;
 import java.util.ArrayList;
 
 /**
- * Created by IntelliJ IDEA.
- * User: jdeck
- * Date: 10/23/13
- * Time: 3:14 PM
- * To change this template use File | Settings | File Templates.
+ * Code to create a project.
+ * Currently this is meant to be run by an administrator in order to setup projects.  Ultimately, there will
+ * be a web-interface for other administrators to create projects
  */
 public class createProject {
 
-    //String curlCxn = "curl --data 'j_username=USER&j_password=PSWD' http://biscicol.org/bcid/j_spring_security_check --location --cookie-jar cookies.txt";
-    static String test = "http://biscicol.org/id/groupService/list";
-    static String cxn = "http://biscicol.org/bcid/j_spring_security_check";
+    bcidConnector bcidConnector;
 
-    public createProject(String username, String password) {
 
-        /*
-        Client client = Client.create();
-        final HTTPBasicAuthFilter authFilter = new HTTPBasicAuthFilter(username, password);
-        client.addFilter(authFilter);
-        client.addFilter(new LoggingFilter());
-
-        WebResource service = client.resource(cxn);
-        Cookie cookie = new Cookie("hellocookie", "Hello Cookie");
-        final ClientResponse blogResponse = service.cookie(cookie).post(ClientResponse.class);
-        final String response = blogResponse.getEntity(String.class);
-
-        fimsPrinter.out.println(response);
-        */
+    /**
+     * create authentication request object, which stores authentication credentials
+     *
+     * @param username
+     * @param password
+     * @throws Exception
+     */
+    public createProject(String username, String password) throws Exception {
+        // First, authenticate username/password here
+        fimsPrinter.out.println("Authenticating ...");
+        bcidConnector = new bcidConnector();
+        boolean authenticationSuccess = bcidConnector.authenticate(username, password);
+        if (!authenticationSuccess)
+            throw new Exception("Unable to authenticate");
     }
 
+    /**
+     *
+     *   public static int DATASET = 1;
+    public static int EVENT = 2;
+    public static int IMAGE = 3;
+    public static int MOVINGIMAGE = 4;
+    public static int PHYSICALOBJECT = 5;
+    public static int SERVICE = 6;
+    public static int SOUND = 7;
+    public static int TEXT = 8;
+    public static int LOCATION = 10;
+    public static int AGENT = 11;
+    public static int SPACER2 = 12;
+    public static int INFORMATIONCONTENTENTITY = 13;
+    public static int MATERIALSAMPLE = 15;
+    public static int PRESERVEDSPECIMEN = 17;
+    public static int FOSSILSPECIMEN = 18;
+    public static int LIVINGSPECIMEN = 19;
+    public static int HUMANOBSERVATION = 20;
+    public static int MACHINEOBSERVATION = 21;
+    public static int OCCURRENCE = 23;
+    public static int IDENTIFICATION = 24;
+    public static int TAXON = 25;
+    public static int RESOURCERELATIONSHIP = 26;
+    public static int MEASUREMENTORFACT = 27;
+    public static int GEOLOGICALCONTEXT = 28;
+    public static int BIOME = 30;
+    public static int FEATURE = 31;
+    public static int MATERIAL = 32;
+    public static int RESOURCE = 34;
+     * @param args
+     */
     public static void main(String[] args) {
-        //createProject createProject = new createProject("demo", "demo");
-
-
-        //String URL_LOGIN = "http://localhost:9080/foo/j_security_check";
-        String URL_LOGIN = cxn;
-        String URL_DATA = test;
-        Client client = Client.create();
-
-        // add a filter to set cookies received from the server and to check if login has been triggered
-        client.addFilter(new ClientFilter() {
-            private ArrayList<Object> cookies;
-
-            @Override
-            public ClientResponse handle(ClientRequest request) throws ClientHandlerException {
-                if (cookies != null) {
-                    request.getHeaders().put("Cookie", cookies);
-                }
-                ClientResponse response = getNext().handle(request);
-                // copy cookies
-                if (response.getCookies() != null) {
-                    if (cookies == null) {
-                        cookies = new ArrayList<Object>();
-                    }
-                    // A simple addAll just for illustration (should probably check for duplicates and expired cookies)
-                    cookies.addAll(response.getCookies());
-                }
-                return response;
-            }
-        });
-
         String username = "demo";
         String password = "demo";
 
-        // Login:
-        WebResource webResource = client.resource(URL_LOGIN);
+        // Instantiate createProject object
+        createProject createProject = null;
+        try {
+            createProject = new createProject(username, password);
+        } catch (Exception e) {
+            fimsPrinter.out.println("\tUnable to authenticate user = " + username);
+            return;
+        }
+        fimsPrinter.out.println("\tUser " + username + " authenticated");
 
-        com.sun.jersey.api.representation.Form form = new Form();
-        form.putSingle("j_username", username);
-        form.putSingle("j_password", password);
-        webResource.type("application/x-www-form-urlencoded").post(form);
-
-        fimsPrinter.out.println(webResource.get(String.class));
-
-        // Get the protected web page:
-        webResource = client.resource(URL_DATA);
-        String response = webResource.get(String.class);
-
-        fimsPrinter.out.println("response = " + response);
+        fimsPrinter.out.println("Creating BCIDs:");
+        try {
+            fimsPrinter.out.println("\t" + createProject.bcidConnector.createBCID("", "project title", 1));
+        } catch (Exception e) {
+            fimsPrinter.out.println("\tTrouble creating BCID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return;
     }
 
 }

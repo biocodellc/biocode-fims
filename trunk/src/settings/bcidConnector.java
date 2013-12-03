@@ -49,7 +49,7 @@ public class bcidConnector {
         // Success then create ARK
         if (success)
             try {
-                message = "Created BCID = " + bcid.createBCID(null);
+                message = "Created BCID = " + bcid.createDatasetBCID(null);
             } catch (Exception e) {
                 message = e.getMessage();
                 e.printStackTrace();
@@ -59,7 +59,7 @@ public class bcidConnector {
 
         try {
 
-            System.out.println(bcid.associateBCID("DEMOH","ark:/21547/Fu2"));
+            System.out.println(bcid.associateBCID("DEMOH", "ark:/21547/Fu2"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,16 +99,37 @@ public class bcidConnector {
     }
 
     /**
-     * Create a BCID.  Uses cookies sent during authentication method.
+     * Create a Dataset BCID.  Uses cookies sent during authentication method.  suffixPassthrough is set to False
+     * since we only want to represent a single entity here
      *
      * @return
      * @throws Exception
      */
-    public String createBCID(String webaddress) throws Exception {
+    public String createDatasetBCID(String webaddress) throws Exception {
         String createBCIDDatasetPostParams =
                 "title=Loaded Dataset from Biocode-FIMS&" +
                         "resourceTypesMinusDataset=1&" +
                         "suffixPassThrough=false&" +
+                        "webaddress=" + webaddress;
+
+        URL url = new URL(arkCreationURL);
+        String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
+
+        return response.toString();
+    }
+
+    /**
+     * Create a Dataset BCID.  Uses cookies sent during authentication method.  suffixPassthrough is set to False
+     * since we only want to represent a single entity here
+     *
+     * @return
+     * @throws Exception
+     */
+    public String createBCID(String webaddress, String title, Integer resourceTypesMinusDataset) throws Exception {
+        String createBCIDDatasetPostParams =
+                "title=" + title + "&" +
+                        "resourceTypesMinusDataset=" + resourceTypesMinusDataset + "&" +
+                        "suffixPassThrough=true&" +
                         "webaddress=" + webaddress;
 
         URL url = new URL(arkCreationURL);

@@ -189,7 +189,7 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
-                conceptAlias="Record"
+                conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
