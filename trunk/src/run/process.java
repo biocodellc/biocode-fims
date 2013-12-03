@@ -85,6 +85,8 @@ public class process {
             boolean authenticationSuccess = bcidConnector.authenticate(username, password);
             if (!authenticationSuccess)
                 throw new Exception("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
+            // force triplify to true if we want to upload
+            triplify = true;
         }
 
         try {
@@ -216,7 +218,8 @@ public class process {
      */
     public static void main(String args[]) {
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
-
+        String username = "";
+        String password = "";
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
 
@@ -257,6 +260,9 @@ public class process {
         options.addOption("u", "upload", false, "Upload");
         options.addOption("w", "write_spreadsheet", false, "Write back an excel spreadsheet from the triplestore.  " +
                 "This option is useful for testing output from flatfile -> RDF -> flatfile but not necessary.");
+        options.addOption("U", "username", true, "Username");
+        options.addOption("P", "password", true, "Password");
+
         // Create the commands parser and parse the command line arguments.
         try {
             cl = clp.parse(options, args);
@@ -268,6 +274,16 @@ public class process {
             return;
         }
 
+        if (cl.hasOption("U")) {
+            username = cl.getOptionValue("U");
+        }
+        if (cl.hasOption("P")) {
+            password = cl.getOptionValue("P");
+        }
+        if (cl.hasOption("u") && (username.equals("") || password.equals(""))) {
+            fimsPrinter.out.println("Must specify a valid username or password for uploading data!");
+            return;
+        }
         // If help was requested, print the help message and exit.
         if (cl.hasOption("h") ||
                 (cl.hasOption("d") && !cl.hasOption("i")) ||
@@ -300,11 +316,6 @@ public class process {
             fimsPrinter.out.println("Using default output directory " + defaultOutputDirectory);
             output_directory = defaultOutputDirectory;
         }
-        // Need to choose "triplify" if you choose "update"
-        if (cl.hasOption("u") && !cl.hasOption("t")) {
-            fimsPrinter.out.println("Must specify 'triplify' option if you choose to 'upload'");
-            return;
-        }
 
         // Check that output directory is writable
         if (!new File(output_directory).canWrite()) {
@@ -323,8 +334,8 @@ public class process {
                     write_spreadsheet,
                     triplify,
                     upload,
-                    "demo",
-                    "demo"
+                    username,
+                    password
             );
         } catch (Exception e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());
