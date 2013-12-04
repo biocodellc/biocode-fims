@@ -42,6 +42,13 @@ public class Fims implements RendererInterface {
     public boolean run(bcidConnector bcidConnector, String project_code) throws Exception {
 
 
+        // Check that the user that is logged in also owns the project_code
+        try {
+            bcidConnector.validateProject(project_code);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
         uploader = new uploader(
                 metadata.getTarget(),
                 new File(mapping.getTriplifier().getTripleOutputFile()));
@@ -59,7 +66,7 @@ public class Fims implements RendererInterface {
                 // Create the BCID to use for upload service
                 fimsPrinter.out.println("\tCreated BCID =" + bcid + " to represent your uploaded dataset");
                 // Associate the project_code with this bcid
-                fimsPrinter.out.println("\tAssociator ... " + bcidConnector.associateBCID(project_code,bcid));
+                fimsPrinter.out.println("\tAssociator ... " + bcidConnector.associateBCID(project_code, bcid));
 
             } catch (Exception e) {
                 throw new Exception("Unable to create BCID", e);
@@ -75,7 +82,7 @@ public class Fims implements RendererInterface {
         if (updateGood) {
             //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
             //fimsPrinter.out.println("\tBCID =  " + bcid);
-            fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/"  + bcid);
+            fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
             fimsPrinter.out.println("\tSample query = " + uploader.getConnectionPoint());
             //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
         } else {
@@ -126,19 +133,14 @@ public class Fims implements RendererInterface {
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
         // Create model
-        /*
-        Just used for testing
-        Model model = FileManager.get().loadModel("http://localhost:3030/ds/data?graph=urn:uuid:75959876-c944-4ad6-a173-d605f176bfae");
+
+        //Just used for testing
+        /*Model model = FileManager.get().loadModel("http://localhost:3030/ds/data?graph=urn:uuid:75959876-c944-4ad6-a173-d605f176bfae");
         fimsModel fimsModel = new fimsModel(model);
         // Read the rows starting with a specified class, Note: the assumption here is that row level metadata is a "Resource"
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
         // Write output to JSON
         fimsPrinter.out.println(fimsModel.toJSON());
-        */
-
-        /*
-
-
          */
 
     }

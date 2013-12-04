@@ -1,14 +1,4 @@
-import com.sun.jersey.api.client.*;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.ClientFilter;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.api.representation.Form;
-
-  import settings.*;
-import javax.ws.rs.core.Cookie;
-import java.util.ArrayList;
+import settings.*;
 
 /**
  * Code to create a project.
@@ -18,6 +8,9 @@ import java.util.ArrayList;
 public class createProject {
 
     bcidConnector bcidConnector;
+    String project_code;
+    // References to the BCID group Elements (Resource Types)
+    Integer[] groupElements = new Integer[]{34, 10, 24, 36, 37, 11, 15, 13, 2};
 
 
     /**
@@ -27,69 +20,69 @@ public class createProject {
      * @param password
      * @throws Exception
      */
-    public createProject(String username, String password) throws Exception {
+    public createProject(String project_code, String username, String password) throws Exception {
+        this.project_code = project_code;
+
         // First, authenticate username/password here
         fimsPrinter.out.println("Authenticating ...");
         bcidConnector = new bcidConnector();
         boolean authenticationSuccess = bcidConnector.authenticate(username, password);
         if (!authenticationSuccess)
-            throw new Exception("Unable to authenticate");
+            throw new Exception("Unable to authenticate user " + username);
+
+        fimsPrinter.out.println("\tUser " + username + " authenticated");
+
+        // Now check that this project code is available
+        String response = bcidConnector.createProject(project_code, project_code + " data group", null, "http://n2t.net/ark:/21547/Fm2");
+
+        fimsPrinter.out.println("\t" + response);
+        //throw new Exception("Project code " + project_code + " is unavailable");
     }
 
+
     /**
+     * Command-line tool for creating projects.  Used by system administrator only
      *
-     *   public static int DATASET = 1;
-    public static int EVENT = 2;
-    public static int IMAGE = 3;
-    public static int MOVINGIMAGE = 4;
-    public static int PHYSICALOBJECT = 5;
-    public static int SERVICE = 6;
-    public static int SOUND = 7;
-    public static int TEXT = 8;
-    public static int LOCATION = 10;
-    public static int AGENT = 11;
-    public static int SPACER2 = 12;
-    public static int INFORMATIONCONTENTENTITY = 13;
-    public static int MATERIALSAMPLE = 15;
-    public static int PRESERVEDSPECIMEN = 17;
-    public static int FOSSILSPECIMEN = 18;
-    public static int LIVINGSPECIMEN = 19;
-    public static int HUMANOBSERVATION = 20;
-    public static int MACHINEOBSERVATION = 21;
-    public static int OCCURRENCE = 23;
-    public static int IDENTIFICATION = 24;
-    public static int TAXON = 25;
-    public static int RESOURCERELATIONSHIP = 26;
-    public static int MEASUREMENTORFACT = 27;
-    public static int GEOLOGICALCONTEXT = 28;
-    public static int BIOME = 30;
-    public static int FEATURE = 31;
-    public static int MATERIAL = 32;
-    public static int RESOURCE = 34;
      * @param args
      */
     public static void main(String[] args) {
+        //TODO: Create command-line parser using the following arguments
         String username = "demo";
         String password = "demo";
+        String project_code = "DEMOH";
 
         // Instantiate createProject object
-        createProject createProject = null;
+        createProject p = null;
         try {
-            createProject = new createProject(username, password);
+            p = new createProject(project_code, username, password);
         } catch (Exception e) {
-            fimsPrinter.out.println("\tUnable to authenticate user = " + username);
+            fimsPrinter.out.println("\tUnable to create project: " + e.getMessage());
             return;
         }
-        fimsPrinter.out.println("\tUser " + username + " authenticated");
 
         fimsPrinter.out.println("Creating BCIDs:");
-        try {
-            fimsPrinter.out.println("\t" + createProject.bcidConnector.createBCID("", "project title", 1));
-        } catch (Exception e) {
-            fimsPrinter.out.println("\tTrouble creating BCID: " + e.getMessage());
-            e.printStackTrace();
+        for (Integer id : p.groupElements) {
+            try {
+                fimsPrinter.out.println("\t" + p.createBCIDAndAssociate(id));
+            } catch (Exception e) {
+                fimsPrinter.out.println("\tTrouble creating BCID: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
         return;
+
+    }
+
+    /**
+     * Create an individual BCID and Associate
+     *
+     * @return
+     * @throws Exception
+     */
+    private String createBCIDAndAssociate(Integer resourceType) throws Exception {
+        String bcid = bcidConnector.createBCID("", project_code + " group element", resourceType);
+        bcidConnector.associateBCID(project_code, bcid);
+        return bcid;
     }
 
 }

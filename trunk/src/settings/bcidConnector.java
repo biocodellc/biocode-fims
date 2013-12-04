@@ -26,6 +26,10 @@ public class bcidConnector {
     private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
     private String arkCreationURL = "http://biscicol.org/id/groupService";
     private String associateURL = "http://biscicol.org/id/projectService/associate";
+    private String projectCreationURL = "http://biscicol.org/id/projectService";
+    private String projectValidationURL = "http://biscicol.org/id/projectService/validateUser/";
+
+    private Integer responseCode;
 
     private String connectionPoint;
 
@@ -37,15 +41,21 @@ public class bcidConnector {
         // Authenticate
         boolean success = false;
         try {
-            success = bcid.authenticate("demo", "demo");
+            success = bcid.authenticate("biocode", "biocode2013");
             if (success)
                 System.out.println("Able to authenticate!");
         } catch (Exception e) {
             message = e.getMessage();
             e.printStackTrace();
         }
-
-
+        // TESTING user-project authentication
+        try {
+           bcid.validateProject("DEMOH");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+         /*
         // Success then create ARK
         if (success)
             try {
@@ -65,7 +75,7 @@ public class bcidConnector {
         }
 
         System.out.println(message);
-
+         */
     }
 
     /**
@@ -114,7 +124,9 @@ public class bcidConnector {
 
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
-
+        if (getResponseCode() == 401) {
+            throw new Exception("User not authorized to upload to this project!");
+        }
         return response.toString();
     }
 
@@ -153,6 +165,45 @@ public class bcidConnector {
         String response = createPOSTConnnection(url, createPostParams);
 
         return response.toString();
+    }
+
+    /**
+     * Asscociate a project_code to a BCID
+     *
+     * @return
+     * @throws Exception
+     */
+    public String createProject(String project_code, String project_title, String abstractString, String biovalidator_Validation_xml) throws Exception {
+        String createPostParams =
+                "project_code=" + project_code + "&" +
+                        "project_title=" + project_title + "&" +
+                        "abstract=" + abstractString + "&" +
+                        "biovalidator_Validation_xml=" + biovalidator_Validation_xml;
+
+        URL url = new URL(projectCreationURL);
+        String response = createPOSTConnnection(url, createPostParams);
+
+        // Catch Error using response string...
+        // TODO: use response code formats here
+        if (response.contains("ERROR")) {
+            throw new Exception(response.toString());
+        }
+        return response.toString();
+    }
+
+    /**
+     * validateProject ensures that this user is associated with this project
+     * @param project_code
+     * @return
+     * @throws Exception
+     */
+    public String validateProject(String project_code) throws Exception {
+        URL url = new URL(projectValidationURL + project_code);
+        String response = createGETConnection(url);
+        if (getResponseCode() != 200) {
+            throw new Exception("The user does not seem to be associated with this project, responseCode = " + getResponseCode());
+        }
+        return response;
     }
 
     /**
@@ -199,6 +250,7 @@ public class bcidConnector {
         System.out.println("Post parameters : " + postParams);
         System.out.println("Response Code : " + responseCode);
         */
+        responseCode = conn.getResponseCode();
 
         BufferedReader in =
                 new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -238,9 +290,9 @@ public class bcidConnector {
                 conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
             }
         }
-        int responseCode = conn.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
-        System.out.println("Response Code : " + responseCode);
+         responseCode = conn.getResponseCode();
+        //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
+        //System.out.println("Response Code : " + responseCode);
 
         BufferedReader in =
                 new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -275,4 +327,7 @@ public class bcidConnector {
         this.cookies = cookies;
     }
 
+    public Integer getResponseCode() {
+        return responseCode;
+    }
 }
