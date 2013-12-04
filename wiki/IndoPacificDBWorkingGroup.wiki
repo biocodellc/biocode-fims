@@ -1,0 +1,11 @@
+#summary The following provides specific instructions for running the IndoPacificDB Working Group FIMS
+
+= Spreadsheet Template =
+
+The latest copy of the Indo Pacific Spreadsheet Template can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v7.xlsx here]
+
+Download this spreadsheet template and fill in your data according to the instructions on the Instructions Tab.
+
+TEST upload to the system using project = DEMOH
+
+Obtain the username/password by emailing jdeck@berkeley.edu
