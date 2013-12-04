@@ -199,14 +199,7 @@ public class Validation implements RendererInterface {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
                     String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n" + warningSB.toString();
-                    /*
-                    for (String warning : warnings) {
-                        message += "\t\t" + warning + "\n";
-                    }
                     return fimsInputter.in.continueOperation(message);
-                    */
-                    return fimsInputter.in.continueOperation(message);
-
                     //Worksheet has no errors or warnings
                 } else {
                     return true;
