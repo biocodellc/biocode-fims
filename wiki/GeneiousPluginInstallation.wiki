@@ -1,0 +1,23 @@
+#summary This page describes how to install and run Biocode-Fims as a geneious plugin.
+
+= Introduction =
+
+Biocode-FIMS can be run either as a command-line application for as a Geneious plugin.  The instructions here are for running Biocode-FIMS as a Geneious Plugin.
+
+= Installation =
+
+  * Download the [http://biocode-fims.googlecode.com/svn/trunk/downloads/FIMSUpload.gplugin Biocode-FIMS Geneious Plugin file]
+  * Download and Install [http://www.geneious.com/download Geneious]
+  * Open Geneious and Goto ->Tools ->Plugins
+  * Select "install plugin from a gplugin file"
+  * Restart Geneious for the plugin to show up
+  * NOTE: if you are uninstalling Biocode-FIMS to install a new version you may have to restart Geneious after uninstalling and before re-installing.
+  
+= Running Biocode-FIMS within the Geneious Environment =
+
+  * Obtain a Project Code, username/ password, and a spreadsheet template from your project's administrator.  
+  * Goto ->Tools -> Upload to Biocode FIMS
+  * Fill in Project Code and Select your spreadsheet with your data on it.
+  * If you want to upload data, check this box.  Otherwise, the spreadsheet will just be validated.
+ 
+After you press submit, you will be prompted on-screen for any further actions.  
