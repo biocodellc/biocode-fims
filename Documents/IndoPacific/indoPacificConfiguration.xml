@@ -261,7 +261,7 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
-                conceptAlias="OBI_0100051"
+                conceptAlias="Specimen"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
                 entityId="6">
             <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'/>
