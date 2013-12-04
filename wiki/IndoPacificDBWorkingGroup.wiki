@@ -2,10 +2,12 @@
 
 = Spreadsheet Template =
 
-The latest copy of the Indo Pacific Spreadsheet Template can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v7.xlsx here]
+  * The latest copy of the Indo Pacific Spreadsheet Template can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v7.xlsx here]
 
-Download this spreadsheet template and fill in your data according to the instructions on the Instructions Tab.
+  * Download this spreadsheet template and fill in your data according to the instructions on the Instructions Tab.
 
-TEST upload to the system using project = DEMOH
+  * TEST upload to the system using project = DEMOH using the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Geneious Plugin Instructions]
 
-Obtain the username/password by emailing jdeck@berkeley.edu
+  * Obtain the username/password by emailing jdeck@berkeley.edu
+
+The REAL version of the spreadsheet loader is coming soon with individualized Project Codes and User Accounts.
