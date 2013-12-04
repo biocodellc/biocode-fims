@@ -58,15 +58,20 @@ public class LogDocument implements PluginDocument {
     @Override
     public String toHTML() {
         StringBuilder builder = new StringBuilder();
-        boolean hasErrors = logText.contains("Error:");
         builder.append("<html>");
         builder.append("<h2>").append(name).append("</h2>");
-        if(hasErrors) {
+        // Initialization errors have to do with project codes, login names, and general environment setup
+        if (logText.contains("Initialization Error:")) {
+            builder.append("<b><font color=\"red\">Unable to initialize FIMS, see below for messages.</font></b><br><br>");
+            builder.append(logText);
+        // Validation errors have to do with errors on the spreadsheet itself
+        } else if (logText.contains("Error:")) {
             builder.append("<b><font color=\"red\">Validation failed, see below for errors.</font></b><br><br>");
+            builder.append(logText.replace("\n", "<br>").replace("Error:", "<b><font color=\"red\">Error</font></b>:"));
         } else {
             builder.append("<b><font color=\"green\">Validation succeeded.</font></b><br><br>");
+            builder.append(logText.replace("\n", "<br>").replace("Warning:", "<b><font color=\"#FFA500\">Warning</font></b>:"));
         }
-        builder.append(logText.replace("\n", "<br>").replace("Error:", "<b><font color=\"red\">Error</font></b>:"));
         builder.append("</html>");
         return builder.toString();
     }

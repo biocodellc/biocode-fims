@@ -16,7 +16,7 @@ import java.util.LinkedList;
 /**
  * Mapping builds the D2RQ structure for converting between relational format to RDF.
  */
-public class Mapping implements  RendererInterface {
+public class Mapping implements RendererInterface {
     public Connection connection;
 
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
@@ -102,13 +102,13 @@ public class Mapping implements  RendererInterface {
         String projectService = "http://biscicol.org/id/projectService/";
         String connectionURL = "";
         try {
-             connectionURL = projectService + project_code + "/" + conceptAlias;
+            connectionURL = projectService + project_code + "/" + conceptAlias;
             // set a 10 second timeout on this connection
             html = Jsoup.connect(connectionURL).timeout(10000).get().body().html();
         } catch (IOException e) {
             throw new Exception("Unable to connect to BCID service to get your project's unique ID using connectionURL =  " +
                     connectionURL +
-                    ". This is a required part of the triplification run.process.  Check your internet connection and try again",e);
+                    ". This is a required part of the triplification run process.  If this problem persists, contact the System Administrator", e);
             //return "urn:x-biocode-fims";
         }
         return html;

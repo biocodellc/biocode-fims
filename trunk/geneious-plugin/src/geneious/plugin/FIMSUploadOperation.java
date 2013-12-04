@@ -7,6 +7,7 @@ import com.biomatters.geneious.publicapi.plugin.*;
 import com.biomatters.geneious.publicapi.utilities.FileUtilities;
 import jebl.util.ProgressListener;
 import run.process;
+import settings.FIMSException;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
@@ -116,20 +117,22 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
             String outputFolder = tempDir.getAbsolutePath();
 
-
-            try {
-                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password);
-                process.runAll();
-            } catch (Exception e) {
-                throw new DocumentOperationException("FIMS operation failed", e);
-            }
-
+             // Structure fileName for the sample data
             String fileName = sampleDataFile;
             if (fileName.endsWith(File.separator)) {
                 fileName = fileName.substring(0, fileName.length() - 2);
             }
             if (fileName.contains(File.separator)) {
                 fileName = sampleDataFile.substring(sampleDataFile.lastIndexOf(File.separator) + 1);
+            }
+
+            // Run the process
+            try {
+                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password);
+                process.runAll();
+            } catch (FIMSException e) {
+                //Dialogs.showTextFieldDialog("Error Message", e.getMessage().toString(), null, null);
+                return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, "Initialization Error: " + e.getMessage()));
             }
 
             return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));

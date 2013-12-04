@@ -247,7 +247,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
                 conceptAlias="Taxon"
-                conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
+                conceptURI="http://rs.tdwg.org/dwc/terms/Taxon"
                 entityId="5">
             <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'/>
             <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'/>
@@ -261,7 +261,7 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
-                conceptAlias="MaterialSample"
+                conceptAlias="OBI_0100051"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
                 entityId="6">
             <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'/>

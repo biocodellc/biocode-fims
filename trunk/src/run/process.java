@@ -51,7 +51,7 @@ public class process {
             Boolean triplify,
             Boolean upload,
             String username,
-            String password) throws Exception {
+            String password) throws FIMSException {
         // Set class variables
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
@@ -70,22 +70,27 @@ public class process {
     /**
      * runAll method is designed to go through entire fims run.process: validate, triplify, upload
      */
-    public void runAll() throws Exception {
+    public void runAll() throws FIMSException {
 
         boolean validationGood = true;
         boolean triplifyGood = true;
         boolean updateGood = true;
         Validation validation = null;
+        bcidConnector bcidConnector = new bcidConnector();
 
-        // If the user wants to upload, first authenticate to see if we have the credentials correct!
-        bcidConnector bcidConnector = null;
+        // Authenticate all the time, even if not uploading
+        fimsPrinter.out.println("Authenticating ...");
+        boolean authenticationSuccess = false;
+        try {
+            authenticationSuccess = bcidConnector.authenticate(username, password);
+        } catch (Exception e) {
+            throw new FIMSException("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
+        }
+        if (!authenticationSuccess)
+            throw new FIMSException("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
+        // force triplify to true if we want to upload
+
         if (upload) {
-            fimsPrinter.out.println("Authenticating ...");
-            bcidConnector = new bcidConnector();
-            boolean authenticationSuccess = bcidConnector.authenticate(username, password);
-            if (!authenticationSuccess)
-                throw new Exception("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
-            // force triplify to true if we want to upload
             triplify = true;
         }
 
@@ -94,38 +99,58 @@ public class process {
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
 
-            configFile = new configurationFileFetcher(project_code, outputFolder).getOutputFile();
+            // Check that the user that is logged in also owns the project_code
+            try {
+                bcidConnector.validateProject(project_code);
+            } catch (Exception e) {
+                throw new FIMSException("The project_code (" + project_code + ") and user (" + username + ") you indicated are not associated.  Please make sure that you are using the correct project code and that it is associated with your login name", e);
+            }
+
+            try {
+                configFile = new configurationFileFetcher(project_code, outputFolder).getOutputFile();
+            } catch (Exception e) {
+                throw new FIMSException("Unable to obtain configuration file from server... Please check that your project code is valid.");
+            }
             fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
             // Read the input file & create the ReaderManager and load the plugins.
-            ReaderManager rm = new ReaderManager();
-            rm.loadReaders();
-            TabularDataReader tdr = rm.openFile(inputFilename);
+            try {
+                ReaderManager rm = new ReaderManager();
+                TabularDataReader tdr = null;
 
-            // Validation
-            validation = new Validation();
-            addValidationRules(new Digester(), validation);
-            validation.run(tdr, project_code + "_output", outputFolder);
-            validationGood = validation.printMessages();
+                rm.loadReaders();
+                tdr = rm.openFile(inputFilename);
 
-            // Triplify if we validate
-            if (triplify & validationGood) {
 
-                Mapping mapping = new Mapping();
-                addMappingRules(new Digester(), mapping);
-                triplifyGood = mapping.run(validation, new triplifier(project_code + "_output", outputFolder), project_code);
-                mapping.print();
+                // Validation
+                validation = new Validation();
+                addValidationRules(new Digester(), validation);
+                validation.run(tdr, project_code + "_output", outputFolder);
+                validationGood = validation.printMessages();
 
-                // Upload after triplifying
-                if (upload & triplifyGood) {
-                    Fims fims = new Fims(mapping);
-                    addFimsRules(new Digester(), fims);
-                    fims.run(bcidConnector, project_code);
-                    fims.print();
+                // Triplify if we validate
+                if (triplify & validationGood) {
 
-                    if (write_spreadsheet)
-                        fimsPrinter.out.println("\tspreadsheet = " + fims.write());
+                    Mapping mapping = new Mapping();
+                    addMappingRules(new Digester(), mapping);
+                    triplifyGood = mapping.run(validation, new triplifier(project_code + "_output", outputFolder), project_code);
+                    mapping.print();
+
+                    // Upload after triplifying
+                    if (upload & triplifyGood) {
+                        Fims fims = new Fims(mapping);
+                        addFimsRules(new Digester(), fims);
+                        fims.run(bcidConnector, project_code);
+                        fims.print();
+
+                        if (write_spreadsheet)
+                            fimsPrinter.out.println("\tspreadsheet = " + fims.write());
+                    }
                 }
+            } catch (Exception e) {
+                //System.out.println("HERE");
+                //e.printStackTrace();
+                throw new FIMSException(e.getMessage(),e);
             }
 
         } finally {
@@ -337,14 +362,14 @@ public class process {
                     username,
                     password
             );
-        } catch (Exception e) {
+        } catch (FIMSException e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());
             System.exit(-1);
         }
 
         try {
             p.runAll();
-        } catch (Exception e) {
+        } catch (FIMSException e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());
             //e.printStackTrace();
             System.exit(-1);

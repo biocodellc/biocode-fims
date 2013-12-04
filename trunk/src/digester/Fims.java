@@ -41,14 +41,6 @@ public class Fims implements RendererInterface {
      */
     public boolean run(bcidConnector bcidConnector, String project_code) throws Exception {
 
-
-        // Check that the user that is logged in also owns the project_code
-        try {
-            bcidConnector.validateProject(project_code);
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
-
         uploader = new uploader(
                 metadata.getTarget(),
                 new File(mapping.getTriplifier().getTripleOutputFile()));
