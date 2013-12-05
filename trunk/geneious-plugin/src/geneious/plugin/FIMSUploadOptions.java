@@ -25,8 +25,9 @@ public class FIMSUploadOptions extends Options {
         usernameOption = addStringOption("username", "Username:", "");
         passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
-        uploadOption.addDependent(usernameOption, true);
-        uploadOption.addDependent(passwordOption, true);
-        //configOption.setAdvanced(true);
+        // Code for adding user/password as dependent on upload being checked
+        //uploadOption.addDependent(usernameOption, true);
+        //uploadOption.addDependent(passwordOption, true);
+
     }
 }
