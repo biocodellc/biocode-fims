@@ -10,7 +10,7 @@ public class FIMSUploadOptions extends Options {
     StringOption projectCodeOption;
     FileSelectionOption sampleDataOption;
     BooleanOption uploadOption;
-    StringOption passwordOption;
+    PasswordOption passwordOption;
     StringOption usernameOption;
     LabelOption labelOption;
 
@@ -23,9 +23,10 @@ public class FIMSUploadOptions extends Options {
 
         labelOption = (LabelOption) addLabel("Username/password only necessary for uploading");
         usernameOption = addStringOption("username", "Username:", "");
-        passwordOption = addStringOption("password", "Password:", "");
+        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
-
+        uploadOption.addDependent(usernameOption, true);
+        uploadOption.addDependent(passwordOption, true);
         //configOption.setAdvanced(true);
     }
 }
