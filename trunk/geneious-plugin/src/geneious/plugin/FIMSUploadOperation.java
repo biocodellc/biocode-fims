@@ -11,8 +11,11 @@ import settings.FIMSException;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -132,7 +135,11 @@ public class FIMSUploadOperation extends DocumentOperation {
                 process.runAll();
             } catch (FIMSException e) {
                 //Dialogs.showTextFieldDialog("Error Message", e.getMessage().toString(), null, null);
-                return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, "Initialization Error: " + e.getMessage()));
+                StringWriter stacktrace = new StringWriter();
+                e.printStackTrace(new PrintWriter(stacktrace));
+                String logText = "Initialization Error: " + e.getMessage();
+                logText += "<br><br><strong>Details</strong>:<br>" + stacktrace;
+                return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, logText));
             }
 
             return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));
@@ -141,5 +148,15 @@ public class FIMSUploadOperation extends DocumentOperation {
         }
     }
 
+    public static void displayExceptionDialog(Exception exception) {
+        displayExceptionDialog("Error", exception.getMessage(), exception, null);
+    }
 
+    public static void displayExceptionDialog(String title, String message, Exception exception, Component owner) {
+        StringWriter stacktrace = new StringWriter();
+        exception.printStackTrace(new PrintWriter(stacktrace));
+        Dialogs.DialogOptions dialogOptions = new Dialogs.DialogOptions(Dialogs.OK_ONLY, title, owner, Dialogs.DialogIcon.WARNING);
+        dialogOptions.setMoreOptionsButtonText("Show details...", "Hide details...");
+        Dialogs.showMoreOptionsDialog(dialogOptions, message, stacktrace.toString());
+    }
 }
