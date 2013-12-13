@@ -6,7 +6,9 @@ STEP 1: Get the latest copy of the Indo Pacific Spreadsheet Template which can b
 
 STEP 2: Fill in your data according to the instructions on the Instructions Tab from the above spreadsheet
 
-STEP 3: Install the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Biocode FIMS Geneious Plugin] and Load Data
+STEP 3: Install the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Biocode FIMS Geneious Plugin] 
+
+STEP 4: Run the plugin by going to Tools -> Upload to Biocode Fims
 
   * Use the "DEMOH" project to test validation and upload functionality
   * Obtain the username/password by emailing jdeck@berkeley.edu
