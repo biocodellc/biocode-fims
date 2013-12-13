@@ -2,7 +2,7 @@
 
 = Getting Started with the Biocode FIMS Validator (For the IndoPacificDB Working Group) =
 
-STEP 1: Get the latest copy of the Indo Pacific Spreadsheet Template which can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v7_2.xlsx here]
+STEP 1: Get the latest copy of the Indo Pacific Spreadsheet Template which can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v7_3.xlsx here]
 
 STEP 2: Fill in your data according to the instructions on the Instructions Tab from the above spreadsheet
 
