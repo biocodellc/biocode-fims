@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
+import sun.security.util.Password;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -35,7 +36,7 @@ public class process {
 
 
     /**
-     * run.process is the main function for validating, triplifying, & uploading fims data
+     * Setup class variables for processing FIMS data.
      *
      * @param inputFilename     The data to run.process, usually an Excel spreadsheet
      * @param outputFolder      Where to store output files
@@ -69,9 +70,10 @@ public class process {
 
     /**
      * runAll method is designed to go through entire fims run.process: validate, triplify, upload
+     * TODO: clean up FIMSExceptions to throw only unexpected errors so they can be handled more elegantly
      */
     public void runAll() throws FIMSException {
-
+           //if (1==1) throw new FIMSException("TEST exception handling");
         boolean validationGood = true;
         boolean triplifyGood = true;
         boolean updateGood = true;
@@ -103,6 +105,7 @@ public class process {
             try {
                 bcidConnector.validateProject(project_code);
             } catch (Exception e) {
+                //e.printStackTrace();
                 throw new FIMSException("The project_code (" + project_code + ") and user (" + username + ") you indicated are not associated.  Please make sure that you are using the correct project code and that it is associated with your login name", e);
             }
 
@@ -148,9 +151,7 @@ public class process {
                     }
                 }
             } catch (Exception e) {
-                //System.out.println("HERE");
-                //e.printStackTrace();
-                throw new FIMSException(e.getMessage(),e);
+                throw new FIMSException(e.getMessage(), e);
             }
 
         } finally {
@@ -319,8 +320,6 @@ public class process {
 
         if (cl.hasOption("d")) {
             project_code = "DEMOH";
-            //configuration = "sampledata/indoPacificConfiguration.xml";
-            //input_file = "sampledata/Apogon_indoPacificTemplate_v3.xlsx";
             output_directory = defaultOutputDirectory;
             triplify = true;
             upload = true;
@@ -348,7 +347,6 @@ public class process {
             return;
         }
 
-        // TODO: create username/password combinations for upload script
         // Run the processor
         process p = null;
         try {

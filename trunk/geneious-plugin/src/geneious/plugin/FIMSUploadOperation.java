@@ -6,11 +6,11 @@ import com.biomatters.geneious.publicapi.documents.DocumentUtilities;
 import com.biomatters.geneious.publicapi.plugin.*;
 import com.biomatters.geneious.publicapi.utilities.FileUtilities;
 import jebl.util.ProgressListener;
+import org.gbif.utils.text.EmailUtils;
 import run.process;
 import settings.FIMSException;
 import settings.fimsInputter;
 import settings.fimsPrinter;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Control the operation of the BiocodeFIMS upload operation, handling feedback from the system such as Warning
+ * Messages and redirecting output to appropriate places in the Geneious environment.
  * @author Matthew Cheung
  */
 public class FIMSUploadOperation extends DocumentOperation {
@@ -34,6 +36,7 @@ public class FIMSUploadOperation extends DocumentOperation {
     public String getHelp() {
         return null;
     }
+
 
     @Override
     public DocumentSelectionSignature[] getSelectionSignatures() {
@@ -134,6 +137,7 @@ public class FIMSUploadOperation extends DocumentOperation {
                 process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password);
                 process.runAll();
             } catch (FIMSException e) {
+                e.printStackTrace();
                 //Dialogs.showTextFieldDialog("Error Message", e.getMessage().toString(), null, null);
                 StringWriter stacktrace = new StringWriter();
                 e.printStackTrace(new PrintWriter(stacktrace));
@@ -151,6 +155,7 @@ public class FIMSUploadOperation extends DocumentOperation {
     public static void displayExceptionDialog(Exception exception) {
         displayExceptionDialog("Error", exception.getMessage(), exception, null);
     }
+
 
     public static void displayExceptionDialog(String title, String message, Exception exception, Component owner) {
         StringWriter stacktrace = new StringWriter();

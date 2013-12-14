@@ -292,6 +292,7 @@ public class bcidConnector {
         }
          responseCode = conn.getResponseCode();
         //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
+
         //System.out.println("Response Code : " + responseCode);
 
         BufferedReader in =
