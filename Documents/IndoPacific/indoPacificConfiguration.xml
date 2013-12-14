@@ -1,4 +1,48 @@
 <?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE fims [
+        <!ELEMENT fims (metadata|validation|mapping)*>
+        <!ATTLIST fims
+                xmlns:xsi CDATA #REQUIRED>
+        <!ELEMENT metadata (#PCDATA)>
+        <!ATTLIST metadata
+                doi CDATA #REQUIRED
+                shortname CDATA #REQUIRED
+                eml_location CDATA #REQUIRED
+                target CDATA #REQUIRED>
+        <!ELEMENT validation (worksheet|lists)*>
+        <!ELEMENT worksheet (rule)*>
+        <!ATTLIST worksheet
+                sheetname CDATA #REQUIRED>
+        <!ELEMENT rule (field)*>
+        <!ATTLIST rule
+                column CDATA #IMPLIED
+                level CDATA #REQUIRED
+                list CDATA #IMPLIED
+                type CDATA #REQUIRED>
+        <!ELEMENT field (#PCDATA)>
+        <!ELEMENT lists (list)*>
+        <!ELEMENT list (field)*>
+        <!ATTLIST list
+                alias CDATA #REQUIRED>
+        <!ELEMENT mapping (entity|relation)*>
+        <!ELEMENT entity (attribute)*>
+        <!ATTLIST entity
+                conceptAlias CDATA #REQUIRED
+                conceptURI CDATA #REQUIRED
+                entityId CDATA #REQUIRED
+                worksheet CDATA #REQUIRED
+                worksheetUniqueKey CDATA #REQUIRED>
+        <!ELEMENT attribute (#PCDATA)>
+        <!ATTLIST attribute
+                column CDATA #REQUIRED
+                datatype CDATA #IMPLIED
+                uri CDATA #REQUIRED>
+        <!ELEMENT relation (subject|predicate|object)*>
+        <!ELEMENT subject (#PCDATA)>
+        <!ELEMENT predicate (#PCDATA)>
+        <!ELEMENT object (#PCDATA)>
+        ]>
 <fims xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
 
     <metadata

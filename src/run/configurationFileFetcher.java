@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Class that handles getting configuration files specified by BCID projectService.
- * The BCID system handles what project configuration files are associated with each project
+ * Class that handles getting configuration files.  Configuration files are stored as BCID/ARKs and thus this class
+ * needs to handle redirection when fetching appropriate configuration files.
  */
 public class configurationFileFetcher {
     private String project_code;
@@ -80,7 +80,7 @@ public class configurationFileFetcher {
         } catch (Exception e) {
             throw new IOException("Unable to create configuration file", e);
         }
-       //System.out.println("\tLoading configuration file at " + outputFile.getAbsolutePath());
+        //System.out.println("\tLoading configuration file at " + outputFile.getAbsolutePath());
         FileOutputStream os = new FileOutputStream(outputFile);
         try {
             byte[] buffer = new byte[1024];
@@ -94,24 +94,10 @@ public class configurationFileFetcher {
             os.flush();
             os.close();
         } catch (IOException e) {
-            throw new Exception("Unable to get configuration file, server down or network error ",e);
+            throw new Exception("Unable to get configuration file, server down or network error ", e);
         }
     }
 
-
-    public static void main(String[] args) {
-        configurationFileFetcher cFF = null;
-        String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
-
-        try {
-            cFF = new configurationFileFetcher("DEMOH", defaultOutputDirectory);
-            System.out.println(readFile(cFF.getOutputFile()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
 
     /**
      * Readfile method -- used as a convenience in this class for testing.
@@ -132,6 +118,20 @@ public class configurationFileFetcher {
         }
 
         return stringBuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        configurationFileFetcher cFF = null;
+        String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
+
+        try {
+            cFF = new configurationFileFetcher("DEMOH", defaultOutputDirectory);
+            System.out.println(readFile(cFF.getOutputFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
 }

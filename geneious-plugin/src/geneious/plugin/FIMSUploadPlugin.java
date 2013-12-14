@@ -13,6 +13,11 @@ public class FIMSUploadPlugin extends GeneiousPlugin {
     }
 
     @Override
+    public String getEmailAddressForCrashes() {
+        return "jdeck@berkeley.edu";
+    }
+
+    @Override
     public String getDescription() {
         return "Validate, Triplify and Upload Biocode FIMS data";
     }

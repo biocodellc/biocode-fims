@@ -1,6 +1,7 @@
 package fims;
 
 import com.hp.hpl.jena.rdf.model.*;
+import com.hp.hpl.jena.util.FileManager;
 import digester.QueryWriter;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -16,7 +17,6 @@ public class fimsModel {
     String depends_on = "http://biscicol.org/terms/index.html#depends_on";
     int depth = 1;
     int countRows = 0;
-    // int countProperties = 0; // the number of properties for each object
 
     QueryWriter queryWriter;
     Row row;    // class level variable we use to assign values to using various methods here
@@ -142,5 +142,6 @@ public class fimsModel {
     public String toExcel() throws Exception {
         return queryWriter.write();
     }
+
 
 }

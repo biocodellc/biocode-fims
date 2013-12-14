@@ -142,7 +142,7 @@ public class QueryWriter {
 
         // Set the value conditionally, we can specify datatypes in the configuration file so interpret them
         // as appropriate here.
-        if (datatype.equals("integer")) {
+        if (datatype != null && datatype.equals("integer")) {
             //fimsPrinter.out.println("value = " + value);
             //Its a number(int or float).. Excel treats both as numeric
             HSSFCellStyle style = (HSSFCellStyle) wb.createCellStyle();
