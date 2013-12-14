@@ -2,8 +2,6 @@
 
 <!DOCTYPE fims [
         <!ELEMENT fims (metadata|validation|mapping)*>
-        <!ATTLIST fims
-                xmlns:xsi CDATA #REQUIRED>
         <!ELEMENT metadata (#PCDATA)>
         <!ATTLIST metadata
                 doi CDATA #REQUIRED
@@ -43,7 +41,7 @@
         <!ELEMENT predicate (#PCDATA)>
         <!ELEMENT object (#PCDATA)>
         ]>
-<fims xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+<fims>
 
     <metadata
             doi="a doi"
