@@ -73,7 +73,7 @@ public class process {
      * TODO: clean up FIMSExceptions to throw only unexpected errors so they can be handled more elegantly
      */
     public void runAll() throws FIMSException {
-           //if (1==1) throw new FIMSException("TEST exception handling");
+         //if (1==1) throw new FIMSException("TEST exception handling");
         boolean validationGood = true;
         boolean triplifyGood = true;
         boolean updateGood = true;
