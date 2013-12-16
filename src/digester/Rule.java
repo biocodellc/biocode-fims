@@ -350,17 +350,16 @@ public class Rule {
         Boolean maximumExists = checkColumnExists(maximum);
         // No warning message if neither exist
         if (!minimumExists && !maximumExists) {
-            messages.addLast(new RowMessage(
-                    "Unable to run minimumMaximumNumberCheck rule since Neither " + minimum + " or " + maximum + " columns exist",
-                    RowMessage.WARNING));
+           // If neither minimum or maximum exist then just ignore this
+           // messages.addLast(new RowMessage(
+           //         "Unable to run minimumMaximumNumberCheck rule since Neither " + minimum + " or " + maximum + " columns exist",
+            //        RowMessage.WARNING));
             return;
         } else if (!minimumExists && maximumExists) {
-            messages.addLast(new RowMessage("Unable to run minimumMaximumNumber check because " + minimum +
-                    " does not exist", RowMessage.WARNING));
+            messages.addLast(new RowMessage("Column " + maximum + " exists but must have corresponding column " + minimum, RowMessage.WARNING));
             return;
         } else if (minimumExists && !maximumExists) {
-            messages.addLast(new RowMessage("Unable to run minimumMaximumNumber check because " + maximum +
-                    " does not exist", RowMessage.WARNING));
+            messages.addLast(new RowMessage("Column " + minimum + " exists but must have corresponding column " + maximum, RowMessage.WARNING));
             return;
         }
 
@@ -784,7 +783,8 @@ public class Rule {
         // First check that this column exists before running this rule
         Boolean columnExists = checkColumnExists(getColumn());
         if (!columnExists) {
-            messages.addLast(new RowMessage("Unable to run checkInXMLFields since column name " + getColumn() + " does not exist", RowMessage.WARNING));
+            // No need to return a message here if column does not exist
+            //messages.addLast(new RowMessage("Column name " + getColumn() + " does not exist", RowMessage.WARNING));
             return;
         }
 

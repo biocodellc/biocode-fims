@@ -41,6 +41,7 @@ public class configurationFileFetcher {
         String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
 
         // Setup connection
+        HttpURLConnection.setFollowRedirects(true);
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(5000);
