@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
+<!--Automated DocType generation using IntelliJ, some versions of Java require this doctype to be inserted-->
 <!DOCTYPE fims [
         <!ELEMENT fims (metadata|validation|mapping)*>
         <!ELEMENT metadata (#PCDATA)>
