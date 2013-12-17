@@ -3,6 +3,8 @@ package digester;
 import settings.fimsPrinter;
 
 import java.io.PrintWriter;
+import java.util.*;
+import java.util.List;
 
 /**
  * Attribute representation
@@ -44,7 +46,6 @@ public class Attribute {
         fimsPrinter.out.println("    column=" + column);
         fimsPrinter.out.println("    uri=" + uri);
         fimsPrinter.out.println("    datatype=" + datatype);
-
     }
 
     /**
@@ -52,19 +53,24 @@ public class Attribute {
      *
      * @param pw       PrintWriter used to write output to.
      * @param parent
+     * @param colNames
      */
-    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
+    public void printD2RQ(PrintWriter pw, Object parent, List<String> colNames) throws Exception {
+
         String classMap = ((Entity) parent).classMap();
         String table = ((Entity) parent).getWorksheet();
 
-        pw.println("map:" + classMap + "_" + column + " a d2rq:PropertyBridge;");
-        pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
-        pw.println("\td2rq:property <" + uri + ">;");
-        pw.println("\td2rq:column \"" + table + "." + column + "\";");
-        //if (datatype != null) {
-        //    pw.println("\td2rq:datatype " + datatype + ";");
-        //}
-        pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
-        pw.println("\t.");
+        // Only print this column if it is in a list of colNames
+        if (colNames.contains(column)) {
+            pw.println("map:" + classMap + "_" + column + " a d2rq:PropertyBridge;");
+            pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
+            pw.println("\td2rq:property <" + uri + ">;");
+            pw.println("\td2rq:column \"" + table + "." + column + "\";");
+            //if (datatype != null) {
+            //    pw.println("\td2rq:datatype " + datatype + ";");
+            //}
+            pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
+            pw.println("\t.");
+        }
     }
 }

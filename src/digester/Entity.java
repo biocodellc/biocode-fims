@@ -3,7 +3,7 @@ package digester;
 import settings.fimsPrinter;
 
 import java.io.PrintWriter;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Entity representation
@@ -14,7 +14,6 @@ public class Entity {
     private String worksheetUniqueKey;
     private String conceptAlias;
     private String conceptURI;
-    //private String bcid;
     private String entityId;
 
     private final LinkedList<Attribute> attributes = new LinkedList<Attribute>();
@@ -119,7 +118,7 @@ public class Entity {
     public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
         pw.println("map:" + classMap() + " a d2rq:ClassMap;");
         pw.println("\td2rq:dataStorage " + "map:database;");
-        pw.println(((Mapping)parent).getPersistentIdentifier(this));
+        pw.println(((Mapping) parent).getPersistentIdentifier(this));
         pw.println("\td2rq:class <" + this.conceptURI + ">;");
         // ensures non-null values
         pw.println("\td2rq:condition \"" + getColumn() + " <> ''\";");
@@ -128,10 +127,12 @@ public class Entity {
         //pw.println(getExtraConditions());
         pw.println("\t.");
 
+        // Get a list of colNames that we know are good from the spreadsheet
+        java.util.List<String> colNames = ((Mapping) parent).getColNames();
         // Loop through attributes associated with this Entity
         if (attributes.size() > 0) {
             for (Attribute attribute : attributes)
-                attribute.printD2RQ(pw, this);
+                attribute.printD2RQ(pw, this, colNames);
         }
     }
 
