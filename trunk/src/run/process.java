@@ -124,19 +124,26 @@ public class process {
                 rm.loadReaders();
                 tdr = rm.openFile(inputFilename);
 
-
                 // Validation
                 validation = new Validation();
                 addValidationRules(new Digester(), validation);
                 validation.run(tdr, project_code + "_output", outputFolder);
                 validationGood = validation.printMessages();
 
+                // Print out column names!!
+                //System.out.println(validation.getTabularDataReader().getColNames());
+                //if (1==1) return;
+
                 // Triplify if we validate
                 if (triplify & validationGood) {
 
                     Mapping mapping = new Mapping();
                     addMappingRules(new Digester(), mapping);
-                    triplifyGood = mapping.run(validation, new triplifier(project_code + "_output", outputFolder), project_code);
+                    triplifyGood = mapping.run(
+                            validation,
+                            new triplifier(project_code + "_output", outputFolder),
+                            project_code,
+                            validation.getTabularDataReader().getColNames());
                     mapping.print();
 
                     // Upload after triplifying

@@ -9,9 +9,8 @@ import settings.Connection;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.List;
 
 /**
  * Mapping builds the D2RQ structure for converting between relational format to RDF.
@@ -23,9 +22,14 @@ public class Mapping implements RendererInterface {
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
     private String project_code;
+    private List<String> colNames;
 
     public Mapping() throws Exception {
 
+    }
+
+    public List<String> getColNames() {
+        return colNames;
     }
 
     public triplifier getTriplifier() {
@@ -152,9 +156,10 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(Validation v, triplifier t, String project_code) throws Exception {
+    public boolean run(Validation v, triplifier t, String project_code, List<String> colNames) throws Exception {
         fimsPrinter.out.println("Converting to RDF Triples ...");
         this.project_code = project_code;
+        this.colNames = colNames;
         triplifier = t;
         // Create a connection to a SQL Lite Instance
         try {

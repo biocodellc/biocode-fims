@@ -23,7 +23,6 @@ import java.io.PrintWriter;
 public class triplifier {
 
     private String outputFolder;
-
     private Model model;
     private String tripleOutputFile;
     private String updateOutputFile;
@@ -77,7 +76,6 @@ public class triplifier {
         // Write the model
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),
                 FileUtils.langN3, "urn:x-biscicol:");
-
         // Write the model as simply a Turtle file
         File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".ttl", outputFolder);
         FileOutputStream fos = new FileOutputStream(tripleFile);
