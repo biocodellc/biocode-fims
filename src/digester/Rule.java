@@ -350,9 +350,9 @@ public class Rule {
         Boolean maximumExists = checkColumnExists(maximum);
         // No warning message if neither exist
         if (!minimumExists && !maximumExists) {
-           // If neither minimum or maximum exist then just ignore this
-           // messages.addLast(new RowMessage(
-           //         "Unable to run minimumMaximumNumberCheck rule since Neither " + minimum + " or " + maximum + " columns exist",
+            // If neither minimum or maximum exist then just ignore this
+            // messages.addLast(new RowMessage(
+            //         "Unable to run minimumMaximumNumberCheck rule since Neither " + minimum + " or " + maximum + " columns exist",
             //        RowMessage.WARNING));
             return;
         } else if (!minimumExists && maximumExists) {
@@ -684,18 +684,47 @@ public class Rule {
 
 
     /**
-     * Check if this is a number
+     * Check if this is a number.  From the checkValidNumberSQL javadoc text:
+     * Method that uses SQL to check for valid numbers.   This uses absolute value function in SQLLite
+     * and recognizes the following as non-numeric values ("abc","15a","z159")
+     * However, the following are recognized as numeric values ("15%", "100$", "1.02E10")
      */
     public void isNumber() throws Exception {
-
-        for (int j = 1; j <= worksheet.getNumRows(); j++) {
-            String rowValue = worksheet.getStringValue(getColumn(), j);
-            if (!checkValidNumber(rowValue)) {
-                addMessage(j, rowValue + " not a number for " + getColumn());
-            }
-        }
+        boolean validNumber = checkValidNumberSQL(getColumn());
     }
 
+    /**
+     * Method that uses SQL to check for valid numbers.   This uses absolute value function in SQLLite
+     * and recognizes the following as non-numeric values ("abc","15a","z159")
+     * However, the following are recognized as numeric values ("15%", "100$", "1.02E10")
+     *
+     * @param thisColumn
+     * @return
+     * @throws Exception
+     */
+    private boolean checkValidNumberSQL(String thisColumn) throws Exception {
+        boolean validNumber = true;
+        ResultSet resultSet;
+        Statement statement = connection.createStatement();
+
+        String msg;
+        try {
+            String sql = "select " + thisColumn + " from  " + digesterWorksheet.getSheetname() +
+                    " where abs(" + thisColumn + ") == 0 AND " +
+                    "trim(" + thisColumn + ") != '0' AND " +
+                    thisColumn + " != \"\";";
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
+                addMessage(msg);
+                validNumber = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("isNumber Check exception", e);
+        }
+        return validNumber;
+    }
 
     /**
      * Check that this is a valid Number, for internal use only
@@ -726,7 +755,8 @@ public class Rule {
     /**
      * Checks for valid lat/lng values and warns about maxerrorinmeters and horizontaldatum values
      */
-    public void DwCLatLngChecker() throws Exception {
+    public void DwCLatLngChecker
+    () throws Exception {
         String msg = "";
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
             Double latValue = null;
@@ -773,7 +803,8 @@ public class Rule {
      * checkInXMLFields checks that Rows under the "name" attribute column in Excel Spreadsheet
      * match values in the XML <field> categories
      */
-    public void checkInXMLFields() throws Exception {
+    public void checkInXMLFields
+    () throws Exception {
         StringBuilder lookupSB = new StringBuilder();
         java.util.List<String> listFields;
         String msg;
@@ -814,8 +845,12 @@ public class Rule {
 
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
-                addMessage(msg, listFields, null);
+                String value = resultSet.getString(getColumn()).trim();
+                // Only display messages for items that exist, that is empty cell contents are an approved value
+                if (!value.equals("")) {
+                    msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
+                    addMessage(msg, listFields, null);
+                }
             }
 
         } catch (SQLException e) {
@@ -833,7 +868,8 @@ public class Rule {
     /**
      * RequiredColumns looks for required columns in spreadsheet by looking for them in the <field> tags
      */
-    public void RequiredColumns() {
+    public void RequiredColumns
+    () {
         Statement statement = null;
         ResultSet rs = null;
         try {
@@ -842,7 +878,7 @@ public class Rule {
             e.printStackTrace();
         }
 
-           // Set text for this warning values
+        // Set text for this warning values
         String levelValue = "required";
         if (getMessageLevel() == RowMessage.WARNING) {
             levelValue = "suggested";
@@ -883,9 +919,8 @@ public class Rule {
             }
         }
 
-
         if (!strNotFound.equals("")) {
-            msg = "Did not find " + levelValue + " columns: " + strNotFound + " (make sure no spaces at end of name)";
+            msg = "Did not find " + levelValue + " columns: " + strNotFound + " (make sure there are no spaces at end of column name)";
             addMessage(msg);
         }
         try {
@@ -900,7 +935,8 @@ public class Rule {
      *
      * @return
      */
-    private java.util.List getListElements() {
+    private java.util.List getListElements
+    () {
         return digesterWorksheet.getValidation().findList(getList()).getFields();
     }
 
@@ -910,7 +946,10 @@ public class Rule {
      * @param row
      * @param message
      */
-    private void addMessage(Integer row, String message) {
+    private void addMessage
+    (Integer
+             row, String
+            message) {
         messages.addLast(new RowMessage(message, getMessageLevel(), row));
     }
 
@@ -919,11 +958,17 @@ public class Rule {
      *
      * @param message
      */
-    private void addMessage(String message) {
+    private void addMessage
+    (String
+             message) {
         messages.addLast(new RowMessage(message, getMessageLevel()));
     }
 
-    private void addMessage(String message, java.util.List list, Integer row) {
+    private void addMessage
+            (String
+                     message, java.util.List
+                    list, Integer
+                    row) {
         messages.addLast(new RowMessage(message, list, getMessageLevel(), row));
     }
 
@@ -932,7 +977,8 @@ public class Rule {
      *
      * @return
      */
-    private Integer getMessageLevel() {
+    private Integer getMessageLevel
+    () {
         if (this.getLevel().equals("warning"))
             return RowMessage.WARNING;
         else
@@ -946,7 +992,9 @@ public class Rule {
      * @return
      * @throws SQLException
      */
-    private boolean checkColumnExists(String column) throws SQLException {
+    private boolean checkColumnExists
+    (String
+             column) throws SQLException {
 
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("SELECT sql FROM sqlite_master WHERE sql like '%" + column + "%'");
@@ -957,7 +1005,8 @@ public class Rule {
             return false;
     }
 
-    public void close() {
+    public void close
+            () {
         try {
             connection.close();
         } catch (SQLException e) {

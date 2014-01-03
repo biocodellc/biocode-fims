@@ -1,16 +1,42 @@
+import org.apache.commons.cli.*;
 import settings.*;
 
 /**
  * Code to create a project.
- * Currently this is meant to be run by an administrator in order to setup projects.  Ultimately, there will
- * be a web-interface for other administrators to create projects
+ * Ultimately, there will be a web-interface for administrators to create projects.
+ * For now, we define a couple of project types statically with fixed pointers to BCID
+ * resources.  The BCID resources are immutable so the integer reference here presumed to be safe
+ *
  */
 public class createProject {
 
+    static Options opts = new Options();
+
     bcidConnector bcidConnector;
     String project_code;
-    // References to the BCID group Elements (Resource Types)
-    Integer[] groupElements = new Integer[]{34, 10, 24, 36, 37, 11, 15, 13, 2};
+
+    // References to biocode-fims Resources Types (within BCID System)
+    static Integer[] biocodeFIMSGroupElements = new Integer[]{
+            34, // Resource
+            10, // Location
+            24, // Identification
+            36, // NucleicAcidSequenceSource
+            37, // Sequencing
+            11, // Agent
+            15, // MaterialSample
+            13, // InformationContentEntity
+            2,  // Event
+            25  // Taxon
+    };
+
+    // References to DwC Group Elements (within BCID System)
+    static Integer[] dwcGroupElements = new Integer[]{
+            10, // Location
+            24, // Identification
+            2,  // Event
+            25, // Taxon
+            23  // Occurrence
+    };
 
 
     /**
@@ -46,31 +72,78 @@ public class createProject {
      * @param args
      */
     public static void main(String[] args) {
-        //TODO: Create command-line parser using the following arguments
-        String username = "demo";
-        String password = "demo";
-        String project_code = "DEMOH";
+        // A reference to this class
+        createProject p = null;
+
+        // Add the options for the program
+        opts.addOption("h", "help", false, "Print this help message and exit");
+        opts.addOption("u", "username", true, "The BCID application username");
+        opts.addOption("p", "password", true, "The BCID application password");
+        opts.addOption("c", "project_code", true, "Your proposed project code.  Must be between 4 and 6 characters " +
+                "and NOT exist within the BCID system");
+        opts.addOption("t", "type", true, "{dwc|biocode-fims} indicates the types of classes to associate " +
+                "with this project");
+
+        // Create the commands parser and parse the command line arguments.
+        CommandLineParser clp = new GnuParser();
+        CommandLine cl = null;
+        try {
+            cl = clp.parse(opts, args);
+        } catch (UnrecognizedOptionException e) {
+            exit("Error: " + e.getMessage());
+        } catch (ParseException e) {
+            exit("Error: " + e.getMessage());
+        }
+
+        // If help was requested, print the help message and exit.
+        if (cl.hasOption("h")) {
+            exit("");
+        }
+
+        String missingOptions = "";
+        if (!cl.hasOption("u")) missingOptions += "username ";
+        if (!cl.hasOption("p")) missingOptions += "password ";
+        if (!cl.hasOption("c")) missingOptions += "project_code ";
+        if (!cl.hasOption("t")) missingOptions += "type ";
+
+        if (!missingOptions.equals("")) {
+            exit("Missing one or more options: " + missingOptions);
+        }
+
+        // Setup variables based on user input options
+        String username = cl.getOptionValue("u");
+        String password = cl.getOptionValue("p");
+        String project_code = cl.getOptionValue("c");
+        String type = cl.getOptionValue("t");
+
+
+        // Set the proper groupElement array
+        Integer[] groupElements = null;
+        if (type.equals("dwc")) {
+            groupElements = dwcGroupElements;
+        } else if (type.equals("biocode-fims")) {
+            groupElements = biocodeFIMSGroupElements;
+        } else {
+            exit("Did not recognize type = " + type);
+        }
 
         // Instantiate createProject object
-        createProject p = null;
         try {
             p = new createProject(project_code, username, password);
         } catch (Exception e) {
-            fimsPrinter.out.println("\tUnable to create project: " + e.getMessage());
-            return;
+            exit("Unable to create project: " + e.getMessage());
         }
 
+        // Create individual BCIDs that go with this project
         fimsPrinter.out.println("Creating BCIDs:");
-        for (Integer id : p.groupElements) {
+        for (Integer id : groupElements) {
             try {
                 fimsPrinter.out.println("\t" + p.createBCIDAndAssociate(id));
             } catch (Exception e) {
-                fimsPrinter.out.println("\tTrouble creating BCID: " + e.getMessage());
-                e.printStackTrace();
+                exit("\tTrouble creating BCID: " + e.getMessage());
             }
         }
         return;
-
     }
 
     /**
@@ -83,6 +156,18 @@ public class createProject {
         String bcid = bcidConnector.createBCID("", project_code + " group element", resourceType);
         bcidConnector.associateBCID(project_code, bcid);
         return bcid;
+    }
+
+    /**
+     * exit message
+     *
+     * @param message
+     */
+    private static void exit(String message) {
+        HelpFormatter helpf = new HelpFormatter();
+        fimsPrinter.out.println(message + "\n");
+        helpf.printHelp("createProject input_files", opts, true);
+        System.exit(-1);
     }
 
 }

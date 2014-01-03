@@ -136,16 +136,18 @@ public class Worksheet {
         for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
             Rule r = i.next();
 
-            // Run this particular rule                                                  d
+            // Run this particular rule
             try {
-                /*
+                 /*
                 //Text to show what rules are running (this is not necessary normally)
                 String message = "\trunning rule " + r.getType();
                 // Create a special connection to use here
                 if (r.getColumn() != null)
                     message += " for " + r.getColumn();
                 fimsPrinter.out.println(message);
-                */
+                 */
+
+
                 // Set the digester worksheet instance for this Rule
                 r.setDigesterWorksheet(this);
                 // Set the SQLLite reference for this Rule

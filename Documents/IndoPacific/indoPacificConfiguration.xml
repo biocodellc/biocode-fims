@@ -126,61 +126,85 @@
             </list>
 
             <list alias='country'>
-                <field>Afghanistan</field>
                 <field>American Samoa</field>
-                <field>Argentina</field>
                 <field>Australia</field>
-                <field>Belau</field>
-                <field>Belize</field>
-                <field>Bolivia</field>
-                <field>Brazil</field>
+                <field>Bahrain</field>
+                <field>Bangladesh</field>
+                <field>British Indian Ocean Territory</field>
+                <field>Brunei</field>
+                <field>Burma</field>
+                <field>Cambodia</field>
                 <field>Canada</field>
-                <field>Caroline Islands</field>
-                <field>Central African Republic</field>
+                <field>Chile</field>
                 <field>China</field>
+                <field>Christmas Island</field>
+                <field>Cocos (Keeling) Islands</field>
+                <field>Colombia</field>
                 <field>Comoros</field>
-                <field>Cook Islands</field>
                 <field>Costa Rica</field>
+                <field>Djibouti</field>
                 <field>Ecuador</field>
+                <field>Egypt</field>
+                <field>El Salvador</field>
+                <field>Eritrea</field>
                 <field>Fiji</field>
                 <field>French Polynesia</field>
-                <field>Guadeloupe</field>
                 <field>Guatemala</field>
-                <field>Guyana</field>
-                <field>Hawaii</field>
+                <field>Honduras</field>
+                <field>India</field>
                 <field>Indonesia</field>
+                <field>Iran</field>
                 <field>Iraq</field>
+                <field>Israel</field>
                 <field>Japan</field>
+                <field>Jordan</field>
                 <field>Kenya</field>
                 <field>Kiribati</field>
-                <field>Liberia</field>
-                <field>Locality Unknown</field>
+                <field>Kuwait</field>
                 <field>Madagascar</field>
                 <field>Malaysia</field>
+                <field>Maldives</field>
+                <field>Marshall Islands</field>
+                <field>Mauritius</field>
+                <field>Mayotte</field>
                 <field>Mexico</field>
-                <field>Micronesia, Federated States of</field>
-                <field>Myanmar</field>
+                <field>Micronesia</field>
+                <field>Mozambique</field>
+                <field>Nauru</field>
                 <field>New Zealand</field>
-                <field>North Pacific Ocean</field>
-                <field>Northern Mariana Islands</field>
+                <field>Nicaragua</field>
+                <field>North Korea</field>
+                <field>Oman</field>
+                <field>Pakistan</field>
                 <field>Palau</field>
                 <field>Panama</field>
                 <field>Papua New Guinea</field>
                 <field>Peru</field>
                 <field>Philippines</field>
-                <field>Saint Vincent and the Grenadines</field>
+                <field>Qatar</field>
+                <field>Reunion</field>
+                <field>Russia</field>
                 <field>Samoa</field>
+                <field>Saudi Arabia</field>
+                <field>Seychelles</field>
+                <field>Singapore</field>
                 <field>Solomon Islands</field>
+                <field>Somalia</field>
                 <field>South Africa</field>
-                <field>South Atlantic Ocean</field>
-                <field>South Pacific Ocean</field>
+                <field>South Korea</field>
+                <field>Sri Lanka</field>
+                <field>Sudan</field>
                 <field>Taiwan</field>
+                <field>Tanzania</field>
+                <field>Thailand</field>
+                <field>Timor L'este</field>
                 <field>Tonga</field>
-                <field>Uganda</field>
-                <field>United States</field>
+                <field>Tuvalu</field>
+                <field>United Arab Emirates</field>
+                <field>United States of America</field>
                 <field>Vanuatu</field>
-                <field>Venezuela</field>
                 <field>Vietnam</field>
+                <field>Yemen</field>
             </list>
         </lists>
 

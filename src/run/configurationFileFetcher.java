@@ -6,6 +6,7 @@ import settings.PathManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 /**
  * Class that handles getting configuration files.  Configuration files are stored as BCID/ARKs and thus this class
@@ -42,7 +43,7 @@ public class configurationFileFetcher {
 
         // Setup connection
         HttpURLConnection.setFollowRedirects(true);
-        URL url = new URL(urlString);
+        URL url = new URL(urlString );
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(5000);
         connection.setUseCaches(false);
@@ -67,11 +68,16 @@ public class configurationFileFetcher {
             // get the cookie if need, for login
             String cookies = connection.getHeaderField("Set-Cookie");
             // open the new connnection again
+            connection.setUseCaches(false);
+            connection.setDefaultUseCaches(false);
+            connection.addRequestProperty("Cache-Control", "no-cache");
+
             connection = (HttpURLConnection) new URL(newUrl).openConnection();
             connection.setRequestProperty("Cookie", cookies);
             connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
             connection.addRequestProperty("User-Agent", "Mozilla");
             connection.addRequestProperty("Referer", "google.com");
+
         }
         InputStream inputStream = connection.getInputStream();
 
