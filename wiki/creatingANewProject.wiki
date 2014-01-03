@@ -8,8 +8,8 @@ Creating a project creates a project code in the BCID system and also creates re
 
 Creating a new project can be done using the "createProject" executable in the java code-base.  Currently, this must be done by a system administrator and is not meant to be run by casual users.  Usage is:
 
-usage: createProject input_files [-c <arg>] [-h] [-p <arg>] [-t <arg>] [-u
-       <arg>]
+{{{
+usage: createProject input_files [-c <arg>] [-h] [-p <arg>] [-t <arg>] [-u <arg>]
  -c,--project_code <arg>   Your proposed project code.  Must be between 4
                            and 6 characters and NOT exist within the BCID
                            system
@@ -18,5 +18,6 @@ usage: createProject input_files [-c <arg>] [-h] [-p <arg>] [-t <arg>] [-u
  -t,--type <arg>           {dwc|biocode-fims} indicates the types of
                            classes to associate with this project
  -u,--username <arg>       The BCID application username
+}}}
 
 Usernames/passwords correspond to usernames/passwords in the BCID system.
