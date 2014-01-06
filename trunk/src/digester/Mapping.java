@@ -3,6 +3,8 @@ package digester;
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
+import settings.deepRoots;
+import settings.deepRootsReader;
 import settings.fimsPrinter;
 import triplify.triplifier;
 import settings.Connection;
@@ -18,6 +20,7 @@ import java.util.List;
 public class Mapping implements RendererInterface {
     public Connection connection;
 
+    protected deepRoots dRoots = null;
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
@@ -90,32 +93,8 @@ public class Mapping implements RendererInterface {
      */
     public String getPersistentIdentifier(Entity entity) throws Exception {
         //System.out.println(entity.getConceptAlias() + " " + entity.toString() + " " + entity.getColumn() + " " + entity.getConceptURI() + " " + entity.getWorksheetUniqueKey());
-        String bcid = lookupBCID(project_code, entity.getConceptAlias());
+        String bcid = dRoots.lookupPrefix(entity.getConceptAlias());
         return "\td2rq:uriPattern \"" + bcid + "@@" + entity.getColumn() + "@@\";";
-    }
-
-    /**
-     * Find the appropriate BCID for this project, calling the BCID projectService to find it.
-     *
-     * @param project_code defines the BCID project_code to lookup
-     * @param conceptAlias defines the alias to narrow this,  a one-word reference denoting a BCID
-     * @return returns the BCID for this project and conceptURI combination
-     */
-    private String lookupBCID(String project_code, String conceptAlias) throws Exception {
-        String html = null;
-        String projectService = "http://biscicol.org/id/projectService/";
-        String connectionURL = "";
-        try {
-            connectionURL = projectService + project_code + "/" + conceptAlias;
-            // set a 10 second timeout on this connection
-            html = Jsoup.connect(connectionURL).timeout(10000).get().body().html();
-        } catch (IOException e) {
-            throw new Exception("Unable to connect to BCID service to get your project's unique ID using connectionURL =  " +
-                    connectionURL +
-                    ". This is a required part of the triplification run process.  If this problem persists, contact the System Administrator", e);
-            //return "urn:x-biocode-fims";
-        }
-        return html;
     }
 
     /**
@@ -161,6 +140,10 @@ public class Mapping implements RendererInterface {
         this.project_code = project_code;
         this.colNames = colNames;
         triplifier = t;
+
+        // Create a deepRoots object based on results returned from the BCID deepRoots service
+        dRoots = new deepRootsReader().createRootData("http://biscicol.org/id/projectService/deepRoots/" + project_code);
+
         // Create a connection to a SQL Lite Instance
         try {
             this.connection = new Connection(v.getSqliteFile());

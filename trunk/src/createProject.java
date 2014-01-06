@@ -40,7 +40,12 @@ public class createProject {
 
 
     /**
-     * create authentication request object, which stores authentication credentials
+     * Create a Project in the BCID system.  This creates the project code.  Must first authenticate as a valid user
+     * before proceeding.
+     *
+     * Steps:
+     * 1. Create authentication request object, which stores authentication credentials
+     * 2. Create the project itself
      *
      * @param username
      * @param password
@@ -131,7 +136,8 @@ public class createProject {
         try {
             p = new createProject(project_code, username, password);
         } catch (Exception e) {
-            exit("Unable to create project: " + e.getMessage());
+            fimsPrinter.out.println("Unable to create project: " + e.getMessage());
+            System.exit(-1);
         }
 
         // Create individual BCIDs that go with this project
@@ -140,7 +146,8 @@ public class createProject {
             try {
                 fimsPrinter.out.println("\t" + p.createBCIDAndAssociate(id));
             } catch (Exception e) {
-                exit("\tTrouble creating BCID: " + e.getMessage());
+                fimsPrinter.out.println("\tTrouble creating BCID: " + e.getMessage());
+                System.exit(-1);
             }
         }
         return;
