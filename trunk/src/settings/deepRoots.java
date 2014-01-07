@@ -115,16 +115,18 @@ public class deepRoots {
     /**
      * Find the appropriate prefix for a concept contained in this file
      *
-     * @param conceptAlias defines the alias to narrow this,  a one-word reference denoting a BCID
+     * @param conceptUri defines the alias to narrow this,  a one-word reference denoting a BCID
      * @return returns the identifier for this conceptAlias in this DeepRoots file
      */
-    public String lookupPrefix(String conceptAlias) throws Exception {
+    public String lookupPrefix(String conceptUri) throws Exception {
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
-            if (pairs.getKey().equals(conceptAlias)) ;
-            return (String) pairs.getValue();
+            if (pairs.getKey().toString().trim().equals(conceptUri.trim())) {
+                return (String) pairs.getValue();
+            }
         }
+        System.out.println("\tWarning: " + conceptUri + " cannot be mapped in Deep Roots, using default ID namespace.");
         return null;
     }
 }

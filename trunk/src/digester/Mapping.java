@@ -93,7 +93,10 @@ public class Mapping implements RendererInterface {
      */
     public String getPersistentIdentifier(Entity entity) throws Exception {
         //System.out.println(entity.getConceptAlias() + " " + entity.toString() + " " + entity.getColumn() + " " + entity.getConceptURI() + " " + entity.getWorksheetUniqueKey());
-        String bcid = dRoots.lookupPrefix(entity.getConceptAlias());
+        String bcid = dRoots.lookupPrefix(entity.getConceptURI());
+        if (bcid == null) {
+            bcid = "urn:x-biscicol:" + entity.getConceptAlias() + ":";
+        }
         return "\td2rq:uriPattern \"" + bcid + "@@" + entity.getColumn() + "@@\";";
     }
 
