@@ -224,13 +224,7 @@
             <attribute column='monthEntered' datatype="integer" uri='urn:monthEntered'/>
             <attribute column='dayEntered' datatype="integer" uri='urn:dayEntered'/>
             <attribute column="ownerInstitutionCode" uri="http://rs.tdwg.org/dwc/terms/ownerInstitutionCode"/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Event"
-                conceptURI="http://purl.org/dc/dcmitype/Event"
-                entityId="2">
+
             <attribute column='yearCollected' datatype="integer" uri='urn:yearCollected'/>
             <attribute column='monthCollected' datatype="integer" uri='urn:monthCollected'/>
             <attribute column='dayCollected' datatype="integer" uri='urn:dayCollected'/>
@@ -242,13 +236,7 @@
             <attribute column='minimumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'/>
             <attribute column='maximumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'/>
             <attribute column='eventRemarks' uri='http://rs.tdwg.org/dwc/terms/eventRemarks'/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Location"
-                conceptURI="http://purl.org/dc/terms/Location"
-                entityId="3">
+
             <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
             <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
             <attribute column="coordinateUncertaintyInMeters"
@@ -256,24 +244,12 @@
             <attribute column="country" uri="http://rs.tdwg.org/dwc/terms/country"/>
             <attribute column='stateProvince' uri='http://rs.tdwg.org/dwc/terms/stateProvince'/>
             <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Identification"
-                conceptURI="http://rs.tdwg.org/dwc/terms/Identification"
-                entityId="4">
+
             <attribute column='identifiedBy' uri='http://rs.tdwg.org/dwc/terms/identifiedBy'/>
             <attribute column='yearIdentified' datatype="integer" uri='urn:yearIdentified'/>
             <attribute column='monthIdentified' datatype="integer" uri='urn:monthIdentified'/>
             <attribute column='dayIdentified' datatype="integer" uri='urn:dayIdentified'/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Taxon"
-                conceptURI="http://rs.tdwg.org/dwc/terms/Taxon"
-                entityId="5">
+
             <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'/>
             <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'/>
             <attribute column='vernacularName' uri='http://rs.tdwg.org/dwc/terms/vernacularName'/>
@@ -282,13 +258,7 @@
             <attribute column='class' uri='http://rs.tdwg.org/dwc/terms/class'/>
             <attribute column='order' uri='http://rs.tdwg.org/dwc/terms/order'/>
             <attribute column='family' uri='http://rs.tdwg.org/dwc/terms/family'/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Specimen"
-                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
-                entityId="6">
+
             <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'/>
             <attribute column='occurrenceID' uri='http://rs.tdwg.org/dwc/terms/occurrenceID'/>
             <attribute column='photograph' uri='http://purl.obolibrary.org/obo/IAO_0000185'/>
@@ -299,72 +269,14 @@
             <attribute column='weightUnit' uri='http://purl.obolibrary.org/obo/UO_0000002'/>
             <attribute column='length' uri='http://purl.obolibrary.org/obo/PATO_0000122'/>
             <attribute column='lengthUnit' uri='http://purl.obolibrary.org/obo/UO_0000001'/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="NucleicAcidSequenceSource"
-                conceptURI="http://gensc.org/ns/mixs/NucleicAcidSequenceSource"
-                entityId="7">
+
             <attribute column="geneticTissueType" uri="urn:geneticTissueType"/>
-        </entity>
-        <entity
-                worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
-                conceptAlias="Sequencing"
-                conceptURI="http://gensc.org/ns/mixs/Sequencing"
-                entityId="8">
+
             <attribute column="associatedSequences" uri="http://rs.tdwg.org/dwc/terms/associatedSequences"/>
             <attribute column="nucleicAcidExtraction" uri="http://gensc.org/ns/mixs/nucleicAcidExtraction"/>
             <attribute column="loci" uri="http://gensc.org/ns/mixs/targetGene"/>
         </entity>
-        <!--
-         1=Record
-        2=Event
-        3=Location
-        4=Identification
-        5=Taxon
-        6=MaterialSample
-        7=NucleicAcidSequenceSource
-        8=Sequencing
-        -->
-        <relation>
-            <subject>2</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>1</object>
-        </relation>
-        <relation>
-            <subject>3</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>2</object>
-        </relation>
-        <relation>
-            <subject>4</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>6</object>
-        </relation>
-        <relation>
-            <subject>5</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>4</object>
-        </relation>
-        <relation>
-            <subject>6</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>2</object>
-        </relation>
-        <relation>
-            <subject>7</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>6</object>
-        </relation>
-        <relation>
-            <subject>8</subject>
-            <predicate>bsc:depends_on</predicate>
-            <object>7</object>
-        </relation>
     </mapping>
-
 
 </fims>
 
