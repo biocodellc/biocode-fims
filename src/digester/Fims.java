@@ -1,6 +1,7 @@
 package digester;
 
 import com.hp.hpl.jena.util.FileManager;
+import com.sun.tools.internal.ws.processor.model.Model;
 import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
@@ -8,6 +9,7 @@ import fims.uploader;
 import settings.PathManager;
 import settings.bcidConnector;
 import settings.fimsPrinter;
+import triplify.triplifier;
 
 import java.io.File;
 import java.lang.String;
@@ -32,6 +34,14 @@ public class Fims implements RendererInterface {
 
     public void addMetadata(Metadata m) {
         metadata = m;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public uploader getUploader() {
+        return uploader;
     }
 
     /**
@@ -75,6 +85,7 @@ public class Fims implements RendererInterface {
             //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
             //fimsPrinter.out.println("\tBCID =  " + bcid);
             fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
+            fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
             fimsPrinter.out.println("\tSample query = " + uploader.getConnectionPoint());
             //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
         } else {
@@ -94,10 +105,12 @@ public class Fims implements RendererInterface {
     /**
      * Write FIMS output to a spreadsheet, using the filename input/output data from the mapping/triplifier instance
      */
-    public String write() throws Exception {
+    public fimsModel getFIMSModel(com.hp.hpl.jena.rdf.model.Model model, String filenamePrefix, String outputFolder) throws Exception {
+
         File file = PathManager.createUniqueFile(
-                mapping.getTriplifier().getFilenamePrefix() + ".xls",
-                mapping.getTriplifier().getOutputFolder());
+                filenamePrefix + ".xls",
+                outputFolder);
+
         String sheetname = mapping.getDefaultSheetName();
         // Create a queryWriter object
         QueryWriter queryWriter = new QueryWriter(
@@ -105,14 +118,14 @@ public class Fims implements RendererInterface {
                 sheetname,
                 file.getAbsolutePath());
         // Construct the FIMS model
-
         fimsModel fimsModel = new fimsModel(
-                FileManager.get().loadModel(metadata.getTarget() + "/data?graph=" + uploader.getEncodedGraph(false)),
+                model,
                 queryWriter);
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
         // Send the filename back to the caller
-        return fimsModel.toExcel();
+        //return fimsModel.toExcel();
+        return fimsModel;
     }
 
     /**

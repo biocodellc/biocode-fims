@@ -1,5 +1,7 @@
 package digester;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -216,5 +218,73 @@ public class QueryWriter {
             e.printStackTrace();
             throw new Exception(e.getMessage());
         }
+    }
+
+    public String getJSON() throws Exception {
+        // Start constructing JSON.
+        JSONObject json = new JSONObject();
+
+        // Iterate through the rows.
+        JSONArray rows = new JSONArray();
+        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
+            Row row = rowsIT.next();
+            JSONObject jRow = new JSONObject();
+
+            // Iterate through the cells.
+            JSONArray cells = new JSONArray();
+            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
+                Cell cell = cellsIT.next();
+                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+                    cells.add(cell.getNumericCellValue());
+                else
+                    cells.add(cell.getStringCellValue());
+            }
+            jRow.put("cell", cells);
+            rows.add(jRow);
+        }
+
+        // Create the JSON.
+        json.put("rows", rows);
+
+        // Get the JSON text.
+        return json.toString();
+    }
+
+    public String getHTML() throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        // Iterate through the rows.
+        ArrayList rows = new ArrayList();
+        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
+            Row row = rowsIT.next();
+            //JSONObject jRow = new JSONObject();
+
+            // Iterate through the cells.
+            ArrayList cells = new ArrayList();
+            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
+                Cell cell = cellsIT.next();
+                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+                    cells.add(cell.getNumericCellValue());
+                else
+                    cells.add(cell.getStringCellValue());
+            }
+            rows.add(cells);
+        }
+
+        Iterator rowsIt = rows.iterator();
+        int count = 0;
+        sb.append("<table>\n");
+        while (rowsIt.hasNext()) {
+            ArrayList cells = (ArrayList) rowsIt.next();
+            Iterator cellsIt = cells.iterator();
+            sb.append("\t<tr>");
+            while (cellsIt.hasNext()) {
+                sb.append("<td>" + cellsIt.next() + "</td>");
+            }
+            sb.append("</tr>\n");
+            count++;
+        }
+        sb.append("</table>\n");
+        return sb.toString();
     }
 }

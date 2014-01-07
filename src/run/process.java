@@ -1,12 +1,14 @@
 package run;
 
+import com.hp.hpl.jena.util.FileManager;
 import digester.*;
+import fims.fimsModel;
+import fims.queryFIMS;
 import org.apache.commons.cli.*;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
-import sun.security.util.Password;
 import triplify.triplifier;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Level;
@@ -14,6 +16,7 @@ import org.apache.commons.cli.HelpFormatter;
 
 
 import java.io.*;
+import java.net.URL;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -73,7 +76,7 @@ public class process {
      * TODO: clean up FIMSExceptions to throw only unexpected errors so they can be handled more elegantly
      */
     public void runAll() throws FIMSException {
-         //if (1==1) throw new FIMSException("TEST exception handling");
+        //if (1==1) throw new FIMSException("TEST exception handling");
         boolean validationGood = true;
         boolean triplifyGood = true;
         boolean updateGood = true;
@@ -154,7 +157,13 @@ public class process {
                         fims.print();
 
                         if (write_spreadsheet)
-                            fimsPrinter.out.println("\tspreadsheet = " + fims.write());
+                            fimsPrinter.out.println("\tspreadsheet = " +
+                                    fims.getFIMSModel(FileManager.get().loadModel(
+                                            fims.getMetadata().getTarget() +
+                                                    "/data?graph=" +
+                                                    fims.getUploader().getEncodedGraph(false)),
+                                            mapping.getTriplifier().getFilenamePrefix(),
+                                            mapping.getTriplifier().getOutputFolder()));
                     }
                 }
             } catch (Exception e) {
@@ -167,6 +176,46 @@ public class process {
         }
     }
 
+    /**
+     * Run a query from the command-line.. not meant to be a full-featured query service but simply to show a
+     * way of returning results
+     *
+     * @throws FIMSException
+     */
+    public void query(String graphs) throws FIMSException {
+        //TODO: figure out way to get configuration file for any project on query
+        String configURL = "http://n2t.net/ark:/21547/Fm2";
+        try {
+            configFile = new configurationFileFetcher(new URL(configURL), outputFolder).getOutputFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FIMSException("Unable to obtain configuration file from server... Please check that your project code is valid.");
+        }
+        fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
+
+        String[] graphArray = graphs.split(",");
+
+        try {
+            Mapping mapping = new Mapping();
+            addMappingRules(new Digester(), mapping);
+
+            Fims fims = new Fims(mapping);
+            addFimsRules(new Digester(), fims);
+            queryFIMS q = new queryFIMS(graphArray);
+
+            // Construct a  fimsModel
+            fimsModel fimsModel = fims.getFIMSModel(q.getModel(), "query", outputFolder);
+            fimsPrinter.out.println("\tresults = ");
+            //System.out.println(fimsModel.toHTML());
+            System.out.println(fimsModel.toExcel());
+            //System.out.println(fimsModel.toJSON());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FIMSException(e.getMessage(), e);
+        }
+
+    }
 
     /**
      * Process metadata component rules
@@ -283,6 +332,7 @@ public class process {
         // Define our commandline options
         Options options = new Options();
         options.addOption("h", "help", false, "print this help message and exit");
+        options.addOption("q", "query", true, "Run a query and pass in graph UUIDs to look at for this query");
         options.addOption("p", "project_code", true, "Project code.  You will need to obtain a project code before " +
                 "loading data, or use the demo_mode.");
         options.addOption("o", "output_directory", true, "Output Directory");
@@ -318,11 +368,13 @@ public class process {
             return;
         }
         // If help was requested, print the help message and exit.
-        if (cl.hasOption("h") ||
-                (cl.hasOption("d") && !cl.hasOption("i")) ||
-                (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
-            helpf.printHelp("fims ", options, true);
-            return;
+        if (!cl.hasOption("q")) {
+            if (cl.hasOption("h") ||
+                    (cl.hasOption("d") && !cl.hasOption("i")) ||
+                    (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
+                helpf.printHelp("fims ", options, true);
+                return;
+            }
         }
 
         if (cl.hasOption("d")) {
@@ -372,12 +424,22 @@ public class process {
             System.exit(-1);
         }
 
-        try {
-            p.runAll();
-        } catch (FIMSException e) {
-            fimsPrinter.out.println("\nError: " + e.getMessage());
-            //e.printStackTrace();
-            System.exit(-1);
+        if (cl.hasOption("q")) {
+            try {
+                p.query(cl.getOptionValue("q"));
+            } catch (FIMSException e) {
+                fimsPrinter.out.println("\nError: " + e.getMessage());
+                //e.printStackTrace();
+                System.exit(-1);
+            }
+        } else {
+            try {
+                p.runAll();
+            } catch (FIMSException e) {
+                fimsPrinter.out.println("\nError: " + e.getMessage());
+                //e.printStackTrace();
+                System.exit(-1);
+            }
         }
     }
 

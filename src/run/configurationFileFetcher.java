@@ -26,6 +26,16 @@ public class configurationFileFetcher {
     }
 
     /**
+     * in this constructor we already know the URL of the configuration file
+     * @param url
+     * @param defaultOutputDirectory
+     * @throws Exception
+     */
+    public configurationFileFetcher(URL url, String defaultOutputDirectory) throws Exception {
+        init(url, defaultOutputDirectory);
+    }
+
+    /**
      * Create the class object given a particular project code and a default Output Directory
      *
      * @param project_code
@@ -34,7 +44,6 @@ public class configurationFileFetcher {
      */
     public configurationFileFetcher(String project_code, String defaultOutputDirectory) throws Exception {
         this.project_code = project_code;
-        boolean redirect = false;
 
         // Get the URL for this configuration File
         String projectServiceString = projectServiceRoot + project_code;
@@ -42,8 +51,14 @@ public class configurationFileFetcher {
         String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
 
         // Setup connection
+        URL url = new URL(urlString);
+        init(new URL(urlString), defaultOutputDirectory);
+    }
+
+    private void init(URL url, String defaultOutputDirectory) throws Exception {
+        boolean redirect = false;
+
         HttpURLConnection.setFollowRedirects(true);
-        URL url = new URL(urlString );
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(5000);
         connection.setUseCaches(false);
