@@ -229,7 +229,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
                 conceptAlias="Event"
-                conceptURI="http://rs.tdwg.org/dwc/terms/Event"
+                conceptURI="http://purl.org/dc/dcmitype/Event"
                 entityId="2">
             <attribute column='yearCollected' datatype="integer" uri='urn:yearCollected'/>
             <attribute column='monthCollected' datatype="integer" uri='urn:monthCollected'/>
