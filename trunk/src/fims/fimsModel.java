@@ -4,6 +4,7 @@ import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.util.FileManager;
 import digester.QueryWriter;
 import org.apache.poi.ss.usermodel.Row;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  * Model representing FIMS
@@ -131,9 +132,9 @@ public class fimsModel {
      *
      * @return
      */
-    public String toJSON() {
+    public String toJSON() throws Exception {
         //return stringBuilder.toString();
-        return null;
+        return queryWriter.getJSON();
     }
 
     /**
@@ -141,6 +142,12 @@ public class fimsModel {
      */
     public String toExcel() throws Exception {
         return queryWriter.write();
+    }
+      /**
+     * Return output as an HTML table
+     */
+    public String toHTML() throws Exception {
+        return queryWriter.getHTML();
     }
 
 
