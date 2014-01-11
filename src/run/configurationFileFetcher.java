@@ -49,7 +49,6 @@ public class configurationFileFetcher {
         String projectServiceString = projectServiceRoot + project_code;
         // Set a 10 second timeout on this connection
         String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
-
         // Setup connection
         URL url = new URL(urlString);
         init(new URL(urlString), defaultOutputDirectory);

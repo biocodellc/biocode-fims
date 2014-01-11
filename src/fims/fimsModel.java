@@ -1,10 +1,10 @@
 package fims;
 
 import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.util.FileManager;
 import digester.QueryWriter;
 import org.apache.poi.ss.usermodel.Row;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
+import java.io.File;
 
 /**
  * Model representing FIMS
@@ -12,8 +12,9 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 public class fimsModel {
     Model model;
     //Property rowLabelProperty;
-    String rowLabelProperty = "rdfs:Label";
-    String rowClass = "http://www.w3.org/2000/01/rdf-schema#Resource";
+    //String rowLabelProperty = "rdfs:Label";
+    //String rowClass = "http://www.w3.org/2000/01/rdf-schema#Resource";
+
     String type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
     String depends_on = "http://biscicol.org/terms/index.html#depends_on";
     int depth = 1;
@@ -27,6 +28,7 @@ public class fimsModel {
     public fimsModel(Model model, QueryWriter queryWriter) {
         this.model = model;
         this.queryWriter = queryWriter;
+
     }
 
     /**
@@ -111,6 +113,11 @@ public class fimsModel {
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {
                 queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
             }
+            /*
+             if (s.getPredicate().equals(getProperty("urn:basisOfIdentification"))) {
+                queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+            }
+            */
         }
     }
 
@@ -132,22 +139,22 @@ public class fimsModel {
      *
      * @return
      */
-    public String toJSON() throws Exception {
+    public String writeJSON(File file) throws Exception {
         //return stringBuilder.toString();
-        return queryWriter.getJSON();
+        return queryWriter.writeJSON(file);
     }
 
     /**
      * Return output as an Excel file
      */
-    public String toExcel() throws Exception {
-        return queryWriter.write();
+    public String writeExcel(File file) throws Exception {
+        return queryWriter.writeExcel(file);
     }
       /**
      * Return output as an HTML table
      */
-    public String toHTML() throws Exception {
-        return queryWriter.getHTML();
+    public String writeHTML(File file) throws Exception {
+        return queryWriter.writeHTML(file);
     }
 
 

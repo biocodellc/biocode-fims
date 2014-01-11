@@ -1,7 +1,6 @@
 package digester;
 
-import com.hp.hpl.jena.util.FileManager;
-import com.sun.tools.internal.ws.processor.model.Model;
+import com.hp.hpl.jena.rdf.model.Model;
 import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
@@ -9,8 +8,6 @@ import fims.uploader;
 import settings.PathManager;
 import settings.bcidConnector;
 import settings.fimsPrinter;
-import triplify.triplifier;
-
 import java.io.File;
 import java.lang.String;
 
@@ -64,7 +61,7 @@ public class Fims implements RendererInterface {
         // If the update worked then set a BCID to refer to it
         if (updateGood) {
             try {
-                bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint());
+                bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
                 // Create the BCID to use for upload service
                 fimsPrinter.out.println("\tCreated BCID =" + bcid + " to represent your uploaded dataset");
                 // Associate the project_code with this bcid
@@ -103,28 +100,29 @@ public class Fims implements RendererInterface {
     }
 
     /**
-     * Write FIMS output to a spreadsheet, using the filename input/output data from the mapping/triplifier instance
+     * Create a fimsModel to store the results from this query
      */
-    public fimsModel getFIMSModel(com.hp.hpl.jena.rdf.model.Model model, String filenamePrefix, String outputFolder) throws Exception {
+    public fimsModel getFIMSModel(Model model) throws Exception {
 
-        File file = PathManager.createUniqueFile(
-                filenamePrefix + ".xls",
-                outputFolder);
 
+
+        // Set the default sheetname
         String sheetname = mapping.getDefaultSheetName();
+
         // Create a queryWriter object
         QueryWriter queryWriter = new QueryWriter(
                 mapping.getAllAttributes(sheetname),
-                sheetname,
-                file.getAbsolutePath());
+                sheetname);
+
         // Construct the FIMS model
         fimsModel fimsModel = new fimsModel(
                 model,
                 queryWriter);
+
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
-        // Send the filename back to the caller
-        //return fimsModel.toExcel();
+
+        // Return the fimsModel
         return fimsModel;
     }
 

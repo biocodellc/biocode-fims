@@ -5,7 +5,9 @@ import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
+import settings.PathManager;
 import settings.fimsPrinter;
 
 import java.io.File;
@@ -25,7 +27,6 @@ public class QueryWriter {
     ArrayList extraColumns;
     Integer totalColumns;
     String sheetName;
-    String fileLocation;
     Workbook wb = new HSSFWorkbook();
     Sheet sheet;
 
@@ -33,10 +34,9 @@ public class QueryWriter {
      * @param attributes ArrayList of attributes passed as argument is meant to come from digester.Mapping instance
      * @throws IOException
      */
-    public QueryWriter(ArrayList<Attribute> attributes, String sheetName, String fileLocation) throws IOException {
+    public QueryWriter(ArrayList<Attribute> attributes, String sheetName) throws IOException {
         this.sheetName = sheetName;
         this.attributes = attributes;
-        this.fileLocation = fileLocation;
         totalColumns = attributes.size() - 1;
         extraColumns = new ArrayList();
 
@@ -130,6 +130,7 @@ public class QueryWriter {
      */
     public void createCell(Row row, String predicate, String value) {
         String colName = predicate;
+        //System.out.println(colName);
         String datatype = null;
         // Loop attributes and use column names instead of URI value in column position lookups
         Iterator it = attributes.iterator();
@@ -162,7 +163,7 @@ public class QueryWriter {
      * @param args
      */
     public static void main(String[] args) {
-
+        /*
         // Setup columns -- construct these in XML and use Digester to populate
         ArrayList attributes = new ArrayList();
         Attribute a = new Attribute();
@@ -194,18 +195,19 @@ public class QueryWriter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
     }
 
     /**
      * Write output to a file
      */
-    public String write() throws Exception {
+    public String writeExcel(File file) throws Exception {
         // Header Row
         createHeaderRow(sheet);
         // Write the output to a file
         FileOutputStream fileOut = null;
         try {
-            File file = new File(fileLocation);
+            //File file = new File(fileLocation);
             fileOut = new FileOutputStream(file);
 
             wb.write(fileOut);
@@ -220,38 +222,73 @@ public class QueryWriter {
         }
     }
 
-    public String getJSON() throws Exception {
+
+    public String writeJSON(File file) throws Exception {
+        // Header Row
+        createHeaderRow(sheet);
+
         // Start constructing JSON.
         JSONObject json = new JSONObject();
 
         // Iterate through the rows.
+        int count = 0;
+        int  LIMIT = 10000;
         JSONArray rows = new JSONArray();
-        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
-            Row row = rowsIT.next();
-            JSONObject jRow = new JSONObject();
 
-            // Iterate through the cells.
-            JSONArray cells = new JSONArray();
-            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
-                Cell cell = cellsIT.next();
-                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-                    cells.add(cell.getNumericCellValue());
-                else
-                    cells.add(cell.getStringCellValue());
+        for (Row row : sheet) {
+            if (count < LIMIT) {
+                JSONObject jRow = new JSONObject();
+                JSONArray cells = new JSONArray();
+
+                for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                    Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                    if (cell == null) {
+                        cells.add("");
+                    } else {
+                        switch (cell.getCellType()) {
+                            case Cell.CELL_TYPE_STRING:
+                                cells.add(cell.getRichStringCellValue().getString());
+                                break;
+                            case Cell.CELL_TYPE_NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    cells.add(cell.getDateCellValue());
+                                } else {
+                                    cells.add(cell.getNumericCellValue());
+                                }
+                                break;
+                            case Cell.CELL_TYPE_BOOLEAN:
+                                cells.add(cell.getBooleanCellValue());
+                                break;
+                            case Cell.CELL_TYPE_FORMULA:
+                                cells.add(cell.getCellFormula());
+                                break;
+                            default:
+                                cells.add(cell.toString());
+                        }
+                    }
+
+                }
+                if (count == 0) {
+                    json.put("header", cells);
+                } else {
+                    jRow.put("row", cells);
+                    rows.add(jRow);
+                }
             }
-            jRow.put("cell", cells);
-            rows.add(jRow);
+            count++;
         }
 
         // Create the JSON.
-        json.put("rows", rows);
+        json.put("data", rows);
 
         // Get the JSON text.
-        return json.toString();
+        return writeFile(json.toString(), file);
     }
 
-    public String getHTML() throws Exception {
+    public String writeHTML(File file) throws Exception {
         StringBuilder sb = new StringBuilder();
+        // Header Row
+        createHeaderRow(sheet);
 
         // Iterate through the rows.
         ArrayList rows = new ArrayList();
@@ -285,6 +322,41 @@ public class QueryWriter {
             count++;
         }
         sb.append("</table>\n");
-        return sb.toString();
+        return writeFile(sb.toString(), file);
+    }
+
+    private String writeFile(String content, File file) {
+
+        FileOutputStream fop = null;
+
+        try {
+            fop = new FileOutputStream(file);
+
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // get the content in bytes
+            byte[] contentInBytes = content.getBytes();
+
+            fop.write(contentInBytes);
+            fop.flush();
+            fop.close();
+
+            //System.out.println("Done");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fop != null) {
+                    fop.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file.getAbsolutePath();
     }
 }

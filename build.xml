@@ -1,41 +1,198 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="biocode-fims" default="all">
 
-<project name="biocode-fims" default="build" basedir=".">
 
-    <property name="jar-name" value="biocode-fims"/>
 
-    <property name="build" location="build"/>
-    <property name="classes" location="classes"/>
-    <property name="src" location="src"/>
+    <property name="jdk.home.1.6" value="/usr"/>
 
-    <path id="classpath">
-        <fileset dir="lib">
-            <include name="*.jar"/>
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/SCCS/**"/>
+        <exclude name="**/RCS/**"/>
+        <exclude name="**/rcs/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/.pyc/**"/>
+        <exclude name="**/.pyo/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/.hg/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.zip"/>
+        <include name="*.war"/>
+        <include name="*.egg"/>
+        <include name="*.ear"/>
+        <include name="*.swc"/>
+        <include name="*.jar"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <include name="**/?*.properties"/>
+        <include name="**/?*.xml"/>
+        <include name="**/?*.gif"/>
+        <include name="**/?*.png"/>
+        <include name="**/?*.jpeg"/>
+        <include name="**/?*.jpg"/>
+        <include name="**/?*.html"/>
+        <include name="**/?*.dtd"/>
+        <include name="**/?*.tld"/>
+        <include name="**/?*.ftl"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+    <path id="jdk.classpath.1.6">
+    </path>
+
+    <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+
+
+    <!-- Project Libraries -->
+
+    <!-- BJS: instead of listing each JAR, switched this to use the "fileset" mechanism -->
+    <path id="library.lib.classpath">
+        <fileset dir="${basedir}/lib">
+            <include name="**/*.jar"/>
         </fileset>
     </path>
 
+    <!-- Modules -->
+    <dirname property="module.biocode-fims.basedir" file="${ant.file}"/>
 
-    <target name="build" depends="compile">
-        <jar jarfile="${build}/${jar-name}.jar">
-            <fileset dir="${classes}"/>
-        </jar>
-    </target>
 
-    <target name="compile" depends="prepare">
-        <javac target="1.6" source="1.6" destdir="${classes}" debug="true">
-            <classpath refid="classpath"/>
-            <src path="${src}"/>
+    <property name="module.jdk.home.biocode-fims" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.biocode-fims" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.biocode-fims" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.biocode-fims" value="${compiler.args}"/>
+
+    <property name="biocode-fims.output.dir" value="${module.biocode-fims.basedir}/out/production/biocode-fims"/>
+    <property name="biocode-fims.testoutput.dir" value="${module.biocode-fims.basedir}/out/test/biocode-fims"/>
+
+    <path id="biocode-fims.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="biocode-fims.module.production.classpath">
+        <path refid="${module.jdk.classpath.biocode-fims}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <!-- added by BJS -->
+    <path id="biocode-fims.module.buildtests.classpath">
+        <path refid="${module.jdk.classpath.biocode-fims}"/>
+        <pathelement location="${biocode-fims.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <!-- added by BJS -->
+    <path id="biocode-fims.module.runtests.classpath">
+        <path refid="${module.jdk.classpath.biocode-fims}"/>
+        <pathelement location="${biocode-fims.output.dir}"/>
+        <pathelement location="${biocode-fims.testoutput.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="biocode-fims.runtime.production.module.classpath">
+        <pathelement location="${biocode-fims.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="biocode-fims.module.classpath">
+        <path refid="${module.jdk.classpath.biocode-fims}"/>
+        <pathelement location="${biocode-fims.output.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+    <path id="biocode-fims.runtime.module.classpath">
+        <pathelement location="${biocode-fims.output.dir}"/>
+        <pathelement location="${biocode-fims.testoutput.dir}"/>
+        <path refid="library.lib.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.biocode-fims">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.biocode-fims">
+        <patternset refid="excluded.from.module.biocode-fims"/>
+    </patternset>
+
+    <path id="biocode-fims.module.sourcepath">
+        <dirset dir="/">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+    <target name="compile.module.biocode-fims" depends="compile.module.biocode-fims.production"
+            description="Compile module Biocode-FIMS"/>
+
+    <target name="compile.module.biocode-fims.production" description="Compile module Biocode-FIMS; production classes">
+        <mkdir dir="${biocode-fims.output.dir}"/>
+        <javac destdir="${biocode-fims.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+               srcdir="src" memorymaximumsize="${compiler.max.memory}" fork="true"
+               executable="${module.jdk.bin.biocode-fims}/javac">
+            <compilerarg line="${compiler.args.biocode-fims}"/>
+            <bootclasspath refid="biocode-fims.module.bootclasspath"/>
+            <classpath refid="biocode-fims.module.production.classpath"/>
+            <patternset refid="excluded.from.compilation.biocode-fims"/>
         </javac>
+
+        <copy todir="${biocode-fims.output.dir}">
+            <fileset dir="${module.biocode-fims.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
     </target>
 
-    <target name="prepare">
-        <mkdir dir="${build}"/>
-        <mkdir dir="${classes}"/>
+    <target name="clean.module.biocode-fims" description="cleanup module">
+        <delete dir="${biocode-fims.output.dir}"/>
+        <delete dir="${biocode-fims.testoutput.dir}"/>
     </target>
 
-    <target name="clean">
-        <delete dir="${build}"/>
-        <delete dir="${classes}"/>
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
     </target>
 
-</project>
+    <target name="clean" depends="clean.module.biocode-fims" description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, compile.module.biocode-fims, war" description="build all modules"/>
+
+    
+    <target name="war" depends="compile.module.biocode-fims.production">
+        <war destfile="dist/biocode-fims.war" webxml="web/WEB-INF/web.xml">
+            <fileset dir="web"/>
+            <lib dir="lib" excludes="servlet-api.jar"/>
+            <classes dir="${biocode-fims.output.dir}"/>
+        </war>
+    </target>
+
+    <!-- added by BJS -->
+    <target name="test" depends="compile.module.biocode-fims">
+        <junit>
+            <classpath refid="biocode-fims.module.runtests.classpath"/>
+            <formatter type="brief" usefile="false"/>
+            <batchtest>
+                <fileset dir="${biocode-fims.testoutput.dir}" includes="**/*Test.class"/>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="all" depends="build.modules" description="build all"/>
+
+
+</project> 
