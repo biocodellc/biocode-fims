@@ -50,32 +50,32 @@ public class bcidConnector {
         }
         // TESTING user-project authentication
         try {
-           bcid.validateProject("DEMOH");
+            bcid.validateProject("DEMOH");
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-         /*
-        // Success then create ARK
-        if (success)
-            try {
-                message = "Created BCID = " + bcid.createDatasetBCID(null);
-            } catch (Exception e) {
-                message = e.getMessage();
-                e.printStackTrace();
-            }
-        else
-            message = "Unable to authenticate";
+        /*
+       // Success then create ARK
+       if (success)
+           try {
+               message = "Created BCID = " + bcid.createDatasetBCID(null);
+           } catch (Exception e) {
+               message = e.getMessage();
+               e.printStackTrace();
+           }
+       else
+           message = "Unable to authenticate";
 
-        try {
+       try {
 
-            System.out.println(bcid.associateBCID("DEMOH", "ark:/21547/Fu2"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+           System.out.println(bcid.associateBCID("DEMOH", "ark:/21547/Fu2"));
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
 
-        System.out.println(message);
-         */
+       System.out.println(message);
+        */
     }
 
     /**
@@ -115,12 +115,15 @@ public class bcidConnector {
      * @return
      * @throws Exception
      */
-    public String createDatasetBCID(String webaddress) throws Exception {
+    public String createDatasetBCID(String webaddress, String graph) throws Exception {
         String createBCIDDatasetPostParams =
                 "title=Loaded Dataset from Biocode-FIMS&" +
                         "resourceTypesMinusDataset=1&" +
                         "suffixPassThrough=false&" +
                         "webaddress=" + webaddress;
+
+        if (graph != null)
+            createBCIDDatasetPostParams += "&graph=" + graph;
 
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
@@ -193,6 +196,7 @@ public class bcidConnector {
 
     /**
      * validateProject ensures that this user is associated with this project
+     *
      * @param project_code
      * @return
      * @throws Exception
@@ -290,7 +294,7 @@ public class bcidConnector {
                 conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
             }
         }
-         responseCode = conn.getResponseCode();
+        responseCode = conn.getResponseCode();
         //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
 
         //System.out.println("Response Code : " + responseCode);

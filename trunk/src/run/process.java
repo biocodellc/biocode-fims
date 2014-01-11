@@ -3,7 +3,7 @@ package run;
 import com.hp.hpl.jena.util.FileManager;
 import digester.*;
 import fims.fimsModel;
-import fims.queryFIMS;
+import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
@@ -30,6 +30,7 @@ public class process {
     File configFile;
     String inputFilename;
     String outputFolder;
+    String outputPrefix;
     String project_code;
     Boolean write_spreadsheet;
     Boolean triplify;
@@ -66,9 +67,26 @@ public class process {
         this.username = username;
         this.password = password;
 
+
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
+    }
+
+    /**
+     * A smaller constructor for when we're running queries
+     *
+     * @param outputFolder
+     * @param configFile
+     * @throws FIMSException
+     */
+    public process(
+            String outputFolder,
+            File configFile
+    ) throws FIMSException {
+        this.outputFolder = outputFolder;
+        this.configFile = configFile;
+        this.outputPrefix = "output";
     }
 
     /**
@@ -130,7 +148,7 @@ public class process {
                 // Validation
                 validation = new Validation();
                 addValidationRules(new Digester(), validation);
-                validation.run(tdr, project_code + "_output", outputFolder);
+                validation.run(tdr, outputPrefix, outputFolder);
                 validationGood = validation.printMessages();
 
                 // Print out column names!!
@@ -144,7 +162,7 @@ public class process {
                     addMappingRules(new Digester(), mapping);
                     triplifyGood = mapping.run(
                             validation,
-                            new triplifier(project_code + "_output", outputFolder),
+                            new triplifier(outputPrefix, outputFolder),
                             project_code,
                             validation.getTabularDataReader().getColNames());
                     mapping.print();
@@ -161,9 +179,8 @@ public class process {
                                     fims.getFIMSModel(FileManager.get().loadModel(
                                             fims.getMetadata().getTarget() +
                                                     "/data?graph=" +
-                                                    fims.getUploader().getEncodedGraph(false)),
-                                            mapping.getTriplifier().getFilenamePrefix(),
-                                            mapping.getTriplifier().getOutputFolder()));
+                                                    fims.getUploader().getEncodedGraph(false))
+                                    ));
                     }
                 }
             } catch (Exception e) {
@@ -177,44 +194,52 @@ public class process {
     }
 
     /**
-     * Run a query from the command-line.. not meant to be a full-featured query service but simply to show a
-     * way of returning results
+     * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
+     * fetching results
      *
      * @throws FIMSException
      */
-    public void query(String graphs) throws FIMSException {
-        //TODO: figure out way to get configuration file for any project on query
-        String configURL = "http://n2t.net/ark:/21547/Fm2";
-        try {
-            configFile = new configurationFileFetcher(new URL(configURL), outputFolder).getOutputFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("Unable to obtain configuration file from server... Please check that your project code is valid.");
-        }
-        fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
-
-        String[] graphArray = graphs.split(",");
+    public String query(String graphs, String format, String filter) throws FIMSException {
 
         try {
+            // Build Mapping object
             Mapping mapping = new Mapping();
             addMappingRules(new Digester(), mapping);
 
+            // Build FIMS object
             Fims fims = new Fims(mapping);
             addFimsRules(new Digester(), fims);
-            queryFIMS q = new queryFIMS(graphArray);
+
+            // Code a reference to the Sparql Query Server
+            String sparqlServer = fims.getMetadata().getTarget().toString() + "/query";
+
+            // Build a query model, passing in an String[] array of graph identifiers
+            fimsQueryBuilder q = new fimsQueryBuilder(graphs.split(","), sparqlServer);
+
+            // Filter
+            if (filter != null && !filter.trim().equals(""))
+                q.setObjectFilter(filter);
 
             // Construct a  fimsModel
-            fimsModel fimsModel = fims.getFIMSModel(q.getModel(), "query", outputFolder);
-            fimsPrinter.out.println("\tresults = ");
-            //System.out.println(fimsModel.toHTML());
-            System.out.println(fimsModel.toExcel());
-            //System.out.println(fimsModel.toJSON());
+            fimsModel fimsModel = fims.getFIMSModel(q.getModel());
 
+
+            // Output the results
+            fimsPrinter.out.println("Writing results ... ");
+
+            if (format == null)
+                format = "json";
+
+            if (format.equals("excel"))
+                return fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
+            else if (format.equals("html"))
+                return fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
+            else
+                return fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
         } catch (Exception e) {
             e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
-
     }
 
     /**
@@ -332,7 +357,12 @@ public class process {
         // Define our commandline options
         Options options = new Options();
         options.addOption("h", "help", false, "print this help message and exit");
-        options.addOption("q", "query", true, "Run a query and pass in graph UUIDs to look at for this query");
+        options.addOption("q", "query", true, "Run a query and pass in graph UUIDs to look at for this query -- Use this along with options C and S");
+        options.addOption("f", "format", true, "excel|html|json  specifying the return format for the query");
+        options.addOption("F", "filter", true, "Filter results based on a keyword search");
+
+
+        options.addOption("C", "configURL", true, "A URL specifying a configuration file, only for running queries");
         options.addOption("p", "project_code", true, "Project code.  You will need to obtain a project code before " +
                 "loading data, or use the demo_mode.");
         options.addOption("o", "output_directory", true, "Output Directory");
@@ -368,14 +398,18 @@ public class process {
             return;
         }
         // If help was requested, print the help message and exit.
-        if (!cl.hasOption("q")) {
-            if (cl.hasOption("h") ||
-                    (cl.hasOption("d") && !cl.hasOption("i")) ||
-                    (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
+        if (cl.hasOption("q")) {
+            if (!cl.hasOption("C")) {
                 helpf.printHelp("fims ", options, true);
                 return;
             }
+        } else if (cl.hasOption("h") ||
+                (cl.hasOption("d") && !cl.hasOption("i")) ||
+                (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
+            helpf.printHelp("fims ", options, true);
+            return;
         }
+
 
         if (cl.hasOption("d")) {
             project_code = "DEMOH";
@@ -406,40 +440,43 @@ public class process {
             return;
         }
 
-        // Run the processor
-        process p = null;
-        try {
-            p = new process(
-                    input_file,
-                    output_directory,
-                    project_code,
-                    write_spreadsheet,
-                    triplify,
-                    upload,
-                    username,
-                    password
-            );
-        } catch (FIMSException e) {
-            fimsPrinter.out.println("\nError: " + e.getMessage());
-            System.exit(-1);
-        }
 
-        if (cl.hasOption("q")) {
-            try {
-                p.query(cl.getOptionValue("q"));
-            } catch (FIMSException e) {
-                fimsPrinter.out.println("\nError: " + e.getMessage());
-                //e.printStackTrace();
-                System.exit(-1);
-            }
-        } else {
-            try {
+        // Run the command
+        try {
+            /*
+            Run a query
+             */
+            if (cl.hasOption("q")) {
+
+                File file = new configurationFileFetcher(new URL(cl.getOptionValue("C")), output_directory).getOutputFile();
+
+                process p = new process(
+                        output_directory,
+                        file
+                );
+
+                p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
+                /*
+                Run the validator
+                 */
+            } else {
+
+                process p = new process(
+                        input_file,
+                        output_directory,
+                        project_code,
+                        write_spreadsheet,
+                        triplify,
+                        upload,
+                        username,
+                        password
+                );
                 p.runAll();
-            } catch (FIMSException e) {
-                fimsPrinter.out.println("\nError: " + e.getMessage());
-                //e.printStackTrace();
-                System.exit(-1);
             }
+        } catch (Exception e) {
+            fimsPrinter.out.println("\nError: " + e.getMessage());
+            //e.printStackTrace();
+            System.exit(-1);
         }
     }
 

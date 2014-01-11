@@ -15,8 +15,11 @@ public class createProject {
     bcidConnector bcidConnector;
     String project_code;
 
-    // References to biocode-fims Resources Types (within BCID System)
-    static Integer[] biocodeFIMSGroupElements = new Integer[]{
+    // Reference to single resource Type
+    static Integer[] biocodeFIMSGroupElements = new Integer[]{34};
+
+    // References to biocode-fims Resources Types Full Ontology (within BCID System)
+    static Integer[] biocodeFIMSGroupElementsFull = new Integer[]{
             34, // Resource
             10, // Location
             24, // Identification
