@@ -27,11 +27,13 @@ public class bcidConnector {
     private String arkCreationURL = "http://biscicol.org/id/groupService";
     private String associateURL = "http://biscicol.org/id/projectService/associate";
     private String projectCreationURL = "http://biscicol.org/id/projectService";
-    private String projectValidationURL = "http://biscicol.org/id/projectService/validateUser/";
+    private String projectValidationURL = "http://biscicol.org/id/projectService/validateProject/";
 
     private Integer responseCode;
 
     private String connectionPoint;
+    private String username;
+    private String password;
 
     public static void main(String[] args) {
 
@@ -50,7 +52,7 @@ public class bcidConnector {
         }
         // TESTING user-project authentication
         try {
-            bcid.validateProject("DEMOH");
+            bcid.validateProject("DEMOH", 1);
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -95,7 +97,8 @@ public class bcidConnector {
      * @throws Exception
      */
     public boolean authenticate(String username, String password) throws Exception {
-
+        this.username = username;
+        this.password = password;
         String postParams = "j_username=" + username + "&j_password=" + password;
         URL url = new URL(authenticationURL);
         String response = createPOSTConnnection(url, postParams);
@@ -176,12 +179,15 @@ public class bcidConnector {
      * @return
      * @throws Exception
      */
-    public String createProject(String project_code, String project_title, String abstractString, String biovalidator_Validation_xml) throws Exception {
+    public String createProject(String project_code, 
+                                String project_title, 
+                                String abstractString, 
+                                Integer expedition_id) throws Exception {
         String createPostParams =
                 "project_code=" + project_code + "&" +
                         "project_title=" + project_title + "&" +
                         "abstract=" + abstractString + "&" +
-                        "biovalidator_Validation_xml=" + biovalidator_Validation_xml;
+                        "expedition_id=" + expedition_id;
 
         URL url = new URL(projectCreationURL);
         String response = createPOSTConnnection(url, createPostParams);
@@ -195,19 +201,49 @@ public class bcidConnector {
     }
 
     /**
-     * validateProject ensures that this user is associated with this project
+     * validateProject ensures that this user is associated with this project and that the project code is unique within
+     * a particular expedition
      *
      * @param project_code
      * @return
      * @throws Exception
      */
-    public String validateProject(String project_code) throws Exception {
-        URL url = new URL(projectValidationURL + project_code);
+    public boolean validateProject(String project_code, Integer expedition_id) throws Exception {
+        URL url = new URL(projectValidationURL + expedition_id + "/" + project_code);
         String response = createGETConnection(url);
+        String action = response.split(":")[0];
         if (getResponseCode() != 200) {
-            throw new Exception("The user does not seem to be associated with this project, responseCode = " + getResponseCode());
+            throw new Exception("BCID service error");
+        } else {
+            if (action.equals("error")) {
+                throw new Exception(response);
+            } else if (action.equals("update")) {
+                return true;
+            } else if (action.equals("insert")) {
+                String message = "\nThe project code \"" + project_code + "\" does not exist.  " +
+                        "Do you wish to create it now?" +
+                        "\nIf you choose to continue, your data will be associated with this new project code.";
+                if (fimsInputter.in.continueOperation(message)) {
+                    try {
+                        // TODO: the configuration URL is hard-coded below!
+                        String output = createProject(
+                                project_code,
+                                project_code + " data group",
+                                null,
+                                expedition_id);
+                        fimsPrinter.out.println("\t" + output);
+                        return true;
+                    } catch (Exception e) {
+                        throw new Exception("Unable to create project " + project_code, e);
+                    }
+
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
-        return response;
     }
 
     /**

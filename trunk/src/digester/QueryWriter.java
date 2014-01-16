@@ -232,7 +232,7 @@ public class QueryWriter {
 
         // Iterate through the rows.
         int count = 0;
-        int  LIMIT = 10000;
+        int LIMIT = 10000;
         JSONArray rows = new JSONArray();
 
         for (Row row : sheet) {
@@ -358,5 +358,119 @@ public class QueryWriter {
             }
         }
         return file.getAbsolutePath();
+    }
+
+
+    public String writeKML(File file) {
+        createHeaderRow(sheet);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n" +
+                "\t<Document>\n");
+
+
+        // Iterate through the rows.
+        ArrayList rows = new ArrayList();
+        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
+            Row row = rowsIT.next();
+            //JSONObject jRow = new JSONObject();
+
+            // Iterate through the cells.
+            ArrayList cells = new ArrayList();
+            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
+                Cell cell = cellsIT.next();
+                /* if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+                cells.add(cell.getNumericCellValue());
+            else
+                cells.add(cell.getStringCellValue());
+                */
+                cells.add(cell);
+            }
+            rows.add(cells);
+        }
+
+        Iterator rowsIt = rows.iterator();
+        int count = 0;
+
+        /*   <?xml version="1.0" encoding="UTF-8"?>
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+          <Document>
+            <Placemark>
+              <name>CDATA example</name>
+              <description>
+                <![CDATA[
+                  <h1>CDATA Tags are useful!</h1>
+                  <p><font color="red">Text is <i>more readable</i> and
+                  <b>easier to write</b> when you can avoid using entity
+                  references.</font></p>
+                ]]>
+              </description>
+              <Point>
+                <coordinates>102.595626,14.996729</coordinates>
+              </Point>
+            </Placemark>
+          </Document>
+        </kml>*/
+        while (rowsIt.hasNext()) {
+            ArrayList cells = (ArrayList) rowsIt.next();
+            Iterator cellsIt = cells.iterator();
+
+            // don't take the first row, its a header.
+            if (count > 1) {
+                StringBuilder header = new StringBuilder();
+
+                StringBuilder description = new StringBuilder();
+                StringBuilder name = new StringBuilder();
+
+                header.append("\t<Placemark>\n");
+                description.append("\t\t<description>\n");
+                String decimalLatitude = null;
+                String decimalLongitude = null;
+                description.append("\t\t<![CDATA[");
+
+                int fields = 0;
+                // take all the fields
+                while (cellsIt.hasNext()) {
+                    Cell c = (Cell) cellsIt.next();
+                    Integer index = c.getColumnIndex();
+                    String value = c.toString();
+                    String fieldname = sheet.getRow(0).getCell(index).toString();
+
+                    //Only take the first 10 fields for data....
+                    if (fields < 10)
+                        description.append("<br>" + fieldname + "=" + value);
+
+                    if (fieldname.equalsIgnoreCase("decimalLatitude") && !value.equals(""))
+                        decimalLatitude = value;
+                    if (fieldname.equalsIgnoreCase("decimalLongitude") && !value.equals(""))
+                        decimalLongitude = value;
+                    if (fieldname.equalsIgnoreCase("materialSampleID"))
+                        name.append("\t\t<name>" + value + "</name>\n");
+
+                    fields++;
+                }
+                description.append("\t\t]]>\n");
+                description.append("\t\t</description>\n");
+
+                if (decimalLatitude != null && decimalLongitude != null) {
+                    sb.append(header);
+                    sb.append(name);
+                    sb.append(description);
+
+                    sb.append("\t\t<Point>\n");
+                    sb.append("\t\t\t<coordinates>" + decimalLongitude + "," + decimalLatitude + "</coordinates>\n");
+                    sb.append("\t\t</Point>\n");
+
+                    sb.append("\t</Placemark>\n");
+                }
+
+            }
+            count++;
+        }
+
+        sb.append("</Document>\n" +
+                "</kml>");
+        return writeFile(sb.toString(), file);
     }
 }

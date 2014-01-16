@@ -6,7 +6,6 @@ import settings.PathManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Random;
 
 /**
  * Class that handles getting configuration files.  Configuration files are stored as BCID/ARKs and thus this class
@@ -15,7 +14,8 @@ import java.util.Random;
 public class configurationFileFetcher {
     private String project_code;
     private File outputFile;
-    private String projectServiceRoot = "http://biscicol.org/id/projectService/";
+    // TODO: Fix biscicol.org resolution -- can't see itself!
+    private String expeditionLookup = "http://biscicol.org:8080/id/expeditionService/validation/";
 
     public File getOutputFile() {
         return outputFile;
@@ -38,15 +38,14 @@ public class configurationFileFetcher {
     /**
      * Create the class object given a particular project code and a default Output Directory
      *
-     * @param project_code
      * @param defaultOutputDirectory
      * @throws IOException
      */
-    public configurationFileFetcher(String project_code, String defaultOutputDirectory) throws Exception {
+    public configurationFileFetcher(Integer expedition_id, String defaultOutputDirectory) throws Exception {
         this.project_code = project_code;
 
         // Get the URL for this configuration File
-        String projectServiceString = projectServiceRoot + project_code;
+        String projectServiceString = expeditionLookup + expedition_id;
         // Set a 10 second timeout on this connection
         String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
         // Setup connection
@@ -146,7 +145,7 @@ public class configurationFileFetcher {
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
 
         try {
-            cFF = new configurationFileFetcher("DEMOH", defaultOutputDirectory);
+            cFF = new configurationFileFetcher(1, defaultOutputDirectory);
             System.out.println(readFile(cFF.getOutputFile()));
         } catch (IOException e) {
             e.printStackTrace();
