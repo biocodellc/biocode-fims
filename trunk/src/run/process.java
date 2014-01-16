@@ -37,6 +37,7 @@ public class process {
     Boolean upload;
     String username;
     String password;
+    Integer expedition_id;
 
 
     /**
@@ -56,7 +57,8 @@ public class process {
             Boolean triplify,
             Boolean upload,
             String username,
-            String password) throws FIMSException {
+            String password,
+            Integer expedition_id) throws FIMSException {
         // Set class variables
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
@@ -66,11 +68,12 @@ public class process {
         this.upload = upload;
         this.username = username;
         this.password = password;
-
+        this.expedition_id = expedition_id;
+        // Control the file outputPrefix... set them here to project codes.
+        this.outputPrefix = project_code + "_output";
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
-
     }
 
     /**
@@ -123,9 +126,6 @@ public class process {
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
 
-            // TODO: pass in expedition ID from main process and change geneious functions here....
-            Integer expedition_id = 1;
-
             try {
 
                 configFile = new configurationFileFetcher(expedition_id, outputFolder).getOutputFile();
@@ -167,6 +167,7 @@ public class process {
 
                         Mapping mapping = new Mapping();
                         addMappingRules(new Digester(), mapping);
+
                         triplifyGood = mapping.run(
                                 validation,
                                 new triplifier(outputPrefix, outputFolder),
@@ -241,7 +242,7 @@ public class process {
                 return fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
             else if (format.equals("html"))
                 return fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
-             else if (format.equals("kml"))
+            else if (format.equals("kml"))
                 return fimsModel.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
             else
                 return fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
@@ -336,6 +337,8 @@ public class process {
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
         String username = "";
         String password = "";
+        Integer expedition_id = 0;
+
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
 
@@ -376,6 +379,8 @@ public class process {
                 "loading data, or use the demo_mode.");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
+        options.addOption("e", "expedition_id", true, "Expedition Identifier.  A numeric integer corresponding to your expedition");
+
         options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify project_code, " +
                 "configuration, or output_directory.  You still need to specify an input file.");
         options.addOption("t", "triplify", false, "Triplify");
@@ -425,6 +430,19 @@ public class process {
             output_directory = defaultOutputDirectory;
             triplify = true;
             upload = true;
+        }
+        if (cl.hasOption("e")) {
+            try {
+                expedition_id = new Integer(cl.getOptionValue("e"));
+            } catch (Exception e) {
+                fimsPrinter.out.println("Bad option for expedition_id");
+                helpf.printHelp("fims ", options, true);
+                return;
+            }
+        }
+        if (cl.hasOption("u") && expedition_id < 1) {
+            fimsPrinter.out.println("Must specify a valid expedition_id when uploading data");
+            return;
         }
         if (cl.hasOption("i"))
             input_file = cl.getOptionValue("i");
@@ -478,7 +496,8 @@ public class process {
                         triplify,
                         upload,
                         username,
-                        password
+                        password,
+                        expedition_id
                 );
                 p.runAll();
             }
