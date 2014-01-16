@@ -145,7 +145,8 @@ public class Mapping implements RendererInterface {
         triplifier = t;
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
-        dRoots = new deepRootsReader().createRootData("http://biscicol.org/id/projectService/deepRoots/" + project_code);
+        // TODO: put this into a settings file
+        dRoots = new deepRootsReader().createRootData("http://biscicol.org:8080/id/projectService/deepRoots/" + project_code);
 
         // Create a connection to a SQL Lite Instance
         try {

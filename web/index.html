@@ -8,14 +8,30 @@
 
 <link rel="stylesheet" href="css/jNotify.jquery.css" type="text/css" />
 
-<body onload="populateGraphs();">
+<body onload="populateExpeditions();">
 
 <br><b>Query Engine for Biocode FIMS</b>
 
 <table>
-<tr><td>Graphs</td><td><select size=7 id=graphs multiple><option data-qrepeat="m data" data-qattr="graph m"></option></select></td></tr>
-<tr><td>Filter</td><td><input type=text id=filter></td></tr>
-<tr><td>Output</td><td><input type=button onclick="javascript:queryJSON();" value=table> <input type=button onclick="javascript:queryExcel();" value=excel></td></tr>
+<tr><td>Expeditions<br>(select one)</td><td>
+    <select size=5 width=20 id=expeditions onchange='populateGraphs(this.options[this.selectedIndex].value);'>
+        <option data-qrepeat="e expeditions" data-qattr="value e.expedition_id; text e.expedition_title">Loading Expeditions ...</option>
+    </select>
+</td></tr>
+<tr><td>Spreadsheets<br>(select one or more)</td><td>
+    <select size=5 width=20 id=graphs multiple>
+        <option data-qrepeat="g data" data-qattr="value g.graph; text g.project_title">Spreadsheets associated with chosen expedition will appear here</option>
+    </select>
+</td></tr>
+<tr><td>Filter</td><td>
+    <input type=text id=filter>
+</td></tr>
+<tr><td>Output</td><td>
+    <input type=button onclick="javascript:queryJSON();" value=table> 
+    <input type=button onclick="javascript:queryExcel();" value=excel>
+    <input type=button onclick="javascript:queryGoogleMaps();" value=map>
+    <input type=button onclick="javascript:queryKml();" value=kml>
+</td></tr>
 </table>
 
 <table id=results border=0>

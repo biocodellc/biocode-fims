@@ -162,13 +162,18 @@
     <target name="clean.module.biocode-fims" description="cleanup module">
         <delete dir="${biocode-fims.output.dir}"/>
         <delete dir="${biocode-fims.testoutput.dir}"/>
+
     </target>
 
     <target name="init" description="Build initialization">
         <!-- Perform any build initialization in this target -->
     </target>
 
-    <target name="clean" depends="clean.module.biocode-fims" description="cleanup all"/>
+    <target name="clean" depends="clean.module.biocode-fims" description="cleanup all">
+        <delete dir="${build}"/>
+        <delete dir="${classes}"/>
+            </target>
+
 
     <target name="build.modules" depends="init, clean, compile.module.biocode-fims, war" description="build all modules"/>
 
@@ -193,6 +198,42 @@
     </target>
 
     <target name="all" depends="build.modules" description="build all"/>
+
+
+
+    <!-- Everything below this line is from the original ANT task to build biocode-fims, before
+    we undertook the web-services framework.  This portion keeps the Geneious plugin build.xml file happy -->
+     <property name="jar-name" value="biocode-fims"/>
+
+    <property name="build" location="build"/>
+    <property name="classes" location="classes"/>
+    <property name="src" location="src"/>
+
+    <path id="classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+
+    <target name="build" depends="compile">
+        <jar jarfile="${build}/${jar-name}.jar">
+            <fileset dir="${classes}"/>
+        </jar>
+    </target>
+
+    <target name="compile" depends="prepare">
+        <javac target="1.6" source="1.6" destdir="${classes}" debug="true">
+            <classpath refid="classpath"/>
+            <src path="${src}"/>
+        </javac>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${classes}"/>
+    </target>
+
 
 
 </project> 

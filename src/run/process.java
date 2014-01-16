@@ -98,6 +98,7 @@ public class process {
         boolean validationGood = true;
         boolean triplifyGood = true;
         boolean updateGood = true;
+        boolean projectCheck = false;
         Validation validation = null;
         bcidConnector bcidConnector = new bcidConnector();
 
@@ -122,71 +123,77 @@ public class process {
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
 
-            // Check that the user that is logged in also owns the project_code
-            try {
-                bcidConnector.validateProject(project_code);
-            } catch (Exception e) {
-                //e.printStackTrace();
-                throw new FIMSException("The project_code (" + project_code + ") and user (" + username + ") you indicated are not associated.  Please make sure that you are using the correct project code and that it is associated with your login name", e);
-            }
+            // TODO: pass in expedition ID from main process and change geneious functions here....
+            Integer expedition_id = 1;
 
             try {
-                configFile = new configurationFileFetcher(project_code, outputFolder).getOutputFile();
+
+                configFile = new configurationFileFetcher(expedition_id, outputFolder).getOutputFile();
             } catch (Exception e) {
                 throw new FIMSException("Unable to obtain configuration file from server... Please check that your project code is valid.");
             }
             fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
-            // Read the input file & create the ReaderManager and load the plugins.
+
+            // Check that the user that is logged in also owns the project_code
             try {
-                ReaderManager rm = new ReaderManager();
-                TabularDataReader tdr = null;
-
-                rm.loadReaders();
-                tdr = rm.openFile(inputFilename);
-
-                // Validation
-                validation = new Validation();
-                addValidationRules(new Digester(), validation);
-                validation.run(tdr, outputPrefix, outputFolder);
-                validationGood = validation.printMessages();
-
-                // Print out column names!!
-                //System.out.println(validation.getTabularDataReader().getColNames());
-                //if (1==1) return;
-
-                // Triplify if we validate
-                if (triplify & validationGood) {
-
-                    Mapping mapping = new Mapping();
-                    addMappingRules(new Digester(), mapping);
-                    triplifyGood = mapping.run(
-                            validation,
-                            new triplifier(outputPrefix, outputFolder),
-                            project_code,
-                            validation.getTabularDataReader().getColNames());
-                    mapping.print();
-
-                    // Upload after triplifying
-                    if (upload & triplifyGood) {
-                        Fims fims = new Fims(mapping);
-                        addFimsRules(new Digester(), fims);
-                        fims.run(bcidConnector, project_code);
-                        fims.print();
-
-                        if (write_spreadsheet)
-                            fimsPrinter.out.println("\tspreadsheet = " +
-                                    fims.getFIMSModel(FileManager.get().loadModel(
-                                            fims.getMetadata().getTarget() +
-                                                    "/data?graph=" +
-                                                    fims.getUploader().getEncodedGraph(false))
-                                    ));
-                    }
-                }
+                projectCheck = bcidConnector.validateProject(project_code, expedition_id);
             } catch (Exception e) {
+                //e.printStackTrace();
                 throw new FIMSException(e.getMessage(), e);
             }
 
+            if (projectCheck) {
+                // Read the input file & create the ReaderManager and load the plugins.
+                try {
+                    ReaderManager rm = new ReaderManager();
+                    TabularDataReader tdr = null;
+
+                    rm.loadReaders();
+                    tdr = rm.openFile(inputFilename);
+
+                    // Validation
+                    validation = new Validation();
+                    addValidationRules(new Digester(), validation);
+                    validation.run(tdr, outputPrefix, outputFolder);
+                    validationGood = validation.printMessages();
+
+                    // Print out column names!!
+                    //System.out.println(validation.getTabularDataReader().getColNames());
+                    //if (1==1) return;
+
+                    // Triplify if we validate
+                    if (triplify & validationGood) {
+
+                        Mapping mapping = new Mapping();
+                        addMappingRules(new Digester(), mapping);
+                        triplifyGood = mapping.run(
+                                validation,
+                                new triplifier(outputPrefix, outputFolder),
+                                project_code,
+                                validation.getTabularDataReader().getColNames());
+                        mapping.print();
+
+                        // Upload after triplifying
+                        if (upload & triplifyGood) {
+                            Fims fims = new Fims(mapping);
+                            addFimsRules(new Digester(), fims);
+                            fims.run(bcidConnector, project_code);
+                            fims.print();
+
+                            if (write_spreadsheet)
+                                fimsPrinter.out.println("\tspreadsheet = " +
+                                        fims.getFIMSModel(FileManager.get().loadModel(
+                                                fims.getMetadata().getTarget() +
+                                                        "/data?graph=" +
+                                                        fims.getUploader().getEncodedGraph(false))
+                                        ));
+                        }
+                    }
+                } catch (Exception e) {
+                    throw new FIMSException(e.getMessage(), e);
+                }
+            }
         } finally {
             if (validation != null)
                 validation.close();
@@ -234,6 +241,8 @@ public class process {
                 return fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
             else if (format.equals("html"))
                 return fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
+             else if (format.equals("kml"))
+                return fimsModel.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
             else
                 return fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
         } catch (Exception e) {

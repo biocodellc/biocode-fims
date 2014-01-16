@@ -45,11 +45,11 @@ public class query {
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJson(
             @QueryParam("graphs") String graphs,
-            @QueryParam("configuration") String configuration,
+            @QueryParam("expedition_id") Integer expedition_id,
             @QueryParam("filter") String filter) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(new URL(URLDecoder.decode(configuration, "UTF-8")), uploadPath()).getOutputFile();
+        File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
 
         try {
             p = new process(
@@ -73,6 +73,51 @@ public class query {
     }
 
     /**
+     * Return KML for a graph query
+     *
+     * @param graphs indicate a comma-separated list of graphs
+     * @return
+     * @throws Exception
+     */
+    @GET
+    @Path("/kml/")
+    @Produces("application/vnd.google-earth.kml+xml")
+    public Response queryKml(
+            @QueryParam("graphs") String graphs,
+            @QueryParam("expedition_id") Integer expedition_id,
+            @QueryParam("filter") String filter) throws Exception {
+
+
+        try {
+            graphs = URLDecoder.decode(graphs, "UTF-8");
+            File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
+
+            process p = new process(
+                    uploadPath(),
+                    configFile
+            );
+
+            // Construct a file
+            File file = new File(p.query(graphs, "kml", filter));
+
+            // Return file to client
+            Response.ResponseBuilder response = Response.ok((Object) file);
+            response.header("Content-Disposition",
+                    "attachment; filename=biocode-fims-output.kml");
+
+            // Return response
+            if (response == null) {
+                return Response.status(204).build();
+            } else {
+                return response.build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.ok("\nError: " + e.getMessage()).build();
+        }
+    }
+
+    /**
      * Return Excel for a graph query
      *
      * @param graphs indicate a comma-separated list of graphs
@@ -84,14 +129,13 @@ public class query {
     @Produces("application/vnd.ms-excel")
     public Response queryExcel(
             @QueryParam("graphs") String graphs,
-            @QueryParam("configuration") String configuration,
+            @QueryParam("expedition_id") Integer expedition_id,
             @QueryParam("filter") String filter) throws Exception {
 
         try {
 
-            configuration = URLDecoder.decode(configuration, "UTF-8");
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(new URL(configuration), uploadPath()).getOutputFile();
+            File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
 
             // Create a process object
             process p = new process(

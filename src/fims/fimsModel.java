@@ -158,4 +158,7 @@ public class fimsModel {
     }
 
 
+    public String writeKML(File file) {
+        return queryWriter.writeKML(file);
+    }
 }

@@ -1,5 +1,6 @@
+package settings;
+
 import org.apache.commons.cli.*;
-import settings.*;
 
 /**
  * Code to create a project.
@@ -67,7 +68,8 @@ public class createProject {
         fimsPrinter.out.println("\tUser " + username + " authenticated");
 
         // Now check that this project code is available
-        String response = bcidConnector.createProject(project_code, project_code + " data group", null, "http://n2t.net/ark:/21547/Fm2");
+        // TODO: the configuration URL is hard-coded below!
+        String response = bcidConnector.createProject(project_code, project_code + " data group", null, 1);
 
         fimsPrinter.out.println("\t" + response);
         //throw new Exception("Project code " + project_code + " is unavailable");
@@ -135,7 +137,7 @@ public class createProject {
             exit("Did not recognize type = " + type);
         }
 
-        // Instantiate createProject object
+        // Instantiate settings.createProject object
         try {
             p = new createProject(project_code, username, password);
         } catch (Exception e) {
@@ -176,7 +178,7 @@ public class createProject {
     private static void exit(String message) {
         HelpFormatter helpf = new HelpFormatter();
         fimsPrinter.out.println(message + "\n");
-        helpf.printHelp("createProject input_files", opts, true);
+        helpf.printHelp("settings.createProject input_files", opts, true);
         System.exit(-1);
     }
 
