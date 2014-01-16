@@ -225,10 +225,9 @@ public class bcidConnector {
                         "\nIf you choose to continue, your data will be associated with this new project code.";
                 if (fimsInputter.in.continueOperation(message)) {
                     try {
-                        // TODO: the configuration URL is hard-coded below!
                         String output = createProject(
                                 project_code,
-                                project_code + " data group",
+                                project_code + " spreadsheet project",
                                 null,
                                 expedition_id);
                         fimsPrinter.out.println("\t" + output);

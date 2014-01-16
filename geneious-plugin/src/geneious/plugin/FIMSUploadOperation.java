@@ -11,6 +11,7 @@ import run.process;
 import settings.FIMSException;
 import settings.fimsInputter;
 import settings.fimsPrinter;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.util.List;
 /**
  * Control the operation of the BiocodeFIMS upload operation, handling feedback from the system such as Warning
  * Messages and redirecting output to appropriate places in the Geneious environment.
+ *
  * @author Matthew Cheung
  */
 public class FIMSUploadOperation extends DocumentOperation {
@@ -104,7 +106,10 @@ public class FIMSUploadOperation extends DocumentOperation {
 
         if (options instanceof FIMSUploadOptions) {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions) options;
-            String project_code = uploadOptions.projectCodeOption.getValue();
+
+             Integer expedition_id = new Integer(uploadOptions.expeditionOption.getValue().toString());
+            String project_code = uploadOptions.projectCodeOption.getValue().toString();
+
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
             String username = uploadOptions.usernameOption.getValue();
             String password = uploadOptions.passwordOption.getValue();
@@ -123,7 +128,7 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
             String outputFolder = tempDir.getAbsolutePath();
 
-             // Structure fileName for the sample data
+            // Structure fileName for the sample data
             String fileName = sampleDataFile;
             if (fileName.endsWith(File.separator)) {
                 fileName = fileName.substring(0, fileName.length() - 2);
@@ -134,7 +139,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password);
+                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password,expedition_id);
                 process.runAll();
             } catch (FIMSException e) {
                 e.printStackTrace();
