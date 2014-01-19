@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="shortname"
+            eml_location="eml_location"
+            target="http://biscicol.org:3030/ds">
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>materialSampleID</field>
+            </rule>
+        </worksheet>
+
+        <lists>
+            <list alias='habitat'>
+                <field>Coral Reef</field>
+                <field>Intertidal</field>
+                <field>Fouling</field>
+                <field>Macroalgae</field>
+                <field>Mangrove</field>
+                <field>Mud</field>
+                <field>Continental shelf</field>
+                <field>Pelagic</field>
+                <field>Planktonic</field>
+                <field>Rock</field>
+                <field>Sand</field>
+                <field>Seagrass</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="materialSample"
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
+                entityId="1">
+            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="geneticTissueTypeDestructive" uri="urn:geneticTissueTypeDestructive"/>
+            <attribute column="plate" uri="urn:plate"/>
+            <attribute column='well' datatype="integer" uri='urn:well'/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="occurrenceID"
+                conceptAlias="materialSample"
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
+                entityId="2">
+            <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="hash"
+                conceptAlias="taxonomicIdentificationProcess"
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000042				"
+                entityId="3">
+            <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
+            <attribute column="identifiedBy" uri="urn:identifiedBy"/>
+            <attribute column="yearIdentified" uri="urn:yearIdentified"/>
+            <attribute column="monthIdentified" uri="urn:monthIdentified"/>
+            <attribute column="dayIdentified" uri="urn:dayIdentified"/>
+        </entity>
+
+        <relation>
+            <subject>1</subject>
+            <predicate>bsc:derives_from</predicate>
+            <object>2</object>
+        </relation>
+         <relation>
+            <subject>3</subject>
+            <predicate>urn:hasAsInput</predicate>
+            <object>1</object>
+        </relation>
+    </mapping>
+
+</fims>
+
