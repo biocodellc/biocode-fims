@@ -173,6 +173,12 @@ public class query {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 
+    /**
+     * Read a file and return it as a String... meant to be used within this class only
+     * @param file
+     * @return
+     * @throws IOException
+     */
     private String readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = null;
