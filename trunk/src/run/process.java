@@ -130,7 +130,7 @@ public class process {
 
                 configFile = new configurationFileFetcher(expedition_id, outputFolder).getOutputFile();
             } catch (Exception e) {
-                throw new FIMSException("Unable to obtain configuration file from server... Please check that your project code is valid.");
+                throw new FIMSException("Unable to obtain configuration file from server... \nPlease check that your project code is valid.  Project codes Must be between 4 and 6 characters in length.");
             }
             fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
