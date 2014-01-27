@@ -6,7 +6,8 @@
             doi="a doi"
             shortname="shortname"
             eml_location="eml_location"
-            target="http://biscicol.org:443/ds">
+            target="http://biscicol.org:443/ds"
+            queryTarget="http://biscicol.org:3030/ds">
         <![CDATA[Some text with abstract]]>
     </metadata>
 
