@@ -233,7 +233,7 @@ public class bcidConnector {
                         fimsPrinter.out.println("\t" + output);
                         return true;
                     } catch (Exception e) {
-                        throw new Exception("Unable to create project " + project_code, e);
+                        throw new Exception("Unable to create project " + project_code + "\nPlease be sure project codes are between 4 and 6 characters in length\nand do not contain spaces or special characters.", e);
                     }
 
                 } else {
