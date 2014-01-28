@@ -132,7 +132,7 @@ public class Validation implements RendererInterface {
             sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
 
             TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
-            tdc.convert(false);
+            tdc.convert();
             tabularDataReader.closeFile();
         } catch (Exception e) {
             throw new Exception(e.getMessage(), e);
