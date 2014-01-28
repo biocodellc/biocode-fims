@@ -4,6 +4,7 @@ package reader.plugins;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.File;
+import java.sql.SQLException;
 
 /**
  * The interface for data reader plugins in the triplifier system.  This
@@ -131,7 +132,7 @@ public interface TabularDataReader {
      *
      * @return The next row of data from the data source.
      */
-    public String[] tableGetNextRow();
+    public String[] tableGetNextRow() throws SQLException;
 
     /**
      * Close the open data source, if there is one.

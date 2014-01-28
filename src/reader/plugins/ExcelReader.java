@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -20,9 +21,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.joda.time.DateTime;
+import settings.fimsPrinter;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003
@@ -379,7 +382,7 @@ public class ExcelReader implements TabularDataReader {
         return null;
     }
 
-    public String[] tableGetNextRow() {
+    public String[] tableGetNextRow() throws SQLException {
         if (!tableHasNextRow())
             throw new NoSuchElementException();
 
@@ -430,7 +433,19 @@ public class ExcelReader implements TabularDataReader {
                 case Cell.CELL_TYPE_FORMULA:
                     // Use the FormulaEvaluator to determine the result of the
                     // cell's formula, then convert the result to a String.
-                    ret[cnt] = df.formatCellValue(cell, fe);
+                    // The following was throwing an error...
+                    try {
+                    ret[cnt] = df.formatCellValue(cell,fe);
+                    } catch (Exception e) {
+                        int rowNum = cell.getRowIndex() + 1;
+                        throw new SQLException("There was an issue processing a formula on this sheet.\n" +
+                                "\tWhile standard formulas are allowed, formulas with references to external sheets cannot be read!\n" +
+                                "\tCell = " + CellReference.convertNumToColString(cnt) + rowNum + "\n" +
+                                "\tUnreadable Formula = " + cell + "\n" +
+                                "\t(There may be additional formulas you may need to fix)"
+                                );
+                    }
+                    //ret[cnt] = df.formatCellValue(cell);
                     break;
                 default:
                     ret[cnt] = "";

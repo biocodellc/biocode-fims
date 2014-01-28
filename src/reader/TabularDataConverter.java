@@ -141,7 +141,7 @@ public final class TabularDataConverter {
      *
      * @throws SQLException
      */
-    public void convert(boolean fixDwCA) throws SQLException {
+    public void convert() throws SQLException {
         //int tablecnt = 0;
         // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
         String tname = source.getCurrentTableName();
