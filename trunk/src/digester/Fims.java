@@ -5,7 +5,6 @@ import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
-import settings.PathManager;
 import settings.bcidConnector;
 import settings.fimsPrinter;
 import java.io.File;

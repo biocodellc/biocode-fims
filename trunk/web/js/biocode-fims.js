@@ -2,7 +2,12 @@
 function populateExpeditions() {
     theUrl = "http://biscicol.org/id/expeditionService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
+	// Initialize the graphs option
+	graphsMessage('Choose an expedition to see loaded spreadsheets');
+	// Call distal to load the expeditions data
         distal(expeditions,data);
+	// Set to the first value in the list which should be "select one..."
+	$("#expeditions").val($("#expeditions option:first").val());
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
 	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -14,9 +19,21 @@ function populateExpeditions() {
 
 // Get the graphs
 function populateGraphs(expedition_id) {
+    $("#resultsContainer").hide();
+    // Don't let this progress if this is the first option, then reset graphs message
+    if ($("#expeditions").val() == 0)  {
+	    graphsMessage('Choose an expedition to see loaded spreadsheets');
+	    return;
+    }
     theUrl = "http://biscicol.org/id/expeditionService/graphs/" + expedition_id;
     var jqxhr = $.getJSON( theUrl, function(data) {
+    // Check for empty object in response
+    if (typeof data['data'][0] === "undefined") {
+	graphsMessage('No projects found for this expedition');
+    } else {
+	// Call distal to load the graphs data
         distal(graphs,data);
+    }
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
 	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -30,6 +47,7 @@ function populateGraphs(expedition_id) {
 function queryJSON() {
     theUrl = "/biocode-fims/query/json/?" + getGraphsKeyValue() + "&" + getExpeditionKeyValue() + "&" +  getFilterKeyValue();
     var jqxhr = $.getJSON( theUrl, function(data) {
+        $("#resultsContainer").show();
         distal(results,data);
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
@@ -56,7 +74,8 @@ function queryKml() {
 
 // Get results as Excel
 function queryGoogleMaps() {
-    theUrl = "http://biscicol.org/biocode-fims/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getExpeditionKeyValue() + encodeURIComponent("&") +  getFilterKeyValue
+    theUrl = "http://biscicol.org/biocode-fims/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getExpeditionKeyValue() + encodeURIComponent("&") +  getFilterKeyVal
+ue
     mapsUrl = "http://maps.google.com/maps?q=" + theUrl;
     window.open(
         mapsUrl,
@@ -114,4 +133,12 @@ function showMessage(message) {
 
           }
         });
+}
+
+
+// handle displaying messages/results in the graphs(spreadsheets) select list
+function graphsMessage(message) {
+        $('#graphs').empty();
+        $('#graphs').append('<option data-qrepeat="g data" data-qattr="value g.graph; text g.project_title"></option>');
+        $('#graphs').find('option').first().text(message);
 }
