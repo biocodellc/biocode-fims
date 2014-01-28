@@ -1,0 +1,15 @@
+#summary The following provides specific instructions for running the Barcode of Wildlife FIMS
+
+= Getting Started with the Biocode FIMS Validator (For the Barcode of Wildlife Group) =
+
+STEP 1: Get the latest copy of the Barcode of Wildlife Template which can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v8.xlsx here].  NOTE: this is a temporary template used for training purposes for the BWP group.
+
+STEP 2: Fill in your data according to the instructions on the Instructions Tab from the above spreadsheet
+
+STEP 3: Install the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Biocode FIMS Geneious Plugin] 
+
+STEP 4: Run the plugin by going to Tools -> Upload to Biocode Fims
+
+  * Type in a project code to test validation and upload functionality that is between 4 and 6 characters in length
+  * Obtain the TEMPORARY username/password by emailing Mike Trizna <TRIZNAM@si.edu>
+
