@@ -10,6 +10,8 @@ public class Metadata {
     private String shortname;
     private String eml_location;
     private String target;
+    private String queryTarget;
+
     private String text_abstract;
 
     public String getTarget() {
@@ -18,6 +20,14 @@ public class Metadata {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getQueryTarget() {
+        return queryTarget;
+    }
+
+    public void setQueryTarget(String queryTarget) {
+        this.queryTarget = queryTarget;
     }
 
     public String getDoi() {

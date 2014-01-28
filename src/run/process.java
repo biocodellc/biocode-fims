@@ -219,7 +219,7 @@ public class process {
             addFimsRules(new Digester(), fims);
 
             // Code a reference to the Sparql Query Server
-            String sparqlServer = fims.getMetadata().getTarget().toString() + "/query";
+            String sparqlServer = fims.getMetadata().getQueryTarget().toString() + "/query";
 
             // Build a query model, passing in an String[] array of graph identifiers
             fimsQueryBuilder q = new fimsQueryBuilder(graphs.split(","), sparqlServer);
