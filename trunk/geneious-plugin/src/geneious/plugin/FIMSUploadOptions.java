@@ -30,9 +30,13 @@ public class FIMSUploadOptions extends Options {
         OptionValue optionValue1 = new OptionValue("1", "IndoPacific Database");
         OptionValue optionValue2 = new OptionValue("2", "Smithsonian LAB");
         OptionValue optionValue3 = new OptionValue("3", "Hawaii Dimensions");
+        OptionValue optionValue4 = new OptionValue("5", "Barcode of Wildlife Training");
+
         expeditionValues.add(optionValue1);
         expeditionValues.add(optionValue2);
         expeditionValues.add(optionValue3);
+        expeditionValues.add(optionValue4);
+
         expeditionOption = addComboBoxOption("expeditionCode", "Expedition:", expeditionValues, optionValue1);
 
         /*
