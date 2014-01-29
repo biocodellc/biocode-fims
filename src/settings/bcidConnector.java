@@ -23,7 +23,9 @@ public class bcidConnector {
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded";
     private final String CONNECTION = "keep-alive";
 
-    private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
+    //private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
+    private String authenticationURL = "http://biscicol.org/id/loginService";
+
     private String arkCreationURL = "http://biscicol.org/id/groupService";
     private String associateURL = "http://biscicol.org/id/projectService/associate";
     private String projectCreationURL = "http://biscicol.org/id/projectService";
@@ -99,7 +101,8 @@ public class bcidConnector {
     public boolean authenticate(String username, String password) throws Exception {
         this.username = username;
         this.password = password;
-        String postParams = "j_username=" + username + "&j_password=" + password;
+        //String postParams = "j_username=" + username + "&j_password=" + password;
+        String postParams = "username=" + username + "&password=" + password;
         URL url = new URL(authenticationURL);
         String response = createPOSTConnnection(url, postParams);
 
