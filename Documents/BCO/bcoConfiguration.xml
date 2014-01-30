@@ -6,7 +6,9 @@
             doi="a doi"
             shortname="shortname"
             eml_location="eml_location"
-            target="http://biscicol.org:3030/ds">
+            target="http://biscicol.org:443/ds"
+            queryTarget="http://biscicol.org:3030/ds">
+
         <![CDATA[Some text with abstract]]>
     </metadata>
 
@@ -77,12 +79,12 @@
 
         <relation>
             <subject>1</subject>
-            <predicate>bsc:derives_from</predicate>
+            <predicate>http://www.obofoundry.org/ro/ro.owl#derives_from</predicate>
             <object>2</object>
         </relation>
          <relation>
             <subject>3</subject>
-            <predicate>urn:hasAsInput</predicate>
+            <predicate>http://biscicol.org/terms/index.html#depends_on</predicate>
             <object>1</object>
         </relation>
     </mapping>
