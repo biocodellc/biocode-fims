@@ -66,7 +66,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="hash"
                 conceptAlias="taxonomicIdentificationProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000042				"
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
                 entityId="3">
             <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="identifiedBy" uri="urn:identifiedBy"/>
