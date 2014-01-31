@@ -46,7 +46,7 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
-                conceptAlias="materialSample"
+                conceptAlias="destructedTissueSample"
                 conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
                 entityId="1">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
@@ -58,7 +58,7 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
-                conceptAlias="materialSample"
+                conceptAlias="occurrence"
                 conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
                 entityId="2">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
