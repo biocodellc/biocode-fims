@@ -66,7 +66,7 @@
 
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="hash"
+                worksheetUniqueKey="taxonomicIdentificationProcessHASH"
                 conceptAlias="taxonomicIdentificationProcess"
                 conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
                 entityId="3">
