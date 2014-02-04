@@ -16,196 +16,353 @@
         <worksheet sheetname='Samples'>
 
             <rule type='duplicateColumnNames' level='error'></rule>
-            <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+            <rule type='uniqueValue' column='sampleID' level='error'></rule>
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
-                <field>materialSampleID</field>
-                <field>principalInvestigator</field>
-                <field>phylum</field>
+                <field>sampleID</field>
+                <field>partnerCountry</field>
+                <field>processingLab</field>
+                <field>sequencingLab</field>
             </rule>
-            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
-                <field>yearCollected</field>
-                <field>permitInformation</field>
-                <field>coordinateUncertaintyInMeters</field>
-                <field>georeferenceProtocol</field>
-                <field>basisOfIdentification</field>
-            </rule>
-
-            <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
-                  level='error'></rule>
-            <rule type='minimumMaximumNumberCheck'
-                  column='minimumDistanceAboveSurfaceInMeters,maximumDistanceAboveSurfaceInMeters' level='error'></rule>
 
             <rule type='isNumber' column='weight' level='error'></rule>
             <rule type='isNumber' column='length' level='error'></rule>
 
-            <rule type='checkInXMLFields' column='phylum' list='phylum' level='error'></rule>
-            <rule type='checkInXMLFields' column='habitat' list='habitat' level='warning'></rule>
-            <rule type='checkInXMLFields' column='basisOfIdentification' list='basisOfIdentification'
+            <rule type='checkInXMLFields' column='typeStatus' list='typeStatus'
                   level='warning'></rule>
             <rule type='checkInXMLFields' column='sex' list='sex' level='warning'></rule>
             <rule type='checkInXMLFields' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
             <rule type='checkInXMLFields' column='lifeStage' list='lifeStage' level='warning'></rule>
+
             <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Partner Country' list='Partner Country' level='warning'></rule>
+
         </worksheet>
 
         <lists>
 
-            <list alias='habitat'>
-                <field>Coral Reef</field>
-                <field>Intertidal</field>
-                <field>Fouling</field>
-                <field>Macroalgae</field>
-                <field>Mangrove</field>
-                <field>Mud</field>
-                <field>Continental shelf</field>
-                <field>Pelagic</field>
-                <field>Planktonic</field>
-                <field>Rock</field>
-                <field>Sand</field>
-                <field>Seagrass</field>
-            </list>
-            <list alias='basisOfIdentification'>
-                <field>Genetics</field>
-                <field>Morphology</field>
-                <field>Other</field>
-            </list>
-            <list alias='sex'>
-                <field>Male</field>
-                <field>Female</field>
-                <field>Simultaneous Hermaphrodite</field>
-                <field>Protogynous</field>
-                <field>Protandrous</field>
-            </list>
             <list alias='establishmentMeans'>
                 <field>native</field>
                 <field>introduced</field>
-                <field>naturalized</field>
+                <field>naturalised</field>
                 <field>invasive</field>
                 <field>managed</field>
+                <field>uncertain</field>
             </list>
-
+            <list alias='typeStatus'>
+                <field>holotype</field>
+                <field>paratype</field>
+                <field>neotype</field>
+                <field>syntype</field>
+                <field>lectotype</field>
+                <field>paralectotype</field>
+                <field>hapantotype</field>
+                <field>other</field>
+            </list>
+            <
             <list alias='lifeStage'>
+                <field>zygote</field>
+                <field>embryo</field>
                 <field>larva</field>
                 <field>juvenile</field>
                 <field>adult</field>
+                <field>sporophyte</field>
+                <field>spore</field>
+                <field>gametophyte</field>
+                <field>gamete</field>
+                <field>pupa</field>
             </list>
-            <list alias='phylum'>
-                <field>Acoelomorpha</field>
-                <field>Annelida</field>
-                <field>Arthropoda</field>
-                <field>Brachiopoda</field>
-                <field>Bryozoa</field>
-                <field>Chaetognatha</field>
-                <field>Chordata</field>
-                <field>Cnidaria</field>
-                <field>Ctenophora</field>
-                <field>Cycliophora</field>
-                <field>Echinodermata</field>
-                <field>Entoprocta</field>
-                <field>Gastrotricha</field>
-                <field>Gnathostomulida</field>
-                <field>Hemichordata</field>
-                <field>Kinorhyncha</field>
-                <field>Loricifera</field>
-                <field>Micrognathozoa</field>
-                <field>Mollusca</field>
-                <field>Nematoda</field>
-                <field>Nematomorpha</field>
-                <field>Nemertea</field>
-                <field>Onychophora</field>
-                <field>Orthonectida</field>
-                <field>Phoronida</field>
-                <field>Placozoa</field>
-                <field>Platyhelminthes</field>
-                <field>Porifera</field>
-                <field>Priapulida</field>
-                <field>Rhombozoa</field>
-                <field>Rotifera</field>
-                <field>Sipuncula</field>
-                <field>Tardigrada</field>
-                <field>Xenoturbellida</field>
+            <list alias='sex'>
+                <field>unknowable</field>
+                <field>undetermined</field>
+                <field>female</field>
+                <field>male</field>
+                <field>hermaphrodite</field>
+                <field>gynandromorph</field>
             </list>
 
+            <list alias='Partner Country'>
+                <field>Kenya</field>
+                <field>Mexico</field>
+                <field>Nigeria</field>
+                <field>South Africa</field>
+            </list>
             <list alias='country'>
+                <field>Afghanistan</field>
+                <field>Albania</field>
+                <field>Algeria</field>
                 <field>American Samoa</field>
+                <field>Andorra</field>
+                <field>Angola</field>
+                <field>Anguilla</field>
+                <field>Antarctica</field>
+                <field>Antigua and Barbuda</field>
+                <field>Arctic Ocean</field>
+                <field>Argentina</field>
+                <field>Armenia</field>
+                <field>Aruba</field>
+                <field>Ashmore and Cartier Islands</field>
+                <field>Atlantic Ocean</field>
                 <field>Australia</field>
+                <field>Austria</field>
+                <field>Azerbaijan</field>
+                <field>Bahamas</field>
                 <field>Bahrain</field>
+                <field>Baltic Sea</field>
+                <field>Baker Island</field>
                 <field>Bangladesh</field>
-                <field>British Indian Ocean Territory</field>
+                <field>Barbados</field>
+                <field>Bassas da India</field>
+                <field>Belarus</field>
+                <field>Belgium</field>
+                <field>Belize</field>
+                <field>Benin</field>
+                <field>Bermuda</field>
+                <field>Bhutan</field>
+                <field>Bolivia</field>
+                <field>Borneo</field>
+                <field>Bosnia and Herzegovina</field>
+                <field>Botswana</field>
+                <field>Bouvet Island</field>
+                <field>Brazil</field>
+                <field>British Virgin Islands</field>
                 <field>Brunei</field>
-                <field>Burma</field>
+                <field>Bulgaria</field>
+                <field>Burkina Faso</field>
+                <field>Burundi</field>
                 <field>Cambodia</field>
+                <field>Cameroon</field>
                 <field>Canada</field>
+                <field>Cape Verde</field>
+                <field>Cayman Islands</field>
+                <field>Central African Republic</field>
+                <field>Chad</field>
                 <field>Chile</field>
                 <field>China</field>
                 <field>Christmas Island</field>
-                <field>Cocos (Keeling) Islands</field>
+                <field>Clipperton Island</field>
+                <field>Cocos Islands</field>
                 <field>Colombia</field>
                 <field>Comoros</field>
+                <field>Cook Islands</field>
+                <field>Coral Sea Islands</field>
                 <field>Costa Rica</field>
+                <field>Cote d'Ivoire</field>
+                <field>Croatia</field>
+                <field>Cuba</field>
+                <field>Curacao</field>
+                <field>Cyprus</field>
+                <field>Czech Republic</field>
+                <field>Democratic Republic of the Congo</field>
+                <field>Denmark</field>
                 <field>Djibouti</field>
+                <field>Dominica</field>
+                <field>Dominican Republic</field>
+                <field>East Timor</field>
                 <field>Ecuador</field>
                 <field>Egypt</field>
                 <field>El Salvador</field>
+                <field>Equatorial Guinea</field>
                 <field>Eritrea</field>
+                <field>Estonia</field>
+                <field>Ethiopia</field>
+                <field>Europa Island</field>
+                <field>Falkland Islands (Islas Malvinas)</field>
+                <field>Faroe Islands</field>
                 <field>Fiji</field>
+                <field>Finland</field>
+                <field>France</field>
+                <field>French Guiana</field>
                 <field>French Polynesia</field>
+                <field>French Southern and Antarctic Lands</field>
+                <field>Gabon</field>
+                <field>Gambia</field>
+                <field>Gaza Strip</field>
+                <field>Georgia</field>
+                <field>Germany</field>
+                <field>Ghana</field>
+                <field>Gibraltar</field>
+                <field>Glorioso Islands</field>
+                <field>Greece</field>
+                <field>Greenland</field>
+                <field>Grenada</field>
+                <field>Guadeloupe</field>
+                <field>Guam</field>
                 <field>Guatemala</field>
+                <field>Guernsey</field>
+                <field>Guinea</field>
+                <field>Guinea-Bissau</field>
+                <field>Guyana</field>
+                <field>Haiti</field>
+                <field>Heard Island and McDonald Islands</field>
                 <field>Honduras</field>
+                <field>Hong Kong</field>
+                <field>Howland Island</field>
+                <field>Hungary</field>
+                <field>Iceland</field>
                 <field>India</field>
+                <field>Indian Ocean</field>
                 <field>Indonesia</field>
                 <field>Iran</field>
                 <field>Iraq</field>
+                <field>Ireland</field>
+                <field>Isle of Man</field>
                 <field>Israel</field>
+                <field>Italy</field>
+                <field>Jamaica</field>
+                <field>Jan Mayen</field>
                 <field>Japan</field>
+                <field>Jarvis Island</field>
+                <field>Jersey</field>
+                <field>Johnston Atoll</field>
                 <field>Jordan</field>
+                <field>Juan de Nova Island</field>
+                <field>Kazakhstan</field>
                 <field>Kenya</field>
+                <field>Kerguelen Archipelago</field>
+                <field>Kingman Reef</field>
                 <field>Kiribati</field>
+                <field>Kosovo</field>
                 <field>Kuwait</field>
+                <field>Kyrgyzstan</field>
+                <field>Laos</field>
+                <field>Latvia</field>
+                <field>Lebanon</field>
+                <field>Lesotho</field>
+                <field>Liberia</field>
+                <field>Libya</field>
+                <field>Liechtenstein</field>
+                <field>Line Islands</field>
+                <field>Lithuania</field>
+                <field>Luxembourg</field>
+                <field>Macau</field>
+                <field>Macedonia</field>
                 <field>Madagascar</field>
+                <field>Malawi</field>
                 <field>Malaysia</field>
                 <field>Maldives</field>
+                <field>Mali</field>
+                <field>Malta</field>
                 <field>Marshall Islands</field>
+                <field>Martinique</field>
+                <field>Mauritania</field>
                 <field>Mauritius</field>
                 <field>Mayotte</field>
+                <field>Mediterranean Sea</field>
                 <field>Mexico</field>
                 <field>Micronesia</field>
+                <field>Midway Islands</field>
+                <field>Moldova</field>
+                <field>Monaco</field>
+                <field>Mongolia</field>
+                <field>Montenegro</field>
+                <field>Montserrat</field>
+                <field>Morocco</field>
                 <field>Mozambique</field>
+                <field>Myanmar</field>
+                <field>Namibia</field>
                 <field>Nauru</field>
+                <field>Navassa Island</field>
+                <field>Nepal</field>
+                <field>Netherlands</field>
+                <field>New Caledonia</field>
                 <field>New Zealand</field>
                 <field>Nicaragua</field>
+                <field>Niger</field>
+                <field>Nigeria</field>
+                <field>Niue</field>
+                <field>Norfolk Island</field>
                 <field>North Korea</field>
+                <field>North Sea</field>
+                <field>Northern Mariana Islands</field>
+                <field>Norway</field>
                 <field>Oman</field>
+                <field>Pacific Ocean</field>
                 <field>Pakistan</field>
                 <field>Palau</field>
+                <field>Palmyra Atoll</field>
                 <field>Panama</field>
                 <field>Papua New Guinea</field>
+                <field>Paracel Islands</field>
+                <field>Paraguay</field>
                 <field>Peru</field>
                 <field>Philippines</field>
+                <field>Pitcairn Islands</field>
+                <field>Poland</field>
+                <field>Portugal</field>
+                <field>Puerto Rico</field>
                 <field>Qatar</field>
+                <field>Republic of the Congo</field>
                 <field>Reunion</field>
+                <field>Romania</field>
+                <field>Ross Sea</field>
                 <field>Russia</field>
+                <field>Rwanda</field>
+                <field>Saint Helena</field>
+                <field>Saint Kitts and Nevis</field>
+                <field>Saint Lucia</field>
+                <field>Saint Pierre and Miquelon</field>
+                <field>Saint Vincent and the Grenadines</field>
                 <field>Samoa</field>
+                <field>San Marino</field>
+                <field>Sao Tome and Principe</field>
                 <field>Saudi Arabia</field>
+                <field>Senegal</field>
+                <field>Serbia</field>
                 <field>Seychelles</field>
+                <field>Sierra Leone</field>
                 <field>Singapore</field>
+                <field>Sint Maarten</field>
+                <field>Slovakia</field>
+                <field>Slovenia</field>
                 <field>Solomon Islands</field>
                 <field>Somalia</field>
                 <field>South Africa</field>
+                <field>South Georgia and the South Sandwich Islands</field>
                 <field>South Korea</field>
+                <field>Southern Ocean</field>
+                <field>Spain</field>
+                <field>Spratly Islands</field>
                 <field>Sri Lanka</field>
                 <field>Sudan</field>
+                <field>Suriname</field>
+                <field>Svalbard</field>
+                <field>Swaziland</field>
+                <field>Sweden</field>
+                <field>Switzerland</field>
+                <field>Syria</field>
                 <field>Taiwan</field>
+                <field>Tajikistan</field>
                 <field>Tanzania</field>
+                <field>Tasman Sea</field>
                 <field>Thailand</field>
-                <field>Timor L'este</field>
+                <field>Togo</field>
+                <field>Tokelau</field>
                 <field>Tonga</field>
+                <field>Trinidad and Tobago</field>
+                <field>Tromelin Island</field>
+                <field>Tunisia</field>
+                <field>Turkey</field>
+                <field>Turkmenistan</field>
+                <field>Turks and Caicos Islands</field>
                 <field>Tuvalu</field>
+                <field>USA</field>
+                <field>Uganda</field>
+                <field>Ukraine</field>
                 <field>United Arab Emirates</field>
-                <field>United States of America</field>
+                <field>United Kingdom</field>
+                <field>Uruguay</field>
+                <field>Uzbekistan</field>
                 <field>Vanuatu</field>
-                <field>Vietnam</field>
+                <field>Venezuela</field>
+                <field>Viet Nam</field>
+                <field>Virgin Islands</field>
+                <field>Wake Island</field>
+                <field>Wallis and Futuna</field>
+                <field>West Bank</field>
+                <field>Western Sahara</field>
                 <field>Yemen</field>
+                <field>Zambia</field>
+                <field>Zimbabwe</field>
             </list>
         </lists>
 
@@ -214,68 +371,74 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
+                worksheetUniqueKey="sampleID"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
-            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
-            <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
-            <attribute column="enteredBy" uri="urn:enteredBy"/>
-            <attribute column='yearEntered' datatype="integer" uri='urn:yearEntered'/>
-            <attribute column='monthEntered' datatype="integer" uri='urn:monthEntered'/>
-            <attribute column='dayEntered' datatype="integer" uri='urn:dayEntered'/>
-            <attribute column="ownerInstitutionCode" uri="http://rs.tdwg.org/dwc/terms/ownerInstitutionCode"/>
+            <attribute column="sampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
 
-            <attribute column='yearCollected' datatype="integer" uri='urn:yearCollected'/>
-            <attribute column='monthCollected' datatype="integer" uri='urn:monthCollected'/>
-            <attribute column='dayCollected' datatype="integer" uri='urn:dayCollected'/>
-            <attribute column="permitInformation" uri="urn:permitInformation"/>
-            <attribute column='biome' uri='http://purl.obolibrary.org/obo/ENVO_00000428'/>
-            <attribute column='habitat' uri='http://purl.obolibrary.org/obo/ENVO_00002036'/>
-            <attribute column='material' uri='http://purl.obolibrary.org/obo/ENVO_00010483'/>
-            <attribute column='samplingProtocol' uri='http://rs.tdwg.org/dwc/terms/samplingProtocol'/>
-            <attribute column='minimumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'/>
-            <attribute column='maximumDepthInMeters' uri='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'/>
-            <attribute column='eventRemarks' uri='http://rs.tdwg.org/dwc/terms/eventRemarks'/>
-
-            <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
-            <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
-            <attribute column="coordinateUncertaintyInMeters"
-                       uri="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
-            <attribute column="country" uri="http://rs.tdwg.org/dwc/terms/country"/>
-            <attribute column='stateProvince' uri='http://rs.tdwg.org/dwc/terms/stateProvince'/>
-            <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'/>
-
-            <attribute column='identifiedBy' uri='http://rs.tdwg.org/dwc/terms/identifiedBy'/>
-            <attribute column='yearIdentified' datatype="integer" uri='urn:yearIdentified'/>
-            <attribute column='monthIdentified' datatype="integer" uri='urn:monthIdentified'/>
-            <attribute column='dayIdentified' datatype="integer" uri='urn:dayIdentified'/>
-
-            <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'/>
-            <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'/>
-            <attribute column='vernacularName' uri='http://rs.tdwg.org/dwc/terms/vernacularName'/>
-            <attribute column='kingdom' uri='http://rs.tdwg.org/dwc/terms/kingdom'/>
-            <attribute column='phylum' uri='http://rs.tdwg.org/dwc/terms/phylum'/>
-            <attribute column='class' uri='http://rs.tdwg.org/dwc/terms/class'/>
-            <attribute column='order' uri='http://rs.tdwg.org/dwc/terms/order'/>
-            <attribute column='family' uri='http://rs.tdwg.org/dwc/terms/family'/>
-
-            <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'/>
-            <attribute column='occurrenceID' uri='http://rs.tdwg.org/dwc/terms/occurrenceID'/>
-            <attribute column='photograph' uri='http://purl.obolibrary.org/obo/IAO_0000185'/>
-            <attribute column='preservative' uri='http://rs.tdwg.org/dwc/terms/preparations'/>
-            <attribute column='previousIdentifications' uri='http://rs.tdwg.org/dwc/terms/previousIdentifications'/>
-            <attribute column='lifeStage' uri='http://rs.tdwg.org/dwc/terms/lifeStage'/>
-            <attribute column='weight' uri='http://purl.obolibrary.org/obo/PATO_0000128'/>
-            <attribute column='weightUnit' uri='http://purl.obolibrary.org/obo/UO_0000002'/>
-            <attribute column='length' uri='http://purl.obolibrary.org/obo/PATO_0000122'/>
-            <attribute column='lengthUnit' uri='http://purl.obolibrary.org/obo/UO_0000001'/>
-
-            <attribute column="geneticTissueType" uri="urn:geneticTissueType"/>
-
-            <attribute column="associatedSequences" uri="http://rs.tdwg.org/dwc/terms/associatedSequences"/>
-            <attribute column="nucleicAcidExtraction" uri="http://gensc.org/ns/mixs/nucleicAcidExtraction"/>
-            <attribute column="loci" uri="http://gensc.org/ns/mixs/targetGene"/>
+            <attribute column='partnerCountry' uri='urn:partnerCountry'/>
+            <attribute column='processingLab' uri='urn:processingLab'/>
+            <attribute column='sequencingLab' uri='urn:sequencingLab'/>
+            <attribute column='collectedBy' uri='urn:collectedBy'/>
+            <attribute column='dayCollected' uri='urn:dayCollected'/>
+            <attribute column='monthCollected' uri='urn:monthCollected'/>
+            <attribute column='yearCollected' uri='urn:yearCollected'/>
+            <attribute column='basisOfID' uri='urn:basisOfID'/>
+            <attribute column='dateIdentified' uri='urn:dateIdentified'/>
+            <attribute column='identificationConfidence' uri='urn:identificationConfidence'/>
+            <attribute column='identifiedBy' uri='urn:identifiedBy'/>
+            <attribute column='typeStatus' uri='urn:typeStatus'/>
+            <attribute column='countryOrWaterBody' uri='urn:countryOrWaterBody'/>
+            <attribute column='decimalLatitude' uri='urn:decimalLatitude'/>
+            <attribute column='decimalLongitude' uri='urn:decimalLongitude'/>
+            <attribute column='catalogNumber' uri='urn:catalogNumber'/>
+            <attribute column='collectionCode' uri='urn:collectionCode'/>
+            <attribute column='institutionCode' uri='urn:institutionCode'/>
+            <attribute column='tissueBarcode' uri='urn:tissueBarcode'/>
+            <attribute column='tissuePlate' uri='urn:tissuePlate'/>
+            <attribute column='tissueType' uri='urn:tissueType'/>
+            <attribute column='tissueWell' uri='urn:tissueWell'/>
+            <attribute column='phylum' uri='urn:phylum'/>
+            <attribute column='scientificName' uri='urn:scientificName'/>
+            <attribute column='collectionMethod' uri='urn:collectionMethod'/>
+            <attribute column='eventID' uri='urn:eventID'/>
+            <attribute column='eventRemarks' uri='urn:eventRemarks'/>
+            <attribute column='eventTime' uri='urn:eventTime'/>
+            <attribute column='fieldNumber' uri='urn:fieldNumber'/>
+            <attribute column='habitat' uri='urn:habitat'/>
+            <attribute column='permitInformation' uri='urn:permitInformation'/>
+            <attribute column='county' uri='urn:county'/>
+            <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'/>
+            <attribute column='island' uri='urn:island'/>
+            <attribute column='locality' uri='urn:locality'/>
+            <attribute column='locationRemarks' uri='urn:locationRemarks'/>
+            <attribute column='municipality' uri='urn:municipality'/>
+            <attribute column='stateProvince' uri='urn:stateProvince'/>
+            <attribute column='verbatimDepth' uri='urn:verbatimDepth'/>
+            <attribute column='verbatimElevation' uri='urn:verbatimElevation'/>
+            <attribute column='associatedMedia' uri='urn:associatedMedia'/>
+            <attribute column='establishmentMeans' uri='urn:establishmentMeans'/>
+            <attribute column='length' uri='urn:length'/>
+            <attribute column='lengthUnits' uri='urn:lengthUnits'/>
+            <attribute column='lifeStage' uri='urn:lifeStage'/>
+            <attribute column='preservative' uri='urn:preservative'/>
+            <attribute column='sampleRemarks' uri='urn:sampleRemarks'/>
+            <attribute column='sex' uri='urn:sex'/>
+            <attribute column='weight' uri='urn:weight'/>
+            <attribute column='weightUnits' uri='urn:weightUnits'/>
+            <attribute column='associatedTaxa' uri='urn:associatedTaxa'/>
+            <attribute column='class' uri='urn:class'/>
+            <attribute column='commonName' uri='urn:commonName'/>
+            <attribute column='family' uri='urn:family'/>
+            <attribute column='genus' uri='urn:genus'/>
+            <attribute column='kingdom' uri='urn:kingdom'/>
+            <attribute column='order' uri='urn:order'/>
+            <attribute column='species' uri='urn:species'/>
+            <attribute column='subfamily' uri='urn:subfamily'/>
+            <attribute column='subgenus' uri='urn:subgenus'/>
+            <attribute column='subspecies' uri='urn:subspecies'/>
+            <attribute column='taxonRemarks' uri='urn:taxonRemarks'/>
         </entity>
     </mapping>
 
