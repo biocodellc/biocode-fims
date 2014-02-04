@@ -843,6 +843,7 @@ public class Rule {
             statement = connection.createStatement();
             String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
                     " where " + getColumn() + " not in (" + lookupSB.toString() + ")";
+//System.out.println(sql);
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String value = resultSet.getString(getColumn()).trim();
@@ -854,11 +855,11 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("SQL exception processing checkInXMLFields rule " + e.getMessage());
+            //e.printStackTrace();
+            throw new Exception("SQL exception processing checkInXMLFields rule " + e.getMessage(), e);
         } catch (Exception e) {
             //e.printStackTrace();
-            throw new Exception("Unhandled exception processing checkInXMLFields for " + getColumn());
+            throw new Exception("Unhandled exception processing checkInXMLFields for " + getColumn(), e);
         } finally {
             statement.close();
             if (resultSet != null)
