@@ -58,7 +58,6 @@
                 <field>hapantotype</field>
                 <field>other</field>
             </list>
-            <
             <list alias='lifeStage'>
                 <field>zygote</field>
                 <field>embryo</field>
