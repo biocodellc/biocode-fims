@@ -63,6 +63,10 @@ public class Mapping implements RendererInterface {
         entities.addLast(e);
     }
 
+    public LinkedList<Entity> getEntities() {
+        return entities;
+    }
+
     /**
      * Add a Relation to this Mapping by appending to the LinkedListr of relations
      *
@@ -92,12 +96,27 @@ public class Mapping implements RendererInterface {
      * @return
      */
     public String getPersistentIdentifier(Entity entity) throws Exception {
-        //System.out.println(entity.getConceptAlias() + " " + entity.toString() + " " + entity.getColumn() + " " + entity.getConceptURI() + " " + entity.getWorksheetUniqueKey());
+        String columnName = "";
+
+        // Is this a hash?
+        //if (entity.getWorksheetUniqueKey().trim().equals("hash")) {
+        //    columnName = "1234567hashABCD";
+            // if not a hash then use column name value
+       // } else {
+            columnName = "@@" + entity.getColumn() + "@@";
+        //}
+
+
+        // Use the deepRoots System to lookup Key
         String bcid = dRoots.lookupPrefix(entity.getConceptURI());
+
+        // Use the default namespace value if dRoots is unsuccesful...
         if (bcid == null) {
             bcid = "urn:x-biscicol:" + entity.getConceptAlias() + ":";
         }
-        return "\td2rq:uriPattern \"" + bcid + "@@" + entity.getColumn() + "@@\";";
+
+        //System.out.println("\td2rq:uriPattern \"" + bcid + columnName + "\";");
+        return "\td2rq:uriPattern \"" + bcid + columnName + "\";";
     }
 
     /**
@@ -122,6 +141,7 @@ public class Mapping implements RendererInterface {
      * @param pw PrintWriter used to write output to.
      */
     private void printPrefixes(PrintWriter pw) {
+        // TODO: Allow configuration files to specify namespace prefixes!
         pw.println("@prefix map: <" + "" + "> .");
         pw.println("@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .");
         pw.println("@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .");
@@ -130,6 +150,11 @@ public class Mapping implements RendererInterface {
         pw.println("@prefix jdbc: <http://d2rq.org/terms/jdbc/> .");
         pw.println("@prefix ro: <http://www.obofoundry.org/ro/ro.owl#> .");
         pw.println("@prefix bsc: <http://biscicol.org/terms/index.html#> .");
+        pw.println("@prefix urn: <http://biscicol.org/terms/index.html#> .");
+        // TODO: update this prefix to EZID location when suffixPassthrough is ready
+        pw.println("@prefix ark: <http://biscicol.org/id/ark:> .");
+
+
         pw.println();
     }
 
@@ -138,7 +163,7 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(Validation v, triplifier t, String project_code, List<String> colNames) throws Exception {
+    public boolean run(Validation v, triplifier t, Integer expedition_id, String project_code, List<String> colNames) throws Exception {
         fimsPrinter.out.println("Converting to RDF Triples ...");
         this.project_code = project_code;
         this.colNames = colNames;
@@ -146,7 +171,8 @@ public class Mapping implements RendererInterface {
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData("http://biscicol.org:8080/id/projectService/deepRoots/" + project_code);
+        dRoots = new deepRootsReader().createRootData(
+                "http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code);
 
         // Create a connection to a SQL Lite Instance
         try {

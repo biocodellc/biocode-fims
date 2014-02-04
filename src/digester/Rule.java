@@ -908,8 +908,11 @@ public class Rule {
             } else {
 
                 try {
-                    rs = statement.executeQuery("select count(*) from " + digesterWorksheet.getSheetname() + " where " + reqFieldName + "='' or " + reqFieldName + " is null");
+                    String sql;
+                    sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where " + reqFieldName + "='' or " + reqFieldName + " is null";
+                    rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
+                        //System.out.println(sql);
                         addMessage(levelValue + " column " + reqFieldName + " has a missing cell value");
                     }
                 } catch (SQLException e) {

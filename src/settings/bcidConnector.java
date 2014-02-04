@@ -1,11 +1,18 @@
 package settings;
 
+import digester.Attribute;
+import digester.Entity;
+import digester.Mapping;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.net.CookieManager;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -39,13 +46,15 @@ public class bcidConnector {
 
     public static void main(String[] args) {
 
+        String username = "demo";
+        String password = "demo";
         bcidConnector bcid = new bcidConnector();
         String message = null;
 
         // Authenticate
         boolean success = false;
         try {
-            success = bcid.authenticate("biocode", "biocode2013");
+            success = bcid.authenticate(username, password);
             if (success)
                 System.out.println("Able to authenticate!");
         } catch (Exception e) {
@@ -54,32 +63,11 @@ public class bcidConnector {
         }
         // TESTING user-project authentication
         try {
-            bcid.validateProject("DEMOH", 1);
+            bcid.validateProject("DEMOH", 1, null);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        /*
-       // Success then create ARK
-       if (success)
-           try {
-               message = "Created BCID = " + bcid.createDatasetBCID(null);
-           } catch (Exception e) {
-               message = e.getMessage();
-               e.printStackTrace();
-           }
-       else
-           message = "Unable to authenticate";
-
-       try {
-
-           System.out.println(bcid.associateBCID("DEMOH", "ark:/21547/Fu2"));
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
-       System.out.println(message);
-        */
     }
 
     /**
@@ -101,12 +89,11 @@ public class bcidConnector {
     public boolean authenticate(String username, String password) throws Exception {
         this.username = username;
         this.password = password;
-        //String postParams = "j_username=" + username + "&j_password=" + password;
         String postParams = "username=" + username + "&password=" + password;
         URL url = new URL(authenticationURL);
         String response = createPOSTConnnection(url, postParams);
 
-        // TODO: use a proper method for determining response/error codes (like HTTP Response code = 401 or 403)!
+        // TODO: find a more robust way to search for bad credentials than just parsing the response for text
         if (response.toString().contains("Bad credentials")) {
             return false;
         } else {
@@ -140,22 +127,23 @@ public class bcidConnector {
     }
 
     /**
-     * Create a Dataset BCID.  Uses cookies sent during authentication method.  suffixPassthrough is set to False
-     * since we only want to represent a single entity here
+     * Create BCIDs corresponding to project entities
      *
      * @return
      * @throws Exception
      */
-    public String createBCID(String webaddress, String title, Integer resourceTypesMinusDataset) throws Exception {
+    public String createEntityBCID(String webaddress, String title, String resourceType) throws Exception {
         String createBCIDDatasetPostParams =
                 "title=" + title + "&" +
-                        "resourceTypesMinusDataset=" + resourceTypesMinusDataset + "&" +
+                        "resourceType=" + resourceType + "&" +
                         "suffixPassThrough=true&" +
                         "webaddress=" + webaddress;
 
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
-
+        if (getResponseCode() == 401) {
+            throw new Exception("User authorization error!");
+        }
         return response.toString();
     }
 
@@ -165,9 +153,10 @@ public class bcidConnector {
      * @return
      * @throws Exception
      */
-    public String associateBCID(String project_code, String bcid) throws Exception {
+    public String associateBCID(Integer expedition_id, String project_code, String bcid) throws Exception {
         String createPostParams =
                 "project_code=" + project_code + "&" +
+                        "expedition_id=" + expedition_id + "&" +
                         "bcid=" + bcid;
 
         URL url = new URL(associateURL);
@@ -177,14 +166,14 @@ public class bcidConnector {
     }
 
     /**
-     * Asscociate a project_code to a BCID
+     * create a project
      *
      * @return
      * @throws Exception
      */
-    public String createProject(String project_code, 
-                                String project_title, 
-                                String abstractString, 
+    public String createProject(String project_code,
+                                String project_title,
+                                String abstractString,
                                 Integer expedition_id) throws Exception {
         String createPostParams =
                 "project_code=" + project_code + "&" +
@@ -200,6 +189,9 @@ public class bcidConnector {
         if (response.contains("ERROR")) {
             throw new Exception(response.toString());
         }
+
+        // When i create a project, i also want to create
+
         return response.toString();
     }
 
@@ -208,10 +200,11 @@ public class bcidConnector {
      * a particular expedition
      *
      * @param project_code
+     * @param mapping
      * @return
      * @throws Exception
      */
-    public boolean validateProject(String project_code, Integer expedition_id) throws Exception {
+    public boolean validateProject(String project_code, Integer expedition_id, Mapping mapping) throws Exception {
         URL url = new URL(projectValidationURL + expedition_id + "/" + project_code);
         String response = createGETConnection(url);
         String action = response.split(":")[0];
@@ -228,16 +221,42 @@ public class bcidConnector {
                         "\nIf you choose to continue, your data will be associated with this new project code.";
                 if (fimsInputter.in.continueOperation(message)) {
                     try {
+                        fimsPrinter.out.println("\tCreating project " + project_code + " ... this is a one time process " +
+                                "before loading each spreadsheet and may take a minute...");
                         String output = createProject(
                                 project_code,
                                 project_code + " spreadsheet project",
                                 null,
                                 expedition_id);
-                        fimsPrinter.out.println("\t" + output);
-                        return true;
+                        //fimsPrinter.out.println("\t" + output);
                     } catch (Exception e) {
-                        throw new Exception("Unable to create project " + project_code + "\nPlease be sure project codes are between 4 and 6 characters in length\nand do not contain spaces or special characters.", e);
+                        throw new Exception("Unable to create project " + project_code + "\n" +
+                                "Please be sure project codes are between 4 and 6 characters in length\n" +
+                                "and do not contain spaces or special characters.", e);
                     }
+                    // Loop the mapping file and create a BCID for every entity that we specified there!
+                    if (mapping != null) {
+                        LinkedList<Entity> entities = mapping.getEntities();
+                        Iterator it = entities.iterator();
+                        while (it.hasNext()) {
+                            Entity entity = (Entity) it.next();
+                            try {
+                                fimsPrinter.out.println("\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
+                                // Create the entity BCID
+                                String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+                                // Associate this identifier with this project
+                                associateBCID(expedition_id, project_code,  bcid);
+
+                            } catch (Exception e) {
+                                throw new Exception("The project " + project_code +
+                                        " has been created but unable to create a BCID for\n" +
+                                        "resourceType = " + entity.getConceptURI(), e);
+                            }
+                        }
+                    }
+
+                    return true;
+
 
                 } else {
                     return false;

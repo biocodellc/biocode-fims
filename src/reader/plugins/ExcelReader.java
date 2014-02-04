@@ -3,29 +3,14 @@ package reader.plugins;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import digester.List;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.joda.time.DateTime;
-import settings.fimsPrinter;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003
@@ -217,11 +202,14 @@ public class ExcelReader implements TabularDataReader {
             rows.next();
             count++;
         }
-        XSSFRow row = (XSSFRow) rows.next();
+
+        //XSSFRow row = (XSSFRow) rows.next();
+        Row row = (Row) rows.next();
 
         Iterator<Cell> cells = row.cellIterator();
         while (cells.hasNext()) {
-            XSSFCell cell = (XSSFCell) cells.next();
+            //XSSFCell cell = (XSSFCell) cells.next();
+            Cell cell = (Cell) cells.next();
             if (cell.toString().trim() != "" && cell.toString() != null) {
                 listColumnNames.add(cell.toString());
             }
@@ -243,10 +231,12 @@ public class ExcelReader implements TabularDataReader {
      * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the count--- this
      * means there can be no blank rows.
      *
-     * @return  a count of number of rows
+     * @return a count of number of rows
      */
     public Integer getNumRows() {
+
         Sheet wsh = excelwb.getSheet(getCurrentTableName());
+        Integer numRows;
 
         Iterator it = wsh.rowIterator();
         int count = 0;
@@ -260,17 +250,17 @@ public class ExcelReader implements TabularDataReader {
                     rowContents += cell.toString();
                 }
             }
-
             if (rowContents.equals("")) {
                 // The count to return should be minus 1 to account for title
-                return count - 1 - numHeaderRows;
+                numRows = count - 1 - numHeaderRows;
+                return numRows;
             }
             count++;
         }
-        Integer numRows = count - 1 - numHeaderRows;
-        //fimsPrinter.out.println("this is the number of rows!" + numRows);
         // The count to return should be minus 1 to account for title
-        return count - 1 - numHeaderRows;
+        numRows = count - 1 - numHeaderRows;
+
+        return numRows;
     }
 
 
@@ -350,7 +340,7 @@ public class ExcelReader implements TabularDataReader {
      *
      * @param column
      * @param row
-     * @return  double value in this cell
+     * @return double value in this cell
      * @throws Exception
      */
     public Double getDoubleValue(String column, int row) throws Exception {
@@ -411,7 +401,8 @@ public class ExcelReader implements TabularDataReader {
                 case Cell.CELL_TYPE_NUMERIC:
                     // There is no date data type in Excel, so we have to check
                     // if this cell contains a date-formatted value.
-                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                    //if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                    if (DateUtil.isCellDateFormatted(cell)) {
                         // Convert the value to a Java date object, then to
                         // ISO 8601 format using Joda-Time.
                         DateTime date;
@@ -435,7 +426,7 @@ public class ExcelReader implements TabularDataReader {
                     // cell's formula, then convert the result to a String.
                     // The following was throwing an error...
                     try {
-                    ret[cnt] = df.formatCellValue(cell,fe);
+                        ret[cnt] = df.formatCellValue(cell, fe);
                     } catch (Exception e) {
                         int rowNum = cell.getRowIndex() + 1;
                         throw new SQLException("There was an issue processing a formula on this sheet.\n" +
@@ -443,7 +434,7 @@ public class ExcelReader implements TabularDataReader {
                                 "\tCell = " + CellReference.convertNumToColString(cnt) + rowNum + "\n" +
                                 "\tUnreadable Formula = " + cell + "\n" +
                                 "\t(There may be additional formulas you may need to fix)"
-                                );
+                        );
                     }
                     //ret[cnt] = df.formatCellValue(cell);
                     break;

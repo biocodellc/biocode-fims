@@ -72,7 +72,6 @@ public class triplifier {
         System.gc();
         fimsPrinter.out.println("\tProcessing...");
 
-
         // Write the model
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),
                 FileUtils.langN3, "urn:x-biscicol:");

@@ -126,8 +126,8 @@ public class process {
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
 
+            // Read the Configuration File
             try {
-
                 configFile = new configurationFileFetcher(expedition_id, outputFolder).getOutputFile();
             } catch (Exception e) {
                 //e.printStackTrace();
@@ -137,54 +137,58 @@ public class process {
             }
             fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
+            // Parse the Mapping object (this object is used extensively in downstream functions!)
+            Mapping mapping;
+            try {
+                mapping = new Mapping();
+                addMappingRules(new Digester(), mapping);
+            } catch (Exception e) {
+                throw new FIMSException("Problem reading mapping in configuration file", e);
+            }
 
             // Check that the user that is logged in also owns the project_code
             try {
-                projectCheck = bcidConnector.validateProject(project_code, expedition_id);
+                projectCheck = bcidConnector.validateProject(project_code, expedition_id, mapping);
             } catch (Exception e) {
                 //e.printStackTrace();
                 throw new FIMSException(e.getMessage(), e);
             }
 
+            // If the project Checks out, then we can Continue
             if (projectCheck) {
                 // Read the input file & create the ReaderManager and load the plugins.
                 try {
+                    // Create the tabulardataReader for reading the input file
                     ReaderManager rm = new ReaderManager();
                     TabularDataReader tdr = null;
-
                     rm.loadReaders();
                     tdr = rm.openFile(inputFilename);
 
-                    // Validation
+                    // Perform validation
                     validation = new Validation();
                     addValidationRules(new Digester(), validation);
-                    validation.run(tdr, outputPrefix, outputFolder);
+                    validation.run(tdr, outputPrefix, outputFolder, mapping);
                     validationGood = validation.printMessages();
 
-                    // Print out column names!!
-                    //System.out.println(validation.getTabularDataReader().getColNames());
-                    //if (1==1) return;
-
-                    // Triplify if we validate
+                    // If Validation passed, we can go ahead and triplify
                     if (triplify & validationGood) {
-
-                        Mapping mapping = new Mapping();
-                        addMappingRules(new Digester(), mapping);
-
                         triplifyGood = mapping.run(
                                 validation,
                                 new triplifier(outputPrefix, outputFolder),
+                                expedition_id,
                                 project_code,
                                 validation.getTabularDataReader().getColNames());
                         mapping.print();
 
-                        // Upload after triplifying
+                        // If the triplification was good and the user wants to upload, then proceed
                         if (upload & triplifyGood) {
                             Fims fims = new Fims(mapping);
                             addFimsRules(new Digester(), fims);
-                            fims.run(bcidConnector, project_code);
+                            fims.run(bcidConnector, expedition_id, project_code);
                             fims.print();
 
+                            // Write spreadsheet is a useful for immediately testing output--
+                            // this may or may not be useful in the production system
                             if (write_spreadsheet)
                                 fimsPrinter.out.println("\tspreadsheet = " +
                                         fims.getFIMSModel(FileManager.get().loadModel(

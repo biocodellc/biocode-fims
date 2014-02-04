@@ -72,7 +72,7 @@ public class Relation {
         //if (subjTbl.equals(objTbl)) {
         pw.println("map:" + subjClassMap + "_" + objClassMap + "_rel" + " a d2rq:PropertyBridge;");
         pw.println("\td2rq:belongsToClassMap " + "map:" + subjClassMap + ";");
-        pw.println("\td2rq:property " + predicate + ";");
+        pw.println("\td2rq:property <" + predicate + ">;");
         pw.println(mapping.getPersistentIdentifier(objEntity));
         pw.println("\td2rq:condition \"" + objEntity.getWorksheetUniqueKey() + " <> ''\";");
         pw.println("\t.");
