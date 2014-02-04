@@ -803,8 +803,7 @@ public class Rule {
      * checkInXMLFields checks that Rows under the "name" attribute column in Excel Spreadsheet
      * match values in the XML <field> categories
      */
-    public void checkInXMLFields
-    () throws Exception {
+    public void checkInXMLFields() throws Exception {
         StringBuilder lookupSB = new StringBuilder();
         java.util.List<String> listFields;
         String msg;
@@ -831,7 +830,9 @@ public class Rule {
             try {
                 if (count > 0)
                     lookupSB.append(",");
-                lookupSB.append("\'" + listFields.get(k).toString() + "\'");
+                // NOTE: the following escapes single quotes using another single quote
+                // (two single quotes in a row allows us to query one single quote in SQLlite)
+                lookupSB.append("\'" + listFields.get(k).toString().replace("'","''") + "\'");
                 count++;
             } catch (Exception e) {
                 // do nothing
@@ -842,7 +843,6 @@ public class Rule {
             statement = connection.createStatement();
             String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
                     " where " + getColumn() + " not in (" + lookupSB.toString() + ")";
-
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String value = resultSet.getString(getColumn()).trim();
@@ -854,14 +854,15 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw new Exception("SQL exception processing checkInXMLFields rule " + e.getMessage());
         } catch (Exception e) {
             //e.printStackTrace();
             throw new Exception("Unhandled exception processing checkInXMLFields for " + getColumn());
         } finally {
             statement.close();
-            resultSet.close();
+            if (resultSet != null)
+                resultSet.close();
         }
     }
 
