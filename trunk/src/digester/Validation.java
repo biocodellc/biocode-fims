@@ -106,7 +106,7 @@ public class Validation implements RendererInterface {
      * @return
      * @throws Exception
      */
-    private void createSqlLite(String filenamePrefix, String outputFolder) throws Exception {
+    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
         PathManager pm = new PathManager();
         File processDirectory = null;
 
@@ -132,7 +132,7 @@ public class Validation implements RendererInterface {
             sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
 
             TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
-            tdc.convert();
+            tdc.convert(mapping);
             tabularDataReader.closeFile();
         } catch (Exception e) {
             throw new Exception(e.getMessage(), e);
@@ -215,7 +215,7 @@ public class Validation implements RendererInterface {
      * @return
      * @throws Exception
      */
-    public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder) throws Exception {
+    public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
         fimsPrinter.out.println("Validate ...");
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
@@ -223,7 +223,7 @@ public class Validation implements RendererInterface {
         tabularDataReader.setTable(worksheets.get(0).getSheetname());
 
         try {
-            createSqlLite(filenamePrefix, outputFolder);
+            createSqlLite(filenamePrefix, outputFolder, mapping);
         } catch (Exception e) {
             //e.printStackTrace();
             throw new Exception(e.getMessage(), e);

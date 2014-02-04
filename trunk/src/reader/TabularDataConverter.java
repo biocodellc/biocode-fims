@@ -1,13 +1,15 @@
 package reader;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
+import com.sun.tools.internal.xjc.api.Mapping;
+import digester.Attribute;
+import digester.Entity;
 import reader.plugins.TabularDataReader;
+import settings.hasher;
 
 
 /**
@@ -141,30 +143,84 @@ public final class TabularDataConverter {
      *
      * @throws SQLException
      */
-    public void convert() throws SQLException {
+    public void convert(digester.Mapping mapping) throws SQLException {
         //int tablecnt = 0;
-        // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
         String tname = source.getCurrentTableName();
         Connection connection = DriverManager.getConnection(dest);
 
+        if (source.tableHasNextRow()) {
+            String fixedtname = fixSQLiteIdentifierName(tname);
+            buildTable(connection, fixedtname);
+            buildHashes(connection, mapping, fixedtname);
+        }
 
-        if (source.tableHasNextRow())
-            buildTable(connection, fixSQLiteIdentifierName(tname));
-        /*while (source.hasNextTable()) {
-            source.moveToNextTable();
-            tablecnt++;
-            // If the user supplied a name for the first table in the data
-            // source, use it.  Otherwise, take the table name from the data
-            // source.
-            if ((tablecnt == 1) && !tablename.equals(""))
-                tname = tablename;
-            else
-                tname = source.getCurrentTableName();
+        // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
+        /*
+         while (source.hasNextTable()) {
+          source.moveToNextTable();
+          tablecnt++;
+          // If the user supplied a name for the first table in the data
+          // source, use it.  Otherwise, take the table name from the data
+          // source.
+          if ((tablecnt == 1) && !tablename.equals(""))
+              tname = tablename;
+          else
+              tname = source.getCurrentTableName();
 
-            if (source.tableHasNextRow())
-                buildTable(conn, fixSQLiteIdentifierName(tname));
-        }  */
+          if (source.tableHasNextRow())
+              buildTable(conn, fixSQLiteIdentifierName(tname));
+      }  */
         connection.close();
+    }
+
+    /**
+     * build Hash Keys in SQLLite table when we encounter a worksheetUniqueKey that ends in HASH
+     *
+     * @param connection
+     * @param mapping
+     */
+    private void buildHashes(Connection connection, digester.Mapping mapping, String tname) throws SQLException {
+        // Loop through entities and find which ones define HASH
+        LinkedList<Entity> entities = mapping.getEntities();
+        Iterator it = entities.iterator();
+        Statement stmt = connection.createStatement();
+
+        while (it.hasNext()) {
+            Entity entity = (Entity) it.next();
+            if (entity.getWorksheetUniqueKey().contains("HASH")) {
+
+                // Add this column identifier
+                String alter = "ALTER TABLE " + tname + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
+                stmt.executeUpdate(alter);
+
+                LinkedList<Attribute> attributes = entity.getAttributes();
+                Iterator attributesIt = attributes.iterator();
+                StringBuilder sb = new StringBuilder();
+                sb.append("SELECT rowid,");
+                while (attributesIt.hasNext()) {
+                    Attribute attribute = (Attribute) attributesIt.next();
+                    sb.append(attribute.getColumn());
+                    if (attributesIt.hasNext())
+                        sb.append(" || ");
+                }
+                sb.append(" AS toHash FROM " + tname);
+                ResultSet rs = stmt.executeQuery(sb.toString());
+
+                Statement updateStatement = connection.createStatement();
+                hasher hasher = new hasher();
+                updateStatement.execute("BEGIN TRANSACTION");
+                while (rs.next()) {
+                    String update = "UPDATE " + tname +
+                            " SET " + entity.getWorksheetUniqueKey() + " = \"" +
+                            hasher.hasherDigester(rs.getString("toHash")) + "\" " +
+                            " WHERE rowid = " + rs.getString("rowid");
+                    updateStatement.executeUpdate(update);
+                }
+                updateStatement.execute("COMMIT");
+                updateStatement.close();
+            }
+        }
+        stmt.close();
     }
 
     /**
@@ -241,8 +297,10 @@ public final class TabularDataConverter {
         // populate the table with the source data
         while (source.tableHasNextRow()) {
             cnt = 0;
+            StringBuilder sb = new StringBuilder();
             for (String dataval : source.tableGetNextRow()) {
                 //fimsPrinter.out.println(dataval);
+                sb.append(dataval);
                 insstmt.setString(++cnt, dataval);
             }
 
@@ -253,8 +311,11 @@ public final class TabularDataConverter {
                 insstmt.setString(++cnt, "");
             }
 
-            // add the row to the database
-            insstmt.executeUpdate();
+            // Only execute this portion of the strinbuilder identified ANY datavalues for this row
+            if (!sb.toString().equals("")) {
+                // add the row to the database
+                insstmt.executeUpdate();
+            }
         }
 
         insstmt.close();

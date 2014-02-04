@@ -120,8 +120,9 @@ public class Entity {
         pw.println("\td2rq:dataStorage " + "map:database;");
         pw.println(((Mapping) parent).getPersistentIdentifier(this));
         pw.println("\td2rq:class <" + this.conceptURI + ">;");
-        // ensures non-null values
-        pw.println("\td2rq:condition \"" + getColumn() + " <> ''\";");
+        // ensures non-null values ... don't apply if this is a hash
+        if (!getColumn().contains("hash"))
+            pw.println("\td2rq:condition \"" + getColumn() + " <> ''\";");
 
         // TODO: add in extra conditions (May not be necessary)
         //pw.println(getExtraConditions());
