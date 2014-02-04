@@ -34,7 +34,7 @@
             <rule type='checkInXMLFields' column='lifeStage' list='lifeStage' level='warning'></rule>
 
             <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
-            <rule type='checkInXMLFields' column='Partner Country' list='Partner Country' level='warning'></rule>
+            <rule type='checkInXMLFields' column='partnerCountry' list='partnerCountry' level='warning'></rule>
 
         </worksheet>
 
@@ -79,7 +79,7 @@
                 <field>gynandromorph</field>
             </list>
 
-            <list alias='Partner Country'>
+            <list alias='partnerCountry'>
                 <field>Kenya</field>
                 <field>Mexico</field>
                 <field>Nigeria</field>
