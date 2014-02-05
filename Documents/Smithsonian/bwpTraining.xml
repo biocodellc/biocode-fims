@@ -18,9 +18,9 @@
             <rule type='duplicateColumnNames' level='error'></rule>
             <rule type='uniqueValue' column='sampleID' level='error'></rule>
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
-                <field>sampleID</field>
                 <field>partnerCountry</field>
                 <field>processingLab</field>
+                <field>tissueBarcode</field>
                 <field>sequencingLab</field>
             </rule>
 
@@ -370,7 +370,7 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="sampleID"
+                worksheetUniqueKey="tissueBarcode"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
