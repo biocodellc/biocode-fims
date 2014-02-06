@@ -22,21 +22,51 @@ public class fimsQueryBuilder {
     }
 
     public Model getModel() {
-        String queryString = "DESCRIBE ?s ?p ?o \n" +
+        String queryString = "CONSTRUCT {?s ?p ?o} \n" +
                 getFrom() +
                 "WHERE {" +
                 //" { SELECT ?p WHERE {?s ?p ?o FILTER (?p = <urn:geneticTissueType>)}} \n" +
                 "   ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> . \n" +
-                "   ?s ?p ?o .\n"  +
+                "   ?s ?p ?o .\n" +
                 //"   ?s <urn:geneticTissueType> ?o . \n" +
                 getObjectFilter() +
-               //"   FILTER (?p = <urn:geneticTissueType>)\n" +
+                //"   FILTER (?p = <urn:geneticTissueType>)\n" +
                 "}";
         //System.out.println(queryString);
         QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlService, queryString);
-        Model model = qexec.execDescribe();
+
+       /* ResultSet rs = qexec.execSelect();
+
+        while (rs.hasNext()) {
+            QuerySolution s = rs.next();
+
+            RDFNode p = s.get("?p");
+            RDFNode o = s.get("?o");
+            RDFNode su = s.get("?s");
+            String object = "";
+            String triple = "";
+            if (o.isLiteral() == true) {
+                object = "\"" + o.toString() + "\"";
+            } else
+                object = "<" + o.toString() + ">";
+
+            triple = "<" + su + ">" + " " + "<" + p + ">" + " " + object + " " + ".";
+
+        }
+        */
+
+
+        Model model = qexec.execConstruct();
         qexec.close();
 
+        /*
+        com.hp.hpl.jena.rdf.model.Resource r = model.getResource("ark:/21547/Hz2F9198780");
+        StmtIterator s = r.listProperties();
+        while (s.hasNext()) {
+            Statement st = s.nextStatement();
+            System.out.println("HERE" + st.getSubject().toString() + " " + st.getPredicate().toString() + " " + st.getObject().toString());
+        }
+        */
         return model;
     }
 
@@ -76,6 +106,7 @@ public class fimsQueryBuilder {
 
     /**
      * Print the Model
+     *
      * @param model
      */
     private static void print(Model model) {
@@ -102,7 +133,7 @@ public class fimsQueryBuilder {
         }
     }
 
-/**
+    /**
      * Used only for testing
      *
      * @param args
@@ -119,5 +150,6 @@ public class fimsQueryBuilder {
         print(q.getModel());
 
     }
+
 
 }

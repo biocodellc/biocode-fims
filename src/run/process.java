@@ -215,7 +215,9 @@ public class process {
      * @throws FIMSException
      */
     public String query(String graphs, String format, String filter) throws FIMSException {
+        String output = "";
 
+        fimsModel model = null;
         try {
             // Build Mapping object
             Mapping mapping = new Mapping();
@@ -236,7 +238,7 @@ public class process {
                 q.setObjectFilter(filter);
 
             // Construct a  fimsModel
-            fimsModel fimsModel = fims.getFIMSModel(q.getModel());
+            model = fims.getFIMSModel(q.getModel());
 
 
             // Output the results
@@ -246,17 +248,20 @@ public class process {
                 format = "json";
 
             if (format.equals("excel"))
-                return fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
+                output = model.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
             else if (format.equals("html"))
-                return fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
+                output = model.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
             else if (format.equals("kml"))
-                return fimsModel.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
+                output = model.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
             else
-                return fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
+                output = model.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
         } catch (Exception e) {
             e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
+        } finally {
+            model.close();
         }
+        return output;
     }
 
     /**

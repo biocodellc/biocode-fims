@@ -1,12 +1,16 @@
 package digester;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.*;
+import com.sun.javaws.security.Resource;
 import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
 import settings.bcidConnector;
 import settings.fimsPrinter;
+
 import java.io.File;
 import java.lang.String;
 
@@ -102,8 +106,14 @@ public class Fims implements RendererInterface {
      * Create a fimsModel to store the results from this query
      */
     public fimsModel getFIMSModel(Model model) throws Exception {
-
-
+       /*
+        com.hp.hpl.jena.rdf.model.Resource r = model.getResource("ark:/21547/Hz2F9198780");
+        StmtIterator s = r.listProperties();
+        while (s.hasNext()) {
+            Statement st = s.nextStatement();
+            System.out.println(st.getSubject().toString() + " " + st.getPredicate().toString() + " "+ st.getObject().toString());
+        }
+        */
 
         // Set the default sheetname
         String sheetname = mapping.getDefaultSheetName();

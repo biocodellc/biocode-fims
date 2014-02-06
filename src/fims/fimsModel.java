@@ -62,6 +62,9 @@ public class fimsModel {
             // Set depth back to 1
             depth = 1;
         }
+        i.close();
+
+
     }
 
     /**
@@ -119,6 +122,7 @@ public class fimsModel {
             }
             */
         }
+        stmtIterator.close();
     }
 
     /**
@@ -141,6 +145,7 @@ public class fimsModel {
      */
     public String writeJSON(File file) throws Exception {
         //return stringBuilder.toString();
+
         return queryWriter.writeJSON(file);
     }
 
@@ -160,5 +165,9 @@ public class fimsModel {
 
     public String writeKML(File file) {
         return queryWriter.writeKML(file);
+    }
+
+    public  void close() {
+        model.close();
     }
 }

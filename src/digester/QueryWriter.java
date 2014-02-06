@@ -211,6 +211,7 @@ public class QueryWriter {
             fileOut = new FileOutputStream(file);
 
             wb.write(fileOut);
+
             fileOut.close();
             return file.getAbsolutePath();
         } catch (FileNotFoundException e) {
@@ -234,7 +235,6 @@ public class QueryWriter {
         int count = 0;
         int LIMIT = 10000;
         JSONArray rows = new JSONArray();
-
         for (Row row : sheet) {
             if (count < LIMIT) {
                 JSONObject jRow = new JSONObject();
