@@ -75,18 +75,20 @@ public class configurationFileFetcher {
 
         // Handle redirects
         if (redirect) {
+
             // get redirect url from "location" header field
             String newUrl = connection.getHeaderField("Location");
 
             // get the cookie if need, for login
-            String cookies = connection.getHeaderField("Set-Cookie");
+//            String cookies = connection.getHeaderField("Set-Cookie");
             // open the new connnection again
+
+            connection = (HttpURLConnection) new URL(newUrl ).openConnection();
             connection.setUseCaches(false);
             connection.setDefaultUseCaches(false);
             connection.addRequestProperty("Cache-Control", "no-cache");
 
-            connection = (HttpURLConnection) new URL(newUrl).openConnection();
-            connection.setRequestProperty("Cookie", cookies);
+//            connection.setRequestProperty("Cookie", cookies);
             connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
             connection.addRequestProperty("User-Agent", "Mozilla");
             connection.addRequestProperty("Referer", "google.com");

@@ -77,6 +77,15 @@
             <attribute column="dayIdentified" uri="urn:dayIdentified"/>
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="taxonHASH"
+                conceptAlias="taxon"
+                conceptURI="http://rs.tdwg.org/dwc/terms/occurrenceID"
+                entityId="4">
+            <attribute column="genus" uri="http://rs.tdwg.org/dwc/terms/genus"/>
+            <attribute column="species" uri="http://rs.tdwg.org/dwc/terms/specificEpithet"/>
+        </entity>
 
         <relation>
             <subject>1</subject>
@@ -87,6 +96,11 @@
             <subject>3</subject>
             <predicate>http://biscicol.org/terms/index.html#depends_on</predicate>
             <object>2</object>
+        </relation>
+         <relation>
+            <subject>4</subject>
+            <predicate>http://biscicol.org/terms/index.html#depends_on</predicate>
+            <object>3</object>
         </relation>
     </mapping>
 
