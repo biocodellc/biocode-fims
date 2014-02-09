@@ -4,6 +4,7 @@ import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.*;
 import org.apache.log4j.Level;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 
@@ -23,8 +24,9 @@ public class fimsQueryBuilder {
 
     public Model getModel() {
         String queryString = "CONSTRUCT {?s ?p ?o} \n" +
+                // String queryString = "DESCRIBE ?s ?p ?o \n" +
                 getFrom() +
-                "WHERE {" +
+                "WHERE {\n" +
                 //" { SELECT ?p WHERE {?s ?p ?o FILTER (?p = <urn:geneticTissueType>)}} \n" +
                 "   ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> . \n" +
                 "   ?s ?p ?o .\n" +
@@ -32,10 +34,10 @@ public class fimsQueryBuilder {
                 getObjectFilter() +
                 //"   FILTER (?p = <urn:geneticTissueType>)\n" +
                 "}";
-        //System.out.println(queryString);
+        System.out.println(queryString);
         QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlService, queryString);
 
-       /* ResultSet rs = qexec.execSelect();
+        /* ResultSet rs = qexec.execSelect();
 
         while (rs.hasNext()) {
             QuerySolution s = rs.next();
@@ -78,8 +80,46 @@ public class fimsQueryBuilder {
         this.propertyFilter = propertyFilter;
     }
 
+    /**
+     * For object filters, we support multiple field/value specifications using an AND specification
+     * Where a match is made to a particular property the match is "equals"
+     * for Filters on all fields the match is "contains"
+     *
+     * @param pFilter
+     */
     public void setObjectFilter(String pFilter) {
-        objectFilter = "   FILTER regex(?o, \"" + pFilter + "\", \"i\") \n";
+        java.net.URLDecoder decoder = new java.net.URLDecoder();
+        String filterExpression = "";
+        String[] kvs = pFilter.split(",");
+
+        for (String kv : kvs) {
+            String[] kvSplit = kv.split(":");
+            // There is only 1 value here... so use filter ALL.. this looks for "contains" value not equals
+            if (kvSplit.length == 1) {
+                filterExpression = "   ?s ?propertyFilter ?objectFilter . \n";
+                filterExpression += "   FILTER regex(?objectFilter,\"" + kvSplit[0].toString() + "\") \n";
+                break;
+            } else if (kvSplit.length < 1) {
+                break;
+            } else {
+                try {
+                    String predicate = decoder.decode(kvSplit[0], "UTF8").toString();
+                    String object = decoder.decode(kvSplit[1], "UTF8").toString();
+
+                    //TODO: lookup proper mapped URI name here in configuration file, for now this is just assuming
+                    filterExpression += "   ?s <urn:" + predicate + "> ?" + predicate + " . \n";
+                    filterExpression += "   FILTER regex(?" + predicate + ", \"^" + object + "$\", \"i\") .\n";
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        objectFilter = filterExpression;
+        //objectFilter = "   FILTER regex(?o, \"" + pFilter + "\", \"i\") \n";
+
     }
 
     private String getObjectFilter() {

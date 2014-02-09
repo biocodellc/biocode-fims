@@ -1,5 +1,6 @@
 package run;
 
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.util.FileManager;
 import digester.*;
 import fims.fimsModel;
@@ -217,7 +218,8 @@ public class process {
     public String query(String graphs, String format, String filter) throws FIMSException {
         String output = "";
 
-        fimsModel model = null;
+        fimsModel fimsModel = null;
+        Model jenaModel = null;
         try {
             // Build Mapping object
             Mapping mapping = new Mapping();
@@ -238,8 +240,8 @@ public class process {
                 q.setObjectFilter(filter);
 
             // Construct a  fimsModel
-            model = fims.getFIMSModel(q.getModel());
-
+             jenaModel = q.getModel();
+            fimsModel = fims.getFIMSModel(jenaModel);
 
             // Output the results
             fimsPrinter.out.println("Writing results ... ");
@@ -248,18 +250,19 @@ public class process {
                 format = "json";
 
             if (format.equals("excel"))
-                output = model.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
+                output = fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
             else if (format.equals("html"))
-                output = model.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
+                output = fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
             else if (format.equals("kml"))
-                output = model.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
+                output = fimsModel.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
             else
-                output = model.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
+                output = fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
         } catch (Exception e) {
             e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         } finally {
-            model.close();
+            fimsModel.close(); 
+            jenaModel.close();
         }
         return output;
     }
