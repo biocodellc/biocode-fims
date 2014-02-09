@@ -101,6 +101,11 @@
             <predicate>http://biscicol.org/terms/index.html#depends_on</predicate>
             <object>3</object>
         </relation>
+         <relation>
+            <subject>4</subject>
+            <predicate>http://biscicol.org/terms/index.html#related_to</predicate>
+            <object>2</object>
+        </relation>
     </mapping>
 
 </fims>
