@@ -80,7 +80,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="taxonHASH"
                 conceptAlias="taxon"
-                conceptURI="http://rs.tdwg.org/dwc/terms/taxonID"
+                conceptURI="http://rs.tdwg.org/dwc/terms/Taxon"
                 entityId="4">
             <attribute column="genus" uri="http://rs.tdwg.org/dwc/terms/genus"/>
             <attribute column="species" uri="http://rs.tdwg.org/dwc/terms/specificEpithet"/>
