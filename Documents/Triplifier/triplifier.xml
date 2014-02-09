@@ -102,9 +102,9 @@
             <object>3</object>
         </relation>
          <relation>
-            <subject>4</subject>
+            <subject>2</subject>
             <predicate>http://biscicol.org/terms/index.html#related_to</predicate>
-            <object>2</object>
+            <object>4</object>
         </relation>
     </mapping>
 
