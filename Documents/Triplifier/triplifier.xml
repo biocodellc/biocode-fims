@@ -76,7 +76,6 @@
             <attribute column="monthIdentified" uri="urn:monthIdentified"/>
             <attribute column="dayIdentified" uri="urn:dayIdentified"/>
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
-
         </entity>
 
         <relation>
