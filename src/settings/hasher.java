@@ -16,7 +16,7 @@ public class hasher {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         hasher h = new hasher();
 
-        System.out.println(h.hasherDigester("Some Data"));
+        System.out.println(h.hasherDigester(""));
         System.out.println(h.hasherDigester("dsasdkflaskdaskdljf23(E(D(#(@lfkasldfd"));
         System.out.println(h.hasherDigester("dsasdkflaskdaskdljf23(E(D(#(@lfkasldfD"));
 
@@ -27,6 +27,8 @@ public class hasher {
      * a MD of 40 chars
     */
     public String hasherDigester(String password) {
+        // Don't create a hash for empty content!
+        if (password.trim().equals("")) return "";
         byte[] plainText = password.getBytes();
         MessageDigest md = null;
         try {

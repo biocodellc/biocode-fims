@@ -59,16 +59,16 @@
                 worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
                 conceptAlias="occurrence"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
+                conceptURI="ttp://rs.tdwg.org/dwc/terms/Occurrence"
                 entityId="2">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
 
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="taxonomicIdentificationProcessHASH"
-                conceptAlias="taxonomicIdentificationProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
+                worksheetUniqueKey="identificationHASH"
+                conceptAlias="identficationProcess"
+                conceptURI="http://rs.tdwg.org/dwc/terms/Identification"
                 entityId="3">
             <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="identifiedBy" uri="urn:identifiedBy"/>
