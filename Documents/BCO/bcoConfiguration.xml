@@ -47,8 +47,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
                 conceptAlias="destructedTissueSample"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
-                entityId="1">
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000036">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="geneticTissueTypeDestructive" uri="urn:geneticTissueTypeDestructive"/>
             <attribute column="plate" uri="urn:plate"/>
@@ -59,8 +58,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
                 conceptAlias="occurrence"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000036"
-                entityId="2">
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000036">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
 
@@ -68,8 +66,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="taxonomicIdentificationProcessHASH"
                 conceptAlias="taxonomicIdentificationProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
-                entityId="3">
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000042">
             <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="identifiedBy" uri="urn:identifiedBy"/>
             <attribute column="yearIdentified" uri="urn:yearIdentified"/>
@@ -78,14 +75,14 @@
         </entity>
 
         <relation>
-            <subject>1</subject>
+            <subject>destructedTissueSample</subject>
             <predicate>http://www.obofoundry.org/ro/ro.owl#derives_from</predicate>
-            <object>2</object>
+            <object>occurrence</object>
         </relation>
          <relation>
-            <subject>3</subject>
+            <subject>taxonomicIdentificationProcess</subject>
             <predicate>http://biscicol.org/terms/index.html#depends_on</predicate>
-            <object>1</object>
+            <object>destructedTissueSample</object>
         </relation>
     </mapping>
 
