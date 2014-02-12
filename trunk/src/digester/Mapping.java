@@ -79,13 +79,15 @@ public class Mapping implements RendererInterface {
     /**
      * Find Entity defined by given worksheet and worksheetUniqueKey
      *
-     * @param Id
+     * @param conceptAlias
      * @return
      */
-    Entity findEntity(String Id) {
-        for (Entity entity : entities)
-            if (Id.equals(entity.getEntityId()))
+    Entity findEntity(String conceptAlias) {
+        for (Entity entity : entities) {
+        System.out.println(conceptAlias + " " + entity.getConceptAlias());
+            if (conceptAlias.equals(entity.getConceptAlias()))
                 return entity;
+        }
         return null;
     }
 
