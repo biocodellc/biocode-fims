@@ -84,7 +84,6 @@ public class Mapping implements RendererInterface {
      */
     Entity findEntity(String conceptAlias) {
         for (Entity entity : entities) {
-        System.out.println(conceptAlias + " " + entity.getConceptAlias());
             if (conceptAlias.equals(entity.getConceptAlias()))
                 return entity;
         }
