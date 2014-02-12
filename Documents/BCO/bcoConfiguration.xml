@@ -76,7 +76,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessHASH"
                 conceptAlias="materialSamplingProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000022">
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000023">
              <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
              <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>

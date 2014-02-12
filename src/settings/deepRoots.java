@@ -1,5 +1,6 @@
 package settings;
 
+import digester.Entity;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -19,6 +20,12 @@ public class deepRoots {
     private String description;
     private String guid;
     private String date;
+    private Integer expedition_id;
+    private  String project_code;
+    public deepRoots(Integer expedition_id, String project_code) {
+        this.expedition_id = expedition_id;
+        this.project_code = project_code;
+    }
 
     /**
      * stores the links between the concept (as URI) and prefix (as String)
@@ -115,18 +122,32 @@ public class deepRoots {
     /**
      * Find the appropriate prefix for a concept contained in this file
      *
-     * @param conceptUri defines the alias to narrow this,  a one-word reference denoting a BCID
      * @return returns the identifier for this conceptAlias in this DeepRoots file
      */
-    public String lookupPrefix(String conceptUri) throws Exception {
+    public String lookupPrefix(Entity entity) throws Exception {
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
-            if (pairs.getKey().toString().trim().equals(conceptUri.trim())) {
+            if (pairs.getKey().toString().trim().equals(entity.getConceptURI().trim())) {
                 return (String) pairs.getValue();
             }
         }
-        System.out.println("\tWarning: " + conceptUri + " cannot be mapped in Deep Roots, using default ID namespace.");
-        return null;
+        fimsPrinter.out.println("\tWarning: " + entity.getConceptURI() + " cannot be mapped in Deep Roots, attempting to create mapping");
+
+        // Create a mapping in the deeproots system for this URI
+        bcidConnector bcidConnector = new bcidConnector();
+        try {
+            fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
+            // Create the entity BCID
+            String bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+            // Associate this identifier with this project
+            bcidConnector.associateBCID(expedition_id, project_code, bcid);
+        } catch (Exception e) {
+            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " using default namespace!");
+            return null;
+        } finally {
+            return "something";
+        }
+
     }
 }
