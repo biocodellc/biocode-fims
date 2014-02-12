@@ -1,0 +1,6 @@
+# Here are some SPARQL queries against data that i've loaded using the BCO loader
+select * from <urn:uuid:f41a0cfb-0e95-4f52-9bb1-9a7a19ef9fbe>where
+{?identification <http://biscicol.org/terms/index.html#depends_on> ?occurrence .
+?occurrence a <http://purl.obolibrary.org/obo/bco_0000036> .
+?identification <urn:identifiedBy> ?identifiedBy
+}
