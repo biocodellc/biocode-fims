@@ -23,11 +23,14 @@ import java.util.Iterator;
  */
 public class deepRootsReader {
 
-    public deepRoots createRootData(String url) throws IOException, URISyntaxException {
+
+    public deepRoots createRootData(Integer expedition_id, String project_code) throws IOException, URISyntaxException {
+        String url = "http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code;
+
         // Read file into String variable
         String json = readFile(new URL(url));
         // Create the deepLinks.rootData Class
-        deepRoots rootData = new deepRoots();
+        deepRoots rootData = new deepRoots(expedition_id,project_code);
         // Create the Hashmap to store in the deepLinks.rootData class
         HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
         // write json String into array
@@ -102,7 +105,7 @@ public class deepRootsReader {
         // Some path name to the file
         String filePath = "file:///Users/jdeck/IdeaProjects/bcid/src/deepRoots/test.json";
         // Creating the object
-        deepRoots rootData = reader.createRootData(filePath);
+        deepRoots rootData = reader.createRootData(1, filePath);
         // Output for testing
         System.out.println(rootData.toString());
     }

@@ -109,7 +109,7 @@ public class Mapping implements RendererInterface {
 
 
         // Use the deepRoots System to lookup Key
-        String bcid = dRoots.lookupPrefix(entity.getConceptURI());
+        String bcid = dRoots.lookupPrefix(entity);
 
         // Use the default namespace value if dRoots is unsuccesful...
         if (bcid == null) {
@@ -172,8 +172,8 @@ public class Mapping implements RendererInterface {
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(
-                "http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code);
+        dRoots = new deepRootsReader().createRootData(expedition_id,project_code);
+                //"http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code);
 
         // Create a connection to a SQL Lite Instance
         try {
