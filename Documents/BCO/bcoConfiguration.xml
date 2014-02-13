@@ -55,6 +55,16 @@
 
         <entity
                 worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="preservedTissueSample"
+                conceptURI="bco:materialSample"
+                uri="http://purl.obolibrary.org/obo/bco_0000036">
+            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="geneticTissueTypePreserved" uri="urn:geneticTissueTypePreserved"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
                 conceptAlias="occurrence"
                 conceptURI="bco:materialSample"
@@ -77,13 +87,26 @@
 
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="materialSamplingProcessHASH"
-                conceptAlias="materialSamplingProcess"
+                worksheetUniqueKey="materialSamplingProcessDestructiveHASH"
+                conceptAlias="materialSamplingProcessDestructive"
                 conceptURI="bco:materialSamplingProcess"
                 uri="http://purl.obolibrary.org/obo/bco_0000022">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSamplingProcessPreservedHASH"
+                conceptAlias="materialSamplingProcessPreserved"
+                conceptURI="bco:materialSamplingProcess"
+                uri="http://purl.obolibrary.org/obo/bco_0000022">
+            <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="preservative" uri="http://rs.tdwg.org/dwc/terms/preservative"/>
+            <attribute column="geneticTissueTypePreserved" uri="urn:tissueType"/>
+        </entity>
+
 
         <entity
                 worksheet="Samples"
@@ -134,8 +157,16 @@
             <subject>occurrence</subject>
             <predicate>urn:is_specified_input_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
-            <object>materialSamplingProcess</object>
+            <object>materialSamplingProcessDestructive</object>
         </relation>
+
+        <relation>
+            <subject>occurrence</subject>
+            <predicate>urn:is_specified_input_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
+            <object>materialSamplingProcessPreserved</object>
+        </relation>
+
 
         <relation>
             <subject>materialSamplingProcessEvent</subject>
@@ -147,7 +178,14 @@
             <subject>destructedTissueSample</subject>
             <predicate>urn:is_specified_output_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
-            <object>materialSamplingProcess</object>
+            <object>materialSamplingProcessDestructive</object>
+        </relation>
+
+        <relation>
+            <subject>preservedTissueSample</subject>
+            <predicate>urn:is_specified_output_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
+            <object>materialSamplingProcessPreserved</object>
         </relation>
 
         <relation>

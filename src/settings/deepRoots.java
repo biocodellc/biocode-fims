@@ -155,6 +155,7 @@ public class deepRoots {
             fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " -- using default namespace!");
             return null;
         } finally {
+            System.out.println("\tNew prefix = " + bcid);
             return bcid;
         }
 
