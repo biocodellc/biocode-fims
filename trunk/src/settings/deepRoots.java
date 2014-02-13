@@ -139,12 +139,12 @@ public class deepRoots {
             }
         }
         fimsPrinter.out.println("\tWarning: " + entity.getConceptURI() + " cannot be mapped in Deep Roots, attempting to create mapping");
-
+        String bcid = null;
         // Create a mapping in the deeproots system for this URI
         try {
             fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
             // Create the entity BCID
-            String bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+             bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
             // Associate this identifier with this project
             bcidConnector.associateBCID(expedition_id, project_code, bcid);
 
@@ -155,7 +155,7 @@ public class deepRoots {
             fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " -- using default namespace!");
             return null;
         } finally {
-            return "something";
+            return bcid;
         }
 
     }
