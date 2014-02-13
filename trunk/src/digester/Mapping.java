@@ -3,11 +3,8 @@ package digester;
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
-import settings.deepRoots;
-import settings.deepRootsReader;
-import settings.fimsPrinter;
+import settings.*;
 import triplify.triplifier;
-import settings.Connection;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -164,7 +161,7 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(Validation v, triplifier t, Integer expedition_id, String project_code, List<String> colNames) throws Exception {
+    public boolean run(bcidConnector bcidConnector, Validation v, triplifier t, Integer expedition_id, String project_code, List<String> colNames) throws Exception {
         fimsPrinter.out.println("Converting to RDF Triples ...");
         this.project_code = project_code;
         this.colNames = colNames;
@@ -172,7 +169,7 @@ public class Mapping implements RendererInterface {
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(expedition_id,project_code);
+        dRoots = new deepRootsReader().createRootData(bcidConnector, expedition_id,project_code);
                 //"http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code);
 
         // Create a connection to a SQL Lite Instance

@@ -174,6 +174,7 @@ public class process {
                     // If Validation passed, we can go ahead and triplify
                     if (triplify & validationGood) {
                         triplifyGood = mapping.run(
+                                bcidConnector,
                                 validation,
                                 new triplifier(outputPrefix, outputFolder),
                                 expedition_id,
