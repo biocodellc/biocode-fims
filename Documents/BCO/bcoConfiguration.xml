@@ -87,6 +87,23 @@
 
         <entity
                 worksheet="Samples"
+                worksheetUniqueKey="materialSamplingProcessEventHASH"
+                conceptAlias="materialSamplingProcessEvent"
+                conceptURI="bco:materialSamplingProcess"
+                uri="http://purl.obolibrary.org/obo/bco_0000022">
+            <attribute column="minimumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
+            <attribute column="maximumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
+            <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+            <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+            <attribute column="coordinateUncertaintyInMeters"
+                       uri="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
+            <attribute column="country" uri="http://rs.tdwg.org/dwc/terms/country"/>
+            <attribute column="stateProvince" uri="http://rs.tdwg.org/dwc/terms/stateProvince"/>
+            <attribute column="locality" uri="http://rs.tdwg.org/dwc/terms/locality"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
                 worksheetUniqueKey="multiWellPlateHASH"
                 conceptAlias="multiWellPlate"
                 conceptURI="obi:multiWellPlate"
@@ -95,11 +112,35 @@
             <attribute column='well' uri='urn:well'/>
         </entity>
 
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="taxonomicNameHASH"
+                conceptAlias="taxonomicName"
+                conceptURI="bco:taxonomicName"
+                uri="">
+            <attribute column="genus" uri="urn:genus"/>
+            <attribute column='species' uri='urn:species'/>
+        </entity>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="ownerInstitutionCode"
+                conceptAlias="ownerInstitutionCode"
+                conceptURI="obi:organization"
+                uri="">
+            <attribute column="ownerInstitutionCode" uri="urn:ownerInstitutionCode"/>
+        </entity>
+
         <relation>
             <subject>occurrence</subject>
             <predicate>urn:is_specified_input_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
             <object>materialSamplingProcess</object>
+        </relation>
+
+        <relation>
+            <subject>materialSamplingProcessEvent</subject>
+            <predicate>urn:has_specified_output</predicate>
+            <object>occurrence</object>
         </relation>
 
         <relation>
@@ -118,10 +159,26 @@
 
         <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>urn:is_specified_input_of</predicate>
-            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
+            <predicate>urn:has_specified_input</predicate>
+            <uri></uri>
             <object>occurrence</object>
         </relation>
+
+        <relation>
+            <subject>morphologicalIdentificationProcess</subject>
+            <predicate>urn:has_specified_output</predicate>
+            <uri></uri>
+            <object>taxonomicName</object>
+        </relation>
+
+        <relation>
+            <subject>occurrence</subject>
+            <predicate>urn:located_in</predicate>
+            <uri></uri>
+            <object>ownerInstitutionCode</object>
+        </relation>
+
+
     </mapping>
 
 </fims>
