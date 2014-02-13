@@ -55,7 +55,7 @@
 
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
+                worksheetUniqueKey="preservedTissueSampleHASH"
                 conceptAlias="preservedTissueSample"
                 conceptURI="bco:materialSample"
                 uri="http://purl.obolibrary.org/obo/bco_0000036">
