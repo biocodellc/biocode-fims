@@ -45,7 +45,7 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
+                worksheetUniqueKey="destructedTissueSampleHASH"
                 conceptAlias="destructedTissueSample"
                 conceptURI="bco:materialSample"
                 uri="http://purl.obolibrary.org/obo/bco_0000036">
@@ -55,7 +55,7 @@
 
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="preservedTissueSampleHASH"
+                worksheetUniqueKey="materialSampleID"
                 conceptAlias="preservedTissueSample"
                 conceptURI="bco:materialSample"
                 uri="http://purl.obolibrary.org/obo/bco_0000036">
