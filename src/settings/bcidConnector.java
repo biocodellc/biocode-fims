@@ -141,6 +141,7 @@ public class bcidConnector {
 
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
+
         if (getResponseCode() == 401) {
             throw new Exception("User authorization error!");
         }

@@ -22,9 +22,11 @@ public class deepRoots {
     private String date;
     private Integer expedition_id;
     private  String project_code;
-    public deepRoots(Integer expedition_id, String project_code) {
+    private bcidConnector bcidConnector;
+    public deepRoots(bcidConnector bcidConnector, Integer expedition_id, String project_code) {
         this.expedition_id = expedition_id;
         this.project_code = project_code;
+        this.bcidConnector = bcidConnector;
     }
 
     /**
@@ -135,15 +137,18 @@ public class deepRoots {
         fimsPrinter.out.println("\tWarning: " + entity.getConceptURI() + " cannot be mapped in Deep Roots, attempting to create mapping");
 
         // Create a mapping in the deeproots system for this URI
-        bcidConnector bcidConnector = new bcidConnector();
         try {
-            fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
+            fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
             // Create the entity BCID
             String bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
             // Associate this identifier with this project
             bcidConnector.associateBCID(expedition_id, project_code, bcid);
+
+            // Add this element to the data string so we don't keep trying to add it in the loop above
+            data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
         } catch (Exception e) {
-            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " using default namespace!");
+            //e.printStackTrace();
+            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " -- using default namespace!");
             return null;
         } finally {
             return "something";
