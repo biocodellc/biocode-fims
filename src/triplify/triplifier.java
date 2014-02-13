@@ -78,7 +78,7 @@ public class triplifier {
         // Write the model as simply a Turtle file
         File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".ttl", outputFolder);
         FileOutputStream fos = new FileOutputStream(tripleFile);
-        model.write(fos, FileUtils.langTurtle);
+        model.write(fos, FileUtils.langTurtle,null);
         fos.close();
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 

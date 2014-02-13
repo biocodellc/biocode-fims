@@ -72,45 +72,49 @@
             <attribute column="dayIdentified" uri="urn:dayIdentified"/>
         </entity>
 
-         <entity
+        <entity
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessHASH"
                 conceptAlias="materialSamplingProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000024">
-             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
-             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000022">
+            <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+            <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>
 
-         <entity
+        <entity
                 worksheet="Samples"
                 worksheetUniqueKey="multiWellPlateHASH"
                 conceptAlias="multiWellPlate"
                 conceptURI="http://purl.obolibrary.org/obo/OBI_0400076">
-           <attribute column="plate" uri="urn:plate"/>
-            <attribute column='well'  uri='urn:well'/>
+            <attribute column="plate" uri="urn:plate"/>
+            <attribute column='well' uri='urn:well'/>
         </entity>
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>http://purl.obolibrary.org/obo/OBI_0000295</predicate>
+            <predicate>is_specified_input_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
             <object>materialSamplingProcess</object>
         </relation>
 
-         <relation>
+        <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
+            <predicate>is_specified_output_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
             <object>materialSamplingProcess</object>
         </relation>
 
-         <relation>
+        <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>http://purl.obolibrary.org/obo/RO_0001025</predicate>
+            <predicate>located_in</predicate>
+            <uri>http://purl.obolibrary.org/obo/RO_0001025</uri>
             <object>multiWellPlate</object>
         </relation>
 
-         <relation>
+        <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>http://purl.obolibrary.org/obo/OBI_0000295</predicate>
+            <predicate>is_specified_input_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
             <object>occurrence</object>
         </relation>
     </mapping>
