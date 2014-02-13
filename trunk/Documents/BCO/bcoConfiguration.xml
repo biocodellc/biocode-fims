@@ -47,7 +47,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
                 conceptAlias="destructedTissueSample"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000036">
+                conceptURI="bco:materialSample"
+                uri="http://purl.obolibrary.org/obo/bco_0000036">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="geneticTissueTypeDestructive" uri="urn:geneticTissueTypeDestructive"/>
         </entity>
@@ -56,7 +57,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
                 conceptAlias="occurrence"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000036">
+                conceptURI="bco:materialSample"
+                uri="http://purl.obolibrary.org/obo/bco_0000036">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
 
@@ -64,7 +66,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="morphologicalIdentificationProcessHASH"
                 conceptAlias="morphologicalIdentificationProcess"
-                conceptURI="http://purl.obolibrary.org/obo/BCO_examples_0000083">
+                conceptURI="bco:morphologicalIdentificationProcess"
+                uri="http://purl.obolibrary.org/obo/BCO_examples_0000083">
             <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="identifiedBy" uri="urn:identifiedBy"/>
             <attribute column="yearIdentified" uri="urn:yearIdentified"/>
@@ -76,7 +79,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessHASH"
                 conceptAlias="materialSamplingProcess"
-                conceptURI="http://purl.obolibrary.org/obo/bco_0000022">
+                conceptURI="bco:materialSamplingProcess"
+                uri="http://purl.obolibrary.org/obo/bco_0000022">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>
@@ -85,7 +89,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="multiWellPlateHASH"
                 conceptAlias="multiWellPlate"
-                conceptURI="http://purl.obolibrary.org/obo/OBI_0400076">
+                conceptURI="obi:multiWellPlate"
+                uri="http://purl.obolibrary.org/obo/OBI_0400076">
             <attribute column="plate" uri="urn:plate"/>
             <attribute column='well' uri='urn:well'/>
         </entity>

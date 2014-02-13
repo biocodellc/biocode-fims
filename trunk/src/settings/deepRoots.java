@@ -127,11 +127,15 @@ public class deepRoots {
      * @return returns the identifier for this conceptAlias in this DeepRoots file
      */
     public String lookupPrefix(Entity entity) throws Exception {
+        // when viewing in graphviz.
+        //String prefixRoot = "http://biscicol.org/id/metadata/";
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
             if (pairs.getKey().toString().trim().equals(entity.getConceptURI().trim())) {
-                return (String) pairs.getValue();
+                String postfix =  (String) pairs.getValue();
+                //return prefixRoot + postfix;
+                return postfix;
             }
         }
         fimsPrinter.out.println("\tWarning: " + entity.getConceptURI() + " cannot be mapped in Deep Roots, attempting to create mapping");
