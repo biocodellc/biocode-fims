@@ -94,7 +94,7 @@ public class bcidConnector {
         String response = createPOSTConnnection(url, postParams);
 
         // TODO: find a more robust way to search for bad credentials than just parsing the response for text
-        if (response.toString().contains("Bad credentials")) {
+        if (response.toString().contains("Bad Credentials")) {
             return false;
         } else {
             return true;
