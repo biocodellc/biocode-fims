@@ -31,7 +31,7 @@ public class bcidConnector {
     private final String CONNECTION = "keep-alive";
 
     //private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
-    private String authenticationURL = "http://biscicol.org/id/loginService";
+    private String authenticationURL = "http://biscicol.org/id/authenticationService/login/";
 
     private String arkCreationURL = "http://biscicol.org/id/groupService";
     private String associateURL = "http://biscicol.org/id/projectService/associate";
