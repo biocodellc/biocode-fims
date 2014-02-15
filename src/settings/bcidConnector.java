@@ -231,9 +231,7 @@ public class bcidConnector {
                                 expedition_id);
                         //fimsPrinter.out.println("\t" + output);
                     } catch (Exception e) {
-                        throw new Exception("Unable to create project " + project_code + "\n" +
-                                "Please be sure project codes are between 4 and 6 characters in length\n" +
-                                "and do not contain spaces or special characters.", e);
+                        throw new Exception(e.getMessage(), e);
                     }
                     // Loop the mapping file and create a BCID for every entity that we specified there!
                     if (mapping != null) {
