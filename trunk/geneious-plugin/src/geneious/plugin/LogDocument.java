@@ -60,7 +60,7 @@ public class LogDocument implements PluginDocument {
         StringBuilder builder = new StringBuilder();
         builder.append("<html>");
         builder.append("<h2>").append(name).append("</h2>");
-        // Initialization errors have to do with project codes, login names, and general environment setup
+        // Initialization errors have to do with expedition codes, login names, and general environment setup
         if (logText.contains("Initialization Error:")) {
             builder.append("<b><font color=\"red\">Unable to initialize FIMS, see below for messages.</font></b><br><br>");
             builder.append(logText);

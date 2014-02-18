@@ -49,7 +49,7 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public boolean run(bcidConnector bcidConnector, Integer expedition_id, String project_code) throws Exception {
+    public boolean run(bcidConnector bcidConnector, Integer project_id, String expedition_code) throws Exception {
 
         uploader = new uploader(
                 metadata.getTarget(),
@@ -67,8 +67,8 @@ public class Fims implements RendererInterface {
                 bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
                 // Create the BCID to use for upload service
                 fimsPrinter.out.println("\tCreated BCID =" + bcid + " to represent your uploaded dataset");
-                // Associate the project_code with this bcid
-                fimsPrinter.out.println("\tAssociator ... " + bcidConnector.associateBCID(expedition_id, project_code, bcid));
+                // Associate the expedition_code with this bcid
+                fimsPrinter.out.println("\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid));
 
             } catch (Exception e) {
                 throw new Exception("Unable to create BCID", e);

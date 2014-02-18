@@ -8,9 +8,9 @@ export SDB_USER=root
 export SDB_JDBC=com.mysql.jdbc.Driver
 export SDB_PASSWORD=
 
-cp ~/IdeaProjects/triplifier/lib/mysql-connector-java-5.1.18-bin.jar lib/
+cp ~/IdeaExpeditions/triplifier/lib/mysql-connector-java-5.1.18-bin.jar lib/
 sdbconfig --sdb Store/sdb-mysql-innodb.ttl --format
-sdbload --sdb Store/sdb-mysql-innodb.ttl ~/IdeaProjects/biocode-fims/tripleOutput/biocode_template.xls.triples.22.n3
+sdbload --sdb Store/sdb-mysql-innodb.ttl ~/IdeaExpeditions/biocode-fims/tripleOutput/biocode_template.xls.triples.22.n3
 
 sdbconfig --sdb Store/sdb-mysql-innodb.ttl --index
 

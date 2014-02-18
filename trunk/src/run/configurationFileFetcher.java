@@ -12,17 +12,17 @@ import java.net.URL;
  * needs to handle redirection when fetching appropriate configuration files.
  */
 public class configurationFileFetcher {
-    private String project_code;
+    private String expedition_code;
     private File outputFile;
     // TODO: Fix biscicol.org resolution -- can't see itself!
-    private String expeditionLookup = "http://biscicol.org:8080/id/expeditionService/validation/";
+    private String projectLookup = "http://biscicol.org:8080/id/projectService/validation/";
 
     public File getOutputFile() {
         return outputFile;
     }
 
-    public String getProject_code() {
-        return project_code;
+    public String getExpedition_code() {
+        return expedition_code;
     }
 
     /**
@@ -36,18 +36,18 @@ public class configurationFileFetcher {
     }
 
     /**
-     * Create the class object given a particular project code and a default Output Directory
+     * Create the class object given a particular expedition code and a default Output Directory
      *
      * @param defaultOutputDirectory
      * @throws IOException
      */
-    public configurationFileFetcher(Integer expedition_id, String defaultOutputDirectory) throws Exception {
-        this.project_code = project_code;
+    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory) throws Exception {
+        this.expedition_code = expedition_code;
 
         // Get the URL for this configuration File
-        String projectServiceString = expeditionLookup + expedition_id;
+        String expeditionServiceString = projectLookup + project_id;
         // Set a 10 second timeout on this connection
-        String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
+        String urlString = Jsoup.connect(expeditionServiceString).timeout(10000).get().body().html();
         // Setup connection
         URL url = new URL(urlString);
         init(new URL(urlString), defaultOutputDirectory);

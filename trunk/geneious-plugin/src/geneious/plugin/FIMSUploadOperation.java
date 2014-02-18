@@ -107,8 +107,8 @@ public class FIMSUploadOperation extends DocumentOperation {
         if (options instanceof FIMSUploadOptions) {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions) options;
 
-             Integer expedition_id = new Integer(uploadOptions.expeditionOption.getValue().toString());
-            String project_code = uploadOptions.projectCodeOption.getValue().toString();
+             Integer project_id = new Integer(uploadOptions.projectOption.getValue().toString());
+            String expedition_code = uploadOptions.expeditionCodeOption.getValue().toString();
 
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
             String username = uploadOptions.usernameOption.getValue();
@@ -139,7 +139,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process process = new process(sampleDataFile, outputFolder, project_code, export, triplify, upload, username, password,expedition_id);
+                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, username, password,project_id);
                 process.runAll();
             } catch (FIMSException e) {
                 e.printStackTrace();

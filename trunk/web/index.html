@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/biocode-fims.css" type="text/css"/>
 
 
-<body onload="populateExpeditions();">
+<body onload="populateProjects();">
 <div id=centered>
     <b>Query Engine for Biocode FIMS (Beta!)</b>
     <br>The following page is a demonstration of some test-data that has been loaded using the Biocode-FIMS system. This
@@ -24,12 +24,12 @@
     <p>
     <table>
         <tr>
-            <td>Expeditions</td>
+            <td>Projects</td>
             <td>
-                <select width=20 id=expeditions onchange='populateGraphs(this.options[this.selectedIndex].value);'>
-                    <option qdup=1 value=0>Select an expedition ...</option>
-                    <option data-qrepeat="e expeditions" data-qattr="value e.expedition_id; text e.expedition_title">
-                        Loading Expeditions ...
+                <select width=20 id=projects onchange='populateGraphs(this.options[this.selectedIndex].value);'>
+                    <option qdup=1 value=0>Select an project ...</option>
+                    <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
+                        Loading Projects ...
                     </option>
                 </select>
             </td>
