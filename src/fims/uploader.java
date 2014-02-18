@@ -63,7 +63,7 @@ public class uploader {
 
     /**
      * Constructor called without a graph specification uses a UUID for the graph
-     * TODO: fetch an ARK for this graph-name and make the fuseki service the target, add project code etc...
+     * TODO: fetch an ARK for this graph-name and make the fuseki service the target, add expedition code etc...
      * following on this, need to think about pointing the ARK to the RDF end-point
      *
      * @param fuseki_service

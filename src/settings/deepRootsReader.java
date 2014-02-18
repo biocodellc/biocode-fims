@@ -24,13 +24,13 @@ import java.util.Iterator;
 public class deepRootsReader {
 
 
-    public deepRoots createRootData(bcidConnector bcidConnector, Integer expedition_id, String project_code) throws IOException, URISyntaxException {
-        String url = "http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code;
+    public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) throws IOException, URISyntaxException {
+        String url = "http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code;
 
         // Read file into String variable
         String json = readFile(new URL(url));
         // Create the deepLinks.rootData Class
-        deepRoots rootData = new deepRoots(bcidConnector,expedition_id,project_code);
+        deepRoots rootData = new deepRoots(bcidConnector,project_id,expedition_code);
         // Create the Hashmap to store in the deepLinks.rootData class
         HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
         // write json String into array
@@ -103,7 +103,7 @@ public class deepRootsReader {
     public static void main(String[] args) throws IOException, URISyntaxException {
         deepRootsReader reader = new deepRootsReader();
         // Some path name to the file
-        String filePath = "file:///Users/jdeck/IdeaProjects/bcid/src/deepRoots/test.json";
+        String filePath = "file:///Users/jdeck/IdeaExpeditions/bcid/src/deepRoots/test.json";
         // Creating the object
         deepRoots rootData = reader.createRootData(null, 1, filePath);
         // Output for testing

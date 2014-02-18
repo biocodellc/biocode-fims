@@ -2,14 +2,14 @@
 
  -c,--configuration <arg>      Configuration File
  -d,--demo_mode                Demonstration mode.  Do not need to specify
-                               project_code, configuration, or
+                               expedition_code, configuration, or
                                output_directory.  You still need to
                                specify an input file.
  -h,--help                     print this help message and exit
  -i,--input_file <arg>         Input Spreadsheet
  -o,--output_directory <arg>   Output Directory
- -p,--project_code <arg>       Project code.  You will need to obtain a
-                               project code before loading data, or use
+ -p,--expedition_code <arg>       Expedition code.  You will need to obtain a
+                               expedition code before loading data, or use
                                the demo_mode.
  -t,--triplify                 Triplify
  -u,--upload                   Upload

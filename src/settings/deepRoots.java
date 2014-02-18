@@ -20,12 +20,12 @@ public class deepRoots {
     private String description;
     private String guid;
     private String date;
-    private Integer expedition_id;
-    private  String project_code;
+    private Integer project_id;
+    private  String expedition_code;
     private bcidConnector bcidConnector;
-    public deepRoots(bcidConnector bcidConnector, Integer expedition_id, String project_code) {
-        this.expedition_id = expedition_id;
-        this.project_code = project_code;
+    public deepRoots(bcidConnector bcidConnector, Integer project_id, String expedition_code) {
+        this.project_id = project_id;
+        this.expedition_code = expedition_code;
         this.bcidConnector = bcidConnector;
     }
 
@@ -145,8 +145,8 @@ public class deepRoots {
             fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
             // Create the entity BCID
              bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
-            // Associate this identifier with this project
-            bcidConnector.associateBCID(expedition_id, project_code, bcid);
+            // Associate this identifier with this expedition
+            bcidConnector.associateBCID(project_id, expedition_code, bcid);
 
             // Add this element to the data string so we don't keep trying to add it in the loop above
             data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());

@@ -21,7 +21,7 @@ public class Mapping implements RendererInterface {
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
-    private String project_code;
+    private String expedition_code;
     private List<String> colNames;
 
     public Mapping() throws Exception {
@@ -161,16 +161,16 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(bcidConnector bcidConnector, Validation v, triplifier t, Integer expedition_id, String project_code, List<String> colNames) throws Exception {
+    public boolean run(bcidConnector bcidConnector, Validation v, triplifier t, Integer project_id, String expedition_code, List<String> colNames) throws Exception {
         fimsPrinter.out.println("Converting to RDF Triples ...");
-        this.project_code = project_code;
+        this.expedition_code = expedition_code;
         this.colNames = colNames;
         triplifier = t;
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(bcidConnector, expedition_id,project_code);
-                //"http://biscicol.org:8080/id/projectService/deepRoots/" + expedition_id + "/" + project_code);
+        dRoots = new deepRootsReader().createRootData(bcidConnector, project_id,expedition_code);
+                //"http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code);
 
         // Create a connection to a SQL Lite Instance
         try {

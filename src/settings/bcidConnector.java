@@ -31,12 +31,12 @@ public class bcidConnector {
     private final String CONNECTION = "keep-alive";
 
     //private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
-    private String authenticationURL = "http://biscicol.org/id/authenticationService/login/";
+    private String authenticationURL = "http://biscicol.org/id/authenticationService/login";
 
     private String arkCreationURL = "http://biscicol.org/id/groupService";
-    private String associateURL = "http://biscicol.org/id/projectService/associate";
-    private String projectCreationURL = "http://biscicol.org/id/projectService";
-    private String projectValidationURL = "http://biscicol.org/id/projectService/validateProject/";
+    private String associateURL = "http://biscicol.org/id/expeditionService/associate";
+    private String expeditionCreationURL = "http://biscicol.org/id/expeditionService";
+    private String expeditionValidationURL = "http://biscicol.org/id/expeditionService/validateExpedition/";
 
     private Integer responseCode;
 
@@ -61,9 +61,9 @@ public class bcidConnector {
             message = e.getMessage();
             e.printStackTrace();
         }
-        // TESTING user-project authentication
+        // TESTING user-expedition authentication
         try {
-            bcid.validateProject("DEMOH", 1, null);
+            bcid.validateExpedition("DEMOH", 1, null);
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -121,13 +121,13 @@ public class bcidConnector {
         URL url = new URL(arkCreationURL);
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
         if (getResponseCode() == 401) {
-            throw new Exception("User not authorized to upload to this project!");
+            throw new Exception("User not authorized to upload to this expedition!");
         }
         return response.toString();
     }
 
     /**
-     * Create BCIDs corresponding to project entities
+     * Create BCIDs corresponding to expedition entities
      *
      * @return
      * @throws Exception
@@ -149,15 +149,15 @@ public class bcidConnector {
     }
 
     /**
-     * Asscociate a project_code to a BCID
+     * Asscociate a expedition_code to a BCID
      *
      * @return
      * @throws Exception
      */
-    public String associateBCID(Integer expedition_id, String project_code, String bcid) throws Exception {
+    public String associateBCID(Integer project_id, String expedition_code, String bcid) throws Exception {
         String createPostParams =
-                "project_code=" + project_code + "&" +
-                        "expedition_id=" + expedition_id + "&" +
+                "expedition_code=" + expedition_code + "&" +
+                        "project_id=" + project_id + "&" +
                         "bcid=" + bcid;
 
         URL url = new URL(associateURL);
@@ -167,22 +167,22 @@ public class bcidConnector {
     }
 
     /**
-     * create a project
+     * create a expedition
      *
      * @return
      * @throws Exception
      */
-    public String createProject(String project_code,
-                                String project_title,
+    public String createExpedition(String expedition_code,
+                                String expedition_title,
                                 String abstractString,
-                                Integer expedition_id) throws Exception {
+                                Integer project_id) throws Exception {
         String createPostParams =
-                "project_code=" + project_code + "&" +
-                        "project_title=" + project_title + "&" +
+                "expedition_code=" + expedition_code + "&" +
+                        "expedition_title=" + expedition_title + "&" +
                         "abstract=" + abstractString + "&" +
-                        "expedition_id=" + expedition_id;
+                        "project_id=" + project_id;
 
-        URL url = new URL(projectCreationURL);
+        URL url = new URL(expeditionCreationURL);
         String response = createPOSTConnnection(url, createPostParams);
 
         // Catch Error using response string...
@@ -191,22 +191,22 @@ public class bcidConnector {
             throw new Exception(response.toString());
         }
 
-        // When i create a project, i also want to create
+        // When i create a expedition, i also want to create
 
         return response.toString();
     }
 
     /**
-     * validateProject ensures that this user is associated with this project and that the project code is unique within
-     * a particular expedition
+     * validateExpedition ensures that this user is associated with this expedition and that the expedition code is unique within
+     * a particular project
      *
-     * @param project_code
+     * @param expedition_code
      * @param mapping
      * @return
      * @throws Exception
      */
-    public boolean validateProject(String project_code, Integer expedition_id, Mapping mapping) throws Exception {
-        URL url = new URL(projectValidationURL + expedition_id + "/" + project_code);
+    public boolean validateExpedition(String expedition_code, Integer project_id, Mapping mapping) throws Exception {
+        URL url = new URL(expeditionValidationURL + project_id + "/" + expedition_code);
         String response = createGETConnection(url);
         String action = response.split(":")[0];
         if (getResponseCode() != 200) {
@@ -217,21 +217,23 @@ public class bcidConnector {
             } else if (action.equals("update")) {
                 return true;
             } else if (action.equals("insert")) {
-                String message = "\nThe project code \"" + project_code + "\" does not exist.  " +
+                String message = "\nThe expedition code \"" + expedition_code + "\" does not exist.  " +
                         "Do you wish to create it now?" +
-                        "\nIf you choose to continue, your data will be associated with this new project code.";
+                        "\nIf you choose to continue, your data will be associated with this new expedition code.";
                 if (fimsInputter.in.continueOperation(message)) {
                     try {
-                        fimsPrinter.out.println("\tCreating project " + project_code + " ... this is a one time process " +
+                        fimsPrinter.out.println("\tCreating expedition " + expedition_code + " ... this is a one time process " +
                                 "before loading each spreadsheet and may take a minute...");
-                        String output = createProject(
-                                project_code,
-                                project_code + " spreadsheet project",
+                        String output = createExpedition(
+                                expedition_code,
+                                expedition_code + " spreadsheet expedition",
                                 null,
-                                expedition_id);
+                                project_id);
                         //fimsPrinter.out.println("\t" + output);
                     } catch (Exception e) {
-                        throw new Exception(e.getMessage(), e);
+                        throw new Exception("Unable to create expedition " + expedition_code + "\n" +
+                                "Please be sure expedition codes are between 4 and 6 characters in length\n" +
+                                "and do not contain spaces or special characters.", e);
                     }
                     // Loop the mapping file and create a BCID for every entity that we specified there!
                     if (mapping != null) {
@@ -243,11 +245,11 @@ public class bcidConnector {
                                 fimsPrinter.out.println("\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
                                 // Create the entity BCID
                                 String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
-                                // Associate this identifier with this project
-                                associateBCID(expedition_id, project_code,  bcid);
+                                // Associate this identifier with this expedition
+                                associateBCID(project_id, expedition_code,  bcid);
 
                             } catch (Exception e) {
-                                throw new Exception("The project " + project_code +
+                                throw new Exception("The expedition " + expedition_code +
                                         " has been created but unable to create a BCID for\n" +
                                         "resourceType = " + entity.getConceptURI(), e);
                             }

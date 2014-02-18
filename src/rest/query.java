@@ -26,7 +26,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 
 /**
- * Query interface for Biocode-fims project
+ * Query interface for Biocode-fims expedition
  */
 @Path("")
 public class query {
@@ -45,11 +45,11 @@ public class query {
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJson(
             @QueryParam("graphs") String graphs,
-            @QueryParam("expedition_id") Integer expedition_id,
+            @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
+        File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
 
         try {
             p = new process(
@@ -84,13 +84,13 @@ public class query {
     @Produces("application/vnd.google-earth.kml+xml")
     public Response queryKml(
             @QueryParam("graphs") String graphs,
-            @QueryParam("expedition_id") Integer expedition_id,
+            @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
 
         try {
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
 
             process p = new process(
                     uploadPath(),
@@ -129,13 +129,13 @@ public class query {
     @Produces("application/vnd.ms-excel")
     public Response queryExcel(
             @QueryParam("graphs") String graphs,
-            @QueryParam("expedition_id") Integer expedition_id,
+            @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
         try {
 
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(expedition_id, uploadPath()).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
 
             // Create a process object
             process p = new process(
