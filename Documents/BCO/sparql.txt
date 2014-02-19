@@ -1,6 +1,19 @@
 # Here are some SPARQL queries against data that i've loaded using the BCO loader
+
+# identification instances
 select * from <urn:uuid:f41a0cfb-0e95-4f52-9bb1-9a7a19ef9fbe>where
 {?identification <http://biscicol.org/terms/index.html#depends_on> ?occurrence .
 ?occurrence a <http://purl.obolibrary.org/obo/bco_0000036> .
 ?identification <urn:identifiedBy> ?identifiedBy
+}
+
+
+# show me the plates & wells where i can find derived tissue from an organism
+select  * from <urn:uuid:e0f9a630-ed7f-4bec-bad4-c33ba6b9cc06> where
+{
+?organism <urn:is_specified_input_of> ?samplingProcess .
+?tissue <urn:is_specified_output_of> ?samplingProcess .
+?tissue  <urn:located_in>   ?plateID .
+?plateID <urn:plate> ?plate  .
+?plateID <urn:well> ?well  .
 }

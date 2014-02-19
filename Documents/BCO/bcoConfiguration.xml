@@ -155,14 +155,14 @@
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>urn:is_specified_input_of</predicate>
+            <predicate>obi:is_specified_input_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
             <object>materialSamplingProcessDestructive</object>
         </relation>
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>urn:is_specified_input_of</predicate>
+            <predicate>obi:is_specified_input_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
             <object>materialSamplingProcessPreserved</object>
         </relation>
@@ -170,48 +170,48 @@
 
         <relation>
             <subject>materialSamplingProcessEvent</subject>
-            <predicate>urn:has_specified_output</predicate>
+            <predicate>obi:has_specified_output</predicate>
             <object>occurrence</object>
         </relation>
 
         <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>urn:is_specified_output_of</predicate>
+            <predicate>obi:is_specified_output_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
             <object>materialSamplingProcessDestructive</object>
         </relation>
 
         <relation>
             <subject>preservedTissueSample</subject>
-            <predicate>urn:is_specified_output_of</predicate>
+            <predicate>obi:is_specified_output_of</predicate>
             <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
             <object>materialSamplingProcessPreserved</object>
         </relation>
 
         <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>urn:located_in</predicate>
+            <predicate>obi:located_in</predicate>
             <uri>http://purl.obolibrary.org/obo/RO_0001025</uri>
             <object>multiWellPlate</object>
         </relation>
 
         <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>urn:has_specified_input</predicate>
+            <predicate>obi:has_specified_input</predicate>
             <uri></uri>
             <object>occurrence</object>
         </relation>
 
         <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>urn:has_specified_output</predicate>
+            <predicate>obi:has_specified_output</predicate>
             <uri></uri>
             <object>taxonomicName</object>
         </relation>
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>urn:located_in</predicate>
+            <predicate>obi:located_in</predicate>
             <uri></uri>
             <object>ownerInstitutionCode</object>
         </relation>
