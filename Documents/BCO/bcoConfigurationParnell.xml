@@ -83,6 +83,7 @@
                 worksheetUniqueKey="TAXON_ID"
                 conceptAlias="identificationProcess"
                 conceptURI="bco:IdentificationProcess">
+            <attribute column="TAXON_ID" uri="dwc:taxonID"/>
         </entity>
 
        <entity
