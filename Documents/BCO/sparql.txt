@@ -19,9 +19,23 @@ select  ?organism ?plate ?well from <urn:uuid:6686b083-7149-49c2-bff1-dbc78a1d86
 }
 
 
-# Parnell Data:
-select * from <urn:uuid:2637886c-4542-4991-b546-d2f264c65097> where
+# Parnell Data: look for pH associated with a sample
+# NOTE: that in the modelling that Jie did the ph is related to the material entity from which the soil Core was
+# derived but here we have made ph a property of soilCore
+select * from <urn:uuid:f5baecb4-6b83-4716-99f9-5e3ebf22ead2> where
 {
+  ?materialSamplingProcess <obi:has_specified_output> ?soilCore .
+  ?materialSamplingProcess a <obi:materialSamplingProcess> .
+  ?soilCore <obi:acidIonConcentration> ?ph .
+  ?soilCore <urn:Calcium> ?ca .
+}
 
-
+# NOTE: that in the modelling that Jie did the ph is related to the material entity from which the soil Core was
+# derived but here we have made ph a property of soilCore
+select ?soilCore ?easting ?northing from <urn:uuid:101cf8e9-9bef-4c40-beaf-e5116200d1b8> where
+{
+  ?materialSamplingProcess <obi:has_specified_output> ?soilCore .
+  ?materialSamplingProcess <obi:occurs_in> ?location .
+  ?location <urn:easting>  ?easting .
+  ?location <urn:northing>  ?northing .
 }
