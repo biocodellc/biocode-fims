@@ -54,7 +54,7 @@
    <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="NEON sample name"
+                worksheetUniqueKey="NEON_sample_name"
                 conceptAlias="soilCore"
                 conceptURI="bco:materialSample">
             <attribute column="NEON_sample_name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
