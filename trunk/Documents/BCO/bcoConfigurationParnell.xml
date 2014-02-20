@@ -39,12 +39,12 @@
     latitude
     longitude
     altitude
-        assigned_from_geo
-        country
         depth
         elevation
         NEON tower Lat
         NEON tower long
+         assigned_from_geo
+        country
 
      Environment:
     env_biome
@@ -93,10 +93,29 @@
             <attribute column="TAXON_ID" uri="dwc:taxonID"/>
         </entity>
 
+       <entity
+                worksheet="Samples"
+                worksheetUniqueKey="locationHASH"
+                conceptAlias="location"
+                conceptURI="dc:Location">
+            <attribute column="NEON US State" uri="dwc:stateProvince"/>
+           <attribute column="NEON easting UTM" uri="urn:easting"/>
+           <attribute column="NEON northing UTM" uri="urn:northing"/>
+           <attribute column="latitude" uri="dwc:decimalLatitude"/>
+           <attribute column="longitude" uri="dwc:decimalLongitude"/>
+           <attribute column="altitude" uri="dwc:altitude"/>
+        </entity>
+
         <relation>
             <subject>soilSamplingProcess</subject>
             <predicate>obi:has_specified_output</predicate>
             <object>soilCore</object>
+        </relation>
+
+       <relation>
+            <subject>soilSamplingProcess</subject>
+            <predicate>obi:located_in</predicate>
+            <object>location</object>
         </relation>
 
         <relation>
