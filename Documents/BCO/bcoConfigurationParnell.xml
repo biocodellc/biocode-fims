@@ -100,7 +100,7 @@
                 conceptAlias="location"
                 conceptURI="dc:Location">
             <attribute column="NEON_US_State" uri="dwc:stateProvince"/>
-           <attribute column="NEON easting_UTM" uri="urn:easting"/>
+           <attribute column="NEON_easting_UTM" uri="urn:easting"/>
            <attribute column="NEON_northing_UTM" uri="urn:northing"/>
            <attribute column="latitude" uri="dwc:decimalLatitude"/>
            <attribute column="longitude" uri="dwc:decimalLongitude"/>
