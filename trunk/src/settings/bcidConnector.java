@@ -132,10 +132,10 @@ public class bcidConnector {
      * @return
      * @throws Exception
      */
-    public String createEntityBCID(String webaddress, String title, String resourceType) throws Exception {
+    public String createEntityBCID(String webaddress, String resourceAlias, String resourceType) throws Exception {
         String createBCIDDatasetPostParams =
-                "title=" + title + "&" +
-                        "resourceType=" + resourceType + "&" +
+                "title=" + resourceAlias + "&" +
+                        "resourceType=" + resourceAlias + "&" +
                         "suffixPassThrough=true&" +
                         "webaddress=" + webaddress;
 
@@ -231,6 +231,7 @@ public class bcidConnector {
                                 project_id);
                         //fimsPrinter.out.println("\t" + output);
                     } catch (Exception e) {
+                        e.printStackTrace();
                         throw new Exception("Unable to create expedition " + expedition_code + "\n" +
                                 "Please be sure expedition codes are between 4 and 6 characters in length\n" +
                                 "and do not contain spaces or special characters.", e);

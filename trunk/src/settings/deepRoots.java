@@ -15,7 +15,8 @@ import java.util.Map;
  * technology.
  */
 public class deepRoots {
-    private HashMap<URI, String> data = new HashMap<URI, String>();
+    //private HashMap<URI, String> data = new HashMap<URI, String>();
+    private HashMap<String, String> data = new HashMap<String, String>();
     private String shortName;
     private String description;
     private String guid;
@@ -34,7 +35,7 @@ public class deepRoots {
      *
      * @return
      */
-    public HashMap<URI, String> getData() {
+    public HashMap<String, String> getData() {
         return data;
     }
 
@@ -43,7 +44,7 @@ public class deepRoots {
      *
      * @param data
      */
-    public void setData(HashMap<URI, String> data) {
+    public void setData(HashMap<String, String> data) {
         this.data = data;
     }
 
@@ -132,13 +133,14 @@ public class deepRoots {
         Iterator it = data.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
-            if (pairs.getKey().toString().trim().equals(entity.getConceptURI().trim())) {
+            //if (pairs.getKey().toString().trim().equals(entity.getConceptURI().trim())) {
+            if (pairs.getKey().toString().trim().equals(entity.getConceptAlias().trim())) {
                 String postfix =  (String) pairs.getValue();
                 //return prefixRoot + postfix;
                 return postfix;
             }
         }
-        fimsPrinter.out.println("\tWarning: " + entity.getConceptURI() + " cannot be mapped in Deep Roots, attempting to create mapping");
+        fimsPrinter.out.println("\tWarning: " + entity.getConceptAlias() + " cannot be mapped in Deep Roots, attempting to create mapping");
         String bcid = null;
         // Create a mapping in the deeproots system for this URI
         try {
@@ -149,10 +151,11 @@ public class deepRoots {
             bcidConnector.associateBCID(project_id, expedition_code, bcid);
 
             // Add this element to the data string so we don't keep trying to add it in the loop above
-            data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
+            //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
+            data.put(entity.getConceptAlias(),bcid);
         } catch (Exception e) {
             //e.printStackTrace();
-            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptURI() + " -- using default namespace!");
+            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptAlias() + " -- using default namespace!");
             return null;
         } finally {
             System.out.println("\tNew prefix = " + bcid);

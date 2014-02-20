@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="shortname"
+            eml_location="eml_location"
+            target="http://biscicol.org:443/ds"
+            queryTarget="http://biscicol.org:3030/ds">
+
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='NEON sample name' level='error'></rule>
+        </worksheet>
+
+    </validation>
+    <!--
+    Others:
+        NEON_soil_descrip (add bco:dataProperty for soil type)
+        horizon  ; add bco:dataProperty(?)
+          16S_Barcode
+        16S_notes
+        18S_Barcode
+        18S_notes
+        samp_store_temp
+        host_subject_id
+        collection_date
+
+    Location:
+    NEON US State
+    NEON easting UTM
+    NEON northing UTM
+    latitude
+    longitude
+    altitude
+        assigned_from_geo
+        country
+        depth
+        elevation
+        NEON tower Lat
+        NEON tower long
+
+     Environment:
+    env_biome
+    env_feature
+    env_matter  -->
+
+   <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="NEON sample name"
+                conceptAlias="soilCore"
+                conceptURI="bco:materialSample">
+            <attribute column="NEON sample name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="protocolFollowedHASH"
+                conceptAlias="protocolFollowed"
+                conceptURI="obi:protocol">
+            <attribute column="Single or Composite Core" uri="obi:Protocol"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="soilSamplingProcessHASH"
+                conceptAlias="soilSamplingProcess"
+                conceptURI="obi:materialSamplingProcess">
+            <attribute column="NEON numeric collection date" uri="dwc:eventDate"/>
+            <attribute column="DESCRIPTION" uri="urn:specimenCollectionType"/>
+
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="TAXON_ID"
+                conceptAlias="identificationProcess"
+                conceptURI="bco:IdentificationProcess">
+        </entity>
+
+       <entity
+                worksheet="Samples"
+                worksheetUniqueKey="TAXON_ID"
+                conceptAlias="taxonomicName"
+                conceptURI="dwc:Taxon">
+            <attribute column="TAXON_ID" uri="dwc:taxonID"/>
+        </entity>
+
+        <relation>
+            <subject>soilSamplingProcess</subject>
+            <predicate>obi:has_specified_output</predicate>
+            <object>soilCore</object>
+        </relation>
+
+        <relation>
+            <subject>identificationProcess</subject>
+            <predicate>obi:has_specified_input</predicate>
+            <object>soilCore</object>
+        </relation>
+
+        <relation>
+            <subject>identificationProcess</subject>
+            <predicate>obi:has_specified_output</predicate>
+            <object>taxonomicName</object>
+        </relation>
+
+        <relation>
+            <subject>soilSamplingProcess</subject>
+            <predicate>urn:follows_protocol</predicate>
+            <object>protocolFollowed</object>
+        </relation>
+
+
+    </mapping>
+
+</fims>
+

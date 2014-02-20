@@ -32,7 +32,8 @@ public class deepRootsReader {
         // Create the deepLinks.rootData Class
         deepRoots rootData = new deepRoots(bcidConnector,project_id,expedition_code);
         // Create the Hashmap to store in the deepLinks.rootData class
-        HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
+        //HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
+        HashMap<String, String> data = new HashMap<String, String>();
         // write json String into array
         JSONArray jsonOutputArray = (JSONArray) JSONSerializer.toJSON(JSONArray.fromObject(json));
         // Loop the Output
@@ -48,8 +49,10 @@ public class deepRootsReader {
                 while (dataIt.hasNext()) {
                     JSONObject dataObject = (JSONObject) dataIt.next();
                     java.net.URI concept = new java.net.URI((String) dataObject.get("concept"));
+                    String alias = (String) dataObject.get("alias");
                     String prefix = (String) dataObject.get("prefix");
-                    data.put(concept, prefix);
+                    //data.put(concept, prefix);
+                    data.put(alias, prefix);
                 }
             } else if (outputObject.containsKey("metadata")) {
                 JSONObject metadataObject = (JSONObject) outputObject.values().toArray()[0];
