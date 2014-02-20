@@ -51,13 +51,15 @@
     env_feature
     env_matter  -->
 
-   <mapping>
+    <mapping>
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="NEON_sample_name"
                 conceptAlias="soilCore"
                 conceptURI="bco:materialSample">
             <attribute column="NEON_sample_name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="ph" uri="obi:acidIonConcentration"/>
+            <attribute column="Ca" uri="urn:Calcium"/>
         </entity>
 
         <entity
@@ -86,7 +88,7 @@
             <attribute column="TAXON_ID" uri="dwc:taxonID"/>
         </entity>
 
-       <entity
+        <entity
                 worksheet="Samples"
                 worksheetUniqueKey="TAXON_ID"
                 conceptAlias="taxonomicName"
@@ -94,17 +96,17 @@
             <attribute column="TAXON_ID" uri="dwc:taxonID"/>
         </entity>
 
-       <entity
+        <entity
                 worksheet="Samples"
                 worksheetUniqueKey="locationHASH"
                 conceptAlias="location"
                 conceptURI="dc:Location">
             <attribute column="NEON_US_State" uri="dwc:stateProvince"/>
-           <attribute column="NEON_easting_UTM" uri="urn:easting"/>
-           <attribute column="NEON_northing_UTM" uri="urn:northing"/>
-           <attribute column="latitude" uri="dwc:decimalLatitude"/>
-           <attribute column="longitude" uri="dwc:decimalLongitude"/>
-           <attribute column="altitude" uri="dwc:altitude"/>
+            <attribute column="NEON_easting_UTM" uri="urn:easting"/>
+            <attribute column="NEON_northing_UTM" uri="urn:northing"/>
+            <attribute column="latitude" uri="dwc:decimalLatitude"/>
+            <attribute column="longitude" uri="dwc:decimalLongitude"/>
+            <attribute column="altitude" uri="dwc:altitude"/>
         </entity>
 
         <relation>
@@ -113,9 +115,9 @@
             <object>soilCore</object>
         </relation>
 
-       <relation>
+        <relation>
             <subject>soilSamplingProcess</subject>
-            <predicate>obi:located_in</predicate>
+            <predicate>obi:occurs_in</predicate>
             <object>location</object>
         </relation>
 

@@ -8,7 +8,7 @@ select * from <urn:uuid:d6bec500-e319-4a9e-bf82-0a7a9a20a637> where
     ?morphologicalIDProcess <urn:identifiedBy> ?identifiedBy
 }
 
-# show me the plates & wells where i can find derived tissue from an organism
+# Riginos Data: show me the plates & wells where i can find derived tissue from an organism
 select  ?organism ?plate ?well from <urn:uuid:6686b083-7149-49c2-bff1-dbc78a1d8626> where
 {
     ?organism <obi:is_specified_input_of> ?samplingProcess .
@@ -16,4 +16,12 @@ select  ?organism ?plate ?well from <urn:uuid:6686b083-7149-49c2-bff1-dbc78a1d86
     ?tissue  <obi:located_in>   ?plateID .
     ?plateID <urn:plate> ?plate  .
     ?plateID <urn:well> ?well  .
+}
+
+
+# Parnell Data:
+select * from <urn:uuid:2637886c-4542-4991-b546-d2f264c65097> where
+{
+
+
 }
