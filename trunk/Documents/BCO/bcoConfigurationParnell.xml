@@ -77,7 +77,8 @@
                 conceptURI="obi:materialSamplingProcess">
             <attribute column="NEON_numeric_collection_date" uri="dwc:eventDate"/>
             <attribute column="DESCRIPTION" uri="urn:specimenCollectionType"/>
-
+             <attribute column="NEON_easting_UTM" uri="urn:easting"/>
+            <attribute column="NEON_northing_UTM" uri="urn:northing"/>
         </entity>
 
         <entity
