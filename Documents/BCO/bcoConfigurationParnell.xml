@@ -16,7 +16,7 @@
 
         <worksheet sheetname='Samples'>
             <rule type='duplicateColumnNames' level='error'></rule>
-            <rule type='uniqueValue' column='NEON sample name' level='error'></rule>
+            <rule type='uniqueValue' column='NEON_sample_name' level='error'></rule>
         </worksheet>
 
     </validation>
