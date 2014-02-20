@@ -135,6 +135,7 @@ public class Validation implements RendererInterface {
             tdc.convert(mapping);
             tabularDataReader.closeFile();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage(), e);
         }
 

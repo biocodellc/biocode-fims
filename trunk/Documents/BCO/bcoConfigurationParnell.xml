@@ -57,7 +57,7 @@
                 worksheetUniqueKey="NEON sample name"
                 conceptAlias="soilCore"
                 conceptURI="bco:materialSample">
-            <attribute column="NEON sample name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="NEON_sample_name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>
 
         <entity
@@ -65,7 +65,7 @@
                 worksheetUniqueKey="protocolFollowedHASH"
                 conceptAlias="protocolFollowed"
                 conceptURI="obi:protocol">
-            <attribute column="Single or Composite Core" uri="obi:Protocol"/>
+            <attribute column="Single_or_Composite_Core" uri="obi:Protocol"/>
         </entity>
 
         <entity
@@ -73,7 +73,7 @@
                 worksheetUniqueKey="soilSamplingProcessHASH"
                 conceptAlias="soilSamplingProcess"
                 conceptURI="obi:materialSamplingProcess">
-            <attribute column="NEON numeric collection date" uri="dwc:eventDate"/>
+            <attribute column="NEON_numeric_collection_date" uri="dwc:eventDate"/>
             <attribute column="DESCRIPTION" uri="urn:specimenCollectionType"/>
 
         </entity>
@@ -98,9 +98,9 @@
                 worksheetUniqueKey="locationHASH"
                 conceptAlias="location"
                 conceptURI="dc:Location">
-            <attribute column="NEON US State" uri="dwc:stateProvince"/>
-           <attribute column="NEON easting UTM" uri="urn:easting"/>
-           <attribute column="NEON northing UTM" uri="urn:northing"/>
+            <attribute column="NEON_US_State" uri="dwc:stateProvince"/>
+           <attribute column="NEON easting_UTM" uri="urn:easting"/>
+           <attribute column="NEON_northing_UTM" uri="urn:northing"/>
            <attribute column="latitude" uri="dwc:decimalLatitude"/>
            <attribute column="longitude" uri="dwc:decimalLongitude"/>
            <attribute column="altitude" uri="dwc:altitude"/>
