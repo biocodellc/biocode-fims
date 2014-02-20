@@ -204,7 +204,7 @@ public final class TabularDataConverter {
                         sb.append(" || ");
                 }
                 sb.append(" AS toHash FROM " + tname);
-System.out.println(sb.toString());
+//System.out.println(sb.toString());
                 ResultSet rs = stmt.executeQuery(sb.toString());
 
                 Statement updateStatement = connection.createStatement();
