@@ -111,6 +111,7 @@ public class uploader {
         } catch (Exception e) {
             // throw a general exception here since we want to inform the call application of any mis-deeds
             // typically this will be the service being down
+            //e.printStackTrace();
             throw e;
         }
         return graphID;
