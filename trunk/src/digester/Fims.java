@@ -86,7 +86,7 @@ public class Fims implements RendererInterface {
             //fimsPrinter.out.println("\tBCID =  " + bcid);
             fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
             fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
-            fimsPrinter.out.println("\tSample query = " + uploader.getConnectionPoint());
+            fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
             //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
         } else {
             fimsPrinter.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". " +
