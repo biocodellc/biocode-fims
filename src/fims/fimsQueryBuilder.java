@@ -34,8 +34,8 @@ public class fimsQueryBuilder {
                 getObjectFilter() +
                 //"   FILTER (?p = <urn:geneticTissueType>)\n" +
                 "}";
-        System.out.println(queryString);
-        System.out.println(sparqlService);
+       // System.out.println(queryString);
+       // System.out.println(sparqlService);
 
         QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlService, queryString);
 
