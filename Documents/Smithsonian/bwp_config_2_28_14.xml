@@ -1,0 +1,392 @@
+
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="BWP_FIMS"
+            eml_location="eml_location"
+            target="http://flmnh-biscicol2.acis.ufl.edu/ds/data"
+            queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds">
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='sampleID' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>occurenceID</field>
+                <field>processingLab</field>
+                <field>tissueBarcode</field>
+                <field>sequencingLab</field>
+            </rule>
+
+            <rule type='isNumber' column='weightInGrams' level='error'></rule>
+            <rule type='isNumber' column='lengthInCentimeters' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
+
+        </worksheet>
+
+        <lists>
+            <list alias='country'>
+                <field>Afghanistan</field>
+                <field>Albania</field>
+                <field>Algeria</field>
+                <field>American Samoa</field>
+                <field>Andorra</field>
+                <field>Angola</field>
+                <field>Anguilla</field>
+                <field>Antarctica</field>
+                <field>Antigua and Barbuda</field>
+                <field>Arctic Ocean</field>
+                <field>Argentina</field>
+                <field>Armenia</field>
+                <field>Aruba</field>
+                <field>Ashmore and Cartier Islands</field>
+                <field>Atlantic Ocean</field>
+                <field>Australia</field>
+                <field>Austria</field>
+                <field>Azerbaijan</field>
+                <field>Bahamas</field>
+                <field>Bahrain</field>
+                <field>Baltic Sea</field>
+                <field>Baker Island</field>
+                <field>Bangladesh</field>
+                <field>Barbados</field>
+                <field>Bassas da India</field>
+                <field>Belarus</field>
+                <field>Belgium</field>
+                <field>Belize</field>
+                <field>Benin</field>
+                <field>Bermuda</field>
+                <field>Bhutan</field>
+                <field>Bolivia</field>
+                <field>Borneo</field>
+                <field>Bosnia and Herzegovina</field>
+                <field>Botswana</field>
+                <field>Bouvet Island</field>
+                <field>Brazil</field>
+                <field>British Virgin Islands</field>
+                <field>Brunei</field>
+                <field>Bulgaria</field>
+                <field>Burkina Faso</field>
+                <field>Burundi</field>
+                <field>Cambodia</field>
+                <field>Cameroon</field>
+                <field>Canada</field>
+                <field>Cape Verde</field>
+                <field>Cayman Islands</field>
+                <field>Central African Republic</field>
+                <field>Chad</field>
+                <field>Chile</field>
+                <field>China</field>
+                <field>Christmas Island</field>
+                <field>Clipperton Island</field>
+                <field>Cocos Islands</field>
+                <field>Colombia</field>
+                <field>Comoros</field>
+                <field>Cook Islands</field>
+                <field>Coral Sea Islands</field>
+                <field>Costa Rica</field>
+                <field>Cote d'Ivoire</field>
+                <field>Croatia</field>
+                <field>Cuba</field>
+                <field>Curacao</field>
+                <field>Cyprus</field>
+                <field>Czech Republic</field>
+                <field>Democratic Republic of the Congo</field>
+                <field>Denmark</field>
+                <field>Djibouti</field>
+                <field>Dominica</field>
+                <field>Dominican Republic</field>
+                <field>East Timor</field>
+                <field>Ecuador</field>
+                <field>Egypt</field>
+                <field>El Salvador</field>
+                <field>Equatorial Guinea</field>
+                <field>Eritrea</field>
+                <field>Estonia</field>
+                <field>Ethiopia</field>
+                <field>Europa Island</field>
+                <field>Falkland Islands (Islas Malvinas)</field>
+                <field>Faroe Islands</field>
+                <field>Fiji</field>
+                <field>Finland</field>
+                <field>France</field>
+                <field>French Guiana</field>
+                <field>French Polynesia</field>
+                <field>French Southern and Antarctic Lands</field>
+                <field>Gabon</field>
+                <field>Gambia</field>
+                <field>Gaza Strip</field>
+                <field>Georgia</field>
+                <field>Germany</field>
+                <field>Ghana</field>
+                <field>Gibraltar</field>
+                <field>Glorioso Islands</field>
+                <field>Greece</field>
+                <field>Greenland</field>
+                <field>Grenada</field>
+                <field>Guadeloupe</field>
+                <field>Guam</field>
+                <field>Guatemala</field>
+                <field>Guernsey</field>
+                <field>Guinea</field>
+                <field>Guinea-Bissau</field>
+                <field>Guyana</field>
+                <field>Haiti</field>
+                <field>Heard Island and McDonald Islands</field>
+                <field>Honduras</field>
+                <field>Hong Kong</field>
+                <field>Howland Island</field>
+                <field>Hungary</field>
+                <field>Iceland</field>
+                <field>India</field>
+                <field>Indian Ocean</field>
+                <field>Indonesia</field>
+                <field>Iran</field>
+                <field>Iraq</field>
+                <field>Ireland</field>
+                <field>Isle of Man</field>
+                <field>Israel</field>
+                <field>Italy</field>
+                <field>Jamaica</field>
+                <field>Jan Mayen</field>
+                <field>Japan</field>
+                <field>Jarvis Island</field>
+                <field>Jersey</field>
+                <field>Johnston Atoll</field>
+                <field>Jordan</field>
+                <field>Juan de Nova Island</field>
+                <field>Kazakhstan</field>
+                <field>Kenya</field>
+                <field>Kerguelen Archipelago</field>
+                <field>Kingman Reef</field>
+                <field>Kiribati</field>
+                <field>Kosovo</field>
+                <field>Kuwait</field>
+                <field>Kyrgyzstan</field>
+                <field>Laos</field>
+                <field>Latvia</field>
+                <field>Lebanon</field>
+                <field>Lesotho</field>
+                <field>Liberia</field>
+                <field>Libya</field>
+                <field>Liechtenstein</field>
+                <field>Line Islands</field>
+                <field>Lithuania</field>
+                <field>Luxembourg</field>
+                <field>Macau</field>
+                <field>Macedonia</field>
+                <field>Madagascar</field>
+                <field>Malawi</field>
+                <field>Malaysia</field>
+                <field>Maldives</field>
+                <field>Mali</field>
+                <field>Malta</field>
+                <field>Marshall Islands</field>
+                <field>Martinique</field>
+                <field>Mauritania</field>
+                <field>Mauritius</field>
+                <field>Mayotte</field>
+                <field>Mediterranean Sea</field>
+                <field>Mexico</field>
+                <field>Micronesia</field>
+                <field>Midway Islands</field>
+                <field>Moldova</field>
+                <field>Monaco</field>
+                <field>Mongolia</field>
+                <field>Montenegro</field>
+                <field>Montserrat</field>
+                <field>Morocco</field>
+                <field>Mozambique</field>
+                <field>Myanmar</field>
+                <field>Namibia</field>
+                <field>Nauru</field>
+                <field>Navassa Island</field>
+                <field>Nepal</field>
+                <field>Netherlands</field>
+                <field>New Caledonia</field>
+                <field>New Zealand</field>
+                <field>Nicaragua</field>
+                <field>Niger</field>
+                <field>Nigeria</field>
+                <field>Niue</field>
+                <field>Norfolk Island</field>
+                <field>North Korea</field>
+                <field>North Sea</field>
+                <field>Northern Mariana Islands</field>
+                <field>Norway</field>
+                <field>Oman</field>
+                <field>Pacific Ocean</field>
+                <field>Pakistan</field>
+                <field>Palau</field>
+                <field>Palmyra Atoll</field>
+                <field>Panama</field>
+                <field>Papua New Guinea</field>
+                <field>Paracel Islands</field>
+                <field>Paraguay</field>
+                <field>Peru</field>
+                <field>Philippines</field>
+                <field>Pitcairn Islands</field>
+                <field>Poland</field>
+                <field>Portugal</field>
+                <field>Puerto Rico</field>
+                <field>Qatar</field>
+                <field>Republic of the Congo</field>
+                <field>Reunion</field>
+                <field>Romania</field>
+                <field>Ross Sea</field>
+                <field>Russia</field>
+                <field>Rwanda</field>
+                <field>Saint Helena</field>
+                <field>Saint Kitts and Nevis</field>
+                <field>Saint Lucia</field>
+                <field>Saint Pierre and Miquelon</field>
+                <field>Saint Vincent and the Grenadines</field>
+                <field>Samoa</field>
+                <field>San Marino</field>
+                <field>Sao Tome and Principe</field>
+                <field>Saudi Arabia</field>
+                <field>Senegal</field>
+                <field>Serbia</field>
+                <field>Seychelles</field>
+                <field>Sierra Leone</field>
+                <field>Singapore</field>
+                <field>Sint Maarten</field>
+                <field>Slovakia</field>
+                <field>Slovenia</field>
+                <field>Solomon Islands</field>
+                <field>Somalia</field>
+                <field>South Africa</field>
+                <field>South Georgia and the South Sandwich Islands</field>
+                <field>South Korea</field>
+                <field>Southern Ocean</field>
+                <field>Spain</field>
+                <field>Spratly Islands</field>
+                <field>Sri Lanka</field>
+                <field>Sudan</field>
+                <field>Suriname</field>
+                <field>Svalbard</field>
+                <field>Swaziland</field>
+                <field>Sweden</field>
+                <field>Switzerland</field>
+                <field>Syria</field>
+                <field>Taiwan</field>
+                <field>Tajikistan</field>
+                <field>Tanzania</field>
+                <field>Tasman Sea</field>
+                <field>Thailand</field>
+                <field>Togo</field>
+                <field>Tokelau</field>
+                <field>Tonga</field>
+                <field>Trinidad and Tobago</field>
+                <field>Tromelin Island</field>
+                <field>Tunisia</field>
+                <field>Turkey</field>
+                <field>Turkmenistan</field>
+                <field>Turks and Caicos Islands</field>
+                <field>Tuvalu</field>
+                <field>USA</field>
+                <field>Uganda</field>
+                <field>Ukraine</field>
+                <field>United Arab Emirates</field>
+                <field>United Kingdom</field>
+                <field>Uruguay</field>
+                <field>Uzbekistan</field>
+                <field>Vanuatu</field>
+                <field>Venezuela</field>
+                <field>Viet Nam</field>
+                <field>Virgin Islands</field>
+                <field>Wake Island</field>
+                <field>Wallis and Futuna</field>
+                <field>West Bank</field>
+                <field>Western Sahara</field>
+                <field>Yemen</field>
+                <field>Zambia</field>
+                <field>Zimbabwe</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="tissueBarcode"
+                conceptAlias="Resource"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+            <attribute column="processingLab"/>
+            <attribute column="sequencingLab"/>
+            <attribute column="tissueBarcode" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="tissuePlate"/>
+            <attribute column="tissueWell"/>
+            <attribute column="tissueType" uri="http://rs.tdwg.org/dwc/terms/preparations"/>
+            <attribute column="preservative" uri="http://rs.tdwg.org/dwc/terms/preparations"/>
+            <attribute column="extractionBarcode"/>
+            <attribute column="occurenceID"/>
+            <attribute column="institutionCode" uri="http://rs.tdwg.org/dwc/terms/institutionCode"/>
+            <attribute column="collectionCode" uri="http://rs.tdwg.org/dwc/terms/collectionCode"/>
+            <attribute column="catalogNumber" uri="http://rs.tdwg.org/dwc/terms/catalogNumber"/>
+            <attribute column="sex" uri="http://rs.tdwg.org/dwc/terms/sex"/>
+            <attribute column="lifeStage" uri="http://rs.tdwg.org/dwc/terms/lifeStage"/>
+            <attribute column="associatedMedia" uri="http://rs.tdwg.org/dwc/terms/associatedMedia"/>
+            <attribute column="establishmentMeans" uri="http://rs.tdwg.org/dwc/terms/establishmentMeans"/>
+            <attribute column="weightInGrams"/>
+            <attribute column="lengthInCentimeters"/>
+            <attribute column="sampleRemarks" uri="http://rs.tdwg.org/dwc/terms/occurrenceRemarks"/>
+            <attribute column="yearCollected" uri="http://rs.tdwg.org/dwc/terms/year"/>
+            <attribute column="monthCollected" uri="http://rs.tdwg.org/dwc/terms/month"/>
+            <attribute column="dayCollected" uri="http://rs.tdwg.org/dwc/terms/day"/>
+            <attribute column="collectedBy" uri="http://rs.tdwg.org/dwc/terms/recordedBy"/>
+            <attribute column="eventID" uri="http://rs.tdwg.org/dwc/terms/eventID"/>
+            <attribute column="collectionMethod" uri="http://rs.tdwg.org/dwc/terms/samplingProtocol"/>
+            <attribute column="fieldNumber" uri="http://rs.tdwg.org/dwc/terms/fieldNumber"/>
+            <attribute column="eventTime" uri="http://rs.tdwg.org/dwc/terms/eventTime"/>
+            <attribute column="permitInformation"/>
+            <attribute column="habitat" uri="http://rs.tdwg.org/dwc/terms/habitat"/>
+            <attribute column="eventRemarks" uri="http://rs.tdwg.org/dwc/terms/eventRemarks"/>
+            <attribute column="countryOrWaterBody" uri="http://rs.tdwg.org/dwc/terms/country"/>
+            <attribute column="island" uri="http://rs.tdwg.org/dwc/terms/island"/>
+            <attribute column="stateProvince" uri="http://rs.tdwg.org/dwc/terms/stateProvince"/>
+            <attribute column="county" uri="http://rs.tdwg.org/dwc/terms/county"/>
+            <attribute column="municipality" uri="http://rs.tdwg.org/dwc/terms/municipality"/>
+            <attribute column="locality" uri="http://rs.tdwg.org/dwc/terms/locality"/>
+            <attribute column="verbatimElevation" uri="http://rs.tdwg.org/dwc/terms/verbatimElevation"/>
+            <attribute column="verbatimDepth" uri="http://rs.tdwg.org/dwc/terms/verbatimDepth"/>
+            <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+            <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+            <attribute column="locationRemarks" uri="http://rs.tdwg.org/dwc/terms/locationRemarks"/>
+            <attribute column="georeferenceProtocol" uri="http://rs.tdwg.org/dwc/terms/georeferenceProtocol"/>
+            <attribute column="identifiedBy" uri="http://rs.tdwg.org/dwc/terms/identifiedBy"/>
+            <attribute column="yearIdentified" uri="http://rs.tdwg.org/dwc/terms/dateIdentified"/>
+            <attribute column="monthIdentified" uri="http://rs.tdwg.org/dwc/terms/dateIdentified"/>
+            <attribute column="dayIdentified" uri="http://rs.tdwg.org/dwc/terms/dateIdentified"/>
+            <attribute column="typeStatus" uri="http://rs.tdwg.org/dwc/terms/typeStatus"/>
+            <attribute column="basisOfID" uri="http://rs.tdwg.org/dwc/terms/identificationReferences"/>
+            <attribute column="identificationConfidence" uri="http://rs.tdwg.org/dwc/terms/identificationVerificationStatus"/>
+            <attribute column="scientificName" uri="http://rs.tdwg.org/dwc/terms/scientificName"/>
+            <attribute column="kingdom" uri="http://rs.tdwg.org/dwc/terms/kingdom"/>
+            <attribute column="phylum" uri="http://rs.tdwg.org/dwc/terms/phylum"/>
+            <attribute column="class" uri="http://rs.tdwg.org/dwc/terms/class"/>
+            <attribute column="order" uri="http://rs.tdwg.org/dwc/terms/order"/>
+            <attribute column="family" uri="http://rs.tdwg.org/dwc/terms/family"/>
+            <attribute column="subfamily"/>
+            <attribute column="genus" uri="http://rs.tdwg.org/dwc/terms/genus"/>
+            <attribute column="species" uri="http://rs.tdwg.org/dwc/terms/specificEpithet"/>
+            <attribute column="subspecies" uri="http://rs.tdwg.org/dwc/terms/infraspecificEpithet"/>
+            <attribute column="commonName" uri="http://rs.tdwg.org/dwc/terms/vernacularName"/>
+            <attribute column="associatedTaxa" uri="http://rs.tdwg.org/dwc/terms/associatedTaxa"/>
+            <attribute column="taxonRemarks"/>
+            <attribute column="chainOfCustody"/>
+        </entity>
+    </mapping>
+
+</fims>
+
