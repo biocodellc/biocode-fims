@@ -44,10 +44,12 @@ public class uploader {
     } */
 
     public String getConnectionPoint() {
-        return this.getService() + "/query" +
+        return this.getService() + "?graph="+graphID;
+        /*return this.getService() + "/query" +
                 "?query=select+*+%7Bgraph+" + this.getEncodedGraph(true) + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
                 "&output=text" +
-                "&stylesheet=%2Fxml-to-html.xsl";
+                "&stylesheet=%2Fxml-to-html.xsl";*/
+
     }
 
     /**
