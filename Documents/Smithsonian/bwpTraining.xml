@@ -7,7 +7,7 @@
             shortname="shortname"
             eml_location="eml_location"
             target="http://flmnh-biscicol2.acis.ufl.edu/ds/data"
-            queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds/data">
+            queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds">
         <![CDATA[Some text with abstract]]>
     </metadata>
 

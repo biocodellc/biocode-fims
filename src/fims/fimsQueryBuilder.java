@@ -35,6 +35,8 @@ public class fimsQueryBuilder {
                 //"   FILTER (?p = <urn:geneticTissueType>)\n" +
                 "}";
         System.out.println(queryString);
+        System.out.println(sparqlService);
+
         QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlService, queryString);
 
         /* ResultSet rs = qexec.execSelect();
@@ -182,11 +184,13 @@ public class fimsQueryBuilder {
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
         String[] graphArray = new String[2];
-        graphArray[0] = "urn:uuid:c4cc9f83-5338-48d7-8f92-9bd23802ae7f";
-        graphArray[1] = "urn:uuid:0fe114da-07c9-4f50-8a0d-743b7d456dfc";
+        //graphArray[0] = "urn:uuid:c4cc9f83-5338-48d7-8f92-9bd23802ae7f";
+        //graphArray[1] = "urn:uuid:0fe114da-07c9-4f50-8a0d-743b7d456dfc";
+        graphArray[0] = "urn:uuid:ded8e057-75b9-4e42-a74d-c711762d757b";
 
-        fimsQueryBuilder q = new fimsQueryBuilder(graphArray, "http://biscicol.org:3030/ds/query");
-        q.setObjectFilter("Mfl1090");
+        //fimsQueryBuilder q = new fimsQueryBuilder(graphArray, "http://biscicol.org:3030/ds/query");
+        fimsQueryBuilder q = new fimsQueryBuilder(graphArray, " http://flmnh-biscicol2.acis.ufl.edu/ds/query");
+        //q.setObjectFilter("Mfl1090");
         print(q.getModel());
 
     }
