@@ -90,7 +90,7 @@ public class Fims implements RendererInterface {
             //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
         } else {
             fimsPrinter.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". " +
-                    "If this persists, your network may be blocking access to the database port 3030. " +
+                    "If this persists, your network may be blocking access to the database port. " +
                     "Please contact jdeck@berkeley.edu for more information.");
         }
     }
