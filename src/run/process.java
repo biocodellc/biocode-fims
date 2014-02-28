@@ -135,7 +135,7 @@ public class process {
                 //e.printStackTrace();
                 throw new FIMSException("Unable to obtain configuration file from server... \n" +
                         "Please check that your expedition code is valid.\n" +
-                        " Expedition codes Must be between 4 and 6 characters in length.");
+                        " Expedition codes Must be between 4 and 12 characters in length.");
             }
             fimsPrinter.out.println("\tconfiguration file = " + configFile.getAbsoluteFile());
 
