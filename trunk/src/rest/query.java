@@ -28,7 +28,7 @@ import java.net.URLDecoder;
 /**
  * Query interface for Biocode-fims expedition
  */
-@Path("")
+@Path("query")
 public class query {
     @Context
     static ServletContext context;

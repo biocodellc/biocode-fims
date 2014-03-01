@@ -1,13 +1,53 @@
+function populateDefinitions(column) {
+ var e = document.getElementById('projects');
+    var project_id = e.options[e.selectedIndex].value;
+
+    theUrl = "/biocode-fims/rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
+
+    $.ajax({
+        type: "GET",
+        url: theUrl,
+        dataType: "html",
+        success: function(data) {
+            $("#definition").html(data);
+        }
+    });
+}
+
+function populateColumns(targetDivId) {
+    $(targetDivId).html("Loading ...");
+
+    var e = document.getElementById('projects');
+    var project_id = e.options[e.selectedIndex].value;
+
+    theUrl = "/biocode-fims/rest/templates/attributes/?project_id=" + project_id;
+
+    var jqxhr = $.ajax( {
+        url: theUrl,
+        async: false,
+        dataType : 'html'
+    }).done(function(data) {
+        $(targetDivId).html(data);
+    }).fail(function(jqXHR,textStatus) {
+        if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response!");
+        } else {
+                showMessage ("Error completing request!" );
+        }
+    });
+
+     $(".def_link").click(function () {
+        populateDefinitions($(this).attr('name'));
+     });
+}
 // Get the available projects
 function populateProjects() {
     theUrl = "http://biscicol.org/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
-	// Initialize the graphs option
-	graphsMessage('Choose an project to see loaded spreadsheets');
-	// Call distal to load the projects data
+	    // Call distal to load the projects data
         distal(projects,data);
-	// Set to the first value in the list which should be "select one..."
-	$("#projects").val($("#projects option:first").val());
+	    // Set to the first value in the list which should be "select one..."
+	    $("#projects").val($("#projects option:first").val());
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
 	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -45,7 +85,7 @@ function populateGraphs(project_id) {
 
 // Get results as JSON
 function queryJSON() {
-    theUrl = "/biocode-fims/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
     var jqxhr = $.getJSON( theUrl, function(data) {
         $("#resultsContainer").show();
         distal(results,data);
@@ -60,21 +100,21 @@ function queryJSON() {
 
 // Get results as Excel
 function queryExcel() {
-    theUrl = "/biocode-fims/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
     window.location = theUrl;
     showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
 }
 
 // Get results as Excel
 function queryKml() {
-    theUrl = "/biocode-fims/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
     window.location = theUrl;
     showMessage ("Downloading results as an KML document<br>If Google Earth does not open you can point to it directly");
 }
 
 // Get results as Excel
 function queryGoogleMaps() {
-    theUrl = "http://biscicol.org/biocode-fims/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyVal
+    theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyVal
 ue
     mapsUrl = "http://maps.google.com/maps?q=" + theUrl;
     window.open(

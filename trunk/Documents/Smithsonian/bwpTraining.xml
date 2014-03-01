@@ -7,7 +7,7 @@
             shortname="shortname"
             eml_location="eml_location"
             target="http://flmnh-biscicol2.acis.ufl.edu/ds/data"
-            queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds">
+                                queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds">
         <![CDATA[Some text with abstract]]>
     </metadata>
 
@@ -376,7 +376,7 @@
                 entityId="1">
             <attribute column="sampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
 
-            <attribute column='partnerCountry' uri='urn:partnerCountry'/>
+            <attribute column='partnerCountry' uri='urn:partnerCountry'>Here is where we put the definition</attribute>
             <attribute column='processingLab' uri='urn:processingLab'/>
             <attribute column='sequencingLab' uri='urn:sequencingLab'/>
             <attribute column='collectedBy' uri='urn:collectedBy'/>

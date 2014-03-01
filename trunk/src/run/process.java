@@ -18,6 +18,7 @@ import org.apache.commons.cli.HelpFormatter;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Iterator;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -78,7 +79,7 @@ public class process {
     }
 
     /**
-     * A smaller constructor for when we're running queries
+     * A constructor for when we're running queries or reading template files
      *
      * @param outputFolder
      * @param configFile
@@ -212,6 +213,71 @@ public class process {
     }
 
     /**
+     * Get a definition for a particular column name
+     * TODO: create a template processing class for this
+     * @param column_name
+     * @return
+     * @throws FIMSException
+     */
+    public String templateDefinition(String column_name) throws FIMSException {
+        String output = "";
+        try {
+          // Build Mapping object
+            Mapping mapping = new Mapping();
+            addMappingRules(new Digester(), mapping);
+
+             Iterator attributes = mapping.getAllAttributes( mapping.getDefaultSheetName()).iterator();
+            while (attributes.hasNext()) {
+                Attribute a = (Attribute) attributes.next();
+                String column = a.getColumn();
+                if (column_name.trim().equals(column.trim())) {
+                    if (a.getUri() != null)
+                        output += "<b>uri:</b>" + a.getUri();
+                    else
+                        output += "No URI available";
+                    if (a.getDefinition() != null)
+                        output += "<p><b>definition:</b>" + a.getDefinition();
+                    else
+                        output += "<p>No definition available";
+                }
+            }
+
+          } catch (Exception e) {
+            e.printStackTrace();
+              throw new FIMSException("exception handling templates " + e.getMessage(), e);
+          }
+        return "No definition found for " + column_name;
+    }
+    /**
+     * Generate checkBoxes/Column Names for the mappings in a template
+     * TODO: create a template processing class for this
+     * @return
+     * @throws FIMSException
+     */
+    public String template() throws FIMSException {
+        String output = "";
+        try {
+          // Build Mapping object
+            Mapping mapping = new Mapping();
+            addMappingRules(new Digester(), mapping);
+
+             Iterator attributes = mapping.getAllAttributes( mapping.getDefaultSheetName()).iterator();
+            while (attributes.hasNext()) {
+                Attribute a = (Attribute) attributes.next();
+                String column = a.getColumn();
+                output += "<label class='checkbox'>\n" +
+                        "\t<input type='checkbox' class='check_boxes' value='" + column + "'>" + column + " \n" +
+                        "\t<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
+                        "</label>\n";
+            }
+
+          } catch (Exception e) {
+            e.printStackTrace();
+              throw new FIMSException("exception handling templates " + e.getMessage(), e);
+          }
+        return output;
+    }
+    /**
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
      * fetching results
      *
@@ -234,7 +300,7 @@ public class process {
             // Code a reference to the Sparql Query Server
             String sparqlServer = fims.getMetadata().getQueryTarget().toString() + "/query";
 
-            // Build a query model, passing in an String[] array of graph identifiers
+            // Build a query model, passing in a String[] array of graph identifiers
             fimsQueryBuilder q = new fimsQueryBuilder(graphs.split(","), sparqlServer);
 
             // Filter
@@ -333,6 +399,7 @@ public class process {
         // Add attributes associated with this entity
         d.addObjectCreate("fims/mapping/entity/attribute", Attribute.class);
         d.addSetProperties("fims/mapping/entity/attribute");
+        d.addCallMethod("fims/mapping/entity/attribute", "addDefinition", 0);
         d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
 
         // Create relation objects
