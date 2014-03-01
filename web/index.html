@@ -1,76 +1,16 @@
 <!DOCTYPE HTML>
 <html>
+<body>
 
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="js/distal.js"></script>
-<script>
-    jQuery.fn.distal = function (json) {
-    return this.each( function () { distal(this, json) } )
-    };
-</script>
-<script src="js/biocode-fims.js"></script>
-<script src="js/jNotify.jquery.js"></script>
-
-<link rel="stylesheet" href="css/jNotify.jquery.css" type="text/css"/>
-<link rel="stylesheet" href="css/biocode-fims.css" type="text/css"/>
-
-
-<body onload="populateProjects();">
-<div id=centered>
-    <b>Query Engine for Biocode FIMS (Beta!)</b>
-    <br>The following page is a demonstration of some test-data that has been loaded using the Biocode-FIMS system. This
-    system
-    is expected to be complete by Summer of 2014.
-    <p>
-    <table>
-        <tr>
-            <td>Projects</td>
-            <td>
-                <select width=20 id=projects onchange='populateGraphs(this.options[this.selectedIndex].value);'>
-                    <option qdup=1 value=0>Select an project ...</option>
-                    <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
-                        Loading Projects ...
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Spreadsheets<br>(select one or more)</td>
-            <td>
-                <select width=20 id=graphs multiple>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Filter</td>
-            <td>
-                <input type=text id=filter>
-            </td>
-        </tr>
-        <tr>
-            <td>Output</td>
-            <td>
-                <input type=button onclick="javascript:queryJSON();" value=table>
-                <input type=button onclick="javascript:queryExcel();" value=excel>
-                <input type=button onclick="javascript:queryGoogleMaps();" value=map>
-                <input type=button onclick="javascript:queryKml();" value=kml>
-            </td>
-        </tr>
-    </table>
-</div>
+<h1>Biocode FIMS Online Tools</h1>
 
 <p>
 
-<div id=resultsContainer>
-<table id=results border=0>
-    <tr>
-        <th data-qrepeat="m header"><b data-qtext="m"></b></th>
-    </tr>
-    <tr data-qrepeat="m data">
-        <td data-qrepeat="i m.row"><i data-qtext="i"></i>
-    </tr>
-</table>
-</div>
+    <a href='query.html'>Biocode-FIMS Query</a>
+
+<p>
+
+    <a href='templates.jsp'>Template Generator</a>
 
 </body>
 </html>

@@ -13,6 +13,7 @@ public class Attribute {
     private String column;
     private String uri;
     private String datatype = "string";  // string is default type
+    private String definition;
 
     public String getColumn() {
         return column;
@@ -36,6 +37,13 @@ public class Attribute {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+     public String getDefinition() {
+        return definition;
+    }
+
+    public void addDefinition(String definition) {
+        this.definition = definition;
     }
 
     /**
@@ -73,4 +81,6 @@ public class Attribute {
             pw.println("\t.");
         }
     }
+
+
 }
