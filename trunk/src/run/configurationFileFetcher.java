@@ -26,16 +26,6 @@ public class configurationFileFetcher {
     }
 
     /**
-     * in this constructor we already know the URL of the configuration file
-     * @param url
-     * @param defaultOutputDirectory
-     * @throws Exception
-     */
-    public configurationFileFetcher(URL url, String defaultOutputDirectory) throws Exception {
-        init(url, defaultOutputDirectory);
-    }
-
-    /**
      * Create the class object given a particular expedition code and a default Output Directory
      *
      * @param defaultOutputDirectory
