@@ -102,7 +102,6 @@ public class configurationFileFetcher {
         } catch (Exception e) {
             throw new IOException("Unable to create configuration file", e);
         }
-        //System.out.println("\tLoading configuration file at " + outputFile.getAbsolutePath());
         FileOutputStream os = new FileOutputStream(outputFile);
         try {
             byte[] buffer = new byte[1024];
