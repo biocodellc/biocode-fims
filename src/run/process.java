@@ -47,7 +47,7 @@ public class process {
      *
      * @param inputFilename     The data to run.process, usually an Excel spreadsheet
      * @param outputFolder      Where to store output files
-     * @param expedition_code      A distinct expedition code for the expedition being loaded, used to lookup expeditions in the BCID system
+     * @param expedition_code   A distinct expedition code for the expedition being loaded, used to lookup expeditions in the BCID system
      *                          for assigning identifier roots.
      * @param write_spreadsheet Write back a spreadsheet to test to the entire cycle
      */
@@ -215,6 +215,7 @@ public class process {
     /**
      * Get a definition for a particular column name
      * TODO: create a template processing class for this
+     *
      * @param column_name
      * @return
      * @throws FIMSException
@@ -222,46 +223,51 @@ public class process {
     public String templateDefinition(String column_name) throws FIMSException {
         String output = "";
         try {
-          // Build Mapping object
+            // Build Mapping object
             Mapping mapping = new Mapping();
             addMappingRules(new Digester(), mapping);
 
-             Iterator attributes = mapping.getAllAttributes( mapping.getDefaultSheetName()).iterator();
+            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
             while (attributes.hasNext()) {
                 Attribute a = (Attribute) attributes.next();
                 String column = a.getColumn();
                 if (column_name.trim().equals(column.trim())) {
+
                     if (a.getUri() != null)
                         output += "<b>uri:</b>" + a.getUri();
                     else
-                        output += "No URI available";
-                    if (a.getDefinition() != null)
-                        output += "<p><b>definition:</b>" + a.getDefinition();
+                        output += "<b>uri:</b> No URI available";
+                    if (!a.getDefinition().trim().equals(""))
+                        output += "<p><b>definition:</b> " + a.getDefinition();
                     else
-                        output += "<p>No definition available";
+                        output += "<p><b>definition:</b> No definition available";
+
+                    return output;
                 }
             }
 
-          } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-              throw new FIMSException("exception handling templates " + e.getMessage(), e);
-          }
+            throw new FIMSException("exception handling templates " + e.getMessage(), e);
+        }
         return "No definition found for " + column_name;
     }
+
     /**
      * Generate checkBoxes/Column Names for the mappings in a template
      * TODO: create a template processing class for this
+     *
      * @return
      * @throws FIMSException
      */
     public String template() throws FIMSException {
         String output = "";
         try {
-          // Build Mapping object
+            // Build Mapping object
             Mapping mapping = new Mapping();
             addMappingRules(new Digester(), mapping);
 
-             Iterator attributes = mapping.getAllAttributes( mapping.getDefaultSheetName()).iterator();
+            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
             while (attributes.hasNext()) {
                 Attribute a = (Attribute) attributes.next();
                 String column = a.getColumn();
@@ -271,12 +277,13 @@ public class process {
                         "</label>\n";
             }
 
-          } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-              throw new FIMSException("exception handling templates " + e.getMessage(), e);
-          }
+            throw new FIMSException("exception handling templates " + e.getMessage(), e);
+        }
         return output;
     }
+
     /**
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
      * fetching results
@@ -308,7 +315,7 @@ public class process {
                 q.setObjectFilter(filter);
 
             // Construct a  fimsModel
-             jenaModel = q.getModel();
+            jenaModel = q.getModel();
             fimsModel = fims.getFIMSModel(jenaModel);
 
             // Output the results
@@ -329,7 +336,7 @@ public class process {
             e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         } finally {
-            fimsModel.close(); 
+            fimsModel.close();
             jenaModel.close();
         }
         return output;
@@ -457,13 +464,11 @@ public class process {
         options.addOption("f", "format", true, "excel|html|json  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
-
-        options.addOption("C", "configURL", true, "A URL specifying a configuration file, only for running queries");
-        options.addOption("p", "expedition_code", true, "Expedition code.  You will need to obtain a expedition code before " +
+        options.addOption("e", "expedition_code", true, "Expedition code.  You will need to obtain a expedition code before " +
                 "loading data, or use the demo_mode.");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
-        options.addOption("e", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
+        options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
 
         options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify expedition_code, " +
                 "configuration, or output_directory.  You still need to specify an input file.");
@@ -495,15 +500,18 @@ public class process {
             fimsPrinter.out.println("Must specify a valid username or password for uploading data!");
             return;
         }
-        // If help was requested, print the help message and exit.
+        // query option must also have project_id option
         if (cl.hasOption("q")) {
-            if (!cl.hasOption("C")) {
+            if (!cl.hasOption("p")) {
                 helpf.printHelp("fims ", options, true);
                 return;
             }
-        } else if (cl.hasOption("h") ||
+
+        }
+        // help options
+        else if (cl.hasOption("h") ||
                 (cl.hasOption("d") && !cl.hasOption("i")) ||
-                (!cl.hasOption("d") && (!cl.hasOption("p") || !cl.hasOption("i")))) {
+                (!cl.hasOption("d") && (!cl.hasOption("e") || !cl.hasOption("i")))) {
             helpf.printHelp("fims ", options, true);
             return;
         }
@@ -515,9 +523,9 @@ public class process {
             triplify = true;
             upload = true;
         }
-        if (cl.hasOption("e")) {
+        if (cl.hasOption("p")) {
             try {
-                project_id = new Integer(cl.getOptionValue("e"));
+                project_id = new Integer(cl.getOptionValue("p"));
             } catch (Exception e) {
                 fimsPrinter.out.println("Bad option for project_id");
                 helpf.printHelp("fims ", options, true);
@@ -532,8 +540,8 @@ public class process {
             input_file = cl.getOptionValue("i");
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
-        if (cl.hasOption("p"))
-            expedition_code = cl.getOptionValue("p");
+        if (cl.hasOption("e"))
+            expedition_code = cl.getOptionValue("e");
         if (cl.hasOption("w"))
             write_spreadsheet = true;
         if (cl.hasOption("t"))
@@ -559,7 +567,7 @@ public class process {
              */
             if (cl.hasOption("q")) {
 
-                File file = new configurationFileFetcher(new URL(cl.getOptionValue("C")), output_directory).getOutputFile();
+                File file = new configurationFileFetcher(project_id, output_directory).getOutputFile();
 
                 process p = new process(
                         output_directory,
@@ -587,7 +595,7 @@ public class process {
             }
         } catch (Exception e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());
-           // e.printStackTrace();
+            // e.printStackTrace();
             System.exit(-1);
         }
     }
