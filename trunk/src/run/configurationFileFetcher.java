@@ -6,23 +6,48 @@ import settings.PathManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Class that handles getting configuration files.  Configuration files are stored as BCID/ARKs and thus this class
  * needs to handle redirection when fetching appropriate configuration files.
  */
 public class configurationFileFetcher {
-    private String expedition_code;
     private File outputFile;
-    // TODO: Fix biscicol.org resolution -- can't see itself!
+    // TODO: Fix biscicol.org resolution -- can't see itself! The work-around here is to use a different port
     private String projectLookup = "http://biscicol.org:8080/id/projectService/validation/";
+    private Integer project_id;
+    private String configFileName;
+
+    public Integer getProject_id() {
+        return project_id;
+    }
 
     public File getOutputFile() {
         return outputFile;
     }
 
-    public String getExpedition_code() {
-        return expedition_code;
+    /**
+     * If file is more than 24 hours old or does not exist then return false
+     *
+     * @param defaultOutputDirectory
+     * @return
+     */
+    public Boolean getCachedConfigFile(String defaultOutputDirectory) throws Exception {
+        // Create a file reference
+        File file = new File(defaultOutputDirectory,configFileName);
+
+        // check for file existing, if not then return false
+        if (!file.exists())
+            return false;
+
+        // check for files older than 24 hours
+        if (new Date().getTime() - file.lastModified() > 24 * 60 * 60 * 1000)
+            return false;
+
+        // File exists and is younger than 24 hours old, set the outputFile class variable
+        outputFile = new File(defaultOutputDirectory,configFileName);
+        return true;
     }
 
     /**
@@ -31,16 +56,27 @@ public class configurationFileFetcher {
      * @param defaultOutputDirectory
      * @throws IOException
      */
-    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory) throws Exception {
-        this.expedition_code = expedition_code;
+    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) throws Exception {
+        this.project_id = project_id;
+        configFileName = "config." + project_id + ".xml";
 
-        // Get the URL for this configuration File
-        String expeditionServiceString = projectLookup + project_id;
-        // Set a 10 second timeout on this connection
-        String urlString = Jsoup.connect(expeditionServiceString).timeout(10000).get().body().html();
-        // Setup connection
-        URL url = new URL(urlString);
-        init(new URL(urlString), defaultOutputDirectory);
+        Boolean useCacheResults = false;
+
+        // call cache operation if user wants it
+        if (useCache) {
+            useCacheResults = getCachedConfigFile(defaultOutputDirectory);
+        }
+
+        // get a fresh copy if the useCacheResults is false
+        if (!useCacheResults) {
+            // Get the URL for this configuration File
+            String projectServiceString = projectLookup + project_id;
+            // Set a 10 second timeout on this connection
+            String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
+            // Setup connection
+            URL url = new URL(urlString);
+            init(new URL(urlString), defaultOutputDirectory);
+        }
     }
 
     private void init(URL url, String defaultOutputDirectory) throws Exception {
@@ -69,16 +105,13 @@ public class configurationFileFetcher {
             // get redirect url from "location" header field
             String newUrl = connection.getHeaderField("Location");
 
-            // get the cookie if need, for login
-//            String cookies = connection.getHeaderField("Set-Cookie");
-            // open the new connnection again
-
-            connection = (HttpURLConnection) new URL(newUrl ).openConnection();
+            // open the  connnection
+            connection = (HttpURLConnection) new URL(newUrl).openConnection();
             connection.setUseCaches(false);
             connection.setDefaultUseCaches(false);
             connection.addRequestProperty("Cache-Control", "no-cache");
 
-//            connection.setRequestProperty("Cookie", cookies);
+            // connection.setRequestProperty("Cookie", cookies);
             connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
             connection.addRequestProperty("User-Agent", "Mozilla");
             connection.addRequestProperty("Referer", "google.com");
@@ -88,7 +121,8 @@ public class configurationFileFetcher {
 
         // Write configuration file to output directory
         try {
-            outputFile = PathManager.createUniqueFile("config.xml", defaultOutputDirectory);
+            //outputFile = PathManager.createUniqueFile("config.xml", defaultOutputDirectory);
+            outputFile = PathManager.createFile(configFileName, defaultOutputDirectory);
         } catch (Exception e) {
             throw new IOException("Unable to create configuration file", e);
         }
@@ -136,8 +170,8 @@ public class configurationFileFetcher {
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
 
         try {
-            cFF = new configurationFileFetcher(1, defaultOutputDirectory);
-            System.out.println(readFile(cFF.getOutputFile()));
+            cFF = new configurationFileFetcher(1, defaultOutputDirectory, false);
+            // System.out.println(readFile(cFF.getOutputFile()));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

@@ -189,7 +189,7 @@ public class fimsQueryBuilder {
         graphArray[0] = "urn:uuid:ded8e057-75b9-4e42-a74d-c711762d757b";
 
         //fimsQueryBuilder q = new fimsQueryBuilder(graphArray, "http://biscicol.org:3030/ds/query");
-        fimsQueryBuilder q = new fimsQueryBuilder(graphArray, " http://flmnh-biscicol2.acis.ufl.edu/ds/query");
+        fimsQueryBuilder q = new fimsQueryBuilder(graphArray, " http://data.biscicol.org/ds/query");
         //q.setObjectFilter("Mfl1090");
         print(q.getModel());
 
