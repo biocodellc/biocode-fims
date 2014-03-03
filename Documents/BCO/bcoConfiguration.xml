@@ -6,8 +6,8 @@
             doi="a doi"
             shortname="shortname"
             eml_location="eml_location"
-            target="http://flmnh-biscicol2.acis.ufl.edu/ds/data"
-            queryTarget="http://flmnh-biscicol2.acis.ufl.edu/ds">
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
 
         <![CDATA[Some text with abstract]]>
     </metadata>

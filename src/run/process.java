@@ -131,7 +131,7 @@ public class process {
 
             // Read the Configuration File
             try {
-                configFile = new configurationFileFetcher(project_id, outputFolder).getOutputFile();
+                configFile = new configurationFileFetcher(project_id, outputFolder,true).getOutputFile();
             } catch (Exception e) {
                 //e.printStackTrace();
                 throw new FIMSException("Unable to obtain configuration file from server... \n" +
@@ -567,7 +567,7 @@ public class process {
              */
             if (cl.hasOption("q")) {
 
-                File file = new configurationFileFetcher(project_id, output_directory).getOutputFile();
+                File file = new configurationFileFetcher(project_id, output_directory,true).getOutputFile();
 
                 process p = new process(
                         output_directory,

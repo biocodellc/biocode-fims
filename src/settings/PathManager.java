@@ -65,7 +65,7 @@ public class PathManager {
         return theDir;
     }
 
-        /**
+    /**
      * Create new file in given folder, add incremental number to base if filename already exists.
      *
      * @param pFilename Name of the file.
@@ -89,6 +89,23 @@ public class PathManager {
             file = new File(pOutputFolder, base + "." + i++ + ext);
         return file;
     }
+
+    /**
+     * Create a File in a given folder and overwrite any existing file.
+     *
+     * @param pFilename Name of the file.
+     * @return The new file.
+     */
+    public static File createFile(String pFilename, String pOutputFolder) throws Exception {
+        File file = new File(pOutputFolder, pFilename);
+        if (file.exists()) {
+            file.delete();
+            return new File(pOutputFolder, pFilename);
+        } else {
+            return file;
+        }
+    }
+
     public static void main(String args[]) {
         PathManager pm = new PathManager();
         try {

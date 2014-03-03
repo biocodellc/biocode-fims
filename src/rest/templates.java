@@ -33,7 +33,7 @@ public class templates {
             @QueryParam("project_id") Integer project_id) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
+        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
         try {
             p = new process(
@@ -41,7 +41,6 @@ public class templates {
                     configFile
             );
         } catch (FIMSException e) {
-            //e.printStackTrace();
             return Response.ok("\nError: " + e.getMessage()).build();
         }
 
@@ -69,7 +68,7 @@ public class templates {
             @QueryParam("column_name") String column_name) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
+        File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
         try {
             p = new process(

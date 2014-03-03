@@ -49,7 +49,7 @@ public class query {
             @QueryParam("filter") String filter) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
+        File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
         try {
             p = new process(
@@ -90,7 +90,7 @@ public class query {
 
         try {
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
             process p = new process(
                     uploadPath(),
@@ -135,7 +135,7 @@ public class query {
         try {
 
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath()).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
             // Create a process object
             process p = new process(
