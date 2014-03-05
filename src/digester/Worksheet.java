@@ -9,6 +9,7 @@ import sun.rmi.transport.Connection;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.List;
 
 /**
  * digester.Worksheet class holds all elements pertaining to worksheets including most importantly
@@ -105,6 +106,9 @@ public class Worksheet {
         rules.add(rule);
     }
 
+    public List<Rule> getRules() {
+        return rules;
+    }
 
     public void print() {
         fimsPrinter.out.println("  sheetname=" + sheetname);

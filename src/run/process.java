@@ -212,77 +212,7 @@ public class process {
         }
     }
 
-    /**
-     * Get a definition for a particular column name
-     * TODO: create a template processing class for this
-     *
-     * @param column_name
-     * @return
-     * @throws FIMSException
-     */
-    public String templateDefinition(String column_name) throws FIMSException {
-        String output = "";
-        try {
-            // Build Mapping object
-            Mapping mapping = new Mapping();
-            addMappingRules(new Digester(), mapping);
 
-            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
-            while (attributes.hasNext()) {
-                Attribute a = (Attribute) attributes.next();
-                String column = a.getColumn();
-                if (column_name.trim().equals(column.trim())) {
-
-                    if (a.getUri() != null)
-                        output += "<b>uri:</b>" + a.getUri();
-                    else
-                        output += "<b>uri:</b> No URI available";
-                    if (!a.getDefinition().trim().equals(""))
-                        output += "<p><b>definition:</b> " + a.getDefinition();
-                    else
-                        output += "<p><b>definition:</b> No definition available";
-
-                    return output;
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("exception handling templates " + e.getMessage(), e);
-        }
-        return "No definition found for " + column_name;
-    }
-
-    /**
-     * Generate checkBoxes/Column Names for the mappings in a template
-     * TODO: create a template processing class for this
-     *
-     * @return
-     * @throws FIMSException
-     */
-    public String template() throws FIMSException {
-        String output = "";
-        try {
-            // Build Mapping object
-            Mapping mapping = new Mapping();
-            addMappingRules(new Digester(), mapping);
-
-            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
-            while (attributes.hasNext()) {
-                Attribute a = (Attribute) attributes.next();
-                String column = a.getColumn();
-                output += "<label class='checkbox'>\n" +
-                        "\t<input type='checkbox' class='check_boxes' value='" + column + "'>" + column + " \n" +
-                        "\t<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
-                        "</label>\n";
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("exception handling templates " + e.getMessage(), e);
-        }
-        return output;
-    }
 
     /**
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
@@ -347,7 +277,7 @@ public class process {
      *
      * @param d
      */
-    private synchronized void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+    public synchronized void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
         d.push(fims);
         d.addObjectCreate("fims/metadata", Metadata.class);
         d.addSetProperties("fims/metadata");
@@ -362,7 +292,7 @@ public class process {
      *
      * @param d
      */
-    private synchronized void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+    public synchronized void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
         d.push(validation);
 
         // Create worksheet objects
@@ -395,7 +325,7 @@ public class process {
      *
      * @param d
      */
-    private synchronized void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+    public synchronized void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
         d.push(mapping);
 
         // Create entity objects

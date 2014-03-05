@@ -131,10 +131,16 @@ function getFilterKeyValue() {
     return "";
 }
 
-// Get the project_id
-function getProjectKeyValue() {
+
+// Get the projectID
+function getProjectID() {
     var e = document.getElementById('projects');
-    return "project_id=" + e.options[e.selectedIndex].value
+    return  e.options[e.selectedIndex].value;
+}
+
+// Get the project_id for a key/value expression
+function getProjectKeyValue() {
+    return "project_id=" + getProjectID();
 }
 
 // Get the URL key/value for the graphs by parsing return from the BCID service
