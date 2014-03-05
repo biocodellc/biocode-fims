@@ -162,7 +162,7 @@ public class Mapping implements RendererInterface {
      * @throws Exception
      */
     public boolean run(bcidConnector bcidConnector, Validation v, triplifier t, Integer project_id, String expedition_code, List<String> colNames) throws Exception {
-        fimsPrinter.out.println("Converting to RDF Triples ...");
+        fimsPrinter.out.println("Converting Data Format ...");
         this.expedition_code = expedition_code;
         this.colNames = colNames;
         triplifier = t;

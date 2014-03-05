@@ -107,7 +107,8 @@ public class FIMSUploadOperation extends DocumentOperation {
         if (options instanceof FIMSUploadOptions) {
             FIMSUploadOptions uploadOptions = (FIMSUploadOptions) options;
 
-             Integer project_id = new Integer(uploadOptions.projectOption.getValue().toString());
+            Integer project_id = new Integer(uploadOptions.projectOption.getValue().toString());
+
             String expedition_code = uploadOptions.expeditionCodeOption.getValue().toString();
 
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
@@ -139,7 +140,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, username, password,project_id);
+                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, username, password, project_id);
                 process.runAll();
             } catch (FIMSException e) {
                 e.printStackTrace();
@@ -152,6 +153,7 @@ public class FIMSUploadOperation extends DocumentOperation {
             }
 
             return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));
+
         } else {
             throw new IllegalStateException("Bad options");
         }

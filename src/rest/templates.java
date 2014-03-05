@@ -53,7 +53,6 @@ public class templates {
     public Response getTemplateCheckboxes(
             @QueryParam("project_id") Integer project_id) throws Exception {
 
-        process p = null;
         File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
         templateProcessor t = new templateProcessor(uploadPath(),configFile);
 
