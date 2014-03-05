@@ -1,3 +1,12 @@
+    function showVersion() {
+        var text ='<strong>Version 0.2 January 11, 2014</strong>' +
+              "<p>This is the first mock-up of a FIMS spreadsheet customization tool, based on Mike Trizna's "+
+               '0.1 Spreadsheet customization tool. This version reads Biocode-FIMS XML Configuration Files to '+
+               'to generate the available mappings</p>';
+
+        showMessage(text);
+    }
+
 	function populate_bottom(){
 			var selected = new Array();
 			var listElement = document.createElement("ul");
@@ -11,49 +20,44 @@
 				//selected.push($(this).val());
 			});
 		}
-		function download_file(url){
+
+    function download_file(){
+		    // TODO: create a single place for our biocode-fims service calls
+			var url = '/biocode-fims/rest/templates/createExcel/';
 			var input_string = '';
-			$(".picked_tags_li").each(function(index) {
-				input_string+='<input type="hidden" name="field'+index + '" value="' + $(this).text() + '" />';
+			// Loop through CheckBoxes and find ones that are checked
+			$(".check_boxes").each(function(index) {
+                if ($(this).is(':checked'))
+				    //input_string+='<input type="hidden" name="field'+index + '" value="' + $(this).val() + '" />';
+				    input_string+='<input type="hidden" name="fields" value="' + $(this).val() + '" />';
 			});
+			input_string+='<input type="hidden" name="project_id" value="' + getProjectID() + '" />';
+
+			// Pass the form to the server and submit
+			//showMessage("STILL TO CODE, CALL: " + url + " with input_string = " + input_string);
+			// Get the form parameter correct.
 			$('<form action="'+ url +'" method="post">'+input_string+'</form>').appendTo('body').submit().remove();
-		}
-		$(function () {
-			$('#available_tags a:first').tab('show');
-			$('input').click(populate_bottom);
+    }
 
+    // Processing functions
+	$(function () {
+		$('#available_tags a:first').tab('show');
+		$('input').click(populate_bottom);
 
-/*			$('.def_link').click(function() {
-				//var heading_name = $(this).attr('name');
-				theUrl = "/biocode-fims/rest/templates/attributes/?project_id=" + project_id + "&column_name=" + $(this).attr('name');
-				$.ajax({
-					type: "GET",
-					url: theUrl,
-					dataType: "html",
-					//data: {heading: heading_name},
-					success: function(data) {
-						$("#definition").html(data);
-					}
-				});
-				//var def_html = '<p><strong>Heading Name:</strong> ' + heading_name + '</p>';
-				//$("#definition").html(def_html);
-				console.log(heading_name);
+		$('#default_bold').click(function() {
+		    $('.check_boxes').prop('checked',true);
+			populate_bottom();
+	    });
+		$('#excel_button').click(function() {
+			var li_list = new Array();
+			$(".check_boxes").each(function() {
+				li_list.push($(this).text() );
 			});
-			*/
-			$('#default_bold').click(function() {
-				$('.check_boxes').prop('checked',true);
-				populate_bottom();
-			});
-			$('#excel_button').click(function() {
-				var li_list = new Array();
-				$(".picked_tags_li").each(function() {
-					li_list.push($(this).text() );
-				});
-				if(li_list.length > 0){
-					download_file('excel_export.php');
-				}
-				else{
-					alert('You must select at least 1 field in order to export a spreadsheet.');
-				}
-			});
-		  })
+			if(li_list.length > 0){
+				download_file();
+			}
+			else{
+				showMessage('You must select at least 1 field in order to export a spreadsheet.');
+			}
+	    });
+    })

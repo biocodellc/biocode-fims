@@ -870,8 +870,7 @@ public class Rule {
     /**
      * RequiredColumns looks for required columns in spreadsheet by looking for them in the <field> tags
      */
-    public void RequiredColumns
-    () {
+    public void RequiredColumns() {
         Statement statement = null;
         ResultSet rs = null;
         try {
