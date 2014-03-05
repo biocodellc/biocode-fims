@@ -1,8 +1,13 @@
 package geneious.plugin;
 
+import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.plugin.Options;
+import org.openjena.atlas.json.JSON;
+import settings.availableProject;
+import settings.availableProjectsFetcher;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -21,12 +26,35 @@ public class FIMSUploadOptions extends Options {
     StringOption usernameOption;
     LabelOption labelOption;
 
+
+    @Override
+    public String verifyOptionsAreValid() {
+        return super.verifyOptionsAreValid();    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     public FIMSUploadOptions() {
         super(FIMSUploadOptions.class);
 
-        // Create an option value list of Expeditions
-        // TODO: Make the project list dynamic. For now, i'm just hard-coding the projects that i know about
+        // Create an option value list of Proects
+        availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        Iterator projectsIt = fetcher.getAvailableProjects().iterator();
+
+        // Populate the OptionBoxes from the list of available Projects
         List projectValues = new ArrayList();
+        int count = 0;
+        // First is empty value
+        projectValues.add(new OptionValue("Choose Project", "Choose Project"));
+        OptionValue firstOptionValue = null;
+        while (projectsIt.hasNext()) {
+            availableProject p = (availableProject) projectsIt.next();
+            OptionValue v = new OptionValue(p.getProject_id(), p.getProject_title());
+            if (count == 0)
+                firstOptionValue = v;
+            projectValues.add(v);
+            count++;
+        }
+
+/*
         OptionValue optionValue1 = new OptionValue("1", "IndoPacific Database");
         OptionValue optionValue2 = new OptionValue("2", "Smithsonian LAB");
         OptionValue optionValue3 = new OptionValue("3", "Hawaii Dimensions");
@@ -36,8 +64,12 @@ public class FIMSUploadOptions extends Options {
         projectValues.add(optionValue2);
         projectValues.add(optionValue3);
         projectValues.add(optionValue4);
+*/
+        projectOption = addComboBoxOption("projectCode", "Project:", projectValues, firstOptionValue);
 
-        projectOption = addComboBoxOption("projectCode", "Project:", projectValues, optionValue1);
+        // Username/password
+        usernameOption = addStringOption("username", "Username:", "");
+        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
         /*
         I'm not sure how to code this part.  Basically what i want is to
@@ -68,11 +100,14 @@ public class FIMSUploadOptions extends Options {
         uploadOption = addBooleanOption("upload", "Upload", true);
 
         //labelOption = (LabelOption) addLabel("Username/password are necessary for verifying expedition codes, obtaining identifier keys, and uploading to the database");
-        usernameOption = addStringOption("username", "Username:", "");
-        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
+
 
         // Code for adding user/password as dependent on upload being checked
         //uploadOption.addDependent(usernameOption, true);
         //uploadOption.addDependent(passwordOption, true);
     }
+
+
+
+
 }

@@ -70,7 +70,7 @@ public class triplifier {
     public void getTriples(Mapping mapping) throws Exception {
         //String filenamePrefix = inputFile.getName();
         System.gc();
-        fimsPrinter.out.println("\tProcessing...");
+        fimsPrinter.out.println("\tWriting Temporary Output ...");
 
         // Write the model
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),
