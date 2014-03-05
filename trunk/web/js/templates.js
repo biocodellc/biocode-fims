@@ -2,7 +2,9 @@
         var text ='<strong>Version 0.2 January 11, 2014</strong>' +
               "<p>This is the first mock-up of a FIMS spreadsheet customization tool, based on Mike Trizna's "+
                '0.1 Spreadsheet customization tool. This version reads Biocode-FIMS XML Configuration Files to '+
-               'to generate the available mappings</p>';
+               'to generate the available mappings.  In addition, it also now reads the RequiredColumns rule ' +
+               'and automatically checks those boxes for the user (and disabling unchecking).' +
+               '</p>';
 
         showMessage(text);
     }
