@@ -188,7 +188,7 @@ public class Mapping implements RendererInterface {
      */
     public void print() {
         fimsPrinter.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
-        fimsPrinter.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
+        //fimsPrinter.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
     }
 
     /**

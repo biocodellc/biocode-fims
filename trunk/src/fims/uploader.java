@@ -23,33 +23,9 @@ public class uploader {
     private String connectionPoint;
     private String graphID;
 
-    /**
-     * Constructor for the uploader, currently just takes a file
-     *
-     //@param service the fuseki service, e.g. http://localhost:3030/ds
-     // @param graph   the name of the graph we want to use, should be in URI form, e.g. http://biscicol.org/graph1
-     *                use "default" for the default graph
-     // @param file    for now the file is always a turtle format file
-     */
-    /*public uploader(String service, String graph, File file) {
-        this.graph = graph;
-        this.service = service;
-        try {
-            this.endpoint = service + "?graph=" + URLEncoder.encode(graph, encoding);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        this.file = file;
-
-    } */
 
     public String getConnectionPoint() {
         return this.getService() + "?graph="+graphID;
-        /*return this.getService() + "/query" +
-                "?query=select+*+%7Bgraph+" + this.getEncodedGraph(true) + "++%7B%3Fs+%3Fp+%3Fo%7D%7D" +
-                "&output=text" +
-                "&stylesheet=%2Fxml-to-html.xsl";*/
-
     }
 
     /**
@@ -73,17 +49,15 @@ public class uploader {
      */
     public uploader(String fuseki_service, File file) {
         setGraphID();
-        //this.graph = graph;
+
         this.service = fuseki_service;
         try {
             this.endpoint = service + "?graph=" + URLEncoder.encode(graphID, encoding);
+            //System.out.println(endpoint);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         this.file = file;
-
-//        this(fuseki_service, uuid, file);
-        //this(fuseki_service, bcid, file);
     }
 
     /**
@@ -135,10 +109,6 @@ public class uploader {
         return service;
     }
 
-   // public String getGraph() {
-   //     return graph;
-   // }
-
     /**
      * Return an encoding of this graph so it can be packed up and sent to a service
      *
@@ -154,6 +124,26 @@ public class uploader {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * A convenient place to upload n-triple files to the data.biscicol.org database... this was
+     * started as a temporary back-end to load data files coming from the triplifier project into the
+     * biscicol database.
+     * @param args
+     */
+    public static void main (String[] args) {
+        File file = new File("/Users/jdeck/Downloads/triplifierTest.n3");
+        //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/DEMOH_output.31.n3");
+        //http://data.biscicol.org/ds/data?graph=urn%3Auuid%3A37797bda-7602-42af-82a5-c8a3827d1c61
+        //String uuid = "urn%3Auuid%3A2eddf62e-a58a-11e3-aae7-d4c45d837ce1";
+        //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
+        uploader u = new uploader("http://data.biscicol.org/ds/data",file);
+        try {
+           System.out.println( u.execute());
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 }
