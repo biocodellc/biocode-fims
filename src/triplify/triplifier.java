@@ -83,6 +83,7 @@ public class triplifier {
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 
         // Write out as a Sparql Update Statement
+        /*
         File updateFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
         FileOutputStream fosUpdateFile = new FileOutputStream(updateFile);
         fosUpdateFile.write("INSERT DATA {\n".getBytes());
@@ -111,6 +112,7 @@ public class triplifier {
 
         //return outputFolder + tripleFile.getName();
         updateOutputFile =  outputFolder + File.separator + updateFile.getName();
+        */
     }
 
     /**
