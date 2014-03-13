@@ -15,9 +15,11 @@ Biocode-FIMS can be run either as a command-line application for as a Geneious p
   
 = Running Biocode-FIMS within the Geneious Environment =
 
-  * Obtain a Project Code, username/ password, and a spreadsheet template from your project's administrator.  
+https://biocode-fims.googlecode.com/svn/trunk/web/docs/geneiousplugin.jpg
+
+  * Obtain the Project Name, username/ password, and a spreadsheet template from your project's administrator.  
   * Goto ->Tools -> Upload to Biocode FIMS
-  * Fill in Project Code and Select your spreadsheet with your data on it.
+  * Select the proper Project Code, fill in your username and password, enter a new "Expedition Code", and browse to your spreadsheet with your data on it  ([https://code.google.com/p/bcid/wiki/projectsAndExpeditions More information on Expeditions and Projects]).
   * If you want to upload data, check this box.  Otherwise, the spreadsheet will just be validated.
  
 After you press submit, you will be prompted on-screen for any further actions.  
