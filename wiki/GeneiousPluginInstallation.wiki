@@ -7,9 +7,9 @@ Biocode-FIMS can be run either as a command-line application for as a Geneious p
 = Installation =
 
   * Download the latest Geneious plugin file listed in the [https://code.google.com/p/biocode-fims/source/browse/trunk/downloads/ downloads folder]
-  * Download and Install [http://www.geneious.com/download Geneious]
+  * If you have not already done so, download and Install [http://www.geneious.com/download Geneious]
   * Open Geneious and Goto ->Tools ->Plugins
-  * Select "install plugin from a gplugin file"
+  * Select "Install plugin from a gplugin file"
   * Restart Geneious for the plugin to show up
   * NOTE: if you are uninstalling Biocode-FIMS to install a new version you may have to restart Geneious after uninstalling and before re-installing.
   
