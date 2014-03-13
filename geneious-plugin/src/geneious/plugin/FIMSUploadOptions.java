@@ -17,6 +17,7 @@ import java.util.List;
 public class FIMSUploadOptions extends Options {
 
     //StringOption expeditionCodeOption;
+    OptionValue chooseProject;
     ComboBoxOption projectOption;
     StringOption expeditionCodeOption;
 
@@ -41,31 +42,15 @@ public class FIMSUploadOptions extends Options {
 
         // Populate the OptionBoxes from the list of available Projects
         List projectValues = new ArrayList();
-        int count = 0;
-        // First is empty value
-        projectValues.add(new OptionValue("Choose Project", "Choose Project"));
-        OptionValue firstOptionValue = null;
+        chooseProject = new OptionValue("Choose Project", "Choose Project");
+        projectValues.add(chooseProject);
+
         while (projectsIt.hasNext()) {
             availableProject p = (availableProject) projectsIt.next();
             OptionValue v = new OptionValue(p.getProject_id(), p.getProject_title());
-            if (count == 0)
-                firstOptionValue = v;
             projectValues.add(v);
-            count++;
         }
-
-/*
-        OptionValue optionValue1 = new OptionValue("1", "IndoPacific Database");
-        OptionValue optionValue2 = new OptionValue("2", "Smithsonian LAB");
-        OptionValue optionValue3 = new OptionValue("3", "Hawaii Dimensions");
-        OptionValue optionValue4 = new OptionValue("5", "Barcode of Wildlife Training");
-
-        projectValues.add(optionValue1);
-        projectValues.add(optionValue2);
-        projectValues.add(optionValue3);
-        projectValues.add(optionValue4);
-*/
-        projectOption = addComboBoxOption("projectCode", "Project:", projectValues, firstOptionValue);
+        projectOption = addComboBoxOption("projectCode", "Project:", projectValues, chooseProject);
 
         // Username/password
         usernameOption = addStringOption("username", "Username:", "");
@@ -107,7 +92,14 @@ public class FIMSUploadOptions extends Options {
         //uploadOption.addDependent(passwordOption, true);
     }
 
-
-
+    @Override
+    public boolean areValuesGoodEnoughToContinue() {
+        if(projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
+            Dialogs.showMessageDialog("You need to choose a project");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 }
