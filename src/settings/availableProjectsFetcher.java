@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
 
 
 /**
- * Fetch availableProjects from the BCID system
+ * Fetch publicly availableProjects from the BCID system
  */
 public class availableProjectsFetcher {
     String projectServiceURL = "http://biscicol.org/id/projectService/list";
@@ -22,7 +22,7 @@ public class availableProjectsFetcher {
     /**
      * Constructor parses the projectServiceURL and builds an array of availableProjects
      */
-    public availableProjectsFetcher() {
+    public availableProjectsFetcher(bcidConnector connector) {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(readJsonFromUrl(projectServiceURL));
@@ -61,8 +61,10 @@ public class availableProjectsFetcher {
         is.close();
         return json;
     }
-    public static void main (String[] args) {
-        availableProjectsFetcher fetcher = new availableProjectsFetcher();
+    public static void main (String[] args) throws Exception {
+        bcidConnector connector = new bcidConnector();
+        connector.authenticate("demo","demo");
+        availableProjectsFetcher fetcher = new availableProjectsFetcher(connector);
         Iterator it = fetcher.getAvailableProjects().iterator();
         while (it.hasNext()) {
             availableProject a = (availableProject) it.next();
