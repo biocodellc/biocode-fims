@@ -174,12 +174,10 @@ public class bcidConnector {
      */
     public String createExpedition(String expedition_code,
                                 String expedition_title,
-                                String abstractString,
                                 Integer project_id) throws Exception {
         String createPostParams =
                 "expedition_code=" + expedition_code + "&" +
                         "expedition_title=" + expedition_title + "&" +
-                        "abstract=" + abstractString + "&" +
                         "project_id=" + project_id;
 
         URL url = new URL(expeditionCreationURL);
@@ -227,7 +225,6 @@ public class bcidConnector {
                         String output = createExpedition(
                                 expedition_code,
                                 expedition_code + " spreadsheet expedition",
-                                null,
                                 project_id);
                         //fimsPrinter.out.println("\t" + output);
                     } catch (Exception e) {
