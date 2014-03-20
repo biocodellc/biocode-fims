@@ -7,6 +7,9 @@ package settings;
 public abstract class fimsInputter {
 
     public abstract boolean continueOperation(String question);
+    public abstract void haltOperation(String message);
+
+
     // make the standardPrinter the default output class so we never get a null pointer
     public static fimsInputter in = new standardInputter();
 }

@@ -8,6 +8,12 @@ import java.io.InputStreamReader;
  * Allows us to read from Standard In, always using Y/y as a positive response
  */
 public class standardInputter extends fimsInputter {
+
+    /**
+     * Ask the user if they wish to continue this operation given certain information
+     * @param message
+     * @return
+     */
     @Override
     public boolean continueOperation(String message) {
         fimsPrinter.out.print(message + "\n\nIf you wish to continue, enter 'Y': ");
@@ -23,5 +29,14 @@ public class standardInputter extends fimsInputter {
             return false;
         }
         return false;
+    }
+
+    /**
+     * haltOperation
+     * @param message
+     */
+    @Override
+    public void haltOperation(String message) {
+        fimsPrinter.out.print(message);
     }
 }

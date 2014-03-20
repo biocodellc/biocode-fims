@@ -17,8 +17,6 @@ import org.apache.commons.cli.HelpFormatter;
 
 
 import java.io.*;
-import java.net.URL;
-import java.util.Iterator;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -37,9 +35,8 @@ public class process {
     Boolean write_spreadsheet;
     Boolean triplify;
     Boolean upload;
-    String username;
-    String password;
     Integer project_id;
+    bcidConnector connector;
 
 
     /**
@@ -58,9 +55,8 @@ public class process {
             Boolean write_spreadsheet,
             Boolean triplify,
             Boolean upload,
-            String username,
-            String password,
-            Integer project_id) throws FIMSException {
+            Integer project_id,
+            bcidConnector connector) throws FIMSException {
         // Set class variables
         this.inputFilename = inputFilename;
         this.outputFolder = outputFolder;
@@ -68,11 +64,10 @@ public class process {
         this.write_spreadsheet = write_spreadsheet;
         this.triplify = triplify;
         this.upload = upload;
-        this.username = username;
-        this.password = password;
         this.project_id = project_id;
         // Control the file outputPrefix... set them here to expedition codes.
         this.outputPrefix = expedition_code + "_output";
+        this.connector = connector;
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -94,6 +89,27 @@ public class process {
         this.outputPrefix = "output";
     }
 
+    public static bcidConnector createConnection(String username, String password) throws FIMSException {
+        bcidConnector bcidConnector = new bcidConnector();
+
+        // Authenticate all the time, even if not uploading
+        fimsPrinter.out.println("Authenticating ...");
+        boolean authenticationSuccess = false;
+        try {
+            authenticationSuccess = bcidConnector.authenticate(username, password);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            throw new FIMSException("A system error occurred attempting to authenticate " + username);
+        }
+
+        if (!authenticationSuccess) {
+            String message = "Unable to authenticate " + username + " using the supplied credentials!";
+            fimsInputter.in.haltOperation(message);
+            return null;
+        }
+        return bcidConnector;
+    }
+
     /**
      * runAll method is designed to go through entire fims run.process: validate, triplify, upload
      * TODO: clean up FIMSExceptions to throw only unexpected errors so they can be handled more elegantly
@@ -105,28 +121,16 @@ public class process {
         boolean updateGood = true;
         boolean expeditionCheck = false;
         Validation validation = null;
-        bcidConnector bcidConnector = new bcidConnector();
 
-        // Authenticate all the time, even if not uploading
-        fimsPrinter.out.println("Authenticating ...");
-        boolean authenticationSuccess = false;
-        try {
-            authenticationSuccess = bcidConnector.authenticate(username, password);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new FIMSException("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
-        }
-        if (!authenticationSuccess)
-            throw new FIMSException("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
+        //throw new FIMSException("You indicated you wanted to upload data but we were unable to authenticate using the supplied credentials!");
         // force triplify to true if we want to upload
-
 
         if (upload) {
             triplify = true;
         }
 
         try {
-            // Initializing
+            // DocumentOperation[]ing
             fimsPrinter.out.println("Initializing ...");
             fimsPrinter.out.println("\tinputFilename = " + inputFilename);
 
@@ -152,7 +156,7 @@ public class process {
 
             // Check that the user that is logged in also owns the expedition_code
             try {
-                expeditionCheck = bcidConnector.validateExpedition(expedition_code, project_id, mapping);
+                expeditionCheck = connector.validateExpedition(expedition_code, project_id, mapping);
             } catch (Exception e) {
                 //e.printStackTrace();
                 throw new FIMSException(e.getMessage(), e);
@@ -177,7 +181,7 @@ public class process {
                     // If Validation passed, we can go ahead and triplify
                     if (triplify & validationGood) {
                         triplifyGood = mapping.run(
-                                bcidConnector,
+                                connector,
                                 validation,
                                 new triplifier(outputPrefix, outputFolder),
                                 project_id,
@@ -189,7 +193,7 @@ public class process {
                         if (upload & triplifyGood) {
                             Fims fims = new Fims(mapping);
                             addFimsRules(new Digester(), fims);
-                            fims.run(bcidConnector, project_id, expedition_code);
+                            fims.run(connector, project_id, expedition_code);
                             fims.print();
 
                             // Write spreadsheet is a useful for immediately testing output--
@@ -510,18 +514,22 @@ public class process {
                  */
             } else {
 
-                process p = new process(
-                        input_file,
-                        output_directory,
-                        expedition_code,
-                        write_spreadsheet,
-                        triplify,
-                        upload,
-                        username,
-                        password,
-                        project_id
-                );
-                p.runAll();
+                bcidConnector connector = createConnection(username, password);
+
+                if (connector != null) {
+                    process p = new process(
+                            input_file,
+                            output_directory,
+                            expedition_code,
+                            write_spreadsheet,
+                            triplify,
+                            upload,
+                            project_id,
+                            connector
+                    );
+
+                    p.runAll();
+                }
             }
         } catch (Exception e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());

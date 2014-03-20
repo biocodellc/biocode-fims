@@ -9,6 +9,7 @@ import jebl.util.ProgressListener;
 import org.gbif.utils.text.EmailUtils;
 import run.process;
 import settings.FIMSException;
+import settings.bcidConnector;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
@@ -20,6 +21,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.biomatters.geneious.publicapi.plugin.PluginUtilities.getDocumentOperations;
 
 /**
  * Control the operation of the BiocodeFIMS upload operation, handling feedback from the system such as Warning
@@ -51,7 +54,7 @@ public class FIMSUploadOperation extends DocumentOperation {
     }
 
     @Override
-    public List<AnnotatedPluginDocument> performOperation(AnnotatedPluginDocument[] annotatedPluginDocuments, final ProgressListener progressListener, Options options) throws DocumentOperationException {
+    public List<AnnotatedPluginDocument> performOperation(final AnnotatedPluginDocument[] annotatedPluginDocuments, final ProgressListener progressListener, final Options options) throws DocumentOperationException {
         final StringBuilder log = new StringBuilder();
 
         fimsPrinter.out = new fimsPrinter() {
@@ -102,6 +105,16 @@ public class FIMSUploadOperation extends DocumentOperation {
                 log.append("\n\n").append(question).append("\n\n");
                 return Dialogs.showYesNoDialog("<html>" + question + "\nContinue?</html>", "Continue?", null, Dialogs.DialogIcon.QUESTION);
             }
+
+            @Override
+            public void haltOperation(String message) {
+                //String logText = "Initialization Error:";
+                //logText += "\n\n" + message + "\n\n";
+                //log.append(logText);
+                Dialogs.showMessageDialog(message);
+                // TODO: Ask Matthew how to make this return us to the initial dialog box, right now it just ends
+                //  return;
+            }
         };
 
         if (options instanceof FIMSUploadOptions) {
@@ -140,7 +153,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, username, password, project_id);
+                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
                 process.runAll();
             } catch (FIMSException e) {
                 e.printStackTrace();

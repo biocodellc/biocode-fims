@@ -2,9 +2,11 @@ package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.plugin.Options;
-import org.openjena.atlas.json.JSON;
+import run.process;
+import settings.FIMSException;
 import settings.availableProject;
 import settings.availableProjectsFetcher;
+import settings.bcidConnector;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +28,7 @@ public class FIMSUploadOptions extends Options {
     PasswordOption passwordOption;
     StringOption usernameOption;
     LabelOption labelOption;
-
+    bcidConnector connector = null;
 
     @Override
     public String verifyOptionsAreValid() {
@@ -35,6 +37,10 @@ public class FIMSUploadOptions extends Options {
 
     public FIMSUploadOptions() {
         super(FIMSUploadOptions.class);
+
+          // Username/password
+        usernameOption = addStringOption("username", "Username:", "");
+        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
         // Create an option value list of Proects
         availableProjectsFetcher fetcher = new availableProjectsFetcher();
@@ -51,10 +57,7 @@ public class FIMSUploadOptions extends Options {
             projectValues.add(v);
         }
         projectOption = addComboBoxOption("projectCode", "Project:", projectValues, chooseProject);
-
-        // Username/password
-        usernameOption = addStringOption("username", "Username:", "");
-        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
+        projectOption.setVisible(false);
 
         /*
         I'm not sure how to code this part.  Basically what i want is to
@@ -79,10 +82,13 @@ public class FIMSUploadOptions extends Options {
          */
 
         expeditionCodeOption = addStringOption("expeditionCode", "Expedition Code:", "DEMOH");
+         expeditionCodeOption.setVisible(false);
 
         sampleDataOption = addFileSelectionOption("sampleData", "Sample Data:", "");
+        sampleDataOption.setVisible(false);
 
         uploadOption = addBooleanOption("upload", "Upload", true);
+        uploadOption.setVisible(false);
 
         //labelOption = (LabelOption) addLabel("Username/password are necessary for verifying expedition codes, obtaining identifier keys, and uploading to the database");
 
@@ -94,12 +100,40 @@ public class FIMSUploadOptions extends Options {
 
     @Override
     public boolean areValuesGoodEnoughToContinue() {
-        if(projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
+       // Make sure the user has chosen a project
+        if (projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
             Dialogs.showMessageDialog("You need to choose a project");
+            return false;
+        }
+
+        // TEST for user authentication before proceeding too far
+        if (connector == null) {
+            try {
+                connector = process.createConnection(usernameOption.getValue(), passwordOption.getValue());
+            } catch (FIMSException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                Dialogs.showMessageDialog("Authentication system not currently working, or no internet connection");
+                return false;
+            }
+
+            // User authenticated... turn on the other options
+            if (connector != null) {
+                userAuthenticated();
+            } else {
+                Dialogs.showMessageDialog("Unable to authenticate " + usernameOption.getValue());
+            }
             return false;
         } else {
             return true;
         }
     }
 
+    public void userAuthenticated() {
+        projectOption.setVisible(true);
+        expeditionCodeOption.setVisible(true);
+        sampleDataOption.setVisible(true);
+        uploadOption.setVisible(true);
+        usernameOption.setVisible(false);
+        passwordOption.setVisible(false);
+    }
 }
