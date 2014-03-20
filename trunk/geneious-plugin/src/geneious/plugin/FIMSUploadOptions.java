@@ -1,7 +1,11 @@
 package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.components.Dialogs;
+import com.biomatters.geneious.publicapi.components.ProgressFrame;
 import com.biomatters.geneious.publicapi.plugin.Options;
+import com.biomatters.geneious.publicapi.utilities.GuiUtilities;
+import jebl.util.CompositeProgressListener;
+import jebl.util.ProgressListener;
 import run.process;
 import settings.FIMSException;
 import settings.availableProject;
@@ -53,13 +57,11 @@ public class FIMSUploadOptions extends Options {
         usernameOption = addStringOption("username", "Username:", "");
         passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
-        labelForgotPasswordOption = (LabelOption) addLabel("Forgot Password");
-        labelForgotPasswordOption.setFillHorizontalSpace(false);
-        labelForgotUsernameOption = (LabelOption) addLabel("Forgot Username");
-        labelForgotUsernameOption.setFillHorizontalSpace(false);
+        labelForgotPasswordOption = (LabelOption) addLabel("Forgot Password?");
+        labelForgotUsernameOption = (LabelOption) addLabel("Forgot Username?");
 
         // Project-related Options
-        labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for user " + usernameOption.getValue());
+        labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for user " + this.usernameOption.getValue().toString());
 
         chooseProject = new OptionValue("Choose Project", "Choose Project");
         projectValues.add(chooseProject);
@@ -89,11 +91,31 @@ public class FIMSUploadOptions extends Options {
 
         // TEST for user authentication before proceeding
         if (connector == null) {
+            /*ProgressListener progress = ProgressListener.EMPTY;
+            CompositeProgressListener compositeProgress=new CompositeProgressListener(progress);
+            progress.setIndeterminateProgress();
+            progress.setMessage("Authenticating user");
+            */
+            final ProgressFrame frame = new ProgressFrame("Authenticating user", "Checking with server...", GuiUtilities.getMainFrame());
+            frame.setIndeterminateProgress();
+
+            Thread connectingThread = new Thread() {
+                public void run() {
+                    try {
+                        connector = process.createConnection(usernameOption.getValue(), passwordOption.getValue());
+                    } catch (FIMSException e) {
+                        frame.setComplete();
+                        displayExceptionDialog(e);
+                    }
+                    frame.setComplete();
+                }
+            };
+            connectingThread.start();
+
             try {
-                connector = process.createConnection(usernameOption.getValue(), passwordOption.getValue());
-            } catch (FIMSException e) {
-                displayExceptionDialog(e);
-                return false;
+                connectingThread.join();
+            } catch (InterruptedException e) {
+                Dialogs.showMessageDialog("Interrupted connection process!");
             }
 
             // User authenticated... turn on the other options
@@ -107,7 +129,9 @@ public class FIMSUploadOptions extends Options {
             return false;
         }
         // Make sure the user has chosen a project
-        else {
+        else
+
+        {
 
             if (projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
                 Dialogs.showMessageDialog("You need to choose a project");
@@ -123,11 +147,14 @@ public class FIMSUploadOptions extends Options {
      *
      * @throws Exception
      */
-    public boolean userAuthenticated() {
+
+    public boolean userAuthenticated
+    () {
 
         // If there is a project then continue!
         if (hasProject()) {
 
+            labelProjectHeaderOption.setValueFromString("Data validation and loading options for user " + this.usernameOption.getValue().toString());
             labelProjectHeaderOption.setVisible(true);
             projectOption.setVisible(true);
             expeditionCodeOption.setVisible(true);
@@ -154,7 +181,8 @@ public class FIMSUploadOptions extends Options {
      *
      * @return
      */
-    private boolean hasProject() {
+    private boolean hasProject
+    () {
         // populate the user's projects
         //http://biscicol.org/id/projectService/listUserProjects
         // Create an option value list of Proects
@@ -189,12 +217,19 @@ public class FIMSUploadOptions extends Options {
         return hasProject;
     }
 
-    public static void displayExceptionDialog(Exception exception) {
+    public static void displayExceptionDialog
+            (Exception
+                     exception) {
         displayExceptionDialog("Error", exception.getMessage(), exception, null);
     }
 
 
-    public static void displayExceptionDialog(String title, String message, Exception exception, Component owner) {
+    public static void displayExceptionDialog
+            (String
+                     title, String
+                    message, Exception
+                    exception, Component
+                    owner) {
         StringWriter stacktrace = new StringWriter();
         exception.printStackTrace(new PrintWriter(stacktrace));
         Dialogs.DialogOptions dialogOptions = new Dialogs.DialogOptions(Dialogs.OK_ONLY, title, owner, Dialogs.DialogIcon.WARNING);
