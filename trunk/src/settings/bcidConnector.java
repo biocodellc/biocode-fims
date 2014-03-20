@@ -3,14 +3,18 @@ package settings;
 import digester.Attribute;
 import digester.Entity;
 import digester.Mapping;
+import net.sf.json.JSONException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
+import java.nio.charset.Charset;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +41,8 @@ public class bcidConnector {
     private String associateURL = "http://biscicol.org/id/expeditionService/associate";
     private String expeditionCreationURL = "http://biscicol.org/id/expeditionService";
     private String expeditionValidationURL = "http://biscicol.org/id/expeditionService/validateExpedition/";
+    private String availableProjectsURL = "http://biscicol.org/id/projectService/listUserProjects";
+
 
     private Integer responseCode;
 
@@ -63,7 +69,12 @@ public class bcidConnector {
         }
         // TESTING user-expedition authentication
         try {
-            bcid.validateExpedition("DEMOH", 1, null);
+            //bcid.validateExpedition("DEMOH", 1, null);
+            Iterator it = bcid.listAvailableProjects().iterator();
+            while (it.hasNext()) {
+                availableProject p = (availableProject) it.next();
+                System.out.println(p.getProject_title());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -167,14 +178,49 @@ public class bcidConnector {
     }
 
     /**
+     * List the available projects by User
+     *
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<availableProject> listAvailableProjects() throws Exception {
+        ArrayList<availableProject> availableProjects = new ArrayList<availableProject>();
+
+        //URL url = new URL(availableProjectsURL);
+        //String response = createGETConnection(url);
+
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(readJsonFromUrl(availableProjectsURL));
+            JSONObject jsonObject = (JSONObject) obj;
+
+            // loop array
+            JSONArray msg = (JSONArray) jsonObject.get("projects");
+            Iterator<JSONObject> iterator = msg.iterator();
+            while (iterator.hasNext()) {
+                availableProjects.add(new availableProject(iterator.next()));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return availableProjects;
+    }
+
+    /**
      * create a expedition
      *
      * @return
      * @throws Exception
      */
     public String createExpedition(String expedition_code,
-                                String expedition_title,
-                                Integer project_id) throws Exception {
+                                   String expedition_title,
+                                   Integer project_id) throws Exception {
         String createPostParams =
                 "expedition_code=" + expedition_code + "&" +
                         "expedition_title=" + expedition_title + "&" +
@@ -244,7 +290,7 @@ public class bcidConnector {
                                 // Create the entity BCID
                                 String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
                                 // Associate this identifier with this expedition
-                                associateBCID(project_id, expedition_code,  bcid);
+                                associateBCID(project_id, expedition_code, bcid);
 
                             } catch (Exception e) {
                                 throw new Exception("The expedition " + expedition_code +
@@ -391,4 +437,15 @@ public class bcidConnector {
     public Integer getResponseCode() {
         return responseCode;
     }
+
+    private static String readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        String json = org.apache.commons.io.IOUtils.toString(br);
+
+        is.close();
+        return json;
+    }
+
 }

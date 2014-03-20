@@ -5,9 +5,11 @@ import com.biomatters.geneious.publicapi.plugin.Options;
 import run.process;
 import settings.FIMSException;
 import settings.availableProject;
-import settings.availableProjectsFetcher;
 import settings.bcidConnector;
 
+import java.awt.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,13 +23,20 @@ public class FIMSUploadOptions extends Options {
     //StringOption expeditionCodeOption;
     OptionValue chooseProject;
     ComboBoxOption projectOption;
+    List projectValues = new ArrayList();
     StringOption expeditionCodeOption;
 
     FileSelectionOption sampleDataOption;
     BooleanOption uploadOption;
     PasswordOption passwordOption;
     StringOption usernameOption;
-    LabelOption labelOption;
+    LabelOption labelInitialHeaderOption;
+    LabelOption labelForgotPasswordOption;
+    LabelOption labelForgotUsernameOption;
+
+    LabelOption labelProjectHeaderOption;
+
+
     bcidConnector connector = null;
 
     @Override
@@ -38,60 +47,37 @@ public class FIMSUploadOptions extends Options {
     public FIMSUploadOptions() {
         super(FIMSUploadOptions.class);
 
-          // Username/password
+        // Username/password Options
+        labelInitialHeaderOption = (LabelOption) addLabel("Login using your Biocode-FIMS username/password");
+
         usernameOption = addStringOption("username", "Username:", "");
         passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
 
-        // Create an option value list of Proects
-        availableProjectsFetcher fetcher = new availableProjectsFetcher();
-        Iterator projectsIt = fetcher.getAvailableProjects().iterator();
+        labelForgotPasswordOption = (LabelOption) addLabel("Forgot Password");
+        labelForgotPasswordOption.setFillHorizontalSpace(false);
+        labelForgotUsernameOption = (LabelOption) addLabel("Forgot Username");
+        labelForgotUsernameOption.setFillHorizontalSpace(false);
 
-        // Populate the OptionBoxes from the list of available Projects
-        List projectValues = new ArrayList();
+        // Project-related Options
+        labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for user " + usernameOption.getValue());
+
         chooseProject = new OptionValue("Choose Project", "Choose Project");
         projectValues.add(chooseProject);
-
-        while (projectsIt.hasNext()) {
-            availableProject p = (availableProject) projectsIt.next();
-            OptionValue v = new OptionValue(p.getProject_id(), p.getProject_title());
-            projectValues.add(v);
-        }
         projectOption = addComboBoxOption("projectCode", "Project:", projectValues, chooseProject);
-        projectOption.setVisible(false);
 
-        /*
-        I'm not sure how to code this part.  Basically what i want is to
-
-        FIRST have the user select a particular project from the list in the projectOption above.
-        Based on the results of that operation, we will...
-
-        SECOND, call the following service:  http://biscicol.org/id/projectService/graphs/1
-        Where "1" equals the value from the project box above.  This returns JSON that when parsed for expedition_codes populates
-        a String[] containing {"DEMOH","DEMOI","DEMOX"}
-
-        THIRD: populate the expeditionValues box, like....
-
-        String[] expeditionValues = {"DEMOX", "DEMOJ", "DEMOH"};
-        expeditionCodeOption = addEditableComboBoxOption("expeditionCode", "Expedition Code:", "", expeditionValues);
-
-        I can basically take care of the FIRST and SECOND above but need help with the THIRD... that is, don't let the user progress
-        until they select an appropriate project and showing them an editableComboBox with expedition codes they already
-        have (or enabling adding a new one)
-
-        for now, i have the expedition coded as an input string
-         */
-
+        // select Expedition
         expeditionCodeOption = addStringOption("expeditionCode", "Expedition Code:", "DEMOH");
-         expeditionCodeOption.setVisible(false);
-
+        // pointer to File to load
         sampleDataOption = addFileSelectionOption("sampleData", "Sample Data:", "");
-        sampleDataOption.setVisible(false);
-
+        // upload checkbox
         uploadOption = addBooleanOption("upload", "Upload", true);
+
+        // set them all to invisible for now
+        labelProjectHeaderOption.setVisible(false);
+        projectOption.setVisible(false);
+        expeditionCodeOption.setVisible(false);
+        sampleDataOption.setVisible(false);
         uploadOption.setVisible(false);
-
-        //labelOption = (LabelOption) addLabel("Username/password are necessary for verifying expedition codes, obtaining identifier keys, and uploading to the database");
-
 
         // Code for adding user/password as dependent on upload being checked
         //uploadOption.addDependent(usernameOption, true);
@@ -100,40 +86,119 @@ public class FIMSUploadOptions extends Options {
 
     @Override
     public boolean areValuesGoodEnoughToContinue() {
-       // Make sure the user has chosen a project
-        if (projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
-            Dialogs.showMessageDialog("You need to choose a project");
-            return false;
-        }
 
-        // TEST for user authentication before proceeding too far
+        // TEST for user authentication before proceeding
         if (connector == null) {
             try {
                 connector = process.createConnection(usernameOption.getValue(), passwordOption.getValue());
             } catch (FIMSException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                Dialogs.showMessageDialog("Authentication system not currently working, or no internet connection");
+                displayExceptionDialog(e);
                 return false;
             }
 
             // User authenticated... turn on the other options
             if (connector != null) {
+                // run the userAuthenticated method sets up the next stage of operations
                 userAuthenticated();
             } else {
                 Dialogs.showMessageDialog("Unable to authenticate " + usernameOption.getValue());
             }
+            // We're still not ready to continue... need user to select a project, etc...
             return false;
-        } else {
-            return true;
+        }
+        // Make sure the user has chosen a project
+        else {
+
+            if (projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
+                Dialogs.showMessageDialog("You need to choose a project");
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
-    public void userAuthenticated() {
-        projectOption.setVisible(true);
-        expeditionCodeOption.setVisible(true);
-        sampleDataOption.setVisible(true);
-        uploadOption.setVisible(true);
-        usernameOption.setVisible(false);
-        passwordOption.setVisible(false);
+    /**
+     * Set of processes to execute after a user has been authenticated
+     *
+     * @throws Exception
+     */
+    public boolean userAuthenticated() {
+
+        // If there is a project then continue!
+        if (hasProject()) {
+
+            labelProjectHeaderOption.setVisible(true);
+            projectOption.setVisible(true);
+            expeditionCodeOption.setVisible(true);
+            sampleDataOption.setVisible(true);
+            uploadOption.setVisible(true);
+
+            // Turn off visibility on Username/password options
+            usernameOption.setVisible(false);
+            passwordOption.setVisible(false);
+            labelInitialHeaderOption.setVisible(false);
+            labelForgotPasswordOption.setVisible(false);
+            labelForgotUsernameOption.setVisible(false);
+            return true;
+        } else {
+            Dialogs.showMessageDialog(usernameOption.getValue() + " is not associated with any projects, talk " +
+                    "to a project administrator to get setup.");
+            return false;
+        }
+    }
+
+    /**
+     * Convenience method for both populating the projects Combo Box and checking to see if there
+     * are any projects associated with this user
+     *
+     * @return
+     */
+    private boolean hasProject() {
+        // populate the user's projects
+        //http://biscicol.org/id/projectService/listUserProjects
+        // Create an option value list of Proects
+        //availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        // Populate the OptionBoxes from the list of available Projects
+
+
+        boolean hasProject = false;
+
+        ArrayList<availableProject> availableProjects = null;
+        try {
+            availableProjects = connector.listAvailableProjects();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            // StringWriter errors = new StringWriter();
+            // e.printStackTrace(new PrintWriter(errors));
+            displayExceptionDialog(e);
+            //Dialogs.showMessageDialog("Exception occurred while fetching user projects \n");
+            return false;
+        }
+        Iterator projectsIt = availableProjects.iterator();
+
+        while (projectsIt.hasNext()) {
+            availableProject p = (availableProject) projectsIt.next();
+            OptionValue v = new OptionValue(p.getProject_id(), p.getProject_title());
+            //Dialogs.showMessageDialog(p.getProject_code());
+            projectOption.addPossibleValue(v);
+            projectValues.add(v);
+            hasProject = true;
+        }
+
+        return hasProject;
+    }
+
+    public static void displayExceptionDialog(Exception exception) {
+        displayExceptionDialog("Error", exception.getMessage(), exception, null);
+    }
+
+
+    public static void displayExceptionDialog(String title, String message, Exception exception, Component owner) {
+        StringWriter stacktrace = new StringWriter();
+        exception.printStackTrace(new PrintWriter(stacktrace));
+        Dialogs.DialogOptions dialogOptions = new Dialogs.DialogOptions(Dialogs.OK_ONLY, title, owner, Dialogs.DialogIcon.WARNING);
+        dialogOptions.setMoreOptionsButtonText("Show details...", "Hide details...");
+        Dialogs.showMoreOptionsDialog(dialogOptions, message, stacktrace.toString());
     }
 }

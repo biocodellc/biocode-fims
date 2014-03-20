@@ -108,12 +108,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             @Override
             public void haltOperation(String message) {
-                //String logText = "Initialization Error:";
-                //logText += "\n\n" + message + "\n\n";
-                //log.append(logText);
                 Dialogs.showMessageDialog(message);
-                // TODO: Ask Matthew how to make this return us to the initial dialog box, right now it just ends
-                //  return;
             }
         };
 
