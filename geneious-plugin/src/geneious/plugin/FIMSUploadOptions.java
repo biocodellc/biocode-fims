@@ -38,8 +38,8 @@ public class FIMSUploadOptions extends Options {
     LabelOption labelInitialHeaderOption;
     LabelOption labelInformationMessage;
 
-    LabelOption labelForgotPasswordOption;
-    LabelOption labelForgotUsernameOption;
+    //LabelOption labelForgotPasswordOption;
+    //LabelOption labelForgotUsernameOption;
     ButtonOption loginButtonOption;
     StringOption usernameOption;
     // PasswordOption passwordOption;
@@ -216,8 +216,8 @@ public class FIMSUploadOptions extends Options {
             showElements();
             // Turn off visibility on Username/password options
             labelInitialHeaderOption.setVisible(false);
-            labelForgotPasswordOption.setVisible(false);
-            labelForgotUsernameOption.setVisible(false);
+           // labelForgotPasswordOption.setVisible(false);
+           /// labelForgotUsernameOption.setVisible(false);
             loginButtonOption.setVisible(false);
             loginButtonOption.setHidden();
             return true;
