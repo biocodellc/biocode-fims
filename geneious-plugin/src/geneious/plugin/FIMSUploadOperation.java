@@ -120,8 +120,8 @@ public class FIMSUploadOperation extends DocumentOperation {
             String expedition_code = uploadOptions.expeditionCodeOption.getValue().toString();
 
             String sampleDataFile = uploadOptions.sampleDataOption.getValue();
-            String username = uploadOptions.usernameOption.getValue();
-            String password = uploadOptions.passwordOption.getValue();
+            //String username = uploadOptions.usernameOption.getValue();
+            //String password = uploadOptions.passwordOption.getValue();
             boolean upload = uploadOptions.uploadOption.getValue();
             // For the plugin we probably never need to write directly back out to a spreadsheet, this is used for testing
             boolean export = false;
@@ -160,6 +160,7 @@ public class FIMSUploadOperation extends DocumentOperation {
                 return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, logText));
             }
 
+            // Open this up again at the end....
             return DocumentUtilities.createAnnotatedPluginDocuments(new LogDocument("FIMS Upload of " + fileName, log.toString()));
 
         } else {

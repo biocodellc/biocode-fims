@@ -910,7 +910,7 @@ public class Rule {
 
                 try {
                     String sql;
-                    sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where " + reqFieldName + "='' or " + reqFieldName + " is null";
+                    sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + reqFieldName + "`='' or `" + reqFieldName + "` is null";
                     rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
                         //System.out.println(sql);
