@@ -58,6 +58,7 @@ public class Fims implements RendererInterface {
         try {
             uploader.execute();
         } catch (Exception e) {
+            e.printStackTrace();
             updateGood = false;
         }
 

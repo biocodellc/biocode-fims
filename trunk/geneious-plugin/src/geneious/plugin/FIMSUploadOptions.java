@@ -4,14 +4,15 @@ import com.biomatters.geneious.publicapi.components.Dialogs;
 import com.biomatters.geneious.publicapi.components.ProgressFrame;
 import com.biomatters.geneious.publicapi.plugin.Options;
 import com.biomatters.geneious.publicapi.utilities.GuiUtilities;
-import jebl.util.CompositeProgressListener;
-import jebl.util.ProgressListener;
 import run.process;
 import settings.FIMSException;
 import settings.availableProject;
 import settings.bcidConnector;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -25,21 +26,26 @@ import java.util.List;
 public class FIMSUploadOptions extends Options {
 
     //StringOption expeditionCodeOption;
-    OptionValue chooseProject;
+    OptionValue chooseProject = new OptionValue("Choose Project", "Choose Project");
     ComboBoxOption projectOption;
     List projectValues = new ArrayList();
     StringOption expeditionCodeOption;
 
     FileSelectionOption sampleDataOption;
     BooleanOption uploadOption;
-    PasswordOption passwordOption;
-    StringOption usernameOption;
+    //PasswordOption passwordOption;
+    //StringOption usernameOption;
     LabelOption labelInitialHeaderOption;
+    LabelOption labelInformationMessage;
+
     LabelOption labelForgotPasswordOption;
     LabelOption labelForgotUsernameOption;
+    ButtonOption loginButtonOption;
+    StringOption usernameOption;
+    // PasswordOption passwordOption;
 
     LabelOption labelProjectHeaderOption;
-
+    String username, password;
 
     bcidConnector connector = null;
 
@@ -53,17 +59,90 @@ public class FIMSUploadOptions extends Options {
 
         // Username/password Options
         labelInitialHeaderOption = (LabelOption) addLabel("Login using your Biocode-FIMS username/password");
-
+        loginButtonOption = addButtonOption("User Login", "", "User Login");
         usernameOption = addStringOption("username", "Username:", "");
-        passwordOption = addCustomOption(new PasswordOption("password", "Password:"));
+        usernameOption.setVisible(false);
 
-        labelForgotPasswordOption = (LabelOption) addLabel("Forgot Password?");
-        labelForgotUsernameOption = (LabelOption) addLabel("Forgot Username?");
+        loginButtonOption.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+
+                hideElements();
+
+                JPanel myPanel = new JPanel();
+                myPanel.setLayout(new GridLayout(0, 2));
+                final JPasswordField passwordField = new JPasswordField();
+                //JTextField usernameField = new JTextField();
+                myPanel.add(new JLabel("Username:"));
+                //myPanel.add(usernameField);
+                myPanel.add(usernameOption.getComponent());
+                myPanel.add(new JLabel("Password:"));
+                myPanel.add(passwordField);
+
+                usernameOption.setVisible(true);
+                //myPanel.add(new JLabel("Forgot Password? (option coming soon)"));
+                //myPanel.add(new JLabel("Forgot Username? (option coming soon)"));
+                //  usernameOption.setVisible(true);
+                //  passwordOption.setVisible(true);
+
+                boolean ok = Dialogs.showInputDialog("", "Login", null, myPanel);
+                usernameOption.setVisible(false);
+
+                // Immediately set these values to not visible
+                //usernameOption.setVisible(false);
+                // passwordOption.setVisible(false);
+                if (ok) {
+                  /*  final ProgressFrame frame = new ProgressFrame("Authenticating user", "Need to contact server", GuiUtilities.getMainFrame());
+                    frame.setIndeterminateProgress();
+                    frame.setCancelable(false);
+                    frame.setMessage("Connecting ...");
+                    */
+                     try {
+                        username = usernameOption.getValue();
+                        password = String.valueOf(passwordField.getPassword());
+                        connector = process.createConnection(username, password);
+                    } catch (FIMSException e) {
+                        displayExceptionDialog(e);
+                    }
+
+
+                   /* Thread connectingThread = new Thread() {
+                        public void run() {
+                            try {
+                                username = usernameOption.getValue();
+                                password = String.valueOf(passwordField.getPassword());
+                                connector = process.createConnection(username, password);
+                            } catch (FIMSException e) {
+                                displayExceptionDialog(e);
+                            }
+                        }
+                    };
+                    connectingThread.run();
+
+                    try {
+                        connectingThread.join();
+                    } catch (InterruptedException e) {
+                        Dialogs.showMessageDialog("Interrupted connection process!");
+                    }
+                    frame.setComplete();
+                    */
+
+                    // User authenticated... turn on the other options
+                    if (connector != null) {
+                        // run the userAuthenticated method sets up the next stage of operations
+                        userAuthenticated();
+                    } else {
+                        Dialogs.showMessageDialog("Unable to authenticate " + username);
+                    }
+                }
+            }
+        }
+        );
 
         // Project-related Options
-        labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for user " + this.usernameOption.getValue().toString());
+        //labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for " + this.usernameOption.getValue().toString());
+        labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options");
 
-        chooseProject = new OptionValue("Choose Project", "Choose Project");
+        projectValues = new ArrayList();
         projectValues.add(chooseProject);
         projectOption = addComboBoxOption("projectCode", "Project:", projectValues, chooseProject);
 
@@ -74,16 +153,35 @@ public class FIMSUploadOptions extends Options {
         // upload checkbox
         uploadOption = addBooleanOption("upload", "Upload", true);
 
+        hideElements();
+
+        // Code for adding user/password as dependent on upload being checked
+        //uploadOption.addDependent(usernameOption, true);
+        //uploadOption.addDependent(passwordOption, true);
+    }
+
+
+    /**
+     * Make it convenient to turn off elements commonly that we don't want to show
+     */
+    private void hideElements() {
         // set them all to invisible for now
         labelProjectHeaderOption.setVisible(false);
         projectOption.setVisible(false);
         expeditionCodeOption.setVisible(false);
         sampleDataOption.setVisible(false);
         uploadOption.setVisible(false);
+    }
 
-        // Code for adding user/password as dependent on upload being checked
-        //uploadOption.addDependent(usernameOption, true);
-        //uploadOption.addDependent(passwordOption, true);
+    /**
+     * Make it convenient to turn on elements commonly that we don't want to show
+     */
+    private void showElements() {
+        labelProjectHeaderOption.setVisible(true);
+        projectOption.setVisible(true);
+        expeditionCodeOption.setVisible(true);
+        sampleDataOption.setVisible(true);
+        uploadOption.setVisible(true);
     }
 
     @Override
@@ -91,49 +189,10 @@ public class FIMSUploadOptions extends Options {
 
         // TEST for user authentication before proceeding
         if (connector == null) {
-            /*ProgressListener progress = ProgressListener.EMPTY;
-            CompositeProgressListener compositeProgress=new CompositeProgressListener(progress);
-            progress.setIndeterminateProgress();
-            progress.setMessage("Authenticating user");
-            */
-            final ProgressFrame frame = new ProgressFrame("Authenticating user", "Checking with server...", GuiUtilities.getMainFrame());
-            frame.setIndeterminateProgress();
-
-            Thread connectingThread = new Thread() {
-                public void run() {
-                    try {
-                        connector = process.createConnection(usernameOption.getValue(), passwordOption.getValue());
-                    } catch (FIMSException e) {
-                        frame.setComplete();
-                        displayExceptionDialog(e);
-                    }
-                    frame.setComplete();
-                }
-            };
-            connectingThread.start();
-
-            try {
-                connectingThread.join();
-            } catch (InterruptedException e) {
-                Dialogs.showMessageDialog("Interrupted connection process!");
-            }
-
-            // User authenticated... turn on the other options
-            if (connector != null) {
-                // run the userAuthenticated method sets up the next stage of operations
-                userAuthenticated();
-            } else {
-                Dialogs.showMessageDialog("Unable to authenticate " + usernameOption.getValue());
-            }
-            // We're still not ready to continue... need user to select a project, etc...
             return false;
-        }
-        // Make sure the user has chosen a project
-        else
-
-        {
-
-            if (projectOption.getValue() == chooseProject) {  // You'll need to make your "Choose Project" accessible.
+        } else {
+            // Make sure the user has chosen a project
+            if (projectOption.getValue() == chooseProject) {
                 Dialogs.showMessageDialog("You need to choose a project");
                 return false;
             } else {
@@ -147,29 +206,23 @@ public class FIMSUploadOptions extends Options {
      *
      * @throws Exception
      */
-
-    public boolean userAuthenticated
-    () {
+    public boolean userAuthenticated() {
 
         // If there is a project then continue!
         if (hasProject()) {
 
-            labelProjectHeaderOption.setValueFromString("Data validation and loading options for user " + this.usernameOption.getValue().toString());
-            labelProjectHeaderOption.setVisible(true);
-            projectOption.setVisible(true);
-            expeditionCodeOption.setVisible(true);
-            sampleDataOption.setVisible(true);
-            uploadOption.setVisible(true);
+            labelProjectHeaderOption.setValueFromString("Data validation / loading options for '" + username + "'");
 
+            showElements();
             // Turn off visibility on Username/password options
-            usernameOption.setVisible(false);
-            passwordOption.setVisible(false);
             labelInitialHeaderOption.setVisible(false);
             labelForgotPasswordOption.setVisible(false);
             labelForgotUsernameOption.setVisible(false);
+            loginButtonOption.setVisible(false);
+            loginButtonOption.setHidden();
             return true;
         } else {
-            Dialogs.showMessageDialog(usernameOption.getValue() + " is not associated with any projects, talk " +
+            Dialogs.showMessageDialog(username + " is not associated with any projects, talk " +
                     "to a project administrator to get setup.");
             return false;
         }
@@ -181,8 +234,7 @@ public class FIMSUploadOptions extends Options {
      *
      * @return
      */
-    private boolean hasProject
-    () {
+    private boolean hasProject() {
         // populate the user's projects
         //http://biscicol.org/id/projectService/listUserProjects
         // Create an option value list of Proects
@@ -204,15 +256,18 @@ public class FIMSUploadOptions extends Options {
             return false;
         }
         Iterator projectsIt = availableProjects.iterator();
-
+        // Re-initialize list
+        projectValues = new ArrayList();
+        projectValues.add(chooseProject);
         while (projectsIt.hasNext()) {
             availableProject p = (availableProject) projectsIt.next();
             OptionValue v = new OptionValue(p.getProject_id(), p.getProject_title());
             //Dialogs.showMessageDialog(p.getProject_code());
-            projectOption.addPossibleValue(v);
+            //projectOption.addPossibleValue(v);
             projectValues.add(v);
             hasProject = true;
         }
+        projectOption.setPossibleValues(projectValues);
 
         return hasProject;
     }
