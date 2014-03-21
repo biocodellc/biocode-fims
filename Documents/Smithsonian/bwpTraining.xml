@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <fims>
-  <metadata doi="a doi" shortname="BarcodeOfWildlife" eml_location="eml_location" target="http://data.biscicol.org/ds"><![CDATA[Some text with abstract]]></metadata>
+  <metadata doi="a doi" shortname="BarcodeOfWildlife" eml_location="eml_location" target="http://data.biscicol.org/ds/data" queryTarget="http://data.biscicol.org/ds"><![CDATA[Some text with abstract]]></metadata>
   <mapping>
     <entity worksheet="Samples" worksheetUniqueKey="tissueBarcode" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">
       <attribute column="eventID" uri="http://rs.tdwg.org/dwc/terms/eventID"><![CDATA[An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set.]]></attribute>
