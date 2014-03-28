@@ -12,7 +12,7 @@ STEP 4: Obtain the TEMPORARY username/password by emailing Mike Trizna <TRIZNAM@
 
 STEP 5: Run the plugin by going to Tools -> Upload to Biocode Fims
 
-  * Choose the "Barcode of Wildlife Training" Expedition
+  * Choose the "Barcode of Wildlife Training" Project
   * Find the spreadsheet that you have just filled out
-  * Type in a project code, unique to this sheet, that is between 4 and 6 characters in length
+  * Type in a dataset code, unique to this sheet, that is between 4 and 16 characters in length
   * Enter the username/password you received above 
