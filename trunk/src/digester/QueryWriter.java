@@ -134,11 +134,18 @@ public class QueryWriter {
         String datatype = null;
         // Loop attributes and use column names instead of URI value in column position lookups
         Iterator it = attributes.iterator();
-        while (it.hasNext()) {
+          while (it.hasNext()) {
             Attribute attribute = (Attribute) it.next();
-            if (attribute.getUri().equals(predicate)) {
-                colName = attribute.getColumn();
-                datatype = attribute.getDatatype();
+            // map column names to datatype
+            // TODO: this part bombs when the configuration file does not have a URI specified, thus we need to write a configuration file validator?
+            try {
+                if (attribute.getUri().equals(predicate)) {
+                    colName = attribute.getColumn();
+                    datatype = attribute.getDatatype();
+                }
+
+            } catch (Exception e) {
+                // For now, do nothing.
             }
         }
         Cell cell = row.createCell(getColumnPosition(colName));

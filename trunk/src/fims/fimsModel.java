@@ -114,7 +114,11 @@ public class fimsModel {
             Statement s = stmtIterator.next();
             // Print just the predicates we care about
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {
-                queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+                // Don't want local name to be null
+                if (s.getPredicate().getLocalName() != null &&
+                      !s.getPredicate().getLocalName().equals("null")  ) {
+                    queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+                }
             }
             /*
              if (s.getPredicate().equals(getProperty("urn:basisOfIdentification"))) {

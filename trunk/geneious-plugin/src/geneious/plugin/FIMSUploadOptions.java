@@ -147,7 +147,7 @@ public class FIMSUploadOptions extends Options {
         projectOption = addComboBoxOption("projectCode", "Project:", projectValues, chooseProject);
 
         // select Expedition
-        expeditionCodeOption = addStringOption("expeditionCode", "Expedition Code:", "DEMOH");
+        expeditionCodeOption = addStringOption("expeditionCode", "Dataset Code:", "DEMOH");
         // pointer to File to load
         sampleDataOption = addFileSelectionOption("sampleData", "Sample Data:", "");
         // upload checkbox
