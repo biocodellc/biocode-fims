@@ -67,18 +67,16 @@
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="Site_ID"
-                conceptAlias="siteName"
+                conceptAlias="specificOSDDayAtaSiteProcess"
                 conceptURI="obi:specimenCollectionProcess"
                 uri="http://purl.obolibrary.org/obo/OBI_0000659">
-            <attribute column="Site_ID" uri="dwc:EventID"/>
-            <attribute column="Site_name" uri="urn:siteName"/>
         </entity>
 
         <!--obi:SpecimenCollectionProcess3-->
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="specimenCollectionProcessHASH"
-                conceptAlias="specimenCollectionProcess"
+                worksheetUniqueKey="filteredSampleCollectionProcessHASH"
+                conceptAlias="filteredSampleCollectionProcess"
                 conceptURI="obi:specimenCollectionProcess"
                 uri="http://purl.obolibrary.org/obo/OBI_0000659">
             <attribute column="latitude" uri="dwc:DecimalLatitude"/>
@@ -119,28 +117,34 @@
         obi:specimen1(destructedWaterSample)	adjacent_to	envo:environmentalMaterial (matter)-->
 
         <relation>
-            <subject>siteName</subject>
+            <subject>specificOSDDayAtaSiteProcess</subject>
             <predicate>ro:part_of</predicate>
             <uri></uri>
             <object>globalEvent</object>
         </relation>
         <relation>
-            <subject>specimenCollectionProcess</subject>
+            <subject>filteredSampleCollectionProcess</subject>
             <predicate>ro:part_of</predicate>
             <uri></uri>
-            <object>siteName</object>
+            <object>specificOSDDayAtaSiteProcess</object>
+        </relation>
+        <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>ro:input_of</predicate>
+            <uri></uri>
+            <object>specificOSDDayAtaSiteProcess</object>
         </relation>
         <relation>
             <subject>destructedWaterSample</subject>
             <predicate>obi:specified_input_of</predicate>
             <uri></uri>
-            <object>specimenCollectionProcess</object>
+            <object>filteredSampleCollectionProcess</object>
         </relation>
         <relation>
             <subject>filterSample</subject>
             <predicate>obi:specified_output_of</predicate>
             <uri></uri>
-            <object>specimenCollectionProcess</object>
+            <object>filteredSampleCollectionProcess</object>
         </relation>
         <relation>
             <subject>destructedWaterSample</subject>
