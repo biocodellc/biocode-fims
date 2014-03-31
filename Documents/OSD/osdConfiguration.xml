@@ -82,6 +82,15 @@
             <attribute column="latitude" uri="dwc:DecimalLatitude"/>
             <attribute column="longitude" uri="dwc:DecimalLongitude"/>
         </entity>
+            <entity
+                worksheet="Samples"
+                worksheetUniqueKey="waterSampleCollectionProcessHASH"
+                conceptAlias="waterSampleCollectionProcess"
+                conceptURI="obi:specimenCollectionProcess"
+                uri="http://purl.obolibrary.org/obo/OBI_0000659">
+            <attribute column="latitude" uri="dwc:DecimalLatitude"/>
+            <attribute column="longitude" uri="dwc:DecimalLongitude"/>
+        </entity>
                 <!--obi:SpecimenCollectionProcess1 = -->
         <entity
                 worksheet="Samples"
