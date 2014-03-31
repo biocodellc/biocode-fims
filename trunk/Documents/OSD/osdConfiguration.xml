@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="OSD"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='Sample_name' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>Sample_name</field>
+            </rule>
+        </worksheet>
+
+    </validation>
+
+    <mapping>
+        <!--obi:Specimen1 = destructedWaterSample-->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Sample_name"
+                conceptAlias="destructedWaterSample"
+                conceptURI="obi:Specimen"
+                uri="http://purl.obolibrary.org/obo/OBI_0100051">
+            <attribute column="Sample_name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="Temp" uri="urn:Temp"/>
+            <attribute column="TempUnit" uri="urn:TempUnit"/>
+            <attribute column="Salinity" uri="urn:Salinity"/>
+            <attribute column="SalinityUnit" uri="urn:salinityUnit"/>
+        </entity>
+
+        <!--obi:Specimen2 = filterSample-->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Sample_name"
+                conceptAlias="filterSample"
+                conceptURI="obi:Specimen"
+                uri="http://purl.obolibrary.org/obo/OBI_0100051">
+            <attribute column="Sample_name" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
+            <attribute column="Sample_location" uri="urn:sampleLocation"/>
+            <attribute column="Sample_progress" uri="urn:sampleProgress"/>
+            <attribute column="Taxon_id" uri="urn:NCBICatchAllTaxonId"/>
+
+        </entity>
+        <!--obi:SpecimenCollectionProcess1 = -->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="OSD_GlobalSamplingEvent"
+                conceptAlias="globalEvent"
+                conceptURI="obi:specimenCollectionProcess"
+                uri="http://purl.obolibrary.org/obo/OBI_0000659">
+            <attribute column="OSD_GlobalSamplingEvent" uri="dwc:EventID"/>
+        </entity>
+
+        <!--obi:SpecimenCollectionProcess2-->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Site_ID"
+                conceptAlias="siteName"
+                conceptURI="obi:specimenCollectionProcess"
+                uri="http://purl.obolibrary.org/obo/OBI_0000659">
+            <attribute column="Site_ID" uri="dwc:EventID"/>
+            <attribute column="Site_name" uri="urn:siteName"/>
+        </entity>
+
+        <!--obi:SpecimenCollectionProcess3-->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="specimenCollectionProcessHASH"
+                conceptAlias="specimenCollectionProcess"
+                conceptURI="obi:specimenCollectionProcess"
+                uri="http://purl.obolibrary.org/obo/OBI_0000659">
+            <attribute column="latitude" uri="dwc:DecimalLatitude"/>
+            <attribute column="longitude" uri="dwc:DecimalLongitude"/>
+        </entity>
+                <!--obi:SpecimenCollectionProcess1 = -->
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Env_biome"
+                conceptAlias="biome"
+                conceptURI="envo:biome"
+                uri="envo:biome">
+            <attribute column="Env_biome" uri="urn:biomeProperty"/>
+        </entity>
+            <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Env_habitat"
+                conceptAlias="habitat"
+                conceptURI="envo:habitat"
+                uri="envo:habitat">
+            <attribute column="Env_habitat" uri="dwc:habitat"/>
+        </entity>
+          <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Env_matter"
+                conceptAlias="environmentalMaterial"
+                conceptURI="envo:matter"
+                uri="envo:matter">
+            <attribute column="Env_matter" uri="dwc:matter"/>
+        </entity>
+        <!--
+        obi:SpecimenCollectionProcess2(siteName)	part_of	obi:SpecimenCollectionProcess1(globalEvent)
+        obi:SpecimenCollectionProcess3(specimenCollectionProcess)	part_of	obi:SpecimenCollectionProcess2(siteName)
+        obi:Specimen1(destructedWaterSample)	input_of	obi:SpecimenCollectionProcess3 (specimenCollectionProcess)
+        obi:Specimen2(filterSample)	output_of	obi:SpecimenCollectionProcess3 (specimenCollectionProcess)
+        obi:specimen1(destructedWaterSample)	part_of	envo:biome1(biome)
+        obi:specimen1(destructedWaterSample)	part_of	envo:feature1(habitat)
+        obi:specimen1(destructedWaterSample)	adjacent_to	envo:environmentalMaterial (matter)-->
+
+        <relation>
+            <subject>siteName</subject>
+            <predicate>ro:part_of</predicate>
+            <uri></uri>
+            <object>globalEvent</object>
+        </relation>
+        <relation>
+            <subject>specimenCollectionProcess</subject>
+            <predicate>ro:part_of</predicate>
+            <uri></uri>
+            <object>siteName</object>
+        </relation>
+        <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>obi:specified_input_of</predicate>
+            <uri></uri>
+            <object>specimenCollectionProcess</object>
+        </relation>
+        <relation>
+            <subject>filterSample</subject>
+            <predicate>obi:specified_output_of</predicate>
+            <uri></uri>
+            <object>specimenCollectionProcess</object>
+        </relation>
+        <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>ro:part_of</predicate>
+            <uri></uri>
+            <object>biome</object>
+        </relation>
+        <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>ro:part_of</predicate>
+            <uri></uri>
+            <object>habitat</object>
+        </relation>
+        <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>ro:adjacent_to</predicate>
+            <uri></uri>
+            <object>environmentalMaterial</object>
+        </relation>
+    </mapping>
+
+</fims>
+
