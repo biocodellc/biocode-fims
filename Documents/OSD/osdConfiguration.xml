@@ -21,6 +21,8 @@
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>Sample_name</field>
             </rule>
+            <rule type='isNumber' column='Temp' level='warning'></rule>
+
         </worksheet>
 
     </validation>
@@ -79,7 +81,7 @@
                 conceptAlias="filteredSampleCollectionProcess"
                 conceptURI="obi:specimenCollectionProcess"
                 uri="http://purl.obolibrary.org/obo/OBI_0000659">
-            <attribute column="latitude" uri="dwc:DecimalLatitude"/>
+            <attribute column="latitude" uri="dwc:DecimalLatitude"><![CDATA[The geographic latitude,in decimal degrees of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. This field will be validated to being within the range -90.0 to 90.0.]]></attribute>
             <attribute column="longitude" uri="dwc:DecimalLongitude"/>
         </entity>
             <entity
