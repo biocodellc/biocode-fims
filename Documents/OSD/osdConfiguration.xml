@@ -137,6 +137,12 @@
             <uri></uri>
             <object>specificOSDDayAtaSiteProcess</object>
         </relation>
+         <relation>
+            <subject>destructedWaterSample</subject>
+            <predicate>ro:part_of</predicate>
+            <uri></uri>
+            <object>specificOSDDayAtaSiteProcess</object>
+        </relation>
         <relation>
             <subject>destructedWaterSample</subject>
             <predicate>obi:specified_output_of</predicate>
