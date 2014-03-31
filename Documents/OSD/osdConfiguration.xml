@@ -130,10 +130,11 @@
         </relation>
         <relation>
             <subject>destructedWaterSample</subject>
-            <predicate>ro:input_of</predicate>
+            <predicate>obi:specified_output_of</predicate>
             <uri></uri>
-            <object>specificOSDDayAtaSiteProcess</object>
+            <object>waterSampleCollectionProcess</object>
         </relation>
+
         <relation>
             <subject>destructedWaterSample</subject>
             <predicate>obi:specified_input_of</predicate>
