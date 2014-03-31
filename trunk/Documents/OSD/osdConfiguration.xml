@@ -95,11 +95,11 @@
         </entity>
             <entity
                 worksheet="Samples"
-                worksheetUniqueKey="Env_habitat"
-                conceptAlias="habitat"
-                conceptURI="envo:habitat"
-                uri="envo:habitat">
-            <attribute column="Env_habitat" uri="dwc:habitat"/>
+                worksheetUniqueKey="Env_feature"
+                conceptAlias="feature"
+                conceptURI="envo:feature"
+                uri="envo:feature">
+            <attribute column="Env_feature" uri="dwc:habitat"/>
         </entity>
           <entity
                 worksheet="Samples"
@@ -152,7 +152,7 @@
             <subject>destructedWaterSample</subject>
             <predicate>ro:part_of</predicate>
             <uri></uri>
-            <object>habitat</object>
+            <object>feature</object>
         </relation>
         <relation>
             <subject>destructedWaterSample</subject>
