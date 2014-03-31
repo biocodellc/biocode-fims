@@ -98,7 +98,6 @@
                 conceptAlias="biome"
                 conceptURI="envo:biome"
                 uri="envo:biome">
-            <attribute column="Env_biome" uri="urn:biomeProperty"/>
         </entity>
             <entity
                 worksheet="Samples"
@@ -106,7 +105,6 @@
                 conceptAlias="feature"
                 conceptURI="envo:feature"
                 uri="envo:feature">
-            <attribute column="Env_feature" uri="dwc:habitat"/>
         </entity>
           <entity
                 worksheet="Samples"
@@ -114,7 +112,6 @@
                 conceptAlias="environmentalMaterial"
                 conceptURI="envo:matter"
                 uri="envo:matter">
-            <attribute column="Env_matter" uri="dwc:matter"/>
         </entity>
         <!--
         obi:SpecimenCollectionProcess2(siteName)	part_of	obi:SpecimenCollectionProcess1(globalEvent)
