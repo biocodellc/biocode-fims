@@ -138,7 +138,7 @@
             <object>specificOSDDayAtaSiteProcess</object>
         </relation>
          <relation>
-            <subject>destructedWaterSample</subject>
+            <subject>waterSampleCollectionProcess</subject>
             <predicate>ro:part_of</predicate>
             <uri></uri>
             <object>specificOSDDayAtaSiteProcess</object>
