@@ -1,0 +1,8 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+select * from <urn:uuid:2066ac82-775c-4cb2-a9c4-5f0bce0291e8> where
+{
+  ?materialSamplingProcess <obi:specified_input_of> ?waterSample .
+  ?materialSamplingProcess a <obi:specimenCollectionProcess> .
+  ?waterSample <urn:Temp> ?temp .
+   filter(xsd:decimal(?temp) > 31)
+}
