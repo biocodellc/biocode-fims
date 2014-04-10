@@ -50,7 +50,7 @@
 
         <lists>
 
-            <list alias='habitat'>
+            <list alias='habitat' caseInsenstive='true'>
                 <field>Coral Reef</field>
                 <field>Intertidal</field>
                 <field>Fouling</field>
@@ -64,19 +64,19 @@
                 <field>Sand</field>
                 <field>Seagrass</field>
             </list>
-            <list alias='basisOfIdentification'>
+            <list alias='basisOfIdentification' caseInsenstive='true'>
                 <field>Genetics</field>
                 <field>Morphology</field>
                 <field>Other</field>
             </list>
-            <list alias='sex'>
+            <list alias='sex' caseInsenstive='true'>
                 <field>Male</field>
                 <field>Female</field>
                 <field>Simultaneous Hermaphrodite</field>
                 <field>Protogynous</field>
                 <field>Protandrous</field>
             </list>
-            <list alias='establishmentMeans'>
+            <list alias='establishmentMeans' caseInsenstive='true'>
                 <field>native</field>
                 <field>introduced</field>
                 <field>naturalized</field>
@@ -84,12 +84,12 @@
                 <field>managed</field>
             </list>
 
-            <list alias='lifeStage'>
+            <list alias='lifeStage' caseInsenstive='true'>
                 <field>larva</field>
                 <field>juvenile</field>
                 <field>adult</field>
             </list>
-            <list alias='phylum'>
+            <list alias='phylum' caseInsenstive='true'>
                 <field>Acoelomorpha</field>
                 <field>Annelida</field>
                 <field>Arthropoda</field>
@@ -126,7 +126,7 @@
                 <field>Xenoturbellida</field>
             </list>
 
-            <list alias='country'>
+            <list alias='country' caseInsenstive='true'>
                 <field>American Samoa</field>
                 <field>Australia</field>
                 <field>Bahrain</field>

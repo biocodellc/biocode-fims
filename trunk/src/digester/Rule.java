@@ -832,13 +832,24 @@ public class Rule {
                     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
-                lookupSB.append("\'" + listFields.get(k).toString().replace("'","''") + "\'");
+                lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
                 count++;
             } catch (Exception e) {
                 // do nothing
             }
         }
         // Query the SQLlite instance to see if these values are contained in a particular row
+
+        Boolean caseInsensitiveSearch = false;
+        try {
+            if (digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive().equalsIgnoreCase("true")) {
+                caseInsensitiveSearch = true;
+            }
+        } catch (NullPointerException e) {
+            // do nothing, just make it not caseInsensitive
+        }
+        System.out.println("caseInsensitive?" + digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive());
+
         try {
             statement = connection.createStatement();
             String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
