@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 public class List {
     private String alias;
+    private String caseInsensitive;
     private java.util.List fields = new ArrayList();
 
     /**
@@ -26,6 +27,14 @@ public class List {
      */
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getCaseInsensitive() {
+        return caseInsensitive;
+    }
+
+    public void setCaseInsensitive(String caseInsensitive) {
+        this.caseInsensitive = caseInsensitive;
     }
 
     /**
