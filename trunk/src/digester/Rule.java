@@ -810,6 +810,15 @@ public class Rule {
         ResultSet resultSet = null;
         Statement statement = null;
 
+        Boolean caseInsensitiveSearch = false;
+        try {
+            if (digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive().equalsIgnoreCase("true")) {
+                caseInsensitiveSearch = true;
+            }
+        } catch (NullPointerException e) {
+            // do nothing, just make it not caseInsensitive
+        }
+
         // First check that this column exists before running this rule
         Boolean columnExists = checkColumnExists(getColumn());
         if (!columnExists) {
@@ -832,7 +841,10 @@ public class Rule {
                     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
-                lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                if (caseInsensitiveSearch)
+                    lookupSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
+                else
+                    lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
                 count++;
             } catch (Exception e) {
                 // do nothing
@@ -840,21 +852,17 @@ public class Rule {
         }
         // Query the SQLlite instance to see if these values are contained in a particular row
 
-        Boolean caseInsensitiveSearch = false;
-        try {
-            if (digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive().equalsIgnoreCase("true")) {
-                caseInsensitiveSearch = true;
-            }
-        } catch (NullPointerException e) {
-            // do nothing, just make it not caseInsensitive
-        }
-        System.out.println("caseInsensitive?" + digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive());
 
         try {
             statement = connection.createStatement();
             String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
-                    " where " + getColumn() + " not in (" + lookupSB.toString() + ")";
-//System.out.println(sql);
+                    " where ";
+            if (caseInsensitiveSearch)
+                sql += "UPPER(" + getColumn() + ")";
+            else
+                sql += getColumn();
+            sql += " not in (" + lookupSB.toString() + ")";
+
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String value = resultSet.getString(getColumn()).trim();

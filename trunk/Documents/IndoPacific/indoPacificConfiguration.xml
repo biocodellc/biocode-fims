@@ -76,7 +76,7 @@
                 <field>Protogynous</field>
                 <field>Protandrous</field>
             </list>
-            <list alias='establishmentMeans' caseInsensitive='true'>
+            <list alias='establishmentMeans'>
                 <field>native</field>
                 <field>introduced</field>
                 <field>naturalized</field>
