@@ -84,73 +84,10 @@ public class templates {
         String defaultSheetname = t.getMapping().getDefaultSheetName();
         String instructionSheetName = "Instructions";
 
-        // Create the workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // Create the Instructions Sheet, which is always first
-        HSSFSheet instructionsSheet = workbook.createSheet(instructionSheetName);
-
-        // Loop through all fields in schema and provide names, uris, and definitions
-        Iterator entitiesIt = t.getMapping().getEntities().iterator();
-        int rowNum = 0;
-        Row row = instructionsSheet.createRow(rowNum++);
-        row.createCell(0).setCellValue("ColumnName");
-        row.createCell(1).setCellValue("Entity");
-        row.createCell(2).setCellValue("URI");
-        row.createCell(3).setCellValue("Definition");
-
-        // Must loop entities first
-        while (entitiesIt.hasNext()) {
-            digester.Entity e = (digester.Entity) entitiesIt.next();
-            // Loop attributes
-            Iterator attributesIt = ((LinkedList<Attribute>) e.getAttributes()).iterator();
-
-            // Then loop attributes
-            while (attributesIt.hasNext()) {
-                Attribute a = (Attribute) attributesIt.next();
-                row = instructionsSheet.createRow(rowNum++);
-                int column = 0;
-                row.createCell(column++).setCellValue(a.getColumn());
-                row.createCell(column++).setCellValue(e.getConceptAlias());
-                row.createCell(column++).setCellValue(a.getUri());
-                row.createCell(column++).setCellValue(a.getDefinition());
-            }
-        }
-        // Create the Default Sheet sheet
-        HSSFSheet defaultSheet = workbook.createSheet(defaultSheetname);
-
-        //Create the header row
-        row = defaultSheet.createRow(0);
-
-        // Loop the fields that the user wants in the default sheet
-        rowNum = 0;
-        Iterator itFields = fields.iterator();
-        while (itFields.hasNext()) {
-            String field = (String) itFields.next();
-            Cell cell = row.createCell(rowNum++);
-            //Set value to new value
-            cell.setCellValue(field);
-        }
-
-        // Write the excel file
-        // Set the outputname
-        String filename = "output";
-        if (t.getFims().getMetadata().getShortname() != null && !t.getFims().getMetadata().getShortname().equals(""))
-            filename = t.getFims().getMetadata().getShortname();
-        String outputName = filename + ".xls";
-
-        // Create the file
         File file = null;
         try {
-            file = PathManager.createUniqueFile(outputName, uploadPath());
-            FileOutputStream out = new FileOutputStream(file);
-            workbook.write(out);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return Response.status(204).build();
-
-        } catch (IOException e) {
+            file = t.createExcelFile(instructionSheetName, defaultSheetname, uploadPath(), fields);
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(204).build();
         }
