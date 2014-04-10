@@ -163,7 +163,7 @@ public class templateProcessor {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        File configFile = new configurationFileFetcher(4, "tripleOutput", false).getOutputFile();
+        File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
         templateProcessor t = new templateProcessor("tripleOutput", configFile);
         System.out.println(t.printCheckboxes());

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Attribute representation
  */
-public class Attribute {
+public class Attribute implements Comparable {
     private String column;
     private String uri;
     private String datatype = "string";  // string is default type
@@ -83,4 +83,7 @@ public class Attribute {
     }
 
 
+    public int compareTo(Object o) {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
