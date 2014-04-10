@@ -222,6 +222,40 @@
                 <![CDATA[The "local" accession number that you use for your laboratory's database. This number should link EXACTLY to the genetic data you are providing for this sample. It must be unique among the numbers that your lab is providing.]]></attribute>
             <attribute column='principalInvestigator' uri='urn:PrincipalInvestigator'>
                 <![CDATA[Firstname Lastname (the PI on the grant that generated this data)]]></attribute>
+            <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'>
+                <![CDATA[Local name of site. Something that could be found by Google, e.g. city, town, ocean, etc. You must enter a value for this to the best level of precision that you are confident about. A site name like "Sanur" is good. "Indonesia" is fine if that is all you know, or "The Pacific Ocean". If you have no idea where the sample came from, please enter "Earth". Required.]]></attribute>
+            <attribute column='phylum' uri='http://rs.tdwg.org/dwc/terms/phylum'>
+                <![CDATA[The full scientific name of the phylum in which the taxon is classified. Required.]]></attribute>
+            <attribute column='decimalLatitude' uri='http://rs.tdwg.org/dwc/terms/decimalLatitude'>
+                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
+            <attribute column='decimalLongitude' uri='http://rs.tdwg.org/dwc/terms/decimalLongitude'>
+                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
+            <attribute column='coordinateUncertaintyInMeters'
+                       uri='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
+                <![CDATA[In meters.]]></attribute>
+            <attribute column='georeferenceProtocol' uri='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
+                <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
+            <attribute column='yearCollected' uri='urn:yearCollected'><![CDATA[YYYY (the year collected)]]></attribute>
+            <attribute column='monthCollected' uri='urn:monthCollected'><![CDATA[MM (the month collected)]]></attribute>
+            <attribute column='dayCollected' uri='urn:dayCollected'><![CDATA[DD (the day collected)]]></attribute>
+            <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'>
+                <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
+            <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'>
+                <![CDATA[The name of the first or species epithet of the scientificName.]]></attribute>
+            <attribute column='permitInformation' uri='urn:permitInformation'>
+                <![CDATA[Please include any permit information (agency, permit#, etc) as a text string]]></attribute>
+            <attribute column='basisOfIdentification' uri='urn:basisOfID'>
+                <![CDATA[Morphology, Genetic, Other.]]></attribute>
+            <attribute column='wormsID' uri='urn:wormsID'>
+                <![CDATA[Identification # (AphiaID) for Worms database (http://www.marinespecies.org/). Please try to provide this or the genus/species.]]></attribute>
+            <attribute column='country' uri='http://rs.tdwg.org/dwc/terms/country'>
+                <![CDATA[The country where the sample was found. Must be found in associated list in "lists" tab.]]></attribute>
+            <attribute column='stateProvince' uri='http://rs.tdwg.org/dwc/terms/stateProvince'>
+                <![CDATA[The state or province where the sample was found.]]></attribute>
+            <attribute column='island' uri='http://rs.tdwg.org/dwc/terms/island'>
+                <![CDATA[The island where the sample was found.]]></attribute>
+            <attribute column='islandGroup' uri='http://rs.tdwg.org/dwc/terms/islandGroup'>
+                <![CDATA[The island group or archipelago where the sample was found.]]></attribute>
             <attribute column='sampleOwnerInstitutionCode' uri='http://rs.tdwg.org/dwc/terms/ownerInstitutionCode'>
                 <![CDATA[Most commonly used acronym for your university, agency or institution]]></attribute>
             <attribute column='fundingSource' uri='urn:fundingSource'>
@@ -238,7 +272,7 @@
                 <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
             <attribute column='lifeStage' uri='http://rs.tdwg.org/dwc/terms/lifeStage'>
                 <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
-            <attribute column='weight' uri='http://purl.obolibrary.org/obo/PATO_0000128'>
+            <attribute column='weight' uri=' http://purl.obolibrary.org/obo/PATO_0000128'>
                 <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
             <attribute column='length' uri='http://purl.obolibrary.org/obo/PATO_0000122'>
                 <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
@@ -250,11 +284,6 @@
                 <![CDATA[A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of genetic sequence information associated with the Occurrence. Links to Genbank or DRYAD entries.]]></attribute>
             <attribute column='occurrenceRemarks' uri='http://rs.tdwg.org/dwc/terms/occurrenceRemarks'>
                 <![CDATA[Any other relevant comments or notes about the sample itself.]]></attribute>
-            <attribute column='yearCollected' uri='urn:yearCollected'><![CDATA[YYYY (the year collected)]]></attribute>
-            <attribute column='monthCollected' uri='urn:monthCollected'><![CDATA[MM (the month collected)]]></attribute>
-            <attribute column='dayCollected' uri='urn:dayCollected'><![CDATA[DD (the day collected)]]></attribute>
-            <attribute column='permitInformation' uri='urn:permitInformation'>
-                <![CDATA[Please include any permit information (agency, permit#, etc) as a text string]]></attribute>
             <attribute column='habitat' uri='http://purl.obolibrary.org/obo/ENVO_00002036'>
                 <![CDATA[Habitat from which the sample was collected. Please pick from the associated list in "lists" tab.]]></attribute>
             <attribute column='microHabitat' uri='urn:microHabitat'>
@@ -281,52 +310,23 @@
                 <![CDATA[A text string for notes that were written on the original label during collection]]></attribute>
             <attribute column='recordedBy' uri='http://rs.tdwg.org/dwc/terms/recordedBy'>
                 <![CDATA[Full Name (can be list -- primary collector first, separate list by semicolons)]]></attribute>
-            <attribute column='decimalLatitude' uri='http://rs.tdwg.org/dwc/terms/decimalLatitude'>
-                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
-            <attribute column='decimalLongitude' uri='http://rs.tdwg.org/dwc/terms/decimalLongitude'>
-                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
-            <attribute column='coordinateUncertaintyInMeters'
-                       uri='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
-                <![CDATA[In meters.]]></attribute>
-            <attribute column='georeferenceProtocol' uri='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
-                <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
-            <attribute column='country' uri='http://rs.tdwg.org/dwc/terms/country'>
-                <![CDATA[The country where the sample was found. Must be found in associated list in "lists" tab.]]></attribute>
-            <attribute column='stateProvince' uri='http://rs.tdwg.org/dwc/terms/stateProvince'>
-                <![CDATA[The state or province where the sample was found.]]></attribute>
-            <attribute column='island' uri='http://rs.tdwg.org/dwc/terms/island'>
-                <![CDATA[The island where the sample was found.]]></attribute>
-            <attribute column='islandGroup' uri='http://rs.tdwg.org/dwc/terms/islandGroup'>
-                <![CDATA[The island group or archipelago where the sample was found.]]></attribute>
-            <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'>
-                <![CDATA[Local name of site. Something that could be found by Google, e.g. city, town, ocean, etc. You must enter a value for this to the best level of precision that you are confident about. A site name like "Sanur" is good. "Indonesia" is fine if that is all you know, or "The Pacific Ocean". If you have no idea where the sample came from, please enter "Earth". Required.]]></attribute>
-            <attribute column='basisOfIdentification' uri='urn:basisOfID'>
-                <![CDATA[Morphology, Genetic, Other.]]></attribute>
             <attribute column='identifiedBy' uri='http://rs.tdwg.org/dwc/terms/identifiedBy'>
                 <![CDATA[Full Name (A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject.)]]></attribute>
             <attribute column='yearIdentified' uri='urn:yearIdentified'><![CDATA[YYYY]]></attribute>
             <attribute column='monthIdentified' uri='urn:monthIdentified'><![CDATA[MM]]></attribute>
             <attribute column='dayIdentified' uri='urn:dayIdentified'><![CDATA[DD]]></attribute>
-            <attribute column='genus' uri='http://rs.tdwg.org/dwc/terms/genus'>
-                <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
-            <attribute column='species' uri='http://rs.tdwg.org/dwc/terms/specificEpithet'>
-                <![CDATA[The name of the first or species epithet of the scientificName.]]></attribute>
-            <attribute column='subSpecies' uri='http://rs.tdwg.org/dwc/terms/infraspecificEpithet'>
-                <![CDATA[The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]></attribute>
-            <attribute column='vernacularName' uri='http://rs.tdwg.org/dwc/terms/vernacularName'>
-                <![CDATA[Common name and/or native name]]></attribute>
-            <attribute column='phylum' uri='http://rs.tdwg.org/dwc/terms/phylum'>
-                <![CDATA[The full scientific name of the phylum in which the taxon is classified. Required.]]></attribute>
             <attribute column='class' uri='http://rs.tdwg.org/dwc/terms/class'>
                 <![CDATA[The full scientific name of the class in which the taxon is classified.]]></attribute>
             <attribute column='order' uri='http://rs.tdwg.org/dwc/terms/order'>
                 <![CDATA[The full scientific name of the order in which the taxon is classified.]]></attribute>
             <attribute column='family' uri='http://rs.tdwg.org/dwc/terms/family'>
                 <![CDATA[The full scientific name of the family in which the taxon is classified.]]></attribute>
+            <attribute column='subSpecies' uri='http://rs.tdwg.org/dwc/terms/infraspecificEpithet'>
+                <![CDATA[The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]></attribute>
+            <attribute column='vernacularName' uri='http://rs.tdwg.org/dwc/terms/vernacularName'>
+                <![CDATA[Common name and/or native name]]></attribute>
             <attribute column='taxonRemarks' uri='http://rs.tdwg.org/dwc/terms/taxonRemarks'>
                 <![CDATA[Comments or notes about the taxon or name.]]></attribute>
-            <attribute column='wormsID' uri='urn:wormsID'>
-                <![CDATA[Identification # (AphiaID) for Worms database (http://www.marinespecies.org/). Please try to provide this or the genus/species.]]></attribute>
             <attribute column='geneticTissueType' uri='urn:geneticTissueType'>
                 <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
             <attribute column='plateID' uri='urn:plateID'>
