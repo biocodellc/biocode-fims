@@ -11,6 +11,8 @@ import settings.PathManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class templateProcessor {
 
     String instructionsSheetName = "Instructions";
     String dataFieldsSheetName = "Data Fields";
+    String listsSheetName = "Lists";
+
 
     public templateProcessor(String outputFolder, File configFile) throws Exception {
         this.p = new process(outputFolder, configFile);
@@ -180,7 +184,7 @@ public class templateProcessor {
      */
     public void createListsSheetAndValidations(List<String> fields) {
         int column;
-        HSSFSheet listsSheet = workbook.createSheet("Lists");
+        HSSFSheet listsSheet = workbook.createSheet(listsSheetName);
 
         Iterator listsIt = validation.getLists().iterator();
         int listColumnNumber = 0;
@@ -223,11 +227,11 @@ public class templateProcessor {
                 // Get the letter of this column
                 String columnLetter = CellReference.convertNumToColString(listColumnNumber);
                 Name namedCell = workbook.createName();
-                namedCell.setNameName("Lists" + columnLetter);
-                namedCell.setRefersToFormula("Lists!$" + columnLetter + "$2:$" + columnLetter + "$" + validationFields.length);
+                namedCell.setNameName(listsSheetName + columnLetter);
+                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + validationFields.length);
                 CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
                 // Set the Constraint to the Lists Table
-                DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint("Lists" + columnLetter);
+                DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + columnLetter);
                 // Create the data validation object
                 DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
                 dataValidation.setSuppressDropDownArrow(false);
@@ -266,13 +270,11 @@ public class templateProcessor {
 
     /**
      * Create the DataFields sheet
-     *
-     * @param sheetName
      */
-    public void createDataFields(String sheetName) {
+    public void createDataFields() {
 
         // Create the Instructions Sheet, which is always first
-        HSSFSheet dataFieldsSheet = workbook.createSheet(sheetName);
+        HSSFSheet dataFieldsSheet = workbook.createSheet(dataFieldsSheetName);
 
         // Loop through all fields in schema and provide names, uris, and definitions
         Iterator entitiesIt = getMapping().getEntities().iterator();
@@ -347,20 +349,94 @@ public class templateProcessor {
         }
     }
 
+
+    /**
+     * Create an instructions sheet
+     *
+     * @param defaultSheetName
+     */
+    private void createInstructions(String defaultSheetName) {
+        // Create the Instructions Sheet, which is always first
+        HSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
+        Row row;
+        Cell cell;
+
+        // Center align & bold for title
+        HSSFCellStyle titleStyle = workbook.createCellStyle();
+        HSSFFont bold = workbook.createFont();
+        bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        titleStyle.setFont(bold);
+        titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
+
+        // Make a big first column
+        instructionsSheet.setColumnWidth(0, 160 * 256);
+
+        // The name of this project as specified by the sheet
+        row = instructionsSheet.createRow(1);
+        cell = row.createCell(0);
+        cell.setCellStyle(titleStyle);
+        cell.setCellValue(fims.getMetadata().getShortname());
+
+        // Print todays date
+        row = instructionsSheet.createRow(2);
+        cell = row.createCell(0);
+        cell.setCellStyle(titleStyle);
+        DateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
+        Calendar cal = Calendar.getInstance();
+        cell.setCellValue("Template generated on " + dateFormat.format(cal.getTime()));
+
+        // Default sheet instructions
+        row = instructionsSheet.createRow(3);
+        cell = row.createCell(0);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue(defaultSheetName + " Tab");
+
+        row = instructionsSheet.createRow(4);
+        cell = row.createCell(0);
+        cell.setCellValue("Please fill out each field in the \"" + defaultSheetName + "\" tab as completely as possible. " +
+                "Fields in red are required (data cannot be uploaded to the database without these fields). " +
+                "Required and recommended fields are usually placed towards the beginning of the template. " +
+                "Some fields have a controlled vocabulary associated with them in the \"" + listsSheetName + "\" tab " +
+                "and are provided as data validation in the provided cells" +
+                "If you have more than one entry to a field (i.e. a list of publications), " +
+                "please delimit your list with semicolons (;).  Also please make sure that there are no newline " +
+                "characters (=carriage returns) in any of your metadata. Fields in the " + defaultSheetName + " tab may be re-arranged " +
+                "in any order so long as you don't change the field names.");
+
+        // data Fields sheet
+        row = instructionsSheet.createRow(6);
+        cell = row.createCell(0);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue(dataFieldsSheetName + " Tab");
+
+        row = instructionsSheet.createRow(7);
+        cell = row.createCell(0);
+        cell.setCellValue("This tab contains column names, associated URIs and definitions for each column.");
+
+        //Lists Tab
+        row = instructionsSheet.createRow(9);
+        cell = row.createCell(0);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue(listsSheetName + " Tab");
+
+        row = instructionsSheet.createRow(10);
+        cell = row.createCell(0);
+        cell.setCellValue("This tab contains controlled vocabulary lists for certain fields.  DO NOT EDIT this sheet!");
+    }
+
     /**
      * Create the Excel File for output
      *
-
      * @param defaultSheetname
      * @param uploadPath
      * @param fields
      * @return
      * @throws Exception
      */
-    public File createExcelFile( String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
+    public File createExcelFile(String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
 
-        createInstructions(instructionsSheetName);
-        createDataFields(dataFieldsSheetName);
+        createInstructions(defaultSheetname);
+        createDataFields();
         createDefaultSheet(defaultSheetname, fields);
         createListsSheetAndValidations(fields);
 
@@ -378,39 +454,6 @@ public class templateProcessor {
         out.close();
 
         return file;
-    }
-
-    private void createInstructions(String instructionsSheetName) {
-        // Create the Instructions Sheet, which is always first
-        HSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
-        Row row;
-        Cell cell;
-
-        // Center align & bold for title
-        HSSFCellStyle titleStyle = workbook.createCellStyle();
-        HSSFFont bold = workbook.createFont();
-        bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        titleStyle.setFont(bold);
-        titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
-
-        // Make a big first column
-        instructionsSheet.setColumnWidth(0, 200 * 256);
-
-        row = instructionsSheet.createRow(2);
-        cell = row.createCell(0);
-        cell.setCellStyle(titleStyle);
-        cell.setCellValue(fims.getMetadata().getShortname());
-
-        row = instructionsSheet.createRow(3);
-        cell = row.createCell(0);
-        cell.setCellStyle(titleStyle);
-        cell.setCellValue("Print today's date");
-
-        row = instructionsSheet.createRow(5);
-        cell = row.createCell(0);
-        cell.setCellStyle(headingStyle);
-        cell.setCellValue("...Tab");
-
     }
 
     /**
