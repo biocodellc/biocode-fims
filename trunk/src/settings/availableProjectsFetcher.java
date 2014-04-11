@@ -45,6 +45,22 @@ public class availableProjectsFetcher {
     }
 
     /**
+     * Here is a constructor for when we have no login information
+     */
+    public availableProjectsFetcher() {
+        this(null);
+    }
+
+    public availableProject getProject(Integer project_id) {
+       Iterator it = availableProjects.iterator();
+        while (it.hasNext())  {
+            availableProject availableProject = (availableProject)it.next();
+            if ( Integer.parseInt(availableProject.getProject_id()) == project_id)
+                return availableProject;
+        }
+        return null;
+    }
+    /**
      * Get an arraylist of availableProjects and their associated data
      * @return
      */
@@ -61,15 +77,25 @@ public class availableProjectsFetcher {
         is.close();
         return json;
     }
+
     public static void main (String[] args) throws Exception {
-        bcidConnector connector = new bcidConnector();
+      /*  bcidConnector connector = new bcidConnector();
         connector.authenticate("demo","demo");
         availableProjectsFetcher fetcher = new availableProjectsFetcher(connector);
-        Iterator it = fetcher.getAvailableProjects().iterator();
+        */
+        availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        availableProject aP = fetcher.getProject(1);
+        System.out.println(aP.getBiovalidator_validation_xml() + "\n" +
+                aP.getProject_title() + "\n" +
+                aP.getProject_code());
+
+
+        /*Iterator it = fetcher.getAvailableProjects().iterator();
         while (it.hasNext()) {
             availableProject a = (availableProject) it.next();
             System.out.println(a.getProject_code());
         }
+        */
     }
 
 }
