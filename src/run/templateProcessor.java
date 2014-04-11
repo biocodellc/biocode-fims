@@ -8,6 +8,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import settings.FIMSException;
 import settings.PathManager;
+import settings.availableProject;
+import settings.availableProjectsFetcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,8 +44,16 @@ public class templateProcessor {
     String dataFieldsSheetName = "Data Fields";
     String listsSheetName = "Lists";
 
+    File configFile;
+    Integer project_id;
 
-    public templateProcessor(String outputFolder, File configFile) throws Exception {
+    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+
+        // Instantiate the project output Folder
+        configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
+        configFile = fetcher.getOutputFile();
+
+        this.project_id = project_id;
         this.p = new process(outputFolder, configFile);
 
         mapping = new Mapping();
@@ -182,7 +192,7 @@ public class templateProcessor {
      *
      * @param fields
      */
-    public void createListsSheetAndValidations(List<String> fields) {
+    private void createListsSheetAndValidations(List<String> fields) {
         int column;
         HSSFSheet listsSheet = workbook.createSheet(listsSheetName);
 
@@ -221,8 +231,12 @@ public class templateProcessor {
                     HSSFCell cell = row.createCell(listColumnNumber);
                     cell.setCellValue(value);
                     cell.setCellStyle(style);
+
+
                 }
 
+                // autosize this column
+                listsSheet.autoSizeColumn(listColumnNumber);
 
                 // Get the letter of this column
                 String columnLetter = CellReference.convertNumToColString(listColumnNumber);
@@ -271,10 +285,14 @@ public class templateProcessor {
     /**
      * Create the DataFields sheet
      */
-    public void createDataFields() {
+    private void createDataFields() {
 
         // Create the Instructions Sheet, which is always first
         HSSFSheet dataFieldsSheet = workbook.createSheet(dataFieldsSheetName);
+
+        // First find all the required columns so we can look them up
+        LinkedList<String> requiredColumns = getRequiredColumns();
+
 
         // Loop through all fields in schema and provide names, uris, and definitions
         Iterator entitiesIt = getMapping().getEntities().iterator();
@@ -309,9 +327,17 @@ public class templateProcessor {
             while (attributesIt.hasNext()) {
                 Attribute a = (Attribute) attributesIt.next();
                 row = dataFieldsSheet.createRow(rowNum++);
-                row.createCell(NAME).setCellValue(a.getColumn());
+
+                // Column Name
+                Cell nameCell = row.createCell(NAME);
+                nameCell.setCellValue(a.getColumn());
+                if (requiredColumns.contains(a.getColumn()))
+                    nameCell.setCellStyle(requiredStyle);
+
                 row.createCell(ENTITY).setCellValue(e.getConceptAlias());
                 row.createCell(URI).setCellValue(a.getUri());
+
+                // Definition Cell
                 Cell defCell = row.createCell(DEFINITION);
                 defCell.setCellValue(a.getDefinition());
                 defCell.setCellStyle(wrapStyle);
@@ -330,12 +356,15 @@ public class templateProcessor {
      * @param defaultSheetname
      * @param fields
      */
-    public void createDefaultSheet(String defaultSheetname, List<String> fields) {
+    private void createDefaultSheet(String defaultSheetname, List<String> fields) {
         // Create the Default Sheet sheet
         defaultSheet = workbook.createSheet(defaultSheetname);
 
         //Create the header row
         HSSFRow row = defaultSheet.createRow(0);
+
+        // First find all the required columns so we can look them up
+        LinkedList<String> requiredColumns = getRequiredColumns();
 
         // Loop the fields that the user wants in the default sheet
         int columnNum = 0;
@@ -346,9 +375,19 @@ public class templateProcessor {
             //Set value to new value
             cell.setCellValue(field);
             cell.setCellStyle(headingStyle);
-        }
-    }
 
+            // Make required columns red
+            if (requiredColumns.contains(field))
+                cell.setCellStyle(requiredStyle);
+
+        }
+
+        // Auto-size the columns so we can see them all to begin with
+        for (int i = 0; i <= columnNum; i++) {
+            defaultSheet.autoSizeColumn(i);
+        }
+
+    }
 
     /**
      * Create an instructions sheet
@@ -371,14 +410,25 @@ public class templateProcessor {
         // Make a big first column
         instructionsSheet.setColumnWidth(0, 160 * 256);
 
+        //Fetch the project title from the BCID system
+        availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        availableProject aP = fetcher.getProject(project_id);
+        String project_title = aP.getProject_title();
+
+        // Hide the project_id in the first row
+        row = instructionsSheet.createRow(0);
+        cell = row.createCell(0);
+        cell.setCellValue("project_id=" + project_id);
+        row.setZeroHeight(true);
+
         // The name of this project as specified by the sheet
-        row = instructionsSheet.createRow(1);
+        row = instructionsSheet.createRow(2);
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
-        cell.setCellValue(fims.getMetadata().getShortname());
+        cell.setCellValue(project_title);
 
         // Print todays date
-        row = instructionsSheet.createRow(2);
+        row = instructionsSheet.createRow(3);
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
         DateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
@@ -386,13 +436,14 @@ public class templateProcessor {
         cell.setCellValue("Template generated on " + dateFormat.format(cal.getTime()));
 
         // Default sheet instructions
-        row = instructionsSheet.createRow(3);
+        row = instructionsSheet.createRow(5);
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(defaultSheetName + " Tab");
 
-        row = instructionsSheet.createRow(4);
+        row = instructionsSheet.createRow(6);
         cell = row.createCell(0);
+        cell.setCellStyle(wrapStyle);
         cell.setCellValue("Please fill out each field in the \"" + defaultSheetName + "\" tab as completely as possible. " +
                 "Fields in red are required (data cannot be uploaded to the database without these fields). " +
                 "Required and recommended fields are usually placed towards the beginning of the template. " +
@@ -404,23 +455,25 @@ public class templateProcessor {
                 "in any order so long as you don't change the field names.");
 
         // data Fields sheet
-        row = instructionsSheet.createRow(6);
+        row = instructionsSheet.createRow(8);
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(dataFieldsSheetName + " Tab");
 
-        row = instructionsSheet.createRow(7);
+        row = instructionsSheet.createRow(9);
         cell = row.createCell(0);
+        cell.setCellStyle(wrapStyle);
         cell.setCellValue("This tab contains column names, associated URIs and definitions for each column.");
 
         //Lists Tab
-        row = instructionsSheet.createRow(9);
+        row = instructionsSheet.createRow(11);
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(listsSheetName + " Tab");
 
-        row = instructionsSheet.createRow(10);
+        row = instructionsSheet.createRow(12);
         cell = row.createCell(0);
+        cell.setCellStyle(wrapStyle);
         cell.setCellValue("This tab contains controlled vocabulary lists for certain fields.  DO NOT EDIT this sheet!");
     }
 
@@ -435,9 +488,10 @@ public class templateProcessor {
      */
     public File createExcelFile(String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
 
+        // Create each of the sheets
         createInstructions(defaultSheetname);
-        createDataFields();
         createDefaultSheet(defaultSheetname, fields);
+        createDataFields();
         createListsSheetAndValidations(fields);
 
         // Write the excel file
@@ -462,9 +516,10 @@ public class templateProcessor {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
+        // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor("tripleOutput", configFile);
+        templateProcessor t = new templateProcessor(1, "tripleOutput", false);
+
         ArrayList<String> a = new ArrayList<String>();
         a.add("materialSampleID");
         a.add("country");
@@ -472,8 +527,11 @@ public class templateProcessor {
         a.add("habitat");
         a.add("sex");
 
-        System.out.println(t.createExcelFile("Samples", "tripleOutput", a).getAbsoluteFile().toString());
+        File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
+        System.out.println(outputFile.getAbsoluteFile().toString());
+
         //t.getRequiredColumns();
+
         //System.out.println(t.printCheckboxes());
     }
 }

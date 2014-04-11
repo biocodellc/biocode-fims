@@ -53,8 +53,8 @@ public class templates {
     public Response getTemplateCheckboxes(
             @QueryParam("project_id") Integer project_id) throws Exception {
 
-        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(uploadPath(),configFile);
+        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+        templateProcessor t = new templateProcessor(project_id,uploadPath(),true);
 
         // Write the all of the checkbox definitions to a String Variable
         String response = t.printCheckboxes();
@@ -75,10 +75,10 @@ public class templates {
             @FormParam("project_id") Integer project_id) throws Exception {
 
         // Create the configuration file
-        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
         // Create the template processor which handles all functions related to the template, reading, generation
-        templateProcessor t = new templateProcessor(uploadPath(),configFile);
+        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();
@@ -117,8 +117,8 @@ public class templates {
             @QueryParam("column_name") String column_name) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-         templateProcessor t = new templateProcessor(uploadPath(),configFile);
+        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+         templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 
         // Write the response to a String Variable
         String response = t.definition(column_name);
