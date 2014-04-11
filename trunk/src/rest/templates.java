@@ -82,11 +82,11 @@ public class templates {
 
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();
-        String instructionSheetName = "Instructions";
+
 
         File file = null;
         try {
-            file = t.createExcelFile(instructionSheetName, defaultSheetname, uploadPath(), fields);
+            file = t.createExcelFile(defaultSheetname, uploadPath(), fields);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(204).build();
