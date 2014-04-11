@@ -28,13 +28,16 @@ public class templateProcessor {
     HSSFSheet defaultSheet;
     HSSFWorkbook workbook;
 
-    HSSFCellStyle headingStyle, regularStyle, requiredStyle;
+    HSSFCellStyle headingStyle, regularStyle, requiredStyle, wrapStyle;
 
     final int NAME = 0;
     final int ENTITY = 1;
     final int URI = 2;
     final int DEFINITION = 3;
 
+
+    String instructionsSheetName = "Instructions";
+    String dataFieldsSheetName = "Data Fields";
 
     public templateProcessor(String outputFolder, File configFile) throws Exception {
         this.p = new process(outputFolder, configFile);
@@ -62,6 +65,9 @@ public class templateProcessor {
         redBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         redBold.setColor(HSSFFont.COLOR_RED);
         requiredStyle.setFont(redBold);
+
+        wrapStyle = workbook.createCellStyle();
+        wrapStyle.setWrapText(true);
 
         // Set the style for all other cells
         regularStyle = workbook.createCellStyle();
@@ -259,19 +265,19 @@ public class templateProcessor {
     }
 
     /**
-     * Create the instructions sheet
+     * Create the DataFields sheet
      *
-     * @param instructionSheetName
+     * @param sheetName
      */
-    public void createInstructions(String instructionSheetName) {
+    public void createDataFields(String sheetName) {
 
         // Create the Instructions Sheet, which is always first
-        HSSFSheet instructionsSheet = workbook.createSheet(instructionSheetName);
+        HSSFSheet dataFieldsSheet = workbook.createSheet(sheetName);
 
         // Loop through all fields in schema and provide names, uris, and definitions
         Iterator entitiesIt = getMapping().getEntities().iterator();
         int rowNum = 0;
-        Row row = instructionsSheet.createRow(rowNum++);
+        Row row = dataFieldsSheet.createRow(rowNum++);
 
         // HEADER ROWS
         Cell cell = row.createCell(NAME);
@@ -300,18 +306,20 @@ public class templateProcessor {
             // Then loop attributes
             while (attributesIt.hasNext()) {
                 Attribute a = (Attribute) attributesIt.next();
-                row = instructionsSheet.createRow(rowNum++);
+                row = dataFieldsSheet.createRow(rowNum++);
                 row.createCell(NAME).setCellValue(a.getColumn());
                 row.createCell(ENTITY).setCellValue(e.getConceptAlias());
                 row.createCell(URI).setCellValue(a.getUri());
-                row.createCell(DEFINITION).setCellValue(a.getDefinition());
+                Cell defCell = row.createCell(DEFINITION);
+                defCell.setCellValue(a.getDefinition());
+                defCell.setCellStyle(wrapStyle);
             }
         }
         // Set column width
-        instructionsSheet.autoSizeColumn(NAME);
-        instructionsSheet.autoSizeColumn(ENTITY);
-        instructionsSheet.autoSizeColumn(URI);
-        instructionsSheet.setColumnWidth(DEFINITION, 80 * 256);
+        dataFieldsSheet.autoSizeColumn(NAME);
+        dataFieldsSheet.autoSizeColumn(ENTITY);
+        dataFieldsSheet.autoSizeColumn(URI);
+        dataFieldsSheet.setColumnWidth(DEFINITION, 80 * 256);
     }
 
     /**
@@ -342,17 +350,17 @@ public class templateProcessor {
     /**
      * Create the Excel File for output
      *
-     * @param instructionSheetName
+
      * @param defaultSheetname
      * @param uploadPath
      * @param fields
      * @return
      * @throws Exception
      */
-    public File createExcelFile(String instructionSheetName, String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
+    public File createExcelFile( String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
 
-
-        createInstructions(instructionSheetName);
+        createInstructions(instructionsSheetName);
+        createDataFields(dataFieldsSheetName);
         createDefaultSheet(defaultSheetname, fields);
         createListsSheetAndValidations(fields);
 
@@ -372,6 +380,39 @@ public class templateProcessor {
         return file;
     }
 
+    private void createInstructions(String instructionsSheetName) {
+        // Create the Instructions Sheet, which is always first
+        HSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
+        Row row;
+        Cell cell;
+
+        // Center align & bold for title
+        HSSFCellStyle titleStyle = workbook.createCellStyle();
+        HSSFFont bold = workbook.createFont();
+        bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        titleStyle.setFont(bold);
+        titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
+
+        // Make a big first column
+        instructionsSheet.setColumnWidth(0, 200 * 256);
+
+        row = instructionsSheet.createRow(2);
+        cell = row.createCell(0);
+        cell.setCellStyle(titleStyle);
+        cell.setCellValue(fims.getMetadata().getShortname());
+
+        row = instructionsSheet.createRow(3);
+        cell = row.createCell(0);
+        cell.setCellStyle(titleStyle);
+        cell.setCellValue("Print today's date");
+
+        row = instructionsSheet.createRow(5);
+        cell = row.createCell(0);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue("...Tab");
+
+    }
+
     /**
      * main method for testing only
      *
@@ -388,7 +429,7 @@ public class templateProcessor {
         a.add("habitat");
         a.add("sex");
 
-        System.out.println(t.createExcelFile("instructions", "Samples", "tripleOutput", a).getAbsoluteFile().toString());
+        System.out.println(t.createExcelFile("Samples", "tripleOutput", a).getAbsoluteFile().toString());
         //t.getRequiredColumns();
         //System.out.println(t.printCheckboxes());
     }
