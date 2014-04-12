@@ -25,6 +25,9 @@
             <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
                 <field>yearCollected</field>
                 <field>permitInformation</field>
+                <field>locality</field>
+                <field>decimalLatitude</field>
+                <field>decimalLongitude</field>
                 <field>coordinateUncertaintyInMeters</field>
                 <field>georeferenceProtocol</field>
                 <field>basisOfIdentification</field>
