@@ -219,7 +219,8 @@ public class FIMSUploadOptions extends Options {
            // labelForgotPasswordOption.setVisible(false);
            /// labelForgotUsernameOption.setVisible(false);
             loginButtonOption.setVisible(false);
-            loginButtonOption.setHidden();
+            // Evidently, the setHidden option cannot be called here
+            //loginButtonOption.setHidden();
             return true;
         } else {
             Dialogs.showMessageDialog(username + " is not associated with any projects, talk " +
