@@ -411,9 +411,13 @@ public class templateProcessor {
         instructionsSheet.setColumnWidth(0, 160 * 256);
 
         //Fetch the project title from the BCID system
-        availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        // NOTE, getting this particular name from the BCID system throws a connection exception
+       /* availableProjectsFetcher fetcher = new availableProjectsFetcher();
         availableProject aP = fetcher.getProject(project_id);
         String project_title = aP.getProject_title();
+        */
+        // Use the shortName
+        String project_title = getFims().getMetadata().getShortname();
 
         // Hide the project_id in the first row
         row = instructionsSheet.createRow(0);
