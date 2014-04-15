@@ -6,7 +6,8 @@ import com.biomatters.geneious.publicapi.documents.DocumentUtilities;
 import com.biomatters.geneious.publicapi.plugin.*;
 import com.biomatters.geneious.publicapi.utilities.FileUtilities;
 import jebl.util.ProgressListener;
-import run.process_old;
+import run.process;
+import run.processController;
 import settings.FIMSException;
 import settings.fimsInputter;
 import settings.fimsPrinter;
@@ -143,8 +144,9 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process_old process = new process_old(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
-                process.runAll();
+                processController processController = new processController(project_id,expedition_code);
+                process process = new process(sampleDataFile,outputFolder,uploadOptions.connector, processController);// (sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
+                process.runAllLocally(false, true);
             } catch (FIMSException e) {
                 e.printStackTrace();
                 //Dialogs.showTextFieldDialog("Error Message", e.getMessage().toString(), null, null);

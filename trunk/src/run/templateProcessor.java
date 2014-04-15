@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class templateProcessor {
 
-    private process_old p;
+    private process p;
     private Mapping mapping;
     private Fims fims;
     private Validation validation;
@@ -52,7 +52,7 @@ public class templateProcessor {
         configFile = fetcher.getOutputFile();
 
         this.project_id = project_id;
-        this.p = new process_old(outputFolder, configFile);
+        this.p = new process(outputFolder, configFile);
 
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);

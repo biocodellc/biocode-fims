@@ -3,6 +3,7 @@ package digester;
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
+import run.processController;
 import settings.*;
 import triplify.triplifier;
 
@@ -161,23 +162,23 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(bcidConnector bcidConnector, Validation v, triplifier t, Integer project_id, String expedition_code, List<String> colNames) throws Exception {
+    public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) throws Exception {
+
         fimsPrinter.out.println("Converting Data Format ...");
-        this.expedition_code = expedition_code;
-        this.colNames = colNames;
+        this.expedition_code = processController.getExpeditionCode();
+        this.colNames = processController.getValidation().getTabularDataReader().getColNames();
         triplifier = t;
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(bcidConnector, project_id,expedition_code);
-                //"http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code);
+        dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(),expedition_code);
 
         // Create a connection to a SQL Lite Instance
         try {
-            this.connection = new Connection(v.getSqliteFile());
+            this.connection = new Connection(processController.getValidation().getSqliteFile());
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("unable to establish connection to SQLLite");
+            //e.printStackTrace();
+            throw new Exception("Unable to establish connection to SQLLite",e);
         }
         triplifier.getTriples(this);
         return true;

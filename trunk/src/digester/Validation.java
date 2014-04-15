@@ -172,7 +172,7 @@ public class Validation implements RendererInterface {
     /**
      * Print output for the commandline
      */
-    public boolean printMessages(processController processController) {
+    public processController printMessages(processController processController) {
         StringBuilder errorSB = new StringBuilder();
         StringBuilder warningSB = new StringBuilder();
 
@@ -194,21 +194,25 @@ public class Validation implements RendererInterface {
                 fimsPrinter.out.println(errorSB.toString());
                 fimsPrinter.out.println(warningSB.toString());
                 fimsPrinter.out.println("\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.");
-                return false;
+                processController.setHasErrors(true);
+                processController.setErrorsSB(errorSB);
+                processController.setWarningsSB(warningSB);
+                return processController;
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n" + warningSB.toString();
                     processController.setHasWarnings(true);
-                    processController.setClearedOfWarnings(fimsInputter.in.continueOperation(message));
-                    return processController.isClearedOfWarnings();
+                    processController.setWarningsSB(warningSB);
+                    return processController;
                     //Worksheet has no errors or warnings
                 } else {
-                    return true;
+                    processController.setHasWarnings(false);
+                    processController.setValidated(true);
+                    return processController;
                 }
             }
         }
-        return true;
+        return processController;
     }
 
     /**
