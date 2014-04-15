@@ -17,6 +17,11 @@ public class processController {
     private Integer project_id;
     private Validation validation;
 
+    public processController(Integer project_id, String expeditionCode) {
+        this.expeditionCode = expeditionCode;
+        this.project_id = project_id;
+    }
+
     public Boolean getHasWarnings() {
         return hasWarnings;
     }
@@ -53,16 +58,9 @@ public class processController {
         return expeditionCode;
     }
 
-    public void setExpeditionCode(String expeditionCode) {
-        this.expeditionCode = expeditionCode;
-    }
 
     public Integer getProject_id() {
         return project_id;
-    }
-
-    public void setProject_id(Integer project_id) {
-        this.project_id = project_id;
     }
 
     public Boolean isExpeditionAssignedToUser() {
@@ -83,18 +81,19 @@ public class processController {
 
     /**
      * Tells whether the given filename is ready to upload
+     *
      * @return
      */
     public Boolean isReadyToUpload() {
-       if (expeditionAssignedToUser &&
-               validated &&
-               clearedOfWarnings &&
-               inputFilename != null &&
-               expeditionCode != null &&
-               project_id > 0)
-           return true;
+        if (expeditionAssignedToUser &&
+                validated &&
+                clearedOfWarnings &&
+                inputFilename != null &&
+                expeditionCode != null &&
+                project_id > 0)
+            return true;
         else
-           return false;
+            return false;
     }
 
     public String printStatus() {
@@ -107,7 +106,7 @@ public class processController {
             retVal += "Validated";
         else
             retVal += "not validated";
-       return retVal;
+        return retVal;
 
     }
 

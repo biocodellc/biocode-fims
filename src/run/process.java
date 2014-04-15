@@ -38,14 +38,12 @@ public class process {
      *
      * @param inputFilename   The data to run.process, usually an Excel spreadsheet
      * @param outputFolder    Where to store output files
-     * @param expedition_code A distinct expedition code for the expedition being loaded, used to lookup expeditions in the BCID system
-     *                        for assigning identifier roots.
+
      */
     public process(
             String inputFilename,
             String outputFolder,
-            String expedition_code,
-            Integer project_id,
+
             bcidConnector connector,
             processController processController) throws FIMSException {
 
@@ -56,13 +54,10 @@ public class process {
         this.processController = processController;
 
         processController.setInputFilename(inputFilename);
-        processController.setExpeditionCode(expedition_code);
-        processController.setProject_id(project_id);
-
         this.outputFolder = outputFolder;
 
         // Control the file outputPrefix... set them here to expedition codes.
-        this.outputPrefix = expedition_code + "_output";
+        this.outputPrefix = processController.getExpeditionCode() + "_output";
         this.connector = connector;
 
         // Read the Configuration File
@@ -82,6 +77,14 @@ public class process {
         } catch (Exception e) {
             throw new FIMSException("Problem reading mapping in configuration file", e);
         }
+    }
+
+    /**
+     * Always use this method to fetch the process Controller from the process class as it has the current status
+     * @return
+     */
+    public processController getProcessController() {
+        return processController;
     }
 
     /**
@@ -124,7 +127,12 @@ public class process {
     public void runExpeditionCheck() throws FIMSException {
         // Check that the user that is logged in also owns the expedition_code
         try {
-            processController.setExpeditionAssignedToUser(connector.validateExpedition(processController.getExpeditionCode(), processController.getProject_id(), mapping));
+            processController.setExpeditionAssignedToUser(
+                    connector.validateExpedition(
+                            processController.getExpeditionCode(),
+                            processController.getProject_id(),
+                            mapping)
+            );
         } catch (Exception e) {
             //e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
@@ -502,16 +510,15 @@ public class process {
                     process p = new process(
                             input_file,
                             output_directory,
-                            expedition_code,
-                            project_id,
                             connector,
-                            new processController()
+                            new processController(project_id,expedition_code)
                     );
 
                     // DocumentOperation[]ing
                     fimsPrinter.out.println("Initializing ...");
                     fimsPrinter.out.println("\tinputFilename = " + input_file);
 
+                    // TODO: the expedition check requires feedback from the user... (but only if it doesn't exist) the way its coded won't work right now so commenting this out
                     p.runExpeditionCheck();
                     p.runValidation();
                     if (triplify)
