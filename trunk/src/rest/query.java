@@ -1,16 +1,8 @@
 package rest;
 
-import digester.Fims;
-import digester.Mapping;
-import fims.fimsModel;
-import fims.fimsQueryBuilder;
-import org.apache.commons.digester.Digester;
-import org.openjena.riot.ContentType;
 import run.configurationFileFetcher;
-import run.process;
+import run.process_old;
 import settings.FIMSException;
-import settings.PathManager;
-import settings.fimsPrinter;
 
 import javax.servlet.ServletContext;
 
@@ -22,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.net.URLDecoder;
 
 /**
@@ -48,11 +39,11 @@ public class query {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
-        process p = null;
+        process_old p = null;
         File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
         try {
-            p = new process(
+            p = new process_old(
                     uploadPath(),
                     configFile
             );
@@ -92,7 +83,7 @@ public class query {
             graphs = URLDecoder.decode(graphs, "UTF-8");
             File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
-            process p = new process(
+            process_old p = new process_old(
                     uploadPath(),
                     configFile
             );
@@ -138,7 +129,7 @@ public class query {
             File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
             // Create a process object
-            process p = new process(
+            process_old p = new process_old(
                     uploadPath(),
                     configFile
             );

@@ -8,8 +8,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import settings.FIMSException;
 import settings.PathManager;
-import settings.availableProject;
-import settings.availableProjectsFetcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public class templateProcessor {
 
-    private process p;
+    private process_old p;
     private Mapping mapping;
     private Fims fims;
     private Validation validation;
@@ -54,7 +52,7 @@ public class templateProcessor {
         configFile = fetcher.getOutputFile();
 
         this.project_id = project_id;
-        this.p = new process(outputFolder, configFile);
+        this.p = new process_old(outputFolder, configFile);
 
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);

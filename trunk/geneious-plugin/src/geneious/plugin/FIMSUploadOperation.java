@@ -6,10 +6,8 @@ import com.biomatters.geneious.publicapi.documents.DocumentUtilities;
 import com.biomatters.geneious.publicapi.plugin.*;
 import com.biomatters.geneious.publicapi.utilities.FileUtilities;
 import jebl.util.ProgressListener;
-import org.gbif.utils.text.EmailUtils;
-import run.process;
+import run.process_old;
 import settings.FIMSException;
-import settings.bcidConnector;
 import settings.fimsInputter;
 import settings.fimsPrinter;
 
@@ -18,11 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.biomatters.geneious.publicapi.plugin.PluginUtilities.getDocumentOperations;
 
 /**
  * Control the operation of the BiocodeFIMS upload operation, handling feedback from the system such as Warning
@@ -148,7 +143,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
             // Run the process
             try {
-                process process = new process(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
+                process_old process = new process_old(sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
                 process.runAll();
             } catch (FIMSException e) {
                 e.printStackTrace();

@@ -1,10 +1,8 @@
 package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.components.Dialogs;
-import com.biomatters.geneious.publicapi.components.ProgressFrame;
 import com.biomatters.geneious.publicapi.plugin.Options;
-import com.biomatters.geneious.publicapi.utilities.GuiUtilities;
-import run.process;
+import run.process_old;
 import settings.FIMSException;
 import settings.availableProject;
 import settings.bcidConnector;
@@ -99,7 +97,7 @@ public class FIMSUploadOptions extends Options {
                      try {
                         username = usernameOption.getValue();
                         password = String.valueOf(passwordField.getPassword());
-                        connector = process.createConnection(username, password);
+                        connector = process_old.createConnection(username, password);
                     } catch (FIMSException e) {
                         displayExceptionDialog(e);
                     }
