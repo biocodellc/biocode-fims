@@ -3,12 +3,11 @@ package digester;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
-import renderers.RowMessage;
 import renderers.RendererInterface;
+import run.processController;
 import settings.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -173,7 +172,7 @@ public class Validation implements RendererInterface {
     /**
      * Print output for the commandline
      */
-    public boolean printMessages() {
+    public boolean printMessages(processController processController) {
         StringBuilder errorSB = new StringBuilder();
         StringBuilder warningSB = new StringBuilder();
 
@@ -200,7 +199,9 @@ public class Validation implements RendererInterface {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
                     String message = "\tWarnings found on " + worksheet.getSheetname() + " worksheet.\n" + warningSB.toString();
-                    return fimsInputter.in.continueOperation(message);
+                    processController.setHasWarnings(true);
+                    processController.setClearedOfWarnings(fimsInputter.in.continueOperation(message));
+                    return processController.isClearedOfWarnings();
                     //Worksheet has no errors or warnings
                 } else {
                     return true;

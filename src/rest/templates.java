@@ -1,34 +1,14 @@
 package rest;
 
-import com.sun.org.apache.bcel.internal.classfile.AttributeReader;
-import digester.Attribute;
-import digester.Fims;
-import digester.Mapping;
-import org.apache.commons.digester.Digester;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.w3c.dom.Entity;
-import org.w3c.dom.NamedNodeMap;
-import run.configurationFileFetcher;
-import run.process;
+import run.process_old;
 import run.templateProcessor;
-import settings.FIMSException;
-import settings.PathManager;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.core.Context;
 
@@ -116,7 +96,7 @@ public class templates {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("column_name") String column_name) throws Exception {
 
-        process p = null;
+        process_old p = null;
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
          templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 

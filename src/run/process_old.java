@@ -25,7 +25,7 @@ import java.io.*;
  * in different situations, while specifying  fimsPrinter and fimsInputter classes for a variety of styles of output and
  * input
  */
-public class process {
+public class process_old {
 
     File configFile;
     String inputFilename;
@@ -48,7 +48,7 @@ public class process {
      *                          for assigning identifier roots.
      * @param write_spreadsheet Write back a spreadsheet to test to the entire cycle
      */
-    public process(
+    public process_old(
             String inputFilename,
             String outputFolder,
             String expedition_code,
@@ -80,7 +80,7 @@ public class process {
      * @param configFile
      * @throws FIMSException
      */
-    public process(
+    public process_old(
             String outputFolder,
             File configFile
     ) throws FIMSException {
@@ -176,7 +176,7 @@ public class process {
                     validation = new Validation();
                     addValidationRules(new Digester(), validation);
                     validation.run(tdr, outputPrefix, outputFolder, mapping);
-                    validationGood = validation.printMessages();
+                    validationGood = validation.printMessages(new processController());
 
                     // If Validation passed, we can go ahead and triplify
                     if (triplify & validationGood) {
@@ -359,6 +359,7 @@ public class process {
      * @param args
      */
     public static void main(String args[]) {
+        processController processController = new processController();
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
         String username = "";
         String password = "";
@@ -503,7 +504,7 @@ public class process {
 
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
 
-                process p = new process(
+                process_old p = new process_old(
                         output_directory,
                         file
                 );
@@ -517,7 +518,7 @@ public class process {
                 bcidConnector connector = createConnection(username, password);
 
                 if (connector != null) {
-                    process p = new process(
+                    process_old p = new process_old(
                             input_file,
                             output_directory,
                             expedition_code,
