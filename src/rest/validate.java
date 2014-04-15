@@ -5,6 +5,7 @@ import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.bcidConnector;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -61,18 +62,7 @@ public class validate {
         System.out.println(processController.printStatus());
 
         // Run the process
-        try {
-           // TODO: the expedition check requires feedback from the user... the way its coded won't work right now so commenting this out
-           // if (!processController.isExpeditionAssignedToUser())
-           //     p.runExpeditionCheck();
-            if (!processController.isClearedOfWarnings())
-                p.runValidation();
-            else
-                p.runUpload();
-
-        } catch (FIMSException e) {
-            e.printStackTrace();
-        }
+        // TODO: See process.runAllLocally() and copy the interactive steps there...
 
         // Set session's processController to what the process class did with it
         session.setAttribute("processController", p.getProcessController());
