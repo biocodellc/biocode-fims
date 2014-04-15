@@ -8,9 +8,13 @@ import digester.Validation;
  * working in a Servlet environment.
  */
 public class processController {
+    private Boolean hasErrors = false;
+    private StringBuilder errorsSB;
     private Boolean hasWarnings = false;
+    private StringBuilder warningsSB;
     private Boolean clearedOfWarnings = false;
-    private Boolean expeditionAssignedToUser = false;   // checks that the user is authenticated against the supplied expedition
+    private Boolean expeditionAssignedToUserAndExists = false;   // checks that the user is authenticated against the supplied expedition
+    private Boolean expeditionCreateRequired = false;
     private Boolean validated = false;
     private String inputFilename;
     private String expeditionCode;
@@ -22,12 +26,44 @@ public class processController {
         this.project_id = project_id;
     }
 
+    public StringBuilder getErrorsSB() {
+        return errorsSB;
+    }
+
+    public void setErrorsSB(StringBuilder errorsSB) {
+        this.errorsSB = errorsSB;
+    }
+
+    public StringBuilder getWarningsSB() {
+        return warningsSB;
+    }
+
+    public void setWarningsSB(StringBuilder warningsSB) {
+        this.warningsSB = warningsSB;
+    }
+
+    public Boolean isExpeditionCreateRequired() {
+        return expeditionCreateRequired;
+    }
+
+    public void setExpeditionCreateRequired(Boolean expeditionCreateRequired) {
+        this.expeditionCreateRequired = expeditionCreateRequired;
+    }
+
     public Boolean getHasWarnings() {
         return hasWarnings;
     }
 
     public void setHasWarnings(Boolean hasWarnings) {
         this.hasWarnings = hasWarnings;
+    }
+
+    public Boolean getHasErrors() {
+        return hasErrors;
+    }
+
+    public void setHasErrors(Boolean hasErrors) {
+        this.hasErrors = hasErrors;
     }
 
     public Boolean isClearedOfWarnings() {
@@ -63,12 +99,12 @@ public class processController {
         return project_id;
     }
 
-    public Boolean isExpeditionAssignedToUser() {
-        return expeditionAssignedToUser;
+    public Boolean isExpeditionAssignedToUserAndExists() {
+        return expeditionAssignedToUserAndExists;
     }
 
-    public void setExpeditionAssignedToUser(Boolean expeditionAssignedToUser) {
-        this.expeditionAssignedToUser = expeditionAssignedToUser;
+    public void setExpeditionAssignedToUserAndExists(Boolean expeditionAssignedToUserAndExists) {
+        this.expeditionAssignedToUserAndExists = expeditionAssignedToUserAndExists;
     }
 
     public Validation getValidation() {
@@ -85,7 +121,7 @@ public class processController {
      * @return
      */
     public Boolean isReadyToUpload() {
-        if (expeditionAssignedToUser &&
+        if (expeditionAssignedToUserAndExists &&
                 validated &&
                 clearedOfWarnings &&
                 inputFilename != null &&
@@ -98,16 +134,28 @@ public class processController {
 
     public String printStatus() {
         String retVal = "";
-        if (clearedOfWarnings)
-            retVal += "cleared Warnings";
-        else
-            retVal += "not cleared warnings";
-        if (validated)
-            retVal += "Validated";
-        else
-            retVal += "not validated";
-        return retVal;
+        retVal += "\tproject_id = " + project_id + "\n";
+        retVal += "\texpeditionCode = " + expeditionCode + "\n";
+        retVal += "\tinputFilename = " + inputFilename + "\n";
 
+        if (clearedOfWarnings)
+            retVal += "\tclearedOfWarnings=true\n";
+        else
+            retVal += "\tclearedOfWarnings=true\n";
+        if (hasWarnings)
+            retVal += "\thasWarnings=true\n";
+        else
+            retVal += "\thasWarnings=true\n";
+        if (expeditionAssignedToUserAndExists)
+            retVal += "\texpeditionAssignedToUser=true\n";
+        else
+            retVal += "\texpeditionAssignedToUser=false\n";
+        if (validated)
+            retVal += "\tvalidated=true\n";
+        else
+            retVal += "\tvalidated=false\n";
+
+        return retVal;
     }
 
 

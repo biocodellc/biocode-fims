@@ -36,9 +36,8 @@ public class process {
     /**
      * Setup class variables for processing FIMS data.
      *
-     * @param inputFilename   The data to run.process, usually an Excel spreadsheet
-     * @param outputFolder    Where to store output files
-
+     * @param inputFilename The data to run.process, usually an Excel spreadsheet
+     * @param outputFolder  Where to store output files
      */
     public process(
             String inputFilename,
@@ -81,6 +80,7 @@ public class process {
 
     /**
      * Always use this method to fetch the process Controller from the process class as it has the current status
+     *
      * @return
      */
     public processController getProcessController() {
@@ -124,21 +124,80 @@ public class process {
         return bcidConnector;
     }
 
+    /**
+     * Check the status of this expedition
+     *
+     * @throws FIMSException
+     */
     public void runExpeditionCheck() throws FIMSException {
-        // Check that the user that is logged in also owns the expedition_code
         try {
-            processController.setExpeditionAssignedToUser(
-                    connector.validateExpedition(
-                            processController.getExpeditionCode(),
-                            processController.getProject_id(),
-                            mapping)
-            );
+            Boolean checkExpedition = connector.checkExpedition(processController);
+            processController.setExpeditionCreateRequired(checkExpedition);
+            if (!checkExpedition) {
+                processController.setExpeditionAssignedToUserAndExists(true);
+            }
         } catch (Exception e) {
-            //e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
     }
 
+    /**
+     * Create an expedition
+     *
+     * @throws FIMSException
+     */
+    public void runExpeditionCreate() throws FIMSException {
+        try {
+            connector.createExpedition(processController, mapping);
+            processController.setExpeditionCreateRequired(false);
+            processController.setExpeditionAssignedToUserAndExists(true);
+        } catch (Exception e) {
+            throw new FIMSException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * runAll method is designed to go through the FIMS process for a local application.  The REST services
+     * would handle user input/output differently
+     */
+    public void runAllLocally(Boolean triplifier, Boolean upload) throws FIMSException {
+
+        // Validation Step
+        runValidation();
+        if (!processController.isValidated() && processController.getHasWarnings()) {
+            String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
+            Boolean continueOperation = fimsInputter.in.continueOperation(message);
+
+            if (!continueOperation)
+                return;
+            processController.setClearedOfWarnings(true);
+            processController.setValidated(true);
+        }
+
+        // We only need to check on assigning Expedition if the user wants to triplify or upload data
+        if (triplifier || upload) {
+            // Expedition Check Step
+            if (!processController.isExpeditionAssignedToUserAndExists())
+                runExpeditionCheck();
+            // if an expedition creation is required, get feedback from user
+            if (processController.isExpeditionCreateRequired()) {
+                String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                        "Do you wish to create it now?" +
+                        "\nIf you choose to continue, your data will be associated with this new expedition code.";
+                Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                if (!continueOperation)
+                    return;
+                else
+                    runExpeditionCreate();
+            }
+
+            // Triplify OR Upload -- not ever both
+            if (triplifier)
+                runTriplifier();
+            else if (upload)
+                runUpload();
+        }
+    }
 
     public void runValidation() throws FIMSException {
         Validation validation = null;
@@ -154,10 +213,11 @@ public class process {
             validation = new Validation();
             addValidationRules(new Digester(), validation);
             validation.run(tdr, outputPrefix, outputFolder, mapping);
-            //validationGood = validation.printMessages();
-            //TODO: handle warnings!!
-            processController.setValidated(validation.printMessages(processController));
+            //validation.printMessages(processController);
+
+            processController = validation.printMessages(processController);
             processController.setValidation(validation);
+
         } catch (Exception e) {
             throw new FIMSException(e.getMessage(), e);
         }
@@ -170,16 +230,16 @@ public class process {
             try {
                 triplifyGood = mapping.run(
                         connector,
-                        processController.getValidation(),
                         new triplifier(outputPrefix, outputFolder),
-                        processController.getProject_id(),
-                        processController.getExpeditionCode(),
-                        processController.getValidation().getTabularDataReader().getColNames());
+                        processController
+                );
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new FIMSException(e.getMessage(), e);
             }
             mapping.print();
         }
+
         return triplifyGood;
     }
 
@@ -196,19 +256,10 @@ public class process {
                 throw new FIMSException(e.getMessage(), e);
             }
         } else {
-            throw new FIMSException("Unable to upload datasource");
+            throw new FIMSException("Unable to upload datasource.");
         }
     }
 
-    /**
-     * runAll method is designed to go through entire fims run.process: validate, triplify, upload
-     * TODO: clean up FIMSExceptions to throw only unexpected errors so they can be handled more elegantly
-     */
-    public void runAll() throws FIMSException {
-        runExpeditionCheck();
-        runValidation();
-        runUpload();
-    }
 
     /**
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
@@ -511,22 +562,20 @@ public class process {
                             input_file,
                             output_directory,
                             connector,
-                            new processController(project_id,expedition_code)
+                            new processController(project_id, expedition_code)
                     );
 
                     // DocumentOperation[]ing
                     fimsPrinter.out.println("Initializing ...");
                     fimsPrinter.out.println("\tinputFilename = " + input_file);
 
-                    // TODO: the expedition check requires feedback from the user... (but only if it doesn't exist) the way its coded won't work right now so commenting this out
-                    p.runExpeditionCheck();
-                    p.runValidation();
-                    if (triplify)
-                        p.runTriplifier();
-                    else if (upload)
-                        p.runUpload();
-                    // p.runAll();
+
+                    //p.runExpeditionCheck();
+                    //p.runValidation();
+
+                    p.runAllLocally(triplify, upload);
                 }
+
             }
         } catch (Exception e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());

@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import run.processController;
 
 import java.io.*;
 import java.net.*;
@@ -244,13 +245,11 @@ public class bcidConnector {
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is unique within
      * a particular project
      *
-     * @param expedition_code
-     * @param mapping
      * @return
      * @throws Exception
      */
-    public boolean validateExpedition(String expedition_code, Integer project_id, Mapping mapping) throws Exception {
-        URL url = new URL(expeditionValidationURL + project_id + "/" + expedition_code);
+    public boolean checkExpedition(processController processController) throws Exception {
+        URL url = new URL(expeditionValidationURL + processController.getProject_id() + "/" + processController.getExpeditionCode());
         String response = createGETConnection(url);
         String action = response.split(":")[0];
         if (getResponseCode() != 200) {
@@ -259,57 +258,59 @@ public class bcidConnector {
             if (action.equals("error")) {
                 throw new Exception(response);
             } else if (action.equals("update")) {
-                return true;
+                return false;
             } else if (action.equals("insert")) {
-                String message = "\nThe expedition code \"" + expedition_code + "\" does not exist.  " +
+                return true;
+                /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
                         "Do you wish to create it now?" +
                         "\nIf you choose to continue, your data will be associated with this new expedition code.";
-                if (fimsInputter.in.continueOperation(message)) {
-                    try {
-                        fimsPrinter.out.println("\tCreating expedition " + expedition_code + " ... this is a one time process " +
-                                "before loading each spreadsheet and may take a minute...");
-                        String output = createExpedition(
-                                expedition_code,
-                                expedition_code + " spreadsheet expedition",
-                                project_id);
-                        //fimsPrinter.out.println("\t" + output);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new Exception("Unable to create expedition " + expedition_code + "\n" +
-                                "Please be sure expedition codes are between 4 and 6 characters in length\n" +
-                                "and do not contain spaces or special characters.", e);
-                    }
-                    // Loop the mapping file and create a BCID for every entity that we specified there!
-                    if (mapping != null) {
-                        LinkedList<Entity> entities = mapping.getEntities();
-                        Iterator it = entities.iterator();
-                        while (it.hasNext()) {
-                            Entity entity = (Entity) it.next();
-                            try {
-                                fimsPrinter.out.println("\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
-                                // Create the entity BCID
-                                String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
-                                // Associate this identifier with this expedition
-                                associateBCID(project_id, expedition_code, bcid);
-
-                            } catch (Exception e) {
-                                throw new Exception("The expedition " + expedition_code +
-                                        " has been created but unable to create a BCID for\n" +
-                                        "resourceType = " + entity.getConceptURI(), e);
-                            }
-                        }
-                    }
-
-                    return true;
-
-
-                } else {
-                    return false;
-                }
+                Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                return continueOperation;
+                */
             } else {
                 return false;
             }
         }
+    }
+
+    public boolean createExpedition(processController processController, Mapping mapping) throws Exception {
+        try {
+            fimsPrinter.out.println("\tCreating expedition " + processController.getExpeditionCode() + " ... this is a one time process " +
+                    "before loading each spreadsheet and may take a minute...");
+            String output = createExpedition(
+                    processController.getExpeditionCode(),
+                    processController.getExpeditionCode() + " spreadsheet expedition",
+                    processController.getProject_id());
+            //fimsPrinter.out.println("\t" + output);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            //
+            throw new Exception("Unable to create expedition " + processController.getExpeditionCode() + "\n" + e.getMessage(), e);
+        }
+        // Loop the mapping file and create a BCID for every entity that we specified there!
+        if (mapping != null) {
+            LinkedList<Entity> entities = mapping.getEntities();
+            Iterator it = entities.iterator();
+            while (it.hasNext()) {
+                Entity entity = (Entity) it.next();
+                try {
+                    fimsPrinter.out.println("\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
+                    // Create the entity BCID
+                    String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+                    // Associate this identifier with this expedition
+                    associateBCID(processController.getProject_id(), processController.getExpeditionCode(), bcid);
+
+                } catch (Exception e) {
+                    throw new Exception("The expedition " + processController.getExpeditionCode() +
+                            " has been created but unable to create a BCID for\n" +
+                            "resourceType = " + entity.getConceptURI(), e);
+                }
+            }
+        }
+
+        return true;
+
+
     }
 
     /**

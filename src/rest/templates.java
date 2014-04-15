@@ -1,6 +1,5 @@
 package rest;
 
-import run.process_old;
 import run.templateProcessor;
 
 import javax.servlet.ServletContext;
@@ -96,7 +95,6 @@ public class templates {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("column_name") String column_name) throws Exception {
 
-        process_old p = null;
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
          templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 

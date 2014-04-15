@@ -1,7 +1,7 @@
 package rest;
 
 import run.configurationFileFetcher;
-import run.process_old;
+import run.process;
 import settings.FIMSException;
 
 import javax.servlet.ServletContext;
@@ -39,11 +39,11 @@ public class query {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
-        process_old p = null;
+        process p = null;
         File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
         try {
-            p = new process_old(
+            p = new process(
                     uploadPath(),
                     configFile
             );
@@ -83,7 +83,7 @@ public class query {
             graphs = URLDecoder.decode(graphs, "UTF-8");
             File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
-            process_old p = new process_old(
+            process p = new process(
                     uploadPath(),
                     configFile
             );
@@ -129,7 +129,7 @@ public class query {
             File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
 
             // Create a process object
-            process_old p = new process_old(
+            process p = new process(
                     uploadPath(),
                     configFile
             );
