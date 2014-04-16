@@ -1,0 +1,38 @@
+
+  	</div>
+
+	    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js"></script>
+    <script>
+      $(function() {
+          FastClick.attach(document.body);
+      });
+      $('#sort_button').click(function(){
+        $('.col-md-4').sort(function (a, b) {
+          console.log('inside sorting function');
+          var contentA =parseInt( $(a).attr('data-sort'));
+          var contentB =parseInt( $(b).attr('data-sort'));
+          return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+        }).appendTo('#term_row')
+       });
+      $('.panel-heading').click(function(){
+        $(this).children(".expand_contract").toggleClass("glyphicon-plus-sign glyphicon-minus-sign");
+        $(this).next(".panel-body").toggle();
+      });
+      $('#expand_all').click(function(){
+        $(".panel-body").slideDown(300);
+        $(".panel-heading .glyphicon").toggleClass("glyphicon-plus glyphicon-minus");
+      });
+      $('#collapse_all').click(function(){
+        $(".panel-body").slideUp(300);
+        $(".panel-heading .glyphicon").toggleClass("glyphicon-plus glyphicon-minus");
+      });      
+    </script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+ 
+  </body>
+</html>
