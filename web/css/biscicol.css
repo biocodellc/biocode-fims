@@ -1,0 +1,303 @@
+/**
+ * Document-wide styles.
+ **/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    //background: #f6f7b4;
+}
+
+a {
+    text-decoration: none;
+    color: #00A;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 180%;
+    text-align: left;
+    margin: 0;
+}
+
+h2 {
+    font-size: 130%;
+}
+
+table {
+    border-spacing: 7px 3px;
+    min-width: 200px;
+}
+
+/**
+ * The header and sticky-footer.
+ **/
+#container {
+    min-height: 100%;
+    margin-bottom: -54px;
+    position: relative;
+}
+
+#header {
+    color: #333;
+    margin: 4px 6px;
+    margin-bottom: 0;
+    padding: 4px 22px;
+    border: solid 1px #888;
+    border-radius: 4px;
+    background: #c8c8c8;
+    background: -webkit-linear-gradient(top, #eee, #bbb);
+    background: -moz-linear-gradient(top, #eee, #bbb);
+    background: linear-gradient(to bottom, #eee, #bbb);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, .3);
+}
+
+#footer {
+    font-size: 90%;
+    padding: 6px 10px;
+    #margin-top: 30px;
+    border-top: solid 1px #888;
+    border-bottom: solid 1px #888;
+    height: 30px;
+    position: relative;
+    color: gray;
+}
+
+#clearfooter {
+    height: 60px;
+    clear: both;
+}
+
+#header a.help {
+    font-size: 90%;
+    float: right;
+    margin-left: 10px;
+}
+
+/**
+ * Popup help.
+ **/
+div#helpmsg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: none;
+    width: 360px;
+    background: #fff;
+    background: rgba(255, 255, 255, .88);
+    border: solid 1px gray;
+    border-radius: 5px;
+    padding: 10px 16px;
+    font-size: 72%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, .5);
+}
+
+div#helpmsg > a {
+    font-weight: bold;
+    color: #22c;
+}
+
+div#helpmsg p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/**
+ * The main expedition sections.
+ **/
+div.link {
+    display:inline-block;
+    margin:4px;
+    text-decoration: none;
+    color: #00A;
+}
+div.link:hover {
+    text-decoration: underline;
+}
+
+div.disabledlink {
+    display:inline-block;
+    margin:4px;
+    text-decoration: none;
+    color: gray;
+}
+
+div.separator {
+    display:inline-block;
+    margin:4px;
+}
+
+div.section {
+    margin: 10px 2em;
+}
+
+div.sectioncontent {
+    padding: 6px 10px;
+    padding-bottom: 60px;
+    font-size: 90%;
+}
+
+div.sectioncontent-results {
+    style="overflow:auto;"
+}
+
+.sectioncontent table {
+    margin: 10px 0;
+    border: solid 1px #888;
+    border-width: 2px 1px 2px 1px;
+    border-radius: 6px;
+    background: #eee;
+    color: #000;
+}
+
+table.subtable {
+    background:#ffffff;
+    margin-left:12px;
+    border:none;
+}
+
+/**
+* A special Div class for toggling content on and off
+**/
+div.toggle-content {
+    display:none;
+    margin: 0px 20px;
+}
+
+.img-arrow {
+    vertical-align:middle;
+    height:20px;
+    border:none;
+}
+
+.error {
+    color: #d73027;
+    font-size: 16px;
+}
+
+#login input {
+    margin: 5px;
+}
+
+.menu {
+    display:inline-block;
+    margin:4px;
+    -webkit-padding-start: 0px;
+}
+li {
+    list-style:none;
+}
+.menu li {list-style:none;}
+.menu ul { display: none; list-style-type: none;} /* Hide before plugin loads */
+.menu ul.dropit-submenu {
+    position:absolute;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #b2b2b2;
+    padding: 6px 0;
+    margin: 3px 0 0 1px;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+       -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}
+.menu ul.dropit-submenu a.enabled {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    padding: 0 10px;
+}
+
+.menu ul.dropit-submenu a.disabled {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    color: #7a868e;
+    padding: 0 10px;
+}
+
+.menu ul.dropit-submenu a:hover {
+    background: #248fc1;
+    color: #fff;
+    text-decoration: none;
+}
+
+#abstract_box {
+    resize: none;
+}
+
+.project_config {
+    width: 443px;
+}
+
+#confirm {
+    display: none;
+}
+
+.ui-widget {
+    font-size: .9em;
+}
+
+.ui-widget-overlay {
+    background: #eeeeee;
+    opacity: .7;
+}
+
+.ui-dialog-title {
+    float: none;
+    display: block;
+    text-align: center;
+}
+
+.ui-dialog {
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, .15);
+}
+
+.ui-dialog-titlebar-close {
+    display: none;
+}
+
+.ui-widget .ui-widget {
+    font-size: .8em;
+}
+
+.ui-button {
+    color: #00A;
+}
+
+.ui-widget-header {
+    color: #333;
+    background: #c8c8c8;
+    background: -webkit-linear-gradient(top, #eee, #bbb);
+    background: -moz-linear-gradient(top, #eee, #bbb);
+    background: linear-gradient(to bottom, #eee, #bbb);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, .1);
+}
+
+#pwindicator {
+    margin: -4px 2px -2px;
+    font-size: .85em;
+}
+
+.pw-weak .label {
+    color: #d73027;
+}
+
+.pw-good .label {
+    color: #25D500;
+}
+
+.pw-strong .label {
+    color: #188B00;
+}

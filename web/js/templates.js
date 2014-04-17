@@ -43,7 +43,6 @@
 
     // Processing functions
 	$(function () {
-		$('#available_tags a:first').tab('show');
 		$('input').click(populate_bottom);
 
 		$('#default_bold').click(function() {

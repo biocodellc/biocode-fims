@@ -142,7 +142,7 @@ public class templateProcessor {
      */
     public String printCheckboxes() throws FIMSException {
         LinkedList<String> requiredColumns = getRequiredColumns();
-        String output = "";
+        StringBuilder output = new StringBuilder();
         // A list of names we've already added
         ArrayList addedNames = new ArrayList();
         try {
@@ -162,14 +162,15 @@ public class templateProcessor {
                         aRequiredColumn = true;
 
                     // Construct the checkbox text
-                    output += "<label class='checkbox'>\n" +
-                            "\t<input type='checkbox' class='check_boxes' value='" + column + "'";
+                    //output.append("<label class='checkbox'>\n" +
+                            output.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
                     if (aRequiredColumn)
-                        output += " checked disabled";
+                        output.append(" checked disabled");
 
-                    output += ">" + column + " \n" +
-                            "\t<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
-                            "</label>\n";
+                    output.append(">" + column + " \n" +
+                            "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
+                            "<br>\n");// +
+                            //"</label>\n";
                 }
 
                 // Now that we've added this to the output, add it to the ArrayList so we don't add it again
@@ -182,7 +183,7 @@ public class templateProcessor {
             e.printStackTrace();
             throw new FIMSException("exception handling templates " + e.getMessage(), e);
         }
-        return output;
+        return output.toString();
     }
 
     /**
