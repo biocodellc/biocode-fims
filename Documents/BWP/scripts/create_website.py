@@ -5,7 +5,7 @@ latest_term_file = "../terms/terms_4_16.tsv"
 latest_list_file = "../terms/lists_4_16.tsv"
 website_header = "../term_site/terms_header.html"
 website_footer = "../term_site/terms_footer.html"
-website_output = "../term_site/terms_4_16.html"
+website_output = "../term_site/terms_4_17.html"
 
 
 
@@ -67,7 +67,7 @@ with open(website_output, 'w') as outfile:
 
 		outfile.write("\n")
 		outfile.write("\t\t\t</div>\n")
-		outfile.write("\t\t\t<div class='panel-body'>\n")
+		outfile.write("\t\t\t<div class='panel-body panel-collapsed'>\n")
 		outfile.write("\t\t\t\t<p><span class='term_key'>Category: </span>%s</p>\n" % bwp_terms[term]['Category'])
 		if 'DwC Term' in bwp_terms[term]:
 			outfile.write("\t\t\t\t<p><span class='term_key'>DarwinCore Equivalent: </span><a href='%s' target='_blank'>%s</a></p>\n" % (bwp_terms[term]['DwC Term'],bwp_terms[term]['DwC Term']))

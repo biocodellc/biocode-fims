@@ -18,7 +18,7 @@
     margin-bottom: 10px;
     border-color: black;
    }   
-  .panel-body{
+  .panel-collapsed{
     display:none;
    }
    .panel-heading{
@@ -68,5 +68,22 @@
           <p>Specimen metadata must be entered in the standard spreadsheet template before it can be uploaded to the BWP Field Information Management System (FIMS).</p>
           <p>The most recent version of the spreadsheet template can be downloaded here: <a href='BWP_FIMS_Spreadsheet_16_Apr_14.xlsx'>BWP_FIMS_Spreadsheet_16_Apr_14.xlsx</a>.</p>
           <p>Below are all of the column headings from this spreadsheet, along with detailed definitions and guidance on how to fill out your spreadsheets for this project.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 col-md-offset-3'>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">KEY</h3>
+            </div>
+            <div class="panel-body">
+              <p><span class='term_key'><span class="glyphicon glyphicon-exclamation-sign"></span> Required</span></p>
+              <p>Not having an entry in a <strong>Required</strong> column will prompt an Error, and you will not be able to upload your spreadsheet to the FIMS.</p>
+              <p><span class='term_key'><span class="glyphicon glyphicon-warning-sign"></span> Highly Recommended</span></p>
+              <p>Not having an entry in a <strong>Highly Recommended</strong> column will prompt a Warning. You will receive an alert message, but still be able to upload your spreadsheet to the FIMS.</p>    
+              <p><span class='term_key'><span class="glyphicon glyphicon-list-alt"></span> Controlled Vocabulary</span></p>
+              <p>All entries in a column with this icon will be checked against a list in a <strong>Controlled Vocabulary</strong>. If the entry in this column is not in this list, it will either cause an Error or a Warning. Check the Controlled Vocabulary section of the definition to see the list, and to see whether not being in that list will cause an Error or Warning.</p>
+            </div>
+          </div>
         </div>
       </div>

@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico/favicon.png">
+
+    <title>Barcode of Wildlife Project Term Definitions</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+   
+   <style>
+   body{
+    background-color: #F3F3F3;
+   }
+   .panel{
+    margin-bottom: 10px;
+    border-color: black;
+   }   
+  .panel-collapsed{
+    display:none;
+   }
+   .panel-heading{
+    cursor:pointer;
+    border-bottom: 1px solid black;
+    }
+    .panel-heading, .term_key{
+    font-weight: bold;
+   }
+   .required .panel-heading{
+    background-color:#A4C2F4;
+   }
+    .recommended .panel-heading{
+    background-color:#FCE5CD;
+   }
+   .glyphicon{
+    padding-right: 5px;
+   }
+   .well{
+    background-color: white;
+   }
+
+   </style>
+    
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48912913-1', 'barcodeofwildlife.org');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+  <body>
+  	<div class='container-fluid'>
+      <div class='row'>
+        <div class='col-md-6 col-md-offset-3'>
+          <h2>Barcode of Wildlife Term Definitions</h2>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 col-md-offset-3 well'>
+          <p>Specimen metadata must be entered in the standard spreadsheet template before it can be uploaded to the BWP Field Information Management System (FIMS).</p>
+          <p>The most recent version of the spreadsheet template can be downloaded here: <a href='BWP_FIMS_Spreadsheet_16_Apr_14.xlsx'>BWP_FIMS_Spreadsheet_16_Apr_14.xlsx</a>.</p>
+          <p>Below are all of the column headings from this spreadsheet, along with detailed definitions and guidance on how to fill out your spreadsheets for this project.</p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6 col-md-offset-3'>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">KEY</h3>
+            </div>
+            <div class="panel-body">
+              <p><span class='term_key'><span class="glyphicon glyphicon-exclamation-sign"></span> Required</span></p>
+              <p>Not having an entry in a <strong>Required</strong> column will prompt an Error, and you will not be able to upload your spreadsheet to the FIMS.</p>
+              <p><span class='term_key'><span class="glyphicon glyphicon-warning-sign"></span> Highly Recommended</span></p>
+              <p>Not having an entry in a <strong>Highly Recommended</strong> column will prompt a Warning. You will receive an alert message, but still be able to upload your spreadsheet to the FIMS.</p>    
+              <p><span class='term_key'><span class="glyphicon glyphicon-list-alt"></span> Controlled Vocabulary</span></p>
+              <p>All entries in a column with this icon will be checked against a list in a <strong>Controlled Vocabulary</strong>. If the entry in this column is not in this list, it will either cause an Error or a Warning. Check the Controlled Vocabulary section of the definition to see the list, and to see whether not being in that list will cause an Error or Warning.</p>
+            </div>
+          </div>
+        </div>
+      </div><div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>processingLab<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>BWPSpecific</p>
+				<p><span class='term_key'>Definition: </span>The lab where the specimen will be processed from extraction through to PCR purification.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#processingLabList'  data-toggle='modal'>processingLab List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>extractionPlate<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>Definition: </span>Barcode of the FluidX plate that is holding the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>extractionWell<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>Definition: </span>This is the plate position of the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#plateWellList'  data-toggle='modal'>plateWell List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>occurrenceID<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/occurrenceID' target='_blank'>http://rs.tdwg.org/dwc/terms/occurrenceID</a></p>
+				<p><span class='term_key'>Definition: </span>This is the unique id given to the specimen the tissue was taken from. It is constructed from the institutionCode, collectionCode (if one exists), and catalogNumber, joined by a colon (:).</p>
+				<p><span class='term_key'>Example: </span>USNM:Mammals:1234</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>institutionCode<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/institutionCode' target='_blank'>http://rs.tdwg.org/dwc/terms/institutionCode</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>Part of specimen_voucher</p>
+				<p><span class='term_key'>Definition: </span>This is the acronym for the institution or repository where the specimen voucher is stored. GRBio.org is a registry for all institution codes, and the institutionCode field will be validated against its list of codes.</p>
+				<p><span class='term_key'>Example: </span>USNM is the institutionCode for the Smithsonian Natural History Museum (United States National Museum).</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#institutionCodeList'  data-toggle='modal'>institutionCode List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>catalogNumber<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/catalogNumber' target='_blank'>http://rs.tdwg.org/dwc/terms/catalogNumber</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>Part of specimen_voucher</p>
+				<p><span class='term_key'>Definition: </span>An identifier (preferably unique) for the record within the data set or collection.</p>
+				<p><span class='term_key'>Example: </span>1234</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>chainOfCustody<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>Definition: </span>Whether or not a specimen voucher has been collected, transported, and accessioned into a secure repository following chain of custody rules that prevent tampering, contamination, mislabeling or loss. Chain of custody refers to the chronological documentation of the sequence of physical locations of a voucher specimen and the people who had custody of it.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#booleanList'  data-toggle='modal'>boolean List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>yearCollected<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/year' target='_blank'>http://rs.tdwg.org/dwc/terms/year</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of collection_date</p>
+				<p><span class='term_key'>Definition: </span>The four-digit year in which the voucher was collected, according to the Common Era Calendar.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#yearList'  data-toggle='modal'>year List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>monthCollected<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/month' target='_blank'>http://rs.tdwg.org/dwc/terms/month</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of collection_date</p>
+				<p><span class='term_key'>Definition: </span>The two-digit numerical month in which the voucher was collected. This will be validated to being in the range from 1 to 12.</p>
+				<p><span class='term_key'>Example: </span>2 for a voucher collected in February.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#monthList'  data-toggle='modal'>month List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>dayCollected<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/day' target='_blank'>http://rs.tdwg.org/dwc/terms/day</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of collection_date</p>
+				<p><span class='term_key'>Definition: </span>The integer day of the month on which the voucher was collected.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#dayList'  data-toggle='modal'>day List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>collectedBy<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/recordedBy' target='_blank'>http://rs.tdwg.org/dwc/terms/recordedBy</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>collected_by</p>
+				<p><span class='term_key'>Definition: </span>A list (concatenated and separated by semicolons) of names of people, groups, or organizations responsible for collecting the specimen voucher. The primary collector or observer, especially one who applies a personal identifier (recordNumber), should be listed first. The name format should be Given Name, [space], Last Name.</p>
+				<p><span class='term_key'>Example: </span>David Schindel</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>countryOrOcean<span class='pull-right glyphicon glyphicon-exclamation-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/country' target='_blank'>http://rs.tdwg.org/dwc/terms/country</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>country</p>
+				<p><span class='term_key'>Definition: </span>The country or water body from which the specimen voucher was collected. This field will be validated against the INSDC country list (http://www.insdc.org/country.html).</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#countryList'  data-toggle='modal'>country List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>scientificName<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/scientificName' target='_blank'>http://rs.tdwg.org/dwc/terms/scientificName</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>organism</p>
+				<p><span class='term_key'>Definition: </span>The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>kingdom<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/kingdom' target='_blank'>http://rs.tdwg.org/dwc/terms/kingdom</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the kingdom in which the specimen voucher is classified.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>phylum<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/phylum' target='_blank'>http://rs.tdwg.org/dwc/terms/phylum</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the phylum in which the specimen voucher is classified.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>genus<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/genus' target='_blank'>http://rs.tdwg.org/dwc/terms/genus</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the genus in which the taxon is classified.</p>
+				<p><span class='term_key'>Example: </span>Puma, "Monoclea"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>species<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/specificEpithet' target='_blank'>http://rs.tdwg.org/dwc/terms/specificEpithet</a></p>
+				<p><span class='term_key'>Definition: </span>The name of the first or species epithet of the scientificName of the specimen voucher.</p>
+				<p><span class='term_key'>Example: </span>concolor, "gottschei"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel required'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>tissueBarcode<span class='pull-right glyphicon glyphicon-exclamation-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/materialSampleID' target='_blank'>http://rs.tdwg.org/dwc/terms/materialSampleID</a></p>
+				<p><span class='term_key'>Definition: </span>This is the 2D barcode on the FluidX long-term tissue storage vial. This can be read using the tube scanner. This field is required because it is the "primary key" of the spreadsheet. Each tissueBarcode is unique across the BWP project.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>sequencingLab<span class='pull-right glyphicon glyphicon-warning-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>BWPSpecific</p>
+				<p><span class='term_key'>Definition: </span>The lab where the purified PCR products will be sequenced.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#sequencingLabList'  data-toggle='modal'>sequencingLab List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>tissueRack<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>Definition: </span>Barcode of the FluidX rack that is holding the tissue storage vial of the specimen when it enters the lab for processing.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>tissuePosition<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>Definition: </span>This is the position of the tissue storage vial within the tissue rack when it enters the lab for processing.</p>
+				<p><span class='term_key'>Example: </span>tissueWell must be in the format [Letter][2-digit number]. Example: "A01, E07"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>tissueType<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/preparations' target='_blank'>http://rs.tdwg.org/dwc/terms/preparations</a></p>
+				<p><span class='term_key'>Definition: </span>The type of tissue that the DNA was extracted from.</p>
+				<p><span class='term_key'>Example: </span>Liver; Muscle; Blood; Leaf; Stem; Seed</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>collectionCode<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/collectionCode' target='_blank'>http://rs.tdwg.org/dwc/terms/collectionCode</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>Part of specimen_voucher</p>
+				<p><span class='term_key'>Definition: </span>The name or acronym identifying the collection or data set (from the institution/repository listed in institutionCode) from which the record was derived. This collectionCode should be registered, along with the institutionCode, in GRBio.org.</p>
+				<p><span class='term_key'>Example: </span>Mammals</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>decimalLatitude<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/decimalLatitude' target='_blank'>http://rs.tdwg.org/dwc/terms/decimalLatitude</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of lat_lon</p>
+				<p><span class='term_key'>Definition: </span>The geographic latitude,in decimal degrees of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. This field will be validated to being within the range -90.0 to 90.0.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>decimalLongitude<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/decimalLongitude' target='_blank'>http://rs.tdwg.org/dwc/terms/decimalLongitude</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of lat_lon</p>
+				<p><span class='term_key'>Definition: </span>The geographic longitude,in decimal degrees of the geographic center of a Location. Positive values are east of the Greenwich Meridian, negative values are west of it. This field will be validated to being within the range -180.0 to 180.0.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>identifiedBy<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/identifiedBy' target='_blank'>http://rs.tdwg.org/dwc/terms/identifiedBy</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>identified_by</p>
+				<p><span class='term_key'>Definition: </span>A list (concatenated by semicolons) of names of people who assigned the Taxon to the specimen voucher. The name format should be Given Name and Last Name.</p>
+				<p><span class='term_key'>Example: </span>David Schindel</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>yearIdentified<span class='pull-right glyphicon glyphicon-warning-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/dateIdentified' target='_blank'>http://rs.tdwg.org/dwc/terms/dateIdentified</a></p>
+				<p><span class='term_key'>Definition: </span>The 4-digit year in which the specimen voucher was identified as representing the Taxon, according to the Common Era Calendar.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#yearList'  data-toggle='modal'>year List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>monthIdentified<span class='pull-right glyphicon glyphicon-warning-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/dateIdentified' target='_blank'>http://rs.tdwg.org/dwc/terms/dateIdentified</a></p>
+				<p><span class='term_key'>Definition: </span>The two-digit numerical month in which the specimen voucher was identified as representing the Taxon. This will be validated to being in the range from 1 to 12.</p>
+				<p><span class='term_key'>Example: </span>2 for a voucher identified in February.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#monthList'  data-toggle='modal'>month List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>dayIdentified<span class='pull-right glyphicon glyphicon-warning-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/dateIdentified' target='_blank'>http://rs.tdwg.org/dwc/terms/dateIdentified</a></p>
+				<p><span class='term_key'>Definition: </span>The integer day of the month on which the specimen voucher was identified as representing the Taxon. This will be validated to being in the range from 1 to 31.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#dayList'  data-toggle='modal'>day List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>typeStatus<span class='pull-right glyphicon glyphicon-warning-sign'></span><span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/typeStatus' target='_blank'>http://rs.tdwg.org/dwc/terms/typeStatus</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>type_material</p>
+				<p><span class='term_key'>Definition: </span>A list (concatenated by semicolons) of nomenclatural types (type status, typified scientific name, publication) applied to the subject.</p>
+				<p><span class='term_key'>Example: </span>DarwinCore recommends a controlled vocabulary of holotype, paratype, neotype, syntype, lectotype, paralectotype, hapantotype, other.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#typeStatusList'  data-toggle='modal'>typeStatus List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>basisOfID<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/identificationReferences' target='_blank'>http://rs.tdwg.org/dwc/terms/identificationReferences</a></p>
+				<p><span class='term_key'>Definition: </span>Free-text field describing what rationale was used to identify the specimen voucher as representing the Taxon. Can include materials examined or reference specimens, literature, or field guides.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>identificationConfidence<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Identification</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/identificationVerificationStatus' target='_blank'>http://rs.tdwg.org/dwc/terms/identificationVerificationStatus</a></p>
+				<p><span class='term_key'>Definition: </span>The subjective appraisal by the identifier of the reliability of the identification at the species level. The reliability of a species identification can be High, Medium or Preliminary, based on the identifier&#8217;s expertise in the taxonomic group, the nature and quality of the specimen, and the reference material used to make the identification.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>class<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/class' target='_blank'>http://rs.tdwg.org/dwc/terms/class</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the class in which the specimen voucher is classified.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>order<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/order' target='_blank'>http://rs.tdwg.org/dwc/terms/order</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the order in which the specimen voucher is classified.</p>
+				<p><span class='term_key'>Example: </span>Carnivora, "Monocleales"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel recommended'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>family<span class='pull-right glyphicon glyphicon-warning-sign'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/family' target='_blank'>http://rs.tdwg.org/dwc/terms/family</a></p>
+				<p><span class='term_key'>Definition: </span>The full scientific name of the family in which the specimen voucher is classified.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>preservative
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/preparations' target='_blank'>http://rs.tdwg.org/dwc/terms/preparations</a></p>
+				<p><span class='term_key'>Definition: </span>List exactly what the tissue is preserved in in the tissue storage vial.</p>
+				<p><span class='term_key'>Example: </span>80% EtOH, 95% EtOH, buffer</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>extractionBarcode
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>MaterialSample</p>
+				<p><span class='term_key'>Definition: </span>This is the 2D barcode of the FluidX storage tube which contains the DNA extract of the specimen. This field will not be populated until after the DNA extraction process is complete.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>sex<span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/sex' target='_blank'>http://rs.tdwg.org/dwc/terms/sex</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>sex</p>
+				<p><span class='term_key'>Definition: </span>The sex of the specimen voucher.</p>
+				<p><span class='term_key'>Example: </span>DarwinCore recommends a controlled vocabulary of unknowable, undetermined, female, male, hermaphrodite, gynandromorph.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><strong>Error</strong> if not in <a href='#sexList'  data-toggle='modal'>sex List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>lifeStage<span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/lifeStage' target='_blank'>http://rs.tdwg.org/dwc/terms/lifeStage</a></p>
+				<p><span class='term_key'>Definition: </span>The age class or life stage of the organism when it was vouchered.</p>
+				<p><span class='term_key'>Example: </span>DarwinCore recommends a controlled vocabulary of zygote, embryo, larva, juvenile, adult, sporophyte, spore, gametophyte, gamete, pupa.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#lifeStageList'  data-toggle='modal'>lifeStage List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>associatedMedia
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/associatedMedia' target='_blank'>http://rs.tdwg.org/dwc/terms/associatedMedia</a></p>
+				<p><span class='term_key'>Definition: </span>A list, concatenated by semicolons, of media associated with the specimen voucher such as images or videos.</p>
+				<p><span class='term_key'>Example: </span>http://flic.kr/p/746gTw, "http://youtu.be/yjoU6M3nnMA"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>establishmentMeans<span class='pull-right glyphicon glyphicon-list-alt'></span>
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/establishmentMeans' target='_blank'>http://rs.tdwg.org/dwc/terms/establishmentMeans</a></p>
+				<p><span class='term_key'>Definition: </span>The process by which the biological individual represented in the specimen voucher became established at the location.</p>
+				<p><span class='term_key'>Example: </span>DarwinCore recommends a controlled vocabulary of native, introduced, naturalised, invasive, managed, uncertain.</p>
+				<p><span class='term_key'>Controlled Vocabulary: </span><em>Warning</em> if not in <a href='#establishmentMeansList'  data-toggle='modal'>establishmentMeans List</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>sampleRemarks
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Occurrence</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/occurrenceRemarks' target='_blank'>http://rs.tdwg.org/dwc/terms/occurrenceRemarks</a></p>
+				<p><span class='term_key'>Definition: </span>Comments or notes about the specimen voucher that are not covered in the other fields.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>eventID
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/eventID' target='_blank'>http://rs.tdwg.org/dwc/terms/eventID</a></p>
+				<p><span class='term_key'>Definition: </span>An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>collectionMethod
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/samplingProtocol' target='_blank'>http://rs.tdwg.org/dwc/terms/samplingProtocol</a></p>
+				<p><span class='term_key'>Definition: </span>The name of, reference to, or description of the method or protocol used during an Event.</p>
+				<p><span class='term_key'>Example: </span>UV light trap, "mist net", "ad hoc observation", "Takats et al. 2001. Guidelines for Nocturnal Owl Monitoring in North America. Beaverhill Bird Observatory and Bird Studies Canada, Edmonton, Alberta. 32 pp.", "http://www.bsc-eoc.org/download/Owl.pdf".</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>fieldNumber
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/fieldNumber' target='_blank'>http://rs.tdwg.org/dwc/terms/fieldNumber</a></p>
+				<p><span class='term_key'>Definition: </span>An identifier given to the individual in the field. Often serves as a link between field notes and the Event.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>timeCollected
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/eventTime' target='_blank'>http://rs.tdwg.org/dwc/terms/eventTime</a></p>
+				<p><span class='term_key'>Definition: </span>The time or interval during which a voucher was collected. Can be a descriptive term, such as "morning". If using an exact time of day, use the 24-hour time format (e.g "1400" for 2 hours past noon).</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>permitInformation
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>Definition: </span>A free-text field containing information about the collecting permit used to collect the specimen voucher. It can include a permit number or a link to the permit itself.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>habitat
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/habitat' target='_blank'>http://rs.tdwg.org/dwc/terms/habitat</a></p>
+				<p><span class='term_key'>Definition: </span>A category or description of the habitat in which the Event occurred.</p>
+				<p><span class='term_key'>Example: </span>oak savanna, "pre-cordilleran steppe"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>eventRemarks
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Event</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/eventRemarks' target='_blank'>http://rs.tdwg.org/dwc/terms/eventRemarks</a></p>
+				<p><span class='term_key'>Definition: </span>Comments or notes about the collecting event that are not covered in the other fields.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>waterBody
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/waterBody' target='_blank'>http://rs.tdwg.org/dwc/terms/waterBody</a></p>
+				<p><span class='term_key'>Definition: </span>The name of the water body in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.</p>
+				<p><span class='term_key'>Example: </span>Indian Ocean, "Baltic Sea", "Hudson River"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>island
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/island' target='_blank'>http://rs.tdwg.org/dwc/terms/island</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of country</p>
+				<p><span class='term_key'>Definition: </span>The name of the island on or near which the Location occurs.</p>
+				<p><span class='term_key'>Example: </span>Isla Victoria, "Vancouver", "Viti Levu", "Zanzibar"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>stateProvince
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/stateProvince' target='_blank'>http://rs.tdwg.org/dwc/terms/stateProvince</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of country</p>
+				<p><span class='term_key'>Definition: </span>The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs.</p>
+				<p><span class='term_key'>Example: </span>Montana, "Minas Gerais", "C&#243;rdoba"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>county
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/county' target='_blank'>http://rs.tdwg.org/dwc/terms/county</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of country</p>
+				<p><span class='term_key'>Definition: </span>The full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) in which the Location occurs.</p>
+				<p><span class='term_key'>Example: </span>Missoula, "Los Lagos", "Matar&#243;"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>municipality
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/municipality' target='_blank'>http://rs.tdwg.org/dwc/terms/municipality</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of country</p>
+				<p><span class='term_key'>Definition: </span>The full, unabbreviated name of the next smaller administrative region than county (city, municipality, etc.) in which the Location occurs. Do not use this term for a nearby named place that does not contain the actual location.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>locality
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/locality' target='_blank'>http://rs.tdwg.org/dwc/terms/locality</a></p>
+				<p><span class='term_key'>GenBank Equivalent: </span>part of country</p>
+				<p><span class='term_key'>Definition: </span>The specific description of the place. Less specific geographic information can be provided in other geographic terms (higherGeography, continent, country, stateProvince, county, municipality, waterBody, island, islandGroup). This term may contain information modified from the original to correct perceived errors or standardize the description.</p>
+				<p><span class='term_key'>Example: </span>Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>verbatimElevation
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/verbatimElevation' target='_blank'>http://rs.tdwg.org/dwc/terms/verbatimElevation</a></p>
+				<p><span class='term_key'>Definition: </span>The original description of the elevation (altitude above sea level) of the Location. This value should be given in meters.</p>
+				<p><span class='term_key'>Example: </span>100-200 m</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>verbatimDepth
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/verbatimDepth' target='_blank'>http://rs.tdwg.org/dwc/terms/verbatimDepth</a></p>
+				<p><span class='term_key'>Definition: </span>The original description of the depth below the local surface. This value should be given in meters.</p>
+				<p><span class='term_key'>Example: </span>5-10 m</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>locationRemarks
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/locationRemarks' target='_blank'>http://rs.tdwg.org/dwc/terms/locationRemarks</a></p>
+				<p><span class='term_key'>Definition: </span>Comments or notes about the location of the collecting event that are not covered in the other fields.</p>
+				<p><span class='term_key'>Example: </span>under water since 2005</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>georeferenceProtocol
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Location</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/georeferenceProtocol' target='_blank'>http://rs.tdwg.org/dwc/terms/georeferenceProtocol</a></p>
+				<p><span class='term_key'>Definition: </span>A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties.</p>
+				<p><span class='term_key'>Example: </span>Guide to Best Practices for Georeferencing (Chapman and Wieczorek, eds. 2006), Global Biodiversity Information Facility.", "MaNIS/HerpNet/ORNIS Georeferencing Guidelines", "Georeferencing Quick Reference Guide"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>subfamily
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>Definition: </span>This is the full scientific name of the rank immediately below family but above genus of the specimen voucher.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>subspecies
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/infraspecificEpithet' target='_blank'>http://rs.tdwg.org/dwc/terms/infraspecificEpithet</a></p>
+				<p><span class='term_key'>Definition: </span>The name of the lowest or terminal infraspecific epithet of the scientificName of the specimen voucher, excluding any rank designation.</p>
+				<p><span class='term_key'>Example: </span>concolor, "oxyadenia", "sayi"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>commonName
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/vernacularName' target='_blank'>http://rs.tdwg.org/dwc/terms/vernacularName</a></p>
+				<p><span class='term_key'>Definition: </span>A common or vernacular name.</p>
+				<p><span class='term_key'>Example: </span>Andean Condor, "Condor Andino", "American Eagle", "G&#228;nsegeier"</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>associatedTaxa
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/associatedTaxa' target='_blank'>http://rs.tdwg.org/dwc/terms/associatedTaxa</a></p>
+				<p><span class='term_key'>Definition: </span>A list (concatenated and separated by semicolons) of names of taxa and their associations with the specimen voucher.</p>
+				<p><span class='term_key'>Example: </span>host: Quercus alba</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-6 col-md-offset-3'>
+		<div class='panel'>
+			<div class='panel-heading'>
+				<span class='expand_contract glyphicon glyphicon-plus-sign'></span>taxonRemarks
+			</div>
+			<div class='panel-body panel-collapsed'>
+				<p><span class='term_key'>Category: </span>Taxon</p>
+				<p><span class='term_key'>DarwinCore Equivalent: </span><a href='http://rs.tdwg.org/dwc/terms/taxonRemarks' target='_blank'>http://rs.tdwg.org/dwc/terms/taxonRemarks</a></p>
+				<p><span class='term_key'>Definition: </span>Comments of notes about the taxon or name.</p>
+				<p><span class='term_key'>Example: </span>this name is a misspelling in common use</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='countryList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Taken from the INSDC country list: <a href='http://www.insdc.org/country.html' target='_blank'>http://www.insdc.org/country.html</a></p>
+				<ul>
+					<li>Afghanistan</li>
+					<li>Albania</li>
+					<li>Algeria</li>
+					<li>American Samoa</li>
+					<li>Andorra</li>
+					<li>Angola</li>
+					<li>Anguilla</li>
+					<li>Antarctica</li>
+					<li>Antigua and Barbuda</li>
+					<li>Arctic Ocean</li>
+					<li>Argentina</li>
+					<li>Armenia</li>
+					<li>Aruba</li>
+					<li>Ashmore and Cartier Islands</li>
+					<li>Atlantic Ocean</li>
+					<li>Australia</li>
+					<li>Austria</li>
+					<li>Azerbaijan</li>
+					<li>Bahamas</li>
+					<li>Bahrain</li>
+					<li>Baltic Sea</li>
+					<li>Baker Island</li>
+					<li>Bangladesh</li>
+					<li>Barbados</li>
+					<li>Bassas da India</li>
+					<li>Belarus</li>
+					<li>Belgium</li>
+					<li>Belize</li>
+					<li>Benin</li>
+					<li>Bermuda</li>
+					<li>Bhutan</li>
+					<li>Bolivia</li>
+					<li>Borneo</li>
+					<li>Bosnia and Herzegovina</li>
+					<li>Botswana</li>
+					<li>Bouvet Island</li>
+					<li>Brazil</li>
+					<li>British Virgin Islands</li>
+					<li>Brunei</li>
+					<li>Bulgaria</li>
+					<li>Burkina Faso</li>
+					<li>Burundi</li>
+					<li>Cambodia</li>
+					<li>Cameroon</li>
+					<li>Canada</li>
+					<li>Cape Verde</li>
+					<li>Cayman Islands</li>
+					<li>Central African Republic</li>
+					<li>Chad</li>
+					<li>Chile</li>
+					<li>China</li>
+					<li>Christmas Island</li>
+					<li>Clipperton Island</li>
+					<li>Cocos Islands</li>
+					<li>Colombia</li>
+					<li>Comoros</li>
+					<li>Cook Islands</li>
+					<li>Coral Sea Islands</li>
+					<li>Costa Rica</li>
+					<li>Cote d'Ivoire</li>
+					<li>Croatia</li>
+					<li>Cuba</li>
+					<li>Curacao</li>
+					<li>Cyprus</li>
+					<li>Czech Republic</li>
+					<li>Democratic Republic of the Congo</li>
+					<li>Denmark</li>
+					<li>Djibouti</li>
+					<li>Dominica</li>
+					<li>Dominican Republic</li>
+					<li>East Timor</li>
+					<li>Ecuador</li>
+					<li>Egypt</li>
+					<li>El Salvador</li>
+					<li>Equatorial Guinea</li>
+					<li>Eritrea</li>
+					<li>Estonia</li>
+					<li>Ethiopia</li>
+					<li>Europa Island</li>
+					<li>Falkland Islands (Islas Malvinas)</li>
+					<li>Faroe Islands</li>
+					<li>Fiji</li>
+					<li>Finland</li>
+					<li>France</li>
+					<li>French Guiana</li>
+					<li>French Polynesia</li>
+					<li>French Southern and Antarctic Lands</li>
+					<li>Gabon</li>
+					<li>Gambia</li>
+					<li>Gaza Strip</li>
+					<li>Georgia</li>
+					<li>Germany</li>
+					<li>Ghana</li>
+					<li>Gibraltar</li>
+					<li>Glorioso Islands</li>
+					<li>Greece</li>
+					<li>Greenland</li>
+					<li>Grenada</li>
+					<li>Guadeloupe</li>
+					<li>Guam</li>
+					<li>Guatemala</li>
+					<li>Guernsey</li>
+					<li>Guinea</li>
+					<li>Guinea-Bissau</li>
+					<li>Guyana</li>
+					<li>Haiti</li>
+					<li>Heard Island and McDonald Islands</li>
+					<li>Honduras</li>
+					<li>Hong Kong</li>
+					<li>Howland Island</li>
+					<li>Hungary</li>
+					<li>Iceland</li>
+					<li>India</li>
+					<li>Indian Ocean</li>
+					<li>Indonesia</li>
+					<li>Iran</li>
+					<li>Iraq</li>
+					<li>Ireland</li>
+					<li>Isle of Man</li>
+					<li>Israel</li>
+					<li>Italy</li>
+					<li>Jamaica</li>
+					<li>Jan Mayen</li>
+					<li>Japan</li>
+					<li>Jarvis Island</li>
+					<li>Jersey</li>
+					<li>Johnston Atoll</li>
+					<li>Jordan</li>
+					<li>Juan de Nova Island</li>
+					<li>Kazakhstan</li>
+					<li>Kenya</li>
+					<li>Kerguelen Archipelago</li>
+					<li>Kingman Reef</li>
+					<li>Kiribati</li>
+					<li>Kosovo</li>
+					<li>Kuwait</li>
+					<li>Kyrgyzstan</li>
+					<li>Laos</li>
+					<li>Latvia</li>
+					<li>Lebanon</li>
+					<li>Lesotho</li>
+					<li>Liberia</li>
+					<li>Libya</li>
+					<li>Liechtenstein</li>
+					<li>Line Islands</li>
+					<li>Lithuania</li>
+					<li>Luxembourg</li>
+					<li>Macau</li>
+					<li>Macedonia</li>
+					<li>Madagascar</li>
+					<li>Malawi</li>
+					<li>Malaysia</li>
+					<li>Maldives</li>
+					<li>Mali</li>
+					<li>Malta</li>
+					<li>Marshall Islands</li>
+					<li>Martinique</li>
+					<li>Mauritania</li>
+					<li>Mauritius</li>
+					<li>Mayotte</li>
+					<li>Mediterranean Sea</li>
+					<li>Mexico</li>
+					<li>Micronesia</li>
+					<li>Midway Islands</li>
+					<li>Moldova</li>
+					<li>Monaco</li>
+					<li>Mongolia</li>
+					<li>Montenegro</li>
+					<li>Montserrat</li>
+					<li>Morocco</li>
+					<li>Mozambique</li>
+					<li>Myanmar</li>
+					<li>Namibia</li>
+					<li>Nauru</li>
+					<li>Navassa Island</li>
+					<li>Nepal</li>
+					<li>Netherlands</li>
+					<li>New Caledonia</li>
+					<li>New Zealand</li>
+					<li>Nicaragua</li>
+					<li>Niger</li>
+					<li>Nigeria</li>
+					<li>Niue</li>
+					<li>Norfolk Island</li>
+					<li>North Korea</li>
+					<li>North Sea</li>
+					<li>Northern Mariana Islands</li>
+					<li>Norway</li>
+					<li>Oman</li>
+					<li>Pacific Ocean</li>
+					<li>Pakistan</li>
+					<li>Palau</li>
+					<li>Palmyra Atoll</li>
+					<li>Panama</li>
+					<li>Papua New Guinea</li>
+					<li>Paracel Islands</li>
+					<li>Paraguay</li>
+					<li>Peru</li>
+					<li>Philippines</li>
+					<li>Pitcairn Islands</li>
+					<li>Poland</li>
+					<li>Portugal</li>
+					<li>Puerto Rico</li>
+					<li>Qatar</li>
+					<li>Republic of the Congo</li>
+					<li>Reunion</li>
+					<li>Romania</li>
+					<li>Ross Sea</li>
+					<li>Russia</li>
+					<li>Rwanda</li>
+					<li>Saint Helena</li>
+					<li>Saint Kitts and Nevis</li>
+					<li>Saint Lucia</li>
+					<li>Saint Pierre and Miquelon</li>
+					<li>Saint Vincent and the Grenadines</li>
+					<li>Samoa</li>
+					<li>San Marino</li>
+					<li>Sao Tome and Principe</li>
+					<li>Saudi Arabia</li>
+					<li>Senegal</li>
+					<li>Serbia</li>
+					<li>Seychelles</li>
+					<li>Sierra Leone</li>
+					<li>Singapore</li>
+					<li>Sint Maarten</li>
+					<li>Slovakia</li>
+					<li>Slovenia</li>
+					<li>Solomon Islands</li>
+					<li>Somalia</li>
+					<li>South Africa</li>
+					<li>South Georgia and the South Sandwich Islands</li>
+					<li>South Korea</li>
+					<li>Southern Ocean</li>
+					<li>Spain</li>
+					<li>Spratly Islands</li>
+					<li>Sri Lanka</li>
+					<li>Sudan</li>
+					<li>Suriname</li>
+					<li>Svalbard</li>
+					<li>Swaziland</li>
+					<li>Sweden</li>
+					<li>Switzerland</li>
+					<li>Syria</li>
+					<li>Taiwan</li>
+					<li>Tajikistan</li>
+					<li>Tanzania</li>
+					<li>Tasman Sea</li>
+					<li>Thailand</li>
+					<li>Togo</li>
+					<li>Tokelau</li>
+					<li>Tonga</li>
+					<li>Trinidad and Tobago</li>
+					<li>Tromelin Island</li>
+					<li>Tunisia</li>
+					<li>Turkey</li>
+					<li>Turkmenistan</li>
+					<li>Turks and Caicos Islands</li>
+					<li>Tuvalu</li>
+					<li>USA</li>
+					<li>Uganda</li>
+					<li>Ukraine</li>
+					<li>United Arab Emirates</li>
+					<li>United Kingdom</li>
+					<li>Uruguay</li>
+					<li>Uzbekistan</li>
+					<li>Vanuatu</li>
+					<li>Venezuela</li>
+					<li>Viet Nam</li>
+					<li>Virgin Islands</li>
+					<li>Wake Island</li>
+					<li>Wallis and Futuna</li>
+					<li>West Bank</li>
+					<li>Western Sahara</li>
+					<li>Yemen</li>
+					<li>Zambia</li>
+					<li>Zimbabwe</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='institutionCodeList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>The list of all institution codes from all active biorepositories at <a href='http://grbio.org/' target='_blank'>GRBio</a>.</p>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='processingLabList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>List of all processing labs from the BWP project.</p>
+				<ul>
+					<li>IPR-MBL</li>
+					<li>ICIPE</li>
+					<li>KWS</li>
+					<li>NMK-MGL</li>
+					<li>NABDA</li>
+					<li>UNIPORT</li>
+					<li>UNILAG</li>
+					<li>SAIAB</li>
+					<li>NZG</li>
+					<li>UJ</li>
+					<li>ECOSUR</li>
+					<li>IBUNAM</li>
+					<li>CIBNOR</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='sexList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Taken from the <a href='https://code.google.com/p/darwincore/wiki/Occurrence' target='_blank'>DarwinCore Occurrence discussion page</a>.</p>
+				<ul>
+					<li>unknowable</li>
+					<li>undetermined</li>
+					<li>female</li>
+					<li>male</li>
+					<li>hermaphrodite</li>
+					<li>gynandromorph</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='lifeStageList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Taken from the <a href='https://code.google.com/p/darwincore/wiki/Occurrence' target='_blank'>DarwinCore Occurrence discussion page</a>.</p>
+				<ul>
+					<li>zygote</li>
+					<li>embryo</li>
+					<li>larva</li>
+					<li>juvenile</li>
+					<li>adult</li>
+					<li>sporophyte</li>
+					<li>spore</li>
+					<li>gametophyte</li>
+					<li>gamete</li>
+					<li>pupa</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='establishmentMeansList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Taken from the <a href='https://code.google.com/p/darwincore/wiki/Occurrence' target='_blank'>DarwinCore Occurrence discussion page</a>.</p>
+				<ul>
+					<li>native</li>
+					<li>introduced</li>
+					<li>naturalised</li>
+					<li>invasive</li>
+					<li>managed</li>
+					<li>uncertain</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='booleanList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Yes or No</p>
+				<ul>
+					<li>Yes</li>
+					<li>No</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='typeStatusList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Taken from the <a href='https://code.google.com/p/darwincore/wiki/Occurrence' target='_blank'>DarwinCore Occurrence discussion page</a>.</p>
+				<ul>
+					<li>holotype</li>
+					<li>paratype</li>
+					<li>neotype</li>
+					<li>syntype</li>
+					<li>lectotype</li>
+					<li>paralectotype</li>
+					<li>hapantotype</li>
+					<li>other</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='plateWellList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>All possible wells in a plate (A01 - H12) in proper format.</p>
+				<ul>
+					<li>A01</li>
+					<li>A02</li>
+					<li>A03</li>
+					<li>A04</li>
+					<li>A05</li>
+					<li>A06</li>
+					<li>A07</li>
+					<li>A08</li>
+					<li>A09</li>
+					<li>A10</li>
+					<li>A11</li>
+					<li>A12</li>
+					<li>B01</li>
+					<li>B02</li>
+					<li>B03</li>
+					<li>B04</li>
+					<li>B05</li>
+					<li>B06</li>
+					<li>B07</li>
+					<li>B08</li>
+					<li>B09</li>
+					<li>B10</li>
+					<li>B11</li>
+					<li>B12</li>
+					<li>C01</li>
+					<li>C02</li>
+					<li>C03</li>
+					<li>C04</li>
+					<li>C05</li>
+					<li>C06</li>
+					<li>C07</li>
+					<li>C08</li>
+					<li>C09</li>
+					<li>C10</li>
+					<li>C11</li>
+					<li>C12</li>
+					<li>D01</li>
+					<li>D02</li>
+					<li>D03</li>
+					<li>D04</li>
+					<li>D05</li>
+					<li>D06</li>
+					<li>D07</li>
+					<li>D08</li>
+					<li>D09</li>
+					<li>D10</li>
+					<li>D11</li>
+					<li>D12</li>
+					<li>E01</li>
+					<li>E02</li>
+					<li>E03</li>
+					<li>E04</li>
+					<li>E05</li>
+					<li>E06</li>
+					<li>E07</li>
+					<li>E08</li>
+					<li>E09</li>
+					<li>E10</li>
+					<li>E11</li>
+					<li>E12</li>
+					<li>F01</li>
+					<li>F02</li>
+					<li>F03</li>
+					<li>F04</li>
+					<li>F05</li>
+					<li>F06</li>
+					<li>F07</li>
+					<li>F08</li>
+					<li>F09</li>
+					<li>F10</li>
+					<li>F11</li>
+					<li>F12</li>
+					<li>G01</li>
+					<li>G02</li>
+					<li>G03</li>
+					<li>G04</li>
+					<li>G05</li>
+					<li>G06</li>
+					<li>G07</li>
+					<li>G08</li>
+					<li>G09</li>
+					<li>G10</li>
+					<li>G11</li>
+					<li>G12</li>
+					<li>H01</li>
+					<li>H02</li>
+					<li>H03</li>
+					<li>H04</li>
+					<li>H05</li>
+					<li>H06</li>
+					<li>H07</li>
+					<li>H08</li>
+					<li>H09</li>
+					<li>H10</li>
+					<li>H11</li>
+					<li>H12</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='yearList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>Range from 1900-2050 to ensure that years values are in the correct format.</p>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='sequencingLabList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>List of all sequencing labs from the BWP project.</p>
+				<ul>
+					<li>BecA-ILRI</li>
+					<li>IITA</li>
+					<li>SAIAB</li>
+					<li>NZG</li>
+					<li>UJ</li>
+					<li>IBUNAM</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='monthList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>All possible months (1-12).</p>
+				<ul>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+					<li>7</li>
+					<li>8</li>
+					<li>9</li>
+					<li>10</li>
+					<li>11</li>
+					<li>12</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class='modal fade' id='dayList'>
+	<div class='modal-dialog modal-sm'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title'>Controlled vocabulary</h4>
+			</div>
+			<div class='modal-body'>
+				<p>All possible days of the month.</p>
+				<ul>
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					<li>4</li>
+					<li>5</li>
+					<li>6</li>
+					<li>7</li>
+					<li>8</li>
+					<li>9</li>
+					<li>10</li>
+					<li>11</li>
+					<li>12</li>
+					<li>13</li>
+					<li>14</li>
+					<li>15</li>
+					<li>16</li>
+					<li>17</li>
+					<li>18</li>
+					<li>19</li>
+					<li>20</li>
+					<li>21</li>
+					<li>22</li>
+					<li>23</li>
+					<li>24</li>
+					<li>25</li>
+					<li>26</li>
+					<li>27</li>
+					<li>28</li>
+					<li>29</li>
+					<li>30</li>
+					<li>31</li>
+				</ul>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+  	</div>
+
+	    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js"></script>
+    <script>
+      $(function() {
+          FastClick.attach(document.body);
+      });
+      $('#sort_button').click(function(){
+        $('.col-md-4').sort(function (a, b) {
+          console.log('inside sorting function');
+          var contentA =parseInt( $(a).attr('data-sort'));
+          var contentB =parseInt( $(b).attr('data-sort'));
+          return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+        }).appendTo('#term_row')
+       });
+      $('.panel-heading').click(function(){
+        $(this).children(".expand_contract").toggleClass("glyphicon-plus-sign glyphicon-minus-sign");
+        $(this).next(".panel-body").toggle();
+      });
+      $('#expand_all').click(function(){
+        $(".panel-body").slideDown(300);
+        $(".panel-heading .glyphicon").toggleClass("glyphicon-plus glyphicon-minus");
+      });
+      $('#collapse_all').click(function(){
+        $(".panel-body").slideUp(300);
+        $(".panel-heading .glyphicon").toggleClass("glyphicon-plus glyphicon-minus");
+      });      
+    </script>
+
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+ 
+  </body>
+</html>
