@@ -221,9 +221,9 @@
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
-            <attribute column='materialSampleID' uri='http://rs.tdwg.org/dwc/terms/materialSampleID' isDefinedBy='http://rs.tdwg.org/dwc/terms/materialSampleID'>
+            <attribute column='materialSampleID' uri='http://rs.tdwg.org/dwc/terms/materialSampleID' defined_by='http://rs.tdwg.org/dwc/terms/materialSampleID'>
                 <![CDATA[The "local" accession number that you use for your laboratory's database. This number should link EXACTLY to the genetic data you are providing for this sample. It must be unique among the numbers that your lab is providing.]]></attribute>
-            <attribute column='principalInvestigator' uri='urn:principalInvestigator' isDefinedBy='urn:principalInvestigator'>
+            <attribute column='principalInvestigator' uri='urn:principalInvestigator' defined_by='urn:principalInvestigator'>
                 <![CDATA[Firstname Lastname (the PI on the grant that generated this data)]]></attribute>
             <attribute column='locality' uri='http://rs.tdwg.org/dwc/terms/locality'>
                 <![CDATA[Local name of site. Something that could be found by Google, e.g. city, town, ocean, etc. You must enter a value for this to the best level of precision that you are confident about. A site name like "Sanur" is good. "Indonesia" is fine if that is all you know, or "The Pacific Ocean". If you have no idea where the sample came from, please enter "Earth". Required.]]></attribute>
