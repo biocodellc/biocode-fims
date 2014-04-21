@@ -107,6 +107,10 @@ public class Entity {
         fimsPrinter.out.println("    conceptName=" + conceptAlias);
         fimsPrinter.out.println("    conceptURI=" + conceptURI);
         //fimsPrinter.out.println("    bcid=" + bcid);
+         if (attributes.size() > 0) {
+            for (Attribute attribute : attributes)
+                attribute.print();
+        }
 
     }
 

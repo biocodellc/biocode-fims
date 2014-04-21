@@ -123,7 +123,6 @@ public class processController {
     public Boolean isReadyToUpload() {
         if (expeditionAssignedToUserAndExists &&
                 validated &&
-                clearedOfWarnings &&
                 inputFilename != null &&
                 expeditionCode != null &&
                 project_id > 0)

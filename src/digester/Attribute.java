@@ -10,10 +10,13 @@ import java.util.List;
  * Attribute representation
  */
 public class Attribute implements Comparable {
+    private String isDefinedByURIString = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy";
     private String column;
     private String uri;
+    private String defined_by;
     private String datatype = "string";  // string is default type
     private String definition;
+
 
     public String getColumn() {
         return column;
@@ -21,6 +24,14 @@ public class Attribute implements Comparable {
 
     public void setColumn(String column) {
         this.column = column;
+    }
+
+    public String getDefined_by() {
+        return defined_by;
+    }
+
+    public void setDefined_by(String defined_by) {
+        this.defined_by = defined_by;
     }
 
     public String getDatatype() {
@@ -38,7 +49,8 @@ public class Attribute implements Comparable {
     public void setUri(String uri) {
         this.uri = uri;
     }
-     public String getDefinition() {
+
+    public String getDefinition() {
         return definition;
     }
 
@@ -54,6 +66,7 @@ public class Attribute implements Comparable {
         fimsPrinter.out.println("    column=" + column);
         fimsPrinter.out.println("    uri=" + uri);
         fimsPrinter.out.println("    datatype=" + datatype);
+        fimsPrinter.out.println("    isDefinedBy=" + defined_by);
     }
 
     /**
@@ -67,19 +80,38 @@ public class Attribute implements Comparable {
 
         String classMap = ((Entity) parent).classMap();
         String table = ((Entity) parent).getWorksheet();
+        String classMapStringEquivalence = "";
 
         // Only print this column if it is in a list of colNames
         if (colNames.contains(column)) {
-            pw.println("map:" + classMap + "_" + column + " a d2rq:PropertyBridge;");
+            String classMapString = "map:" + classMap + "_" + column;
+            pw.println(classMapString + " a d2rq:PropertyBridge;");
             pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
             pw.println("\td2rq:property <" + uri + ">;");
             pw.println("\td2rq:column \"" + table + "." + column + "\";");
+            // Specify Datatype here
             //if (datatype != null) {
             //    pw.println("\td2rq:datatype " + datatype + ";");
             //}
             pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
+            // Specify an equivalence, which is isDefinedBy
+            classMapStringEquivalence = classMapString + "_Equivalence";
+            pw.println("\td2rq:additionalPropertyDefinitionProperty " + classMapStringEquivalence + ";");
+
             pw.println("\t.");
         }
+
+        // Always use isDefinedBy, even if the user has not expressed it explicitly.  We do this by
+        // using the uri value if NO isDefinedBy is expressed.
+        pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
+        pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
+        if (defined_by != null) {
+            pw.println("\td2rq:propertyValue <" + defined_by + ">;");
+        } else {
+            pw.println("\td2rq:propertyValue <" + uri + ">;");
+        }
+        pw.println("\t.");
+
     }
 
 

@@ -1,5 +1,6 @@
 package digester;
 
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -7,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
+import run.templateProcessor;
 import settings.PathManager;
 import settings.fimsPrinter;
 
@@ -134,7 +136,7 @@ public class QueryWriter {
         String datatype = null;
         // Loop attributes and use column names instead of URI value in column position lookups
         Iterator it = attributes.iterator();
-          while (it.hasNext()) {
+        while (it.hasNext()) {
             Attribute attribute = (Attribute) it.next();
             // map column names to datatype
             // TODO: this part bombs when the configuration file does not have a URI specified, thus we need to write a configuration file validator?
@@ -217,6 +219,8 @@ public class QueryWriter {
             //File file = new File(fileLocation);
             fileOut = new FileOutputStream(file);
 
+            //File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
+
             wb.write(fileOut);
 
             fileOut.close();
@@ -293,43 +297,63 @@ public class QueryWriter {
     }
 
     public String writeHTML(File file) throws Exception {
+        StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         // Header Row
         createHeaderRow(sheet);
 
         // Iterate through the rows.
-        ArrayList rows = new ArrayList();
-        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
-            Row row = rowsIT.next();
-            //JSONObject jRow = new JSONObject();
-
-            // Iterate through the cells.
-            ArrayList cells = new ArrayList();
-            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
-                Cell cell = cellsIT.next();
-                if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-                    cells.add(cell.getNumericCellValue());
-                else
-                    cells.add(cell.getStringCellValue());
-            }
-            rows.add(cells);
-        }
-
-        Iterator rowsIt = rows.iterator();
         int count = 0;
-        sb.append("<table>\n");
-        while (rowsIt.hasNext()) {
-            ArrayList cells = (ArrayList) rowsIt.next();
-            Iterator cellsIt = cells.iterator();
-            sb.append("\t<tr>");
-            while (cellsIt.hasNext()) {
-                sb.append("<td>" + cellsIt.next() + "</td>");
+        int LIMIT = 10000;
+        for (Row row : sheet) {
+            if (count < LIMIT) {
+
+                StringBuilder sbRow = new StringBuilder();
+
+                for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                    Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                    if (cell == null) {
+                        sbRow.append("<td></td>");
+
+                    } else {
+                        switch (cell.getCellType()) {
+                            case Cell.CELL_TYPE_STRING:
+                                sbRow.append("<td>" + cell.getRichStringCellValue().getString() + "</td>");
+                                break;
+                            case Cell.CELL_TYPE_NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                     sbRow.append("<td>" + cell.getDateCellValue() + "</td>");
+                                } else {
+                                     sbRow.append("<td>" + cell.getNumericCellValue() + "</td>");
+                                }
+                                break;
+                            case Cell.CELL_TYPE_BOOLEAN:
+                                 sbRow.append("<td>" + cell.getBooleanCellValue() + "</td>");
+                                break;
+                            case Cell.CELL_TYPE_FORMULA:
+                                 sbRow.append("<td>" + cell.getCellFormula() + "</td>");
+                                break;
+                            default:
+                                 sbRow.append("<td>" + cell.toString() + "</td>");
+                        }
+                    }
+
+                }
+                if (count == 0) {
+                    sbHeader.append("<tr>\n");
+                    sbHeader.append("\t" + sbRow + "\n");
+                    sbHeader.append("</tr>\n");
+                } else {
+                    sb.append("<tr>\n");
+                    sb.append("\t" + sbRow + "\n");
+                    sb.append("\t<tr>\n");
+                }
             }
-            sb.append("</tr>\n");
             count++;
         }
-        sb.append("</table>\n");
-        return writeFile(sb.toString(), file);
+
+
+        return writeFile("<table border=1>\n"  + sbHeader.toString() + sb.toString() + "</table>", file);
     }
 
     private String writeFile(String content, File file) {
@@ -350,8 +374,6 @@ public class QueryWriter {
             fop.write(contentInBytes);
             fop.flush();
             fop.close();
-
-            //System.out.println("Done");
 
         } catch (IOException e) {
             e.printStackTrace();

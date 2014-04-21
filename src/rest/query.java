@@ -1,5 +1,6 @@
 package rest;
 
+import fims.fimsFilterCondition;
 import run.configurationFileFetcher;
 import run.process;
 import settings.FIMSException;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 
 /**
  * Query interface for Biocode-fims expedition
@@ -53,7 +55,7 @@ public class query {
         }
 
         // Write the response to a String Variable
-        String response = readFile(p.query(URLDecoder.decode(graphs, "UTF-8"), "json", filter));
+        String response = readFile(p.query(URLDecoder.decode(graphs, "UTF-8"), "json", constructFilters(filter)));
 
         // Return response
         if (response == null) {
@@ -89,7 +91,7 @@ public class query {
             );
 
             // Construct a file
-            File file = new File(p.query(graphs, "kml", filter));
+            File file = new File(p.query(graphs, "kml", constructFilters(filter)));
 
             // Return file to client
             Response.ResponseBuilder response = Response.ok((Object) file);
@@ -135,7 +137,7 @@ public class query {
             );
 
             // Construct a file
-            File file = new File(p.query(graphs, "excel", filter));
+            File file = new File(p.query(graphs, "excel", constructFilters(filter)));
 
             // Return file to client
             Response.ResponseBuilder response = Response.ok((Object) file);
@@ -154,6 +156,14 @@ public class query {
         }
     }
 
+    /**
+     * TODO: Make this function a reality by converting a filter STRING to an arrayList of fimsFilterConditions,
+     * @param filter
+     * @return
+     */
+    static ArrayList<fimsFilterCondition> constructFilters(String filter) {
+        return null;
+    }
     /**
      * Get real path of the uploads folder from context.
      * Needs context to have been injected before.

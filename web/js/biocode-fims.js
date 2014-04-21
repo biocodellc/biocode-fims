@@ -1,3 +1,4 @@
+// for template generator, get the definitions when the user clicks on DEF
 function populateDefinitions(column) {
  var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
@@ -57,7 +58,7 @@ function populateProjects() {
     });
 }
 
-// Get the graphs
+// Get the graphs for a given project_id
 function populateGraphs(project_id) {
     $("#resultsContainer").hide();
     // Don't let this progress if this is the first option, then reset graphs message
@@ -85,7 +86,8 @@ function populateGraphs(project_id) {
 
 // Get results as JSON
 function queryJSON() {
-    theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+   // theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
     var jqxhr = $.getJSON( theUrl, function(data) {
         $("#resultsContainer").show();
         distal(results,data);
@@ -100,22 +102,24 @@ function queryJSON() {
 
 // Get results as Excel
 function queryExcel() {
-    theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    //theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
     window.location = theUrl;
     showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
 }
 
 // Get results as Excel
 function queryKml() {
-    theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    //theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
+    theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
     window.location = theUrl;
     showMessage ("Downloading results as an KML document<br>If Google Earth does not open you can point to it directly");
 }
 
 // Get results as Excel
 function queryGoogleMaps() {
-    theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyVal
-ue
+    //theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyValue
+    theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue();
     mapsUrl = "http://maps.google.com/maps?q=" + theUrl;
     window.open(
         mapsUrl,
@@ -130,6 +134,7 @@ function getFilterKeyValue() {
     }
     return "";
 }
+
 
 
 // Get the projectID
