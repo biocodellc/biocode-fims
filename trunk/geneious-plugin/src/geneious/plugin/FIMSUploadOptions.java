@@ -1,7 +1,9 @@
 package geneious.plugin;
 
 import com.biomatters.geneious.publicapi.components.Dialogs;
+import com.biomatters.geneious.publicapi.components.ProgressFrame;
 import com.biomatters.geneious.publicapi.plugin.Options;
+import com.biomatters.geneious.publicapi.utilities.ThreadUtilities;
 import run.process;
 import settings.FIMSException;
 import settings.availableProject;
@@ -82,6 +84,11 @@ public class FIMSUploadOptions extends Options {
                 //  usernameOption.setVisible(true);
                 //  passwordOption.setVisible(true);
 
+                // There is a bug (I think) that causes getCurrentModalDialog() to return the login dialog even after it
+                // is closed.  So we'll get a reference to the Options dialog here before we create the login one.
+                // We need the reference to the dialog so we can disable it for the authentication progress frame.
+                Dialog optionsDialog = Dialogs.getCurrentModalDialog();
+
                 boolean ok = Dialogs.showInputDialog("", "Login", null, myPanel);
                 usernameOption.setVisible(false);
 
@@ -89,21 +96,27 @@ public class FIMSUploadOptions extends Options {
                 //usernameOption.setVisible(false);
                 // passwordOption.setVisible(false);
                 if (ok) {
-                  /*  final ProgressFrame frame = new ProgressFrame("Authenticating user", "Need to contact server", GuiUtilities.getMainFrame());
+                    final ProgressFrame frame = new ProgressFrame("Authenticating user", "Need to contact server",
+                            optionsDialog);
                     frame.setIndeterminateProgress();
                     frame.setCancelable(false);
                     frame.setMessage("Connecting ...");
-                    */
-                     try {
-                        username = usernameOption.getValue();
-                        password = String.valueOf(passwordField.getPassword());
-                        connector = process.createConnection(username, password);
-                    } catch (FIMSException e) {
-                        displayExceptionDialog(e);
-                    }
+
+                    // Create a runnable to be run in the UI thread later.
+                    final Runnable afterAuthTry = new Runnable() {
+                        public void run() {
+                            // User authenticated... turn on the other options
+                            if (connector != null) {
+                                // run the userAuthenticated method sets up the next stage of operations
+                                userAuthenticated();
+                            } else {
+                                Dialogs.showMessageDialog("Unable to authenticate " + username);
+                            }
+                        }
+                    };
 
 
-                   /* Thread connectingThread = new Thread() {
+                    Thread connectingThread = new Thread() {
                         public void run() {
                             try {
                                 username = usernameOption.getValue();
@@ -112,25 +125,11 @@ public class FIMSUploadOptions extends Options {
                             } catch (FIMSException e) {
                                 displayExceptionDialog(e);
                             }
+                            frame.setComplete();
+                            ThreadUtilities.invokeNowOrLater(afterAuthTry);
                         }
                     };
-                    connectingThread.run();
-
-                    try {
-                        connectingThread.join();
-                    } catch (InterruptedException e) {
-                        Dialogs.showMessageDialog("Interrupted connection process!");
-                    }
-                    frame.setComplete();
-                    */
-
-                    // User authenticated... turn on the other options
-                    if (connector != null) {
-                        // run the userAuthenticated method sets up the next stage of operations
-                        userAuthenticated();
-                    } else {
-                        Dialogs.showMessageDialog("Unable to authenticate " + username);
-                    }
+                    connectingThread.start();
                 }
             }
         }
