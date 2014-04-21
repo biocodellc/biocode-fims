@@ -22,10 +22,13 @@
                 <td><select id=graphs multiple style="display:inline-block;width:400px;text-align:left;"></select></td>
             </tr>
 
+            <!--
+            NOTE: Need to rebuild this section to add multiple query conditions
             <tr>
                 <td align=right>Filter</td>
                 <td><input type=text id=filter style="display:inline-block;width:400px;text-align:left;"></td>
             </tr>
+            -->
 
             <tr>
                 <td colspan=2>

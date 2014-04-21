@@ -1,5 +1,6 @@
 package digester;
 
+import java.net.URI;
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
@@ -9,6 +10,7 @@ import triplify.triplifier;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 
@@ -222,5 +224,22 @@ public class Mapping implements RendererInterface {
                 a.addAll(e.getAttributes());
         }
         return a;
+    }
+
+    /**
+     * Lookup any property associated with a column name from a list of attributes
+     * (generated from getAllAttributes functions)
+     * @param attributes
+     * @return
+     */
+    public URI lookupAnyProperty(URI property, ArrayList<Attribute> attributes) throws  URISyntaxException {
+        Iterator it = attributes.iterator();
+        while (it.hasNext()) {
+            Attribute a = (Attribute) it.next();
+            if (a.getUri().equalsIgnoreCase(property.toString())) {
+                return new URI(a.getUri());
+            }
+        }
+       return null;
     }
 }

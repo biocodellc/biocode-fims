@@ -76,9 +76,9 @@ public class triplifier {
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),
                 FileUtils.langN3, "urn:x-biscicol:");
         // Write the model as simply a Turtle file
-        File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".ttl", outputFolder);
+        File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
         FileOutputStream fos = new FileOutputStream(tripleFile);
-        model.write(fos, FileUtils.langTurtle,null);
+        model.write(fos, FileUtils.langNTriple,null);
         fos.close();
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 

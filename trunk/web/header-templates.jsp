@@ -5,7 +5,7 @@
 
 <html>
     <head>
-    <title>FIMS Spreadsheet Customization</title>
+    <title>Biocode FIMS Template Generator</title>
 
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/biscicol.css"/>

@@ -2,6 +2,7 @@ package run;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import digester.*;
+import fims.fimsFilterCondition;
 import fims.fimsModel;
 import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
@@ -15,6 +16,7 @@ import triplify.triplifier;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -256,7 +258,7 @@ public class process {
                 throw new FIMSException(e.getMessage(), e);
             }
         } else {
-            throw new FIMSException("Unable to upload datasource.");
+            throw new FIMSException("Unhandled System Error... ");
         }
     }
 
@@ -267,56 +269,17 @@ public class process {
      *
      * @throws settings.FIMSException
      */
-    public String query(String graphs, String format, String filter) throws FIMSException {
-        String output = "";
-
-        fimsModel fimsModel = null;
-        Model jenaModel = null;
+    public String query(String graphs, String format, ArrayList<fimsFilterCondition> filter) throws FIMSException {
         try {
-            // Build Mapping object
-            Mapping mapping = new Mapping();
-            addMappingRules(new Digester(), mapping);
-
-            // Build FIMS object
-            Fims fims = new Fims(mapping);
-            addFimsRules(new Digester(), fims);
-
-            // Code a reference to the Sparql Query Server
-            String sparqlServer = fims.getMetadata().getQueryTarget().toString() + "/query";
-
-            // Build a query model, passing in a String[] array of graph identifiers
-            fimsQueryBuilder q = new fimsQueryBuilder(graphs.split(","), sparqlServer);
-
-            // Filter
-            if (filter != null && !filter.trim().equals(""))
-                q.setObjectFilter(filter);
-
-            // Construct a  fimsModel
-            jenaModel = q.getModel();
-            fimsModel = fims.getFIMSModel(jenaModel);
-
-            // Output the results
-            fimsPrinter.out.println("Writing results ... ");
-
-            if (format == null)
-                format = "json";
-
-            if (format.equals("excel"))
-                output = fimsModel.writeExcel(PathManager.createUniqueFile(outputPrefix + ".xls", outputFolder));
-            else if (format.equals("html"))
-                output = fimsModel.writeHTML(PathManager.createUniqueFile(outputPrefix + ".html", outputFolder));
-            else if (format.equals("kml"))
-                output = fimsModel.writeKML(PathManager.createUniqueFile(outputPrefix + ".kml", outputFolder));
-            else
-                output = fimsModel.writeJSON(PathManager.createUniqueFile(outputPrefix + ".json", outputFolder));
+            // Build the Query Object by passing this object and an array of graph objects, separated by commas
+            fimsQueryBuilder q = new fimsQueryBuilder(this, graphs.split(","), outputFolder);
+            // Add our filter conditions
+            q.addFilter(filter);
+            // Run the query, passing in a format and returning the location of the output file
+            return q.run(format);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
-        } finally {
-            fimsModel.close();
-            jenaModel.close();
         }
-        return output;
     }
 
     /**
@@ -549,11 +512,15 @@ public class process {
                         file
                 );
 
-                p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
-                /*
-                Run the validator
-                 */
-            } else {
+                //p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
+                // TODO: construct filter statements from arguments passed in on command-line
+                p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), null);
+
+            }
+            /*
+           Run the validator
+            */
+            else {
 
                 bcidConnector connector = createConnection(username, password);
 
