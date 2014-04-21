@@ -290,7 +290,7 @@
                 <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
             <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
                 <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
-            <attribute column='weight' uri='urn:weight' defined_by=' http://purl.obolibrary.org/obo/PATO_0000128'>
+            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128'>
                 <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
             <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122'>
                 <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
