@@ -45,14 +45,27 @@
                 validates data, and assigns persistent identifiers by Project, Dataset, and locally unique identifiers
                 (see <a href="http://biscicol.org/bcid" target="_blank">BCID system</a>).
                 <p>
-        <img src='docs/Workflow.jpeg'>
+
+        <img id='workflowImage' src='docs/Workflow_simple.jpeg'>
+        <br><a id='workflowControl' onclick='workflowImageSwap();'>Advanced</a>
     </div>
 </div>
 
 <script>
+
 function runIt() {
     alert("yet to implement this part");
 }
-</script>
+
+function workflowImageSwap() {
+    if ($("#workflowImage").attr("src") == 'docs/Workflow.jpeg') {
+        $("#workflowImage").attr("src",'docs/Workflow_simple.jpeg');
+        $("#workflowControl").text('Advanced');
+    } else {
+        $("#workflowImage").attr("src",'docs/Workflow.jpeg');
+        $("#workflowControl").text('Simple');
+    }
+}
+</script></script>
 
 <%@ include file="footer.jsp" %>
