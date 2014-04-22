@@ -158,19 +158,21 @@ public class templateProcessor {
                 if (!addedNames.contains(column)) {
                     // Set boolean to tell us if this is a requiredColumn
                     Boolean aRequiredColumn = false;
-                    if (requiredColumns.contains(a.getColumn()))
+                    if (requiredColumns == null) {
+                        aRequiredColumn = false;
+                    } else if (requiredColumns.contains(a.getColumn())) {
                         aRequiredColumn = true;
-
+                    }
                     // Construct the checkbox text
                     //output.append("<label class='checkbox'>\n" +
-                            output.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
+                    output.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
                     if (aRequiredColumn)
                         output.append(" checked disabled");
 
                     output.append(">" + column + " \n" +
                             "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
                             "<br>\n");// +
-                            //"</label>\n";
+                    //"</label>\n";
                 }
 
                 // Now that we've added this to the output, add it to the ArrayList so we don't add it again
@@ -191,6 +193,7 @@ public class templateProcessor {
      *
      * @param fields
      */
+
     private void createListsSheetAndValidations(List<String> fields) {
         int column;
         HSSFSheet listsSheet = workbook.createSheet(listsSheetName);
@@ -411,7 +414,7 @@ public class templateProcessor {
 
         //Fetch the project title from the BCID system
         // NOTE, getting this particular name from the BCID system throws a connection exception
-       /* availableProjectsFetcher fetcher = new availableProjectsFetcher();
+        /* availableProjectsFetcher fetcher = new availableProjectsFetcher();
         availableProject aP = fetcher.getProject(project_id);
         String project_title = aP.getProject_title();
         */
