@@ -131,7 +131,12 @@ public class fimsQueryBuilder {
             fimsFilterCondition f = (fimsFilterCondition) filterArrayListIt.next();
 
             // The fimsFilterCondition uriProperty corresponds to the uri value in the configuration file
-            sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
+            if (f.uriProperty == null) {
+                 sb.append("\t?s ?propertyFilter ?objectFilter . \n");
+                sb.append("\tFILTER regex(?objectFilter,\"" + f.value + "\") . \n");
+            } else {
+                sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
+            }
 
             // TODO: the current filter statement only builds AND conditions, need to account for OR and NOT
         }
@@ -254,8 +259,12 @@ public class fimsQueryBuilder {
         fimsQueryBuilder q = new fimsQueryBuilder(p, graphArray, output_directory);
 
         // Add filter conditions to the object
-        q.addFilter(new fimsFilterCondition(new URI("urn:phylum"), "Echinodermata", fimsFilterCondition.AND));
-        q.addFilter(new fimsFilterCondition(new URI("urn:materialSampleID"), "IN0123.01", fimsFilterCondition.AND));
+        //q.addFilter(new fimsFilterCondition(new URI("urn:phylum"), "Echinodermata", fimsFilterCondition.AND));
+        //q.addFilter(new fimsFilterCondition(new URI("urn:materialSampleID"), "IN0123.01", fimsFilterCondition.AND));
+        q.addFilter(new fimsFilterCondition(null, "IN0123.01", fimsFilterCondition.AND));
+        // TODO: clean up the filter conditions here to handle all cases
+        //q.addFilter(new fimsFilterCondition(null, "10", fimsFilterCondition.AND));
+
 
         // Run the query and specify the output format
         String outputFileLocation = q.run("excel");
@@ -263,4 +272,6 @@ public class fimsQueryBuilder {
         // Print out the file location
         System.out.println("File location: " + outputFileLocation);
     }
+
+
 }

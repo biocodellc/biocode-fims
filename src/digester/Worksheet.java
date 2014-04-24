@@ -137,48 +137,55 @@ public class Worksheet {
         validation = (Validation) parent;
         java.sql.Connection connection = validation.getConnection();
 
-        for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
-            Rule r = i.next();
+        // Default rule... always check that there is some data
+        if (validation.getTabularDataReader().getNumRows() < 1) {
+            messages.addLast(new RowMessage("No data found", RowMessage.ERROR));
+            //System.out.println("number of rows = " + validation.getTabularDataReader().getNumRows());
+        } else {
 
-            // Run this particular rule
-            try {
-                 /*
-                //Text to show what rules are running (this is not necessary normally)
-                String message = "\trunning rule " + r.getType();
-                // Create a special connection to use here
-                if (r.getColumn() != null)
-                    message += " for " + r.getColumn();
-                fimsPrinter.out.println(message);
-                 */
+            for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
+                Rule r = i.next();
+
+                // Run this particular rule
+                try {
+                    /*
+                   //Text to show what rules are running (this is not necessary normally)
+                   String message = "\trunning rule " + r.getType();
+                   // Create a special connection to use here
+                   if (r.getColumn() != null)
+                       message += " for " + r.getColumn();
+                   fimsPrinter.out.println(message);
+                    */
 
 
-                // Set the digester worksheet instance for this Rule
-                r.setDigesterWorksheet(this);
-                // Set the SQLLite reference for this Rule
-                r.setConnection(connection);
-                // Set the TabularDataReader worksheet instance for this Rule
-                r.setWorksheet(validation.getTabularDataReader());
-                // Run this rule
-                Method method = r.getClass().getMethod(r.getType());
-                if (method != null) {
-                    method.invoke(r);
-                } else {
-                    fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
+                    // Set the digester worksheet instance for this Rule
+                    r.setDigesterWorksheet(this);
+                    // Set the SQLLite reference for this Rule
+                    r.setConnection(connection);
+                    // Set the TabularDataReader worksheet instance for this Rule
+                    r.setWorksheet(validation.getTabularDataReader());
+                    // Run this rule
+                    Method method = r.getClass().getMethod(r.getType());
+                    if (method != null) {
+                        method.invoke(r);
+                    } else {
+                        fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
+                    }
+
+                    // Close the connection
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    String message = "\tUnable to run " + r.getType() + " on " + r.getColumn() + " column";
+                    if (e.getMessage() != null)
+                        message += ", message = " + e.getMessage();
+                    fimsPrinter.out.println(message);
+                    //return false;
                 }
 
-                // Close the connection
-            } catch (Exception e) {
-                //e.printStackTrace();
-                String message = "\tUnable to run " + r.getType() + " on " + r.getColumn()  + " column";
-                if (e.getMessage() != null)
-                    message += ", message = " + e.getMessage();
-                fimsPrinter.out.println(message);
-                //return false;
+                // Display warnings/etc...
+                messages.addAll(r.getMessages());
+
             }
-
-            // Display warnings/etc...
-            messages.addAll(r.getMessages());
-
         }
         // Close our connection
         try {

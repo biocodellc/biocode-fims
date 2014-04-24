@@ -720,7 +720,7 @@ public class Rule {
                 validNumber = false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new Exception("isNumber Check exception", e);
         }
         return validNumber;
