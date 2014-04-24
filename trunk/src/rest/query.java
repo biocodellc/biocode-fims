@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
@@ -42,7 +44,7 @@ public class query {
             @QueryParam("filter") String filter) throws Exception {
 
         process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
+        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
         try {
             p = new process(
@@ -83,7 +85,7 @@ public class query {
 
         try {
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
             process p = new process(
                     uploadPath(),
@@ -128,7 +130,7 @@ public class query {
         try {
 
             graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath(),true).getOutputFile();
+            File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
             // Create a process object
             process p = new process(
@@ -157,13 +159,59 @@ public class query {
     }
 
     /**
-     * TODO: Make this function a reality by converting a filter STRING to an arrayList of fimsFilterConditions,
-     * @param filter
+     * Convert a GET string representation of filter and make it into a fimsFilterCondition ArrayList.
+     * The GET string should be one of the following forms:
+     * <p/>
+     * value
+     * value|column
+     * value|column|operation (1=AND, 2=OR, 3=NOT -- currently its all just AND)
+     * <p/>
+     * Multiple filter statements can be joined using commas, like:
+     * <p/>
+     * value|column, value|column,
+     * <p/>
+     * column MUST be the URI specification... this is the only truly persistent representation of this concept
+     *
+     * @param filters
      * @return
      */
-    static ArrayList<fimsFilterCondition> constructFilters(String filter) {
-        return null;
+    static ArrayList<fimsFilterCondition> constructFilters(String filters) throws URISyntaxException {
+        String filterDelimeter = ",";
+        String filterPartsDelimiter = "\\|";
+
+        ArrayList<fimsFilterCondition> fimsFilterConditionArrayList = new ArrayList<fimsFilterCondition>();
+
+        if (filters == null || filters.equals(""))
+            return null;
+
+        String[] filter = filters.split(filterDelimeter);
+        for (int i = 0; i < filter.length; i++) {
+
+            String[] conditions = filter[i].split(filterPartsDelimiter);
+
+            URI uri = null;
+            String value = null;
+            Integer conditionInt = fimsFilterCondition.AND; // Default
+
+            System.out.println("there are " + conditions.length + " conditions for " + filter[i]);
+
+            for (int j = 0; j < conditions.length; j++) {
+                if (j == 0)
+                    value = conditions[j];
+                if (j == 1)
+                    uri = new URI(conditions[1]);
+                if (j == 2)
+                    conditionInt = Integer.parseInt(conditions[2]);
+            }
+
+            //System.out.println("\t" + uri.toString() + "|" + value + "|" + conditionInt);
+            fimsFilterConditionArrayList.add(new fimsFilterCondition(uri, value, conditionInt));
+
+        }
+
+        return fimsFilterConditionArrayList;
     }
+
     /**
      * Get real path of the uploads folder from context.
      * Needs context to have been injected before.
@@ -176,6 +224,7 @@ public class query {
 
     /**
      * Read a file and return it as a String... meant to be used within this class only
+     *
      * @param file
      * @return
      * @throws IOException

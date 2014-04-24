@@ -99,21 +99,19 @@ public class Attribute implements Comparable {
             pw.println("\td2rq:additionalPropertyDefinitionProperty " + classMapStringEquivalence + ";");
 
             pw.println("\t.");
-        }
 
-        // Always use isDefinedBy, even if the user has not expressed it explicitly.  We do this by
-        // using the uri value if NO isDefinedBy is expressed.
-        pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
-        pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
-        if (defined_by != null) {
-            pw.println("\td2rq:propertyValue <" + defined_by + ">;");
-        } else {
-            pw.println("\td2rq:propertyValue <" + uri + ">;");
+            // Always use isDefinedBy, even if the user has not expressed it explicitly.  We do this by
+            // using the uri value if NO isDefinedBy is expressed.
+            pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
+            pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
+            if (defined_by != null) {
+                pw.println("\td2rq:propertyValue <" + defined_by + ">;");
+            } else {
+                pw.println("\td2rq:propertyValue <" + uri + ">;");
+            }
+            pw.println("\t.");
         }
-        pw.println("\t.");
-
     }
-
 
     public int compareTo(Object o) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
