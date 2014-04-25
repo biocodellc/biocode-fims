@@ -1,24 +1,17 @@
 package rest;
 
 import fims.fimsFilterCondition;
+import fims.fimsQueryBuilder;
 import run.configurationFileFetcher;
 import run.process;
-import settings.FIMSException;
 
 import javax.servlet.ServletContext;
-
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.ws.rs.core.*;
+import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Query interface for Biocode-fims expedition
@@ -43,21 +36,9 @@ public class query {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
-        process p = null;
-        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+        File file = GETQueryResult(graphs, project_id, filter, "json");
 
-        try {
-            p = new process(
-                    uploadPath(),
-                    configFile
-            );
-        } catch (FIMSException e) {
-            e.printStackTrace();
-            return Response.ok("\nError: " + e.getMessage()).build();
-        }
-
-        // Write the response to a String Variable
-        String response = readFile(p.query(URLDecoder.decode(graphs, "UTF-8"), "json", constructFilters(filter)));
+        String response = readFile(file.getAbsolutePath());
 
         // Return response
         if (response == null) {
@@ -68,7 +49,41 @@ public class query {
     }
 
     /**
-     * Return KML for a graph query
+     * Return JSON for a graph query as POST
+     * <p/>
+     * filter parameters are of the form:
+     * name={URI} value={filter value}
+     *
+     * @return
+     * @throws Exception
+     */
+    @POST
+    @Path("/json/")
+    @Consumes("application/x-www-form-urlencoded")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response queryJsonAsPOST(
+            MultivaluedMap<String, String> form) throws Exception {
+
+        // Build the query, etc..
+        fimsQueryBuilder q = POSTQueryResult(form);
+
+        // Run the query, passing in a format and returning the location of the output file
+        File file = new File(q.run("json"));
+
+        // Wrie the file to a String and return it
+        String response = readFile(file.getAbsolutePath());
+
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return Response.ok(response).build();
+        }
+    }
+
+    /**
+     * Return KML for a graph query using POST
+     * filter is just a single value to filter the entire dataset
      *
      * @param graphs indicate a comma-separated list of graphs
      * @return
@@ -82,18 +97,52 @@ public class query {
             @QueryParam("project_id") Integer project_id,
             @QueryParam("filter") String filter) throws Exception {
 
-
         try {
-            graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-
-            process p = new process(
-                    uploadPath(),
-                    configFile
-            );
 
             // Construct a file
-            File file = new File(p.query(graphs, "kml", constructFilters(filter)));
+            File file = GETQueryResult(graphs, project_id, filter, "kml");
+
+            // Return file to client
+            Response.ResponseBuilder response = Response.ok((Object) file);
+
+            response.header("Content-Disposition",
+                    "attachment; filename=biocode-fims-output.kml");
+
+
+            // Return response
+            if (response == null) {
+                return Response.status(204).build();
+            } else {
+                return response.build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.ok("\nError: " + e.getMessage()).build();
+        }
+    }
+
+    /**
+     * Return KML for a graph query using POST
+     * * <p/>
+     * filter parameters are of the form:
+     * name={URI} value={filter value}
+     *
+     * @return
+     * @throws Exception
+     */
+    @POST
+    @Path("/kml/")
+    @Consumes("application/x-www-form-urlencoded")
+    @Produces("application/vnd.google-earth.kml+xml")
+    public Response queryKml(
+            MultivaluedMap<String, String> form) throws Exception {
+
+        try {
+            // Build the query, etc..
+            fimsQueryBuilder q = POSTQueryResult(form);
+
+            // Run the query, passing in a format and returning the location of the output file
+            File file = new File(q.run("kml"));
 
             // Return file to client
             Response.ResponseBuilder response = Response.ok((Object) file);
@@ -112,8 +161,9 @@ public class query {
         }
     }
 
+
     /**
-     * Return Excel for a graph query
+     * Return Excel for a graph query.  The GET query runs a simple FILTER query for any term
      *
      * @param graphs indicate a comma-separated list of graphs
      * @return
@@ -125,21 +175,52 @@ public class query {
     public Response queryExcel(
             @QueryParam("graphs") String graphs,
             @QueryParam("project_id") Integer project_id,
-            @QueryParam("filter") String filter) throws Exception {
+            @QueryParam("filter") String filter
+    ) throws Exception {
 
         try {
+            File file = GETQueryResult(graphs, project_id, filter, "excel");
 
-            graphs = URLDecoder.decode(graphs, "UTF-8");
-            File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+            // Return file to client
+            Response.ResponseBuilder response = Response.ok((Object) file);
+            response.header("Content-Disposition",
+                    "attachment; filename=biocode-fims-output.xls");
 
-            // Create a process object
-            process p = new process(
-                    uploadPath(),
-                    configFile
-            );
+            // Return response
+            if (response == null) {
+                return Response.status(204).build();
+            } else {
+                return response.build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.ok("\nError: " + e.getMessage()).build();
+        }
+    }
 
-            // Construct a file
-            File file = new File(p.query(graphs, "excel", constructFilters(filter)));
+
+    /**
+     * Return KML for a graph query using POST
+     * * <p/>
+     * filter parameters are of the form:
+     * name={URI} value={filter value}
+     *
+     * @return
+     * @throws Exception
+     */
+    @POST
+    @Path("/kml/")
+    @Consumes("application/x-www-form-urlencoded")
+    @Produces("application/vnd.ms-excel")
+    public Response queryExcel(
+            MultivaluedMap<String, String> form) throws Exception {
+
+        try {
+            // Build the query, etc..
+            fimsQueryBuilder q = POSTQueryResult(form);
+
+            // Run the query, passing in a format and returning the location of the output file
+            File file = new File(q.run("kml"));
 
             // Return file to client
             Response.ResponseBuilder response = Response.ok((Object) file);
@@ -159,57 +240,95 @@ public class query {
     }
 
     /**
-     * Convert a GET string representation of filter and make it into a fimsFilterCondition ArrayList.
-     * The GET string should be one of the following forms:
-     * <p/>
-     * value
-     * value|column
-     * value|column|operation (1=AND, 2=OR, 3=NOT -- currently its all just AND)
-     * <p/>
-     * Multiple filter statements can be joined using commas, like:
-     * <p/>
-     * value|column, value|column,
-     * <p/>
-     * column MUST be the URI specification... this is the only truly persistent representation of this concept
+     * Get the POST query result as a file
      *
-     * @param filters
      * @return
+     * @throws Exception
      */
-    static ArrayList<fimsFilterCondition> constructFilters(String filters) throws URISyntaxException {
-        String filterDelimeter = ",";
-        String filterPartsDelimiter = "\\|";
+    private fimsQueryBuilder POSTQueryResult(MultivaluedMap<String, String> form) throws Exception {
+        Iterator entries = form.entrySet().iterator();
+        String[] graphs = null;
+        Integer project_id = null;
 
-        ArrayList<fimsFilterCondition> fimsFilterConditionArrayList = new ArrayList<fimsFilterCondition>();
+        ArrayList<fimsFilterCondition> filterConditionArrayList = new ArrayList<fimsFilterCondition>();
 
-        if (filters == null || filters.equals(""))
-            return null;
-
-        String[] filter = filters.split(filterDelimeter);
-        for (int i = 0; i < filter.length; i++) {
-
-            String[] conditions = filter[i].split(filterPartsDelimiter);
-
-            URI uri = null;
-            String value = null;
-            Integer conditionInt = fimsFilterCondition.AND; // Default
-
-            System.out.println("there are " + conditions.length + " conditions for " + filter[i]);
-
-            for (int j = 0; j < conditions.length; j++) {
-                if (j == 0)
-                    value = conditions[j];
-                if (j == 1)
-                    uri = new URI(conditions[1]);
-                if (j == 2)
-                    conditionInt = Integer.parseInt(conditions[2]);
+        while (entries.hasNext()) {
+            Map.Entry thisEntry = (Map.Entry) entries.next();
+            String key = (String) thisEntry.getKey();
+            // Values come over as a linked list
+            LinkedList value = (LinkedList) thisEntry.getValue();
+            if (key.equalsIgnoreCase("graphs")) {
+                Object[] valueArray = value.toArray();
+                graphs = Arrays.copyOf(valueArray, valueArray.length, String[].class);
+            } else if (key.equalsIgnoreCase("project_id")) {
+                project_id = Integer.parseInt((String) value.get(0));
+            } else if (key.equalsIgnoreCase("submit")) {
+                // do nothing with this
+            } else {
+                String v = (String) value.get(0);// only expect 1 value here
+                if (key != null && !key.equals("") && v != null && !v.equals("")) {
+                    filterConditionArrayList.add(new fimsFilterCondition(
+                            new URI(key),
+                            v,
+                            fimsFilterCondition.AND));
+                }
             }
-
-            //System.out.println("\t" + uri.toString() + "|" + value + "|" + conditionInt);
-            fimsFilterConditionArrayList.add(new fimsFilterCondition(uri, value, conditionInt));
-
         }
 
-        return fimsFilterConditionArrayList;
+        if (graphs != null && graphs.length < 1 && project_id != null) {
+            throw new Exception("Bad arguments");
+        }
+
+        // Build the Query
+        fimsQueryBuilder q = new fimsQueryBuilder(getProcess(project_id), graphs, uploadPath());
+
+        // Add our filter conditions
+        q.addFilter(filterConditionArrayList);
+
+        return q;
+    }
+
+    /**
+     * Get the query result as a file
+     *
+     * @param graphs
+     * @param project_id
+     * @param filter
+     * @param format
+     * @return
+     * @throws Exception
+     */
+    private File GETQueryResult(String graphs, Integer project_id, String filter, String format) throws Exception {
+        graphs = URLDecoder.decode(graphs, "UTF-8");
+
+        process p = getProcess(project_id);
+
+        // Run the query
+        return new File(p.query(graphs, format, filter(filter)));
+    }
+
+    private process getProcess(Integer project_id) throws Exception {
+        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+
+        // Create a process object
+        process p = new process(
+                uploadPath(),
+                configFile
+        );
+        return p;
+    }
+
+    /**
+     * Given a single filter condition, just some random value, then return the appropriate arraylist
+     *
+     * @param filter
+     * @return
+     */
+    private static ArrayList<fimsFilterCondition> filter(String filter) {
+        // Create a filter statement
+        ArrayList<fimsFilterCondition> arrayList = new ArrayList<fimsFilterCondition>();
+        arrayList.add(new fimsFilterCondition(null, filter, null));
+        return arrayList;
     }
 
     /**
@@ -218,7 +337,7 @@ public class query {
      *
      * @return Real path of the uploads folder with ending slash.
      */
-    static String uploadPath() {
+    private static String uploadPath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 
