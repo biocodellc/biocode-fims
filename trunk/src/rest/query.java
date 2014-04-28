@@ -1,7 +1,10 @@
 package rest;
 
+import digester.Attribute;
+import digester.Mapping;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
+import org.apache.commons.digester.Digester;
 import run.configurationFileFetcher;
 import run.process;
 
@@ -98,7 +101,6 @@ public class query {
             @QueryParam("filter") String filter) throws Exception {
 
         try {
-
             // Construct a file
             File file = GETQueryResult(graphs, project_id, filter, "kml");
 
@@ -107,7 +109,6 @@ public class query {
 
             response.header("Content-Disposition",
                     "attachment; filename=biocode-fims-output.kml");
-
 
             // Return response
             if (response == null) {
@@ -161,7 +162,6 @@ public class query {
         }
     }
 
-
     /**
      * Return Excel for a graph query.  The GET query runs a simple FILTER query for any term
      *
@@ -197,7 +197,6 @@ public class query {
             return Response.ok("\nError: " + e.getMessage()).build();
         }
     }
-
 
     /**
      * Return KML for a graph query using POST
@@ -250,6 +249,7 @@ public class query {
         String[] graphs = null;
         Integer project_id = null;
 
+        HashMap<String, String> filterMap = new HashMap<String, String>();
         ArrayList<fimsFilterCondition> filterConditionArrayList = new ArrayList<fimsFilterCondition>();
 
         while (entries.hasNext()) {
@@ -266,24 +266,34 @@ public class query {
                 // do nothing with this
             } else {
                 String v = (String) value.get(0);// only expect 1 value here
-                if (key != null && !key.equals("") && v != null && !v.equals("")) {
-                    filterConditionArrayList.add(new fimsFilterCondition(
-                            new URI(key),
-                            v,
-                            fimsFilterCondition.AND));
-                }
+                filterMap.put(key, v);
             }
         }
 
+        // Make sure graphs and project_id are set
         if (graphs != null && graphs.length < 1 && project_id != null) {
-            throw new Exception("Bad arguments");
+            throw new Exception("ERROR: incomplete arguments");
         }
 
+        // Create a process object here so we can look at uri/column values
+        process process = getProcess(project_id);
+
         // Build the Query
-        fimsQueryBuilder q = new fimsQueryBuilder(getProcess(project_id), graphs, uploadPath());
+        fimsQueryBuilder q = new fimsQueryBuilder(process, graphs, uploadPath());
+
+        // Loop the filterMap entries and build the filterConditionArrayList
+        Iterator it = filterMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+            fimsFilterCondition f = parsePOSTFilter((String) pairs.getKey(), (String) pairs.getValue(), process);
+            if (f != null)
+                filterConditionArrayList.add(f);
+            it.remove();
+        }
 
         // Add our filter conditions
-        q.addFilter(filterConditionArrayList);
+        if (filterConditionArrayList != null && filterConditionArrayList.size() > 0)
+            q.addFilter(filterConditionArrayList);
 
         return q;
     }
@@ -299,12 +309,25 @@ public class query {
      * @throws Exception
      */
     private File GETQueryResult(String graphs, Integer project_id, String filter, String format) throws Exception {
+        java.net.URLDecoder decoder = new java.net.URLDecoder();
+
         graphs = URLDecoder.decode(graphs, "UTF-8");
 
         process p = getProcess(project_id);
 
-        // Run the query
-        return new File(p.query(graphs, format, filter(filter)));
+        // Parse the GET filter
+        fimsFilterCondition filterCondition = parseGETFilter(filter, p);
+
+        if (filterCondition != null) {
+            // Create a filter statement
+            ArrayList<fimsFilterCondition> arrayList = new ArrayList<fimsFilterCondition>();
+            arrayList.add(filterCondition);
+
+            // Run the query
+            return new File(p.query(graphs, format, arrayList));
+        } else {
+            return new File(p.query(graphs, format, null));
+        }
     }
 
     private process getProcess(Integer project_id) throws Exception {
@@ -318,18 +341,6 @@ public class query {
         return p;
     }
 
-    /**
-     * Given a single filter condition, just some random value, then return the appropriate arraylist
-     *
-     * @param filter
-     * @return
-     */
-    private static ArrayList<fimsFilterCondition> filter(String filter) {
-        // Create a filter statement
-        ArrayList<fimsFilterCondition> arrayList = new ArrayList<fimsFilterCondition>();
-        arrayList.add(new fimsFilterCondition(null, filter, null));
-        return arrayList;
-    }
 
     /**
      * Get real path of the uploads folder from context.
@@ -358,6 +369,87 @@ public class query {
             stringBuilder.append(ls);
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * Parse the GET filter string smartly.  Maps what looks like a column to a URI using the configuration file
+     * and if it looks like a URI then creates a URI straight from the key.
+     *
+     * @param key
+     * @param value
+     * @param process
+     * @return
+     * @throws Exception
+     */
+    public static fimsFilterCondition parsePOSTFilter(String key, String value, process process) throws Exception {
+        java.net.URI uri = null;
+
+        if (key == null || key.equals("") || value == null || value.equals(""))
+            return null;
+
+        // this is a predicate/URI query
+        if (key.contains(":")) {
+            uri = new URI(key);
+        } else {
+            Mapping mapping = new Mapping();
+            process.addMappingRules(new Digester(), mapping);
+            ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
+            uri = mapping.lookupColumn(key, attributeArrayList);
+        }
+        return new fimsFilterCondition(uri, value, fimsFilterCondition.AND);
+
+    }
+
+    /**
+     * Parse the GET filter string smartly.  This looks for either column Names or URI Properties, and
+     * if it finds a column name maps to a URI Property.  Values are assumed to be last element past a semicolon ALWAYS.
+     *
+     * @param filter
+     * @return
+     * @throws Exception
+     */
+    public static fimsFilterCondition parseGETFilter(String filter, process process) throws Exception {
+        Mapping mapping = new Mapping();
+        process.addMappingRules(new Digester(), mapping);
+
+        String delimiter = ":";
+        java.net.URI uri = null;
+        java.net.URLDecoder decoder = new java.net.URLDecoder();
+
+        if (filter == null)
+            return null;
+
+        String[] filterSplit = filter.split(":");
+
+        // Get the value we're looking for
+        Integer lastValue = filterSplit.length - 1;
+        String value = decoder.decode(filterSplit[lastValue], "UTF8").toString();
+
+        // Build the predicate.
+        if (filterSplit.length != lastValue) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < lastValue; i++) {
+                if (i > 0) {
+                    sb.append(delimiter);
+                }
+                sb.append(decoder.decode(filterSplit[i], "UTF8").toString());
+            }
+
+            // re-assemble the string
+            String key = sb.toString();
+
+            // If the key contains a semicolon, then assume it is a URI
+            if (key.contains(":")) {
+                uri = new java.net.URI(key);
+            }
+            // If there is no semicolon here then assume the user passed in a column name
+            else {
+                ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
+                uri = mapping.lookupColumn(key, attributeArrayList);
+            }
+        }
+
+        return new fimsFilterCondition(uri, value, fimsFilterCondition.AND);
     }
 }
 
