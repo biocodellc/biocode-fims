@@ -242,4 +242,20 @@ public class Mapping implements RendererInterface {
         }
        return null;
     }
+     /**
+     * Lookup any property associated with a column name from a list of attributes
+     * (generated from getAllAttributes functions)
+     * @param attributes
+     * @return
+     */
+    public URI lookupColumn(String columnName, ArrayList<Attribute> attributes) throws  URISyntaxException {
+        Iterator it = attributes.iterator();
+        while (it.hasNext()) {
+            Attribute a = (Attribute) it.next();
+            if (a.getColumn().equalsIgnoreCase(columnName)) {
+                return new URI(a.getUri());
+            }
+        }
+       return null;
+    }
 }

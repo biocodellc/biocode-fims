@@ -132,10 +132,14 @@ public class fimsQueryBuilder {
 
             // The fimsFilterCondition uriProperty corresponds to the uri value in the configuration file
             if (f.uriProperty == null) {
-                 sb.append("\t?s ?propertyFilter ?objectFilter . \n");
-                sb.append("\tFILTER regex(?objectFilter,\"" + f.value + "\") . \n");
+                 if (f.value != null) {
+                     sb.append("\t?s ?propertyFilter ?objectFilter . \n");
+                    sb.append("\tFILTER regex(?objectFilter,\"" + f.value + "\") . \n");
+                 }
             } else {
-                sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
+                if (f.value != null) {
+                    sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
+                }
             }
 
             // TODO: the current filter statement only builds AND conditions, need to account for OR and NOT
