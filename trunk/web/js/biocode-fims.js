@@ -243,6 +243,9 @@ function submitForm(){
         success: function(data) {
             de.resolve(data);
         },
+        fail: function() {
+            de.reject();
+        },
         uploadProgress: function(event, position, total, percentComplete) {
             // For browsers that do support the upload progress listener
             if (percentComplete == 100) {
@@ -253,6 +256,17 @@ function submitForm(){
 
     $('form').ajaxSubmit(options);
     return promise;
+}
+
+function failError() {
+    var buttons = {
+        "OK": function(){
+            $("#dialogContainer").removeClass("error");
+            $(this).dialog("close");
+          }
+    }
+    $("#dialogContainer").addClass("error");
+    dialog("Server Error!", "Error", buttons);
 }
 
 // submit dataset to be validated/uploaded
@@ -274,6 +288,8 @@ function validatorSubmit() {
     } else {
         submitForm().done(function(data) {
             validationResults(data);
+        }).fail(function() {
+            failError();
         });
     }
 }
@@ -301,7 +317,7 @@ function pollStatus() {
     $.getJSON("/biocode-fims/rest/validate/status")
         .done(function(data) {
             def.resolve(data);
-        }).fail(function(a,b,c) {
+        }).fail(function() {
             def.reject();
         });
     return def.promise();
@@ -319,6 +335,9 @@ function continueUpload(createExpedition) {
         .done(function(data) {
             d.resolve();
             uploadResults(data);
+        }).fail(function() {
+            d.reject();
+            failError();
         });
     loopStatus(d.promise());
 }
@@ -359,10 +378,12 @@ function uploadResults(data) {
         if (data.done != null) {
             message = data.done;
         } else {
+            $("#dialogContainer").addClass("error");
             message = data.error;
         }
         var buttons = {
             "Ok": function() {
+                $("#dialogContainer").removeClass("error");
                 $(this).dialog("close");
             }
         }
