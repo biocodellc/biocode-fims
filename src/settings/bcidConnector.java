@@ -6,9 +6,12 @@ import digester.Mapping;
 import net.sf.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import run.process;
 import run.processController;
+import utils.SettingsManager;
 
 import java.io.*;
 import java.net.*;
@@ -47,6 +50,9 @@ public class bcidConnector {
 
     private Integer responseCode;
     private String accessToken;
+    private String refreshToken;
+    private Boolean refreshedToken = false;
+    private Boolean triedToRefreshToken = false;
 
     private String connectionPoint;
     private String username;
@@ -95,8 +101,9 @@ public class bcidConnector {
      * this constructor is used when the user has authenticated via oauth.
      * @param accessToken
      */
-    public bcidConnector(String accessToken) {
+    public bcidConnector(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         CookieHandler.setDefault(new CookieManager());
     }
 
@@ -124,6 +131,42 @@ public class bcidConnector {
         }
     }
 
+    public Boolean getRefreshedToken() {return this.refreshedToken;}
+
+    public String getAccessToken() {return this.accessToken;}
+
+    public String getRefreshToken() {return this.refreshToken;}
+
+    /**
+     * Obtain a new access token from the BCID system in order to continue the upload process.
+     */
+    private void getValidAccessToken() throws Exception {
+        this.triedToRefreshToken = true;
+
+        SettingsManager sm = SettingsManager.getInstance();
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        URL url = new URL(sm.retrieveValue("refresh_uri"));
+
+        String params = "client_id=" + sm.retrieveValue("client_id") + "&" +
+                "client_secret=" + sm.retrieveValue("client_secret") + "&" +
+                "refresh_token=" + refreshToken;
+
+        Object tokenResponse = JSONValue.parse(createPOSTConnnection(url, params));
+        JSONArray tokenArray = (JSONArray) tokenResponse;
+
+        JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
+
+        if (tokenJSON.containsKey("error")) {return;}
+
+        this.accessToken = tokenJSON.get("access_token").toString();
+        this.refreshToken = tokenJSON.get("refresh_token").toString();
+        this.refreshedToken = true;
+    }
+
     /**
      * Create a Dataset BCID.  Uses cookies sent during authentication method, or OAuth access tokens if accessToken != null
      * suffixPassthrough is set to False since we only want to represent a single entity here
@@ -149,7 +192,12 @@ public class bcidConnector {
         }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
         if (getResponseCode() == 401) {
-            throw new NotAuthorizedException("User not authorized to upload to this expedition!");
+            if (accessToken != null && !triedToRefreshToken) {
+                getValidAccessToken();
+                return createDatasetBCID(webaddress, graph);
+            } else {
+                throw new NotAuthorizedException("User not authorized to upload to this expedition!");
+            }
         }
         return response.toString();
     }
@@ -176,7 +224,12 @@ public class bcidConnector {
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
 
         if (getResponseCode() == 401) {
-            throw new NotAuthorizedException("User authorization error!");
+            if (accessToken != null && !triedToRefreshToken) {
+                getValidAccessToken();
+                return createEntityBCID(webaddress, resourceAlias, resourceType);
+            } else {
+                throw new NotAuthorizedException("User authorization error!");
+            }
         }
         return response.toString();
     }
@@ -221,7 +274,12 @@ public class bcidConnector {
             JSONObject jsonObject = (JSONObject) obj;
 
             if (jsonObject.containsKey("error") && jsonObject.get("error") == "authorization_error") {
-                throw new NotAuthorizedException("User authorization error!");
+                if (accessToken != null && !triedToRefreshToken) {
+                    getValidAccessToken();
+                    return listAvailableProjects();
+                } else {
+                    throw new NotAuthorizedException("User authorization error!");
+                }
             }
 
             // loop array
@@ -267,7 +325,12 @@ public class bcidConnector {
         // Catch Error using response string...
         // TODO: use response code formats here
         if (getResponseCode() == 401) {
-            throw new NotAuthorizedException("User authorization error!");
+            if (accessToken != null && !triedToRefreshToken) {
+                getValidAccessToken();
+                return createExpedition(expedition_code, expedition_title, project_id);
+            } else {
+                throw new NotAuthorizedException("User authorization error!");
+            }
         }
         if (response.contains("ERROR")) {
             throw new Exception(response.toString());
@@ -294,7 +357,12 @@ public class bcidConnector {
         String response = createGETConnection(url);
         String action = response.split(":")[0];
         if (getResponseCode() == 401) {
-            throw new NotAuthorizedException("User authorization error!");
+            if (accessToken != null && !triedToRefreshToken) {
+                getValidAccessToken();
+                return checkExpedition(processController);
+            } else {
+                throw new NotAuthorizedException("User authorization error!");
+            }
         } else if (getResponseCode() != 200) {
             throw new Exception("BCID service error");
         } else {

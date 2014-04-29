@@ -87,7 +87,7 @@ public class authenticationService {
 
         JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
 
-        if (tokenJSON.containsKey("error") ||(tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
+        if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
             response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
             return;
         }
@@ -101,6 +101,7 @@ public class authenticationService {
         session.setAttribute("user", profileJSON.get("username"));
         session.setAttribute("userId", profileJSON.get("user_id"));
         session.setAttribute("access_token", access_token);
+        session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
 
         response.sendRedirect("/biocode-fims/index.jsp");
         return;

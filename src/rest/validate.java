@@ -42,6 +42,7 @@ public class validate {
 
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
 
         try {
 
@@ -73,7 +74,7 @@ public class validate {
                 throw new FIMSException("[{\"done\": \"Server error saving file.\"}]");
             }
 
-            bcidConnector connector = new bcidConnector(accessToken);
+            bcidConnector connector = new bcidConnector(accessToken, refreshToken);
 
             // Create the process object --- this is done each time to orient the application
             process p = null;
@@ -97,17 +98,14 @@ public class validate {
                 // if there were validation errors, we can't upload
                 if (processController.getHasErrors()) {
                     retVal.append("{\"done\": \"");
-                    retVal.append(processController.stringToHTMLJSON(processController.getErrorsSB().toString()) + "<br>");
-                    retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()) + "<br>");
-                    retVal.append("Errors found on " + processController.stringToHTMLJSON(
-                            processController.getWorksheetName()) + " worksheet.  Must fix to continue.");
+                    retVal.append(processController.getStatusSB().toString());
                     retVal.append("\"}");
 
                 } else if (upload != null && upload.equals("on")) {
                      // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
                      if (!processController.isValidated() && processController.getHasWarnings()) {
                         retVal.append("{\"continue\": {\"message\": \"");
-                        retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()));
+                        retVal.append(processController.getStatusSB().toString());
                         retVal.append("\"}}");
 
                     // there were no validation warnings and the user would like to upload, so continue
@@ -124,13 +122,14 @@ public class validate {
                 // User doesn't want to upload, inform them of any validation warnings
                 } else if (processController.getHasWarnings()) {
                     retVal.append("{\"done\": \"");
-                    retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()));
+                    retVal.append(processController.getStatusSB().toString());
                     retVal.append("\"}");
                 // User doesn't want to upload and the validation passed w/o any warnings or errors
                 } else {
+                    processController.appendStatus("<br>" + processController.getWorksheetName() +
+                            " worksheet successfully validated.");
                     retVal.append("{\"done\": \"");
-                    retVal.append(processController.stringToHTMLJSON(processController.getWorksheetName()));
-                    retVal.append(" worksheet successfully validated.");
+                    retVal.append(processController.getStatusSB());
                     retVal.append("\"}");
                 }
             } catch (FIMSException e) {
@@ -160,6 +159,7 @@ public class validate {
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
 
         // if no processController is found, we can't do anything
@@ -171,7 +171,7 @@ public class validate {
         processController.setClearedOfWarnings(true);
         processController.setValidated(true);
 
-        bcidConnector connector = new bcidConnector(accessToken);
+        bcidConnector connector = new bcidConnector(accessToken, refreshToken);
 
         // Create the process object --- this is done each time to orient the application
         process p = null;
@@ -204,6 +204,11 @@ public class validate {
                 }
 
                 if (processController.isExpeditionCreateRequired()) {
+                    // if a new access token was issued, update the session variables
+                    if (connector.getRefreshedToken()) {
+                        session.setAttribute("access_token", connector.getAccessToken());
+                        session.setAttribute("refresh_token", connector.getRefreshToken());
+                    }
                     // ask the user if they want to create this expedition
                     return "{\"continue\": \"The expedition code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                             "\\\" does not exist.  " +
@@ -220,7 +225,14 @@ public class validate {
                 // remove the processController from the session
                 session.removeAttribute("processController");
 
-                return "{\"done\": \"Successfully Uploaded!\"}";
+                if (connector.getRefreshedToken()) {
+                    session.setAttribute("access_token", connector.getAccessToken());
+                    session.setAttribute("refresh_token", connector.getRefreshToken());
+                }
+
+                processController.appendStatus("<br>Successfully Uploaded!");
+
+                return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
             } catch (FIMSException e) {
                 e.printStackTrace();
                 throw new FIMSException("{\"error\": \"Server Error.\"}");

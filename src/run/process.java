@@ -254,7 +254,7 @@ public class process {
                 addFimsRules(new Digester(), fims);
                 fims.run(connector, processController);
                 String results = fims.results();
-                processController.appendStatus(results);
+                processController.appendStatus("<br>" + results);
                 fimsPrinter.out.println(results);
             } catch (Exception e) {
                 throw new FIMSException(e.getMessage(), e);

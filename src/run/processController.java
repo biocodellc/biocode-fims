@@ -16,7 +16,6 @@ import java.io.OutputStream;
  */
 public class processController {
     private Boolean hasErrors = false;
-    private StringBuilder errorsSB;
     private Boolean hasWarnings = false;
     private StringBuilder warningsSB;
     private Boolean clearedOfWarnings = false;
@@ -49,14 +48,6 @@ public class processController {
     public processController(Integer project_id, String expeditionCode) {
         this.expeditionCode = expeditionCode;
         this.project_id = project_id;
-    }
-
-    public StringBuilder getErrorsSB() {
-        return errorsSB;
-    }
-
-    public void setErrorsSB(StringBuilder errorsSB) {
-        this.errorsSB = errorsSB;
     }
 
     public StringBuilder getWarningsSB() {

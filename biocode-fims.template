@@ -5,3 +5,4 @@ redirect_uri = http://biscicol.org/biocode-fims/rest/authenticationService/acces
 authorize_uri = http://biscicol.org/id/authenticationService/oauth/authorize?
 access_token_uri = http://biscicol.org/id/authenticationService/oauth/access_token
 profile_uri = http://biscicol.org/id/userService/oauth?access_token=
+refresh_uri = http://biscicol.org/id/authenticationService/oauth/refresh
