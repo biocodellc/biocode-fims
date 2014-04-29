@@ -318,8 +318,10 @@ public class bcidConnector {
 
     public boolean createExpedition(processController processController, Mapping mapping) throws Exception {
         try {
-            fimsPrinter.out.println("\tCreating expedition " + processController.getExpeditionCode() + " ... this is a one time process " +
-                    "before loading each spreadsheet and may take a minute...");
+            String status = "\tCreating expedition " + processController.getExpeditionCode() + " ... this is a one time process " +
+                    "before loading each spreadsheet and may take a minute...";
+            processController.appendStatus(status);
+            fimsPrinter.out.println(status);
             String output = createExpedition(
                     processController.getExpeditionCode(),
                     processController.getExpeditionCode() + " spreadsheet expedition",
@@ -337,7 +339,9 @@ public class bcidConnector {
             while (it.hasNext()) {
                 Entity entity = (Entity) it.next();
                 try {
-                    fimsPrinter.out.println("\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI());
+                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI();
+                    processController.appendStatus(s);
+                    fimsPrinter.out.println(s);
                     // Create the entity BCID
                     String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
                     // Associate this identifier with this expedition
@@ -404,7 +408,7 @@ public class bcidConnector {
 
         BufferedReader in;
 
-        if (conn.getResponseCode() >= 400) {
+        if (responseCode >= 400) {
             in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         } else {
             in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -450,8 +454,13 @@ public class bcidConnector {
 
         //System.out.println("Response Code : " + responseCode);
 
-        BufferedReader in =
-                new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        BufferedReader in;
+
+        if (responseCode >= 400) {
+            in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        } else {
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        }
         String inputLine;
         StringBuffer response = new StringBuffer();
 

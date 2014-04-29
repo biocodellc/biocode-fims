@@ -252,8 +252,10 @@ public class process {
             Fims fims = new Fims(mapping);
             try {
                 addFimsRules(new Digester(), fims);
-                fims.run(connector, processController.getProject_id(), processController.getExpeditionCode());
-                fims.print();
+                fims.run(connector, processController);
+                String results = fims.results();
+                processController.appendStatus(results);
+                fimsPrinter.out.println(results);
             } catch (Exception e) {
                 throw new FIMSException(e.getMessage(), e);
             }

@@ -8,6 +8,7 @@ import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
+import run.processController;
 import settings.bcidConnector;
 import settings.fimsPrinter;
 
@@ -49,7 +50,9 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public boolean run(bcidConnector bcidConnector, Integer project_id, String expedition_code) throws Exception {
+    public boolean run(bcidConnector bcidConnector, processController processController) throws Exception {
+        Integer project_id = processController.getProject_id();
+        String expedition_code = processController.getExpeditionCode();
 
         uploader = new uploader(
                 metadata.getTarget(),
@@ -67,9 +70,13 @@ public class Fims implements RendererInterface {
             try {
                 bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
                 // Create the BCID to use for upload service
-                fimsPrinter.out.println("\tCreated BCID =" + bcid + " to represent your uploaded dataset");
+                String status1 = "\tCreated BCID =" + bcid + " to represent your uploaded dataset";
+                processController.appendStatus(status1);
+                fimsPrinter.out.println(status1);
                 // Associate the expedition_code with this bcid
-                fimsPrinter.out.println("\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid));
+                String status2 = "\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid);
+                processController.appendStatus(status2);
+                fimsPrinter.out.println(status2);
 
             } catch (Exception e) {
                 throw new Exception("Unable to create BCID", e);
@@ -94,6 +101,23 @@ public class Fims implements RendererInterface {
                     "If this persists, your network may be blocking access to the database port. " +
                     "Please contact jdeck@berkeley.edu for more information.");
         }
+    }
+
+    /**
+     * return the results of run()
+     */
+    public String results() {
+        String retVal = "";
+        if (updateGood) {
+            retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
+            retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
+            retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
+        } else {
+            retVal += "\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". " +
+                    "If this persists, your network may be blocking access to the database port. " +
+                    "Please contact jdeck@berkeley.edu for more information.\n";
+        }
+        return retVal;
     }
 
     /**

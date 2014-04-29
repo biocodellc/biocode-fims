@@ -167,7 +167,7 @@ public class Mapping implements RendererInterface {
     public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) throws Exception {
 
         String status = "Converting Data Format ...";
-        processController.appendStatus(status + "\n");
+        processController.appendStatus(status + "<br>");
         fimsPrinter.out.println(status);
         this.expedition_code = processController.getExpeditionCode();
         this.colNames = processController.getValidation().getTabularDataReader().getColNames();

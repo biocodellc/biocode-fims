@@ -55,7 +55,8 @@ public class validate {
 
             // update the status
             processController.appendStatus("Initializing...<br>");
-            processController.appendStatus("inputFilename = " + stringToHTMLJSON(fileData.getFileName()) + "<br>");
+            processController.appendStatus("inputFilename = " + processController.stringToHTMLJSON(
+                    fileData.getFileName()) + "<br>");
 
             // Save the uploaded file
             String splitArray[] = fileData.getFileName().split("\\.");
@@ -66,7 +67,7 @@ public class validate {
             } else {
                 ext = splitArray[splitArray.length - 1];
             }
-            input_file = saveTempFile(is, ext);
+            input_file = processController.saveTempFile(is, ext);
             // if input_file null, then there was an error saving the file
             if (input_file == null) {
                 throw new FIMSException("[{\"done\": \"Server error saving file.\"}]");
@@ -96,16 +97,17 @@ public class validate {
                 // if there were validation errors, we can't upload
                 if (processController.getHasErrors()) {
                     retVal.append("{\"done\": \"");
-                    retVal.append(stringToHTMLJSON(processController.getErrorsSB().toString()) + "<br>");
-                    retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()) + "<br>");
-                    retVal.append("Errors found on " + stringToHTMLJSON(processController.getWorksheetName()) + " worksheet.  Must fix to continue.");
+                    retVal.append(processController.stringToHTMLJSON(processController.getErrorsSB().toString()) + "<br>");
+                    retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()) + "<br>");
+                    retVal.append("Errors found on " + processController.stringToHTMLJSON(
+                            processController.getWorksheetName()) + " worksheet.  Must fix to continue.");
                     retVal.append("\"}");
 
                 } else if (upload != null && upload.equals("on")) {
                      // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
                      if (!processController.isValidated() && processController.getHasWarnings()) {
                         retVal.append("{\"continue\": {\"message\": \"");
-                        retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()));
+                        retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()));
                         retVal.append("\"}}");
 
                     // there were no validation warnings and the user would like to upload, so continue
@@ -122,12 +124,12 @@ public class validate {
                 // User doesn't want to upload, inform them of any validation warnings
                 } else if (processController.getHasWarnings()) {
                     retVal.append("{\"done\": \"");
-                    retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()));
+                    retVal.append(processController.stringToHTMLJSON(processController.getWarningsSB().toString()));
                     retVal.append("\"}");
                 // User doesn't want to upload and the validation passed w/o any warnings or errors
                 } else {
                     retVal.append("{\"done\": \"");
-                    retVal.append(stringToHTMLJSON(processController.getWorksheetName()));
+                    retVal.append(processController.stringToHTMLJSON(processController.getWorksheetName()));
                     retVal.append(" worksheet successfully validated.");
                     retVal.append("\"}");
                 }
@@ -149,11 +151,6 @@ public class validate {
         }
 
         return retVal.toString();
-    }
-
-    private String stringToHTMLJSON(String s) {
-        s = s.replaceAll("\n", "<br>").replaceAll("\t", "");
-        return JSONObject.escape(s);
     }
 
     @GET
@@ -250,25 +247,6 @@ public class validate {
         }
 
         return "{\"status\": \"" + processController.getStatusSB().toString() + "\"}";
-    }
-
-    private String saveTempFile(InputStream is, String ext) {
-        String tempDir = System.getProperty("java.io.tmpdir");
-        File f = new File(tempDir, new stringGenerator().generateString(20) + '.' + ext);
-
-        try {
-            OutputStream os = new FileOutputStream(f);
-            try {
-                byte[] buffer = new byte[4096];
-                for (int n; (n = is.read(buffer)) != -1; )
-                    os.write(buffer, 0, n);
-            }
-            finally { os.close(); }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return f.getAbsolutePath();
     }
 
     static String uploadpath() {
