@@ -12,6 +12,16 @@
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
+    <script src="js/jquery.form.js"></script>
+
+    <script src="js/distal.js"></script>
+    <script>
+        jQuery.fn.distal = function (json) {
+            return this.each( function () { distal(this, json) } )
+        };
+    </script>
+
+    <script type="text/javascript" src="js/biocode-fims.js"></script>
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 

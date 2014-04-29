@@ -5,37 +5,46 @@
 
         <h2>Validation</h2>
 
-        <form>
-            <table border=0>
-            <tr><td colspan=2>Online Validation Services not yet implemented, coming by May, 2014.  <br>Meanwhile, you can use the <a href="https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation" target="_blank">Biocode FIMS Geneious Plugin</a></td></tr>
-            <tr>
-                <td align=right>FIMS Spreadsheet</td>
-                <td align=left>
-                    <input
-                        type=file
-                        name="spreadsheet"
-                        id="spreadsheet"
-                        size="40"/>
-                </td>
-            </tr>
-            <tr>
-                <td align=right style="color:gray">Upload</td>
-                <td align=left>
-                    <input
-                        type="checkbox"
-                        name="upload"
-                        value="upload" disabled/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan=2>
-                    <input
-                        type="button"
-                        onclick="runIt();"
-                        name="Submit"
-                        value="Submit" />
-                </td>
-            </tr>
+        <form method="POST">
+            <table>
+                <tr>
+                    <td align="right">FIMS Spreadsheet</td>
+                    <td><input type="file" name="dataset" id="dataset" /></td>
+                </tr>
+
+                <tr class="toggle-content" id="projects_toggle">
+                    <td align="right">Project</td>
+                    <td>
+                        <select width=20 name="project_id" id="projects">
+                            <option qdup=1 value=0>Select an project ...</option>
+                            <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
+                                Loading Projects ...
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="right">Upload</td>
+                    <td style="font-size:11px;">
+                        <c:if test="${user == null}">
+                            <input type="checkbox" id="upload" disabled="disabled" /> (login to upload)
+                        </c:if>
+                        <c:if test="${user != null}">
+                            <input type="checkbox" id="upload" name="upload" />
+                        </c:if>
+                    </td>
+                </tr>
+
+                <tr class="toggle-content" id="expedition_code_toggle">
+                    <td align="right">Expedition Code</td>
+                    <td><input type="text" name="expedition_code" id="expedition_code" /></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><input type="button" value="Submit"</td>
+                </tr>
             </table>
         </form>
 
@@ -52,20 +61,22 @@
 </div>
 
 <script>
-
-function runIt() {
-    alert("yet to implement this part");
-}
-
-function workflowImageSwap() {
-    if ($("#workflowImage").attr("src") == 'docs/Workflow.jpeg') {
-        $("#workflowImage").attr("src",'docs/Workflow_simple.jpeg');
-        $("#workflowControl").text('Advanced');
-    } else {
-        $("#workflowImage").attr("src",'docs/Workflow.jpeg');
-        $("#workflowControl").text('Simple');
+    function workflowImageSwap() {
+        if ($("#workflowImage").attr("src") == 'docs/Workflow.jpeg') {
+            $("#workflowImage").attr("src",'docs/Workflow_simple.jpeg');
+            $("#workflowControl").text('Advanced');
+        } else {
+            $("#workflowImage").attr("src",'docs/Workflow.jpeg');
+            $("#workflowControl").text('Simple');
+        }
     }
-}
-</script></script>
+    $(document).ready(function() {
+        uploader();
+        populateProjects();
+        $("input[type=button]").click(function() {
+            validatorSubmit();
+        });
+    });
+</script>
 
 <%@ include file="footer.jsp" %>

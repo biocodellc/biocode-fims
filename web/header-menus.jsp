@@ -7,13 +7,10 @@
 
         <div style='float:right' id="loginLink">
             <c:if test="${user == null}">
-                <!--NEED TO IMPLEMENT LOGIN SERVICE TO HIT OAUTH FOR BIOCODE-FIMS and then implement something like:
-                 <a href="/biocode-fims/login.jsp">Login</a>
-                 -->
-                Login
+                <a id="login" href="rest/authenticationService/login">Login</a>
             </c:if>
             <c:if test="${user != null}">
-                <a href="/bcid/secure/profile.jsp">${user}</a> | <a href="/id/authenticationService/logout/">Logout</a>
+                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a>
             </c:if>
             | <a href="https://code.google.com/p/biocode-fims/">Help</a>
         </div>
