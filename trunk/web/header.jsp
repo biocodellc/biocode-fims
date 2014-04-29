@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="css/biscicol.css"/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="js/distal.js"></script>
         <script>
             jQuery.fn.distal = function (json) {
