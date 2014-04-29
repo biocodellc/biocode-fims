@@ -23,6 +23,12 @@ import java.net.URL;
 @Path("authenticationService")
 public class authenticationService {
 
+    /**
+     * Rest service that will initiate the oauth login process
+     * @param response
+     * @param request
+     * @throws IOException
+     */
     @GET
     @Path("login")
     public void login(@Context HttpServletResponse response,
@@ -47,7 +53,7 @@ public class authenticationService {
 
     /**
      * first, exchange the returned oauth code for an access token. Then use the access token to obtain the user's
-     * profile information, and store the username and user id in the session.
+     * profile information, and store the username, user id, access token, and refresh token in the session.
      * @param code
      * @param response
      * @param request
@@ -107,6 +113,12 @@ public class authenticationService {
         return;
     }
 
+    /**
+     * Rest service to log a user out of the biocode-fims system
+     * @param req
+     * @param res
+     * @throws IOException
+     */
     @GET
     @Path("logout")
     @Produces(MediaType.TEXT_HTML)

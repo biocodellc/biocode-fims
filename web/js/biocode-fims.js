@@ -258,6 +258,7 @@ function submitForm(){
     return promise;
 }
 
+// function to show the user an error occurred if an ajax call failed
 function failError() {
     var buttons = {
         "OK": function(){
