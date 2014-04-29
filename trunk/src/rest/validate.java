@@ -7,7 +7,6 @@ import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.bcidConnector;
-import utils.stringGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +25,16 @@ public class validate {
     @Context
     static ServletContext context;
 
+    /**
+     * service to validate a dataset against a project's rules
+     * @param project_id
+     * @param expedition_code
+     * @param upload
+     * @param is
+     * @param fileData
+     * @param request
+     * @return
+     */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
@@ -152,6 +161,12 @@ public class validate {
         return retVal.toString();
     }
 
+    /**
+     * Service to upload a dataset to an expedition. The validate service must be called before this service.
+     * @param createExpedition
+     * @param request
+     * @return
+     */
     @GET
     @Path("/continue")
     @Produces(MediaType.APPLICATION_JSON)
@@ -247,6 +262,11 @@ public class validate {
         }
     }
 
+    /**
+     * Service used for getting the current status of the dataset validation/upload.
+     * @param request
+     * @return
+     */
     @GET
     @Path("/status")
     @Produces(MediaType.APPLICATION_JSON)

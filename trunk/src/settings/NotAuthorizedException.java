@@ -1,7 +1,7 @@
 package settings;
 
 /**
- * Created by rjewing on 4/19/14.
+ * Exception class for catching 401 responses. This allows the calling method to handle 401 error appropriately.
  */
 public class NotAuthorizedException extends Exception {
     public NotAuthorizedException(Throwable throwable) {
