@@ -1,6 +1,13 @@
 package run;
 
 import digester.Validation;
+import org.json.simple.JSONObject;
+import utils.stringGenerator;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Tracks status of data validation.  Helpful especially in a stateless environment.
@@ -35,12 +42,8 @@ public class processController {
         return statusSB;
     }
 
-    public void setStatusSB(StringBuilder sb) {
-        statusSB = sb;
-    }
-
     public void appendStatus(String s) {
-        statusSB.append(s);
+        statusSB.append(stringToHTMLJSON(s));
     }
 
     public processController(Integer project_id, String expeditionCode) {
@@ -151,6 +154,41 @@ public class processController {
             return true;
         else
             return false;
+    }
+
+    /**
+     * take an InputStream and extension and write it to a file in the operating systems temp dir.
+     * @param is
+     * @param ext
+     * @return
+     */
+    public String saveTempFile(InputStream is, String ext) {
+        String tempDir = System.getProperty("java.io.tmpdir");
+        File f = new File(tempDir, new stringGenerator().generateString(20) + '.' + ext);
+
+        try {
+            OutputStream os = new FileOutputStream(f);
+            try {
+                byte[] buffer = new byte[4096];
+                for (int n; (n = is.read(buffer)) != -1; )
+                    os.write(buffer, 0, n);
+            }
+            finally { os.close(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return f.getAbsolutePath();
+    }
+
+    /**
+     * return a string that is to be used in html and is json safe
+     * @param s
+     * @return
+     */
+    public String stringToHTMLJSON(String s) {
+        s = s.replaceAll("\n", "<br>").replaceAll("\t", "");
+        return JSONObject.escape(s);
     }
 
     public String printStatus() {

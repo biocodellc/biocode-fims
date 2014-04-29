@@ -72,7 +72,7 @@ public class triplifier {
         //String filenamePrefix = inputFile.getName();
         System.gc();
         String status = "\tWriting Temporary Output ...";
-        processController.appendStatus(status + "\n");
+        processController.appendStatus(status + "<br>");
         fimsPrinter.out.println(status);
 
         // Write the model

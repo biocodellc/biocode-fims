@@ -194,6 +194,7 @@ function graphsMessage(message) {
         $('#graphs').find('option').first().text(message);
 }
 
+// function to open an new or update an already open jquery ui dialog box
 function dialog(msg, title, buttons) {
     var dialogContainer = $("#dialogContainer");
     if (dialogContainer.html() != msg) {
@@ -208,7 +209,7 @@ function dialog(msg, title, buttons) {
             title: title,
             resizable: false,
             width: 'auto',
-            draggable: true,
+            draggable: false,
             buttons: buttons
         });
     }
@@ -216,6 +217,7 @@ function dialog(msg, title, buttons) {
     return;
 }
 
+// function to submit the validation form using jquery form plugin to handle the file uploads
 function submitForm(){
     var de = new $.Deferred();
     var promise = de.promise();
@@ -270,8 +272,7 @@ function validatorSubmit() {
         }
         dialog(message, "Validation Results", buttons);
     } else {
-        var d = submitForm();
-        d.done(function(data) {
+        submitForm().done(function(data) {
             validationResults(data);
         });
     }
@@ -294,6 +295,7 @@ function loopStatus(promise) {
     }, 1000);
 }
 
+// poll the server to get the validation/upload status
 function pollStatus() {
     var def = new $.Deferred();
     $.getJSON("/biocode-fims/rest/validate/status")
@@ -305,6 +307,23 @@ function pollStatus() {
     return def.promise();
 }
 
+// Continue the upload process after getting user consent if there were warnings during validation or if we are creating
+// a new expedition
+function continueUpload(createExpedition) {
+    var d = new $.Deferred();
+    var url = "/biocode-fims/rest/validate/continue";
+    if (createExpedition) {
+        url += "?createExpedition=true";
+    }
+    $.getJSON(url)
+        .done(function(data) {
+            d.resolve();
+            uploadResults(data);
+        });
+    loopStatus(d.promise());
+}
+
+// function to handle the results from the rest service /biocode-fims/rest/validate
 function validationResults(data) {
     var title = "Validation Results";
     if (data.done != null) {
@@ -316,19 +335,12 @@ function validationResults(data) {
         dialog(data.done, title, buttons);
     } else {
         if (data.continue.message == null) {
-            $.get("/biocode-fims/rest/validate/continue")
-                .done(function(data) {
-                    uploadResults(data);
-                });
+            continueUpload(false);
         } else {
             // ask user if want to proceed
             var buttons = {
                 "Continue": function() {
-                    $.get("/biocode-fims/rest/validate/continue")
-                        .done(function(data) {
-                            uploadResults(data);
-                        });
-                    $(this).dialog("close");
+                      continueUpload(false);
                 },
                 "Cancel": function() {
                     $(this).dialog("close");
@@ -339,6 +351,7 @@ function validationResults(data) {
     }
 }
 
+// function to handle the results from the rest service /biocode-fims/rest/validate/continue
 function uploadResults(data) {
     var title = "Upload Results";
     if (data.done != null || data.error != null) {
@@ -358,11 +371,7 @@ function uploadResults(data) {
         // ask user if want to proceed
         var buttons = {
             "Continue": function() {
-                $.get("/biocode-fims/rest/validate/continue?createExpedition=true")
-                    .done(function(data) {
-                        uploadResults(data);
-                    });
-                $(this).dialog("close");
+                continueUpload(true);
             },
             "Cancel": function() {
                 $(this).dialog("close");
