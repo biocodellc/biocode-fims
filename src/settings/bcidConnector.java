@@ -321,7 +321,7 @@ public class bcidConnector {
      * @return
      * @throws IOException
      */
-    private String createPOSTConnnection(URL url, String postParams) throws IOException {
+    public String createPOSTConnnection(URL url, String postParams) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         // Acts like a browser
@@ -359,8 +359,13 @@ public class bcidConnector {
         */
         responseCode = conn.getResponseCode();
 
-        BufferedReader in =
-                new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        BufferedReader in;
+
+        if (conn.getResponseCode() >= 400) {
+            in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        } else {
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        }
         String inputLine;
         StringBuffer response = new StringBuffer();
 
@@ -380,7 +385,7 @@ public class bcidConnector {
      * @return
      * @throws IOException
      */
-    private String createGETConnection(URL url) throws IOException {
+    public String createGETConnection(URL url) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         // default is GET
