@@ -198,21 +198,20 @@ function graphsMessage(message) {
 function validatorSubmit() {
     $("#uploaderResults").html("validating...")
     var options = {
+        url: "/biocode-fims/rest/validate/",
+        type: "POST",
+        resetForm: true,
+        contentType: "multipart/form-data",
         beforeSerialize: function(form, options) {
             $('#projects').prop('disabled', false);
         },
         beforeSubmit: function(form, options) {
             $('#projects').prop('disabled', true);
         },
-        url: "/biocode-fims/rest/validate/validate/",
-        type: "POST",
-        resetForm: true
+//        success: function(){};
         }
 
-    $(this).ajaxSubmit(options)
-        .done(function(data) {
-            var t = true;
-        });
+    $('form').ajaxSubmit(options)
 }
 
 // function to extract the project_id from a dataset to be uploaded
@@ -226,14 +225,18 @@ function extractProjectId() {
         f.onload = function () {
             var fileContents = f.result;
             var re = "~project_id=[0-9]+~";
-            var results = fileContents.match(re)[0];
+            try {
+                var results = fileContents.match(re)[0];
 
-            if (results != null) {
-                var project_id = results.split('=')[1].slice(0, -1);
-                if (project_id > 0) {
-                    deferred.resolve(project_id);
+                if (results != null) {
+                    var project_id = results.split('=')[1].slice(0, -1);
+                    if (project_id > 0) {
+                        deferred.resolve(project_id);
+                    }
+                } else {
+                    deferred.resolve(-1);
                 }
-            } else {
+            } catch (e) {
                 deferred.resolve(-1);
             }
         };
@@ -262,7 +265,7 @@ function uploader() {
         });
     });
     $('#upload').change(function() {
-        if ($('.toggle-content#expedition_code_toggle').is(':hidden')) {
+        if ($('.toggle-content#expedition_code_toggle').is(':hidden') && $('#upload').is(":checked")) {
             $('.toggle-content#expedition_code_toggle').show(400);
         } else {
             $('.toggle-content#expedition_code_toggle').hide(400);

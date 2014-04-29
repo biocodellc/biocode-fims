@@ -1,38 +1,36 @@
 package rest;
 
-
+import com.sun.jersey.multipart.FormDataParam;
+import com.sun.jndi.url.dns.dnsURLContext;
 import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.bcidConnector;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.*;
+//import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
- * REST interface for validating data
+ * Created by rjewing on 4/18/14.
  */
 @Path("validate")
 public class validate {
-    @Context
-    static ServletContext context;
-
-    @GET
-    @Path("/validate")
-    @Produces(MediaType.TEXT_HTML)
-    public void validate(@QueryParam("project_id") Integer project_id,
-                         @QueryParam("expedition_code") String expedition_code,
-                         @Context HttpServletRequest req)
-            throws IOException {
-
-
-        HttpSession session = req.getSession();
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void validate(@FormDataParam("project_id") Integer project_id,
+                         @FormDataParam("expedition_code") String expedition_code,
+                         @FormDataParam("upload") String upload,
+                         @FormDataParam("dataset") InputStream is,
+                         @Context HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
 
         // Find an existing processController or create a new one if it doesn't exist
         processController processController = (processController) session.getAttribute("processController");
@@ -40,8 +38,8 @@ public class validate {
             processController = new processController(project_id, expedition_code);
         }
 
-        // TODO: make some method to upload a file and refer to it here
-        String input_file = "";
+        // TODO: delete this temp file after uploaded
+        String input_file = saveTempFile(is);
         // TODO: fetch the connector from a session
         bcidConnector connector = null;
 
@@ -50,7 +48,7 @@ public class validate {
         try {
             p = new process(
                     input_file,
-                    uploadPath(),
+                    "",//uploadpath(),
                     connector,
                     processController
             );
@@ -64,20 +62,34 @@ public class validate {
         // Run the process
         // TODO: See process.runAllLocally() and copy the interactive steps there...
 
-        // Set session's processController to what the process class did with it
-        session.setAttribute("processController", p.getProcessController());
-
+        // Set the session processController to what the process class did with it
+        session.setAttribute("processController", processController);
     }
 
-    /**
-     * Get real path of the uploads folder from context.
-     * Needs context to have been injected before.
-     *
-     * @return Real path of the uploads folder with ending slash.
-     */
-    static String uploadPath() {
-        return context.getRealPath("tripleOutput") + File.separator;
+    private String saveTempFile(InputStream is) {
+        String tempDir = System.getProperty("java.io.tmpdir");
+        File f = new File(tempDir, "filename");
+
+        try {
+            OutputStream os = new FileOutputStream(f);
+            try {
+                byte[] buffer = new byte[4096];
+                for (int n; (n = is.read(buffer)) != -1; )
+                    os.write(buffer, 0, n);
+            }
+            finally { os.close(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return f.getAbsolutePath();
     }
 
+//    @Context
+//    static ServletContext context;
+//
+//    static String uploadpath() {
+//        return context.getRealPath("tripleOutput") + File.separator;
+//    }
 
 }
