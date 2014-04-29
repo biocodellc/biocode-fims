@@ -100,6 +100,7 @@ public class authenticationService {
 
         session.setAttribute("user", profileJSON.get("username"));
         session.setAttribute("userId", profileJSON.get("user_id"));
+        session.setAttribute("access_token", access_token);
 
         response.sendRedirect("/biocode-fims/index.jsp");
         return;

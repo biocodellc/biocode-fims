@@ -46,6 +46,7 @@ public class bcidConnector {
 
 
     private Integer responseCode;
+    private String accessToken;
 
     private String connectionPoint;
     private String username;
@@ -91,7 +92,17 @@ public class bcidConnector {
     }
 
     /**
-     * Authenticate against BCID system.  This is done first to set cookies in this class in the cookies class variable.
+     * this constructor is used when the user has authenticated via oauth.
+     * @param accessToken
+     */
+    public bcidConnector(String accessToken) {
+        this.accessToken = accessToken;
+        CookieHandler.setDefault(new CookieManager());
+    }
+
+    /**
+     * Authenticate against BCID system.  This is done first to set cookies in this class in the cookies class variable,
+     * unless the user authenticated via OAuth, then this method is not needed.
      *
      * @param username
      * @param password
@@ -114,8 +125,8 @@ public class bcidConnector {
     }
 
     /**
-     * Create a Dataset BCID.  Uses cookies sent during authentication method.  suffixPassthrough is set to False
-     * since we only want to represent a single entity here
+     * Create a Dataset BCID.  Uses cookies sent during authentication method, or OAuth access tokens if accessToken != null
+     * suffixPassthrough is set to False since we only want to represent a single entity here
      *
      * @return
      * @throws Exception
@@ -130,7 +141,12 @@ public class bcidConnector {
         if (graph != null)
             createBCIDDatasetPostParams += "&graph=" + graph;
 
-        URL url = new URL(arkCreationURL);
+        URL url;
+        if (accessToken != null) {
+            url = new URL(arkCreationURL + "?access_token=" + accessToken);
+        } else {
+            url = new URL(arkCreationURL);
+        }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
         if (getResponseCode() == 401) {
             throw new Exception("User not authorized to upload to this expedition!");
@@ -151,7 +167,12 @@ public class bcidConnector {
                         "suffixPassThrough=true&" +
                         "webaddress=" + webaddress;
 
-        URL url = new URL(arkCreationURL);
+        URL url;
+        if (accessToken != null) {
+            url = new URL(arkCreationURL + "?access_token=" + accessToken);
+        } else {
+            url = new URL(arkCreationURL);
+        }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
 
         if (getResponseCode() == 401) {
@@ -192,7 +213,11 @@ public class bcidConnector {
 
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(readJsonFromUrl(availableProjectsURL));
+            String url = availableProjectsURL;
+            if (accessToken != null) {
+                url += "?access_token=" + accessToken;
+            }
+            Object obj = parser.parse(readJsonFromUrl(url));
             JSONObject jsonObject = (JSONObject) obj;
 
             // loop array
@@ -227,7 +252,12 @@ public class bcidConnector {
                         "expedition_title=" + expedition_title + "&" +
                         "project_id=" + project_id;
 
-        URL url = new URL(expeditionCreationURL);
+        URL url;
+        if (accessToken != null) {
+            url = new URL(expeditionCreationURL + "?access_token=" + accessToken);
+        } else {
+            url = new URL(expeditionCreationURL);
+        }
         String response = createPOSTConnnection(url, createPostParams);
 
         // Catch Error using response string...
@@ -249,7 +279,11 @@ public class bcidConnector {
      * @throws Exception
      */
     public boolean checkExpedition(processController processController) throws Exception {
-        URL url = new URL(expeditionValidationURL + processController.getProject_id() + "/" + processController.getExpeditionCode());
+        String urlString = expeditionValidationURL + processController.getProject_id() + "/" + processController.getExpeditionCode();
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
+        URL url = new URL(urlString);
         String response = createGETConnection(url);
         String action = response.split(":")[0];
         if (getResponseCode() != 200) {
