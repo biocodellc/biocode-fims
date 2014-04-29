@@ -197,7 +197,19 @@ function graphsMessage(message) {
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     $("#uploaderResults").html("validating...")
-    $.post("rest/validate/validate", $("form").serialize())
+    var options = {
+        beforeSerialize: function(form, options) {
+            $('#projects').prop('disabled', false);
+        },
+        beforeSubmit: function(form, options) {
+            $('#projects').prop('disabled', true);
+        },
+        url: "/biocode-fims/rest/validate/validate/",
+        type: "POST",
+        resetForm: true
+        }
+
+    $(this).ajaxSubmit(options)
         .done(function(data) {
             var t = true;
         });
