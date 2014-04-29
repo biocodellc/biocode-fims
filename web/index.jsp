@@ -5,6 +5,17 @@
 
         <h2>Validation</h2>
 
+        <c:if test="${param.error != null}">
+        <script>
+        $(document).ready(function(){
+            $("#dialogContainer").addClass("error");
+            dialog("Authentication Error!", "Error", {"OK": function() {
+                $("#dialogContainer").removeClass("error");
+                $(this).dialog("close"); }
+            });
+        });</script>
+        </c:if>
+
         <form method="POST">
             <table>
                 <tr>
