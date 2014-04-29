@@ -194,6 +194,22 @@ function graphsMessage(message) {
         $('#graphs').find('option').first().text(message);
 }
 
+function dialog(msg, title, buttons) {
+    var dialog = $("<div>"+msg+"</div>");
+
+    $(dialog).dialog({
+        modal: true,
+        autoOpen: true,
+        title: title,
+        resizable: false,
+        width: 'auto',
+        draggable: false,
+        buttons: buttons,
+        close: function(ev, ui) { $( this ).remove(); }
+    });
+    return;
+}
+
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     if ($('#projects').val() == 0 || $('#expedition_code').val().length > 6) {
@@ -204,21 +220,13 @@ function validatorSubmit() {
             message = "Expedition code is too long. Please limit to 6 characters."
         }
         $('#resultsContainer').html(message);
-        $('#resultsContainer').dialog({
-            modal: true,
-            autoOpen: true,
-            title: "Validation Results",
-            resizable: false,
-            width: 'auto',
-            draggable: false,
-            buttons:{ "OK": function(){
-                                        $(this).dialog("close");
-                                        $(this).dialog("destroy");
-                                      }
-                    }
-        });
+        var buttons = {
+            "OK": function(){
+                $(this).dialog("close");
+              }
+        }
+        dialog(message, "Validation Results", buttons);
     } else {
-        var d = $.Deferred;
         var options = {
             url: "/biocode-fims/rest/validate/",
             type: "POST",
@@ -242,21 +250,14 @@ function validatorSubmit() {
 }
 
 function validationResults(data) {
+    var title = "Validation Results";
     if (data.done != null) {
-        $('#resultsContainer').html(data.done);
-        $('#resultsContainer').dialog({
-            modal: true,
-            autoOpen: true,
-            title: "Validation Results",
-            resizable: false,
-            width: 'auto',
-            draggable: false,
-            buttons:{ "OK": function(){
-                                        $(this).dialog("close");
-                                        $(this).dialog("destroy");
-                                      }
-                    }
-        });
+        var buttons = {
+            "Ok": function() {
+                $(this).dialog("close");
+            }
+        }
+        dialog(data.done, title, buttons);
     } else {
         if (data.continue.message == null) {
             $.get("/biocode-fims/rest/validate/continue")
@@ -265,33 +266,25 @@ function validationResults(data) {
                 });
         } else {
             // ask user if want to proceed
-            $('#resultsContainer').html(data.continue.message);
-            $('#resultsContainer').dialog({
-                modal: true,
-                autoOpen: true,
-                title: "Validation Results",
-                resizable: false,
-                width: 'auto',
-                draggable: false,
-                buttons:{ "Continue": function(){
-                                                    $.get("/biocode-fims/rest/validate/continue")
-                                                        .done(function(data) {
-                                                            uploadResults(data);
-                                                        });
-                                                    $(this).dialog("close");
-                                                    $(this).dialog("destroy");
-                                                },
-                          "Cancel": function(){
-                                                $(this).dialog("close");
-                                                $(this).dialog("destroy");
-                                              }
-                        }
-            });
+            var buttons = {
+                "Continue": function() {
+                    $.get("/biocode-fims/rest/validate/continue")
+                        .done(function(data) {
+                            uploadResults(data);
+                        });
+                    $(this).dialog("close");
+                },
+                "Cancel": function() {
+                    $(this).dialog("close");
+                }
+            }
+            dialog(data.continue.message, title, buttons);
         }
     }
 }
 
 function uploadResults(data) {
+    var title = "Upload Results";
     if (data.done != null || data.error != null) {
         var message;
         if (data.done != null) {
@@ -299,45 +292,28 @@ function uploadResults(data) {
         } else {
             message = data.error;
         }
-        $('#resultsContainer').html(message);
-        $('#resultsContainer').dialog({
-            modal: true,
-            autoOpen: true,
-            title: "Upload Results",
-            resizable: false,
-            width: 'auto',
-            draggable: false,
-            buttons:{ "OK": function(){
-                                        $(this).dialog("close");
-                                        $(this).dialog("destroy");
-                                      }
-                    }
-        });
+        var buttons = {
+            "Ok": function() {
+                $(this).dialog("close");
+            }
+        }
+        dialog(message, title, buttons);
     } else {
         // ask user if want to proceed
-        $('#resultsContainer').html(data.continue);
-        $('#resultsContainer').dialog({
-            modal: true,
-            autoOpen: true,
-            title: "Upload Results",
-            resizable: false,
-            width: 'auto',
-            draggable: false,
-            buttons:{ "Continue": function(){
-                                                $.get("/biocode-fims/rest/validate/continue?createExpedition=true")
-                                                    .done(function(data) {
-                                                        uploadResults(data);
-                                                    });
-                                                $(this).dialog("close");
-                                                $(this).dialog("destroy");
-                                            },
-                      "Cancel": function(){
-                                            $(this).dialog("close");
-                                            $(this).dialog("destroy");
-                                          }
-                    }
-        });
-}
+        var buttons = {
+            "Continue": function() {
+                $.get("/biocode-fims/rest/validate/continue?createExpedition=true")
+                    .done(function(data) {
+                        uploadResults(data);
+                    });
+                $(this).dialog("close");
+            },
+            "Cancel": function() {
+                $(this).dialog("close");
+            }
+        }
+        dialog(data.continue, title, buttons);
+    }
 }
 
 // function to extract the project_id from a dataset to be uploaded
