@@ -54,8 +54,8 @@ public class validate {
 
 
             // update the status
-            processController.appendStatus("Initializing...\n");
-            processController.appendStatus("\tinputFilename = " + fileData.getFileName() + "\n");
+            processController.appendStatus("Initializing...<br>");
+            processController.appendStatus("inputFilename = " + stringToHTMLJSON(fileData.getFileName()) + "<br>");
 
             // Save the uploaded file
             String splitArray[] = fileData.getFileName().split("\\.");
@@ -90,7 +90,7 @@ public class validate {
 
             // Run the process
             try {
-                processController.appendStatus("Validating...\n");
+                processController.appendStatus("Validating...<br>");
                 p.runValidation();
 
                 // if there were validation errors, we can't upload
