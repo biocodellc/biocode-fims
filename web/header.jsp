@@ -7,9 +7,15 @@
 <head>
     <title>Biocode FIMS</title>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="/bcid/css/biscicol.css"/>
+    <link rel="stylesheet" type="text/css" href="css/biscicol.css"/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="/bcid/js/bcid.js"></script>
+    <script src="js/distal.js"></script>
+        <script>
+            jQuery.fn.distal = function (json) {
+                return this.each( function () { distal(this, json) } )
+            };
+        </script>
+    <script type="text/javascript" src="js/biocode-fims.js"></script>
 </head>
 
 <body>
@@ -22,10 +28,10 @@
 
         <div style='float:right' id="loginLink">
             <c:if test="${user == null}">
-                <a href="javascript:void();">Login</a>
+                <a id="login" href="http://localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=http://localhost:8080/biocode-fims/rest/authenticationService/access_token/">Login</a>
             </c:if>
             <c:if test="${user != null}">
-                <a href="/bcid/secure/profile.jsp">${user}</a> | <a href="/biocode-fims/rest/logout/">Logout</a>
+                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/biocode-fims/rest/logout/">Logout</a>
             </c:if>
             <!--| <div class="link"><a href='/bcid/concepts.jsp'>Concepts</a></div>-->
             | <a href="https://code.google.com/p/biocode-fims/">Help</a>
@@ -34,16 +40,6 @@
         <div style="clear: both;"></div>
 
         <div style="overflow: auto;width: 100%;">
-            <div class="link"><a href='/biocode-fims/validate.jsp'>Validate</a></div>
-
-            <div class="separator">|</div>
-
-            <c:if test="${user == null}">
-                <div class="disabled"><a href="/secure/upload.jsp">Upload</a></div>
-            </c:if>
-            <c:if test="${user != null}">
-                <div class="link"><a href="/secure/upload.jsp">Upload</a></div>
-            </c:if>
-
+            <div class="link"><a href='/biocode-fims/uploader.jsp'>Uploader</a></div>
         </div>
     </div>

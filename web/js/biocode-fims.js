@@ -194,10 +194,19 @@ function graphsMessage(message) {
         $('#graphs').find('option').first().text(message);
 }
 
+// submit dataset to be validated/uploaded
+function validatorSubmit() {
+    $("#uploaderResults").html("validating...")
+    $.post("rest/validationService/", $("form").serialize())
+        .done(function(data) {
+            var t = true;
+        });
+}
+
 // login user in using the bcid system
 function login() {
-    $.get("localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=localhost:8080/biocode-fims/rest/authenticationService/access_token/")
-        .done(data){
+    $.get("http://localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=localhost:8080/biocode-fims/rest/authenticationService/access_token/")
+        .done(function(data){
         var t = true;
-        }
+        });
 }

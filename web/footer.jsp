@@ -12,5 +12,13 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $("#login").click(function() {
+            // login();
+        });
+    });
+</script>
+
 </body>
 </html>
