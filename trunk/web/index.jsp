@@ -73,8 +73,15 @@
         }
     }
     $(document).ready(function() {
-        uploader();
+        validationFormToggle();
         populateProjects();
+        // call validatorSubmit if the enter key was pressed in an input
+        $("input").keydown( function(event) {
+            if (event.which == 13) {
+            event.preventDefault();
+            validatorSubmit();
+            }
+        });
         $("input[type=button]").click(function() {
             validatorSubmit();
         });
