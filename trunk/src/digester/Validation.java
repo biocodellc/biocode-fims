@@ -181,7 +181,9 @@ public class Validation implements RendererInterface {
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
             processController.setWorksheetName(worksheet.getSheetname());
-            fimsPrinter.out.println("\t" + worksheet.getSheetname() + " worksheet results");
+            String status1 = "\t" + worksheet.getSheetname() + " worksheet results";
+            processController.appendStatus("<br>" + status1 + "<br>");
+            fimsPrinter.out.println(status1);
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
                 errorSB.append("\t\t" + msg + "\n");
                 //fimsPrinter.out.println("\t\t" + msg);
@@ -194,14 +196,21 @@ public class Validation implements RendererInterface {
             if (!worksheet.errorFree()) {
                 fimsPrinter.out.println(errorSB.toString());
                 fimsPrinter.out.println(warningSB.toString());
-                fimsPrinter.out.println("\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.");
+                processController.appendStatus(errorSB.toString() + "<br>");
+                processController.appendStatus(warningSB.toString() + "<br>");
+
+                String status2 = "\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.";
+                fimsPrinter.out.println(status2);
+                processController.appendStatus(status2);
+
                 processController.setHasErrors(true);
-                processController.setErrorsSB(errorSB);
                 processController.setWarningsSB(warningSB);
                 return processController;
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
+                    processController.appendStatus("Warnings found on " + worksheet.getSheetname() + " worksheet.<br>" +
+                            warningSB.toString() + "<br>");
                     processController.setHasWarnings(true);
                     processController.setWarningsSB(warningSB);
                     return processController;
