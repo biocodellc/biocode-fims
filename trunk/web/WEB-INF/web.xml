@@ -24,6 +24,15 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <filter>
+        <filter-name>secureFilter</filter-name>
+        <filter-class>auth.secureFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>secureFilter</filter-name>
+        <url-pattern>/bcid/secure/*</url-pattern>
+    </filter-mapping>
+
 	<error-page>
 	  <error-code>500</error-code>
 	  <location>/error500.jsp</location>
