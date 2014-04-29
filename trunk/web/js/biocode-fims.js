@@ -196,22 +196,148 @@ function graphsMessage(message) {
 
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
-    $("#uploaderResults").html("validating...")
-    var options = {
-        url: "/biocode-fims/rest/validate/",
-        type: "POST",
-        resetForm: true,
-        contentType: "multipart/form-data",
-        beforeSerialize: function(form, options) {
-            $('#projects').prop('disabled', false);
-        },
-        beforeSubmit: function(form, options) {
-            $('#projects').prop('disabled', true);
-        },
-//        success: function(){};
+    if ($('#projects').val() == 0 || $('#expedition_code').val().length > 6) {
+        var message;
+        if ($('#projects').val() == 0) {
+            message = "Please select a project.";
+        } else {
+            message = "Expedition code is too long. Please limit to 6 characters."
+        }
+        $('#resultsContainer').html(message);
+        $('#resultsContainer').dialog({
+            modal: true,
+            autoOpen: true,
+            title: "Validation Results",
+            resizable: false,
+            width: 'auto',
+            draggable: false,
+            buttons:{ "OK": function(){
+                                        $(this).dialog("close");
+                                        $(this).dialog("destroy");
+                                      }
+                    }
+        });
+    } else {
+        var d = $.Deferred;
+        var options = {
+            url: "/biocode-fims/rest/validate/",
+            type: "POST",
+            resetForm: true,
+            contentType: "multipart/form-data",
+            beforeSerialize: function(form, options) {
+                $('#projects').prop('disabled', false);
+            },
+            beforeSubmit: function(form, options) {
+                $('#projects').prop('disabled', true);
+                $('.toggle-content#projects_toggle').hide(400);
+                $('.toggle-content#expedition_code_toggle').hide(400);
+            },
+            success: function(data) {
+                validationResults(data)
+            },
         }
 
-    $('form').ajaxSubmit(options)
+        $('form').ajaxSubmit(options)
+    }
+}
+
+function validationResults(data) {
+    if (data.done != null) {
+        $('#resultsContainer').html(data.done);
+        $('#resultsContainer').dialog({
+            modal: true,
+            autoOpen: true,
+            title: "Validation Results",
+            resizable: false,
+            width: 'auto',
+            draggable: false,
+            buttons:{ "OK": function(){
+                                        $(this).dialog("close");
+                                        $(this).dialog("destroy");
+                                      }
+                    }
+        });
+    } else {
+        if (data.continue.message == null) {
+            $.get("/biocode-fims/rest/validate/continue")
+                .done(function(data) {
+                    uploadResults(data);
+                });
+        } else {
+            // ask user if want to proceed
+            $('#resultsContainer').html(data.continue.message);
+            $('#resultsContainer').dialog({
+                modal: true,
+                autoOpen: true,
+                title: "Validation Results",
+                resizable: false,
+                width: 'auto',
+                draggable: false,
+                buttons:{ "Continue": function(){
+                                                    $.get("/biocode-fims/rest/validate/continue")
+                                                        .done(function(data) {
+                                                            uploadResults(data);
+                                                        });
+                                                    $(this).dialog("close");
+                                                    $(this).dialog("destroy");
+                                                },
+                          "Cancel": function(){
+                                                $(this).dialog("close");
+                                                $(this).dialog("destroy");
+                                              }
+                        }
+            });
+        }
+    }
+}
+
+function uploadResults(data) {
+    if (data.done != null || data.error != null) {
+        var message;
+        if (data.done != null) {
+            message = data.done;
+        } else {
+            message = data.error;
+        }
+        $('#resultsContainer').html(message);
+        $('#resultsContainer').dialog({
+            modal: true,
+            autoOpen: true,
+            title: "Upload Results",
+            resizable: false,
+            width: 'auto',
+            draggable: false,
+            buttons:{ "OK": function(){
+                                        $(this).dialog("close");
+                                        $(this).dialog("destroy");
+                                      }
+                    }
+        });
+    } else {
+        // ask user if want to proceed
+        $('#resultsContainer').html(data.continue);
+        $('#resultsContainer').dialog({
+            modal: true,
+            autoOpen: true,
+            title: "Upload Results",
+            resizable: false,
+            width: 'auto',
+            draggable: false,
+            buttons:{ "Continue": function(){
+                                                $.get("/biocode-fims/rest/validate/continue?createExpedition=true")
+                                                    .done(function(data) {
+                                                        uploadResults(data);
+                                                    });
+                                                $(this).dialog("close");
+                                                $(this).dialog("destroy");
+                                            },
+                      "Cancel": function(){
+                                            $(this).dialog("close");
+                                            $(this).dialog("destroy");
+                                          }
+                    }
+        });
+}
 }
 
 // function to extract the project_id from a dataset to be uploaded
@@ -258,6 +384,7 @@ function uploader() {
                     $('.toggle-content#projects_toggle').show(400);
                 }
             } else {
+                $('#projects').prop('disabled', false);
                 if ($('.toggle-content#projects_toggle').is(':hidden')) {
                     $('.toggle-content#projects_toggle').show(400);
                 }

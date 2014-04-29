@@ -166,7 +166,9 @@ public class Mapping implements RendererInterface {
      */
     public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) throws Exception {
 
-        fimsPrinter.out.println("Converting Data Format ...");
+        String status = "Converting Data Format ...";
+        processController.appendStatus(status + "\n");
+        fimsPrinter.out.println(status);
         this.expedition_code = processController.getExpeditionCode();
         this.colNames = processController.getValidation().getTabularDataReader().getColNames();
         triplifier = t;
@@ -182,7 +184,7 @@ public class Mapping implements RendererInterface {
             //e.printStackTrace();
             throw new Exception("Unable to establish connection to SQLLite",e);
         }
-        triplifier.getTriples(this);
+        triplifier.getTriples(this, processController);
         return true;
     }
 

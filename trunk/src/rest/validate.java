@@ -2,6 +2,7 @@ package rest;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import org.json.simple.JSONObject;
 import run.process;
 import run.processController;
 import settings.FIMSException;
@@ -27,136 +28,228 @@ public class validate {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
     public String validate(@FormDataParam("project_id") Integer project_id,
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
                            @FormDataParam("dataset") InputStream is,
                            @FormDataParam("dataset") FormDataContentDisposition fileData,
                            @Context HttpServletRequest request) {
+        StringBuilder retVal = new StringBuilder();
+        Boolean removeController = true;
+        Boolean deleteInputFile = true;
+        String input_file = null;
+
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
 
-        // create a new processController
-        processController processController = new processController(project_id, expedition_code);
+        try {
 
-        // update the status
-        processController.appendStatus("Initializing...\n");
-        processController.appendStatus("\tinputFilename = " + fileData.getFileName() + "\n");
+            // create a new processController
+            processController processController = new processController(project_id, expedition_code);
 
-        // Save the uploaded file
-        String splitArray[] = fileData.getFileName().split("\\.");
-        String ext;
-        if (splitArray.length == 0) {
-            // if no extension is found, then guess
-            ext = "xls";
-        } else {
-            ext = splitArray[splitArray.length - 1];
+            // place the processController in the session here so that we can track the status of the validation process
+            // by calling rest/validate/status
+            session.setAttribute("processController", processController);
+
+
+            // update the status
+            processController.appendStatus("Initializing...\n");
+            processController.appendStatus("\tinputFilename = " + fileData.getFileName() + "\n");
+
+            // Save the uploaded file
+            String splitArray[] = fileData.getFileName().split("\\.");
+            String ext;
+            if (splitArray.length == 0) {
+                // if no extension is found, then guess
+                ext = "xls";
+            } else {
+                ext = splitArray[splitArray.length - 1];
+            }
+            input_file = saveTempFile(is, ext);
+            // if input_file null, then there was an error saving the file
+            if (input_file == null) {
+                throw new FIMSException("[{\"done\": \"Server error saving file.\"}]");
+            }
+
+            bcidConnector connector = new bcidConnector(accessToken);
+
+            // Create the process object --- this is done each time to orient the application
+            process p = null;
+            try {
+                p = new process(
+                        input_file,
+                        uploadpath(),
+                        connector,
+                        processController
+                );
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                throw new FIMSException("{\"done\": \"Server Error.\"}");
+            }
+
+            // Run the process
+            try {
+                processController.appendStatus("Validating...\n");
+                p.runValidation();
+
+                // if there were validation errors, we can't upload
+                if (processController.getHasErrors()) {
+                    retVal.append("{\"done\": \"");
+                    retVal.append(stringToHTMLJSON(processController.getErrorsSB().toString()) + "<br>");
+                    retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()) + "<br>");
+                    retVal.append("Errors found on " + stringToHTMLJSON(processController.getWorksheetName()) + " worksheet.  Must fix to continue.");
+                    retVal.append("\"}");
+
+                } else if (upload != null && upload.equals("on")) {
+                     // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
+                     if (!processController.isValidated() && processController.getHasWarnings()) {
+                        retVal.append("{\"continue\": {\"message\": \"");
+                        retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()));
+                        retVal.append("\"}}");
+
+                    // there were no validation warnings and the user would like to upload, so continue
+                    } else {
+                         retVal.append("{\"continue\": {}}");
+                    }
+
+                    // don't delete the inputFile because we'll need it for uploading
+                    deleteInputFile = false;
+
+                    // don't remove the controller as we will need it later for uploading this file
+                    removeController = false;
+
+                // User doesn't want to upload, inform them of any validation warnings
+                } else if (processController.getHasWarnings()) {
+                    retVal.append("{\"done\": \"");
+                    retVal.append(stringToHTMLJSON(processController.getWarningsSB().toString()));
+                    retVal.append("\"}");
+                // User doesn't want to upload and the validation passed w/o any warnings or errors
+                } else {
+                    retVal.append("{\"done\": \"");
+                    retVal.append(stringToHTMLJSON(processController.getWorksheetName()));
+                    retVal.append(" worksheet successfully validated.");
+                    retVal.append("\"}");
+                }
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                retVal.append("{\"done\": \"Server Error.\"}");
+            }
+        } catch(FIMSException e) {
+            // clear the StringBuilder buffer
+            retVal.setLength(0);
+            retVal.append(e.getMessage());
         }
-        String input_file = saveTempFile(is, ext);
-        // if input_file null, then there was an error saving the file
-        if (input_file == null) {
-            return "[{\"done\": \"server error saving file\"}]";
+
+        if (deleteInputFile && input_file != null) {
+            new File(input_file).delete();
+        }
+        if (removeController) {
+            session.removeAttribute("processController");
         }
 
-        // TODO: fetch the connector from a session
+        return retVal.toString();
+    }
+
+    private String stringToHTMLJSON(String s) {
+        s = s.replaceAll("\n", "<br>").replaceAll("\t", "");
+        return JSONObject.escape(s);
+    }
+
+    @GET
+    @Path("/continue")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
+                         @Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        processController processController = (processController) session.getAttribute("processController");
+
+        // if no processController is found, we can't do anything
+        if (processController == null) {
+            return "{\"error\": \"No process was detected.\"}";
+        }
+
+        // if the process controller was stored in the session, then the user wants to continue, set warning cleared
+        processController.setClearedOfWarnings(true);
+        processController.setValidated(true);
+
         bcidConnector connector = new bcidConnector(accessToken);
 
         // Create the process object --- this is done each time to orient the application
         process p = null;
-        try {
-            p = new process(
-                    input_file,
-                    uploadpath(),
-                    connector,
-                    processController
-            );
-        } catch (FIMSException e) {
-            e.printStackTrace();
-        }
+        try{
+            try {
+                p = new process(
+                        processController.getInputFilename(),
+                        uploadpath(),
+                        connector,
+                        processController
+                );
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                throw new FIMSException("{\"error\": \"Server Error.\"}");
+            }
 
-        // Print the status of the processController for testing
-        System.out.println(processController.printStatus());
+            // create this expedition if the user wants to
+            if (createExpedition) {
+                try {
+                    p.runExpeditionCreate();
+                } catch (FIMSException e) {
+                    e.printStackTrace();
+                    throw new FIMSException("{\"error\": \"Error creating expedition.\"}");
+                }
+            }
 
-        // Run the process
-        // TODO: See process.runAllLocally() and copy the interactive steps there...
-
-        StringBuilder retVal = new StringBuilder();
-        Boolean deleteInputFile = true;
-        try {
-            processController.appendStatus("Validating...\n");
-            p.runValidation();
-
-            // if there were validation errors, we can't upload
-            if (processController.getHasErrors()) {
-                retVal.append("{\"done\": \"");
-                retVal.append(processController.getErrorsSB().toString() + "\n");
-                retVal.append(processController.getWarningsSB().toString() + "\n");
-                retVal.append("\tErrors found on " + processController.getWorksheetName() + " worksheet.  Must fix to continue.");
-                retVal.append("\"}");
-
-            } else if (upload != null && upload.equals("on")) {
-                 // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
-                 if (!processController.isValidated() && processController.getHasWarnings()) {
-                    retVal.append("{\"continue\": {\"message\": \"");
-                    retVal.append("Warnings found on " + processController.getWorksheetName() + " worksheet.\n");
-                    retVal.append("\t" + processController.getWarningsSB().toString());
-                    retVal.append("\"}}");
-
-                // there were no validation warnings and the user would like to upload, so continue
-                } else {
-                     // TODO continue w/o user consent
-                     retVal.append("{\"continue\": {}}");
+            try {
+                if (!processController.isExpeditionAssignedToUserAndExists()) {
+                    p.runExpeditionCheck();
                 }
 
-                // don't delete the inputFile because we'll need it for uploading
-                deleteInputFile = false;
+                if (processController.isExpeditionCreateRequired()) {
+                    // ask the user if they want to create this expedition
+                    return "{\"continue\": \"The expedition code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                            "\\\" does not exist.  " +
+                            "Do you wish to create it now?<br><br>" +
+                            "If you choose to continue, your data will be associated with this new expedition code.\"}";
+                }
 
-                // If the user would like to upload set the session processController to what the process class did with it
-                session.setAttribute("processController", processController);
+                // upload the dataset
+                p.runUpload();
 
-            // User doesn't want to upload, inform them of any validation warnings
-            } else if (processController.getHasWarnings()) {
-                retVal.append("{\"done\": \"");
-                retVal.append("Warnings found on " + processController.getWorksheetName() + " worksheet.\n");
-                retVal.append(processController.getWarningsSB().toString());
-//                retVal.delete(retVal.lastIndexOf("\n"), retVal.lastIndexOf("\n") + 1);
-                retVal.append("\"}");
-            // User doesn't want to upload and the validation passed w/o any warnings or errors
-            } else {
-                retVal.append("{\"done\": \"");
-                retVal.append(processController.getWorksheetName());
-                retVal.append(" worksheet successfully validated.");
-                retVal.append("\"}");
+                // delete the temporary file now that it has been uploaded
+                new File(processController.getInputFilename()).delete();
+
+                // remove the processController from the session
+                session.removeAttribute("processController");
+
+                return "{\"done\": \"Successfully Uploaded!\"}";
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                throw new FIMSException("{\"error\": \"Server Error.\"}");
             }
         } catch (FIMSException e) {
-            e.printStackTrace();
-            retVal.append("{\"done\": \"Server Error\"}");
-        }
+            // delete the temporary file now that it has been uploaded
+            new File(processController.getInputFilename()).delete();
+            // remove the processController from the session
+            session.removeAttribute("processController");
 
-        if (deleteInputFile) {
-            new File(input_file).delete();
+            return e.getMessage();
         }
-        // need to escape all \t and \n characters for valid json
-        return retVal.toString().replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t");
     }
 
     @GET
     @Path("/status")
+    @Produces(MediaType.APPLICATION_JSON)
     public String status(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         processController processController = (processController) session.getAttribute("processController");
         if (processController == null) {
-            return "[{\"error\": \"No validation is currently running.\"}]";
+            return "{\"error\": \"No validation is currently running.\"}";
         }
 
-        return "[{\"status\": \"" + processController.getStatusSB().toString() + "\"}]";
-    }
-
-    @GET
-    @Path("/continue")
-    public void continueUpload(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        return "{\"status\": \"" + processController.getStatusSB().toString() + "\"}";
     }
 
     private String saveTempFile(InputStream is, String ext) {

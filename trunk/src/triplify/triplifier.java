@@ -8,6 +8,7 @@ import de.fuberlin.wiwiss.d2rq.jena.ModelD2RQ;
 import digester.Mapping;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
+import run.processController;
 import settings.PathManager;
 import settings.fimsPrinter;
 
@@ -67,10 +68,12 @@ public class triplifier {
      * @return
      * @throws Exception
      */
-    public void getTriples(Mapping mapping) throws Exception {
+    public void getTriples(Mapping mapping, processController processController) throws Exception {
         //String filenamePrefix = inputFile.getName();
         System.gc();
-        fimsPrinter.out.println("\tWriting Temporary Output ...");
+        String status = "\tWriting Temporary Output ...";
+        processController.appendStatus(status + "\n");
+        fimsPrinter.out.println(status);
 
         // Write the model
         model = new ModelD2RQ(FileUtils.toURL(getMapping(filenamePrefix, mapping, true)),

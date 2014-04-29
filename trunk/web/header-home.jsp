@@ -22,6 +22,7 @@
     </script>
 
     <script type="text/javascript" src="js/biocode-fims.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 
