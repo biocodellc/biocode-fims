@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import settings.bcidConnector;
+import utils.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,23 +22,26 @@ import java.net.URL;
  */
 @Path("authenticationService")
 public class authenticationService {
-    private String client_id = "ASK4BhP8ZHZex6M!9DHt";
-    private String client_secret = "-5!EPZvwCXSu5aq7625-hbw5Bq-k8-vNPn95NUFP4J3tGPmDXUAYYvVMvj8wzyUxVEyp-xUhK2P";
-    private String redirect_uri = "http://localhost:8080/biocode-fims/rest/authenticationService/access_token/";
 
     @GET
     @Path("login")
     public void login(@Context HttpServletResponse response,
                       @Context HttpServletRequest request) throws IOException {
-        String url = "http://localhost:8080/id/authenticationService/oauth/authorize?";
-
         stringGenerator sg = new stringGenerator();
         String state = sg.generateString(20);
 
         HttpSession session = request.getSession();
         session.setAttribute("oauth_state", state);
 
-        response.sendRedirect(url + "client_id=" + client_id + "&redirect_uri=" + redirect_uri + "&state=" + state);
+        SettingsManager sm = SettingsManager.getInstance();
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect(sm.retrieveValue("authorize_uri") + "client_id=" + sm.retrieveValue("client_id") + "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
+                "&state=" + state);
         return;
     }
 
@@ -56,19 +60,26 @@ public class authenticationService {
                              @QueryParam("state") String state,
                              @Context HttpServletResponse response,
                              @Context HttpServletRequest request) throws IOException {
-        URL url = new URL("http://localhost:8080/id/authenticationService/oauth/access_token");
-        String profileURL = "http://localhost:8080/id/userService/oauth?access_token=";
+        SettingsManager sm = SettingsManager.getInstance();
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        URL url = new URL(sm.retrieveValue("access_token_uri"));
+        String profileURL = sm.retrieveValue("profile_uri");
         HttpSession session = request.getSession();
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = session.getAttribute("oauth_state").toString();
 
         if (code == null || state == null || !state.equals(oauthState)) {
-            response.sendRedirect("/biocode-fims/uploader.jsp?error=authentication_error");
+            response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
             return;
         }
 
-        String postParams = "client_id=" + client_id + "&client_secret=" + client_secret +
-                "&code=" + code + "&redirect_uri=" + redirect_uri;
+        String postParams = "client_id=" + sm.retrieveValue("client_id") + "&client_secret=" + sm.retrieveValue("client_secret") +
+                "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
 
 
         Object tokenResponse = JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
@@ -77,7 +88,7 @@ public class authenticationService {
         JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
 
         if (tokenJSON.containsKey("error") ||(tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
-            response.sendRedirect("/biocode-fims/uploader.jsp?error=authentication_error");
+            response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
             return;
         }
 
@@ -90,7 +101,7 @@ public class authenticationService {
         session.setAttribute("user", profileJSON.get("username"));
         session.setAttribute("userId", profileJSON.get("user_id"));
 
-        response.sendRedirect("/biocode-fims/uploader.jsp");
+        response.sendRedirect("/biocode-fims/index.jsp");
         return;
     }
 
@@ -104,7 +115,7 @@ public class authenticationService {
         HttpSession session = req.getSession();
 
         session.invalidate();
-        res.sendRedirect("/biocode-fims/uploader.jsp");
+        res.sendRedirect("/biocode-fims/index.jsp");
         return;
     }
 }

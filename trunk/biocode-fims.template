@@ -1,0 +1,7 @@
+# OAuth settings
+client_id = public_client_id
+client_secret = super_secret_code
+redirect_uri = http://biscicol.org/biocode-fims/rest/authenticationService/access_token/
+authorize_uri = http://biscicol.org/id/authenticationService/oauth/authorize?
+access_token_uri = http://biscicol.org/id/authenticationService/oauth/access_token
+profile_uri = http://biscicol.org/id/userService/oauth?access_token=

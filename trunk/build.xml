@@ -183,6 +183,7 @@
             <fileset dir="web"/>
             <lib dir="lib" excludes="servlet-api.jar"/>
             <classes dir="${biocode-fims.output.dir}"/>
+            <classes dir="" includes="biocode-fims.props"/>
         </war>
     </target>
 
