@@ -370,6 +370,7 @@ public class process {
         String username = "";
         String password = "";
         Integer project_id = 0;
+        System.out.print(defaultOutputDirectory);
 
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
