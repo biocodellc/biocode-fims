@@ -424,7 +424,7 @@ public class templateProcessor {
         // Hide the project_id in the first row
         row = instructionsSheet.createRow(0);
         cell = row.createCell(0);
-        cell.setCellValue("project_id=" + project_id);
+        cell.setCellValue("~project_id=" + project_id + "~");
         row.setZeroHeight(true);
 
         // The name of this project as specified by the sheet
