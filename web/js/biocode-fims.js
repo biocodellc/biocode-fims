@@ -415,7 +415,8 @@ function extractProjectId() {
     }
 }
 
-function uploader() {
+// function to toggle the project_id and expedition_code inputs of the validation form
+function validationFormToggle() {
     $('#dataset').change(function() {
         $.when(extractProjectId()).done(function(project_id) {
             if (project_id > 0) {
