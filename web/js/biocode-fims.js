@@ -197,8 +197,63 @@ function graphsMessage(message) {
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     $("#uploaderResults").html("validating...")
-    $.post("rest/validationService/", $("form").serialize())
+    $.post("rest/validate/validate", $("form").serialize())
         .done(function(data) {
             var t = true;
         });
+}
+
+// function to extract the project_id from a dataset to be uploaded
+function extractProjectId() {
+    var f = new FileReader();
+    // older browsers don't have a FileReader
+    if (f != null) {
+        var deferred = new $.Deferred();
+        var file = $('#dataset')[0].files[0];
+        // after file has been read, extract the project_id if present
+        f.onload = function () {
+            var fileContents = f.result;
+            var re = "~project_id=[0-9]+~";
+            var results = fileContents.match(re)[0];
+
+            if (results != null) {
+                var project_id = results.split('=')[1].slice(0, -1);
+                if (project_id > 0) {
+                    deferred.resolve(project_id);
+                }
+            } else {
+                deferred.resolve(-1);
+            }
+        };
+        f.readAsText(file);
+        return deferred.promise();
+    } else {
+        // can't find the project_id, so return -1
+        return -1;
+    }
+}
+
+function uploader() {
+    $('#dataset').change(function() {
+        $.when(extractProjectId()).done(function(project_id) {
+            if (project_id > 0) {
+                $('#projects').val(project_id);
+                $('#projects').prop('disabled', true);
+                if ($('.toggle-content#projects_toggle').is(':hidden')) {
+                    $('.toggle-content#projects_toggle').show(400);
+                }
+            } else {
+                if ($('.toggle-content#projects_toggle').is(':hidden')) {
+                    $('.toggle-content#projects_toggle').show(400);
+                }
+            }
+        });
+    });
+    $('#upload').change(function() {
+        if ($('.toggle-content#expedition_code_toggle').is(':hidden')) {
+            $('.toggle-content#expedition_code_toggle').show(400);
+        } else {
+            $('.toggle-content#expedition_code_toggle').hide(400);
+        }
+    });
 }
