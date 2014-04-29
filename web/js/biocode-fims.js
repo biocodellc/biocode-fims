@@ -193,3 +193,11 @@ function graphsMessage(message) {
         $('#graphs').append('<option data-qrepeat="g data" data-qattr="value g.graph; text g.expedition_title"></option>');
         $('#graphs').find('option').first().text(message);
 }
+
+// login user in using the bcid system
+function login() {
+    $.get("localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=localhost:8080/biocode-fims/rest/authenticationService/access_token/")
+        .done(data){
+        var t = true;
+        }
+}
