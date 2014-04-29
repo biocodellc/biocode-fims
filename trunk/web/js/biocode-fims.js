@@ -202,11 +202,3 @@ function validatorSubmit() {
             var t = true;
         });
 }
-
-// login user in using the bcid system
-function login() {
-    $.get("http://localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=localhost:8080/biocode-fims/rest/authenticationService/access_token/")
-        .done(function(data){
-        var t = true;
-        });
-}

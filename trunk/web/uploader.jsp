@@ -3,7 +3,7 @@
 <div class="section">
 
     <div class="sectioncontent">
-        <h2>Validator</h2>
+        <h2>Uploader</h2>
 
         <table>
             <form action="rest/validationService" method="POST">
@@ -31,11 +31,11 @@
 
                 <tr>
                     <td align="right">Upload</td>
-                    <td>
+                    <td style="font-size:11px;">
                         <c:if test="${user == null}">
-                            <input type="checkbox" disabled="disabled" />
+                            <input type="checkbox" disabled="disabled" /> (login to upload)
                         </c:if>
-                        <c:if test="{user != null}">
+                        <c:if test="${user != null}">
                             <input type="checkbox" name="upload" />
                         </c:if>
                     </td>

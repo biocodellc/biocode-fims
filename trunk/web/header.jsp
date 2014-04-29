@@ -28,10 +28,10 @@
 
         <div style='float:right' id="loginLink">
             <c:if test="${user == null}">
-                <a id="login" href="http://localhost:8080/id/authenticationService/oauth/authorize?client_id=ASK4BhP8ZHZex6M!9DHt&redirect_uri=http://localhost:8080/biocode-fims/rest/authenticationService/access_token/">Login</a>
+                <a id="login" href="rest/authenticationService/login">Login</a>
             </c:if>
             <c:if test="${user != null}">
-                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/biocode-fims/rest/logout/">Logout</a>
+                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a>
             </c:if>
             <!--| <div class="link"><a href='/bcid/concepts.jsp'>Concepts</a></div>-->
             | <a href="https://code.google.com/p/biocode-fims/">Help</a>
