@@ -180,6 +180,7 @@ public class Validation implements RendererInterface {
 
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
+            processController.setWorksheetName(worksheet.getSheetname());
             fimsPrinter.out.println("\t" + worksheet.getSheetname() + " worksheet results");
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
                 errorSB.append("\t\t" + msg + "\n");

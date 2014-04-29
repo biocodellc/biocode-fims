@@ -20,6 +20,28 @@ public class processController {
     private String expeditionCode;
     private Integer project_id;
     private Validation validation;
+    private String worksheetName;
+    private StringBuilder statusSB = new StringBuilder();
+
+    public String getWorksheetName() {
+        return worksheetName;
+    }
+
+    public void setWorksheetName(String worksheetName) {
+        this.worksheetName = worksheetName;
+    }
+
+    public StringBuilder getStatusSB() {
+        return statusSB;
+    }
+
+    public void setStatusSB(StringBuilder sb) {
+        statusSB = sb;
+    }
+
+    public void appendStatus(String s) {
+        statusSB.append(s);
+    }
 
     public processController(Integer project_id, String expeditionCode) {
         this.expeditionCode = expeditionCode;
