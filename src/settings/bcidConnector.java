@@ -149,7 +149,7 @@ public class bcidConnector {
         }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
         if (getResponseCode() == 401) {
-            throw new Exception("User not authorized to upload to this expedition!");
+            throw new NotAuthorizedException("User not authorized to upload to this expedition!");
         }
         return response.toString();
     }
@@ -176,7 +176,7 @@ public class bcidConnector {
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
 
         if (getResponseCode() == 401) {
-            throw new Exception("User authorization error!");
+            throw new NotAuthorizedException("User authorization error!");
         }
         return response.toString();
     }
@@ -220,6 +220,10 @@ public class bcidConnector {
             Object obj = parser.parse(readJsonFromUrl(url));
             JSONObject jsonObject = (JSONObject) obj;
 
+            if (jsonObject.containsKey("error") && jsonObject.get("error") == "authorization_error") {
+                throw new NotAuthorizedException("User authorization error!");
+            }
+
             // loop array
             JSONArray msg = (JSONArray) jsonObject.get("projects");
             Iterator<JSONObject> iterator = msg.iterator();
@@ -262,6 +266,9 @@ public class bcidConnector {
 
         // Catch Error using response string...
         // TODO: use response code formats here
+        if (getResponseCode() == 401) {
+            throw new NotAuthorizedException("User authorization error!");
+        }
         if (response.contains("ERROR")) {
             throw new Exception(response.toString());
         }
@@ -286,7 +293,9 @@ public class bcidConnector {
         URL url = new URL(urlString);
         String response = createGETConnection(url);
         String action = response.split(":")[0];
-        if (getResponseCode() != 200) {
+        if (getResponseCode() == 401) {
+            throw new NotAuthorizedException("User authorization error!");
+        } else if (getResponseCode() != 200) {
             throw new Exception("BCID service error");
         } else {
             if (action.equals("error")) {
