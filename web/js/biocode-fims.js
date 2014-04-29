@@ -195,19 +195,62 @@ function graphsMessage(message) {
 }
 
 function dialog(msg, title, buttons) {
-    var dialog = $("<div>"+msg+"</div>");
+    var dialogContainer = $("#dialogContainer");
+    if (dialogContainer.html() != msg) {
+        dialogContainer.html(msg);
+    }
 
-    $(dialog).dialog({
-        modal: true,
-        autoOpen: true,
-        title: title,
-        resizable: false,
-        width: 'auto',
-        draggable: false,
-        buttons: buttons,
-        close: function(ev, ui) { $( this ).remove(); }
-    });
+    if (!$(".ui-dialog").is(":visible") || (dialogContainer.dialog("option", "title") != title ||
+        dialogContainer.dialog("option", "buttons") != buttons)) {
+        dialogContainer.dialog({
+            modal: true,
+            autoOpen: true,
+            title: title,
+            resizable: false,
+            width: 'auto',
+            draggable: true,
+            buttons: buttons
+        });
+    }
+
     return;
+}
+
+function submitForm(){
+    var de = new $.Deferred();
+    var promise = de.promise();
+    var options = {
+        url: "/biocode-fims/rest/validate/",
+        type: "POST",
+        resetForm: true,
+        contentType: "multipart/form-data",
+        beforeSerialize: function(form, options) {
+            $('#projects').prop('disabled', false);
+        },
+        beforeSubmit: function(form, options) {
+            $('#projects').prop('disabled', true);
+            $('.toggle-content#projects_toggle').hide(400);
+            $('.toggle-content#expedition_code_toggle').hide(400);
+            dialog("Loading ...", "Validation Results", null);
+            // For browsers that don't support the upload progress listener
+            var xhr = $.ajaxSettings.xhr();
+            if (!xhr.upload) {
+                loopStatus(promise)
+            }
+        },
+        success: function(data) {
+            de.resolve(data);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            // For browsers that do support the upload progress listener
+            if (percentComplete == 100) {
+            loopStatus(promise)
+            }
+        }
+    }
+
+    $('form').ajaxSubmit(options);
+    return promise;
 }
 
 // submit dataset to be validated/uploaded
@@ -227,26 +270,39 @@ function validatorSubmit() {
         }
         dialog(message, "Validation Results", buttons);
     } else {
-        var options = {
-            url: "/biocode-fims/rest/validate/",
-            type: "POST",
-            resetForm: true,
-            contentType: "multipart/form-data",
-            beforeSerialize: function(form, options) {
-                $('#projects').prop('disabled', false);
-            },
-            beforeSubmit: function(form, options) {
-                $('#projects').prop('disabled', true);
-                $('.toggle-content#projects_toggle').hide(400);
-                $('.toggle-content#expedition_code_toggle').hide(400);
-            },
-            success: function(data) {
-                validationResults(data)
-            },
-        }
-
-        $('form').ajaxSubmit(options)
+        var d = submitForm();
+        d.done(function(data) {
+            validationResults(data);
+        });
     }
+}
+
+// keep looping pollStatus every second until results are returned
+function loopStatus(promise) {
+    setTimeout( function() {
+        pollStatus()
+            .done(function(data) {
+                if (promise.state() == "pending") {
+                    if (data.error != null) {
+                        dialog(data.error, "Validation Results");
+                    } else {
+                        dialog(data.status, "Validation Results");
+                    }
+                    loopStatus(promise);
+                }
+            });
+    }, 1000);
+}
+
+function pollStatus() {
+    var def = new $.Deferred();
+    $.getJSON("/biocode-fims/rest/validate/status")
+        .done(function(data) {
+            def.resolve(data);
+        }).fail(function(a,b,c) {
+            def.reject();
+        });
+    return def.promise();
 }
 
 function validationResults(data) {
