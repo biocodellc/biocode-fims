@@ -212,6 +212,7 @@ public class templateProcessor {
             if (validationFields.length > 0) {
 
                 // populate this validation list in the Lists sheet
+                int counterForRows = 0;
                 for (int i = 0, length = validationFields.length; i < length; i++) {
                     String value;
                     HSSFCellStyle style;
@@ -219,21 +220,30 @@ public class templateProcessor {
                     if (i == 0) {
                         value = list.getAlias();
                         style = headingStyle;
+                        HSSFRow row = listsSheet.getRow(i);
+                        if (row == null)
+                            row = listsSheet.createRow(i);
+
+                        HSSFCell cell = row.createCell(listColumnNumber);
+                        cell.setCellValue(value);
+                        cell.setCellStyle(style);
                     }
                     // Write cell values
-                    else {
-                        value = validationFields[i];
-                        style = regularStyle;
-                    }
+                    // else {
+                    value = validationFields[i];
+                    style = regularStyle;
+                    //counterForRows++;
+                    //}
 
-                    HSSFRow row = listsSheet.getRow(i);
+                    // Set the row counter to +1 because of the header issues
+                    counterForRows = i + 1;
+                    HSSFRow row = listsSheet.getRow(counterForRows);
                     if (row == null)
-                        row = listsSheet.createRow(i);
+                        row = listsSheet.createRow(counterForRows);
 
                     HSSFCell cell = row.createCell(listColumnNumber);
                     cell.setCellValue(value);
                     cell.setCellStyle(style);
-
 
                 }
 
@@ -244,7 +254,7 @@ public class templateProcessor {
                 String columnLetter = CellReference.convertNumToColString(listColumnNumber);
                 Name namedCell = workbook.createName();
                 namedCell.setNameName(listsSheetName + columnLetter);
-                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + validationFields.length);
+                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + counterForRows+2);
                 CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
                 // Set the Constraint to the Lists Table
                 DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + columnLetter);
