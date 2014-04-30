@@ -31,6 +31,8 @@
                 <field>coordinateUncertaintyInMeters</field>
                 <field>georeferenceProtocol</field>
                 <field>basisOfIdentification</field>
+                <field>genus</field>
+                <field>species</field>
             </rule>
 
             <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
