@@ -22,8 +22,10 @@ import java.awt.*;
  *          <p/>
  *          Created on 5/12/13 12:53 PM
  */
+//public class PasswordOption extends Options.Option<String, JPasswordField> {
 public class PasswordOption extends Options.Option<String, JPasswordField> {
 
+    private String label;
     private boolean updatingComponent;
 
     protected PasswordOption(Element element) throws XMLSerializationException {
@@ -34,6 +36,7 @@ public class PasswordOption extends Options.Option<String, JPasswordField> {
 
     protected PasswordOption(String optionName, String label) {
         super(optionName, label, "");
+        this.label = label;
         setRestorePreferenceApplies(false);
     }
 
@@ -52,6 +55,15 @@ public class PasswordOption extends Options.Option<String, JPasswordField> {
         updatingComponent = false;
     }
 
+    protected Box getContainer() {
+
+        Box box = new Box(BoxLayout.X_AXIS);
+        box.add(new JLabel(label));
+        box.add(createComponent());
+        box.setAlignmentX(JDialog.LEFT_ALIGNMENT);
+
+        return box;
+    }
     @Override
     protected JPasswordField createComponent() {
         final JPasswordField passwordField = new JPasswordField();
@@ -80,6 +92,7 @@ public class PasswordOption extends Options.Option<String, JPasswordField> {
             }
         });
         Dimension oldPrefSize = passwordField.getPreferredSize();
+
         passwordField.setPreferredSize(new Dimension(120, oldPrefSize.height));
         passwordField.setMinimumSize(passwordField.getPreferredSize());  // Because the normal minimum is a sliver of nothing
         return passwordField;

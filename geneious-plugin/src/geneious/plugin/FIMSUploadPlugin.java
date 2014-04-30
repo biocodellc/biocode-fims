@@ -9,7 +9,7 @@ import com.biomatters.geneious.publicapi.plugin.GeneiousPlugin;
 public class FIMSUploadPlugin extends GeneiousPlugin {
     @Override
     public String getName() {
-        return "FIMS Upload";
+        return "Biocode FIMS";
     }
 
     @Override
@@ -19,7 +19,7 @@ public class FIMSUploadPlugin extends GeneiousPlugin {
 
     @Override
     public String getDescription() {
-        return "Validate, Triplify and Upload Biocode FIMS data";
+        return "Validate and Upload Biocode FIMS data";
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FIMSUploadPlugin extends GeneiousPlugin {
 
     @Override
     public String getVersion() {
-        return "0.2";
+        return "0.21";
     }
 
     @Override

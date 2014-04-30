@@ -30,7 +30,7 @@ public class FIMSUploadOperation extends DocumentOperation {
 
     @Override
     public GeneiousActionOptions getActionOptions() {
-        return new GeneiousActionOptions("Upload to Biocode FIMS").setMainMenuLocation(GeneiousActionOptions.MainMenu.Tools);
+        return new GeneiousActionOptions("Biocode FIMS Validation and Upload Service").setMainMenuLocation(GeneiousActionOptions.MainMenu.Tools);
     }
 
     @Override

@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,53 +60,31 @@ public class FIMSUploadOptions extends Options {
         super(FIMSUploadOptions.class);
 
         // Username/password Options
-        labelInitialHeaderOption = (LabelOption) addLabel("Login using your Biocode-FIMS username/password");
-        loginButtonOption = addButtonOption("User Login", "", "User Login");
-        usernameOption = addStringOption("username", "Username:", "");
-        usernameOption.setVisible(false);
 
-        loginButtonOption.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
+        //final StringOption usernameOption = addStringOption("username", "Username:", "");
+        final StringOption usernameOption = addStringOption("username", "Username/Password: ", "");
+        final PasswordOption passwordOption = new PasswordOption("password", "Password:");
 
-                hideElements();
+        JPasswordField jPasswordField = passwordOption.createComponent();
+        //addLabel("Password:");
+        addCustomComponent(jPasswordField);
 
-                JPanel myPanel = new JPanel();
-                myPanel.setLayout(new GridLayout(0, 2));
-                final JPasswordField passwordField = new JPasswordField();
-                //JTextField usernameField = new JTextField();
-                myPanel.add(new JLabel("Username:"));
-                //myPanel.add(usernameField);
-                myPanel.add(usernameOption.getComponent());
-                myPanel.add(new JLabel("Password:"));
-                myPanel.add(passwordField);
 
-                usernameOption.setVisible(true);
-                //myPanel.add(new JLabel("Forgot Password? (option coming soon)"));
-                //myPanel.add(new JLabel("Forgot Username? (option coming soon)"));
-                //  usernameOption.setVisible(true);
-                //  passwordOption.setVisible(true);
+        //final StringOption passwordOption = addStringOption("password", "Password:", "");
+        //passwordOption.setShouldSaveValue(false);
+        //passwordOption.setRestorePreferenceApplies(false);
+        addButtonOption("authenticate", "", "Authenticate").addActionListener(new ActionListener() {
+            //@Override
+            public void actionPerformed(ActionEvent e) {
+                final ProgressFrame progressFrame = new ProgressFrame("Authenticating...", "", Dialogs.getCurrentModalDialog());
+                progressFrame.setCancelable(false);
+                progressFrame.setIndeterminateProgress();
 
-                // There is a bug (I think) that causes getCurrentModalDialog() to return the login dialog even after it
-                // is closed.  So we'll get a reference to the Options dialog here before we create the login one.
-                // We need the reference to the dialog so we can disable it for the authentication progress frame.
-                Dialog optionsDialog = Dialogs.getCurrentModalDialog();
 
-                boolean ok = Dialogs.showInputDialog("", "Login", null, myPanel);
-                usernameOption.setVisible(false);
-
-                // Immediately set these values to not visible
-                //usernameOption.setVisible(false);
-                // passwordOption.setVisible(false);
-                if (ok) {
-                    final ProgressFrame frame = new ProgressFrame("Authenticating user", "Need to contact server",
-                            optionsDialog);
-                    frame.setIndeterminateProgress();
-                    frame.setCancelable(false);
-                    frame.setMessage("Connecting ...");
-
-                    // Create a runnable to be run in the UI thread later.
-                    final Runnable afterAuthTry = new Runnable() {
-                        public void run() {
+                final Runnable afterAuthTry = new Runnable() {
+                    public void run() {
+                        ThreadUtilities.sleep(2000);
+                        try {
                             // User authenticated... turn on the other options
                             if (connector != null) {
                                 // run the userAuthenticated method sets up the next stage of operations
@@ -112,28 +92,31 @@ public class FIMSUploadOptions extends Options {
                             } else {
                                 Dialogs.showMessageDialog("Unable to authenticate " + username);
                             }
+                        } catch (Exception e1) {
+                            displayExceptionDialog("Authentication Error", e1.getMessage(), e1, null);
+                            //Dialogs.showMessageDialog("Authentication Exception: " + e1.getMessage());
                         }
-                    };
+                    }
+                };
 
-
-                    Thread connectingThread = new Thread() {
-                        public void run() {
-                            try {
-                                username = usernameOption.getValue();
-                                password = String.valueOf(passwordField.getPassword());
-                                connector = process.createConnection(username, password);
-                            } catch (FIMSException e) {
-                                displayExceptionDialog(e);
-                            }
-                            frame.setComplete();
-                            ThreadUtilities.invokeNowOrLater(afterAuthTry);
+                Thread connectingThread = new Thread() {
+                    public void run() {
+                        try {
+                            username = usernameOption.getValue();
+                            password = passwordOption.getValue();
+                            connector = process.createConnection(username, password);
+                        } catch (FIMSException e) {
+                            displayExceptionDialog(e);
                         }
-                    };
-                    connectingThread.start();
-                }
+                        //frame.setComplete();
+                        ThreadUtilities.invokeNowOrLater(afterAuthTry);
+                        progressFrame.setComplete();
+                    }
+                };
+                connectingThread.start();
             }
-        }
-        );
+        });
+        addDivider(" ");
 
         // Project-related Options
         //labelProjectHeaderOption = (LabelOption) addLabel("Data validation and loading options for " + this.usernameOption.getValue().toString());
@@ -212,10 +195,10 @@ public class FIMSUploadOptions extends Options {
 
             showElements();
             // Turn off visibility on Username/password options
-            labelInitialHeaderOption.setVisible(false);
-           // labelForgotPasswordOption.setVisible(false);
-           /// labelForgotUsernameOption.setVisible(false);
-            loginButtonOption.setVisible(false);
+            //labelInitialHeaderOption.setVisible(false);
+            // labelForgotPasswordOption.setVisible(false);
+            /// labelForgotUsernameOption.setVisible(false);
+            //loginButtonOption.setVisible(false);
             // Evidently, the setHidden option cannot be called here
             //loginButtonOption.setHidden();
             return true;
