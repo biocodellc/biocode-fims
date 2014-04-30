@@ -259,8 +259,6 @@ public class process {
             } catch (Exception e) {
                 throw new FIMSException(e.getMessage(), e);
             }
-        } else {
-            throw new FIMSException("Unhandled System Error... ");
         }
     }
 
