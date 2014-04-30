@@ -202,7 +202,7 @@ function dialog(msg, title, buttons) {
     }
 
     if (!$(".ui-dialog").is(":visible") || (dialogContainer.dialog("option", "title") != title ||
-        dialogContainer.dialog("option", "buttons") != buttons)) {
+        dialogContainer.dialog("option" , "buttons") != buttons)) {
         dialogContainer.dialog({
             modal: true,
             autoOpen: true,
