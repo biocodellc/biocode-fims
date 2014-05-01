@@ -541,6 +541,7 @@ function validationFormToggle() {
     });
 }
 
+// get the expeditions codes a user owns for a project
 function getExpeditionCodes() {
     var projectID = $("#projects").val();
     $.getJSON("/biocode-fims/rest/utils/expeditionCodes/" + projectID)
