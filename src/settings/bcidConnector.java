@@ -60,6 +60,23 @@ public class bcidConnector {
 
     public static void main(String[] args) {
 
+        String post = "client_id=ThER8RQBsXfHptrjbHaS" +
+                "&" +
+                "client_secret=kgHyKWTx6TA5qyR7Q9aXZ2NFWnhxXR-g9U2zpeQU8djZG5tn9ZYTh7Cv5xk977hnwpK6SdfpuGG" +
+                "&" +
+                "code=!9M-KGU-UCwtuUKKhPJz" +
+                "&" +
+                "redirect_uri=http://biscicol.org/biocode-fims/rest/authenticationService/access_token/";
+        bcidConnector bcid = new bcidConnector();
+        try {
+             //http://biscicol.org/id/authenticationService/oauth/access_token
+            String results = bcid.createPOSTConnnection(new URL("http://biscicol.org/id/authenticationService/oauth/access_token"), post);
+            System.out.println(results);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        /*
+
         String username = "demo";
         String password = "demo";
         bcidConnector bcid = new bcidConnector();
@@ -87,6 +104,7 @@ public class bcidConnector {
             e.printStackTrace();
             return;
         }
+        */
     }
 
     /**
@@ -99,6 +117,7 @@ public class bcidConnector {
 
     /**
      * this constructor is used when the user has authenticated via oauth.
+     *
      * @param accessToken
      */
     public bcidConnector(String accessToken, String refreshToken) {
@@ -131,11 +150,17 @@ public class bcidConnector {
         }
     }
 
-    public Boolean getRefreshedToken() {return this.refreshedToken;}
+    public Boolean getRefreshedToken() {
+        return this.refreshedToken;
+    }
 
-    public String getAccessToken() {return this.accessToken;}
+    public String getAccessToken() {
+        return this.accessToken;
+    }
 
-    public String getRefreshToken() {return this.refreshToken;}
+    public String getRefreshToken() {
+        return this.refreshToken;
+    }
 
     /**
      * Obtain a new access token from the BCID system in order to continue the upload process.
@@ -160,7 +185,9 @@ public class bcidConnector {
 
         JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
 
-        if (tokenJSON.containsKey("error")) {return;}
+        if (tokenJSON.containsKey("error")) {
+            return;
+        }
 
         this.accessToken = tokenJSON.get("access_token").toString();
         this.refreshToken = tokenJSON.get("refresh_token").toString();
@@ -461,6 +488,9 @@ public class bcidConnector {
         conn.setDoInput(true);
 
         // Send post request
+        System.out.println("URL = " + url.toString());
+        System.out.println("postparams = " + postParams);
+
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
         wr.writeBytes(postParams);
         wr.flush();
