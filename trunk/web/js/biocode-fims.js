@@ -41,6 +41,29 @@ function populateColumns(targetDivId) {
         populateDefinitions($(this).attr('name'));
      });
 }
+function populateAbstract(targetDivId) {
+    $(targetDivId).html("Loading ...");
+
+    var e = document.getElementById('projects');
+    var project_id = e.options[e.selectedIndex].value;
+
+    theUrl = "/biocode-fims/rest/templates/abstract/?project_id=" + project_id;
+
+    var jqxhr = $.ajax( {
+        url: theUrl,
+        async: false,
+        dataType : 'html'
+    }).done(function(data) {
+        $(targetDivId).html(data +"<p>");
+    }).fail(function(jqXHR,textStatus) {
+        if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response!");
+        } else {
+                showMessage ("Error completing request!" );
+        }
+    });
+}
+
 // Get the available projects
 function populateProjects() {
     theUrl = "http://biscicol.org/id/projectService/list";

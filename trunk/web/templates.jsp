@@ -10,7 +10,7 @@
             <tr>
                 <td align=right>Choose Project</td>
                 <td align=left>
-                <select width=20 id=projects onChange="populateColumns('#cat1');">
+                <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
                         <option qdup=1 value=0>Select an project ...</option>
                         <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
                             Loading Projects ...
@@ -37,7 +37,11 @@
         </div>
 
 
-        <div style="width: 45%; float:left;margin-left:5px;"> <h2>Definition</h2>
+        <div style="width: 45%; float:left;margin-left:5px;">
+
+            <div id='abstract'></div>
+
+            <h2>Definition</h2>
 
             <p>Click on the "DEF" link next to any of the headings to see its definition in this pane.</p>
 

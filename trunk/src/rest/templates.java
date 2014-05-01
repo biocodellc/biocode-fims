@@ -45,6 +45,31 @@ public class templates {
             return Response.ok(response).build();
         }
     }
+     /**
+     * Return the abstract for a particular graph
+     *
+     * @return
+     * @throws Exception
+     */
+    @GET
+    @Path("/abstract/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAbstract(
+            @QueryParam("project_id") Integer project_id) throws Exception {
+
+        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+        templateProcessor t = new templateProcessor(project_id,uploadPath(),true);
+
+        // Write the all of the checkbox definitions to a String Variable
+        String response = t.printAbstract();
+
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return Response.ok(response).build();
+        }
+    }
 
     @POST
     @Path("/createExcel/")

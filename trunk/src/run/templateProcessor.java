@@ -550,4 +550,12 @@ public class templateProcessor {
 
         //System.out.println(t.printCheckboxes());
     }
+
+    /**
+     * Print the abstract text
+     * @return
+     */
+    public String printAbstract() {
+        return getFims().getMetadata().getText_abstract();
+    }
 }
