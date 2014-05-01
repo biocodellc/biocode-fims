@@ -8,7 +8,9 @@
             eml_location="eml_location"
             target="http://data.biscicol.org/ds/data"
             queryTarget="http://data.biscicol.org/ds">
-        <![CDATA[Some text with abstract]]>
+        <![CDATA[Although there are a lot of fields, we are only requiring that you fill out four or five of them:
+        materialSampleID, principalInvestigator, phylum and EITHER (decimalLatitude AND decimalLongitude) OR
+        locality (lat/longs are preferred). Nine additional fields are recommended, and thus automatically checked.]]>
     </metadata>
 
     <validation>
