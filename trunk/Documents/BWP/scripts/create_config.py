@@ -79,10 +79,9 @@ req_warning.set('level','warning')
 for term in bwp_terms:
 	attribute = etree.SubElement(entity,'attribute')
 	attribute.set('column',term)
+	attribute.set('uri', 'urn:'+term)
 	if 'DwC Term' in bwp_terms[term]:
-		attribute.set('uri',bwp_terms[term]['DwC Term'])
-	else:
-		attribute.set('uri',"urn:"+term)
+		attribute.set('defined_by',bwp_terms[term]['DwC Term'])
 	if 'Definition' in bwp_terms[term]:
 		attribute.text = etree.CDATA(bwp_terms[term]['Definition'])
 	if 'FIMS Level' in bwp_terms[term]:
