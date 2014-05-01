@@ -488,8 +488,8 @@ public class bcidConnector {
         conn.setDoInput(true);
 
         // Send post request
-        System.out.println("URL = " + url.toString());
-        System.out.println("postparams = " + postParams);
+        //System.out.println("URL = " + url.toString());
+        //System.out.println("postparams = " + postParams);
 
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
         wr.writeBytes(postParams);

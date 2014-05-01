@@ -109,6 +109,9 @@ public class authenticationService {
         session.setAttribute("access_token", access_token);
         session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
 
+        // for testing....
+        System.out.println(profileJSON.get("username") + " " + profileJSON.get("user_id")  + " " + access_token + " " +tokenJSON.get("refresh_token").toString() );
+
         response.sendRedirect("/biocode-fims/index.jsp");
         return;
     }
