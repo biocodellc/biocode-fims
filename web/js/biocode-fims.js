@@ -240,6 +240,23 @@ function dialog(msg, title, buttons) {
     return;
 }
 
+// If the user wants to create a new expedition, get the expedition code
+function createExpedition() {
+    var d = new $.Deferred();
+    var message = "<input type='text' id='new_expedition' />";
+    var buttons = {
+        "Create": function() {
+            d.resolve($("#new_expedition").val());
+        },
+        "Cancel": function() {
+            d.reject();
+            $(this).dialog("close");
+        }
+    }
+    dialog(message, "Expedition Code", buttons);
+    return d.promise();
+}
+
 // function to submit the validation form using jquery form plugin to handle the file uploads
 function submitForm(){
     var de = new $.Deferred();
@@ -247,15 +264,12 @@ function submitForm(){
     var options = {
         url: "/biocode-fims/rest/validate/",
         type: "POST",
-        resetForm: true,
         contentType: "multipart/form-data",
         beforeSerialize: function(form, options) {
             $('#projects').prop('disabled', false);
         },
         beforeSubmit: function(form, options) {
             $('#projects').prop('disabled', true);
-            $('.toggle-content#projects_toggle').hide(400);
-            $('.toggle-content#expedition_code_toggle').hide(400);
             dialog("Loading ...", "Validation Results", null);
             // For browsers that don't support the upload progress listener
             var xhr = $.ajaxSettings.xhr();
@@ -293,23 +307,51 @@ function failError() {
     dialog("Server Error!", "Error", buttons);
 }
 
-// submit dataset to be validated/uploaded
-function validatorSubmit() {
-    if ($('#projects').val() == 0 || $('#expedition_code').val().length > 6) {
+// Check that the validation form has a project id and if uploading, has an expedition code
+function validForm() {
+    if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
+        var error = false;
         if ($('#projects').val() == 0) {
             message = "Please select a project.";
-        } else {
-            message = "Expedition code is too long. Please limit to 6 characters."
+            error = true;
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
+            $('#expedition_code').val().length < 1)) {
+            message = "Expedition code required.";
+            error = true;
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 6) {
+            message = "Expedition code is too long. Please limit to 6 characters.";
+            error = true;
         }
-        $('#resultsContainer').html(message);
-        var buttons = {
-            "OK": function(){
-                $(this).dialog("close");
-              }
+        if (error) {
+            $('#resultsContainer').html(message);
+            var buttons = {
+                "OK": function(){
+                    $(this).dialog("close");
+                  }
+            }
+            dialog(message, "Validation Results", buttons);
+            return false;
         }
-        dialog(message, "Validation Results", buttons);
-    } else {
+    }
+    return true;
+}
+
+// submit dataset to be validated/uploaded
+function validatorSubmit() {
+    // User wants to create a new expedition
+    if ($("#expedition_code").val() == 0) {
+        createExpedition().done(function (e) {
+            $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
+            if (validForm()) {
+                submitForm().done(function(data) {
+                    validationResults(data);
+                }).fail(function() {
+                    failError();
+                });
+            }
+        })
+    } else if (validForm()) {
         submitForm().done(function(data) {
             validationResults(data);
         }).fail(function() {
@@ -412,6 +454,10 @@ function uploadResults(data) {
             }
         }
         dialog(message, title, buttons);
+        // reset the form to default state
+        $('form').clearForm();
+        $('.toggle-content#projects_toggle').hide(400);
+        $('.toggle-content#expedition_code_toggle').hide(400);
     } else {
         // ask user if want to proceed
         var buttons = {
@@ -467,6 +513,7 @@ function validationFormToggle() {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
+                $('#projects').trigger("change");
                 if ($('.toggle-content#projects_toggle').is(':hidden')) {
                     $('.toggle-content#projects_toggle').show(400);
                 }
@@ -485,4 +532,30 @@ function validationFormToggle() {
             $('.toggle-content#expedition_code_toggle').hide(400);
         }
     });
+    $("#projects").change(function() {
+        // only get expedition codes if a user is logged in
+        if ($('*:contains("Logout")').length > 0) {
+            $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
+            getExpeditionCodes();
+        }
+    });
+}
+
+function getExpeditionCodes() {
+    var projectID = $("#projects").val();
+    $.getJSON("/biocode-fims/rest/utils/expeditionCodes/" + projectID)
+        .done(function(data) {
+            if (data.error != null) {
+                $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code" />');
+                return;
+            }
+            var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
+                "<option value='0'>Create New Expedition</option>";
+            $.each(data.expeditions, function(key, e) {
+                select += "<option value=" + e.expedition_code + ">" + e.expedition_code + " (" + e.expedition_title + ")</option>";
+            });
+
+            select += "</select>";
+            $("#expedition_code").replaceWith(select);
+        });
 }
