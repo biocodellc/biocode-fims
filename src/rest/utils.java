@@ -52,6 +52,13 @@ public class utils {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 
+    /**
+     * Retrieve a user's expeditions in a given project from bcid. This uses an access token to access the
+     * bcid service.
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
     @GET
     @Path("/expeditionCodes/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
