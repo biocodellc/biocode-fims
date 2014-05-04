@@ -26,6 +26,6 @@
     <script src="js/jNotify.jquery.js"></script>
 </head>
 
-<body onload="graphsMessage('Choose an project to see loaded spreadsheets');populateProjects();">
+<body>
 
 <%@ include file="header-menus.jsp" %>
