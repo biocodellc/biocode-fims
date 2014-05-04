@@ -108,35 +108,63 @@ function populateGraphs(project_id) {
 }
 
 // Get results as JSON
-function queryJSON() {
+function queryJSON(params) {
    // theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
-    theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
-    var jqxhr = $.getJSON( theUrl, function(data) {
-        $("#resultsContainer").show();
-        distal(results,data);
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
-	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
-        } else {
-	    showMessage ("Error completing request!");
-        }
-    });
+   // serialize the params object using a shallow serialization
+    var jqxhr = $.post("/biocode-fims/rest/query/json/", $.param(params, true))
+        .done(function(data) {
+            $("#resultsContainer").show();
+            distal(results,data);
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
+             showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+            } else {
+            showMessage ("Error completing request!");
+            }
+        });
 }
 
 // Get results as Excel
-function queryExcel() {
+function queryExcel(params) {
     //theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
-    theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
-    window.location = theUrl;
     showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
+    download("/biocode-fims/rest/query/excel/", params);
 }
 
 // Get results as Excel
-function queryKml() {
+function queryKml(params) {
     //theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
-    theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue();
-    window.location = theUrl;
     showMessage ("Downloading results as an KML document<br>If Google Earth does not open you can point to it directly");
+    download("/biocode-fims/rest/query/kml/", params);
+}
+
+// create a form and then submit that form in order to download files
+function download(url, data) {
+    //url and data options are required
+    if (url && data) {
+        var form = $('<form />', { action: url, method: 'POST'});
+        $.each(data, function(key, value) {
+            // if the value is an array, we need to create an input element for each value
+            if (value instanceof Array) {
+                $.each(value, function(i, v) {
+                 var input = $('<input />', {
+                     type: 'hidden',
+                     name: key,
+                     value: v
+                 }).appendTo(form);
+                });
+            } else {
+                var input = $('<input />', {
+                    type: 'hidden',
+                    name: key,
+                    value: value
+                }).appendTo(form);
+            }
+        });
+
+        return form.appendTo('body').submit().remove();
+    }
+    throw new Error("url and data required");
 }
 
 // Get results as Excel
@@ -171,15 +199,24 @@ function getProjectKeyValue() {
     return "project_id=" + getProjectID();
 }
 
+// Get the query graph URIs
+function getGraphURIs() {
+    var graphs = [];
+    $( "select#graphs option:selected" ).each(function() {
+        graphs.push($(this).val());
+    });
+    return graphs;
+}
+
 // Get the URL key/value for the graphs by parsing return from the BCID service
 function getGraphsKeyValue() {
     var str = "";
     var separator = "";
-    $( "select option:selected" ).each(function() {
+    $( "select#graphs option:selected" ).each(function() {
         str += separator + encodeURIComponent($( this ).val());
         separator = ",";
     });
-    return "graphs="+str;
+    return "graphs=" + str;
 }
 
 // Uses jNotify to display messages
@@ -319,7 +356,7 @@ function validForm() {
             $('#expedition_code').val().length < 1)) {
             message = "Expedition code required.";
             error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 6) {
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 6)) {
             message = "Expedition code is too long. Please limit to 6 characters.";
             error = true;
         }
@@ -559,4 +596,59 @@ function getExpeditionCodes() {
             select += "</select>";
             $("#expedition_code").replaceWith(select);
         });
+}
+
+// a select element with all of the filterable options. Used to add additional filter statements
+var filterSelect = null;
+
+// populate a select with the filter values of a given project
+function getFilterOptions(projectId) {
+    var jqxhr = $.getJSON("rest/mapping/filterOptions/" + projectId)
+        .done(function(data) {
+            if (data.error != null) {
+                return;
+            }
+            filterSelect = "<select id='uri' style='max-width:100px;'>";
+            $.each(data.attributes, function(k, v) {
+                filterSelect += "<option value=" + v + ">" + k + "</option>";
+            });
+
+            filterSelect += "</select>";
+        });
+    return jqxhr;
+}
+
+// add additional filters to the query
+function addFilter() {
+    // change the method to post
+    $("form").attr("method", "POST");
+
+    var tr = "<tr>\n<td align='right'>AND</td>\n<td>\n";
+    tr += filterSelect;
+    tr += "<p style='display:inline;'>=</p>\n";
+    tr += "<input type='text' name='filter_value' style='width:285px;' />\n";
+    tr += "</td>\n";
+
+    // insert another tr after the last filter option, before the submit buttons
+    $("#uri").parent().parent().siblings(":last").before(tr);
+}
+
+// prepare a json object with the query POST params by combining the text and select inputs for each filter statement
+function getQueryPostParams() {
+    var params = {
+        graphs: getGraphURIs(),
+        project_id: getProjectID()
+    }
+
+    var filterKeys = $("select[id=uri]");
+    var filterValues = $("input[name=filter_value]");
+
+    // parse the filter keys and values and add them to the post params
+    $.each(filterKeys, function(index, e) {
+        if (filterValues[index].value != "") {
+            params[e.value] = filterValues[index].value;
+        }
+    });
+
+    return params;
 }

@@ -199,7 +199,7 @@ public class query {
     }
 
     /**
-     * Return KML for a graph query using POST
+     * Return Excel for a graph query using POST
      * * <p/>
      * filter parameters are of the form:
      * name={URI} value={filter value}
@@ -208,7 +208,7 @@ public class query {
      * @throws Exception
      */
     @POST
-    @Path("/kml/")
+    @Path("/excel/")
     @Consumes("application/x-www-form-urlencoded")
     @Produces("application/vnd.ms-excel")
     public Response queryExcel(
@@ -219,7 +219,7 @@ public class query {
             fimsQueryBuilder q = POSTQueryResult(form);
 
             // Run the query, passing in a format and returning the location of the output file
-            File file = new File(q.run("kml"));
+            File file = new File(q.run("excel"));
 
             // Return file to client
             Response.ResponseBuilder response = Response.ok((Object) file);
