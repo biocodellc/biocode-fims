@@ -67,8 +67,8 @@ public class process {
         } catch (Exception e) {
             //e.printStackTrace();
             throw new FIMSException("Unable to obtain configuration file from server... \n" +
-                    "Please check that your expedition code is valid.\n" +
-                    " Expedition codes Must be between 4 and 12 characters in length.");
+                    "Please check that your dataset code is valid.\n" +
+                    " Dataset codes Must be between 4 and 12 characters in length.");
         }
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
@@ -183,9 +183,9 @@ public class process {
                 runExpeditionCheck();
             // if an expedition creation is required, get feedback from user
             if (processController.isExpeditionCreateRequired()) {
-                String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
                         "Do you wish to create it now?" +
-                        "\nIf you choose to continue, your data will be associated with this new expedition code.";
+                        "\nIf you choose to continue, your data will be associated with this new dataset code.";
                 Boolean continueOperation = fimsInputter.in.continueOperation(message);
                 if (!continueOperation)
                     return;
@@ -386,7 +386,7 @@ public class process {
         CommandLine cl;
 
         // The expedition code corresponds to a expedition recognized by BCID
-        String expedition_code = "";
+        String dataset_code = "";
         // The configuration template
         //String configuration = "";
         // The input file
@@ -405,13 +405,13 @@ public class process {
         options.addOption("f", "format", true, "excel|html|json  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
-        options.addOption("e", "expedition_code", true, "Expedition code.  You will need to obtain a expedition code before " +
+        options.addOption("e", "dataset_code", true, "Dataset code.  You will need to obtain a expedition code before " +
                 "loading data, or use the demo_mode.");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
         options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
 
-        options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify expedition_code, " +
+        options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify dataset_code, " +
                 "configuration, or output_directory.  You still need to specify an input file.");
         options.addOption("t", "triplify", false, "Triplify only (upload process triplifies)");
         options.addOption("u", "upload", false, "Upload");
@@ -458,7 +458,7 @@ public class process {
 
 
         if (cl.hasOption("d")) {
-            expedition_code = "DEMOH";
+            dataset_code = "DEMOH";
             output_directory = defaultOutputDirectory;
             triplify = true;
             upload = true;
@@ -481,7 +481,7 @@ public class process {
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
         if (cl.hasOption("e"))
-            expedition_code = cl.getOptionValue("e");
+            dataset_code = cl.getOptionValue("e");
 
         if (cl.hasOption("t"))
             triplify = true;
@@ -530,7 +530,7 @@ public class process {
                             input_file,
                             output_directory,
                             connector,
-                            new processController(project_id, expedition_code)
+                            new processController(project_id, dataset_code)
                     );
 
                     // DocumentOperation[]ing
