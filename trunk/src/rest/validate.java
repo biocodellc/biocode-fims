@@ -96,7 +96,8 @@ public class validate {
                 );
             } catch (FIMSException e) {
                 e.printStackTrace();
-                throw new FIMSException("{\"done\": \"Server Error.\"}");
+                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
+                //throw new FIMSException("{\"done\": \"Server Error.\"}");
             }
 
             // Run the process
@@ -143,7 +144,8 @@ public class validate {
                 }
             } catch (FIMSException e) {
                 e.printStackTrace();
-                retVal.append("{\"done\": \"Server Error.\"}");
+                retVal.append("{\"done\": \"Server Error: " + e.getMessage() + "\"}");
+                //retVal.append("{\"done\": \"Server Error.\"}");
             }
         } catch(FIMSException e) {
             // clear the StringBuilder buffer
@@ -200,7 +202,8 @@ public class validate {
                 );
             } catch (FIMSException e) {
                 e.printStackTrace();
-                throw new FIMSException("{\"error\": \"Server Error.\"}");
+                //throw new FIMSException("{\"error\": \"Server Error.\"}");
+                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
             }
 
             // create this expedition if the user wants to
@@ -250,7 +253,7 @@ public class validate {
                 return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
             } catch (FIMSException e) {
                 e.printStackTrace();
-                throw new FIMSException("{\"error\": \"Server Error.\"}");
+                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
             }
         } catch (FIMSException e) {
             // delete the temporary file now that it has been uploaded

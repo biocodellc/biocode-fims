@@ -69,7 +69,7 @@ public class utils {
         String refreshToken = (String) session.getAttribute("refresh_token");
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
 
-        URL url = new URL("http://biscicol.org/id/expeditionService/list/" + projectId + "?access_token=" + accessToken);
+        URL url = new URL("http://biscicol.org:8080/id/expeditionService/list/" + projectId + "?access_token=" + accessToken);
 
         String response = bcidConnector.createGETConnection(url);
 
