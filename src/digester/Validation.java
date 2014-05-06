@@ -201,7 +201,7 @@ public class Validation implements RendererInterface {
 
                 String status2 = "\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.";
                 fimsPrinter.out.println(status2);
-                processController.appendStatus(status2);
+                processController.appendStatus("<font color=#d73027>" + status2 + "</font>");
 
                 processController.setHasErrors(true);
                 processController.setWarningsSB(warningSB);
@@ -209,7 +209,7 @@ public class Validation implements RendererInterface {
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    processController.appendStatus("Warnings found on " + worksheet.getSheetname() + " worksheet.<br>" +
+                    processController.appendStatus("<font color=#d73027>Warnings found on " + worksheet.getSheetname() + " worksheet.</font><br>" +
                             warningSB.toString() + "<br>");
                     processController.setHasWarnings(true);
                     processController.setWarningsSB(warningSB);
