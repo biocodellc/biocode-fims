@@ -39,13 +39,13 @@ public class bcidConnector {
     private final String CONNECTION = "keep-alive";
 
     //private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
-    private String authenticationURL = "http://biscicol.org/id/authenticationService/login";
+    private String authenticationURL = "http://biscicol.org:8080/id/authenticationService/login";
 
-    private String arkCreationURL = "http://biscicol.org/id/groupService";
-    private String associateURL = "http://biscicol.org/id/expeditionService/associate";
-    private String expeditionCreationURL = "http://biscicol.org/id/expeditionService";
-    private String expeditionValidationURL = "http://biscicol.org/id/expeditionService/validateExpedition/";
-    private String availableProjectsURL = "http://biscicol.org/id/projectService/listUserProjects";
+    private String arkCreationURL = "http://biscicol.org:8080/id/groupService";
+    private String associateURL = "http://biscicol.org:8080/id/expeditionService/associate";
+    private String expeditionCreationURL = "http://biscicol.org:8080/id/expeditionService";
+    private String expeditionValidationURL = "http://biscicol.org:8080/id/expeditionService/validateExpedition/";
+    private String availableProjectsURL = "http://biscicol.org:8080/id/projectService/listUserProjects";
 
 
     private Integer responseCode;
