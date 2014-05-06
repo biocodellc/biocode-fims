@@ -61,6 +61,9 @@
 
         <div id=dialogContainer></div>
 
+        <div id=resultsContainer style='overflow:auto; display:none;'>
+        </div>
+
         <p>
         <h2>Biocode FIMS Workflow</h2>
         Biocode FIMS is a field information management system that enables data collection at the source (in the field),

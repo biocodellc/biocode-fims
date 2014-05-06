@@ -135,8 +135,8 @@ public class validate {
                     retVal.append("\"}");
                 // User doesn't want to upload and the validation passed w/o any warnings or errors
                 } else {
-                    processController.appendStatus("<br>" + processController.getWorksheetName() +
-                            " worksheet successfully validated.");
+                    processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
+                            " worksheet successfully validated.</font>");
                     retVal.append("{\"done\": \"");
                     retVal.append(processController.getStatusSB());
                     retVal.append("\"}");
@@ -245,7 +245,7 @@ public class validate {
                     session.setAttribute("refresh_token", connector.getRefreshToken());
                 }
 
-                processController.appendStatus("<br>Successfully Uploaded!");
+                processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
                 return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
             } catch (FIMSException e) {

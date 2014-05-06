@@ -109,7 +109,6 @@ function populateGraphs(project_id) {
 
 // Get results as JSON
 function queryJSON(params) {
-   // theUrl = "/biocode-fims/rest/query/json/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
    // serialize the params object using a shallow serialization
     var jqxhr = $.post("/biocode-fims/rest/query/json/", $.param(params, true))
         .done(function(data) {
@@ -126,14 +125,12 @@ function queryJSON(params) {
 
 // Get results as Excel
 function queryExcel(params) {
-    //theUrl = "/biocode-fims/rest/query/excel/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
     showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
     download("/biocode-fims/rest/query/excel/", params);
 }
 
 // Get results as Excel
 function queryKml(params) {
-    //theUrl = "/biocode-fims/rest/query/kml/?" + getGraphsKeyValue() + "&" + getProjectKeyValue() + "&" +  getFilterKeyValue();
     showMessage ("Downloading results as an KML document<br>If Google Earth does not open you can point to it directly");
     download("/biocode-fims/rest/query/kml/", params);
 }
@@ -277,6 +274,12 @@ function dialog(msg, title, buttons) {
     return;
 }
 
+// write results to the resultsContainer
+function writeResults(message) {
+    $("#resultsContainer").show();
+    $("#resultsContainer").html("<table><tr><td>" + message + "</td></tr></table>");
+}
+
 // If the user wants to create a new expedition, get the expedition code
 function createExpedition() {
     var d = new $.Deferred();
@@ -377,7 +380,7 @@ function validForm() {
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     // User wants to create a new expedition
-    if ($("#expedition_code").val() == 0) {
+    if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
         createExpedition().done(function (e) {
             $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
             if (validForm()) {
@@ -454,7 +457,9 @@ function validationResults(data) {
                 $(this).dialog("close");
             }
         }
-        dialog(data.done, title, buttons);
+        $("#dialogContainer").dialog("close");
+        writeResults(data.done);
+//        dialog(data.done, title, buttons);
     } else {
         if (data.continue.message == null) {
             continueUpload(false);
@@ -465,6 +470,7 @@ function validationResults(data) {
                       continueUpload(false);
                 },
                 "Cancel": function() {
+                    writeResults(data.continue.message);
                     $(this).dialog("close");
                 }
             }
@@ -480,6 +486,7 @@ function uploadResults(data) {
         var message;
         if (data.done != null) {
             message = data.done;
+            writeResults(message);
         } else {
             $("#dialogContainer").addClass("error");
             message = data.error;
