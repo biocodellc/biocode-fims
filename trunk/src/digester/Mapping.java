@@ -230,7 +230,7 @@ public class Mapping implements RendererInterface {
 
     /**
      * Lookup any property associated with a column name from a list of attributes
-     * (generated from getAllAttributes functions)
+     * (generated from  functions)
      * @param attributes
      * @return
      */

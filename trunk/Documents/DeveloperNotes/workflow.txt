@@ -1,5 +1,5 @@
 1. Initiation
-    - create expedition, make a expedition code: used to request/assign identifiers
+    - create dataset, make a dataset code: used to request/assign identifiers
     - specify a configuration file
         - validation
         - mapping
@@ -14,9 +14,9 @@
 
 3. Loading Sequence Data
 Relies on loaded sampleData, must exist there first before continuing
-    - FASTA (containing many sampleIDs) + Locus + Expedition code
-    - SNP data (containing many loci) + Expedition code + SampleID
-    - NextGen data (containing many loci) + Expedition code + SampleID
+    - FASTA (containing many sampleIDs) + Locus + Dataset code
+    - SNP data (containing many loci) + Dataset code + SampleID
+    - NextGen data (containing many loci) + Dataset code + SampleID
 
 3. Query & Extract
     - Return spreadsheet

@@ -48,7 +48,7 @@
                 </tr>
 
                 <tr class="toggle-content" id="expedition_code_toggle">
-                    <td align="right">Expedition Code</td>
+                    <td align="right">Dataset Code</td>
                     <td><input type="text" name="expedition_code" id="expedition_code" /></td>
                 </tr>
 

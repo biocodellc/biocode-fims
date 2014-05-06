@@ -225,10 +225,10 @@ public class validate {
                         session.setAttribute("refresh_token", connector.getRefreshToken());
                     }
                     // ask the user if they want to create this expedition
-                    return "{\"continue\": \"The expedition code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                    return "{\"continue\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                             "\\\" does not exist.  " +
                             "Do you wish to create it now?<br><br>" +
-                            "If you choose to continue, your data will be associated with this new expedition code.\"}";
+                            "If you choose to continue, your data will be associated with this new dataset code.\"}";
                 }
 
                 // upload the dataset
