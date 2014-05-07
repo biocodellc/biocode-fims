@@ -216,7 +216,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
         }
 
         // no matching reader was found
-        throw new Exception("No matching reader found for this file");
+        throw new Exception("Unable to open the file named '" + filepath + "'");
     }
 
     /**

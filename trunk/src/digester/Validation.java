@@ -4,6 +4,7 @@ import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
 import renderers.RendererInterface;
+import renderers.RowMessage;
 import run.processController;
 import settings.*;
 
@@ -236,12 +237,23 @@ public class Validation implements RendererInterface {
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
         this.tabularDataReader = tabularDataReader;
-        tabularDataReader.setTable(worksheets.get(0).getSheetname());
+
+        Worksheet sheet = null;
+        String sheetName = "";
+        try {
+            sheet = worksheets.get(0);
+            sheetName = sheet.getSheetname();
+            tabularDataReader.setTable(sheetName);
+        } catch (Exception e) {
+            // An error here means the sheetname was not found, throw an application message
+            sheet.getMessages().addLast(new RowMessage("Unable to find a required worksheet named '" + sheetName + "' (no quotes)", RowMessage.ERROR));
+            return false;
+        }
 
         try {
             createSqlLite(filenamePrefix, outputFolder, mapping);
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw new Exception(e.getMessage(), e);
         }
 

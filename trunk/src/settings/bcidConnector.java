@@ -1,6 +1,5 @@
 package settings;
 
-import digester.Attribute;
 import digester.Entity;
 import digester.Mapping;
 import net.sf.json.JSONException;
@@ -9,7 +8,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import run.process;
 import run.processController;
 import utils.SettingsManager;
 
@@ -17,7 +15,6 @@ import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
 import java.nio.charset.Charset;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -38,15 +35,22 @@ public class bcidConnector {
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded";
     private final String CONNECTION = "keep-alive";
 
-    //private String authenticationURL = "http://biscicol.org/bcid/j_spring_security_check";
-    private String authenticationURL = "http://biscicol.org:8080/id/authenticationService/login";
-
-    private String arkCreationURL = "http://biscicol.org:8080/id/groupService";
-    private String associateURL = "http://biscicol.org:8080/id/expeditionService/associate";
-    private String expeditionCreationURL = "http://biscicol.org:8080/id/expeditionService";
-    private String expeditionValidationURL = "http://biscicol.org:8080/id/expeditionService/validateExpedition/";
-    private String availableProjectsURL = "http://biscicol.org:8080/id/projectService/listUserProjects";
-
+    /*    private String authentication_uri = "http://biscicol.org:8080/id/authenticationService/login";
+        private String ark_creation_uri = "http://biscicol.org:8080/id/groupService";
+        private String associate_uri = "http://biscicol.org:8080/id/expeditionService/associate";
+        private String expedition_creation_uri = "http://biscicol.org:8080/id/expeditionService";
+        private String expedition_validation_uri = "http://biscicol.org:8080/id/expeditionService/validateExpedition/";
+        private String available_projects_uri = "http://biscicol.org:8080/id/projectService/listUserProjects";
+    */
+    private String authentication_uri;
+    private String ark_creation_uri;
+    private String associate_uri;
+    private String expedition_creation_uri;
+    private String expedition_validation_uri;
+    private String available_projects_uri;
+    private String client_id;
+    private String client_secret;
+    private String refresh_uri;
 
     private Integer responseCode;
     private String accessToken;
@@ -57,6 +61,7 @@ public class bcidConnector {
     private String connectionPoint;
     private String username;
     private String password;
+    SettingsManager sm = SettingsManager.getInstance();
 
     public static void main(String[] args) {
 
@@ -69,7 +74,7 @@ public class bcidConnector {
                 "redirect_uri=http://biscicol.org/biocode-fims/rest/authenticationService/access_token/";
         bcidConnector bcid = new bcidConnector();
         try {
-             //http://biscicol.org/id/authenticationService/oauth/access_token
+            //http://biscicol.org/id/authenticationService/oauth/access_token
             String results = bcid.createPOSTConnnection(new URL("http://biscicol.org/id/authenticationService/oauth/access_token"), post);
             System.out.println(results);
         } catch (IOException e) {
@@ -113,6 +118,7 @@ public class bcidConnector {
     public bcidConnector() {
         // make sure cookies is turn on
         CookieHandler.setDefault(new CookieManager());
+        setProperties();
     }
 
     /**
@@ -124,6 +130,24 @@ public class bcidConnector {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         CookieHandler.setDefault(new CookieManager());
+        setProperties();
+    }
+
+    public void setProperties() {
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        authentication_uri = sm.retrieveValue("authentication_uri");
+        ark_creation_uri = sm.retrieveValue("ark_creation_uri");
+        associate_uri = sm.retrieveValue("associate_uri");
+        expedition_creation_uri = sm.retrieveValue("expedition_creation_uri");
+        expedition_validation_uri = sm.retrieveValue("expedition_validation_uri");
+        available_projects_uri = sm.retrieveValue("available_projects_uri");
+        client_id = sm.retrieveValue("client_id");
+        client_secret = sm.retrieveValue("client_secret");
+        refresh_uri = sm.retrieveValue("refresh_uri");
     }
 
     /**
@@ -139,7 +163,7 @@ public class bcidConnector {
         this.username = username;
         this.password = password;
         String postParams = "username=" + username + "&password=" + password;
-        URL url = new URL(authenticationURL);
+        URL url = new URL(authentication_uri);
         String response = createPOSTConnnection(url, postParams);
 
         // TODO: find a more robust way to search for bad credentials than just parsing the response for text
@@ -168,19 +192,11 @@ public class bcidConnector {
     private void getValidAccessToken() throws Exception {
         this.triedToRefreshToken = true;
 
-        SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        URL url = new URL(sm.retrieveValue("refresh_uri"));
-
-        String params = "client_id=" + sm.retrieveValue("client_id") + "&" +
-                "client_secret=" + sm.retrieveValue("client_secret") + "&" +
+        String params = "client_id=" + client_id + "&" +
+                "client_secret=" + client_secret + "&" +
                 "refresh_token=" + refreshToken;
 
-        Object tokenResponse = JSONValue.parse(createPOSTConnnection(url, params));
+        Object tokenResponse = JSONValue.parse(createPOSTConnnection(new URL(refresh_uri), params));
         JSONArray tokenArray = (JSONArray) tokenResponse;
 
         JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
@@ -213,9 +229,9 @@ public class bcidConnector {
 
         URL url;
         if (accessToken != null) {
-            url = new URL(arkCreationURL + "?access_token=" + accessToken);
+            url = new URL(ark_creation_uri + "?access_token=" + accessToken);
         } else {
-            url = new URL(arkCreationURL);
+            url = new URL(ark_creation_uri);
         }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
         if (getResponseCode() == 401) {
@@ -244,9 +260,9 @@ public class bcidConnector {
 
         URL url;
         if (accessToken != null) {
-            url = new URL(arkCreationURL + "?access_token=" + accessToken);
+            url = new URL(ark_creation_uri + "?access_token=" + accessToken);
         } else {
-            url = new URL(arkCreationURL);
+            url = new URL(ark_creation_uri);
         }
         String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
 
@@ -273,7 +289,7 @@ public class bcidConnector {
                         "project_id=" + project_id + "&" +
                         "bcid=" + bcid;
 
-        URL url = new URL(associateURL);
+        URL url = new URL(associate_uri);
         String response = createPOSTConnnection(url, createPostParams);
 
         return response.toString();
@@ -293,7 +309,7 @@ public class bcidConnector {
 
         JSONParser parser = new JSONParser();
         try {
-            String url = availableProjectsURL;
+            String url = available_projects_uri;
             if (accessToken != null) {
                 url += "?access_token=" + accessToken;
             }
@@ -343,9 +359,9 @@ public class bcidConnector {
 
         URL url;
         if (accessToken != null) {
-            url = new URL(expeditionCreationURL + "?access_token=" + accessToken);
+            url = new URL(expedition_creation_uri + "?access_token=" + accessToken);
         } else {
-            url = new URL(expeditionCreationURL);
+            url = new URL(expedition_creation_uri);
         }
         String response = createPOSTConnnection(url, createPostParams);
 
@@ -376,7 +392,7 @@ public class bcidConnector {
      * @throws Exception
      */
     public boolean checkExpedition(processController processController) throws Exception {
-        String urlString = expeditionValidationURL + processController.getProject_id() + "/" + processController.getExpeditionCode();
+        String urlString = expedition_validation_uri + processController.getProject_id() + "/" + processController.getExpeditionCode();
         if (accessToken != null) {
             urlString += "?access_token=" + accessToken;
         }
