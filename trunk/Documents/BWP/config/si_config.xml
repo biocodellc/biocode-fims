@@ -70,7 +70,18 @@
     <worksheet sheetname="Samples">
       <rule type="duplicateColumnNames" level="error"/>
       <rule type="uniqueValue" column="voucherID" level="error"/>
-      <rule type="RequiredColumns" column="RequiredColumns" level="error"/>
+      <rule type="RequiredColumns" column="RequiredColumns" level="error">
+        <field>yearCollected</field>
+        <field>monthCollected</field>
+        <field>countryOrOcean</field>
+        <field>voucherID</field>
+        <field>institutionCode</field>
+        <field>catalogNumber</field>
+        <field>scientificName</field>
+        <field>kingdom</field>
+        <field>phylum</field>
+        <field>order</field>
+      </rule>
     </worksheet>
   </validation>
 </fims>
