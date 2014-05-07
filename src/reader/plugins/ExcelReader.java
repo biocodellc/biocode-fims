@@ -135,7 +135,7 @@ public class ExcelReader implements TabularDataReader {
             return (currsheet < excelwb.getNumberOfSheets());
     }
 
-    public void setTable(String worksheet) {
+    public void setTable(String worksheet) throws Exception {
         try {
             Sheet exsheet = excelwb.getSheet(worksheet);
             currsheet = excelwb.getSheetIndex(worksheet) + 1;
@@ -143,7 +143,7 @@ public class ExcelReader implements TabularDataReader {
             numcols = -1;
             testNext();
         } catch (Exception e) {
-            e.printStackTrace();
+           throw new Exception("Unable to find worksheet " + worksheet, e);
         }
     }
 

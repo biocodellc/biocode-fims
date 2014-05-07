@@ -3,6 +3,12 @@ client_id = public_client_id
 client_secret = super_secret_code
 redirect_uri = http://biscicol.org/biocode-fims/rest/authenticationService/access_token/
 authorize_uri = http://biscicol.org/id/authenticationService/oauth/authorize?
-access_token_uri = http://biscicol.org/id/authenticationService/oauth/access_token
-profile_uri = http://biscicol.org/id/userService/oauth?access_token=
+access_token_uri = http://biscicol.org:8080/id/authenticationService/oauth/access_token
+profile_uri = http://biscicol.org:8080/id/userService/oauth?access_token=
 refresh_uri = http://biscicol.org/id/authenticationService/oauth/refresh
+authentication_uri = http://biscicol.org:8080/id/authenticationService/login
+ark_creation_uri = http://biscicol.org:8080/id/groupService
+associate_uri = http://biscicol.org:8080/id/expeditionService/associate
+expedition_creation_uri = http://biscicol.org:8080/id/expeditionService
+expedition_validation_uri = http://biscicol.org:8080/id/expeditionService/validateExpedition/
+available_projects_uri = http://biscicol.org:8080/id/projectService/listUserProjects

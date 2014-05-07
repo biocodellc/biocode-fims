@@ -221,6 +221,7 @@ public class process {
             processController.setValidation(validation);
 
         } catch (Exception e) {
+            //e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
     }
