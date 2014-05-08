@@ -136,8 +136,9 @@ public class validate {
                     retVal.append("\"}");
                 // User doesn't want to upload and the validation passed w/o any warnings or errors
                 } else {
-                    processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
-                            " worksheet successfully validated.</font>");
+                    //processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
+                    processController.appendStatus("<br>" + processController.getWorksheetName() +
+                            " worksheet successfully validated.");
                     retVal.append("{\"done\": \"");
                     retVal.append(processController.getStatusSB());
                     retVal.append("\"}");

@@ -277,6 +277,9 @@ function dialog(msg, title, buttons) {
 // write results to the resultsContainer
 function writeResults(message) {
     $("#resultsContainer").show();
+    // Add some nice coloring
+    message= message.replace(/Warning:/g,"<span style='color:orange;'>Warning:</span>");
+    message= message.replace(/Error:/g,"<span style='color:red;'>Error:</span>");
     $("#resultsContainer").html("<table><tr><td>" + message + "</td></tr></table>");
 }
 

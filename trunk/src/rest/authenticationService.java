@@ -80,6 +80,7 @@ public class authenticationService {
         String oauthState = session.getAttribute("oauth_state").toString();
 
         if (code == null || state == null || !state.equals(oauthState)) {
+            System.out.println("Authentication Error, code or state is null");
             response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
             return;
         }
@@ -94,6 +95,7 @@ public class authenticationService {
         JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
 
         if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
+            System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
             response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
             return;
         }
