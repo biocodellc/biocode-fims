@@ -33,9 +33,7 @@ public class SettingsManager {
      * @return A reference to the global util.SettingsManager object.
      */
     public static SettingsManager getInstance() {
-
         return getInstance(Thread.currentThread().getContextClassLoader().getResource("biocode-fims.props").getFile());
-
     }
 
     /**

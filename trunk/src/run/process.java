@@ -2,6 +2,7 @@ package run;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import digester.*;
+import digester.List;
 import fims.fimsFilterCondition;
 import fims.fimsModel;
 import fims.fimsQueryBuilder;
@@ -16,7 +17,7 @@ import triplify.triplifier;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -114,8 +115,8 @@ public class process {
         try {
             authenticationSuccess = bcidConnector.authenticate(username, password);
         } catch (Exception e) {
-            //e.printStackTrace();
-            throw new FIMSException("A system error occurred attempting to authenticate " + username);
+            e.printStackTrace();
+            throw new FIMSException("A system error occurred attempting to authenticate " + username + ". Is authentication server running?");
         }
 
         if (!authenticationSuccess) {
@@ -166,6 +167,9 @@ public class process {
 
         // Validation Step
         runValidation();
+
+              //
+              // processController.getValidation().findList()
         if (!processController.isValidated() && processController.getHasWarnings()) {
             String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
             Boolean continueOperation = fimsInputter.in.continueOperation(message);
@@ -221,7 +225,7 @@ public class process {
             processController.setValidation(validation);
 
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
     }
@@ -494,11 +498,15 @@ public class process {
         }
 
         // Check that output directory is writable
-        if (!new File(output_directory).canWrite()) {
+        try {
+            if (!new File(output_directory).canWrite()) {
+                fimsPrinter.out.println("Unable to write to output directory " + output_directory);
+                return;
+            }
+        } catch (Exception e) {
             fimsPrinter.out.println("Unable to write to output directory " + output_directory);
-            return;
+                return;
         }
-
 
         // Run the command
         try {
@@ -548,7 +556,7 @@ public class process {
             }
         } catch (Exception e) {
             fimsPrinter.out.println("\nError: " + e.getMessage());
-            // e.printStackTrace();
+            e.printStackTrace();
             System.exit(-1);
         }
     }

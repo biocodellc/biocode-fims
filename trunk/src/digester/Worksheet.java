@@ -5,6 +5,7 @@ import renderers.Message;
 import renderers.RowMessage;
 import settings.fimsPrinter;
 import sun.rmi.transport.Connection;
+import utils.SettingsManager;
 
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -133,6 +134,13 @@ public class Worksheet {
      * @return
      */
     public boolean run(Object parent) {
+        SettingsManager sm = SettingsManager.getInstance();
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Set a reference to the validation parent
         validation = (Validation) parent;
         java.sql.Connection connection = validation.getConnection();
@@ -164,6 +172,8 @@ public class Worksheet {
                     r.setConnection(connection);
                     // Set the TabularDataReader worksheet instance for this Rule
                     r.setWorksheet(validation.getTabularDataReader());
+                    // FIMS Service root
+                    r.setServiceRoot(sm.retrieveValue("fims_service_root"));
                     // Run this rule
                     Method method = r.getClass().getMethod(r.getType());
                     if (method != null) {
