@@ -27,7 +27,7 @@
       <attribute column="verbatimDepth" uri="urn:verbatimDepth" defined_by="http://rs.tdwg.org/dwc/terms/verbatimDepth"><![CDATA[The original description of the depth below the local surface. This value should be given in meters.]]></attribute>
       <attribute column="verbatimElevation" uri="urn:verbatimElevation" defined_by="http://rs.tdwg.org/dwc/terms/verbatimElevation"><![CDATA[The original description of the elevation (altitude above sea level) of the Location. This value should be given in meters.]]></attribute>
       <attribute column="locationRemarks" uri="urn:locationRemarks" defined_by="http://rs.tdwg.org/dwc/terms/locationRemarks"><![CDATA[Comments or notes about the location of the collecting event that are not covered in the other fields.]]></attribute>
-      <attribute column="voucherID" uri="urn:voucherID"/>
+      <attribute column="voucherID" uri="urn:voucherID" defined_by="http://rs.tdwg.org/dwc/terms/occurrenceID"><![CDATA[This is the unique id given to the specimen the tissue was taken from. It is constructed from the institutionCode, collectionCode (if one exists), and catalogNumber, joined by a colon (:).]]></attribute>
       <attribute column="institutionCode" uri="urn:institutionCode" defined_by="http://rs.tdwg.org/dwc/terms/institutionCode"><![CDATA[This is the acronym for the institution or repository where the specimen voucher is stored. GRBio.org is a registry for all institution codes, and the institutionCode field will be validated against its list of codes.]]></attribute>
       <attribute column="collectionCode" uri="urn:collectionCode" defined_by="http://rs.tdwg.org/dwc/terms/collectionCode"><![CDATA[The name or acronym identifying the collection or data set (from the institution/repository listed in institutionCode) from which the record was derived. This collectionCode should be registered, along with the institutionCode, in GRBio.org.]]></attribute>
       <attribute column="catalogNumber" uri="urn:catalogNumber" defined_by="http://rs.tdwg.org/dwc/terms/catalogNumber"><![CDATA[An identifier (preferably unique) for the record within the data set or collection.]]></attribute>
@@ -39,8 +39,8 @@
       <attribute column="scientificName" uri="urn:scientificName" defined_by="http://rs.tdwg.org/dwc/terms/scientificName"><![CDATA[The full scientific name, with authorship and date information if known. When forming part of an Identification, this should be the name in lowest level taxonomic rank that can be determined.]]></attribute>
       <attribute column="kingdom" uri="urn:kingdom" defined_by="http://rs.tdwg.org/dwc/terms/kingdom"><![CDATA[The full scientific name of the kingdom in which the specimen voucher is classified.]]></attribute>
       <attribute column="phylum" uri="urn:phylum" defined_by="http://rs.tdwg.org/dwc/terms/phylum"><![CDATA[The full scientific name of the phylum in which the specimen voucher is classified.]]></attribute>
-      <attribute column="order" uri="urn:order" defined_by="http://rs.tdwg.org/dwc/terms/order"><![CDATA[The full scientific name of the order in which the specimen voucher is classified.]]></attribute>
       <attribute column="class" uri="urn:class" defined_by="http://rs.tdwg.org/dwc/terms/class"><![CDATA[The full scientific name of the class in which the specimen voucher is classified.]]></attribute>
+      <attribute column="order" uri="urn:order" defined_by="http://rs.tdwg.org/dwc/terms/order"><![CDATA[The full scientific name of the order in which the specimen voucher is classified.]]></attribute>
       <attribute column="family" uri="urn:family" defined_by="http://rs.tdwg.org/dwc/terms/family"><![CDATA[The full scientific name of the family in which the specimen voucher is classified.]]></attribute>
       <attribute column="subfamily" uri="urn:subfamily"><![CDATA[This is the full scientific name of the rank immediately below family but above genus of the specimen voucher.]]></attribute>
       <attribute column="genus" uri="urn:genus" defined_by="http://rs.tdwg.org/dwc/terms/genus"><![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
@@ -80,7 +80,10 @@
         <field>scientificName</field>
         <field>kingdom</field>
         <field>phylum</field>
+        <field>class</field>
         <field>order</field>
+        <field>extractionPlate</field>
+        <field>extractionWell</field>
       </rule>
     </worksheet>
   </validation>

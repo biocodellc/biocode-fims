@@ -1,0 +1,62 @@
+Category	Term Name	Logical Order	Require Level
+Event	eventID	1	
+Event	fieldNumber	2	
+Event	yearCollected	3	required
+Event	monthCollected	4	required
+Event	dayCollected	5	
+Event	timeCollected	6	
+Event	collectedBy	7	
+Event	collectionMethod	8	
+Event	habitat	9	
+Event	permitInformation	10	
+Event	eventRemarks	11	
+Location	countryOrOcean	12	required
+Location	waterBody	13	
+Location	island	14	
+Location	stateProvince	15	
+Location	county	16	
+Location	municipality	17	
+Location	locality	18	
+Location	decimalLatitude	19	
+Location	decimalLongitude	20	
+Location	georeferenceProtocol	21	
+Location	verbatimDepth	22	
+Location	verbatimElevation	23	
+Location	locationRemarks	24	
+Voucher	voucherID	25	required
+Voucher	institutionCode	26	required
+Voucher	collectionCode	27	
+Voucher	catalogNumber	28	required
+Voucher	sex	29	
+Voucher	lifeStage	30	
+Voucher	establishmentMeans	31	
+Voucher	associatedMedia	32	
+Voucher	sampleRemarks	33	
+Taxon	scientificName	34	required
+Taxon	kingdom	35	required
+Taxon	phylum	36	required
+Taxon	class	37	required
+Taxon	order	38	required
+Taxon	family	39	
+Taxon	subfamily	40	
+Taxon	genus	41	
+Taxon	species	42	
+Taxon	subspecies	43	
+Taxon	commonName	44	
+Taxon	associatedTaxa	45	
+Taxon	taxonRemarks	46	
+Identification	identifiedBy	47	
+Identification	yearIdentified	48	
+Identification	monthIdentified	49	
+Identification	dayIdentified	50	
+Identification	identificationConfidence	51	
+Identification	basisOfID	52	
+Identification	typeStatus	53	
+MaterialSample	extractionBarcode	54	
+MaterialSample	extractionPlate	55	required
+MaterialSample	extractionWell	56	required
+MaterialSample	tissueBarcode	57	
+MaterialSample	tissueRack	58	
+MaterialSample	tissuePosition	59	
+MaterialSample	tissueType	60	
+MaterialSample	preservative	61	
