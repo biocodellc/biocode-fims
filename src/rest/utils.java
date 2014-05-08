@@ -1,6 +1,9 @@
 package rest;
 
+import digester.Validation;
+import org.apache.commons.digester.Digester;
 import run.configurationFileFetcher;
+import run.process;
 import settings.bcidConnector;
 
 import javax.servlet.ServletContext;
@@ -12,6 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -55,6 +60,7 @@ public class utils {
     /**
      * Retrieve a user's expeditions in a given project from bcid. This uses an access token to access the
      * bcid service.
+     *
      * @param projectId
      * @return
      * @throws Exception
@@ -63,7 +69,7 @@ public class utils {
     @Path("/expeditionCodes/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getExpeditionCodes(@PathParam("project_id") Integer projectId,
-                                       @Context HttpServletRequest request)  throws Exception {
+                                       @Context HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
@@ -76,6 +82,39 @@ public class utils {
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }
 
+    /**
+     * Retrieve a user's expeditions in a given project from bcid. This uses an access token to access the
+     * bcid service.
+     *
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    @GET
+    @Path("/getListFields/{list_name}/")
+    @Produces(MediaType.TEXT_HTML)
+    public Response getListFields(@QueryParam("project_id") Integer projectId,
+                                  @PathParam("list_name") String list_name) throws Exception {
 
+        File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+
+        // Create a process object
+        process p = new process(
+                uploadPath(),
+                configFile
+        );
+
+        Validation validation = new Validation();
+        p.addValidationRules(new Digester(), validation);
+        digester.List results = (digester.List) validation.findList("phylum");
+        Iterator it = results.getFields().iterator();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Acceptable values for " + list_name + "<br>\n");
+        while (it.hasNext()) {
+            sb.append("<li>" + (String) it.next() + "</li>\n");
+        }
+
+        return Response.ok(sb.toString()).build();
+    }
 }
 

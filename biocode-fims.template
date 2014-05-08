@@ -12,3 +12,5 @@ associate_uri = http://biscicol.org:8080/id/expeditionService/associate
 expedition_creation_uri = http://biscicol.org:8080/id/expeditionService
 expedition_validation_uri = http://biscicol.org:8080/id/expeditionService/validateExpedition/
 available_projects_uri = http://biscicol.org:8080/id/projectService/listUserProjects
+fims_service_root = http://biscicol.org/biocode-fims/rest/
+

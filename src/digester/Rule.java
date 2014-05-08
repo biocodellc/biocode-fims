@@ -34,6 +34,8 @@ public class Rule {
     private Worksheet digesterWorksheet;
     // Now a reference to a SQLLite connection
     private java.sql.Connection connection;
+    // Reference a service Root so we can include service calls where needed
+    private String serviceRoot;
 
     // Rules can also own their own fields
     private final LinkedList<String> fields = new LinkedList<String>();
@@ -78,6 +80,9 @@ public class Rule {
         worksheet.setTable(digesterWorksheet.getSheetname());
     }
 
+    public void setServiceRoot(String serviceRoot) {
+        this.serviceRoot = serviceRoot;
+    }
 
     public String getDecimalLatitude() {
         return decimalLatitude;
@@ -868,8 +873,11 @@ public class Rule {
                 String value = resultSet.getString(getColumn()).trim();
                 // Only display messages for items that exist, that is empty cell contents are an approved value
                 if (!value.equals("")) {
-                    msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
-                    addMessage(msg, listFields, null);
+                    //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
+
+                    msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn();
+                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() +"/?project_id='>see approved</a>";
+                    addMessage(msg, null, null);
                 }
             }
 
