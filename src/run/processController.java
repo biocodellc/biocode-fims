@@ -1,5 +1,6 @@
 package run;
 
+import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 import digester.Validation;
 import org.json.simple.JSONObject;
 import utils.stringGenerator;
@@ -28,6 +29,7 @@ public class processController {
     private Validation validation;
     private String worksheetName;
     private StringBuilder statusSB = new StringBuilder();
+    private Boolean NMNH;
 
     public String getWorksheetName() {
         return worksheetName;
@@ -35,6 +37,17 @@ public class processController {
 
     public void setWorksheetName(String worksheetName) {
         this.worksheetName = worksheetName;
+    }
+
+    public Boolean getNMNH() {
+        return NMNH;
+    }
+
+    public void setNMNH(String nmnh) {
+        if (nmnh == null || !nmnh.equalsIgnoreCase("true"))
+            NMNH = false;
+        else
+            NMNH = true;
     }
 
     public StringBuilder getStatusSB() {
@@ -149,6 +162,7 @@ public class processController {
 
     /**
      * take an InputStream and extension and write it to a file in the operating systems temp dir.
+     *
      * @param is
      * @param ext
      * @return
@@ -163,8 +177,9 @@ public class processController {
                 byte[] buffer = new byte[4096];
                 for (int n; (n = is.read(buffer)) != -1; )
                     os.write(buffer, 0, n);
+            } finally {
+                os.close();
             }
-            finally { os.close(); }
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -174,6 +189,7 @@ public class processController {
 
     /**
      * return a string that is to be used in html and is json safe
+     *
      * @param s
      * @return
      */
