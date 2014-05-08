@@ -93,7 +93,7 @@ function populateGraphs(project_id) {
     var jqxhr = $.getJSON( theUrl, function(data) {
     // Check for empty object in response
     if (typeof data['data'][0] === "undefined") {
-	graphsMessage('No expeditions found for this project');
+	graphsMessage('No datasets found for this project');
     } else {
 	// Call distal to load the graphs data
         distal(graphs,data);
@@ -296,7 +296,7 @@ function createExpedition() {
             $(this).dialog("close");
         }
     }
-    dialog(message, "Expedition Code", buttons);
+    dialog(message, "Dataset Code", buttons);
     return d.promise();
 }
 
@@ -360,10 +360,10 @@ function validForm() {
             error = true;
         } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
             $('#expedition_code').val().length < 1)) {
-            message = "Expedition code required.";
+            message = "Dataset code required.";
             error = true;
         } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 6)) {
-            message = "Expedition code is too long. Please limit to 6 characters.";
+            message = "Dataset code is too long. Please limit to 6 characters.";
             error = true;
         }
         if (error) {
@@ -598,7 +598,7 @@ function getExpeditionCodes() {
                 return;
             }
             var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
-                "<option value='0'>Create New Expedition</option>";
+                "<option value='0'>Create New Dataset</option>";
             $.each(data.expeditions, function(key, e) {
                 select += "<option value=" + e.expedition_code + ">" + e.expedition_code + " (" + e.expedition_title + ")</option>";
             });
