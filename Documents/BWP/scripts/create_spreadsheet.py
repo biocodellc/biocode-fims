@@ -2,8 +2,8 @@ import unicodecsv
 import xlsxwriter
 from collections import OrderedDict
 
-latest_term_file = "../terms/terms_4_16.tsv"
-spreadsheet_output = "../spreadsheet/BWP_FIMS_Spreadsheet_16_Apr_14.xlsx"
+latest_term_file = "../terms/terms_5_08.tsv"
+spreadsheet_output = "../spreadsheet/BWP_FIMS_Spreadsheet_8_May_14.xlsx"
 
 bwp_terms = OrderedDict()
 

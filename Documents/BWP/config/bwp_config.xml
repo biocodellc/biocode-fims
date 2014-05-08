@@ -6,7 +6,7 @@
       <attribute column="processingLab" uri="urn:processingLab"><![CDATA[The lab where the specimen will be processed from extraction through to PCR purification.]]></attribute>
       <attribute column="extractionPlate" uri="urn:extractionPlate"><![CDATA[Barcode of the FluidX plate that is holding the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
       <attribute column="extractionWell" uri="urn:extractionWell"><![CDATA[This is the plate position of the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
-      <attribute column="occurrenceID" uri="urn:occurrenceID" defined_by="http://rs.tdwg.org/dwc/terms/occurrenceID"><![CDATA[This is the unique id given to the specimen the tissue was taken from. It is constructed from the institutionCode, collectionCode (if one exists), and catalogNumber, joined by a colon (:).]]></attribute>
+      <attribute column="voucherID" uri="urn:voucherID" defined_by="http://rs.tdwg.org/dwc/terms/occurrenceID"><![CDATA[This is the unique id given to the specimen the tissue was taken from. It is constructed from the institutionCode, collectionCode (if one exists), and catalogNumber, joined by a colon (:).]]></attribute>
       <attribute column="institutionCode" uri="urn:institutionCode" defined_by="http://rs.tdwg.org/dwc/terms/institutionCode"><![CDATA[This is the acronym for the institution or repository where the specimen voucher is stored. GRBio.org is a registry for all institution codes, and the institutionCode field will be validated against its list of codes.]]></attribute>
       <attribute column="catalogNumber" uri="urn:catalogNumber" defined_by="http://rs.tdwg.org/dwc/terms/catalogNumber"><![CDATA[An identifier (preferably unique) for the record within the data set or collection.]]></attribute>
       <attribute column="chainOfCustody" uri="urn:chainOfCustody"><![CDATA[Whether or not a specimen voucher has been collected, transported, and accessioned into a secure repository following chain of custody rules that prevent tampering, contamination, mislabeling or loss. Chain of custody refers to the chronological documentation of the sequence of physical locations of a voucher specimen and the people who had custody of it.]]></attribute>
@@ -77,7 +77,7 @@
         <field>processingLab</field>
         <field>extractionPlate</field>
         <field>extractionWell</field>
-        <field>occurrenceID</field>
+        <field>voucherID</field>
         <field>institutionCode</field>
         <field>catalogNumber</field>
         <field>chainOfCustody</field>

@@ -3,7 +3,7 @@ from lxml import etree
 from xml.dom import minidom
 from collections import OrderedDict
 
-latest_term_file = "../terms/terms_4_16.tsv"
+latest_term_file = "../terms/terms_5_08.tsv"
 latest_list_file = "../terms/lists_4_16.tsv"
 config_output = "../config/bwp_config.xml"
 

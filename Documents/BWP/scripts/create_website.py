@@ -1,11 +1,11 @@
 import unicodecsv
 from collections import OrderedDict
 
-latest_term_file = "../terms/terms_4_16.tsv"
+latest_term_file = "../terms/terms_5_08.tsv"
 latest_list_file = "../terms/lists_4_16.tsv"
 website_header = "../term_site/terms_header.html"
 website_footer = "../term_site/terms_footer.html"
-website_output = "../term_site/terms_4_17.html"
+website_output = "../term_site/terms_5_08.html"
 
 
 
