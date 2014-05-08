@@ -164,12 +164,26 @@ public class process {
      * would handle user input/output differently
      */
     public void runAllLocally(Boolean triplifier, Boolean upload) throws FIMSException {
+        // Set whether this is an NMNH project or not
+        try {
+            Fims fims = new Fims(mapping);
+            addFimsRules(new Digester(), fims);
+            processController.setNMNH(fims.getMetadata().getNMNH());
+            if (processController.getNMNH()) {
+                System.out.println("\tthis is an NMNH designated project");
+            } else {
+                 System.out.println("\tthis is not an NMNH designated project");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FIMSException(e.getMessage(), e);
+        }
+
 
         // Validation Step
         runValidation();
 
-              //
-              // processController.getValidation().findList()
+        //
         if (!processController.isValidated() && processController.getHasWarnings()) {
             String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
             Boolean continueOperation = fimsInputter.in.continueOperation(message);
@@ -505,7 +519,7 @@ public class process {
             }
         } catch (Exception e) {
             fimsPrinter.out.println("Unable to write to output directory " + output_directory);
-                return;
+            return;
         }
 
         // Run the command
