@@ -1,7 +1,7 @@
 package rest;
 
 import digester.Validation;
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import run.configurationFileFetcher;
 import run.process;
 import settings.bcidConnector;

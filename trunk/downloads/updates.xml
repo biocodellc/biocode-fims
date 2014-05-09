@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <updateDescriptor baseUrl="">
-  <entry targetMediaFileId="208" updatableVersionMin="" updatableVersionMax="" fileName="fims_macos_0_1.dmg" newVersion="0.1" newMediaFileId="208" fileSize="59932672" bundledJre="" archive="false">
-    <comment />
-  </entry>
-  <entry targetMediaFileId="211" updatableVersionMin="" updatableVersionMax="" fileName="fims_unix_0_1.sh" newVersion="0.1" newMediaFileId="211" fileSize="59490552" bundledJre="" archive="false">
+  <entry targetMediaFileId="211" updatableVersionMin="" updatableVersionMax="" fileName="fims_unix_0_2.sh" newVersion="0.2" newMediaFileId="211" fileSize="33339882" bundledJre="" archive="false">
     <comment />
   </entry>
 </updateDescriptor>
