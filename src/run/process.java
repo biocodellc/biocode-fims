@@ -7,7 +7,7 @@ import fims.fimsFilterCondition;
 import fims.fimsModel;
 import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
@@ -389,7 +389,7 @@ public class process {
         String username = "";
         String password = "";
         Integer project_id = 0;
-        System.out.print(defaultOutputDirectory);
+        //System.out.print(defaultOutputDirectory);
 
         // Test configuration :
         // -d -t -u -i sampledata/Apogon***.xls
@@ -424,22 +424,21 @@ public class process {
         options.addOption("f", "format", true, "excel|html|json  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
-        options.addOption("e", "dataset_code", true, "Dataset code.  You will need to obtain a expedition code before " +
-                "loading data, or use the demo_mode.");
+        options.addOption("e", "dataset_code", true, "Dataset code.  You will need to obtain a data code before " +
+                "loading data");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
         options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
 
-        options.addOption("d", "demo_mode", false, "Demonstration mode.  Do not need to specify dataset_code, " +
-                "configuration, or output_directory.  You still need to specify an input file.");
         options.addOption("t", "triplify", false, "Triplify only (upload process triplifies)");
         options.addOption("u", "upload", false, "Upload");
 
-        options.addOption("U", "username", true, "Username");
-        options.addOption("P", "password", true, "Password");
+        options.addOption("U", "username", true, "Username (for uploading data)");
+        options.addOption("P", "password", true, "Password (for uploading data)");
 
         // Create the commands parser and parse the command line arguments.
         try {
+
             cl = clp.parse(options, args);
         } catch (UnrecognizedOptionException e) {
             fimsPrinter.out.println("Error: " + e.getMessage());
@@ -468,20 +467,12 @@ public class process {
 
         }
         // help options
-        else if (cl.hasOption("h") ||
-                (cl.hasOption("d") && !cl.hasOption("i")) ||
-                (!cl.hasOption("d") && (!cl.hasOption("e") || !cl.hasOption("i")))) {
+        else if (cl.hasOption("h")) {
             helpf.printHelp("fims ", options, true);
             return;
         }
 
 
-        if (cl.hasOption("d")) {
-            dataset_code = "DEMOH";
-            output_directory = defaultOutputDirectory;
-            triplify = true;
-            upload = true;
-        }
         if (cl.hasOption("p")) {
             try {
                 project_id = new Integer(cl.getOptionValue("p"));
@@ -506,7 +497,7 @@ public class process {
             triplify = true;
         if (cl.hasOption("u"))
             upload = true;
-        if (!cl.hasOption("o") && !cl.hasOption("d")) {
+        if (!cl.hasOption("o")) {
             fimsPrinter.out.println("Using default output directory " + defaultOutputDirectory);
             output_directory = defaultOutputDirectory;
         }

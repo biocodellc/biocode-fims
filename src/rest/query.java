@@ -4,7 +4,7 @@ import digester.Attribute;
 import digester.Mapping;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import run.configurationFileFetcher;
 import run.process;
 

@@ -65,14 +65,14 @@
         </div>
 
         <p>
-        <h2>Biocode FIMS Workflow</h2>
-        Biocode FIMS is a field information management system that enables data collection at the source (in the field),
+        <h2>Workflow</h2>
+        <!--Biocode FIMS is a field information management system that enables data collection at the source (in the field),
                 validates data, and assigns persistent identifiers by Project, Dataset, and locally unique identifiers
                 (see <a href="http://biscicol.org/bcid" target="_blank">BCID system</a>).
                 <p>
-
+         -->
         <img id='workflowImage' src='docs/Workflow_simple.jpeg'>
-        <br><a id='workflowControl' onclick='workflowImageSwap();'>Advanced</a>
+        <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>
     </div>
 </div>
 
@@ -80,7 +80,7 @@
     function workflowImageSwap() {
         if ($("#workflowImage").attr("src") == 'docs/Workflow.jpeg') {
             $("#workflowImage").attr("src",'docs/Workflow_simple.jpeg');
-            $("#workflowControl").text('Advanced');
+            $("#workflowControl").text('Details');
         } else {
             $("#workflowImage").attr("src",'docs/Workflow.jpeg');
             $("#workflowControl").text('Simple');

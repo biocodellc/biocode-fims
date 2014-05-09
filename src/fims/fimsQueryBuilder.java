@@ -5,7 +5,7 @@ import com.hp.hpl.jena.rdf.model.*;
 import digester.Attribute;
 import digester.Fims;
 import digester.Mapping;
-import org.apache.commons.digester.Digester;
+import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
 import run.configurationFileFetcher;
 import run.process;
