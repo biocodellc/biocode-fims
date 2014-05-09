@@ -1,0 +1,47 @@
+#summary Instructions for the command-line installer
+
+= Introduction =
+While the web interface version of the biocode-fims provides many features to make data validation and uploading easy, sometimes it is necessary to batch-validate or batch-load  large numbers of files.  For this reason, we've created the following command-line loader.
+
+= Requirements =
+
+UNIX or MacOS operating system.  
+Knowledge of running applications from the command-line on these systems
+
+= Installation =
+
+  * Download the latest Command-Line File listed in the [https://code.google.com/p/biocode-fims/source/browse/trunk/downloads/ downloads folder]
+  * chmod +x {file_name}
+  * run the program in the spot where it downloads (the installer may build symbolic links on your system)
+
+= Running the biocode-fims from the command-line =
+
+The online application automatically detects the project code while the command-line version does NOT.  Thus, you must lookup the right project code at [http://biscicol.org/id/projectService/list Project Lookup Site].  Once you have the project code, validating and uploading data is easy fairly straightforward.  Here is a simple example to get you started validating:
+
+{{{
+./fims -i {path_to_data_file} -p {project_id}
+}}}
+
+Here is the complete command-line syntax that supports, validation, upload, and query.
+
+{{{
+usage: fims  [-e <arg>] [-f <arg>] [-F <arg>] [-h] [-i <arg>] [-o <arg>]
+       [-P <arg>] [-p <arg>] [-q <arg>] [-t] [-U <arg>] [-u]
+ -e,--dataset_code <arg>       Dataset code.  You will need to obtain a
+                               data code before loading data
+ -f,--format <arg>             excel|html|json  specifying the return
+                               format for the query
+ -F,--filter <arg>             Filter results based on a keyword search
+ -h,--help                     print this help message and exit
+ -i,--input_file <arg>         Input Spreadsheet
+ -o,--output_directory <arg>   Output Directory
+ -P,--password <arg>           Password (for uploading data)
+ -p,--project_id <arg>         Project Identifier.  A numeric integer
+                               corresponding to your project
+ -q,--query <arg>              Run a query and pass in graph UUIDs to look
+                               at for this query -- Use this along with
+                               options C and S
+ -t,--triplify                 Triplify only (upload process triplifies)
+ -U,--username <arg>           Username (for uploading data)
+ -u,--upload                   Upload
+}}}
