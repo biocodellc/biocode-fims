@@ -2,15 +2,16 @@
 
 = Getting Started with the Biocode FIMS Validator (For the IndoPacificDB Working Group) =
 
-STEP 1: Get the latest copy of the Indo Pacific Spreadsheet Template which can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v8.xlsx here]
+STEP 1: Get the latest copy of the Indo Pacific Spreadsheet Template by using the Biocode-FIMS [http://biscicol.org/biocode-fims/templates.jsp Template Generator]
 
-STEP 2: Fill in your data according to the instructions on the Instructions Tab from the above spreadsheet
+STEP 2: Fill in your data according to the instructions on the Instructions Tab from your spreadsheet.
 
-STEP 3: Install the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Biocode FIMS Geneious Plugin] 
+STEP 3: Validate and upload data using one of the following methods
 
-STEP 4: Run the plugin by going to Tools -> Upload to Biocode Fims
+  * Biocode-FIMS [http://biscicol.org/biocode-fims web application] 
+  * Using the [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Biocode FIMS Geneious Plugin] 
 
-  * Use the "DEMOH" project to test validation and upload functionality
-  * Obtain the username/password by emailing jdeck@berkeley.edu
+STEP 4: Loading Data
 
-NOTE: The REAL version of the spreadsheet loader is coming soon with individualized Project Codes and User Accounts.
+  * Use the "DEMOH" dataset code to test validation and upload functionality
+  * To upload actual data, obtain a username/password by emailing eric.darvish@gmail.com
