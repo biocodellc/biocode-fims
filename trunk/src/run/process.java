@@ -111,6 +111,7 @@ public class process {
 
         // Authenticate all the time, even if not uploading
         fimsPrinter.out.println("Authenticating ...");
+
         boolean authenticationSuccess = false;
         try {
             authenticationSuccess = bcidConnector.authenticate(username, password);
@@ -171,8 +172,6 @@ public class process {
             processController.setNMNH(fims.getMetadata().getNMNH());
             if (processController.getNMNH()) {
                 System.out.println("\tthis is an NMNH designated project");
-            } else {
-                 System.out.println("\tthis is not an NMNH designated project");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -472,6 +471,11 @@ public class process {
             return;
         }
 
+        // Nop options returns help message
+        if (cl.getOptions().length < 1) {
+            helpf.printHelp("fims ", options, true);
+            return;
+        }
 
         if (cl.hasOption("p")) {
             try {
@@ -537,8 +541,22 @@ public class process {
             */
             else {
 
-                bcidConnector connector = createConnection(username, password);
+                // Create the appropritate connection string
+                bcidConnector connector = null;
+                if (triplify || upload) {
+                    if (username == null || username.equals("") || password == null || password.equals("")) {
+                        fimsPrinter.out.println("Need valid username / password for uploading or triplifying");
+                        helpf.printHelp("fims ", options, true);
+                        return;
+                    } else {
+                        connector = createConnection(username, password);
+                    }
+                } else {
+                    connector = new bcidConnector();
+                }
 
+
+                // Now run the process
                 if (connector != null) {
                     process p = new process(
                             input_file,
@@ -547,14 +565,10 @@ public class process {
                             new processController(project_id, dataset_code)
                     );
 
-                    // DocumentOperation[]ing
                     fimsPrinter.out.println("Initializing ...");
                     fimsPrinter.out.println("\tinputFilename = " + input_file);
 
-
-                    //p.runExpeditionCheck();
-                    //p.runValidation();
-
+                    // Run the processor
                     p.runAllLocally(triplify, upload);
                 }
 
