@@ -16,13 +16,21 @@ Knowledge of running applications from the command-line on these systems
 
 = Running the biocode-fims from the command-line =
 
-The online application automatically detects the project code while the command-line version does NOT.  Thus, you must lookup the right project code at [http://biscicol.org/id/projectService/list Project Lookup Site].  Once you have the project code, validating and uploading data is easy fairly straightforward.  Here is a simple example to get you started validating:
+The online application automatically detects the project code while the command-line version does NOT.  Thus, you must lookup the right project code at [http://biscicol.org/id/projectService/list Project Lookup Site].  Once you have the project code, validating and uploading data is easy fairly straightforward.  
+
+Perform a simple validation:
 
 {{{
 ./fims -i {path_to_data_file} -p {project_id}
 }}}
 
-Here is the complete command-line syntax that supports, validation, upload, and query.
+Validate and upload to a new dataset called FOODAD:
+
+{{{
+./fims -u -i {path_to_data_file} -p {project_id} -e FOODAD -U {user} -P {password}
+}}}
+
+Here is the complete command-line syntax that supports, validation, upload, and query:
 
 {{{
 usage: fims  [-e <arg>] [-f <arg>] [-F <arg>] [-h] [-i <arg>] [-o <arg>]
