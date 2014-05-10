@@ -10,7 +10,7 @@ Knowledge of running applications from the command-line on these systems
 
 = Installation =
 
-  * Download the latest Command-Line File listed in the [https://code.google.com/p/biocode-fims/source/browse/trunk/downloads/ downloads folder]
+  * Download the latest Command-Line File listed in the [https://code.google.com/p/biocode-fims/source/browse/trunk/downloads/ downloads folder] labeled beginning with "fims_unix"...
   * chmod +x {file_name}
   * run the program in the spot where it downloads (the installer may build symbolic links on your system)
 
