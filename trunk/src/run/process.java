@@ -68,8 +68,7 @@ public class process {
         } catch (Exception e) {
             //e.printStackTrace();
             throw new FIMSException("Unable to obtain configuration file from server... \n" +
-                    "Please check that your dataset code is valid.\n" +
-                    " Dataset codes Must be between 4 and 12 characters in length.");
+                    "Please check that your project code is valid.\n");
         }
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
@@ -141,6 +140,7 @@ public class process {
                 processController.setExpeditionAssignedToUserAndExists(true);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
     }
@@ -195,9 +195,11 @@ public class process {
 
         // We only need to check on assigning Expedition if the user wants to triplify or upload data
         if (triplifier || upload) {
+
             // Expedition Check Step
             if (!processController.isExpeditionAssignedToUserAndExists())
                 runExpeditionCheck();
+
             // if an expedition creation is required, get feedback from user
             if (processController.isExpeditionCreateRequired()) {
                 String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
@@ -541,7 +543,7 @@ public class process {
             */
             else {
 
-                // Create the appropritate connection string
+                // Create the appropritate connection string depending on options
                 bcidConnector connector = null;
                 if (triplify || upload) {
                     if (username == null || username.equals("") || password == null || password.equals("")) {
@@ -550,6 +552,11 @@ public class process {
                         return;
                     } else {
                         connector = createConnection(username, password);
+                        if (!cl.hasOption("e")) {
+                            fimsPrinter.out.println("Need to enter a dataset code before triplifying or uploading");
+                            helpf.printHelp("fims ", options, true);
+                            return;
+                        }
                     }
                 } else {
                     connector = new bcidConnector();
