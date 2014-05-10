@@ -388,10 +388,15 @@ public class bcidConnector {
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is unique within
      * a particular project
      *
-     * @return
+     * @return  true if we need to insert a new expedition
      * @throws Exception
      */
     public boolean checkExpedition(processController processController) throws Exception {
+       // if the expedition code isn't set we can just immediately return true which is
+        if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
+            return true;
+        }
+
         String urlString = expedition_validation_uri + processController.getProject_id() + "/" + processController.getExpeditionCode();
         if (accessToken != null) {
             urlString += "?access_token=" + accessToken;
