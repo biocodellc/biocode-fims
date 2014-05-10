@@ -16,6 +16,8 @@ expedition_validation_uri = http://biscicol.org:8080/id/expeditionService/valida
 available_projects_uri = http://biscicol.org:8080/id/projectService/listUserProjects
 project_lookup_uri = http://biscicol.org:8080/id/projectService/validation/
 deeproots_uri = http://biscicol.org:8080/id/expeditionService/deepRoots/
+project_service_uri = http://biscicol.org:8080/id/projectService/list;
+expedition_list_uri = http://biscicol.org:8080/id/expeditionService/list/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 
