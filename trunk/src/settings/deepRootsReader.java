@@ -3,6 +3,7 @@ package settings;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import utils.SettingsManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +26,12 @@ public class deepRootsReader {
 
 
     public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) throws IOException, URISyntaxException {
-        String url = "http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code;
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+        String deeproots_uri = sm.retrieveValue("deeproots_uri");
+
+//        String url = "http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code;
+        String url = deeproots_uri + project_id + "/" + expedition_code;
 
         // Read file into String variable
         String json = readFile(new URL(url));

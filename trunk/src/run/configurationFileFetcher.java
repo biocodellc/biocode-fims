@@ -2,6 +2,7 @@ package run;
 
 import org.jsoup.Jsoup;
 import settings.PathManager;
+import utils.SettingsManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,7 +16,7 @@ import java.util.Date;
 public class configurationFileFetcher {
     private File outputFile;
     // TODO: Fix biscicol.org resolution -- can't see itself! The work-around here is to use a different port
-    private String projectLookup = "http://biscicol.org:8080/id/projectService/validation/";
+//    private String projectLookup = "http://biscicol.org:8080/id/projectService/validation/";
     private Integer project_id;
     private String configFileName;
 
@@ -60,6 +61,11 @@ public class configurationFileFetcher {
         this.project_id = project_id;
         configFileName = "config." + project_id + ".xml";
 
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
+        String project_lookup_uri = sm.retrieveValue("project_lookup_uri");
+
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it
@@ -70,7 +76,7 @@ public class configurationFileFetcher {
         // get a fresh copy if the useCacheResults is false
         if (!useCacheResults) {
             // Get the URL for this configuration File
-            String projectServiceString = projectLookup + project_id;
+            String projectServiceString = project_lookup_uri + project_id;
             // Set a 10 second timeout on this connection
             String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
             // Setup connection
