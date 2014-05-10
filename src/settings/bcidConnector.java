@@ -374,6 +374,8 @@ public class bcidConnector {
             } else {
                 throw new NotAuthorizedException("User authorization error!");
             }
+        } else if (getResponseCode() == 500) {
+            throw new Exception(response.toString());
         }
         if (response.contains("ERROR")) {
             throw new Exception(response.toString());
