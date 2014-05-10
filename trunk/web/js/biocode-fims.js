@@ -341,7 +341,7 @@ function submitForm(){
 }
 
 // function to show the user an error occurred if an ajax call failed
-function failError() {
+function failError(jqxhr) {
     var buttons = {
         "OK": function(){
             $("#dialogContainer").removeClass("error");
@@ -349,7 +349,14 @@ function failError() {
           }
     }
     $("#dialogContainer").addClass("error");
-    dialog("Server Error!", "Error", buttons);
+
+    var message;
+    if (jqxhr.responseText != null) {
+        message = jqxhr.responseText;
+    } else {
+        message = "Server Error!";
+    }
+    dialog(message, "Error", buttons);
 }
 
 // Check that the validation form has a project id and if uploading, has an expedition code
@@ -391,16 +398,16 @@ function validatorSubmit() {
             if (validForm()) {
                 submitForm().done(function(data) {
                     validationResults(data);
-                }).fail(function() {
-                    failError();
+                }).fail(function(jqxhr) {
+                    failError(jqxhr);
                 });
             }
         })
     } else if (validForm()) {
         submitForm().done(function(data) {
             validationResults(data);
-        }).fail(function() {
-            failError();
+        }).fail(function(jqxhr) {
+            failError(jqxhr);
         });
     }
 }
@@ -446,9 +453,9 @@ function continueUpload(createExpedition) {
         .done(function(data) {
             d.resolve();
             uploadResults(data);
-        }).fail(function() {
+        }).fail(function(jqxhr) {
             d.reject();
-            failError();
+            failError(jqxhr);
         });
     loopStatus(d.promise());
 }

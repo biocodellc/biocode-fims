@@ -414,7 +414,7 @@ public class bcidConnector {
                 throw new NotAuthorizedException("User authorization error!");
             }
         } else if (getResponseCode() != 200) {
-            throw new Exception("BCID service error");
+            throw new Exception(response);
         } else {
             if (action.equals("error")) {
                 throw new Exception(response);
