@@ -10,13 +10,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import utils.SettingsManager;
 
 
 /**
  * Fetch publicly availableProjects from the BCID system
  */
 public class availableProjectsFetcher {
-    String projectServiceURL = "http://biscicol.org/id/projectService/list";
+//    String projectServiceURL = "http://biscicol.org/id/projectService/list";
     ArrayList<availableProject> availableProjects = new ArrayList<availableProject>();
 
     /**
@@ -25,7 +26,11 @@ public class availableProjectsFetcher {
     public availableProjectsFetcher(bcidConnector connector) {
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(readJsonFromUrl(projectServiceURL));
+            SettingsManager sm = SettingsManager.getInstance();
+            sm.loadProperties();
+            String project_service_uri = sm.retrieveValue("project_service_uri");
+
+            Object obj = parser.parse(readJsonFromUrl(project_service_uri));
             JSONObject jsonObject = (JSONObject) obj;
 
             // loop array
