@@ -343,7 +343,7 @@ public class templateProcessor {
                 // Column Name
                 Cell nameCell = row.createCell(NAME);
                 nameCell.setCellValue(a.getColumn());
-                if (requiredColumns.contains(a.getColumn()))
+                if (requiredColumns != null && requiredColumns.contains(a.getColumn()))
                     nameCell.setCellStyle(requiredStyle);
 
                 row.createCell(ENTITY).setCellValue(e.getConceptAlias());
@@ -389,7 +389,7 @@ public class templateProcessor {
             cell.setCellStyle(headingStyle);
 
             // Make required columns red
-            if (requiredColumns.contains(field))
+            if (requiredColumns != null && requiredColumns.contains(field))
                 cell.setCellStyle(requiredStyle);
 
         }
