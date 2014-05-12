@@ -368,11 +368,11 @@ function validForm() {
             message = "Please select a project.";
             error = true;
         } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
-            $('#expedition_code').val().length < 1)) {
-            message = "Dataset code required.";
+            $('#expedition_code').val().length < 4)) {
+            message = "Dataset code is too short. Must be between 4 and 16 characters.";
             error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 6)) {
-            message = "Dataset code is too long. Please limit to 6 characters.";
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 16)) {
+            message = "Dataset code is too long. Please limit to 16 characters.";
             error = true;
         }
         if (error) {
