@@ -267,7 +267,8 @@ function dialog(msg, title, buttons) {
             resizable: false,
             width: 'auto',
             draggable: false,
-            buttons: buttons
+            buttons: buttons,
+            position: { my: "center top", at: "top", of: window}
         });
     }
 
