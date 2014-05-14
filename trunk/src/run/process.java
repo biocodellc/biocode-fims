@@ -67,8 +67,8 @@ public class process {
             configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
         } catch (Exception e) {
             //e.printStackTrace();
-            throw new FIMSException("Unable to obtain configuration file from server... \n" +
-                    "Please check that your project code is valid.\n");
+            throw new FIMSException("Unable to obtain configuration file from server... <br>" +
+                    "Please check that your project code is valid.<br>");
         }
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)

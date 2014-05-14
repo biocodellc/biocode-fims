@@ -326,8 +326,8 @@ function submitForm(){
         success: function(data) {
             de.resolve(data);
         },
-        fail: function() {
-            de.reject();
+        fail: function(jqxhr) {
+            de.reject(jqxhr);
         },
         uploadProgress: function(event, position, total, percentComplete) {
             // For browsers that do support the upload progress listener
