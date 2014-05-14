@@ -1,0 +1,10 @@
+#List of common error messages encountered when running the FIMS and what they could mean
+
+= Introduction =
+
+Following is a list of common error messages encountered when running the FIMS and what these error messages mean.
+
+= Details =
+
+|| Error Message || Explanation ||
+|| Some error || the explanation ||
