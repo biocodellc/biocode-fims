@@ -112,7 +112,7 @@ public class utils {
 
         Validation validation = new Validation();
         p.addValidationRules(new Digester(), validation);
-        digester.List results = (digester.List) validation.findList("phylum");
+        digester.List results = (digester.List) validation.findList(list_name);
         Iterator it = results.getFields().iterator();
         StringBuilder sb = new StringBuilder();
         sb.append("Acceptable values for " + list_name + "<br>\n");
