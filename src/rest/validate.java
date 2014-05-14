@@ -80,78 +80,65 @@ public class validate {
             input_file = processController.saveTempFile(is, ext);
             // if input_file null, then there was an error saving the file
             if (input_file == null) {
-                throw new FIMSException("[{\"done\": \"Server error saving file.\"}]");
+                throw new FIMSException("Server error saving file.");
             }
 
             bcidConnector connector = new bcidConnector(accessToken, refreshToken);
 
             // Create the process object --- this is done each time to orient the application
             process p = null;
-            try {
-                p = new process(
-                        input_file,
-                        uploadpath(),
-                        connector,
-                        processController
-                );
-            } catch (FIMSException e) {
-                e.printStackTrace();
-                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
-                //throw new FIMSException("{\"done\": \"Server Error.\"}");
-            }
+            p = new process(
+                    input_file,
+                    uploadpath(),
+                    connector,
+                    processController
+            );
 
             // Run the process
-            try {
-                processController.appendStatus("Validating...<br>");
-                p.runValidation();
+            processController.appendStatus("Validating...<br>");
+            p.runValidation();
 
-                // if there were validation errors, we can't upload
-                if (processController.getHasErrors()) {
-                    retVal.append("{\"done\": \"");
+            // if there were validation errors, we can't upload
+            if (processController.getHasErrors()) {
+                retVal.append("{\"done\": \"");
+                retVal.append(processController.getStatusSB().toString());
+                retVal.append("\"}");
+
+            } else if (upload != null && upload.equals("on")) {
+                 // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
+                 if (!processController.isValidated() && processController.getHasWarnings()) {
+                    retVal.append("{\"continue\": {\"message\": \"");
                     retVal.append(processController.getStatusSB().toString());
-                    retVal.append("\"}");
+                    retVal.append("\"}}");
 
-                } else if (upload != null && upload.equals("on")) {
-                     // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
-                     if (!processController.isValidated() && processController.getHasWarnings()) {
-                        retVal.append("{\"continue\": {\"message\": \"");
-                        retVal.append(processController.getStatusSB().toString());
-                        retVal.append("\"}}");
-
-                    // there were no validation warnings and the user would like to upload, so continue
-                    } else {
-                         retVal.append("{\"continue\": {}}");
-                    }
-
-                    // don't delete the inputFile because we'll need it for uploading
-                    deleteInputFile = false;
-
-                    // don't remove the controller as we will need it later for uploading this file
-                    removeController = false;
-
-                // User doesn't want to upload, inform them of any validation warnings
-                } else if (processController.getHasWarnings()) {
-                    retVal.append("{\"done\": \"");
-                    retVal.append(processController.getStatusSB().toString());
-                    retVal.append("\"}");
-                // User doesn't want to upload and the validation passed w/o any warnings or errors
+                // there were no validation warnings and the user would like to upload, so continue
                 } else {
-                    //processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
-                    processController.appendStatus("<br>" + processController.getWorksheetName() +
-                            " worksheet successfully validated.");
-                    retVal.append("{\"done\": \"");
-                    retVal.append(processController.getStatusSB());
-                    retVal.append("\"}");
+                     retVal.append("{\"continue\": {}}");
                 }
-            } catch (FIMSException e) {
-                e.printStackTrace();
-                retVal.append("{\"done\": \"Server Error: " + e.getMessage() + "\"}");
-                //retVal.append("{\"done\": \"Server Error.\"}");
+
+                // don't delete the inputFile because we'll need it for uploading
+                deleteInputFile = false;
+
+                // don't remove the controller as we will need it later for uploading this file
+                removeController = false;
+
+            // User doesn't want to upload, inform them of any validation warnings
+            } else if (processController.getHasWarnings()) {
+                retVal.append("{\"done\": \"");
+                retVal.append(processController.getStatusSB().toString());
+                retVal.append("\"}");
+            // User doesn't want to upload and the validation passed w/o any warnings or errors
+            } else {
+                //processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
+                processController.appendStatus("<br>" + processController.getWorksheetName() +
+                        " worksheet successfully validated.");
+                retVal.append("{\"done\": \"");
+                retVal.append(processController.getStatusSB());
+                retVal.append("\"}");
             }
         } catch(FIMSException e) {
-            // clear the StringBuilder buffer
-            retVal.setLength(0);
-            retVal.append(e.getMessage());
+            e.printStackTrace();
+            return "{\"done\": \"Server Error: " + e.getMessage() + "\"}";
         }
 
         if (deleteInputFile && input_file != null) {
