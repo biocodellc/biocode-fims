@@ -9,7 +9,7 @@
         <script>
         $(document).ready(function(){
             $("#dialogContainer").addClass("error");
-            dialog("Authentication Error!", "Error", {"OK": function() {
+            dialog("Authentication Error!<br><br>" + ${param.error}, "Error", {"OK": function() {
                 $("#dialogContainer").removeClass("error");
                 $(this).dialog("close"); }
             });

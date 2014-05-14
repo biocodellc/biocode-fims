@@ -603,10 +603,6 @@ function getExpeditionCodes() {
     var projectID = $("#projects").val();
     $.getJSON("/biocode-fims/rest/utils/expeditionCodes/" + projectID)
         .done(function(data) {
-            if (data.error != null) {
-                $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code" />');
-                return;
-            }
             var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
                 "<option value='0'>Create New Dataset</option>";
             $.each(data.expeditions, function(key, e) {
@@ -615,6 +611,16 @@ function getExpeditionCodes() {
 
             select += "</select>";
             $("#expedition_code").replaceWith(select);
+        }).fail(function(jqxhr) {
+            $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code" />');
+            $("#dialogContainer").addClass("error");
+            var buttons = {
+                "Ok": function() {
+                $("#dialogContainer").removeClass("error");
+                $(this).dialog("close");
+                }
+            }
+            dialog("Error fetching expeditions!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error), "Error!", buttons)
         });
 }
 

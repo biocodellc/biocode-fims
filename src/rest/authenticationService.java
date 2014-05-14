@@ -81,7 +81,7 @@ public class authenticationService {
 
         if (code == null || state == null || !state.equals(oauthState)) {
             System.out.println("Authentication Error, code or state is null");
-            response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
+            response.sendRedirect("/biocode-fims/index.jsp?error=Code or state is null.");
             return;
         }
 
@@ -89,22 +89,26 @@ public class authenticationService {
                 "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
 
 
-        Object tokenResponse = JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
-        JSONArray tokenArray = (JSONArray) tokenResponse;
-
-        JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
+        JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 
         if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
             System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
-            response.sendRedirect("/biocode-fims/index.jsp?error=authentication_error");
-            return;
+            if (tokenJSON.containsKey("error")) {
+                response.sendRedirect("/biocode-fims/index.jsp?error=" + tokenJSON.get("error"));
+                return;
+            } else {
+                response.sendRedirect("/biocode-fims/index.jsp?error=Returned state variable was not the same. Was the request/response hacked?");
+            }
         }
 
         String access_token = tokenJSON.get("access_token").toString();
 
-        Object profileResponse = JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
-        JSONArray profileArray = (JSONArray) profileResponse;
-        JSONObject profileJSON = (JSONObject) profileArray.get(0);
+        JSONObject profileJSON = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
+
+        if (profileJSON.containsKey("error")) {
+            response.sendRedirect("/biocode-fims/index.jsp?error=" + profileJSON.get("error"));
+            return;
+        }
 
         session.setAttribute("user", profileJSON.get("username"));
         session.setAttribute("userId", profileJSON.get("user_id"));
