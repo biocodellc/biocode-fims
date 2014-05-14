@@ -2,7 +2,7 @@
 
 = Getting Started with the Barcode of Wildlife FIMS Validator =
 
-STEP 1: Get the latest copy of the Barcode of Wildlife Spreadsheet Template which can be found [http://biocode-fims.googlecode.com/svn/trunk/Documents/IndoPacific/indoPacificTemplate_v8.xlsx here].  NOTE: this is a temporary template used for training purposes for the BWP group.
+STEP 1: Get the latest copy of the Barcode of Wildlife Spreadsheet Template which can be found [http://barcodeofwildlife.org/fims/terms.html here]. 
 
 STEP 2: Fill in your data according to the instructions on the Instructions Tab from the above spreadsheet
 
