@@ -196,13 +196,10 @@ public class bcidConnector {
                 "client_secret=" + client_secret + "&" +
                 "refresh_token=" + refreshToken;
 
-        Object tokenResponse = JSONValue.parse(createPOSTConnnection(new URL(refresh_uri), params));
-        JSONArray tokenArray = (JSONArray) tokenResponse;
-
-        JSONObject tokenJSON = (JSONObject) tokenArray.get(0);
+        JSONObject tokenJSON = (JSONObject) JSONValue.parse(createPOSTConnnection(new URL(refresh_uri), params));
 
         if (tokenJSON.containsKey("error")) {
-            return;
+            throw new FIMSException(tokenJSON.get("error").toString());
         }
 
         this.accessToken = tokenJSON.get("access_token").toString();
@@ -233,16 +230,19 @@ public class bcidConnector {
         } else {
             url = new URL(ark_creation_uri);
         }
-        String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
+        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
                 return createDatasetBCID(webaddress, graph);
             } else {
-                throw new NotAuthorizedException("User not authorized to upload to this expedition!");
+                throw new NotAuthorizedException(response.get("error").toString());
             }
         }
-        return response.toString();
+        if (response.containsKey("error")) {
+            throw new FIMSException(response.get("error").toString());
+        }
+        return response.get("prefix").toString();
     }
 
     /**
@@ -264,17 +264,20 @@ public class bcidConnector {
         } else {
             url = new URL(ark_creation_uri);
         }
-        String response = createPOSTConnnection(url, createBCIDDatasetPostParams);
 
+        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
                 return createEntityBCID(webaddress, resourceAlias, resourceType);
             } else {
-                throw new NotAuthorizedException("User authorization error!");
+                throw new NotAuthorizedException(response.get("error").toString());
             }
         }
-        return response.toString();
+        if (response.containsKey("error")) {
+            throw new FIMSException(response.get("error").toString());
+        }
+        return response.get("prefix").toString();
     }
 
     /**
@@ -290,9 +293,13 @@ public class bcidConnector {
                         "bcid=" + bcid;
 
         URL url = new URL(associate_uri);
-        String response = createPOSTConnnection(url, createPostParams);
+        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
 
-        return response.toString();
+        if (response.containsKey("error")) {
+            throw new FIMSException(response.get("error").toString());
+        }
+
+        return response.get("success").toString();
     }
 
     /**
@@ -321,8 +328,12 @@ public class bcidConnector {
                     getValidAccessToken();
                     return listAvailableProjects();
                 } else {
-                    throw new NotAuthorizedException("User authorization error!");
+                    throw new NotAuthorizedException(jsonObject.get("error").toString());
                 }
+            }
+
+            if (jsonObject.containsKey("error")) {
+                throw new FIMSException(jsonObject.get("error").toString());
             }
 
             // loop array
@@ -404,8 +415,10 @@ public class bcidConnector {
             urlString += "?access_token=" + accessToken;
         }
         URL url = new URL(urlString);
-        String response = createGETConnection(url);
-        String action = response.split(":")[0];
+        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+        System.out.print(urlString);
+        System.out.print(response.toJSONString());
+        System.out.print(getResponseCode());
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
@@ -413,14 +426,12 @@ public class bcidConnector {
             } else {
                 throw new NotAuthorizedException("User authorization error!");
             }
-        } else if (getResponseCode() != 200) {
-            throw new Exception(response);
         } else {
-            if (action.equals("error")) {
-                throw new Exception(response);
-            } else if (action.equals("update")) {
+            if (response.containsKey("error")) {
+                throw new Exception(response.get("error").toString());
+            } else if (response.containsKey("update")) {
                 return false;
-            } else if (action.equals("insert")) {
+            } else if (response.containsKey("insert")) {
                 return true;
                 /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
                         "Do you wish to create it now?" +

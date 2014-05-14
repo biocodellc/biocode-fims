@@ -1,11 +1,16 @@
 package run;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.jsoup.Jsoup;
+import settings.FIMSException;
 import settings.PathManager;
+import settings.bcidConnector;
 import utils.SettingsManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.Date;
 
@@ -77,9 +82,16 @@ public class configurationFileFetcher {
         if (!useCacheResults) {
             // Get the URL for this configuration File
             String projectServiceString = project_lookup_uri + project_id;
+            bcidConnector connector = new bcidConnector();
             // Set a 10 second timeout on this connection
-            String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
+            JSONObject response = (JSONObject) JSONValue.parse(connector.createGETConnection(new URL(projectServiceString)));
+
+            if (response.containsKey("error")) {
+                throw new FIMSException(response.get("error").toString());
+            }
+            String urlString = (String) response.get("validation_xml");
             // Setup connection
+
             URL url = new URL(urlString);
             init(new URL(urlString), defaultOutputDirectory);
         }
