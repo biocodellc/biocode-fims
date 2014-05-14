@@ -323,6 +323,9 @@ function submitForm(){
                 loopStatus(promise)
             }
         },
+        error: function(jqxhr) {
+            de.reject();
+        },
         success: function(data) {
             de.resolve(data);
         },
