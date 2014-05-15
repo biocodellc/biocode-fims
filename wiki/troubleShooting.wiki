@@ -1,8 +1,12 @@
-= Introduction =
+= Troubleshooting =
 
 Following is a list of common error messages encountered when running the FIMS and what these error messages mean.
 
 = Details =
 
-|| Validation/Upload Error Message in Geneious || Explanation || Other Comment ||
+|| *Validation/Upload Error Message in Geneious* || *Explanation* || *Other Comment* ||
 || Error: required column "XXX" has a missing cell value || Be careful when you are copying and pasting information into your spreadsheet. If there is a lone random cell which accidently contains information then the parser expects values in the required fields associated with this lone cell. If you receive this error then look through ALL of your spreadsheet for cells with data that should not be included. || The software developer will try to devise a way to indicate where the validator is expecting values and return a more informative message. ||
+|| Initialization Error: Sheet index (-1) is out of range (0..2) || The sheet tab in the FIMS Spreadhseet Excel file MUST  be named "Samples". || A more detailed error message will be incorporated by the software developer. ||
+|| The word "Expedition" in any error or warning message || The word "expedition" it is referring to the "Dataset code".  || The software developer should be removing all references to "expedition" code as it has been replaced by "dataset" code. If you spot "expedition" in the future, take a screenshot of the error and e-mail it to one of us so we can inform the developer. ||
+|| Initialization Error: error: expedition already exists within this project but the user does not own it. || All dataset codes MUST be unique. You are receiving this error message as the dataset code you have entered has been used by another user in the same project and therefore you do not have permission to use it. Remember project = "Barcode of Wildlife Training" or "Barcode of Wildlife Kenya" ||  ||
+|| Geneious could not connect to the LIMS database:java.sql.SQLException: Access denied for user 'NAME'@'IP ADDRESS' (using password:YES) || Temporarily turn off your computer firewall setting and retry. If it works then you know you are receiving this error because of firewall settings. (Make sure to turn your firewall settings  ||  ||
