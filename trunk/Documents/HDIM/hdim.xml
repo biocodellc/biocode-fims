@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="hdim"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+        <![CDATA[Insert  descriptive text and helpful comments for selecting HDIM data here.]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='HDIM_Num' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>HDIM_Num</field>
+            </rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+                <field>Lat_1</field>
+                <field>Lon_1</field>
+            </rule>
+            <rule type='checkInXMLFields' column='SexCaste' list='sex' level='warning'></rule>
+            <rule type='checkInXMLFields' column='LifeStage_1' list='lifeStage' level='warning'></rule>
+            <rule type='checkInXMLFields' column='LifeStage_2' list='lifeStage' level='warning'></rule>
+            <rule type='checkInXMLFields' column='LifeStage_3' list='lifeStage' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Collection_collector' list='Collectors' level='warning'></rule>
+            <rule type='checkInXMLFields' column='tissue_container' list='Containers' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Day_Night' list='Day_Night' level='warning'></rule>
+            <rule type='checkInXMLFields' column='IslandGroup' list='IslandGroup' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Island_Volcano' list='Island_Volcano' level='warning'></rule>
+            <rule type='checkInXMLFields' column='HabitatType' list='HabitatType' level='warning'></rule>
+            <rule type='checkInXMLFields' column='ID_Certainty' list='ID_Certainty' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Host_ID_Certainty' list='ID_Certainty' level='warning'></rule>
+            <rule type='checkInXMLFields' column='HoldingInstitution' list='Holding_Institution' level='warning'></rule>
+            <rule type='checkInXMLFields' column='End_Ind_Introduced' list='End_Ind_Introduced' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Collection_Method' list='CollectionMethod' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Decomposition' list='Decomposition' level='warning'></rule>
+            <rule type='checkInXMLFields' column='HostPosition' list='HostPosition' level='warning'></rule>
+            <rule type='checkInXMLFields' column='HostStructure' list='HostStructure' level='warning'></rule>
+        </worksheet>
+
+        <lists>
+            <list alias='Collectors' caseInsensitive='true'>
+                <field>Andrew Rominger</field>
+                <field>Curtis Ewing</field>
+                <field>Daniel Gruner</field>
+                <field>Daniel Rabosky</field>
+                <field>Darko Cotoras</field>
+                <field>Diana Percy</field>
+                <field>Donald Price</field>
+                <field>George Roderick</field>
+                <field>John Hart</field>
+                <field>Kari Goodman</field>
+                <field>Karl Magnacca</field>
+                <field>Kerry Shaw</field>
+                <field>Micheal Brewer</field>
+                <field>Neo Martinez</field>
+                <field>Patrick O'Grady</field>
+                <field>Rosemary Gillespie</field>
+            </list>
+
+            <list alias='Containers' caseInsensitive='true'>
+                <field>FTA 96 well sheet</field>
+                <field>2.5 ml biopsy vial</field>
+                <field>Whirlpack</field>
+                <field>2 ml squat vial</field>
+                <field>1.5 Eppindorf Tube</field>
+                <field>2.0 ml Cryovial</field>
+                <field>15 ml Falcon Tube</field>
+                <field>1.2 ul Cryovial</field>
+                <field>bag in ziploc with silica gel</field>
+                <field>1.4 ml TrackMate 2D barcoded tube</field>
+                <field>2 ml 96 well assay block</field>
+                <field>2.0 ul Cryovial</field>
+                <field>0.65 Eppendorf Tube</field>
+            </list>
+
+            <list alias='Day_Night' caseInsensitive='true'>
+                <field>Day</field>
+                <field>Night</field>
+                <field>Twilight</field>
+                <field>Dawn</field>
+            </list>
+
+            <list alias='IslandGroup' caseInsensitive='true'>
+                <field>Hawaiian Is.</field>
+            </list>
+
+            <list alias='Island_Volcano' caseInsensitive='true'>
+                <field>Big Island, Kohala Mts</field>
+                <field>Big Island, Mauna Kea</field>
+                <field>Big Island, Mauna Loa</field>
+                <field>Big Island, Kilauea</field>
+                <field>Big Island, Hualalai</field>
+                <field>Big Island</field>
+                <field>East Maui</field>
+                <field>West Maui</field>
+                <field>Molokai</field>
+                <field>Lanai</field>
+                <field>Oahu, Waianae Mts.</field>
+                <field>Oahu, Koolau Mts.</field>
+                <field>Oahu</field>
+                <field>Kauai</field>
+            </list>
+
+            <list alias='HabitatType' caseInsensitive='true'>
+                <field>wet forest</field>
+                <field>mixed mesic forest</field>
+                <field>alpine</field>
+                <field>subalpine</field>
+                <field>dry forest</field>
+                <field>dry scrub</field>
+                <field>coastal</field>
+            </list>
+
+            <list alias='ID_Certainty' caseInsensitive='true'>
+                <field>certain</field>
+                <field>probable</field>
+                <field>possibly a new species</field>
+                <field>closely related to species specified</field>
+                <field>uncertain, needs verification</field>
+                <field>undetermined</field>
+            </list>
+
+
+            <list alias='HostStructure' caseInsensitive='true'>
+                <field>vegetation (general)</field>
+                <field>leaves</field>
+                <field>leaves and flowers</field>
+                <field>flowers</field>
+                <field>gall</field>
+                <field>bark exterior</field>
+                <field>under bark-cambium</field>
+                <field>under bark-inner bark</field>
+                <field>in wood</field>
+                <field>leaf axils</field>
+                <field>under leaves</field>
+                <field>sap</field>
+            </list>
+
+
+            <list alias='HostPosition' caseInsensitive='true'>
+                <field>attached</field>
+                <field>attached-drooping</field>
+                <field>on ground</field>
+                <field>in axil</field>
+                <field>leaning</field>
+                <field>disassociated-stuck to veg</field>
+            </list>
+
+
+            <list alias='Decomposition' caseInsensitive='true'>
+                <field>live</field>
+                <field>fresh</field>
+                <field>early decay (nearly fresh)</field>
+                <field>active decay (wet, smelly)</field>
+                <field>late decay (wet)</field>
+                <field>late decay (dry)</field>
+            </list>
+
+
+            <list alias='CollectionMethod' caseInsensitive='true'>
+                <field>beating-sheet</field>
+                <field>beating-net</field>
+                <field>sweep net</field>
+                <field>hand picking</field>
+                <field>aspirator</field>
+                <field>litter sifting-Berlese</field>
+                <field>litter sifting-Sheet</field>
+                <field>pyrethrin mini-fog</field>
+                <field>Lindgren funnel</field>
+                <field>Malaise</field>
+                <field>InsectaZooka</field>
+                <field>pitfall</field>
+                <field>pan-yellow</field>
+                <field>pan-white</field>
+                <field>bucket trap</field>
+                <field>UV-light</field>
+            </list>
+
+            <list alias='End_Ind_Introduced' caseInsensitive='true'>
+                <field>endemic</field>
+                <field>indigenous</field>
+                <field>introduced</field>
+                <field>invasive</field>
+            </list>
+
+            <list alias='Holding_Institution' caseInsensitive='true'>
+                <field>EMEC</field>
+                <field>CUIC</field>
+                <field>BMNH</field>
+                <field>BPBM</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Resource"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+
+            <attribute column='HDIM_Num' uri='urn:hdim_num' defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
+                <![CDATA[This value must be unique within this particular spreadsheet.]]></attribute>
+            <attribute column='Collection' uri='urn:collection' defined_by='urn:collection'/>
+            <attribute column='Collection_collector' uri='urn:collection_collector'
+                       defined_by='urn:collection_collector'/>
+            <attribute column='Specimen_Num_Collector' uri='urn:specimen_num_collector'
+                       defined_by='urn:specimen_num_collector'/>
+            <attribute column='Entered_By' uri='urn:entered_by' defined_by='urn:entered_by'/>
+            <attribute column='Ordr' uri='urn:ordr' defined_by='urn:ordr'/>
+            <attribute column='Family' uri='urn:family' defined_by='urn:family'/>
+            <attribute column='Low_Taxon' uri='urn:low_taxon' defined_by='urn:low_taxon'/>
+            <attribute column='Low_ID' uri='urn:low_id' defined_by='urn:low_id'/>
+            <attribute column='No_Spec' uri='urn:no_spec' defined_by='urn:no_spec'/>
+            <attribute column='Genus' uri='urn:genus' defined_by='urn:genus'/>
+            <attribute column='Species' uri='urn:species' defined_by='urn:species'/>
+            <attribute column='Morpho_sp_Notes' uri='urn:morpho_sp_notes' defined_by='urn:morpho_sp_notes'/>
+            <attribute column='Morpho_sp' uri='urn:morpho_sp' defined_by='urn:morpho_sp'/>
+            <attribute column='SexCaste' uri='urn:sexcaste' defined_by='urn:sexcaste'/>
+            <attribute column='ID_Certainty' uri='urn:id_certainty' defined_by='urn:id_certainty'/>
+            <attribute column='State' uri='urn:state' defined_by='urn:state'/>
+            <attribute column='Island' uri='urn:island' defined_by='urn:island'/>
+            <attribute column='Locality_Site' uri='urn:locality_site' defined_by='urn:locality_site'/>
+            <attribute column='Flow_Age' uri='urn:flow_age' defined_by='urn:flow_age'/>
+            <attribute column='Plot_Num' uri='urn:plot_num' defined_by='urn:plot_num'/>
+            <attribute column='Date_Coll' uri='urn:date_coll' defined_by='urn:date_coll'/>
+            <attribute column='Elevation' uri='urn:elevation' defined_by='urn:elevation'/>
+            <attribute column='Collection_Method' uri='urn:collection_method' defined_by='urn:collection_method'/>
+            <attribute column='Day_Night' uri='urn:day_night' defined_by='urn:day_night'/>
+            <attribute column='Host_Microhabitat' uri='urn:host_microhabitat' defined_by='urn:host microhabitat'/>
+            <attribute column='Collector' uri='urn:collector' defined_by='urn:collector'/>
+            <attribute column='Lat_1' uri='urn:lat_1' defined_by='urn:lat_1'/>
+            <attribute column='Long_1' uri='urn:long_1' defined_by='urn:long_1'/>
+            <attribute column='Lat_2' uri='urn:lat_2' defined_by='urn:lat_2'/>
+            <attribute column='Long_2' uri='urn:long_2' defined_by='urn:long_2'/>
+            <attribute column='Label_1' uri='urn:label_1' defined_by='urn:label_1'/>
+            <attribute column='Label_2' uri='urn:label_2' defined_by='urn:label_2'/>
+            <attribute column='Label_3' uri='urn:label_3' defined_by='urn:label_3'/>
+            <attribute column='Label_4' uri='urn:label_4' defined_by='urn:label_4'/>
+            <attribute column='LatLongErrorInMeters' uri='urn:latlongerrorinmeters'
+                       defined_by='urn:latlongerrorinmeters'/>
+            <attribute column='HorizontalDatum' uri='urn:horizontaldatum' defined_by='urn:horizontaldatum'/>
+            <attribute column='Landowner' uri='urn:landowner' defined_by='urn:landowner'/>
+            <attribute column='Permit_Info' uri='urn:permit_info' defined_by='urn:permit_info'/>
+            <attribute column='pic' uri='urn:pic' defined_by='urn:pic'/>
+            <attribute column='HoldingInstitution' uri='urn:holdinginstitution' defined_by='urn:holdinginstitution'/>
+            <attribute column='ColloquialName' uri='urn:colloquialname' defined_by='urn:colloquialname'/>
+            <attribute column='IdentifiedBy' uri='urn:identifiedby' defined_by='urn:identifiedby'/>
+            <attribute column='BasisOfID' uri='urn:basisofid' defined_by='urn:basisofid'/>
+            <attribute column='DateIdentified' uri='urn:dateidentified' defined_by='urn:dateidentified'/>
+            <attribute column='LifeStage_1' uri='urn:lifestage_1' defined_by='urn:lifestage_1'/>
+            <attribute column='LifeStage_2' uri='urn:lifestage_2' defined_by='urn:lifestage_2'/>
+            <attribute column='LifeStage_3' uri='urn:lifestage_3' defined_by='urn:lifestage_3'/>
+            <attribute column='DateColl_2' uri='urn:datecoll_2' defined_by='urn:datecoll_2'/>
+            <attribute column='TimeofDay_1' uri='urn:timeofday_1' defined_by='urn:timeofday_1'/>
+            <attribute column='TimeofDay_2' uri='urn:timeofday_2' defined_by='urn:timeofday_2'/>
+            <attribute column='Collector2' uri='urn:collector2' defined_by='urn:collector2'/>
+            <attribute column='Collector3' uri='urn:collector3' defined_by='urn:collector3'/>
+            <attribute column='HabitatType' uri='urn:habitattype' defined_by='urn:habitattype'/>
+            <attribute column='HabitatComposition' uri='urn:habitatcomposition' defined_by='urn:habitatcomposition'/>
+            <attribute column='HabitatNotes' uri='urn:habitatnotes' defined_by='urn:habitatnotes'/>
+            <attribute column='WebType' uri='urn:webtype' defined_by='urn:webtype'/>
+            <attribute column='WebHeight' uri='urn:webheight' defined_by='urn:webheight'/>
+            <attribute column='WebSize' uri='urn:websize' defined_by='urn:websize'/>
+            <attribute column='WebNotes' uri='urn:webnotes' defined_by='urn:webnotes'/>
+            <attribute column='PulseRate' uri='urn:pulserate' defined_by='urn:pulserate'/>
+            <attribute column='PulseDuration' uri='urn:pulseduration' defined_by='urn:pulseduration'/>
+            <attribute column='CarrierFreq' uri='urn:carrierfreq' defined_by='urn:carrierfreq'/>
+            <attribute column='SongNotes' uri='urn:songnotes' defined_by='urn:songnotes'/>
+            <attribute column='HostFamily' uri='urn:hostfamily' defined_by='urn:hostfamily'/>
+            <attribute column='HostGenus' uri='urn:hostgenus' defined_by='urn:hostgenus'/>
+            <attribute column='HostSpecies_group' uri='urn:hostspecies_group' defined_by='urn:hostspecies_group'/>
+            <attribute column='Host_ID_Certainty' uri='urn:host_id_certainty' defined_by='urn:host_id_certainty'/>
+            <attribute column='HostStructure' uri='urn:hoststructure' defined_by='urn:hoststructure'/>
+            <attribute column='HostPosition' uri='urn:hostposition' defined_by='urn:hostposition'/>
+            <attribute column='HostNotes' uri='urn:hostnotes' defined_by='urn:hostnotes'/>
+            <attribute column='Decomposition' uri='urn:decomposition' defined_by='urn:decomposition'/>
+            <attribute column='DecompositionNotes' uri='urn:decompositionnotes' defined_by='urn:decompositionnotes'/>
+            <attribute column='GallType' uri='urn:galltype' defined_by='urn:galltype'/>
+            <attribute column='GallNotes' uri='urn:gallnotes' defined_by='urn:gallnotes'/>
+            <attribute column='RearingEmergenceTime(days)' uri='urn:rearingemergencetime(days)'
+                       defined_by='urn:rearingemergencetime(days)'/>
+            <attribute column='RearingNotes' uri='urn:rearingnotes' defined_by='urn:rearingnotes'/>
+            <attribute column='Endophyte_1' uri='urn:endophyte_1' defined_by='urn:endophyte_1'/>
+            <attribute column='Endophyte_2' uri='urn:endophyte_2' defined_by='urn:endophyte_2'/>
+            <attribute column='Endophyte_notes' uri='urn:endophyte_notes' defined_by='urn:endophyte_notes'/>
+            <attribute column='Predator_1' uri='urn:predator_1' defined_by='urn:predator_1'/>
+            <attribute column='Predator_2' uri='urn:predator_2' defined_by='urn:predator_2'/>
+            <attribute column='Predator_notes' uri='urn:predator_notes' defined_by='urn:predator_notes'/>
+            <attribute column='Code_Collection_Method' uri='urn:code_collection_method'
+                       defined_by='urn:code_collection_method'/>
+            <attribute column='PreparationType' uri='urn:preparationtype' defined_by='urn:preparationtype'/>
+            <attribute column='IndividualCount' uri='urn:individualcount' defined_by='urn:individualcount'/>
+            <attribute column='Coloniz' uri='urn:coloniz' defined_by='urn:coloniz'/>
+            <attribute column='End_Ind_Introduced' uri='urn:end_ind_introduced' defined_by='urn:end_ind_introduced'/>
+            <attribute column='AdultMale/AdultFemale' uri='urn:adultmale/adultfemale'
+                       defined_by='urn:adultmale/adultfemale'/>
+            <attribute column='AdultMale' uri='urn:adultmale' defined_by='urn:adultmale'/>
+            <attribute column='AdultFemale' uri='urn:adultfemale' defined_by='urn:adultfemale'/>
+            <attribute column='Juvenile' uri='urn:juvenile' defined_by='urn:juvenile'/>
+            <attribute column='Notes_NetBiome' uri='urn:notes_netbiome' defined_by='urn:notes_netbiome'/>
+            <attribute column='tissue_barcode' uri='urn:tissue_barcode' defined_by='urn:tissue_barcode'/>
+            <attribute column='tissue_type_preserved' uri='urn:tissue_type_preserved'
+                       defined_by='urn:tissue_type_preserved'/>
+            <attribute column='tissue_preservative' uri='urn:tissue_preservative' defined_by='urn:tissue_preservative'/>
+            <attribute column='tissue_container' uri='urn:tissue_container' defined_by='urn:tissue_container'/>
+            <attribute column='format_name96' uri='urn:format_name96' defined_by='urn:format_name96'/>
+            <attribute column='well_number96' uri='urn:well_number96' defined_by='urn:well_number96'/>
+            <attribute column='tissue_type_well' uri='urn:tissue_type_well' defined_by='urn:tissue_type_well'/>
+            <attribute column='IslandGroup' uri='urn:islandgroup' defined_by='urn:islandgroup'/>
+            <attribute column='Island_Volcano' uri='urn:island_volcano' defined_by='urn:island_volcano'/>
+
+        </entity>
+    </mapping>
+
+</fims>
+
