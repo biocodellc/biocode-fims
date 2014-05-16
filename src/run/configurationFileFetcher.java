@@ -82,6 +82,8 @@ public class configurationFileFetcher {
         if (!useCacheResults) {
             // Get the URL for this configuration File
             String projectServiceString = project_lookup_uri + project_id;
+            /*
+            //REMOVING THIS SECTION FOR NOW TO GET SYSTEM RUNNING
             bcidConnector connector = new bcidConnector();
             // Set a 10 second timeout on this connection
             JSONObject response = (JSONObject) JSONValue.parse(connector.createGETConnection(new URL(projectServiceString)));
@@ -90,6 +92,8 @@ public class configurationFileFetcher {
                 throw new FIMSException(response.get("error").toString());
             }
             String urlString = (String) response.get("validation_xml");
+            */
+            String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
             // Setup connection
 
             URL url = new URL(urlString);

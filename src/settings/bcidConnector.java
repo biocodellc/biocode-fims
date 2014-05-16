@@ -416,9 +416,9 @@ public class bcidConnector {
         }
         URL url = new URL(urlString);
         JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
-        System.out.print(urlString);
-        System.out.print(response.toJSONString());
-        System.out.print(getResponseCode());
+        //System.out.print(urlString);
+        //System.out.print(response.toJSONString());
+        //System.out.print(getResponseCode());
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();

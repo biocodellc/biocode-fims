@@ -66,7 +66,7 @@ public class process {
         try {
             configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw new FIMSException("Unable to obtain configuration file from server... <br>" +
                     "Please check that your project code is valid.<br>");
         }

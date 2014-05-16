@@ -15,8 +15,15 @@ import java.sql.Statement;
 import java.util.*;
 
 /**
- * Rule does the heavy lift for the Validation Components. This is where the code is written for each of the rules
+ * Rule does the heavy lift for the Validation Components.
+ * This is where the code is written for each of the rules
  * encountered in the XML configuration file.
+ *   <p></p>
+ * You can use this javadoc to see a listing of available rules by
+ * ignoring the getter and setter methods below and using the method name
+ * as the rule "type" in the XML configuration file.  Examples of use, as
+ * they appear in the XML configuration file are given below.
+ *
  */
 public class Rule {
 
@@ -186,33 +193,9 @@ public class Rule {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    /**
-     * Call the run method here to make sure values are initialized properly when running rules...
-     * @param parent
-     */
-    /*
-    public void run(Object parent) {
-        worksheet = (Worksheet) parent;
-    }
-    */
 
     /**
-     * Lookup the fields belonging to a particular list
-     */
-    /*
-    public void lookupList() {
-        fimsPrinter.out.println("\tlookupList rule for list=" + getList() + " on column " + getColumn());
-        // Fetch the fields belonging to this list and create a List object
-       java.util.List list = digesterWorksheet.getValidation().findList(getList()).getFields();
-        // Loop values
-        for (Iterator i = list.iterator(); i.hasNext(); ) {
-            fimsPrinter.out.println("\t\t" + i.next());
-        }
-    }  */
-
-
-    /**
-     * Warn user if the number of rows the application is looking at differs from what is on the spreadsheet
+     * Warns user if the number of rows the application is looking at differs from what is on the spreadsheet
      */
     public void rowNumMismatch() {
         int bVRows = worksheet.getNumRows();
@@ -227,8 +210,13 @@ public class Rule {
 
     /**
      * Check to see if there duplicateColumn Headers on a worksheet
+     *  <p></p>
+     * Example:
+     * <br></br>
+     * {@code
+     *  <rule type='duplicateColumnNames' level='error'></rule>
+     *  }
      */
-
     public void duplicateColumnNames() {
         java.util.List<String> listSheetColumns = worksheet.getColNames();
         Set<String> output = new HashSet<String>();  // Set does not allow duplicates
@@ -259,8 +247,15 @@ public class Rule {
 
 
     /**
-     * Check a particular column to see if all the values are unique
-     *
+     * Check a particular column to see if all the values are unique.
+     * This rule is strongly encouraged for at least
+     * one column in the spreadsheet
+     * <p></p>
+     * Example:
+     * <br></br>
+     * {@code
+     *  <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+     * }
      * @throws Exception
      */
     public void uniqueValue() throws Exception {
@@ -295,7 +290,16 @@ public class Rule {
 
 
     /**
-     * Check that coordinates are inside a bounding box
+     * Check that coordinates are inside a bounding box.
+     * The bounding box declaration uses well-known text.
+     * <p>
+     * Example:
+     * <br></br>
+     * {@code
+     * <rule type="BoundingBox" name="Moorea" decimalLatitude="DecimalLatitude" decimalLongitude="DecimalLongitude" level="warning">
+     *   <field>BOX3D(-18.5 -150.8,-16.7 -148.4)</field>
+     * </rule>
+     * }
      *
      * @throws Exception
      */
@@ -341,7 +345,15 @@ public class Rule {
 
 
     /**
-     * Check the depthInMeters Numbers are entered correctly
+     * Check that minimum/maximum numbers are entered correctly.
+     * <p></p>
+     * Example:
+     * <br>
+     * </br>
+     * {@code
+     *  <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
+     *             level='error'></rule>
+     * }
      *
      * @throws Exception
      */
@@ -410,11 +422,9 @@ public class Rule {
     }
 
     /**
-     * Check that lowestTaxonLevel and LowestTaxon are entered correctly
-     *
+     * Check that lowestTaxonLevel and LowestTaxon are entered correctly (Biocode Database only)
      * @throws Exception
      */
-
     public void checkLowestTaxonLevel() throws Exception {
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
@@ -453,12 +463,12 @@ public class Rule {
 
 
     /**
-     * Smithsonian created this function to validate genus & species counts.
+     * SI created this function to validate genus & species counts.
      * Collectors SHOULD collect exactly 4 samples for each Genus species
      *
      * @throws Exception
      */
-    public void checkGenusSpeciesCountsSI() throws Exception {
+    @Deprecated  void checkGenusSpeciesCountsSI() throws Exception {
         String genusHeading = "Genus";
         String speciesHeading = "Species";
         String[] headings = {genusHeading, speciesHeading};
@@ -508,7 +518,7 @@ public class Rule {
      * @param worksheet
      * @throws Exception
      */
-    public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
+    @Deprecated public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
         String[] headings = {"Voucher Specimen?", "Herbarium Accession No./Catalog No.", "Herbarium Acronym"};
         int[] columnIndices = this.getColumnIndices(headings);
         int vsIdx = columnIndices[0];
@@ -566,7 +576,7 @@ public class Rule {
      *
      * @throws Exception
      */
-    public void checkTissueColumnsSI() throws Exception {
+    @Deprecated public void checkTissueColumnsSI() throws Exception {
         String plateNoHeading = "Plate No.";
         String rowLetterHeading = "Row Letter";
         String columnNumberHeading = "Column No.";
@@ -641,8 +651,15 @@ public class Rule {
 
 
     /**
-     * Check that well number and plate name are entered together and correctly
-     *
+     * Check that well number and plate name are entered together and correctly.  Takes a tissue and plate column specificaiton
+     * and sees that well numbers are formatted well and with range.
+     * <p></p>
+     * Example:
+     * <br>
+     * </br>
+     * {@code
+     * <rule type="checkTissueColumns" name="" plateName="format_name96" wellNumber="well_number96" level="warning"/>
+     *}
      * @throws Exception
      */
     public void checkTissueColumns() throws Exception {
@@ -689,10 +706,12 @@ public class Rule {
 
 
     /**
-     * Check if this is a number.  From the checkValidNumberSQL javadoc text:
-     * Method that uses SQL to check for valid numbers.   This uses absolute value function in SQLLite
+     * checks for valid numbers.
+     * {@code
+     * This uses absolute value function in SQLLite
      * and recognizes the following as non-numeric values ("abc","15a","z159")
      * However, the following are recognized as numeric values ("15%", "100$", "1.02E10")
+     * }
      */
     public void isNumber() throws Exception {
         boolean validNumber = checkValidNumberSQL(getColumn());
@@ -758,7 +777,19 @@ public class Rule {
     }
 
     /**
-     * Checks for valid lat/lng values and warns about maxerrorinmeters and horizontaldatum values
+     * Checks for valid lat/lng values and warns about maxerrorinmeters and horizontaldatum values.
+     * <p></p>
+     * Example:
+     * <br></br>
+     * {@code
+     * <rule
+     * type="DwCLatLngChecker"
+     * decimalLatitude="DecimalLatitude"
+     * decimalLongitude="DecimalLongitude"
+     * maxErrorInMeters="MaxErrorInMeters" h
+     * orizontalDatum="HorizontalDatum"
+     * level="warning"/>
+     * }
      */
     public void DwCLatLngChecker
     () throws Exception {
@@ -805,8 +836,29 @@ public class Rule {
 
 
     /**
-     * checkInXMLFields checks that Rows under the "name" attribute column in Excel Spreadsheet
-     * match values in the XML <field> categories
+     * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
+     *  <p></p>
+     *
+     * 1. Listing values in XML fields, like: <br></br>
+     * {@code
+     * <rule type="checkInXMLFields" name="PreparationType" level="warning">
+     * <field>card_mount</field>
+     * <field>envelope</field>
+     * <field>fluid</field>
+     * <field>pin</field>
+     * <field>riker_mount</field>
+     * <field>slide</field>
+     * <field>resin_mount</field>
+     * <field>pin_genitalia_vial</field>
+     * <field>other</field>
+     * </rule>
+     * }
+     *  <p></p>
+     *
+     * 2. Refering to values in a lookup list in the configuration file list element, like: <br></br>
+     * {@code
+     * <rule type="checkInXMLFields" name="relaxant" level="warning" list="list3"/>
+     * }
      */
     public void checkInXMLFields() throws Exception {
         StringBuilder lookupSB = new StringBuilder();
@@ -896,6 +948,18 @@ public class Rule {
 
     /**
      * RequiredColumns looks for required columns in spreadsheet by looking for them in the <field> tags
+     * <p></p>
+     * Example:
+     * <br></br>
+     * {@code
+     * <rule type="RequiredColumns" name="RequiredColumns" level="error">
+     * <field>Coll_EventID_collector</field>
+     * <field>EnteredBy</field>
+     * <field>Specimen_Num_Collector</field>
+     * <field>HoldingInstitution</field>
+     * <field>Phylum</field>
+     * </rule>
+     * }
      */
     public void RequiredColumns() {
         Statement statement = null;
