@@ -377,13 +377,12 @@ public class bcidConnector {
         String response = createPOSTConnnection(url, createPostParams);
 
         // Catch Error using response string...
-        // TODO: use response code formats here
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
                 return createExpedition(expedition_code, expedition_title, project_id);
             } else {
-                throw new NotAuthorizedException("User authorization error!");
+                throw new NotAuthorizedException("This user is not authorized to load data into this project!<br>Talk to your project administrator.");
             }
         } else if (getResponseCode() == 500) {
             throw new Exception(response.toString());
@@ -424,7 +423,7 @@ public class bcidConnector {
                 getValidAccessToken();
                 return checkExpedition(processController);
             } else {
-                throw new NotAuthorizedException("User authorization error!");
+                throw new NotAuthorizedException("User authorization error. This account may not be attached to this project.");
             }
         } else {
             if (response.containsKey("error")) {

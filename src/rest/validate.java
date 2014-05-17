@@ -241,7 +241,7 @@ public class validate {
                 return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
             } catch (FIMSException e) {
                 e.printStackTrace();
-                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
+                throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
             }
         } catch (FIMSException e) {
             // delete the temporary file now that it has been uploaded
@@ -266,7 +266,7 @@ public class validate {
 
         processController processController = (processController) session.getAttribute("processController");
         if (processController == null) {
-            return "{\"error\": \"No validation is currently running.\"}";
+            return "{\"error\": \"Waiting for validation to process...\"}";
         }
 
         return "{\"status\": \"" + processController.getStatusSB().toString() + "\"}";
