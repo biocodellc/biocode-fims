@@ -446,19 +446,19 @@ public class bcidConnector {
 
     public boolean createExpedition(processController processController, Mapping mapping) throws Exception {
         try {
-            String status = "\tCreating expedition " + processController.getExpeditionCode() + " ... this is a one time process " +
+            String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
                     "before loading each spreadsheet and may take a minute...";
             processController.appendStatus(status);
             fimsPrinter.out.println(status);
             String output = createExpedition(
                     processController.getExpeditionCode(),
-                    processController.getExpeditionCode() + " spreadsheet expedition",
+                    processController.getExpeditionCode() + " spreadsheet dataset",
                     processController.getProject_id());
             //fimsPrinter.out.println("\t" + output);
         } catch (Exception e) {
             //e.printStackTrace();
             //
-            throw new Exception("Unable to create expedition " + processController.getExpeditionCode() + "\n" + e.getMessage(), e);
+            throw new Exception("Unable to create dataset " + processController.getExpeditionCode() + "\n" + e.getMessage(), e);
         }
         // Loop the mapping file and create a BCID for every entity that we specified there!
         if (mapping != null) {
@@ -476,7 +476,7 @@ public class bcidConnector {
                     associateBCID(processController.getProject_id(), processController.getExpeditionCode(), bcid);
 
                 } catch (Exception e) {
-                    throw new Exception("The expedition " + processController.getExpeditionCode() +
+                    throw new Exception("The dataset " + processController.getExpeditionCode() +
                             " has been created but unable to create a BCID for\n" +
                             "resourceType = " + entity.getConceptURI(), e);
                 }

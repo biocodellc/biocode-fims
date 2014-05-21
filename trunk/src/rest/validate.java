@@ -200,7 +200,7 @@ public class validate {
                     p.runExpeditionCreate();
                 } catch (FIMSException e) {
                     e.printStackTrace();
-                    throw new FIMSException("{\"error\": \"Error creating expedition.\"}");
+                    throw new FIMSException("{\"error\": \"Error creating dataset.\"}");
                 }
             }
 
