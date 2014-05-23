@@ -3,7 +3,7 @@ package digester;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.*;
-import com.sun.javaws.security.Resource;
+//import com.sun.javaws.security.Resource;
 import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
