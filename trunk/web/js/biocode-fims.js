@@ -219,6 +219,11 @@ function getGraphsKeyValue() {
 // Uses jNotify to display messages
 // To re-configure this boxes behaviour and style, goto http://demos.myjqueryplugins.com/jnotify/
 function showMessage(message) {
+$('#alerts').append(
+        '<div class="alert">' +
+            '<button type="button" class="close" data-dismiss="alert">' +
+            '&times;</button>' + message + '</div>');
+/*
       jNotify(
         message,
         {
@@ -241,6 +246,7 @@ function showMessage(message) {
 
           }
         });
+*/
 }
 
 

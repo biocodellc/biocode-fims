@@ -6,9 +6,9 @@
 <h2>Generate Template</h2>
 
     <form>
-        <table border=0>
+        <table border=0 class="table" style="width:600px;">
             <tr>
-                <td align=right>Choose Project</td>
+                <td align=right>&nbsp;&nbsp;Choose Project&nbsp;&nbsp;</td>
                 <td align=left>
                 <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
                         <option qdup=1 value=0>Select an project ...</option>
@@ -29,7 +29,7 @@
 
             <h2>Available Columns</h2>
 
-            <p>Below, you will find all available column headings that you can include in your customized FIMS
+            <p>Check available column headings to include in your customized FIMS
                 spreadsheet.</p>
 
             <div id="cat1"></div>
@@ -54,7 +54,7 @@
 
     <p>
 
-    <button type='button' id='excel_button'>Export Excel</button>
+    <button type='button' id='excel_button' class="btn btn-default">Export Excel</button>
 
 </div>
 </div>

@@ -101,7 +101,9 @@ public class templateProcessor {
      * Get a definition for a particular column name
      *
      * @param column_name
+     *
      * @return
+     *
      * @throws settings.FIMSException
      */
     public String definition(String column_name) throws FIMSException {
@@ -138,11 +140,14 @@ public class templateProcessor {
      * Generate checkBoxes/Column Names for the mappings in a template
      *
      * @return
+     *
      * @throws FIMSException
      */
     public String printCheckboxes() throws FIMSException {
         LinkedList<String> requiredColumns = getRequiredColumns();
-        StringBuilder output = new StringBuilder();
+        Map<String, StringBuilder> groups = new HashMap<String, StringBuilder>();
+
+        //StringBuilder output = new StringBuilder();
         // A list of names we've already added
         ArrayList addedNames = new ArrayList();
         try {
@@ -150,10 +155,12 @@ public class templateProcessor {
             while (attributes.hasNext()) {
                 Attribute a = (Attribute) attributes.next();
 
+                StringBuilder thisOutput = new StringBuilder();
                 // Set the column name
                 String column = a.getColumn();
+                String group = a.getGroup();
 
-                // Check that this name hasn't been already.  This is necessary in some situations where
+                // Check that this name hasn't been read already.  This is necessary in some situations where
                 // column names are repeated for different entities in the configuration file
                 if (!addedNames.contains(column)) {
                     // Set boolean to tell us if this is a requiredColumn
@@ -164,26 +171,71 @@ public class templateProcessor {
                         aRequiredColumn = true;
                     }
                     // Construct the checkbox text
-                    //output.append("<label class='checkbox'>\n" +
-                    output.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
+                    thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
                     if (aRequiredColumn)
-                        output.append(" checked disabled");
+                        thisOutput.append(" checked disabled");
 
-                    output.append(">" + column + " \n" +
+                    thisOutput.append(">" + column + " \n" +
                             "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
                             "<br>\n");// +
-                    //"</label>\n";
+
+                    // Fetch any existing content for this key
+                    StringBuilder existing = groups.get(group);
+
+                    // Append the new content onto any existing in this key
+                    groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
+
                 }
 
                 // Now that we've added this to the output, add it to the ArrayList so we don't add it again
                 addedNames.add(column);
-
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new FIMSException("exception handling templates " + e.getMessage(), e);
+        }
+
+        // Iterate through any defined groups, which makes the template processor easier to navigate
+        Iterator it = groups.entrySet().iterator();
+        StringBuilder output = new StringBuilder();
+        int count = 0;
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+            String groupName;
+
+            try {
+                groupName = pairs.getKey().toString();
+            } catch (NullPointerException e) {
+                groupName = "Default Group";
+            }
+            if (groupName.equals("") || groupName.equals("null")) {
+                groupName = "Default Group";
+            }
+
+            // Anchors cannot have spaces in the name so we replace them with underscores
+            String massagedGroupName = groupName.replaceAll(" ", "_");
+            if (!pairs.getValue().toString().equals("")) {
+                output.append("<div class=\"panel panel-default\">");
+                output.append("<div class=\"panel-heading\"> " +
+                        "<h4 class=\"panel-title\"> " +
+                        "<a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#" + massagedGroupName + "\">" + groupName + "</a> " +
+                        "</h4> " +
+                        "</div>");
+                output.append("<div id=\"" + massagedGroupName + "\" class=\"panel-collapse collapse");
+                // Make the first element open initially
+                if (count == 0) {
+                    output.append(" in");
+                }
+                output.append("\">\n" +
+                        "                <div class=\"panel-body\">\n" +
+                        "                    <div id=\"" + massagedGroupName + "\" class=\"panel-collapse collapse in\">");
+                output.append(pairs.getValue().toString());
+                output.append("\n</div></div></div></div>");
+            }
+
+            it.remove(); // avoids a ConcurrentModificationException
+            count++;
         }
         return output.toString();
     }
@@ -254,7 +306,7 @@ public class templateProcessor {
                 String columnLetter = CellReference.convertNumToColString(listColumnNumber);
                 Name namedCell = workbook.createName();
                 namedCell.setNameName(listsSheetName + columnLetter);
-                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + counterForRows+2);
+                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + counterForRows + 2);
                 CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
                 // Set the Constraint to the Lists Table
                 DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + columnLetter);
@@ -499,7 +551,9 @@ public class templateProcessor {
      * @param defaultSheetname
      * @param uploadPath
      * @param fields
+     *
      * @return
+     *
      * @throws Exception
      */
     public File createExcelFile(String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
@@ -535,6 +589,7 @@ public class templateProcessor {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
         templateProcessor t = new templateProcessor(1, "tripleOutput", false);
+        System.out.println(t.printCheckboxes());
 
         ArrayList<String> a = new ArrayList<String>();
         a.add("materialSampleID");
@@ -553,6 +608,7 @@ public class templateProcessor {
 
     /**
      * Print the abstract text
+     *
      * @return
      */
     public String printAbstract() {
