@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/biscicol.css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/alerts.css" rel="stylesheet"/>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
@@ -23,6 +25,7 @@
 
     <script type="text/javascript" src="js/biocode-fims.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script type='text/javascript' src="js/bootstrap.min.js"></script>
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 

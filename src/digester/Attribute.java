@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class Attribute implements Comparable {
     private String isDefinedByURIString = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy";
+
+    private String group;
     private String column;
     private String uri;
     private String defined_by;
@@ -24,6 +26,14 @@ public class Attribute implements Comparable {
 
     public void setColumn(String column) {
         this.column = column;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getDefined_by() {

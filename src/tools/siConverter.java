@@ -19,6 +19,7 @@ public class siConverter {
     static Integer columnIndex;
     static Integer definitionIndex;
     static Integer uriIndex;
+    static Integer groupIndex;
     static String worksheetUniqueKey = "Primary Coll. Number";
 
     public siConverter() throws IOException, InvalidFormatException {
@@ -81,11 +82,14 @@ public class siConverter {
                 String column = row.getCell(columnIndex).toString();
                 String definition = row.getCell(definitionIndex).toString();
                 String uri = "urn:" + row.getCell(uriIndex).toString();
+                String group = row.getCell(groupIndex).toString();
+
                 String defined_by = uri;
 
                 sb.append("\t\t<attribute ");
                 sb.append("column='" + column + "' ");
                 sb.append("uri='" + uri + "' ");
+                sb.append("group='" + group + "' ");
                 sb.append("defined_by='" + defined_by + "'>");
                 sb.append("<![CDATA[" + definition + "]]>");
                 sb.append("</attribute>\n");
@@ -166,9 +170,9 @@ public class siConverter {
         projects.add(new siProjects(15, "SIENT", "Entomology"));
         projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology"));
         projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles"));
-        projects.add(new siProjects(18, "SIIVB", "VZ-Birds"));
-        projects.add(new siProjects(19, "SIIVF", "VZ-Fishes"));
-        projects.add(new siProjects(20, "SIIVM", "VZ-Mammals"));
+        projects.add(new siProjects(18, "SIVZB", "VZ-Birds"));
+        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes"));
+        projects.add(new siProjects(20, "SIVZM", "VZ-Mammals"));
         projects.add(new siProjects(21, "SIMIN", "Mineral Sciences"));
 
         InputStream inp = new FileInputStream(inputFile);
@@ -183,6 +187,7 @@ public class siConverter {
         columnIndex = getColumnIndex("EMu Field Label (Vernacular)");
         definitionIndex = getColumnIndex("Definition");
         uriIndex = getColumnIndex("Field Name");
+        groupIndex = getColumnIndex("Field Group");
 
         // Loop each of the projects
         Iterator projectsIt = projects.iterator();

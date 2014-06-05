@@ -208,12 +208,12 @@
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
 
-            <attribute column='HDIM_Num' uri='urn:hdim_num' defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
+            <attribute column='hdimNumber' uri='urn:hdim_num' defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
                 <![CDATA[This value must be unique within this particular spreadsheet.]]></attribute>
-            <attribute column='Collection' uri='urn:collection' defined_by='urn:collection'/>
-            <attribute column='Collection_collector' uri='urn:collection_collector'
+            <attribute column='collection' uri='urn:collection' defined_by='urn:collection'/>
+            <attribute column='collectionCollector' uri='urn:collection_collector'
                        defined_by='urn:collection_collector'/>
-            <attribute column='Specimen_Num_Collector' uri='urn:specimen_num_collector'
+            <attribute column='specNumCollector' uri='urn:specimen_num_collector'
                        defined_by='urn:specimen_num_collector'/>
             <attribute column='Entered_By' uri='urn:entered_by' defined_by='urn:entered_by'/>
             <attribute column='Ordr' uri='urn:ordr' defined_by='urn:ordr'/>
