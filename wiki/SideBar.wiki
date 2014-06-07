@@ -2,8 +2,8 @@
 
 
 Running Biocode FIMS
-  * Web Version
+  * [https://code.google.com/p/biocode-fims/wiki/WebVersion Web Version]
   * Geneious Plugin
-  * Command-line Version
+  * [https://code.google.com/p/biocode-fims/wiki/CommandLine Command-line Version]
 
 Troubleshooting
