@@ -9,3 +9,5 @@
   * [https://code.google.com/p/biocode-fims/wiki/CommandLine Command-line Version]
 
 [https://code.google.com/p/biocode-fims/wiki/troubleShooting Troubleshooting]
+
+[https://code.google.com/p/biocode-fims/wiki/Installation Installation] (for developers)
