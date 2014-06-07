@@ -1,0 +1,10 @@
+#summary Instructions on using the web-version
+
+= Introduction =
+
+The web version is available currently at [http://biscicol.org/biocode-fims http://biscicol.org/biocode-fims].  Interested users should generally be directed to his site by a project administrator of an existing project.  If you would like to start a new project, then please contact the owner of the biocode-fims page.  
+
+== How it works ==
+Users first [http://biscicol.org/biocode-fims/templates.jsp generate spreadsheet templates] from an existing project, then enter data on a spreadsheet, [http://biscicol.org/biocode-fims/ validate], then finally upload their data.   See the following diagram for a simple view of how this works:
+
+<img src='http://biscicol.org/biocode-fims/docs/Workflow_simple.jpeg'>
