@@ -1,0 +1,9 @@
+#summary Sidebar Navigation
+
+
+Running Biocode FIMS
+  * Web Version
+  * Geneious Plugin
+  * Command-line Version
+
+Troubleshooting
