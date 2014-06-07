@@ -7,4 +7,4 @@ Running Biocode FIMS
   * [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Geneious Plugin]
   * [https://code.google.com/p/biocode-fims/wiki/CommandLine Command-line Version]
 
-Troubleshooting
+[https://code.google.com/p/biocode-fims/wiki/troubleShooting Troubleshooting]
