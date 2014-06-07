@@ -1,4 +1,5 @@
 #summary Sidebar Navigation
+#labels Featured
 
 [https://code.google.com/p/biocode-fims/wiki/SideBar Table of Contents]
 
