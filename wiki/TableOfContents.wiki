@@ -10,4 +10,4 @@
 
 [https://code.google.com/p/biocode-fims/wiki/troubleShooting Troubleshooting]
 
-[https://code.google.com/p/biocode-fims/wiki/Installation Installation] (for developers)
+[https://code.google.com/p/biocode-fims/wiki/Installation Installation (for developers)]
