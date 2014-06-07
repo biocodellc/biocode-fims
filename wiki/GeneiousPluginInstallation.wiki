@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Biocode-FIMS can be run either as a command-line application for as a Geneious plugin.  The instructions here are for running Biocode-FIMS as a Geneious Plugin.
+Biocode-FIMS can be run either as a web application, command-line application, or as a Geneious plugin.  The instructions here are for running Biocode-FIMS as a Geneious Plugin.
 
 = Installation =
 
