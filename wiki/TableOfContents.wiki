@@ -1,7 +1,7 @@
 #summary Table Of Contents
 #labels Featured
 
-[https://code.google.com/p/biocode-fims/wiki/SideBar Table of Contents]
+[https://code.google.com/p/biocode-fims/wiki/TableOfContents Table of Contents]
 
 [https://code.google.com/p/biocode-fims/wiki/GettingStarted Running Biocode FIMS]
   * [https://code.google.com/p/biocode-fims/wiki/WebVersion Web Version]
