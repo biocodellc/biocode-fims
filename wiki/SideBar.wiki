@@ -1,9 +1,9 @@
 #summary Sidebar Navigation
 
-
+[https://code.google.com/p/biocode-fims/wiki/Sidebar Table of Contents]
 Running Biocode FIMS
   * [https://code.google.com/p/biocode-fims/wiki/WebVersion Web Version]
-  * Geneious Plugin
+  * [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Geneious Plugin]
   * [https://code.google.com/p/biocode-fims/wiki/CommandLine Command-line Version]
 
 Troubleshooting
