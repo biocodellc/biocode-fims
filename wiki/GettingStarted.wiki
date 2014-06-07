@@ -1,6 +1,6 @@
 #summary General Information on Running Biocode-FIMS
 
-= Getting Started with Biocode-FIMS =
+= Running Biocode-FIMS =
 
 Biocode-FIMS is used for generating spreadsheet templates and validating data for field expeditions, typically involving genomic workflows and working with biological samples and sub-samples.  You can begin using Biocode-FIMS by reading the instructions on this wiki and looking at the [http://biscicol.org/biocode-fims Biocode FIMS website].  To load data into either the online database or a customized repository (e.g. for Smithsonian Users) you will need a user account.  For this, you will need to contact the appropriate project administrator.  
 
