@@ -1,0 +1,18 @@
+#summary Installing Biocode FISM
+
+= Introduction =
+
+This content is for people wishing to install Biocode-FIMS on their own server.
+
+= Details =
+
+Biocode-FIMS consists of a core set of Java classes and REST services.  Integration with the [http://code.google.com/p/bcid BCID] system is required and developers have a choice of using the [http://biscicol.org/bcid Biocode Commons BCID] installation or installing their own using the BCID google code site which requires purchase of an [http://ezid.cdlib.org/ EZID account].
+
+To install Biocode-FIMS you will need the following components:
+
+  * A unix-based server
+  * A java servlet container e.g. Tomcat, Glassfish, Jetty
+  * Connection to a BCID service
+
+Optional Component
+  * A triple-store database connection for storing datasets as RDF triples.  We have tested using [http://jena.apache.org/documentation/serving_data/ Apache Fuseki]
