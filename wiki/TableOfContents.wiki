@@ -1,0 +1,10 @@
+#summary Table Of Contents
+
+[https://code.google.com/p/biocode-fims/wiki/SideBar Table of Contents]
+
+[https://code.google.com/p/biocode-fims/wiki/GettingStarted Running Biocode FIMS]
+  * [https://code.google.com/p/biocode-fims/wiki/WebVersion Web Version]
+  * [https://code.google.com/p/biocode-fims/wiki/GeneiousPluginInstallation Geneious Plugin]
+  * [https://code.google.com/p/biocode-fims/wiki/CommandLine Command-line Version]
+
+[https://code.google.com/p/biocode-fims/wiki/troubleShooting Troubleshooting]
