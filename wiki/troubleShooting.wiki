@@ -1,3 +1,5 @@
+#summary Troubleshooting biocode-fims operation
+
 = Troubleshooting =
 
 Following is a list of common error messages encountered when running the FIMS and what these error messages mean.
