@@ -6,7 +6,7 @@ This content is for people wishing to install Biocode-FIMS on their own server.
 
 = Details =
 
-Biocode-FIMS consists of a core set of Java classes and REST services.  Integration with the [http://code.google.com/p/bcid BCID] system is required and developers have a choice of using the [http://biscicol.org/bcid Biocode Commons BCID] installation or installing their own using the BCID google code site which requires purchase of an [http://ezid.cdlib.org/ EZID account].
+Biocode-FIMS consists of a core set of Java classes and REST services.  Integration with the [http://code.google.com/p/bcid BCID] system is required and developers have a choice of using the [http://biscicol.org/bcid Biocode Commons BCID] installation or installing their own using the [http://code.google.com/p/bcid BCID google code site] which requires purchase of an [http://ezid.cdlib.org/ EZID account].
 
 To run an instance of Biocode-FIMS you will need the following components:
 
