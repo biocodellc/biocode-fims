@@ -1,4 +1,4 @@
-#summary Installing Biocode FISM
+#summary Installing Biocode FIMS
 
 = Introduction =
 
