@@ -10,4 +10,6 @@
 
 [https://code.google.com/p/biocode-fims/wiki/troubleShooting Troubleshooting]
 
-[https://code.google.com/p/biocode-fims/wiki/Installation Installation (for developers)]
+Installation (for developers)
+  * [https://code.google.com/p/biocode-fims/wiki/Installation FIMS Installation]
+  * FIMS can be run using an existing BCID installation or you may choose to install your own BCID installation, as described at the [https://code.google.com/p/bcid/wiki/TableOfContents BCID installation] page.
