@@ -12,4 +12,4 @@
 
 Installation (for developers)
   * [https://code.google.com/p/biocode-fims/wiki/Installation FIMS Installation]
-  * [https://code.google.com/p/bcid/wiki/TableOfContents BCID installation] (optional)
+  * [https://code.google.com/p/bcid/wiki/Installation BCID installation] (optional)
