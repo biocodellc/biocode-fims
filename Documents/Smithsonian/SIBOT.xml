@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <fims>
-<metadata  doi="a doi"  shortname="Smithsonian Botany"  eml_location="eml_location"  target="http://data.biscicol.org/ds/data"  queryTarget="http://data.biscicol.org/ds">
+<metadata nmnh="true" doi="a doi"  shortname="Smithsonian Botany"  eml_location="eml_location"  target="http://data.biscicol.org/ds/data"  queryTarget="http://data.biscicol.org/ds">
 	<![CDATA[Some text with abstract]]>
 </metadata>
 <validation>
