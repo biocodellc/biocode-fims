@@ -3,6 +3,9 @@ package rest;
 import run.templateProcessor;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -30,7 +33,12 @@ public class templates {
     @Path("/attributes/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateCheckboxes(
-            @QueryParam("project_id") Integer project_id) throws Exception {
+            @QueryParam("project_id") Integer project_id,
+                             @Context HttpServletRequest request) throws Exception {
+
+        HttpSession session = request.getSession();
+
+
 
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
         templateProcessor t = new templateProcessor(project_id,uploadPath(),true);
