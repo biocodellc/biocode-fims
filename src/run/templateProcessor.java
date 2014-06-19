@@ -588,10 +588,10 @@ public class templateProcessor {
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor(1, "tripleOutput", false);
+        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
         System.out.println(t.printCheckboxes());
 
-        ArrayList<String> a = new ArrayList<String>();
+      /*  ArrayList<String> a = new ArrayList<String>();
         a.add("materialSampleID");
         a.add("country");
         a.add("phylum");
@@ -600,7 +600,7 @@ public class templateProcessor {
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
         System.out.println(outputFile.getAbsoluteFile().toString());
-
+       */
         //t.getRequiredColumns();
 
         //System.out.println(t.printCheckboxes());

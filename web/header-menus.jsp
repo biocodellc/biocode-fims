@@ -27,16 +27,17 @@
 
                     <c:if test="${user != null}">
                         <ul>
-                            <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
                             <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                            <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
+                            <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
                             <li><a href='http://biscicol.org/bcid' class='enabled'>Manage Projects (BCID)</a></li>
                         </ul>
                     </c:if>
 
                     <c:if test="${user == null}">
                         <ul>
-                            <li><a href='/biocode-fims/index.jsp' class='enabled'>Validation</a></li>
                             <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                            <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
                             <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
                             <li><a href='http://biscicol.org/bcid' class='enabled'>Manage Projects (BCID)</a></li>
                          </ul>

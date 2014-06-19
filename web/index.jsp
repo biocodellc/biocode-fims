@@ -3,76 +3,15 @@
 <div id="validation" class="section">
     <div class="sectioncontent">
 
-        <h2>Validation</h2>
+        A Field Information Management System (FIMS) enables data collection at the source (in the field) by
+        generating spreadsheet templates, validating data, and assigning persistent identifiers for every unique biological sample.
+        The following diagram shows how the system works.  The most typical functions are <b>Generating Templates</b> and <b>Validating Data</b>,
+              both of which can be found under the Tools menu.
+        <!--using
+                <a href="http://biscicol.org/bcid" target="_blank">BCIDs</a>, which extends <a href="http://ezid.cdlib.org/">EZIDs</a>.
+                <p>-->
 
-        <c:if test="${param.error != null}">
-        <script>
-        $(document).ready(function(){
-            $("#dialogContainer").addClass("error");
-            dialog("Authentication Error!<br><br>" + ${param.error}, "Error", {"OK": function() {
-                $("#dialogContainer").removeClass("error");
-                $(this).dialog("close"); }
-            });
-        });</script>
-        </c:if>
-
-        <form method="POST">
-            <table class="table" style="width:600px">
-                <tr>
-                    <td align="right">&nbsp;&nbsp;FIMS Spreadsheet&nbsp;&nbsp;</td>
-                    <td><input type="file" class="btn btn-default btn-xs" name="dataset" id="dataset" /></td>
-                </tr>
-
-
-                <tr class="toggle-content" id="projects_toggle">
-                    <td align="right">Project&nbsp;&nbsp;</td>
-                    <td>
-                        <select width=20 name="project_id" id="projects">
-                            <option qdup=1 value=0>Select a project ...</option>
-                            <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
-                                Loading Projects ...
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td align="right">Upload&nbsp;&nbsp;</td>
-                    <td style="font-size:11px;">
-                        <c:if test="${user == null}">
-                            <input type="checkbox" id="upload" disabled="disabled" /> (login to upload)
-                        </c:if>
-                        <c:if test="${user != null}">
-                            <input type="checkbox" id="upload" name="upload" />
-                        </c:if>
-                    </td>
-                </tr>
-
-                <tr class="toggle-content" id="expedition_code_toggle">
-                    <td align="right">Dataset Code&nbsp;&nbsp;</td>
-                    <td><input type="text" name="expedition_code" id="expedition_code" /></td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td><input type="button" value="Submit" class="btn btn-default btn-xs"></td>
-                </tr>
-            </table>
-        </form>
-
-        <div id=dialogContainer></div>
-
-        <div id=resultsContainer style='overflow:auto; display:none;'>
-        </div>
-
-        <!--
-        <p>
-        <h2>Workflow</h2>-->
-        <!--Biocode FIMS is a field information management system that enables data collection at the source (in the field),
-                validates data, and assigns persistent identifiers by Project, Dataset, and locally unique identifiers
-                (see <a href="http://biscicol.org/bcid" target="_blank">BCID system</a>).
-                <p>
-         -->
+<p><img id='workflowImage' src='docs/Workflow.jpeg'>
         <!--<img id='workflowImage' src='docs/Workflow_simple.jpeg'>
         <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
     </div>
