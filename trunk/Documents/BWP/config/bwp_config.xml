@@ -3,13 +3,13 @@
   <metadata doi="a doi" shortname="BarcodeOfWildlife" eml_location="eml_location" target="http://data.biscicol.org/ds/data" queryTarget="http://data.biscicol.org/ds"><![CDATA[The Barcode of Wildlife Project is an initiative run by the Consortium for the Barcode of Life to use standardized DNA sequences to identify and protect endangered species.]]></metadata>
   <mapping>
     <entity worksheet="Samples" worksheetUniqueKey="tissueBarcode" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">
-      <attribute column="processingLab" uri="urn:processingLab"><![CDATA[The lab where the specimen will be processed from extraction through to PCR purification.]]></attribute>
-      <attribute column="extractionPlate" uri="urn:extractionPlate"><![CDATA[Barcode of the FluidX plate that is holding the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
-      <attribute column="extractionWell" uri="urn:extractionWell"><![CDATA[This is the plate position of the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
       <attribute column="voucherID" uri="urn:voucherID" defined_by="http://rs.tdwg.org/dwc/terms/occurrenceID"><![CDATA[This is the unique id given to the specimen the tissue was taken from. It is constructed from the institutionCode, collectionCode (if one exists), and catalogNumber, joined by a colon (:).]]></attribute>
       <attribute column="institutionCode" uri="urn:institutionCode" defined_by="http://rs.tdwg.org/dwc/terms/institutionCode"><![CDATA[This is the acronym for the institution or repository where the specimen voucher is stored. GRBio.org is a registry for all institution codes, and the institutionCode field will be validated against its list of codes.]]></attribute>
       <attribute column="catalogNumber" uri="urn:catalogNumber" defined_by="http://rs.tdwg.org/dwc/terms/catalogNumber"><![CDATA[An identifier (preferably unique) for the record within the data set or collection.]]></attribute>
       <attribute column="chainOfCustody" uri="urn:chainOfCustody"><![CDATA[Whether or not a specimen voucher has been collected, transported, and accessioned into a secure repository following chain of custody rules that prevent tampering, contamination, mislabeling or loss. Chain of custody refers to the chronological documentation of the sequence of physical locations of a voucher specimen and the people who had custody of it.]]></attribute>
+      <attribute column="processingLab" uri="urn:processingLab"><![CDATA[The lab where the specimen will be processed from extraction through to PCR purification.]]></attribute>
+      <attribute column="extractionPlate" uri="urn:extractionPlate"><![CDATA[Barcode of the FluidX plate that is holding the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
+      <attribute column="extractionWell" uri="urn:extractionWell"><![CDATA[This is the plate position of the DNA extraction storage vial. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
       <attribute column="yearCollected" uri="urn:yearCollected" defined_by="http://rs.tdwg.org/dwc/terms/year"><![CDATA[The four-digit year in which the voucher was collected, according to the Common Era Calendar.]]></attribute>
       <attribute column="monthCollected" uri="urn:monthCollected" defined_by="http://rs.tdwg.org/dwc/terms/month"><![CDATA[The two-digit numerical month in which the voucher was collected. This will be validated to being in the range from 1 to 12.]]></attribute>
       <attribute column="dayCollected" uri="urn:dayCollected" defined_by="http://rs.tdwg.org/dwc/terms/day"><![CDATA[The integer day of the month on which the voucher was collected.]]></attribute>
@@ -74,13 +74,13 @@
       <rule type="duplicateColumnNames" level="error"/>
       <rule type="uniqueValue" column="tissueBarcode" level="error"/>
       <rule type="RequiredColumns" column="RequiredColumns" level="error">
-        <field>processingLab</field>
-        <field>extractionPlate</field>
-        <field>extractionWell</field>
         <field>voucherID</field>
         <field>institutionCode</field>
         <field>catalogNumber</field>
         <field>chainOfCustody</field>
+        <field>processingLab</field>
+        <field>extractionPlate</field>
+        <field>extractionWell</field>
         <field>yearCollected</field>
         <field>monthCollected</field>
         <field>dayCollected</field>
@@ -112,10 +112,10 @@
         <field>order</field>
         <field>family</field>
       </rule>
-      <rule type="checkInXMLFields" column="processingLab" list="processingLab" level="warning"/>
-      <rule type="checkInXMLFields" column="extractionWell" list="plateWell" level="error"/>
       <rule type="checkInXMLFields" column="institutionCode" list="institutionCode" level="warning"/>
       <rule type="checkInXMLFields" column="chainOfCustody" list="boolean" level="error"/>
+      <rule type="checkInXMLFields" column="processingLab" list="processingLab" level="warning"/>
+      <rule type="checkInXMLFields" column="extractionWell" list="plateWell" level="error"/>
       <rule type="checkInXMLFields" column="yearCollected" list="year" level="error"/>
       <rule type="checkInXMLFields" column="monthCollected" list="month" level="error"/>
       <rule type="checkInXMLFields" column="dayCollected" list="day" level="error"/>

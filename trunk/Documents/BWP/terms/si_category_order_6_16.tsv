@@ -1,0 +1,60 @@
+Term Name	Require Level
+voucherID	required
+institutionCode	required
+collectionCode	
+catalogNumber	required
+extractionBarcode	
+yearCollected	required
+monthCollected	required
+dayCollected	
+countryOrOcean	required
+scientificName	required
+kingdom	required
+phylum	required
+class	required
+order	required
+family	
+genus	
+species	
+eventID	
+fieldNumber	
+timeCollected	
+collectedBy	
+collectionMethod	
+habitat	
+permitInformation	
+eventRemarks	
+waterBody	
+island	
+stateProvince	
+county	
+municipality	
+locality	
+decimalLatitude	
+decimalLongitude	
+georeferenceProtocol	
+verbatimDepth	
+verbatimElevation	
+locationRemarks	
+sex	
+lifeStage	
+establishmentMeans	
+associatedMedia	
+sampleRemarks	
+subfamily	
+subspecies	
+commonName	
+associatedTaxa	
+taxonRemarks	
+identifiedBy	
+yearIdentified	
+monthIdentified	
+dayIdentified	
+identificationConfidence	
+basisOfID	
+typeStatus	
+tissueBarcode	
+tissueRack	
+tissuePosition	
+tissueType	
+preservative	

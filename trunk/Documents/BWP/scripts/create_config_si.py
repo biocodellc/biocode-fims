@@ -4,8 +4,8 @@ from xml.dom import minidom
 from collections import OrderedDict
 
 config_output = "../config/si_config.xml"
-bwp_file = "../terms/terms_5_08.tsv"
-si_file = "../terms/si_category_order.tsv"
+bwp_file = "../terms/terms_6_19.tsv"
+si_file = "../terms/si_category_order_6_16.tsv"
 
 si_terms = []
 si_required = []
