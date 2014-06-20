@@ -572,6 +572,40 @@ function extractProjectId() {
     }
 }
 
+// function to extract the dataset_code from a dataset to be uploaded
+function extractDatasetCode() {
+    var f = new FileReader();
+    // older browsers don't have a FileReader
+    if (f != null) {
+        var deferred = new $.Deferred();
+        var file = $('#dataset')[0].files[0];
+        // after file has been read, extract the project_id if present
+        f.onload = function () {
+            var fileContents = f.result;
+            var re = "~dataset_code=[a-zA-Z0-9-_]+~";
+            try {
+                var results = fileContents.match(re)[0];
+
+                if (results != null) {
+                    var dataset_code = results.split('=')[1].slice(0, -1);
+                    if (dataset_code != null && dataset_code.length > 0) {
+                        deferred.resolve(dataset_code);
+                    }
+                } else {
+                    deferred.resolve(null);
+                }
+            } catch (e) {
+                deferred.resolve(null);
+            }
+        };
+        f.readAsText(file);
+        return deferred.promise();
+    } else {
+        // can't find the dataset_code, so return null
+        return null;
+    }
+}
+
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
@@ -602,7 +636,14 @@ function validationFormToggle() {
         // only get expedition codes if a user is logged in
         if ($('*:contains("Logout")').length > 0) {
             $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
-            getExpeditionCodes();
+            $.when(extractDatasetCode()).done(function(dataset_code) {
+                if (dataset_code != null) {
+                    $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code">');
+                    $("#expedition_code").val(dataset_code);
+                } else {
+                    getExpeditionCodes();
+                }
+            });
         }
     });
 }
