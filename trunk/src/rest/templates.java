@@ -3,6 +3,7 @@ package rest;
 import run.process;
 import run.processController;
 import run.templateProcessor;
+import settings.bcidConnector;
 import utils.stringGenerator;
 
 import javax.servlet.ServletContext;
@@ -89,45 +90,56 @@ public class templates {
             @FormParam("fields") List<String> fields,
             @FormParam("project_id") Integer project_id,
             @FormParam("accession_number") Integer accessionNumber,
-            @FormParam("collection_number") String collectionNumber) throws Exception {
-
-        String datasetCode = null;
+            @FormParam("dataset_code") String datasetCode,
+            @Context HttpServletRequest request ) throws Exception {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
-        if (accessionNumber != null || collectionNumber != null) {
-            if (accessionNumber == null || collectionNumber == null) {
+        if (accessionNumber != null || datasetCode != null) {
+            if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
-                        " Both Accession number and Unique Collection numbers are required if this is an NMNH project.").build();
-            // only need to check that collectionNumber is valid since an exception would have been thrown if accessionNumber
+                        " Both an Accession Number and a Dataset Code are required if this is an NMNH project.").build();
+            // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
             // wasn't an Integer
-            } else if (!collectionNumber.matches("^\\w+$")) {
-                return Response.status(400).entity("{\"error\": \"The unique collection number must be an alphanumeric.").build();
+            } else if (!datasetCode.matches("^\\w{4,16}$")) {
+                return Response.status(400).entity("{\"error\": \"The Dataset Code must be an alphanumeric between" +
+                        " 4 and 16 characters.").build();
             }
 
         }
 
         // Check if the project is an NMNH project
-        processController processController = new processController(project_id, null);
+        processController processController = new processController(project_id, datasetCode);
+
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
         process p = new process(
                 null,
                 uploadPath(),
-                null,
+                bcidConnector,
                 processController);
         if (p.isNMNHProject()) {
-            if (accessionNumber == null || collectionNumber == null) {
+            if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": " +
-                    "\"This is an NMNH project. Accession number and collection number are required.}").build();
+                    "\"This is an NMNH project. Accession number and Dataset Code are required.}").build();
+            } else {
+                // create the expedition
+                p.runExpeditionCreate();
             }
-
-            // generate an expedition code
-            datasetCode = stringGenerator.generateString(16);
         }
 
+        templateProcessor t;
         // Create the template processor which handles all functions related to the template, reading, generation
-        templateProcessor t = new templateProcessor(project_id, uploadPath(), true,
-                accessionNumber, collectionNumber, datasetCode);
+        if (accessionNumber != null) {
+            t = new templateProcessor(project_id, uploadPath(), true,
+                    accessionNumber, datasetCode);
+        } else {
+            t = new templateProcessor(project_id, uploadPath(), true);
+        }
 
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();

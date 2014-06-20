@@ -92,6 +92,36 @@ public class utils {
     }
 
     /**
+     * Check whether or not an expedition code is valid
+     * @param projectId
+     * @param expeditionCode
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @GET
+    @Path("/validateExpedition/{project_id}/{expedition_code}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response validateExpedition(@PathParam("project_id") Integer projectId,
+                                       @PathParam("expedition_code") String expeditionCode,
+                                       @Context HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+        String expedition_list_uri = sm.retrieveValue("expedition_validation_uri");
+
+        URL url = new URL(expedition_list_uri + projectId + "?access_token=" + accessToken);
+
+        String response = bcidConnector.createGETConnection(url);
+
+        return Response.status(bcidConnector.getResponseCode()).entity(response).build();
+    }
+
+    /**
      * Retrieve a user's expeditions in a given project from bcid. This uses an access token to access the
      * bcid service.
      *
