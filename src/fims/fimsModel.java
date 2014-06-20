@@ -110,8 +110,13 @@ public class fimsModel {
      */
     public void listProperties(Resource resource) {
         StmtIterator stmtIterator = resource.listProperties();
+        int count = 0;
         while (stmtIterator.hasNext()) {
             Statement s = stmtIterator.next();
+           // Print the BCID as a property
+            if (count == 0) {
+                     queryWriter.createCell(row, "EZID", s.getSubject().toString());
+            }
             // Print just the predicates we care about
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {
                 // Don't want local name to be null

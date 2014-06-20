@@ -85,37 +85,8 @@ public class triplifier {
         fos.close();
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 
-        // Write out as a Sparql Update Statement
-        /*
-        File updateFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
-        FileOutputStream fosUpdateFile = new FileOutputStream(updateFile);
-        fosUpdateFile.write("INSERT DATA {\n".getBytes());
-        StmtIterator stmtIterator = model.listStatements();
-        while (stmtIterator.hasNext()) {
-            Statement stmt = stmtIterator.next();
-            String subject = "", predicate = "", object = "";
-            if (stmt.asTriple().getSubject().isURI()) {
-                subject = "<" + stmt.asTriple().getSubject().toString() + ">";
-            }
-            if (stmt.asTriple().getPredicate().isURI()) {
-                predicate = "<" + stmt.asTriple().getPredicate().toString() + ">";
-            }
-            if (stmt.asTriple().getObject().isURI()) {
-                object = "<" + stmt.asTriple().getObject().toString() + ">";
-            } else {
-                object = stmt.asTriple().getObject().toString();
-            }
-            // get the content in bytes
-            byte[] contentInBytes = (subject + " " + predicate + " " + object + " .\n").getBytes();
-
-            fosUpdateFile.write(contentInBytes);
-        }
-        fosUpdateFile.write("}".getBytes());
-        fosUpdateFile.close();
-
-        //return outputFolder + tripleFile.getName();
-        updateOutputFile =  outputFolder + File.separator + updateFile.getName();
-        */
+        if (tripleFile.length() < 1)
+            throw new Exception("No data has been written to database!  No triples to write.");
     }
 
     /**

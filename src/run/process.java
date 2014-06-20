@@ -245,6 +245,11 @@ public class process {
         }
     }
 
+    /**
+     * Run the triplification engine
+     * @return
+     * @throws FIMSException
+     */
     public boolean runTriplifier() throws FIMSException {
         // If Validation passed, we can go ahead and triplify
         Boolean triplifyGood = false;
@@ -256,9 +261,10 @@ public class process {
                         processController
                 );
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 throw new FIMSException(e.getMessage(), e);
             }
+
             mapping.print();
         }
 
@@ -535,7 +541,7 @@ public class process {
 
                 //p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
                 // TODO: construct filter statements from arguments passed in on command-line
-                p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), null);
+                System.out.println(p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), null));
 
             }
             /*
