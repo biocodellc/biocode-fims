@@ -46,7 +46,6 @@ public class templateProcessor {
     Integer project_id;
 
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
-
         // Instantiate the project output Folder
         configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
         configFile = fetcher.getOutputFile();
@@ -247,18 +246,29 @@ public class templateProcessor {
      */
 
     private void createListsSheetAndValidations(List<String> fields) {
+        // Integer for holding column index value
         int column;
+        // Create a sheet to hold the lists
         HSSFSheet listsSheet = workbook.createSheet(listsSheetName);
 
+        // An iterator of the possible lists
         Iterator listsIt = validation.getLists().iterator();
+
+        // Track which column number we're looking at
         int listColumnNumber = 0;
 
         // Loop our array of lists
         while (listsIt.hasNext()) {
+            // Get an instance of a particular list
             digester.List list = (digester.List) listsIt.next();
             // List of fields from this validation rule
             String[] validationFields = (String[]) list.getFields().toArray(new String[list.getFields().size()]);
-            column = fields.indexOf(list.getAlias());
+
+
+            //Attribute a = .getAllAttributes(defaultSheet.getSheetName()).get(0);
+            // Set the index of this particular column
+            //column = fields.indexOf(listAlias);
+            //column = fields.indexOf(li());
 
             // Validation Fields
             if (validationFields.length > 0) {
@@ -281,11 +291,8 @@ public class templateProcessor {
                         cell.setCellStyle(style);
                     }
                     // Write cell values
-                    // else {
                     value = validationFields[i];
                     style = regularStyle;
-                    //counterForRows++;
-                    //}
 
                     // Set the row counter to +1 because of the header issues
                     counterForRows = i + 1;
@@ -299,22 +306,48 @@ public class templateProcessor {
 
                 }
 
-                // autosize this column
+                // Autosize this column
                 listsSheet.autoSizeColumn(listColumnNumber);
 
                 // Get the letter of this column
-                String columnLetter = CellReference.convertNumToColString(listColumnNumber);
+                String listColumnLetter = CellReference.convertNumToColString(listColumnNumber);
+
+
                 Name namedCell = workbook.createName();
-                namedCell.setNameName(listsSheetName + columnLetter);
-                namedCell.setRefersToFormula(listsSheetName + "!$" + columnLetter + "$2:$" + columnLetter + "$" + counterForRows + 2);
-                CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
-                // Set the Constraint to the Lists Table
-                DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + columnLetter);
-                // Create the data validation object
-                DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
-                dataValidation.setSuppressDropDownArrow(false);
-                dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
-                defaultSheet.addValidationData(dataValidation);
+                namedCell.setNameName(listsSheetName + listColumnLetter);
+                namedCell.setRefersToFormula(listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + counterForRows + 2);
+
+                //String listAlias = list.getAlias();
+                
+                // DATA VALIDATION COMPONENT
+                // TODO: expand this to select the appropriate worksheet but for NOW there is only ONE so just get last
+                Worksheet validationWorksheet = validation.getWorksheets().getLast();
+                // An arrayList of columnNames in the default sheet that this list should be applied to
+                ArrayList<String> columnNames = validationWorksheet.getColumnsForList(list.getAlias());
+
+                Iterator columnNamesIt = columnNames.iterator();
+                while (columnNamesIt.hasNext()) {
+                    String thisColumnName = (String) columnNamesIt.next();
+                    column = fields.indexOf(thisColumnName);
+
+                    // This defines an address range for this particular list                
+                    CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
+                    ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
+
+                    // Set the Constraint to a particular column on the lists sheet
+                    DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + listColumnLetter);
+
+                    // Create the data validation object
+                    DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
+
+                    // Data validation styling
+                    dataValidation.setSuppressDropDownArrow(false);
+                    dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
+                    // System.out.println(defaultSheet.getSheetName());
+
+                    // Add the validation to the defaultsheet
+                    defaultSheet.addValidationData(dataValidation);
+                }
                 listColumnNumber++;
             }
         }
@@ -588,19 +621,17 @@ public class templateProcessor {
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
-        System.out.println(t.printCheckboxes());
+        templateProcessor t = new templateProcessor(22, "tripleOutput", false);
+        //System.out.println(t.printCheckboxes());
 
-      /*  ArrayList<String> a = new ArrayList<String>();
-        a.add("materialSampleID");
-        a.add("country");
-        a.add("phylum");
-        a.add("habitat");
-        a.add("sex");
+        ArrayList<String> a = new ArrayList<String>();
+        a.add("Phase");
+        a.add("Cultivated");
+
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
         System.out.println(outputFile.getAbsoluteFile().toString());
-       */
+
         //t.getRequiredColumns();
 
         //System.out.println(t.printCheckboxes());

@@ -128,6 +128,22 @@ public class Worksheet {
     }
 
     /**
+     * Return a list of columns given a list alias.  This shows us ALL of the columns that may reference
+     * a particular list
+     * @param list
+     * @return
+     */
+    public  ArrayList<String> getColumnsForList(String list) {
+        ArrayList columns = new ArrayList();
+        for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
+                Rule r = i.next();
+             if (list.equals(r.getList())) {
+                columns.add(r.getColumn());
+             }
+         }
+        return columns;
+    }
+    /**
      * Loop all validation rules associated with this worksheet
      *
      * @param parent
