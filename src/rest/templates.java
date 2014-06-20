@@ -117,8 +117,8 @@ public class templates {
                 processController);
         if (p.isNMNHProject()) {
             if (accessionNumber == null || collectionNumber == null) {
-                return Response.status(400).entity("\"error\": " +
-                    "\"This is an NMNH project. Accession number and collection number are required.").build();
+                return Response.status(400).entity("{\"error\": " +
+                    "\"This is an NMNH project. Accession number and collection number are required.}").build();
             }
 
             // generate an expedition code
