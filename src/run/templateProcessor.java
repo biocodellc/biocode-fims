@@ -27,6 +27,9 @@ public class templateProcessor {
     private Mapping mapping;
     private Fims fims;
     private Validation validation;
+    private Integer accesstionNumber;
+    private String collectionNumber;
+    private String datasetCode;
     HSSFSheet defaultSheet;
     HSSFWorkbook workbook;
 
@@ -82,6 +85,33 @@ public class templateProcessor {
 
         // Set the style for all other cells
         regularStyle = workbook.createCellStyle();
+    }
+
+
+    /**
+     * constructor for NMNH projects
+     * @param project_id
+     * @param outputFolder
+     * @param useCache
+     * @param accessionNumber
+     * @param collectionNumber
+     * @throws Exception
+     */
+    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
+                             Integer accessionNumber, String collectionNumber, String datasetCode) throws Exception {
+        // we can't have a null value for accessionNumber, collectionNumber, or datasetCode if using this constructor
+        if (accessionNumber == null || collectionNumber == null || datasetCode == null) {
+            throw new FIMSException("dataset code, accession number and collection number are required");
+        }
+        this.accesstionNumber = accessionNumber;
+        this.collectionNumber = collectionNumber;
+        this.datasetCode = datasetCode;
+
+        instantiateTemplateProcessor(project_id, outputFolder, useCache);
+    }
+
+    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+        instantiateTemplateProcessor(project_id, outputFolder, useCache);
     }
 
     public Mapping getMapping() {
@@ -496,6 +526,7 @@ public class templateProcessor {
         HSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
         Row row;
         Cell cell;
+        Integer rowIndex = 0;
 
         // Center align & bold for title
         HSSFCellStyle titleStyle = workbook.createCellStyle();
@@ -517,19 +548,59 @@ public class templateProcessor {
         String project_title = getFims().getMetadata().getShortname();
 
         // Hide the project_id in the first row
-        row = instructionsSheet.createRow(0);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellValue("~project_id=" + project_id + "~");
         row.setZeroHeight(true);
 
+
         // The name of this project as specified by the sheet
-        row = instructionsSheet.createRow(2);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
         cell.setCellValue(project_title);
 
+        // if we have a datasetCode, and accesstionNumber and collectionNumber, hide them in the first row and make them visible
+        // if we have one, we have all three.
+        if (accesstionNumber != null) {
+            // hide the accesstionNumber and collectionNumber
+            row = instructionsSheet.getRow(0);
+            cell = row.createCell(1);
+            cell.setCellValue("~dataset_code=" + datasetCode + "~");
+            cell = row.createCell(2);
+            cell.setCellValue("~accesstion_number=" + accesstionNumber + "~");
+            cell = row.createCell(3);
+            cell.setCellValue("~collection_number=" + collectionNumber + "~");
+
+            // show the datasetCode, accesstionNumber and collectionNumber
+            row = instructionsSheet.createRow(rowIndex);
+            rowIndex++;
+            cell = row.createCell(0);
+            cell.setCellStyle(titleStyle);
+            cell.setCellValue("Dataset Code: " + datasetCode);
+
+            row = instructionsSheet.createRow(rowIndex);
+            rowIndex++;
+            cell = row.createCell(0);
+            cell.setCellStyle(titleStyle);
+            cell.setCellValue("Accesstion Number: " + accesstionNumber);
+
+            row = instructionsSheet.createRow(rowIndex);
+            rowIndex++;
+            cell = row.createCell(0);
+            cell.setCellStyle(titleStyle);
+            cell.setCellValue("Unique Collection Number: " + collectionNumber);
+
+        }
+
+
         // Print todays date
-        row = instructionsSheet.createRow(3);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
         DateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
@@ -537,12 +608,15 @@ public class templateProcessor {
         cell.setCellValue("Template generated on " + dateFormat.format(cal.getTime()));
 
         // Default sheet instructions
-        row = instructionsSheet.createRow(5);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(defaultSheetName + " Tab");
 
-        row = instructionsSheet.createRow(6);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(wrapStyle);
         cell.setCellValue("Please fill out each field in the \"" + defaultSheetName + "\" tab as completely as possible. " +
@@ -556,23 +630,27 @@ public class templateProcessor {
                 "in any order so long as you don't change the field names.");
 
         // data Fields sheet
-        row = instructionsSheet.createRow(8);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(dataFieldsSheetName + " Tab");
 
-        row = instructionsSheet.createRow(9);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(wrapStyle);
         cell.setCellValue("This tab contains column names, associated URIs and definitions for each column.");
 
         //Lists Tab
-        row = instructionsSheet.createRow(11);
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(headingStyle);
         cell.setCellValue(listsSheetName + " Tab");
 
-        row = instructionsSheet.createRow(12);
+        row = instructionsSheet.createRow(rowIndex);
         cell = row.createCell(0);
         cell.setCellStyle(wrapStyle);
         cell.setCellValue("This tab contains controlled vocabulary lists for certain fields.  DO NOT EDIT this sheet!");

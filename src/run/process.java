@@ -105,6 +105,22 @@ public class process {
         this.outputPrefix = "output";
     }
 
+    /**
+     * Check if this is an NMNH project
+     * @return
+     * @throws Exception
+     */
+    public Boolean isNMNHProject() throws Exception {
+        Fims fims = new Fims(mapping);
+        addFimsRules(new Digester(), fims);
+
+        String nmnh = fims.getMetadata().getNMNH();
+        if (nmnh == null || !nmnh.equalsIgnoreCase("true"))
+            return false;
+        else
+            return true;
+    }
+
     public static bcidConnector createConnection(String username, String password) throws FIMSException {
         bcidConnector bcidConnector = new bcidConnector();
 

@@ -24,6 +24,7 @@
 		}
 
     function download_file(){
+        isNMNHProject(getProjectID()).done(function(accessionNumber, collectionNumber) {
 		    // TODO: create a single place for our biocode-fims service calls
 			var url = '/biocode-fims/rest/templates/createExcel/';
 			var input_string = '';
@@ -35,10 +36,16 @@
 			});
 			input_string+='<input type="hidden" name="project_id" value="' + getProjectID() + '" />';
 
+			if (accessionNumber != null) {
+			    input_string += '<input type="hidden" name="accession_number" value="' + accessionNumber + '"/>' +
+			        '<input type="hidden" name="collection_number" value="' + collectionNumber + '"/>';
+			}
+
 			// Pass the form to the server and submit
 			//showMessage("STILL TO CODE, CALL: " + url + " with input_string = " + input_string);
 			// Get the form parameter correct.
 			$('<form action="'+ url +'" method="post">'+input_string+'</form>').appendTo('body').submit().remove();
+        });
     }
 
     // Processing functions
@@ -62,3 +69,50 @@
 			}
 	    });
     })
+
+    // show a dialog to get the user's accession number and unique collection number
+    function NMNHDialog() {
+        var d = new $.Deferred();
+        var title = "NMNH Project Additional Information"
+        var message = "This is an NMNH project. Please enter:<br>" +
+            "Accession Number: <input type='text' id='accession_number' /><br>" +
+            "Unique Collection Number: <input type='text' id='unique_collection_number' />";
+
+        var buttons = {
+            "Create": function() {
+                var digitRegExp = /^\d+$/;
+                var alNumRegExp = /^\w+$/;
+                if (!digitRegExp.test($("#accession_number").val()) || !alNumRegExp.test($("#unique_collection_number").val())) {
+                    var error = "<br><p class=error>Make sure you Accession Number is an integer and you Unique Collection Number is an alphanumeric!</p>";
+                    dialog(message + error, title, buttons);
+                } else {
+                    d.resolve($("#accession_number").val(), $("#unique_collection_number").val());
+                    $(this).dialog("close");
+                }
+            },
+            "Cancel": function() {
+                d.reject();
+                $(this).dialog("close");
+            }
+        }
+        dialog(message, title, buttons);
+        return d.promise();
+    }
+
+    // check if the project is an NMNHProject. If it is, we get the user's accession number and unique collection number
+    function isNMNHProject(projectId) {
+        var d = new $.Deferred();
+        $.getJSON("/biocode-fims/rest/utils/isNMNHProject/" + projectId)
+            .done(function(data) {
+                if (data.isNMNHProject == "true") {
+                    NMNHDialog().then(function(accessionNumber, collectionNumber) {
+                        d.resolve(accessionNumber, collectionNumber);
+                    });
+                } else {
+                    d.resolve();
+                }
+            }).fail(function() {
+                d.resolve;
+        });
+        return d.promise();
+    }
