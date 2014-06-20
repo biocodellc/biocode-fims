@@ -13,6 +13,7 @@
     <link href="css/alerts.css" rel="stylesheet"/>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/templates.js"></script>
 

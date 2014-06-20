@@ -56,6 +56,8 @@
 
     <button type='button' id='excel_button' class="btn btn-default">Export Excel</button>
 
+    <div id=dialogContainer></div>
+
 </div>
 </div>
 

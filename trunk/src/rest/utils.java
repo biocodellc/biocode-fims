@@ -1,9 +1,12 @@
 package rest;
 
+import digester.Fims;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import run.configurationFileFetcher;
 import run.process;
+import run.processController;
+import settings.FIMSException;
 import settings.bcidConnector;
 import utils.SettingsManager;
 
@@ -121,6 +124,29 @@ public class utils {
         }
 
         return Response.ok(sb.toString()).build();
+    }
+
+    @GET
+    @Path("/isNMNHProject/{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response isNMNGProject(@PathParam("project_id") Integer projectId) {
+        try {
+            processController processController = new processController(projectId, null);
+            process p = new process(
+                    null,
+                    uploadPath(),
+                    null,
+                    processController);
+
+            return Response.ok("{\"isNMNHProject\": \"" + p.isNMNHProject() + "\"}").build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity("{\"error\": \"Server Error: " + e.getMessage() + "\"}").build();
+        }
+    }
+
+    static String uploadpath() {
+        return context.getRealPath("tripleOutput") + File.separator;
     }
 }
 

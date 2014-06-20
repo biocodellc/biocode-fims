@@ -1,6 +1,9 @@
 package rest;
 
+import run.process;
+import run.processController;
 import run.templateProcessor;
+import utils.stringGenerator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -84,13 +87,47 @@ public class templates {
     @Produces("application/vnd.ms-excel")
     public Response createExcel(
             @FormParam("fields") List<String> fields,
-            @FormParam("project_id") Integer project_id) throws Exception {
+            @FormParam("project_id") Integer project_id,
+            @FormParam("accession_number") Integer accessionNumber,
+            @FormParam("collection_number") String collectionNumber) throws Exception {
+
+        String datasetCode = null;
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
+        if (accessionNumber != null || collectionNumber != null) {
+            if (accessionNumber == null || collectionNumber == null) {
+                return Response.status(400).entity("{\"error\": \"" +
+                        " Both Accession number and Unique Collection numbers are required if this is an NMNH project.").build();
+            // only need to check that collectionNumber is valid since an exception would have been thrown if accessionNumber
+            // wasn't an Integer
+            } else if (!collectionNumber.matches("^\\w+$")) {
+                return Response.status(400).entity("{\"error\": \"The unique collection number must be an alphanumeric.").build();
+            }
+
+        }
+
+        // Check if the project is an NMNH project
+        processController processController = new processController(project_id, null);
+        process p = new process(
+                null,
+                uploadPath(),
+                null,
+                processController);
+        if (p.isNMNHProject()) {
+            if (accessionNumber == null || collectionNumber == null) {
+                return Response.status(400).entity("\"error\": " +
+                    "\"This is an NMNH project. Accession number and collection number are required.").build();
+            }
+
+            // generate an expedition code
+            datasetCode = stringGenerator.generateString(16);
+        }
+
         // Create the template processor which handles all functions related to the template, reading, generation
-        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
+        templateProcessor t = new templateProcessor(project_id, uploadPath(), true,
+                accessionNumber, collectionNumber, datasetCode);
 
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();
