@@ -209,8 +209,7 @@ public class fimsQueryBuilder {
             // Construct a  fimsModel
             fimsModel = fims.getFIMSModel(getModel());
             if (format.equals("model"))
-                return fimsModel.model.toString()
-                        ;
+                return fimsModel.model.toString();
             if (format == null)
                 format = "json";
 
