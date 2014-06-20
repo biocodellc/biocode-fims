@@ -28,7 +28,6 @@ public class templateProcessor {
     private Fims fims;
     private Validation validation;
     private Integer accesstionNumber;
-    private String collectionNumber;
     private String datasetCode;
     HSSFSheet defaultSheet;
     HSSFWorkbook workbook;
@@ -94,17 +93,16 @@ public class templateProcessor {
      * @param outputFolder
      * @param useCache
      * @param accessionNumber
-     * @param collectionNumber
+     * @param datasetCode
      * @throws Exception
      */
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
-                             Integer accessionNumber, String collectionNumber, String datasetCode) throws Exception {
-        // we can't have a null value for accessionNumber, collectionNumber, or datasetCode if using this constructor
-        if (accessionNumber == null || collectionNumber == null || datasetCode == null) {
-            throw new FIMSException("dataset code, accession number and collection number are required");
+                             Integer accessionNumber, String datasetCode) throws Exception {
+        // we can't have a null value for accessionNumber or datasetCode if using this constructor
+        if (accessionNumber == null || datasetCode == null) {
+            throw new FIMSException("dataset code and accession number are required");
         }
         this.accesstionNumber = accessionNumber;
-        this.collectionNumber = collectionNumber;
         this.datasetCode = datasetCode;
 
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
@@ -563,19 +561,17 @@ public class templateProcessor {
         cell.setCellStyle(titleStyle);
         cell.setCellValue(project_title);
 
-        // if we have a datasetCode, and accesstionNumber and collectionNumber, hide them in the first row and make them visible
+        // if we have a datasetCode and accesstionNumber, hide them in the first row and make them visible
         // if we have one, we have all three.
         if (accesstionNumber != null) {
-            // hide the accesstionNumber and collectionNumber
+            // hide the accesstionNumber and datasetCode
             row = instructionsSheet.getRow(0);
             cell = row.createCell(1);
             cell.setCellValue("~dataset_code=" + datasetCode + "~");
             cell = row.createCell(2);
             cell.setCellValue("~accesstion_number=" + accesstionNumber + "~");
-            cell = row.createCell(3);
-            cell.setCellValue("~collection_number=" + collectionNumber + "~");
 
-            // show the datasetCode, accesstionNumber and collectionNumber
+            // show the datasetCode and accesstionNumber
             row = instructionsSheet.createRow(rowIndex);
             rowIndex++;
             cell = row.createCell(0);
@@ -587,13 +583,6 @@ public class templateProcessor {
             cell = row.createCell(0);
             cell.setCellStyle(titleStyle);
             cell.setCellValue("Accesstion Number: " + accesstionNumber);
-
-            row = instructionsSheet.createRow(rowIndex);
-            rowIndex++;
-            cell = row.createCell(0);
-            cell.setCellStyle(titleStyle);
-            cell.setCellValue("Unique Collection Number: " + collectionNumber);
-
         }
 
 

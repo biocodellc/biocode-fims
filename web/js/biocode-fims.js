@@ -582,7 +582,7 @@ function extractDatasetCode() {
         // after file has been read, extract the project_id if present
         f.onload = function () {
             var fileContents = f.result;
-            var re = "~dataset_code=[a-zA-Z0-9-_]+~";
+            var re = "~dataset_code=[a-zA-Z0-9-_]{4,16}~";
             try {
                 var results = fileContents.match(re)[0];
 

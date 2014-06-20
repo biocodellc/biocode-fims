@@ -24,7 +24,7 @@
 		}
 
     function download_file(){
-        isNMNHProject(getProjectID()).done(function(accessionNumber, collectionNumber) {
+        isNMNHProject(getProjectID()).done(function(accessionNumber, datasetCode) {
 		    // TODO: create a single place for our biocode-fims service calls
 			var url = '/biocode-fims/rest/templates/createExcel/';
 			var input_string = '';
@@ -38,7 +38,7 @@
 
 			if (accessionNumber != null) {
 			    input_string += '<input type="hidden" name="accession_number" value="' + accessionNumber + '"/>' +
-			        '<input type="hidden" name="collection_number" value="' + collectionNumber + '"/>';
+			        '<input type="hidden" name="dataset_code" value="' + datasetCode + '"/>';
 			}
 
 			// Pass the form to the server and submit
@@ -76,18 +76,50 @@
         var title = "NMNH Project Additional Information"
         var message = "This is an NMNH project. Please enter:<br>" +
             "Accession Number: <input type='text' id='accession_number' /><br>" +
-            "Unique Collection Number: <input type='text' id='unique_collection_number' />";
+            "Dataset Code: <input type='text' id='dataset_code' />";
 
         var buttons = {
             "Create": function() {
                 var digitRegExp = /^\d+$/;
-                var alNumRegExp = /^\w+$/;
-                if (!digitRegExp.test($("#accession_number").val()) || !alNumRegExp.test($("#unique_collection_number").val())) {
-                    var error = "<br><p class=error>Make sure you Accession Number is an integer and you Unique Collection Number is an alphanumeric!</p>";
+                var alNumRegExp = /^\w{4,16}$/;
+                if (!digitRegExp.test($("#accession_number").val()) || !alNumRegExp.test($("#dataset_code").val())) {
+                    var error = "<br><p class=error>Make sure your Accession Number is an integer and the Dataset Code is " +
+                        "an alphanumeric between 4 and 16 chars long!</p>";
                     dialog(message + error, title, buttons);
                 } else {
-                    d.resolve($("#accession_number").val(), $("#unique_collection_number").val());
-                    $(this).dialog("close");
+                    $.getJSON("rest/utils/validateExpedition/" + $("#projects").val() + "/" + $("#dataset_code").val())
+                        .done(function(data) {
+                            if (data.insert) {
+                                var buttons = {
+                                    "Continue": function() {
+                                        d.resolve($("#accession_number").val(), $("#dataset_code").val());
+                                        $(this).dialog("close");
+                                    },
+                                    "Cancel": function() {
+                                        d.reject();
+                                        $(this).dialog("close");
+                                    }
+                                }
+
+                                dialog("Warning: Dataset Code" + $("#dataset_code").val() + " already exists.", "Dataset Code", buttons);
+                            } else {
+                                d.resolve($("#accession_number").val(), $("#dataset_code").val());
+                                $(this).dialog("close");
+                            }
+                        }).fail(function(jqxhr) {
+                            var buttons = {
+                                "Continue": function() {
+                                    d.resolve($("#accession_number").val(), $("#dataset_code").val());
+                                    $(this).dialog("close");
+                                },
+                                "Cancel": function() {
+                                    d.reject();
+                                    $(this).dialog("close");
+                                }
+                            }
+                            var message = "Dataset validation failed.<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);
+                            dialog(message, "Dataset Error", buttons);
+                        });
                 }
             },
             "Cancel": function() {
@@ -105,8 +137,8 @@
         $.getJSON("/biocode-fims/rest/utils/isNMNHProject/" + projectId)
             .done(function(data) {
                 if (data.isNMNHProject == "true") {
-                    NMNHDialog().then(function(accessionNumber, collectionNumber) {
-                        d.resolve(accessionNumber, collectionNumber);
+                    NMNHDialog().then(function(accessionNumber, datasetCode) {
+                        d.resolve(accessionNumber, datasetCode);
                     });
                 } else {
                     d.resolve();
