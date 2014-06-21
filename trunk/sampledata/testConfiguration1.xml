@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fims xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation='bioValidator-0.9.xsd'>
+
+    <metadata
+            doi="a doi"
+            shortname="shortname"
+            eml_location="eml_location"
+            target="http://localhost:3030/ds">
+        <![CDATA[Some text with abstract]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Specimens'>
+
+            <rule type='uniqueValue' column='Specimen_Num_Collector' level='error'></rule>
+
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>Coll_EventID_collector</field>
+                <field>EnteredBy</field>
+                <field>Specimen_Num_Collector</field>
+                <field>HoldingInstitution</field>
+                <field>Phylum</field>
+            </rule>
+
+            <rule type='checkInXMLFields' column='relaxant' list='relaxant' level='warning'></rule>
+
+            <rule type='checkInXMLFields' column='preservative' list='preservative' level='warning'></rule>
+
+        </worksheet>
+
+        <lists>
+
+            <list alias='preservative'>
+                <field>10% formalin</field>
+                <field>100% ethanol</field>
+                <field>75% ethanol</field>
+                <field>80% ethanol</field>
+                <field>RNAlater</field>
+                <field>silica gel</field>
+            </list>
+
+            <list alias='relaxant'>
+                <field>chloretone</field>
+                <field>clove oil</field>
+                <field>ethyl acetate</field>
+                <field>ethylene glycol</field>
+                <field>freezer</field>
+            </list>
+
+            <list alias='horizontalDatum'>
+                <field>WGS1984</field>
+                <field>NAD1927</field>
+                <field>NAD1983</field>
+                <field>unknown</field>
+            </list>
+
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector2"
+                conceptAlias="Record"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="5">
+            <attribute column="Specimen_Num_Collector" uri="rdfs:Label"/>
+        </entity>
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptAlias="Identification"
+                conceptURI="http://purl.org/dc/dcmitype/Event"
+                entityId="1">
+            <attribute column="IdentifiedBy" uri="dwc:identifiedBy"/>
+        </entity>
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptAlias="Taxon"
+                conceptURI="http://purl.obolibrary.org/obo/IAO_0000030"
+                entityId="4">
+            <attribute column="SpecificEpithet" uri="dwc:scientificName"/>
+            <attribute column="Phylum" uri="dwc:phylum"/>
+        </entity>
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="format_name96"
+                conceptAlias="MaterialSample"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                entityId="2">
+            <attribute column="format_name96" uri="bsc:plate"/>
+            <attribute column="well_number96" uri="bsc:well"/>
+        </entity>
+
+        <entity
+                worksheet="Specimens"
+                worksheetUniqueKey="Specimen_Num_Collector"
+                conceptAlias="MaterialSample"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                entityId="3">
+            <attribute column="preservative" uri="bsc:preservative"/>
+            <attribute column="host" uri="dwc:host"/>
+            <attribute column="relaxant" uri="bsc:relaxant"/>
+        </entity>
+
+
+        <relation>
+            <subject>3</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>5</object>
+        </relation>
+        <relation>
+            <subject>1</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>3</object>
+        </relation>
+
+        <relation>
+            <subject>4</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>1</object>
+        </relation>
+
+        <relation>
+            <subject>2</subject>
+            <predicate>bsc:depends_on</predicate>
+            <object>3</object>
+        </relation>
+
+    </mapping>
+
+
+</fims>
+

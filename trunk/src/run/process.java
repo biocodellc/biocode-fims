@@ -66,7 +66,7 @@ public class process {
         try {
             configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new FIMSException("Unable to obtain configuration file from server... <br>" +
                     "Please check that your project code is valid.<br>");
         }
@@ -246,11 +246,12 @@ public class process {
             rm.loadReaders();
             tdr = rm.openFile(processController.getInputFilename());
 
-            // Perform validation
+            // Load validation rules
             validation = new Validation();
             addValidationRules(new Digester(), validation);
+
+            // Run the validation
             validation.run(tdr, outputPrefix, outputFolder, mapping);
-            //validation.printMessages(processController);
 
             processController = validation.printMessages(processController);
             processController.setValidation(validation);
