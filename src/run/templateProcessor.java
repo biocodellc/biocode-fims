@@ -47,7 +47,7 @@ public class templateProcessor {
     File configFile;
     Integer project_id;
 
-    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
         // Instantiate the project output Folder
         configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
         configFile = fetcher.getOutputFile();
