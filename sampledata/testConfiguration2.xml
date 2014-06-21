@@ -1,0 +1,414 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="ucjepsTemplate"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+        <![CDATA[Insert descriptive text and helpful comments for selecting UCJEPS data here.]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='Coll_Num' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>Coll_Num</field>
+                <field>Collector</field>
+                <field>Locality</field>
+            </rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+                <field>ScientificName</field>
+            </rule>
+            <rule type='isNumber' column='Det_Year' level='error'/>
+			<rule type='isNumber' column='Det_Month' level='error'/>
+			<rule type='isNumber' column='Det_Day' level='error'/>
+			<rule type='isNumber' column='Coll_Year' level='error'/>
+            <rule type='isNumber' column='Coll_Month' level='error'/>
+			<rule type='isNumber' column='Coll_Day' level='error'/>
+			<rule type='isNumber' column='Late_Coll_Year' level='error'/>
+            <rule type='isNumber' column='Late_Coll_Month' level='error'/>
+			<rule type='isNumber' column='Late_Coll_Day' level='error'/>
+            <rule type='isNumber' column='Coordinate_Uncertainty_In_Meters' level='error'/>
+            <rule type='isNumber' column='Elevation' level='error'/>
+            <rule type='isNumber' column='Depth' level='error'/>
+            <rule type='isNumber' column='Above_Surface' level='error'/>
+         	<rule type='checkInXMLFields' column='County' list='County' level='warning'></rule>
+         	<rule type='checkInXMLFields' column='State_Province' list='State_Province' level='warning'></rule>
+            <rule type='checkInXMLFields' column='Country' list='Country' level='warning'></rule>
+        	<rule type='checkInXMLFields' column='ID_Qualifier' list='ID_Qualifier' level='error'></rule>
+        	<rule type='checkInXMLFields' column='Datum' list='Datum' level='error'></rule>
+         	<rule type='checkInXMLFields' column='Above_Surface_Units' list='Elevation_Units' level='error'></rule>
+			<rule type='checkInXMLFields' column='Depth_Units' list='Elevation_Units' level='error'></rule>
+			<rule type='checkInXMLFields' column='Elevation_Units' list='Elevation_Units' level='error'></rule>
+         	<rule type='checkInXMLFields' column='Sex' list='Sex' level='error'></rule>
+         	<rule type='checkInXMLFields' column='Phase' list='Phase' level='error'></rule>
+         	<rule type='checkInXMLFields' column='Cultivated' list='YesNo' level='error'></rule>
+        </worksheet>
+
+        <lists>
+			<list alias='YesNo' caseInsensitive='false'>
+				<field>Yes</field>
+				<field>No</field>
+			</list>
+
+			<list alias='Phase' caseInsensitive='false'>
+				<field>Unknown</field>
+				<field>Cone</field>
+				<field>Flowering</field>
+				<field>Flowering/Fruiting</field>
+				<field>Fruiting</field>
+				<field>Gametophyte</field>
+				<field>Juvenile</field>
+				<field>Spores/Sporangia</field>
+				<field>Sporophyte</field>
+				<field>Tetrasporophyte</field>
+				<field>Vegetative (non-reproductive)</field>
+			</list>
+
+			<list alias='Sex' caseInsensitive='false'>
+				<field>male</field>
+				<field>female</field>
+			</list>
+
+			<list alias='Elevation_Units' caseInsensitive='false'>
+				<field>centimeters</field>
+				<field>inches</field>
+				<field>feet</field>
+				<field>meters</field>
+				<field>kilometers</field>
+				<field>miles</field>
+			</list>
+
+			<list alias='Datum' caseInsensitive='false'>
+				<field>Not Recorded</field>
+				<field>ADG66</field>
+				<field>NAD27</field>
+				<field>NAD83</field>
+				<field>NAD83&amp;WGS84</field>
+				<field>WGS84</field>
+			</list>
+
+			<list alias='State_Province' caseInsensitive='false'>
+				<field>CA</field>
+			</list>
+
+			<list alias='Country' caseInsensitive='false'>
+				<field>USA</field>
+			</list>
+
+			<list alias='ID_Qualifier' caseInsensitive='false'>
+                <field>unknown</field>
+                <field>aff.</field>
+                <field>auct.</field>
+                <field>cf.</field>
+                <field>complex</field>
+                <field>fide</field>
+                <field>forsan</field>
+                <field>group</field>
+                <field>hybrid (X)</field>
+                <field>indet.</field>
+                <field>ined.</field>
+                <field>intermediate</field>
+                <field>sensu</field>
+                <field>sensu lato</field>
+                <field>sensu stricto</field>
+                <field>vide</field>
+                <field>?</field>
+            </list>
+
+			<list alias='County' caseInsensitive='false'>
+				<field>Alameda</field>
+				<field>Alpine</field>
+				<field>Amador</field>
+				<field>Butte</field>
+				<field>Calaveras</field>
+				<field>Colusa</field>
+				<field>Contra Costa</field>
+				<field>Del Norte</field>
+				<field>El Dorado</field>
+				<field>Fresno</field>
+				<field>Glenn</field>
+				<field>Humboldt</field>
+				<field>Imperial</field>
+				<field>Inyo</field>
+				<field>Kern</field>
+				<field>Kings</field>
+				<field>Lake</field>
+				<field>Lassen</field>
+				<field>Los Angeles</field>
+				<field>Madera</field>
+				<field>Marin</field>
+				<field>Mariposa</field>
+				<field>Mendocino</field>
+				<field>Merced</field>
+				<field>Modoc</field>
+				<field>Mono</field>
+				<field>Monterey</field>
+				<field>Napa</field>
+				<field>Nevada</field>
+				<field>Orange</field>
+				<field>Placer</field>
+				<field>Plumas</field>
+				<field>Riverside</field>
+				<field>Sacramento</field>
+				<field>San Benito</field>
+				<field>San Bernardino</field>
+				<field>San Diego</field>
+				<field>San Francisco</field>
+				<field>San Joaquin</field>
+				<field>San Luis Obispo</field>
+				<field>San Mateo</field>
+				<field>Santa Barbara</field>
+				<field>Santa Clara</field>
+				<field>Santa Cruz</field>
+				<field>Shasta</field>
+				<field>Sierra</field>
+				<field>Siskiyou</field>
+				<field>Solano</field>
+				<field>Sonoma</field>
+				<field>Stanislaus</field>
+				<field>Sutter</field>
+				<field>Tehama</field>
+				<field>Trinity</field>
+				<field>Tulare</field>
+				<field>Tuolumne</field>
+				<field>Ventura</field>
+				<field>Yolo</field>
+				<field>Yuba</field>
+			</list>
+
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Resource"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+
+			<attribute column='ScientificName' uri='urn:scientificname' defined_by='urn:scientificname'>
+			</attribute>
+			<attribute column='ID_Qualifier' uri='urn:idqualifier' defined_by='urn:idqualifier'>
+			<![CDATA[
+					Identification qualifiers such as "cf.", "aff." etc.  Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='DeterminedBy' uri='urn:determinedby' defined_by='urn:determinedby'>
+			<![CDATA[
+					The name of the person who determined the identification. The format "W. L. Jepson" is preferred.
+				]]>
+			</attribute>
+			<attribute column='Det Year' uri='urn:det_year' defined_by='urn:det_year'>
+			<![CDATA[
+					Year of determination. YYYY format.
+				]]>
+			</attribute>
+			<attribute column='Det_Month' uri='urn:det_year' defined_by='urn:det_month'>
+			<![CDATA[
+					Month of determination. MM format.
+				]]>
+			</attribute>
+			<attribute column='Det_Day' uri='urn:det_day' defined_by='urn:det_day'>
+			<![CDATA[
+					Day of determination. DD format.
+				]]>
+			</attribute>
+			<attribute column='Det_Date_Display' uri='urn:det_date_display' defined_by='urn:det_date_display'>
+			<![CDATA[
+					Free text date of determination, if you don't want the format YYYY-MM-DD printed on the label.
+				]]>
+			</attribute>
+			<attribute column='Label_Header' uri='urn:label_header' defined_by='urn:label_header'>
+			<![CDATA[
+					Project or expedition title as it would appear at the top of a herbarium label. e.g. "Plants of Contra Costa County"
+				]]>
+			</attribute>
+			<attribute column='Label_Footer' uri='urn:label_footer' defined_by='urn:label_footer'>
+			<![CDATA[
+					Footer to appear at the bottom of the herbarium label. e.g. "University Herbarium: University of California, Berkeley"
+				]]>
+			</attribute>
+			<attribute column='Plant_Description' uri='urn:brief_desc' defined_by='urn:brief_desc'>
+			<![CDATA[
+					Brief description of plant macromorphology.
+				]]>
+			</attribute>
+			<attribute column='Comments' uri='urn:comments' defined_by='urn:comments'>
+			<![CDATA[
+					Collection comments/notes which do not fit other provided fields.
+				]]>
+			</attribute>
+			<attribute column='Coll_Year' uri='urn:coll_year' defined_by='urn:coll_year'>
+			<![CDATA[
+					Year of collection, or if a collection date is a range, year of the earliest date. YYYY format.
+				]]>
+			</attribute>
+			<attribute column='Coll_Month' uri='urn:coll_month' defined_by='urn:coll_month'>
+			<![CDATA[
+					Month of collection, or if a collection date is a range, month of the earliest date. MM format.
+				]]>
+			</attribute>
+			<attribute column='Coll_Day' uri='urn:coll_day' defined_by='urn:coll_day'>
+			<![CDATA[
+					Day of collection, or if a collection date is a range, day of the earliest date. DD format.
+				]]>
+			</attribute>
+			<attribute column='Late_Coll_Year' uri='urn:late_coll_year' defined_by='urn:late_coll_year'>
+			<![CDATA[
+					Only use when the collection date is a range. Year of latest date. YYYY format.
+				]]>
+			</attribute>
+			<attribute column='Late_Coll_Month' uri='urn:late_coll_month' defined_by='urn:late_coll_month'>
+			<![CDATA[
+					Only use when the collection date is a range. Month of latest date. MM format.
+				]]>
+			</attribute>
+			<attribute column='Late_Coll_Day' uri='urn:late_coll_day' defined_by='urn:late_coll_day'>
+			<![CDATA[
+					Only use when the collection date is a range. Day of latest date. DD format.
+				]]>
+			</attribute>
+			<attribute column='Coll_Date' uri='urn:coll_date' defined_by='urn:coll_date'>
+			<![CDATA[
+					Free text date of collection, if you don't want the format YYYY-MM-DD printed on the label.
+				]]>
+			</attribute>
+			<attribute column='Collector' uri='urn:collector' defined_by='urn:collector'>
+				<![CDATA[
+					Required. The main collector to whom the collector number corresponds. The format "W. L. Jepson" is preferred. To record multiple collectors, use in conjunction with the Other_Collectors field.
+				]]>
+			</attribute>
+			<attribute column='Coll_Num' uri='urn:coll_numb' defined_by='urn:coll_num'>
+			<![CDATA[
+					Collector number assigned by the main collector. Must be unique within the spreadsheet. Sequential collector numbers without prefixes or suffixes are highly encouraged.
+				]]>
+			</attribute>
+			<attribute column='Other_Collectors' uri='urn:other_collectors' defined_by='urn:other_collectors'>
+				<![CDATA[
+					Use when assigning multiple collectors to a single collection. Record all collectors except the main collector, separated by commas, e.g. "W. L. Jepson, H. M. Hall".
+				]]>
+			</attribute>
+			<attribute column='Habitat' uri='urn:habitat' defined_by='urn:habitat'>
+			<![CDATA[
+					Free-text description of plant habitat. Associated taxa are recorded in a separate field.
+				]]>
+			</attribute>
+			<attribute column='Associated_Taxa' uri='urn:associated_taxa' defined_by='urn:associated_taxa'>
+			<![CDATA[
+					List of scientific names, separated by semicolon, of taxa associated with the specimen collected. E.g. "Planta alba; Planta rubra"
+				]]>
+			</attribute>
+			<attribute column='Country' uri='urn:country' defined_by='urn:country'>
+			<![CDATA[
+					Country of collection. Use "USA" for United States
+				]]>
+			</attribute>
+			<attribute column='State_Province' uri='urn:stateprovince' defined_by='urn:stateprovince'>
+			<![CDATA[
+					State or Province of collection. Use "CA" for California.
+				]]>
+			</attribute>
+			<attribute column='County' uri='urn:county' defined_by='urn:county'>
+			<![CDATA[
+					County of collection. A list of California counties is provided, and FIMS will warn if the county does not match the list.
+				]]>
+			</attribute>
+			<attribute column='Locality' uri='urn:locality' defined_by='urn:locality'>
+			<![CDATA[
+					Free-text description of collection locality. Habitat data is recorded in a separate field
+				]]>
+			</attribute>
+			<attribute column='Latitude' uri='urn:latitude' defined_by='urn:latitude'>
+				<![CDATA[
+					Decimal degrees are strongly preferred (e.g. 37.87517), however Degrees Minutes Seconds (e.g. 37 25 45.3 N) and Degree Decimal Minutes (e.g. 37 25.453 N) formats are also acceptable.
+				]]>
+			</attribute>
+            <attribute column='Longitude' uri='urn:longitude' defined_by='urn:longitude'>
+            	<![CDATA[
+					Decimal degrees are strongly preferred (e.g. -122.23698), however Degrees Minutes Seconds (e.g. 122 25 45.3 W) and Degree Decimal Minutes (e.g. 122 25.453 W) formats are also acceptable.
+				]]>
+			</attribute>
+			<attribute column='Datum' uri='urn:datum' defined_by='urn:datum'>
+            	<![CDATA[
+					Datum for the recorded coordinates. Most GPS units and online mapping products (GoogleMaps/Earth, Etc.) use "WGS84". Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='Coordinate_Uncertainty_In_Meters' uri='urn:uncertainty' defined_by='urn:uncertainty'>
+				<![CDATA[
+					Coordinate uncertainty in meters, provided by GPS unit or determined by georeferencing methods
+				]]>
+			</attribute>
+			<attribute column='TRS' uri='urn:trs' defined_by='urn:trs'>
+				<![CDATA[
+					Township Range Section coordinates. Decimal degrees are strongly preferred using the Latitude and Longitude columns, but if TRS data is all that is available please record in the following format: T12N R8E S16NE.
+				]]>
+			</attribute>
+			<attribute column='Coordinate_Source' uri='urn:coordinate_source' defined_by='urn:coordinate_source'>
+			<![CDATA[
+					Coordinate source. Please record "Collector GPS" if recorded from a GPS unit, or "Collector Georeference" if georeferenced otherwise
+				]]>
+			</attribute>
+			<attribute column='Coordinate_Source_Detail' uri='urn:coordinate_source_detail' defined_by='urn:coordinate_source_detail'>
+			<![CDATA[
+					Free-text field to record additional information about coordinate source(s), to be retained in the database
+				]]>
+			</attribute>
+			<attribute column='Elevation' uri='urn:elevation' defined_by='urn:elevation'>
+			<![CDATA[
+					Numerical value for elevation at which the specimen was collected. Please use with "Elevation_Units"
+				]]>
+			</attribute>
+			<attribute column='Elevation_Units' uri='urn:elevation_units' defined_by='urn:elevation_units'>
+			<![CDATA[
+					Units for the value recorded in "Elevation". Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='Depth' uri='urn:depth' defined_by='urn:depth'>
+			<![CDATA[
+					Numerical value for depth at which a submerged/emergent specimen was collected. Please use with "Depth_Units"
+				]]>
+			</attribute>
+			<attribute column='Depth_Units' uri='urn:depth_units' defined_by='urn:depth_units'>
+			<![CDATA[
+					Units for the value recorded in "Depth". Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='Above_Surface' uri='urn:above_surface' defined_by='urn:above_surface'>
+				<![CDATA[
+					Numerical value for height at which an epiphytic specimen was collected. Please use with "Above_Surface_Units"
+				]]>
+			</attribute>
+			<attribute column='Above_Surface_Units' uri='urn:above_surface_units' defined_by='urn:above_surface_units'>
+			<![CDATA[
+					Units for the value recorded in "Above_Surface". Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='Sex' uri='urn:sex' defined_by='urn:sex'>
+			<![CDATA[
+					Sex of the specimen collected, if specifically "Male" or "Female".
+				]]>
+			</attribute>
+			<attribute column='Phase' uri='urn:phase' defined_by='urn:phase'>
+			<![CDATA[
+					Phenological/Developmental phase of the specimen collected. Must use the provided vocabulary.
+				]]>
+			</attribute>
+			<attribute column='Cultivated?' uri='urn:cultivated' defined_by='urn:cultivated'>
+			<![CDATA[
+					Cultivation status of the specimen. "Yes" if the specimen is from a garden or otherwise intentionally planted.
+				]]>
+			</attribute>
+
+        </entity>
+    </mapping>
+
+</fims>

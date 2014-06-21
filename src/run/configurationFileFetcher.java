@@ -3,15 +3,22 @@ package run;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.*;
 import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
 import utils.SettingsManager;
 
+import javax.xml.parsers.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -37,11 +44,12 @@ public class configurationFileFetcher {
      * If file is more than 24 hours old or does not exist then return false
      *
      * @param defaultOutputDirectory
+     *
      * @return
      */
     public Boolean getCachedConfigFile(String defaultOutputDirectory) throws Exception {
         // Create a file reference
-        File file = new File(defaultOutputDirectory,configFileName);
+        File file = new File(defaultOutputDirectory, configFileName);
 
         // check for file existing, if not then return false
         if (!file.exists())
@@ -52,7 +60,7 @@ public class configurationFileFetcher {
             return false;
 
         // File exists and is younger than 24 hours old, set the outputFile class variable
-        outputFile = new File(defaultOutputDirectory,configFileName);
+        outputFile = new File(defaultOutputDirectory, configFileName);
         return true;
     }
 
@@ -60,6 +68,7 @@ public class configurationFileFetcher {
      * Create the class object given a particular expedition code and a default Output Directory
      *
      * @param defaultOutputDirectory
+     *
      * @throws IOException
      */
     public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) throws Exception {
@@ -166,11 +175,14 @@ public class configurationFileFetcher {
     }
 
 
+
     /**
      * Readfile method -- used as a convenience in this class for testing.
      *
      * @param file
+     *
      * @return
+     *
      * @throws IOException
      */
     private static String readFile(File file) throws IOException {
@@ -201,4 +213,10 @@ public class configurationFileFetcher {
         }
     }
 
+}
+
+class configurationFileError extends Exception {
+    configurationFileError(String s) {
+        super(s);
+    }
 }
