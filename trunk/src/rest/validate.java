@@ -3,10 +3,13 @@ package rest;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONObject;
+import run.configurationFileError;
+import run.configurationFileTester;
 import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.bcidConnector;
+import settings.fimsPrinter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,12 +30,14 @@ public class validate {
 
     /**
      * service to validate a dataset against a project's rules
+     *
      * @param project_id
      * @param expedition_code
      * @param upload
      * @param is
      * @param fileData
      * @param request
+     *
      * @return
      */
     @POST
@@ -94,49 +99,68 @@ public class validate {
                     processController
             );
 
-            // Run the process
-            processController.appendStatus("Validating...<br>");
-            p.runValidation();
-
-            // if there were validation errors, we can't upload
-            if (processController.getHasErrors()) {
+            // Test the configuration file to see that we're good to go... definately stop the process if there is an error
+            configurationFileTester cFT = new configurationFileTester();
+            boolean configurationGood = true;
+            try {
+                cFT.testConfigFile(p.configFile);
+            } catch (configurationFileError configurationFileError) {
+                String message = "CONFIGURATION FILE ERROR...<br>Please talk to your project administrator to fix the following error:<br>\t" + configurationFileError.getMessage();
+                processController.setHasErrors(true);
+                processController.setValidated(false);
+                processController.appendStatus(message + "<br>");
+                configurationGood = false;
                 retVal.append("{\"done\": \"");
                 retVal.append(processController.getStatusSB().toString());
-                retVal.append("\"}");
-
-            } else if (upload != null && upload.equals("on")) {
-                 // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
-                 if (!processController.isValidated() && processController.getHasWarnings()) {
-                    retVal.append("{\"continue\": {\"message\": \"");
-                    retVal.append(processController.getStatusSB().toString());
-                    retVal.append("\"}}");
-
-                // there were no validation warnings and the user would like to upload, so continue
-                } else {
-                     retVal.append("{\"continue\": {}}");
-                }
-
-                // don't delete the inputFile because we'll need it for uploading
-                deleteInputFile = false;
-
-                // don't remove the controller as we will need it later for uploading this file
-                removeController = false;
-
-            // User doesn't want to upload, inform them of any validation warnings
-            } else if (processController.getHasWarnings()) {
-                retVal.append("{\"done\": \"");
-                retVal.append(processController.getStatusSB().toString());
-                retVal.append("\"}");
-            // User doesn't want to upload and the validation passed w/o any warnings or errors
-            } else {
-                //processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
-                processController.appendStatus("<br>" + processController.getWorksheetName() +
-                        " worksheet successfully validated.");
-                retVal.append("{\"done\": \"");
-                retVal.append(processController.getStatusSB());
                 retVal.append("\"}");
             }
-        } catch(FIMSException e) {
+
+            // Run the process only if the configuration is good.
+            if (configurationGood) {
+                processController.appendStatus("Validating...<br>");
+
+                p.runValidation();
+
+                // if there were validation errors, we can't upload
+                if (processController.getHasErrors()) {
+                    retVal.append("{\"done\": \"");
+                    retVal.append(processController.getStatusSB().toString());
+                    retVal.append("\"}");
+
+                } else if (upload != null && upload.equals("on")) {
+                    // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
+                    if (!processController.isValidated() && processController.getHasWarnings()) {
+                        retVal.append("{\"continue\": {\"message\": \"");
+                        retVal.append(processController.getStatusSB().toString());
+                        retVal.append("\"}}");
+
+                        // there were no validation warnings and the user would like to upload, so continue
+                    } else {
+                        retVal.append("{\"continue\": {}}");
+                    }
+
+                    // don't delete the inputFile because we'll need it for uploading
+                    deleteInputFile = false;
+
+                    // don't remove the controller as we will need it later for uploading this file
+                    removeController = false;
+
+                    // User doesn't want to upload, inform them of any validation warnings
+                } else if (processController.getHasWarnings()) {
+                    retVal.append("{\"done\": \"");
+                    retVal.append(processController.getStatusSB().toString());
+                    retVal.append("\"}");
+                    // User doesn't want to upload and the validation passed w/o any warnings or errors
+                } else {
+                    //processController.appendStatus("<br><font color=#188B00>" + processController.getWorksheetName() +
+                    processController.appendStatus("<br>" + processController.getWorksheetName() +
+                            " worksheet successfully validated.");
+                    retVal.append("{\"done\": \"");
+                    retVal.append(processController.getStatusSB());
+                    retVal.append("\"}");
+                }
+            }
+        } catch (FIMSException e) {
             e.printStackTrace();
             return "{\"done\": \"Server Error: " + e.getMessage() + "\"}";
         }
@@ -153,8 +177,10 @@ public class validate {
 
     /**
      * Service to upload a dataset to an expedition. The validate service must be called before this service.
+     *
      * @param createExpedition
      * @param request
+     *
      * @return
      */
     @GET
@@ -180,7 +206,7 @@ public class validate {
 
         // Create the process object --- this is done each time to orient the application
         process p = null;
-        try{
+        try {
             try {
                 p = new process(
                         processController.getInputFilename(),
@@ -255,7 +281,9 @@ public class validate {
 
     /**
      * Service used for getting the current status of the dataset validation/upload.
+     *
      * @param request
+     *
      * @return
      */
     @GET

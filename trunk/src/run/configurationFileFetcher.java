@@ -215,8 +215,4 @@ public class configurationFileFetcher {
 
 }
 
-class configurationFileError extends Exception {
-    configurationFileError(String s) {
-        super(s);
-    }
-}
+

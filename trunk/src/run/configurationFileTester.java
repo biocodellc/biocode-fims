@@ -73,6 +73,7 @@ public class configurationFileTester {
 
             // Check worksheetUniqueKeys
             String worksheetUniqueKey = entityAttributes.getNamedItem("worksheetUniqueKey").getNodeValue();
+
             if (uniqueKeys.contains(worksheetUniqueKey)) {
                 atLeastOneUniqueKeyFound = true;
             }
@@ -208,7 +209,7 @@ public class configurationFileTester {
 
         for (int i = 0; i < projects.length; i++) {
             int project_id = projects[i];
-            System.out.println("TESTING project = " + project_id);
+            System.out.println("Configuration File Testing For Project = " + project_id);
             try {
                 configurationFileTester cFT = new configurationFileTester();
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();

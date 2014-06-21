@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class process {
 
-    File configFile;
+    public File configFile;
     Mapping mapping;
     String outputFolder;
     String outputPrefix;
@@ -70,6 +70,7 @@ public class process {
             throw new FIMSException("Unable to obtain configuration file from server... <br>" +
                     "Please check that your project code is valid.<br>");
         }
+
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
         try {
