@@ -11,7 +11,7 @@ public class Metadata {
     private String eml_location;
     private String target;
     private String queryTarget;
-    private String NMNH;
+    private String nmnh;
 
     private String text_abstract;
 
@@ -39,12 +39,12 @@ public class Metadata {
         this.doi = doi;
     }
 
-    public String getNMNH() {
-        return NMNH;
+    public String getNmnh() {
+        return nmnh;
     }
 
-    public void setNMNH(String NMNH) {
-        this.NMNH = NMNH;
+    public void setNmnh(String nmnh) {
+        this.nmnh = nmnh;
     }
 
     public String getShortname() {

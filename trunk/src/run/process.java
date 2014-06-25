@@ -1,10 +1,8 @@
 package run;
 
-import com.hp.hpl.jena.rdf.model.Model;
 import digester.*;
 import digester.List;
 import fims.fimsFilterCondition;
-import fims.fimsModel;
 import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
 import org.apache.commons.digester3.Digester;
@@ -115,7 +113,7 @@ public class process {
         Fims fims = new Fims(mapping);
         addFimsRules(new Digester(), fims);
 
-        String nmnh = fims.getMetadata().getNMNH();
+        String nmnh = fims.getMetadata().getNmnh();
         if (nmnh == null || !nmnh.equalsIgnoreCase("true"))
             return false;
         else
@@ -186,7 +184,7 @@ public class process {
         try {
             Fims fims = new Fims(mapping);
             addFimsRules(new Digester(), fims);
-            processController.setNMNH(fims.getMetadata().getNMNH());
+            processController.setNMNH(fims.getMetadata().getNmnh());
             if (processController.getNMNH()) {
                 System.out.println("\tthis is an NMNH designated project");
             }
@@ -194,7 +192,6 @@ public class process {
             e.printStackTrace();
             throw new FIMSException(e.getMessage(), e);
         }
-
 
         // Validation Step
         runValidation();
