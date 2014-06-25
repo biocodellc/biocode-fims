@@ -114,7 +114,10 @@ public class utils {
         sm.loadProperties();
         String expedition_list_uri = sm.retrieveValue("expedition_validation_uri");
 
-        URL url = new URL(expedition_list_uri + projectId + "?access_token=" + accessToken);
+        URL url = new URL(expedition_list_uri +
+                projectId + "/" +
+                expeditionCode +
+                "?access_token=" + accessToken);
 
         String response = bcidConnector.createGETConnection(url);
 
@@ -159,7 +162,7 @@ public class utils {
     @GET
     @Path("/isNMNHProject/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isNMNGProject(@PathParam("project_id") Integer projectId) {
+    public Response isNMNHProject(@PathParam("project_id") Integer projectId) {
         try {
             processController processController = new processController(projectId, null);
             process p = new process(

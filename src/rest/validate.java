@@ -105,7 +105,7 @@ public class validate {
             try {
                 cFT.testConfigFile(p.configFile);
             } catch (configurationFileError configurationFileError) {
-                String message = "CONFIGURATION FILE ERROR...<br>Please talk to your project administrator to fix the following error:<br>\t" + configurationFileError.getMessage();
+                String message = "<br>CONFIGURATION FILE ERROR...<br>Please talk to your project administrator to fix the following error:<br>\t" + configurationFileError.getMessage();
                 processController.setHasErrors(true);
                 processController.setValidated(false);
                 processController.appendStatus(message + "<br>");

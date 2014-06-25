@@ -37,13 +37,14 @@
 			input_string+='<input type="hidden" name="project_id" value="' + getProjectID() + '" />';
 
 			if (accessionNumber != null) {
-			    input_string += '<input type="hidden" name="accession_number" value="' + accessionNumber + '"/>' +
-			        '<input type="hidden" name="dataset_code" value="' + datasetCode + '"/>';
+			    input_string += '<input type="hidden" name="accession_number" value="' + accessionNumber + '" />' +
+			        '<input type="hidden" name="dataset_code" value="' + datasetCode + '" />';
 			}
 
 			// Pass the form to the server and submit
 			//showMessage("STILL TO CODE, CALL: " + url + " with input_string = " + input_string);
 			// Get the form parameter correct.
+
 			$('<form action="'+ url +'" method="post">'+input_string+'</form>').appendTo('body').submit().remove();
         });
     }
@@ -72,6 +73,7 @@
 
     // show a dialog to get the user's accession number and unique collection number
     function NMNHDialog() {
+
         var d = new $.Deferred();
         var title = "NMNH Project Additional Information"
         var message = "This is an NMNH project. Please enter:<br>" +
@@ -100,8 +102,11 @@
                                         $(this).dialog("close");
                                     }
                                 }
-
-                                dialog("Warning: Dataset Code" + $("#dataset_code").val() + " already exists.", "Dataset Code", buttons);
+                                // remember accession_number, dataset_code values using hidden form elements
+                                dialog("Warning: Dataset Code" + $("#dataset_code").val() + " already exists." +
+                                "<input type=hidden id='accession_number' value='"+$("#accession_number").val()+"' />" +
+                                "<input type=hidden id='dataset_code' value='"+$("#dataset_code").val()+"' />"
+                                , "Dataset Code", buttons);
                             } else {
                                 d.resolve($("#accession_number").val(), $("#dataset_code").val());
                                 $(this).dialog("close");
