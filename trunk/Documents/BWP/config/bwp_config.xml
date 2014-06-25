@@ -38,6 +38,8 @@
       <attribute column="class" uri="urn:class" defined_by="http://rs.tdwg.org/dwc/terms/class"><![CDATA[The full scientific name of the class in which the specimen voucher is classified.]]></attribute>
       <attribute column="order" uri="urn:order" defined_by="http://rs.tdwg.org/dwc/terms/order"><![CDATA[The full scientific name of the order in which the specimen voucher is classified.]]></attribute>
       <attribute column="family" uri="urn:family" defined_by="http://rs.tdwg.org/dwc/terms/family"><![CDATA[The full scientific name of the family in which the specimen voucher is classified.]]></attribute>
+      <attribute column="extractionPlateBarcode" uri="urn:extractionPlateBarcode"><![CDATA[This is the barcode label on the extraction plate (as opposed to extractionPlate, which is the structured name of the plate).]]></attribute>
+      <attribute column="tissueRackBarcode" uri="urn:tissueRackBarcode"><![CDATA[This is the barcode label on the tissue rack (as opposed to tissueRack, which is the structured name of the rack).]]></attribute>
       <attribute column="preservative" uri="urn:preservative" defined_by="http://rs.tdwg.org/dwc/terms/preparations"><![CDATA[List exactly what the tissue is preserved in in the tissue storage vial.]]></attribute>
       <attribute column="extractionBarcode" uri="urn:extractionBarcode"><![CDATA[This is the 2D barcode of the FluidX storage tube which contains the DNA extract of the specimen. This field will not be populated until after the DNA extraction process is complete.]]></attribute>
       <attribute column="sex" uri="urn:sex" defined_by="http://rs.tdwg.org/dwc/terms/sex"><![CDATA[The sex of the specimen voucher.]]></attribute>
