@@ -82,7 +82,6 @@
         <field>chainOfCustody</field>
         <field>processingLab</field>
         <field>extractionPlate</field>
-        <field>extractionWell</field>
         <field>yearCollected</field>
         <field>monthCollected</field>
         <field>dayCollected</field>
@@ -100,6 +99,7 @@
         <field>tissueRack</field>
         <field>tissuePosition</field>
         <field>tissueType</field>
+        <field>extractionWell</field>
         <field>collectionCode</field>
         <field>decimalLatitude</field>
         <field>decimalLongitude</field>
