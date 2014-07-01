@@ -411,6 +411,7 @@
         <field>Zimbabwe</field>
       </list>
       <list alias="institutionCode">
+        <field>CIBNOR</field>
         <field>A&lt;IH&gt;</field>
         <field>AA&lt;IH&gt;</field>
         <field>AAFC-PRC</field>
