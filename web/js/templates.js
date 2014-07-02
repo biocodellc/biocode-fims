@@ -122,7 +122,13 @@
                                     $(this).dialog("close");
                                 }
                             }
-                            var message = "Dataset validation failed.<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);
+                            if (jqxhr.status == 401) {
+                                var message = "You are not authorized... please login with appropriate credentials";
+                            } else if (jqxhr.status != 404) {
+                                var message = "Server responded with HTTP status code = "+ jqxhr.status;
+                            } else {
+                                var message = "Dataset validation failed.<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);
+                            }
                             dialog(message, "Dataset Error", buttons);
                         });
                 }
