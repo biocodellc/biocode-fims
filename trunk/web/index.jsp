@@ -17,30 +17,4 @@
     </div>
 </div>
 
-<script>
-    function workflowImageSwap() {
-        if ($("#workflowImage").attr("src") == 'docs/Workflow.jpeg') {
-            $("#workflowImage").attr("src",'docs/Workflow_simple.jpeg');
-            $("#workflowControl").text('Details');
-        } else {
-            $("#workflowImage").attr("src",'docs/Workflow.jpeg');
-            $("#workflowControl").text('Simple');
-        }
-    }
-    $(document).ready(function() {
-        validationFormToggle();
-        populateProjects();
-        // call validatorSubmit if the enter key was pressed in an input
-        $("input").keydown( function(event) {
-            if (event.which == 13) {
-            event.preventDefault();
-            validatorSubmit();
-            }
-        });
-        $("input[type=button]").click(function() {
-            validatorSubmit();
-        });
-    });
-</script>
-
 <%@ include file="footer.jsp" %>
