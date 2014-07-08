@@ -36,7 +36,7 @@ public class authenticationService {
         stringGenerator sg = new stringGenerator();
         String state = sg.generateString(20);
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         session.setAttribute("oauth_state", state);
 
         SettingsManager sm = SettingsManager.getInstance();
@@ -139,7 +139,7 @@ public class authenticationService {
                        @Context HttpServletResponse res)
             throws IOException{
 
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(true);
 
         session.invalidate();
         res.sendRedirect("/biocode-fims/index.jsp");
