@@ -22,3 +22,7 @@ Installation and Build
 
 Optional Component
   * A triple-store database connection for storing datasets as RDF triples.  We have tested using [http://jena.apache.org/documentation/serving_data/ Apache Fuseki]
+
+= Additional Installation Instructions =
+   * The source contains a sample property file called biocode-fims.template which should be copied to biocode-fims.props  -- you will need to adjust references in this document. 
+      * Note that references to URLs should begin with "www" as in www.biscicol.org instead of biscicol.org since some browsers (e.g. Firefox) automatically add the "www" and this changes the session designation and creates problems during logging in.
