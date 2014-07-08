@@ -134,11 +134,11 @@ public class authenticationService {
      */
     @GET
     @Path("logout")
-    @Produces(MediaType.TEXT_HTML)
+
     public void logout(@Context HttpServletRequest req,
                        @Context HttpServletResponse res)
             throws IOException{
-
+    ////@Produces(MediaType.TEXT_HTML)
         HttpSession session = req.getSession(true);
 
         // Invalidate the session for Biocode FIMS
