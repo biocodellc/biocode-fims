@@ -75,7 +75,7 @@ public class authenticationService {
 
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = session.getAttribute("oauth_state").toString();
 
