@@ -75,7 +75,7 @@ public class authenticationService {
 
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = session.getAttribute("oauth_state").toString();
 
@@ -141,8 +141,19 @@ public class authenticationService {
 
         HttpSession session = req.getSession(true);
 
+        // Invalidate the session for Biocode FIMS
         session.invalidate();
-        res.sendRedirect("/biocode-fims/index.jsp");
+         SettingsManager sm = SettingsManager.getInstance();
+        try {
+            sm.loadProperties();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Need to also logout of the BCID system
+        res.sendRedirect(sm.retrieveValue("logout_uri"));
+
+        //res.sendRedirect("/biocode-fims/index.jsp");
         return;
     }
 }
