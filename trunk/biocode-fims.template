@@ -3,21 +3,22 @@ client_id = public_client_id
 client_secret = super_secret_code
 redirect_uri = http://biscicol.org/biocode-fims/rest/authenticationService/access_token/
 authorize_uri = http://biscicol.org/id/authenticationService/oauth/authorize?
-access_token_uri = http://biscicol.org:8080/id/authenticationService/oauth/access_token
-profile_uri = http://biscicol.org:8080/id/userService/oauth?access_token=
+access_token_uri = http://www.biscicol.org/id/authenticationService/oauth/access_token
+profile_uri = http://www.biscicol.org/id/userService/oauth?access_token=
 refresh_uri = http://biscicol.org/id/authenticationService/oauth/refresh
 
 # BCID URI's
-authentication_uri = http://biscicol.org:8080/id/authenticationService/login
-ark_creation_uri = http://biscicol.org:8080/id/groupService
-associate_uri = http://biscicol.org:8080/id/expeditionService/associate
-expedition_creation_uri = http://biscicol.org:8080/id/expeditionService
-expedition_validation_uri = http://biscicol.org:8080/id/expeditionService/validateExpedition/
-available_projects_uri = http://biscicol.org:8080/id/projectService/listUserProjects
-project_lookup_uri = http://biscicol.org:8080/id/projectService/validation/
-deeproots_uri = http://biscicol.org:8080/id/expeditionService/deepRoots/
-project_service_uri = http://biscicol.org:8080/id/projectService/list;
-expedition_list_uri = http://biscicol.org:8080/id/expeditionService/list/
+authentication_uri = http://www.biscicol.org/id/authenticationService/login
+ark_creation_uri = http://www.biscicol.org/id/groupService
+associate_uri = http://www.biscicol.org/id/expeditionService/associate
+expedition_creation_uri = http://www.biscicol.org/id/expeditionService
+expedition_validation_uri = http://www.biscicol.org/id/expeditionService/validateExpedition/
+available_projects_uri = http://www.biscicol.org/id/projectService/listUserProjects
+project_lookup_uri = http://www.biscicol.org/id/projectService/validation/
+deeproots_uri = http://www.biscicol.org/id/expeditionService/deepRoots/
+project_service_uri = http://www.biscicol.org/id/projectService/list;
+expedition_list_uri = http://www.biscicol.org/id/expeditionService/list/
+logout_uri = http://www.biscicol.org/id/authenticationService/logout?redirect_uri=http://www.biscicol.org/biocode-fims/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 
