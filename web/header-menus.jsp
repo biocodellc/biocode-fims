@@ -3,7 +3,7 @@
 
     <div id="header">
 
-        <div style='float:left'><h2 style="margin:0px;">Field Information Management System</h2></div>
+        <div style='float:left'><h2 style="margin:0px;">Field Information Management System (FIMS)</h2></div>
 
         <div style='float:right' id="loginLink">
             <c:if test="${user == null}">

@@ -75,9 +75,16 @@ public class authenticationService {
 
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = session.getAttribute("oauth_state").toString();
+
+        //
+        if (oauthState == null) {
+            System.out.println("Authentication Error, oauth state is null");
+            response.sendRedirect("/biocode-fims/index.jsp?error=oauth state is null, there is an issue with the session.");
+            return;
+        }
 
         if (code == null || state == null || !state.equals(oauthState)) {
             System.out.println("Authentication Error, code or state is null");

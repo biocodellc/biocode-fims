@@ -2,7 +2,6 @@ package tools;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,13 +13,23 @@ public class siConverter {
     static public ArrayList<siProjects> projects = new ArrayList<siProjects>();
     static File inputFile;
     static File output_directory;
-    static Sheet sheet;
+    static Sheet MatrixSheet;
+    static Sheet ListsSheet;
+    static Sheet PreparationsSheet;
+
 
     static Integer columnIndex;
     static Integer definitionIndex;
     static Integer uriIndex;
     static Integer groupIndex;
+    static Integer SIFieldTemplate;
+    static Integer globalValidationRuleIndex;
+
     static String worksheetUniqueKey = "Primary Coll. Number";
+
+    static ArrayList<String> requiredColumns = new ArrayList<String>();
+    static ArrayList<String> desiredColumns = new ArrayList<String>();
+    static ArrayList<siRuleProcessor> globalValidationRules = new ArrayList<siRuleProcessor>();
 
     public siConverter() throws IOException, InvalidFormatException {
 
@@ -28,7 +37,7 @@ public class siConverter {
     }
 
     public static Integer getColumnIndex(String columnName) {
-        Row row = sheet.getRow(0);
+        Row row = MatrixSheet.getRow(0);
 
         Iterator rowIt = row.iterator();
         int count = 0;
@@ -63,7 +72,7 @@ public class siConverter {
         StringBuilder sb = new StringBuilder();
 
         Integer projectIndex = getColumnIndex(p.columnName);
-        Integer rows = sheet.getLastRowNum();
+        Integer rows = MatrixSheet.getLastRowNum();
 
         // Write the mapping element
         sb.append("<mapping>\n" +
@@ -75,10 +84,35 @@ public class siConverter {
                 "entityID=\"1\">");
 
         for (int i = 0; i < rows; i++) {
-            Row row = sheet.getRow(i);
-            Cell cell = row.getCell(projectIndex);
-            String value = cell.getStringCellValue();
-            if (value.equalsIgnoreCase("x")) {
+            Row row = MatrixSheet.getRow(i);
+            String value = "", siTemplateValue = "", globalValidationValue = "";
+            try {
+                Cell cell = row.getCell(projectIndex);
+                value = cell.getStringCellValue();
+            } catch (Exception e) {
+                System.err.println("Unable to process value on line " + row.getRowNum());
+            }
+
+            try {
+                Cell siTemplateCell = row.getCell(SIFieldTemplate);
+                siTemplateValue = siTemplateCell.getStringCellValue();
+            } catch (Exception e) {
+                System.err.println("Unable to process siTemplateCell on line " + row.getRowNum());
+            }
+
+            try {
+                Cell globalValidationCell = row.getCell(globalValidationRuleIndex);
+                globalValidationValue = globalValidationCell.getStringCellValue();
+            } catch (Exception e) {
+                System.err.println("Unable to process globalValidationRule on line " + row.getRowNum());
+            }
+
+            // Must have template value as Y and some designation in sheet of p/m/d
+            if (siTemplateValue.equalsIgnoreCase("Y") &&
+                    (value.equalsIgnoreCase("p") ||
+                            value.equalsIgnoreCase("m") ||
+                            value.equalsIgnoreCase("d"))) {
+
                 String column = row.getCell(columnIndex).toString();
                 String definition = row.getCell(definitionIndex).toString();
                 String uri = "urn:" + row.getCell(uriIndex).toString();
@@ -94,6 +128,22 @@ public class siConverter {
                 sb.append("<![CDATA[" + definition + "]]>");
                 sb.append("</attribute>\n");
 
+                // Populate required and desired columns here, used in validation step
+                if (value.equalsIgnoreCase("m")) {
+                    requiredColumns.add(column);
+                } else if (value.equalsIgnoreCase("d")) {
+                    desiredColumns.add(column);
+                }
+
+                // Populate other global validation Rules
+                if (globalValidationValue != null && !globalValidationValue.equals("")) {
+                    try {
+                        globalValidationRules.add(new siRuleProcessor(globalValidationValue,column));
+                    } catch (Exception e) {
+                        System.err.println("Unable to process " + globalValidationValue);
+                    }
+                }
+
             }
         }
 
@@ -105,14 +155,48 @@ public class siConverter {
     }
 
     public static String validation() {
-        String validation =
-                "<validation>\n" +
-                        "\t<worksheet sheetname='Samples'>\n" +
-                        "\t\t<rule type='duplicateColumnNames' level='error'></rule>\n" +
-                        "\t\t<rule type='uniqueValue' column='materialSampleID' level='error'></rule>\n" +
-                        "\t</worksheet>\n" +
-                        "</validation>\n";
-        return validation;
+        StringBuilder sbValidation = new StringBuilder();
+
+        // header
+        sbValidation.append("<validation>\n" +
+                "\t<worksheet sheetname='Samples'>\n");
+
+        // generic rule for all columns
+        sbValidation.append("\t\t<rule type='duplicateColumnNames' level='error'></rule>\n");
+
+        // uniqueValue constraint
+        sbValidation.append("\t\t<rule type='uniqueValue' column='materialSampleID' level='error'></rule>\n");
+
+        // Required columns
+        sbValidation.append("\t\t<rule type='RequiredColumns' column='RequiredColumns' level='error'>\n");
+        Iterator mIt = requiredColumns.iterator();
+        while (mIt.hasNext()) {
+            sbValidation.append("\t\t\t<field>" + mIt.next().toString() + "</field>\n");
+        }
+        sbValidation.append("\t\t</rule>\n");
+
+        // Desired columns
+        sbValidation.append("\t\t<rule type='RequiredColumns' column='RequiredColumns' level='warning'>\n");
+        Iterator dIt = desiredColumns.iterator();
+        while (dIt.hasNext()) {
+            sbValidation.append("\t\t\t<field>" + dIt.next().toString() + "</field>\n");
+        }
+        sbValidation.append("\t\t</rule>\n");
+
+        // Any other rules that we found when looking at the sheet which are defined by JSON
+        Iterator gIt = globalValidationRules.iterator();
+        while (gIt.hasNext()) {
+            //siRuleProcessor ruleProcessor = new siRuleProcessor(gIt.next().toString());
+            //sbValidation.append("\t\t\tANOTHER RULE:" + gIt.next().toString() + "\n");
+            sbValidation.append(((siRuleProcessor)gIt.next()).print());
+        }
+
+        // footer
+        sbValidation.append("\t</worksheet>\n" +
+                "</validation>\n");
+
+
+        return sbValidation.toString();
     }
 
     public static String footer() {
@@ -167,17 +251,22 @@ public class siConverter {
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
         projects.add(new siProjects(14, "SIBOT", "Botany"));
-        projects.add(new siProjects(15, "SIENT", "Entomology"));
+        /*    projects.add(new siProjects(15, "SIENT", "Entomology"));
         projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology"));
         projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles"));
         projects.add(new siProjects(18, "SIVZB", "VZ-Birds"));
         projects.add(new siProjects(19, "SIVZF", "VZ-Fishes"));
         projects.add(new siProjects(20, "SIVZM", "VZ-Mammals"));
         projects.add(new siProjects(21, "SIMIN", "Mineral Sciences"));
+        */
 
         InputStream inp = new FileInputStream(inputFile);
         Workbook workbook = WorkbookFactory.create(inp);
-        sheet = workbook.getSheetAt(0);
+
+        // Get all the sheets that we expect to be using
+        MatrixSheet = workbook.getSheet("Matrix");
+        ListsSheet = workbook.getSheet("Lists");
+        PreparationsSheet = workbook.getSheet("Preparations");
 
     }
 
@@ -185,9 +274,11 @@ public class siConverter {
         init();
 
         columnIndex = getColumnIndex("EMu Field Label (Vernacular)");
-        definitionIndex = getColumnIndex("Definition");
-        uriIndex = getColumnIndex("Field Name");
+        definitionIndex = getColumnIndex("Definitions");
+        uriIndex = getColumnIndex("Primary Field Name");
         groupIndex = getColumnIndex("Field Group");
+        SIFieldTemplate = getColumnIndex("SI Field Template Flag");
+        globalValidationRuleIndex = getColumnIndex("Global Validation Rule");
 
         // Loop each of the projects
         Iterator projectsIt = projects.iterator();
@@ -202,11 +293,11 @@ public class siConverter {
             // Write the metadata element
             sb.append(metadata(project.columnName));
 
-            // Print the validations element
-            sb.append(validation());
-
             // Print the mapping element
             sb.append(mapping(project));
+
+            // Print the validations element
+            sb.append(validation());
 
             // Print the footers
             sb.append(footer());
@@ -218,6 +309,8 @@ public class siConverter {
                             project.abbreviation +
                             ".xml");
             writeFile(outputFile, sb.toString());
+
+            System.out.println(sb.toString());
         }
 
     }
