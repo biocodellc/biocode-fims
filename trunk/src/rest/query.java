@@ -262,6 +262,9 @@ public class query {
                 graphs = Arrays.copyOf(valueArray, valueArray.length, String[].class);
             } else if (key.equalsIgnoreCase("project_id")) {
                 project_id = Integer.parseInt((String) value.get(0));
+            } else if (key.equalsIgnoreCase("boolean")) {
+                /// AND|OR
+                //project_id = Integer.parseInt((String) value.get(0));
             } else if (key.equalsIgnoreCase("submit")) {
                 // do nothing with this
             } else {
