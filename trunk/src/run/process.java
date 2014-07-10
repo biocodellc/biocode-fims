@@ -12,7 +12,10 @@ import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.triplifier;
+import utils.SettingsManager;
+import utils.stringGenerator;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -21,7 +24,8 @@ import java.util.*;
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
  * a expedition code, which is used to specify identifier roots in the BCID (http://code.google.com/p/bcid/) system.
  * The main class is configured to run this from the command-line while the class itself can be extended to run
- * in different situations, while specifying  fimsPrinter and fimsInputter classes for a variety of styles of output and
+ * in different situations, while specifying  fimsPrinter and fimsInputter classes for a variety of styles of output
+ * and
  * input
  */
 public class process {
@@ -93,6 +97,7 @@ public class process {
      *
      * @param outputFolder
      * @param configFile
+     *
      * @throws settings.FIMSException
      */
     public process(
@@ -106,7 +111,9 @@ public class process {
 
     /**
      * Check if this is an NMNH project
+     *
      * @return
+     *
      * @throws Exception
      */
     public Boolean isNMNHProject() throws Exception {
@@ -139,6 +146,11 @@ public class process {
             fimsInputter.in.haltOperation(message);
             return null;
         }
+
+
+
+
+
         return bcidConnector;
     }
 
@@ -196,7 +208,7 @@ public class process {
         // Validation Step
         runValidation();
 
-        //
+        // Run the validation step
         if (!processController.isValidated() && processController.getHasWarnings()) {
             String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
             Boolean continueOperation = fimsInputter.in.continueOperation(message);
@@ -242,7 +254,8 @@ public class process {
             ReaderManager rm = new ReaderManager();
             TabularDataReader tdr = null;
             rm.loadReaders();
-            tdr = rm.openFile(processController.getInputFilename());
+
+            tdr = rm.openFile(processController.getInputFilename(), mapping.getDefaultSheetName(), outputFolder);
 
             // Load validation rules
             validation = new Validation();
@@ -262,7 +275,9 @@ public class process {
 
     /**
      * Run the triplification engine
+     *
      * @return
+     *
      * @throws FIMSException
      */
     public boolean runTriplifier() throws FIMSException {

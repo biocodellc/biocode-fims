@@ -418,8 +418,10 @@ public class bcidConnector {
         //System.out.print(urlString);
         //System.out.print(response.toJSONString());
         //System.out.print(getResponseCode());
+
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
+            //if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
                 return checkExpedition(processController);
             } else {
@@ -447,7 +449,7 @@ public class bcidConnector {
     public boolean createExpedition(processController processController, Mapping mapping) throws Exception {
         try {
             String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
-                    "before loading each spreadsheet and may take a minute...";
+                    "before loading each spreadsheet and may take a minute...\n";
             processController.appendStatus(status);
             fimsPrinter.out.println(status);
             String output = createExpedition(
@@ -467,7 +469,7 @@ public class bcidConnector {
             while (it.hasNext()) {
                 Entity entity = (Entity) it.next();
                 try {
-                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI();
+                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI()+"\n";
                     processController.appendStatus(s);
                     fimsPrinter.out.println(s);
                     // Create the entity BCID
@@ -535,6 +537,7 @@ public class bcidConnector {
         System.out.println("Post parameters : " + postParams);
         System.out.println("Response Code : " + responseCode);
         */
+
         responseCode = conn.getResponseCode();
 
         BufferedReader in;

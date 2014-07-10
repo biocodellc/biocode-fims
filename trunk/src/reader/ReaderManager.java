@@ -195,7 +195,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * @return A new instance of a reader if an appropriate reader is found that
      *         opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath) throws Exception {
+    public TabularDataReader openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception {
         // Check all readers to see if we have one that can read the
         // specified file.
         for (TabularDataReader reader : readers) {
@@ -204,12 +204,13 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                     // A matching reader was found, so create a new instance of
                     // the reader, open the file with it, and return it.
                     TabularDataReader newreader = reader.getClass().newInstance();
-                    newreader.openFile(filepath);
+                    newreader.openFile(filepath, defaultSheetName, outputFolder);
                     // Set input file
                     return newreader;
                 } catch (Exception e) {
+                    e.printStackTrace();
                     throw new Exception(e.getMessage());
-                    //e.printStackTrace();
+
                     //return null;
                 }
             }
@@ -217,6 +218,17 @@ public class ReaderManager implements Iterable<TabularDataReader> {
 
         // no matching reader was found
         throw new Exception("Unable to open the file named '" + filepath + "'");
+    }
+
+    /**
+     * Attempts to open a datafile with just the filepath... this works for Spreadsheets only
+     * and kept as a legacy.  Other tab formats end up being converted to spreadsheets in the end.
+     * @param filepath
+     * @return
+     * @throws Exception
+     */
+    public TabularDataReader openFile(String filepath) throws Exception {
+        return openFile(filepath,null,null);
     }
 
     /**
@@ -229,13 +241,13 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * @return A new instance of a reader if a reader for the format is
      *         available and opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath, String formatstring) {
+    public TabularDataReader openFile(String filepath, String formatstring) throws Exception {
         // get the reader for the specified file format
         TabularDataReader reader = getReader(formatstring);
 
         if (reader != null) {
             // if a matching reader was found, try to open the specified file
-            if (reader.openFile(filepath)) {
+            if (reader.openFile(filepath,null,null)) {
                 return reader;
             } else {
                 return null;

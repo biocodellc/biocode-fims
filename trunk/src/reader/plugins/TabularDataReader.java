@@ -86,10 +86,13 @@ public interface TabularDataReader {
      * successfully.
      *
      * @param filepath A file from which to read data.
+     * @param defaultSheetName A defaultSheetName to Use
+     * @param outputFolder the default output folder
+
      * @return True if the file was opened and is ready to read data from; false
      *         otherwise.
      */
-    public boolean openFile(String filepath);
+    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception;
 
     /**
      * Test if there is at least one table waiting to be processed in the

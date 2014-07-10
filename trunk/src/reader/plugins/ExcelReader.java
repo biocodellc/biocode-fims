@@ -25,30 +25,30 @@ import org.joda.time.DateTime;
  */
 public class ExcelReader implements TabularDataReader {
     // iterator for moving through the active worksheet
-    private Iterator<Row> rowiter = null;
-    private boolean hasnext = false;
+    protected Iterator<Row> rowiter = null;
+    protected boolean hasnext = false;
 
-    Row nextrow;
+    protected Row nextrow;
 
     // The number of columns in the active worksheet (set by the first row).
-    private int numcols;
+    protected int numcols;
 
     // The index for the active worksheet.
-    private int currsheet;
+    protected int currsheet;
 
     // The entire workbook (e.g., spreadsheet file).
-    private Workbook excelwb;
+    protected Workbook excelwb;
 
     // DataFormatter and FormulaEvaluator for dealing with cells with formulas.
-    private DataFormatter df;
-    private FormulaEvaluator fe;
+    protected DataFormatter df;
+    protected FormulaEvaluator fe;
 
     // The row # that the header values are on
     // TODO: make this adjustable in case header rows appear on another line besides the first (see bioValidator code)
-    private int numHeaderRows = 0;
+    protected int numHeaderRows = 0;
 
     // A reference to the file that opened this reader
-    private File inputFile;
+    protected File inputFile;
 
     public String getShortFormatDesc() {
         return "Microsoft Excel";
@@ -91,14 +91,14 @@ public class ExcelReader implements TabularDataReader {
         if (index != -1 && index != (filepath.length() - 1)) {
             // get the extension
             String ext = filepath.substring(index + 1);
-            if (ext.equals("xls") || ext.equals("xlsx"))
+            if (ext.equals("xls") || ext.equals("xlsx") )
                 return true;
         }
 
         return false;
     }
 
-    public boolean openFile(String filepath) {
+    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception {
 
         //fimsPrinter.out.println(filepath);
         FileInputStream is;
@@ -174,7 +174,7 @@ public class ExcelReader implements TabularDataReader {
      * method is necessary because the POI row iterator does not always reliably
      * end with the last data-containing row.
      */
-    private void testNext() {
+    protected void testNext() {
         int lastcellnum = 0;
         while (rowiter.hasNext() && lastcellnum < 1) {
             nextrow = rowiter.next();
