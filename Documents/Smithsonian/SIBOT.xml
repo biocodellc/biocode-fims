@@ -312,7 +312,6 @@ DwC_Ext: used for both DNA and tissue]]></attribute>
 <validation>
 	<worksheet sheetname='Samples'>
 		<rule type='duplicateColumnNames' level='error'></rule>
-		<rule type='uniqueValue' column='materialSampleID' level='error'></rule>
 		<rule type='RequiredColumns' column='RequiredColumns' level='error'>
 			<field>Date Visited (From)</field>
 			<field>Collector 1 (Primary)</field>

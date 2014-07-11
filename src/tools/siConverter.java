@@ -171,7 +171,7 @@ public class siConverter {
         sbValidation.append("\t\t<rule type='duplicateColumnNames' level='error'></rule>\n");
 
         // uniqueValue constraint
-        sbValidation.append("\t\t<rule type='uniqueValue' column='materialSampleID' level='error'></rule>\n");
+        //sbValidation.append("\t\t<rule type='uniqueValue' column='materialSampleID' level='error'></rule>\n");
 
         // Required columns
         sbValidation.append("\t\t<rule type='RequiredColumns' column='RequiredColumns' level='error'>\n");
@@ -378,7 +378,8 @@ public class siConverter {
                             ".xml");
             writeFile(outputFile, sb.toString());
 
-            System.out.println(sb.toString());
+
+            //System.out.println(sb.toString());
         }
 
     }
