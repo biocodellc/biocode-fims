@@ -426,5 +426,174 @@ DwC_Ext: used for both DNA and tissue]]></attribute>
 			<field>Genetic Sample</field>
 		</rule>
 	</worksheet>
+	<lists>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field>Yes</field>
+			<field>No</field>
+		</list>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field>ca.</field>
+			<field>greater than</field>
+			<field>less than</field>
+			<field>±</field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field>N</field>
+			<field>S</field>
+		</list>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field>E</field>
+			<field>W</field>
+		</list>
+		<list alias='identificationQualifier' caseInsensitive='true'>
+			<field>aff.</field>
+			<field>cf.</field>
+			<field>complex</field>
+			<field>group</field>
+			<field>near</field>
+			<field>sp. nov.</field>
+			<field>subgroup</field>
+			<field>uncertain</field>
+			<field>vel aff.</field>
+		</list>
+		<list alias='collectionCode' caseInsensitive='true'>
+			<field>Botany</field>
+			<field>Entomology</field>
+			<field>Invertebrate Zoology</field>
+			<field>Amphibians and Reptiles</field>
+			<field>Birds</field>
+			<field>Fishes</field>
+			<field>Mammals</field>
+			<field>Mineral Sciences</field>
+		</list>
+		<list alias='institutionCode' caseInsensitive='true'>
+			<field>US</field>
+			<field>USNM</field>
+		</list>
+		<list alias='continent' caseInsensitive='true'>
+			<field>Africa</field>
+			<field>Antarctica</field>
+			<field>Asia</field>
+			<field>Australia</field>
+			<field>Europe</field>
+			<field>North America</field>
+			<field>Oceania</field>
+			<field>South America</field>
+		</list>
+		<list alias='ocean' caseInsensitive='true'>
+			<field>Antarctic Ocean</field>
+			<field>Arctic Ocean</field>
+			<field>Indian Ocean</field>
+			<field>North Atlantic Ocean</field>
+			<field>North Pacific Ocean</field>
+			<field>South Atlantic Ocean</field>
+			<field>South Pacific Ocean</field>
+		</list>
+		<list alias='lengthUnits' caseInsensitive='true'>
+			<field>cm</field>
+			<field>m</field>
+			<field>mm</field>
+			<field>µm</field>
+			<field>in</field>
+			<field>ft</field>
+		</list>
+		<list alias='measurementUnit' caseInsensitive='true'>
+			<field>cm</field>
+			<field>ft</field>
+			<field>g</field>
+			<field>in</field>
+			<field>ins</field>
+			<field>kg</field>
+			<field>lb</field>
+			<field>lbs</field>
+			<field>mm</field>
+			<field>oz</field>
+			<field>ct</field>
+		</list>
+		<list alias='basisOfRecord' caseInsensitive='true'>
+			<field>Bulky Specimen</field>
+			<field>Genetic Sample</field>
+			<field>Liquid Preserved</field>
+			<field>Lot</field>
+			<field>Packet</field>
+			<field>Seed</field>
+			<field>Specimen</field>
+			<field>Specimen/Lot</field>
+			<field>Rhizome</field>
+			<field>Unmounted material</field>
+			<field>Wood specimen</field>
+		</list>
+		<list alias='establishmentMeans' caseInsensitive='true'>
+			<field>cultivated</field>
+			<field>escaped</field>
+			<field>introduced</field>
+			<field>invasive</field>
+			<field>managed</field>
+			<field>native</field>
+			<field>naturalised</field>
+			<field>uncertain</field>
+			<field>waif</field>
+			<field>wild</field>
+		</list>
+		<list alias='exudate' caseInsensitive='true'>
+			<field>(NULL)</field>
+			<field>Clear</field>
+			<field>Cream</field>
+			<field>Orangish</field>
+			<field>Reddish</field>
+			<field>White</field>
+			<field>Yellow</field>
+		</list>
+		<list alias='habit' caseInsensitive='true'>
+			<field>Aquatic herb</field>
+			<field>Cespitose herb</field>
+			<field>Decumbent herb</field>
+			<field>Epilithic</field>
+			<field>Epiphyte</field>
+			<field>Erect herb</field>
+			<field>Floating herb</field>
+			<field>Hemiparasite</field>
+			<field>Herbaceous vine</field>
+			<field>Liana</field>
+			<field>Palm</field>
+			<field>Palm-like fern</field>
+			<field>Parasite</field>
+			<field>Scandent shrub</field>
+			<field>Shrub</field>
+			<field>Trailing herb</field>
+			<field>Trailing vine</field>
+			<field>Tree</field>
+			<field>Treelet</field>
+		</list>
+		<list alias='hybridRank' caseInsensitive='true'>
+			<field>Genus</field>
+			<field>Species</field>
+		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field>aberration</field>
+			<field>forma</field>
+			<field>morpha</field>
+			<field>race</field>
+			<field>subforma</field>
+			<field>subvariety</field>
+			<field>variety</field>
+		</list>
+		<list alias='sampleQuality' caseInsensitive='true'>
+			<field>High</field>
+			<field>Medium</field>
+			<field>Low</field>
+		</list>
+		<list alias='sex' caseInsensitive='true'>
+			<field>Male</field>
+			<field>Female</field>
+			<field>Unknown</field>
+			<field>Worker</field>
+		</list>
+		<list alias='geodeticDatum' caseInsensitive='true'>
+			<field>NAD27</field>
+			<field>NAD83</field>
+			<field>WGS84</field>
+		</list>
+	</lists>
 </validation>
 </fims>
