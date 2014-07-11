@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <updateDescriptor baseUrl="">
-  <entry targetMediaFileId="211" updatableVersionMin="" updatableVersionMax="" fileName="fims_unix_0_21.sh" newVersion="0.21" newMediaFileId="211" fileSize="25079476" bundledJre="" archive="false">
+  <entry targetMediaFileId="211" updatableVersionMin="" updatableVersionMax="" fileName="fims_unix_0_22.sh" newVersion="0.22" newMediaFileId="211" fileSize="32930560" bundledJre="" archive="false">
     <comment />
   </entry>
 </updateDescriptor>

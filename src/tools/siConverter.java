@@ -1,10 +1,14 @@
 package tools;
 
+import com.sun.rowset.internal.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class reads a specially built Excel spreadsheet file and generates spreadsheet templates
@@ -138,7 +142,7 @@ public class siConverter {
                 // Populate other global validation Rules
                 if (globalValidationValue != null && !globalValidationValue.equals("")) {
                     try {
-                        globalValidationRules.add(new siRuleProcessor(globalValidationValue,column));
+                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column));
                     } catch (Exception e) {
                         System.err.println("Unable to process " + globalValidationValue);
                     }
@@ -158,8 +162,10 @@ public class siConverter {
         StringBuilder sbValidation = new StringBuilder();
 
         // header
-        sbValidation.append("<validation>\n" +
-                "\t<worksheet sheetname='Samples'>\n");
+        sbValidation.append("<validation>\n");
+
+        // Beginning of the Samples worksheet validation section
+        sbValidation.append("\t<worksheet sheetname='Samples'>\n");
 
         // generic rule for all columns
         sbValidation.append("\t\t<rule type='duplicateColumnNames' level='error'></rule>\n");
@@ -188,15 +194,77 @@ public class siConverter {
         while (gIt.hasNext()) {
             //siRuleProcessor ruleProcessor = new siRuleProcessor(gIt.next().toString());
             //sbValidation.append("\t\t\tANOTHER RULE:" + gIt.next().toString() + "\n");
-            sbValidation.append(((siRuleProcessor)gIt.next()).print());
+            sbValidation.append(((siRuleProcessor) gIt.next()).print());
         }
 
-        // footer
-        sbValidation.append("\t</worksheet>\n" +
-                "</validation>\n");
+        // end of worksheet specific section
+        sbValidation.append("\t</worksheet>\n");
 
+        // Generate Lists section
+        sbValidation.append(lists());
+
+        sbValidation.append("</validation>\n");
 
         return sbValidation.toString();
+    }
+
+    /**
+     * Generate the elements for the Lists worksheet
+     *
+     * @return
+     */
+    private static String lists() {
+        //ListsSheet.
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\t<lists>\n");
+
+        // Build the column references
+        List<String> columns = new ArrayList<String>();
+        Boolean lastColumn = false;
+        int columnNum = 0;
+        Row header = ListsSheet.getRow(0);
+        while (!lastColumn) {
+            Cell c = header.getCell(columnNum++);
+            if (c != null) {
+                columns.add(c.getStringCellValue());
+            } else {
+                lastColumn = true;
+            }
+        }
+
+        // Now get all the elements in this column
+        Iterator columnIt = columns.iterator();
+        int columnCounter = 0;
+        while (columnIt.hasNext()) {
+            String columnName = columnIt.next().toString();
+            if (!columnName.equals("")) {
+                sb.append("\t\t<list alias='" + columnName + "' caseInsensitive='true'>\n");
+
+                // Loop through each fow for this column
+                for (Row row : ListsSheet) {
+                    Cell c = row.getCell(columnCounter);
+                    String value = null;
+                    if (row.getRowNum() > 0) {
+                        // Grab value if Cell !=null
+                        if (c != null) {
+                            value = c.getStringCellValue().toString();
+                        }
+                        // populate field if value !=null
+                        if (value != null && !value.trim().equals("")) {
+                            sb.append("\t\t\t<field>" + value + "</field>\n");
+                        }
+                    }
+                }
+                sb.append("\t\t</list>\n");
+            }
+            columnCounter++;
+
+        }
+
+        sb.append("\t</lists>\n");
+
+        return sb.toString();
     }
 
     public static String footer() {
@@ -314,6 +382,8 @@ public class siConverter {
         }
 
     }
+
+
 }
 
 class siProjects {
