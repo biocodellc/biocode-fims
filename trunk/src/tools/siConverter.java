@@ -29,7 +29,7 @@ public class siConverter {
     static Integer SIFieldTemplate;
     static Integer globalValidationRuleIndex;
 
-    static String worksheetUniqueKey = "recordNumber";
+    static String worksheetUniqueKey = "Primary Collector Number";
 
     static ArrayList<String> requiredColumns = new ArrayList<String>();
     static ArrayList<String> desiredColumns = new ArrayList<String>();
@@ -56,11 +56,12 @@ public class siConverter {
 
 
     public static String metadata(String projectName) {
-        return "<metadata " +
-                " doi=\"a doi\" " +
-                " shortname=\"Smithsonian " + projectName + "\" " +
-                " eml_location=\"eml_location\" " +
-                " target=\"http://data.biscicol.org/ds/data\" " +
+        return "<metadata \n" +
+                " nmnh=\"true\"\n" +
+                " doi=\"a doi\"\n" +
+                " shortname=\"Smithsonian " + projectName + "\"\n" +
+                " eml_location=\"eml_location\"\n" +
+                " target=\"http://data.biscicol.org/ds/data\"\n" +
                 " queryTarget=\"http://data.biscicol.org/ds\">\n" +
                 "\t<![CDATA[Some text with abstract]]>\n" +
                 "</metadata>\n";
