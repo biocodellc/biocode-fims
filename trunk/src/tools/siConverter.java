@@ -29,7 +29,7 @@ public class siConverter {
     static Integer SIFieldTemplate;
     static Integer globalValidationRuleIndex;
 
-    static String worksheetUniqueKey = "Primary Coll. Number";
+    static String worksheetUniqueKey = "recordNumber";
 
     static ArrayList<String> requiredColumns = new ArrayList<String>();
     static ArrayList<String> desiredColumns = new ArrayList<String>();
@@ -339,6 +339,8 @@ public class siConverter {
     }
 
     public static void main(String[] args) throws IOException, InvalidFormatException {
+
+        System.err.println("Need to reed entityWorksheetKey from spreadsheet itself (it is hardcoded here)");
         init();
 
         columnIndex = getColumnIndex("EMu Field Label (Vernacular)");
