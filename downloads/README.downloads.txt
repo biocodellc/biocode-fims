@@ -5,5 +5,8 @@ are ready for use.
 
 
 The files beginning with "FIMSUpload_" are the Geneious Plugin files.
+These are NOT being actively developed at this time
 
 Files beginning with "fims_unix_" are the command line files
+To run, you will need to rename the biocode-fims.template to biocode-fims.props
+and request a key for your installation.
