@@ -172,7 +172,8 @@ public class templateProcessor {
      */
     public String printCheckboxes() throws FIMSException {
         LinkedList<String> requiredColumns = getRequiredColumns();
-        Map<String, StringBuilder> groups = new HashMap<String, StringBuilder>();
+        // Use TreeMap for natural sorting of groups
+        Map<String, StringBuilder> groups = new TreeMap<String, StringBuilder>();
 
         //StringBuilder output = new StringBuilder();
         // A list of names we've already added
@@ -701,9 +702,9 @@ public class templateProcessor {
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor(22, "tripleOutput", false);
-        //System.out.println(t.printCheckboxes());
-
+        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
+        System.out.println(t.printCheckboxes());
+        /*
         ArrayList<String> a = new ArrayList<String>();
         a.add("Phase");
         a.add("Cultivated");
@@ -711,7 +712,7 @@ public class templateProcessor {
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
         System.out.println(outputFile.getAbsoluteFile().toString());
-
+         */
         //t.getRequiredColumns();
 
         //System.out.println(t.printCheckboxes());
