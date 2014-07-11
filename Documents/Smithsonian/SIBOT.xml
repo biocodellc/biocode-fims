@@ -1,10 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <fims>
-<metadata  doi="a doi"  shortname="Smithsonian Botany"  eml_location="eml_location"  target="http://data.biscicol.org/ds/data"  queryTarget="http://data.biscicol.org/ds">
+<metadata 
+ nmnh="true"
+ doi="a doi"
+ shortname="Smithsonian Botany"
+ eml_location="eml_location"
+ target="http://data.biscicol.org/ds/data"
+ queryTarget="http://data.biscicol.org/ds">
 	<![CDATA[Some text with abstract]]>
 </metadata>
 <mapping>
-	<entity worksheet="Samples" worksheetUniqueKey="recordNumber" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">		<attribute column='Publish on Internet' uri='urn:accessBenefitSharing' group='Access Benefit Sharing' defined_by='urn:accessBenefitSharing'><![CDATA[DwC_Ext: Controlled vocabulary: “not required”, “yes”, “no”, “unknown”
+	<entity worksheet="Samples" worksheetUniqueKey="Primary Collector Number" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">		<attribute column='Publish on Internet' uri='urn:accessBenefitSharing' group='Access Benefit Sharing' defined_by='urn:accessBenefitSharing'><![CDATA[DwC_Ext: Controlled vocabulary: “not required”, “yes”, “no”, “unknown”
 
 Biocode: no or NULL]]></attribute>
 		<attribute column='Blocked Until Date' uri='urn:blockedUntilDate' group='Access Benefit Sharing' defined_by='urn:blockedUntilDate'><![CDATA[DwC_Ext: Date until ordering of sample is blocked, year-month-day (e.g. 2012-10-26)
@@ -359,7 +365,7 @@ DwC_Ext: used for both DNA and tissue]]></attribute>
 		<rule type='controlledVocabulary' column='Establishment means' list='establishmentMeans' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Exudate' list='exudate' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Habit' list='habit' level='warning'></rule>
-		<rule type='uniqueValue' column='recordNumber' level='error'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='isNumber' column='sheets' level='error'></rule>
 		<rule type='controlledVocabulary' column='Hybrid rank' list='hybridRank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Epithet below subspecies' level='warning' otherColumn='rank'></rule>
