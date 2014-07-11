@@ -1,7 +1,7 @@
 package utils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.net.URL;
 import java.util.Properties;
 
 
@@ -33,7 +33,24 @@ public class SettingsManager {
      * @return A reference to the global util.SettingsManager object.
      */
     public static SettingsManager getInstance() {
-        return getInstance(Thread.currentThread().getContextClassLoader().getResource("biocode-fims.props").getFile());
+        /*String filename = "biocode-fims.props";
+        String location = null;
+
+        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        if (cl != null) {
+            URL url = cl.getResource(filename);
+            if (null == url) {
+                url = cl.getResource("/" + filename);
+            }
+            if (null != url) {
+                //InputStream in = url.openStream();
+                location = url.getFile();
+                //props = new Properties();
+                //props.load(in);
+            }
+        }
+        return getInstance(location); */
+      return getInstance(Thread.currentThread().getContextClassLoader().getResource("biocode-fims.props").getFile());
     }
 
     /**
@@ -46,6 +63,7 @@ public class SettingsManager {
      *
      * @param propsfile A properties file to use in initializing the
      *                  util.SettingsManager.
+     *
      * @return A reference to the global util.SettingsManager object.
      */
     public static SettingsManager getInstance(String propsfile) {
@@ -98,6 +116,7 @@ public class SettingsManager {
      * in the properties file, then an empty string is returned.
      *
      * @param key The key to search for in the properties file.
+     *
      * @return The value associated with the key if it exists, otherwise, an
      *         empty string.
      */
@@ -112,6 +131,7 @@ public class SettingsManager {
      *
      * @param key        The key to search for in the properties file.
      * @param defaultval The default value to return if the key cannot be found.
+     *
      * @return The value associated with the key if it exists, otherwise, the
      *         specified default value.
      */

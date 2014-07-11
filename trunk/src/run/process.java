@@ -68,7 +68,7 @@ public class process {
         try {
             configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw new FIMSException("Unable to obtain configuration file from server... <br>" +
                     "Please check that your project code is valid.<br>");
         }
@@ -448,7 +448,7 @@ public class process {
         // The input file
         String input_file = "";
         // The directory that we write all our files to
-        String output_directory = "";
+        String output_directory = "tripleOutput";
         // Write spreadsheet content back to a spreadsheet file, for testing
         Boolean triplify = false;
         Boolean upload = false;
