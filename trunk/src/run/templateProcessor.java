@@ -199,18 +199,31 @@ public class templateProcessor {
                     }
                     // Construct the checkbox text
                     thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
+
+                    // If this is a required column then make it checked (and immutable)
                     if (aRequiredColumn)
                         thisOutput.append(" checked disabled");
 
+                    // Close tag and insert Definition link
                     thisOutput.append(">" + column + " \n" +
-                            "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" +
-                            "<br>\n");// +
+                            "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" + "<br>\n");
 
                     // Fetch any existing content for this key
                     StringBuilder existing = groups.get(group);
 
-                    // Append the new content onto any existing in this key
-                    groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
+                    // Append (not required) or Insert (required) the new content onto any existing in this key
+                     if (existing == null) {
+                         existing = thisOutput;
+                     } else {
+                         if (aRequiredColumn) {
+                            existing.insert(0,thisOutput);
+                         } else {
+                            existing.append(thisOutput);
+                         }
+                     }
+                    groups.put(group,existing);
+
+                    //groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
 
                 }
 
