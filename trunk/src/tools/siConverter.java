@@ -335,14 +335,13 @@ public class siConverter {
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
         projects.add(new siProjects(14, "SIBOT", "Botany"));
-        /*
         projects.add(new siProjects(15, "SIENT", "Entomology"));
         projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology"));
         projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles"));
         projects.add(new siProjects(18, "SIVZB", "VZ-Birds"));
         projects.add(new siProjects(19, "SIVZF", "VZ-Fishes"));
         projects.add(new siProjects(20, "SIVZM", "VZ-Mammals"));
-        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences")); */
+        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences"));
 
 
         InputStream inp = new FileInputStream(inputFile);

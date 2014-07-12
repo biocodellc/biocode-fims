@@ -1,15 +1,932 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <fims>
-<metadata  doi="a doi"  shortname="Smithsonian VZ-Mammals"  eml_location="eml_location"  target="http://data.biscicol.org/ds/data"  queryTarget="http://data.biscicol.org/ds">
+<metadata 
+ nmnh="true"
+ doi="a doi"
+ shortname="Smithsonian VZ-Mammals"
+ eml_location="eml_location"
+ target="http://data.biscicol.org/ds/data"
+ queryTarget="http://data.biscicol.org/ds">
 	<![CDATA[Some text with abstract]]>
 </metadata>
+<mapping>
+	<entity worksheet="Samples" worksheetUniqueKey="Primary Collector Number" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">		<attribute column='Publish on Internet' uri='urn:accessBenefitSharing' group='Access Benefit Sharing' defined_by='urn:accessBenefitSharing'><![CDATA[DwC_Ext: Controlled vocabulary: “not required”, “yes”, “no”, “unknown”
+
+Biocode: no or NULL]]></attribute>
+		<attribute column='Blocked Until Date' uri='urn:blockedUntilDate' group='Access Benefit Sharing' defined_by='urn:blockedUntilDate'><![CDATA[DwC_Ext: Date until ordering of sample is blocked, year-month-day (e.g. 2012-10-26)
+
+ABCDDNA: in case the DNA sample is blocked until a specific date it's nevertheless searchable but customers cannot order it.]]></attribute>
+		<attribute column='Landowner/Jurisdiction' uri='urn:landowner' group='Access Benefit Sharing' defined_by='urn:landowner'><![CDATA[]]></attribute>
+		<attribute column='Agreement Name' uri='urn:permitInformation' group='Access Benefit Sharing' defined_by='urn:permitInformation'><![CDATA[IndoPacific: Please include any permit information (agency, permit#, etc) as a text string]]></attribute>
+		<attribute column='Agreement Description' uri='urn:permitNotes' group='Access Benefit Sharing' defined_by='urn:permitNotes'><![CDATA[]]></attribute>
+		<attribute column='Agreement Number' uri='urn:permitNumber' group='Access Benefit Sharing' defined_by='urn:permitNumber'><![CDATA[]]></attribute>
+		<attribute column='Associated Multimedia' uri='urn:associatedMedia' group='Associations' defined_by='urn:associatedMedia'><![CDATA[DwC: A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of media associated with the Occurrence. Example: "http://arctos.database.museum/SpecimenImages/UAMObs/Mamm/2/P7291179.JPG". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedMedia
+
+ABCDDNA: the complete path to your image; you can provide as much multimedia items as you want.
+
+Biocode specimen: 1 = photo in CalPhotos]]></attribute>
+		<attribute column='Related Objects' uri='urn:associatedOccurrences' group='Associations' defined_by='urn:associatedOccurrences'><![CDATA[DwC: A list (concatenated and separated) of identifiers of other Occurrence records and their associations to this Occurrence. Example: "sibling of FMNH:Mammal:1234; sibling of FMNH:Mammal:1235". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedOccurrences
+
+BOLD: A list (concatenated and comma separated) of other specimens associated with the subject specimen at the time of its collection. References to other specimen identifiers should be preceded by the relationship. Examples: "host: PLANT23452, prey: USNM45677" when both prey and host specimens have been captured.]]></attribute>
+		<attribute column='Associated Taxa' uri='urn:associatedTaxa' group='Associations' defined_by='urn:associatedTaxa'><![CDATA[DwC: A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence. Example: "host: Quercus alba". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedTaxa
+
+BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"]]></attribute>
+		<attribute column='Relationship of resource' uri='urn:relationshipOfResource' group='Associations' defined_by='urn:relationshipOfResource'><![CDATA[DwC: The relationship of the resource identified by relatedResourceID to the subject (optionally identified by the resourceID). Recommended best practice is to use a controlled vocabulary. Examples: "duplicate of", "mother of", "endoparasite of", "host to", "sibling of", "valid synonym of", "located within". For discussion see http://code.google.com/p/darwincore/wiki/ResourceRelationship http://rs.tdwg.org/dwc/terms/relationshipOfResource.
+
+ABCDDNA: the Relation between the DNA and the voucher (e.g. "DNA and voucher from same individual").
+
+Biocode: using the pollinator terminology, etc. - this is being developed
+ by Discover Life group and can be adopted for other ecologic associations - will be controlled pick list]]></attribute>
+		<attribute column='Date Visited (To)' uri='urn:endEventDate' group='CollectingEvent' defined_by='urn:endEventDate'><![CDATA[]]></attribute>
+		<attribute column='Time Visited (To)' uri='urn:endEventTime' group='CollectingEvent' defined_by='urn:endEventTime'><![CDATA[]]></attribute>
+		<attribute column='Date Visited (From)' uri='urn:eventDate' group='CollectingEvent' defined_by='urn:eventDate'><![CDATA[DwC: The date-time or interval during which an Event occurred. For occurrences, this is the date-time when the event was recorded. Not suitable for a time in a geological context. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E) Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/EventDate
+
+BOLD: Date of collection, must be in DD-MMM-YYYY. If there is a date range, the Collection Date should be the mid-point, and the +/- can be entered into the Accuracy field.
+
+FROM MIGS: The time of sampling, either as an instance (single point in time) or interval. In case no exact time is available, the date/time can be right truncated i.e. all of these are valid times: 2008-01-23T19:23:10+00:00; 2008-01-23T19:23:10; 2008-01-23; 2008-01; 2008; Except: 2008-01; 2008 all are ISO8601 compliant
+
+ABCDDNA: date when voucher was collected, if you have content you can also use ISO format (e.g. 21. April 1951)
+
+Birds: Calculation field; extracts date from standard Collector's Number]]></attribute>
+		<attribute column='Event ID' uri='urn:eventID' group='CollectingEvent' defined_by='urn:eventID'><![CDATA[DwC: An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set. For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/eventID
+BOLD: An optional event ID.]]></attribute>
+		<attribute column='Collection Event Notes' uri='urn:eventRemarks' group='CollectingEvent' defined_by='urn:eventRemarks'><![CDATA[DwC: Comments or notes about the Event. Example: "after the recent rains the river is nearly at flood stage". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/eventRemarks
+
+BOLD: Comments or notes about the collection event.]]></attribute>
+		<attribute column='Time Visited (From)' uri='urn:eventTime' group='CollectingEvent' defined_by='urn:eventTime'><![CDATA[DwC: The time or interval during which an Event occurred. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "14:07-0600" is 2:07pm in the time zone six hours earlier than UTC, "08:40:21Z" is 8:40:21am UTC, "13:00:00Z/15:30:00Z" is the interval between 1pm UTC and 3:30pm UTC. For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/eventTime
+
+BOLD: The time or time of day during which the sample was collected.]]></attribute>
+		<attribute column='Event Field Number' uri='urn:fieldNumber' group='CollectingEvent' defined_by='urn:fieldNumber'><![CDATA[DwC: An identifier given to the event in the field. Often serves as a link between field notes and the Event. Example: "RV Sol 87-03-08". For discussion see http://code.google.com/p/darwincore/wiki/Event
+http://rs.tdwg.org/dwc/terms/fieldNumber
+
+ABCDDNA: This is whatever number you used before the specimen was vouchered. Specimens MUST have a unique Field ID OR a unique Voucher ID.]]></attribute>
+		<attribute column='Collector 1 (Primary)' uri='urn:recordedBy1' group='CollectingEvent' defined_by='urn:recordedBy1'><![CDATA[]]></attribute>
+		<attribute column='Collector 2' uri='urn:recordedBy2' group='CollectingEvent' defined_by='urn:recordedBy2'><![CDATA[]]></attribute>
+		<attribute column='Collector 3' uri='urn:recordedBy3' group='CollectingEvent' defined_by='urn:recordedBy3'><![CDATA[]]></attribute>
+		<attribute column='Collector 4' uri='urn:recordedBy4' group='CollectingEvent' defined_by='urn:recordedBy4'><![CDATA[]]></attribute>
+		<attribute column='Collector 5' uri='urn:recordedBy5' group='CollectingEvent' defined_by='urn:recordedBy5'><![CDATA[]]></attribute>
+		<attribute column='Collector 6' uri='urn:recordedBy6' group='CollectingEvent' defined_by='urn:recordedBy6'><![CDATA[]]></attribute>
+		<attribute column='Collector 7' uri='urn:recordedBy7' group='CollectingEvent' defined_by='urn:recordedBy7'><![CDATA[]]></attribute>
+		<attribute column='Collector 8' uri='urn:recordedBy8' group='CollectingEvent' defined_by='urn:recordedBy8'><![CDATA[]]></attribute>
+		<attribute column='Collection method' uri='urn:samplingProtocol' group='CollectingEvent' defined_by='urn:samplingProtocol'><![CDATA[DwC: The name of, reference to, or description of the method or protocol used during an Event. Examples: "UV light trap", "mist net", "bottom trawl", "ad hoc observation", "point count", "Penguins from space: faecal stains reveal the location of emperor penguin colonies, http://dx.doi.org/10.1111/j.1466-8238.2009.00467.x", "Takats et al. 20 http://rs.tdwg.org/dwc/terms/samplingProtocol
+
+BOLD: The name of, reference to, or description of the method or protocol used during a collection event. ]]></attribute>
+		<attribute column='Date Visited (Verbatim)' uri='urn:verbatimEventDate' group='CollectingEvent' defined_by='urn:verbatimEventDate'><![CDATA[DwC: The verbatim original representation of the date and time information for an Event. Examples: "spring 1910", "Marzo 2002", "1999-03-XX", "17IV1934". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/verbatimEventDate]]></attribute>
+		<attribute column='Elevation determination method ' uri='urn:elevationDetermination' group='DepthElevation' defined_by='urn:elevationDetermination'><![CDATA[]]></attribute>
+		<attribute column='Elevation Modifier' uri='urn:elevationModifier' group='DepthElevation' defined_by='urn:elevationModifier'><![CDATA[]]></attribute>
+		<attribute column='Elevation Precision' uri='urn:elevationPrecision' group='DepthElevation' defined_by='urn:elevationPrecision'><![CDATA[BOLD: A numerical representation of the precision of the elevation given in meters and is represented as +/- the elevation value. ]]></attribute>
+		<attribute column='Depth to (m)' uri='urn:maximumDepthInMeters' group='DepthElevation' defined_by='urn:maximumDepthInMeters'><![CDATA[DwC: The greater depth of a range of depth below the local surface, in meters. Example: "200". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/maximumDepthInMeters]]></attribute>
+		<attribute column='Elevation To (m)' uri='urn:maximumElevationInMeters' group='DepthElevation' defined_by='urn:maximumElevationInMeters'><![CDATA[DwC: The upper limit of the range of elevation (altitude, usually above sea level), in meters. Example: "200". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/maximumElevationInMeters]]></attribute>
+		<attribute column='Depth from (m)' uri='urn:minimumDepthInMeters' group='DepthElevation' defined_by='urn:minimumDepthInMeters'><![CDATA[DwC: The lesser depth of a range of depth below the local surface, in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumDepthInMeters
+
+BOLD: For organisms collected beneath the surface of a water body. Measured in meters below surface of water. ]]></attribute>
+		<attribute column='Elevation From (m)' uri='urn:minimumElevationInMeters' group='DepthElevation' defined_by='urn:minimumElevationInMeters'><![CDATA[DwC: The lower limit of the range of elevation (altitude, usually above sea level), in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumElevationInMeters.
+
+BOLD: Elevation of sampling site. Measured in meters relative to sea level. Negative values indicate a position below sea level.]]></attribute>
+		<attribute column='Text depth' uri='urn:verbatimDepth' group='DepthElevation' defined_by='urn:verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth]]></attribute>
+		<attribute column='Elevation Text' uri='urn:verbatimElevation' group='DepthElevation' defined_by='urn:verbatimElevation'><![CDATA[DwC: The original description of the elevation (altitude, usually above sea level) of the Location. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimElevation]]></attribute>
+		<attribute column='Extraction Date' uri='urn:extractionDate' group='DNA' defined_by='urn:extractionDate'><![CDATA[ABCDDNA: date of DNA extraction
+
+DwC_Ext: Date of DNA extraction (DNA only)]]></attribute>
+		<attribute column='Coordinate Radius (m)' uri='urn:coordinateUncertaintyInMeters' group='Georeference' defined_by='urn:coordinateUncertaintyInMeters'><![CDATA[DwC: The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (be Example: "30" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), "71" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system). For discus http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters]]></attribute>
+		<attribute column='Latitude Decimal' uri='urn:decimalLatitude' group='Georeference' defined_by='urn:decimalLatitude'><![CDATA[DwC: The geographic latitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, Example: "-41.0983423". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/decimalLatitude]]></attribute>
+		<attribute column='Latitude Decimal 2' uri='urn:decimalLatitude2' group='Georeference' defined_by='urn:decimalLatitude2'><![CDATA[]]></attribute>
+		<attribute column='Longitude Decimal' uri='urn:decimalLongitude' group='Georeference' defined_by='urn:decimalLongitude'><![CDATA[DwC: The geographic longitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between - Example: "-121.1761111". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/decimalLongitude
+
+BOLD: Latitude & Longitude in “degrees.decimal degrees” format (e.g. 45.837).]]></attribute>
+		<attribute column='Longitude Decimal 2' uri='urn:decimalLongitude2' group='Georeference' defined_by='urn:decimalLongitude2'><![CDATA[]]></attribute>
+		<attribute column='Datum' uri='urn:geodeticDatum' group='Georeference' defined_by='urn:geodeticDatum'><![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in decimalLatitude and decimalLongitude as based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide an SRS, if  Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/geodeticDatum]]></attribute>
+		<attribute column='Coordinates Determined By' uri='urn:georeferencedBy' group='Georeference' defined_by='urn:georeferencedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the georeference (spatial representation) for the Location. Example: "Kristina Yamamoto (MVZ); Janet Fang (MVZ)", "Brad Millen (ROM)". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/georeferencedBy]]></attribute>
+		<attribute column='Coordinates Determined Date' uri='urn:georeferencedDate' group='Georeference' defined_by='urn:georeferencedDate'><![CDATA[DwC: The date on which the Location was georeferenced. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/georeferencedDate]]></attribute>
+		<attribute column='Coordinate Determination Method' uri='urn:georeferenceProtocol' group='Georeference' defined_by='urn:georeferenceProtocol'><![CDATA[DwC: A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties. Examples: "Guide to Best Practices for Georeferencing" (Chapman and Wieczorek, eds. 2006), Global Biodiversity Information Facility.", "MaNIS/HerpNet/ORNIS Georeferencing Guidelines", "BioGeomancer". For discussion see http://code.google.com/p/dar http://rs.tdwg.org/dwc/terms/georeferenceProtocol]]></attribute>
+		<attribute column='Coordinate Notes' uri='urn:georeferenceRemarks' group='Georeference' defined_by='urn:georeferenceRemarks'><![CDATA[DwC: Notes or comments about the spatial description determination, explaining assumptions made in addition or opposition to the those formalized in the method referred to in georeferenceProtocol. Example: "assumed distance by road (Hwy. 101)". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/georeferenceRemarks]]></attribute>
+		<attribute column='Coordinate Determination Source' uri='urn:georeferenceSources' group='Georeference' defined_by='urn:georeferenceSources'><![CDATA[DwC: A list (concatenated and separated) of maps, gazetteers, or other resources used to georeference the Location, described specifically enough to allow anyone in the future to use the same resources. Examples: "USGS 1:24000 Florence Montana Quad; Terrametrics 2008 on Google Earth". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/georeferenceSources
+
+BOLD: The source of the latitude and longitude.]]></attribute>
+		<attribute column='Latitude Degrees' uri='urn:latitudeDegrees' group='Georeference' defined_by='urn:latitudeDegrees'><![CDATA[]]></attribute>
+		<attribute column='Latitude Minutes' uri='urn:latitudeMinutes' group='Georeference' defined_by='urn:latitudeMinutes'><![CDATA[]]></attribute>
+		<attribute column='Latitude Direction' uri='urn:latitudeNorthSouth' group='Georeference' defined_by='urn:latitudeNorthSouth'><![CDATA[]]></attribute>
+		<attribute column='Latitude Seconds' uri='urn:latitudeSeconds' group='Georeference' defined_by='urn:latitudeSeconds'><![CDATA[]]></attribute>
+		<attribute column='Longitude Degrees' uri='urn:longitudeDegrees' group='Georeference' defined_by='urn:longitudeDegrees'><![CDATA[]]></attribute>
+		<attribute column='Longitude Direction' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'><![CDATA[]]></attribute>
+		<attribute column='Longitude Minutes' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'><![CDATA[]]></attribute>
+		<attribute column='Longitude Seconds' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'><![CDATA[]]></attribute>
+		<attribute column='Latitude Verbatim' uri='urn:verbatimLatitude' group='Georeference' defined_by='urn:verbatimLatitude'><![CDATA[DwC: The verbatim original latitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem. Example: "41 05 54.03S". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimLatitude]]></attribute>
+		<attribute column='Latitude Verbatim 2' uri='urn:verbatimLatitude2' group='Georeference' defined_by='urn:verbatimLatitude2'><![CDATA[]]></attribute>
+		<attribute column='Longitude Verbatim' uri='urn:verbatimLongitude' group='Georeference' defined_by='urn:verbatimLongitude'><![CDATA[DwC: The verbatim original longitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem. Example: "121d 10' 34" W". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimLongitude]]></attribute>
+		<attribute column='Longitude Verbatim 2' uri='urn:verbatimLongitude2' group='Georeference' defined_by='urn:verbatimLongitude2'><![CDATA[]]></attribute>
+		<attribute column='Verbatim Datum' uri='urn:verbatimSRS' group='Georeference' defined_by='urn:verbatimSRS'><![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in verbatimLatitude and verbatimLongitude, or verbatimCoordinates are based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimSRS]]></attribute>
+		<attribute column='Date Identified' uri='urn:dateIdentified' group='Identification' defined_by='urn:dateIdentified'><![CDATA[DwC: The date on which the subject was identified as representing the Taxon. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/dateIdentified]]></attribute>
+		<attribute column='Identification Qualifier' uri='urn:identificationQualifier' group='Identification' defined_by='urn:identificationQualifier'><![CDATA[DwC: A brief phrase or a standard term ("cf.", "aff.") to express the determiner's doubts about the Identification. Examples: 1) For the determination "Quercus aff. agrifolia var. oxyadenia", identificationQualifier would be "aff. agrifolia var. oxyadenia" with accompanying values "Quercus" in genus, "agrifolia" in specificEpithet, "oxyadenia" in infraspecificE http://rs.tdwg.org/dwc/terms/identificationQualifier
+
+Amy Driskell: Use this field to add notes on taxonomy. e.g. buprestus, c.f. ignoramis, glaucans group B, sp. nov. This data will be moved to the BOLD "Taxonomy Notes" field, but it's handier here.
+
+Biocode: "cf." or "aff."]]></attribute>
+		<attribute column='Identification Qualifier Rank' uri='urn:identificationQualifierRank' group='Identification' defined_by='urn:identificationQualifierRank'><![CDATA[]]></attribute>
+		<attribute column='Identification Comments' uri='urn:identificationRemarks' group='Identification' defined_by='urn:identificationRemarks'><![CDATA[DwC: Comments or notes about the Identification. Example: "Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the u±as.". For discussion see http://code.google.com/p/darwincore/wiki/Identification http://rs.tdwg.org/dwc/terms/identificationRemarks]]></attribute>
+		<attribute column='Identified By' uri='urn:identifiedBy' group='Identification' defined_by='urn:identifiedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject. Example: "James L. Patton", "Theodore Pappenfuss; Robert Macey". For discussion see http://code.google.com/p/darwincore/wiki/Identification http://rs.tdwg.org/dwc/terms/identifiedBy
+
+BOLD: Full name of primary individual responsible for providing taxonomic identification of the specimen. ]]></attribute>
+		<attribute column='Identifier Institution' uri='urn:identifierInstitution' group='Identification' defined_by='urn:identifierInstitution'><![CDATA[BOLD: The full name of the identifier's institutional or organizational affiliation if one exists.]]></attribute>
+		<attribute column='Common Name' uri='urn:vernacularName' group='Identification' defined_by='urn:vernacularName'><![CDATA[DwC: A common or vernacular name. Example: "Andean Condor", "Condor Andino", "American Eagle", "GΣnsegeier". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/vernacularName]]></attribute>
+		<attribute column='Project Number' uri='urn:projectCode' group='IDs' defined_by='urn:projectCode'><![CDATA[]]></attribute>
+		<attribute column='Collection Department/Division' uri='urn:collectionCode' group='Institution' defined_by='urn:collectionCode'><![CDATA[DwC_Ext: will be in the associated Occurrence record. (Unit/SourceID) 
+
+DwC: The name, acronym, coden, or initialism identifying the collection or data set from which the record was derived. Examples: "Mammals", "Hildebrandt", "eBird". For discussion see http://code.google.com/p/darwincore/wiki/RecordLevelTerms http://rs.tdwg.org/dwc/terms/collectionCodeall
+
+BOLD: Code associated with given collection. Used in conjunction with Museum ID to disambiguate a specimen ID number that might be used in different collections within the same institution (i.e., a specimen number in a large museum may appear in the bird, mammal
+and reptile collections). This field is only to be used if Museum ID field is used.
+
+ABCDDNA: short description of relevant collection. Should be "DNA Bank" ]]></attribute>
+		<attribute column='Holding Institution' uri='urn:holdingInstitution' group='Institution' defined_by='urn:holdingInstitution'><![CDATA[BOLD: Full name of the institution where specimen or tissue is stored. Required.
+
+Biocode: Holding institution for Specimens, Tissues, DNA
+
+Schultz: Depository: Collection currently housing the object; SEE IMAGE for value list]]></attribute>
+		<attribute column='Museum Acronym' uri='urn:institutionCode' group='Institution' defined_by='urn:institutionCode'><![CDATA[DwC_Ext: will be in the associated Occurrence record. (Unit/SourceInstitutionID) 
+
+DwC: The name (or acronym) in use by the institution having custody of the object(s) or information referred to in the record. Examples: "MVZ", "FMNH", "AKN-CLO", "University of California Museum of Paleontology (UCMP)". For discussion see http://code.google.com/p/darwincore/wiki/RecordLevelTerms http://rs.tdwg.org/dwc/terms/institutionCodeall
+
+ABCDDNA: the SourceInstitutionID or InstitutionCode used for GBIF (e.g. the acronym of your institution)]]></attribute>
+		<attribute column='Museum Acronym Voucher' uri='urn:ownerInstitutionCode' group='Institution' defined_by='urn:ownerInstitutionCode'><![CDATA[DwC: The name (or acronym) in use by the institution having ownership of the object(s) or information referred to in the record. Examples: "NPS", "APN", "InBio". For discussion see http://code.google.com/p/darwincore/wiki/RecordLevelTerms http://rs.tdwg.org/dwc/terms/ownerInstitutionCodeall]]></attribute>
+		<attribute column='Museum Acronym Sample' uri='urn:sampleOwnerInstitutionCode' group='Institution' defined_by='urn:sampleOwnerInstitutionCode'><![CDATA[DwC Ext.: Most commonly used acronym for your university, agency or institution.
+
+ABCDDNA: short name/abbreviation of relevant institution . Ex: BGBM ]]></attribute>
+		<attribute column='Archipelago' uri='urn:archipelago' group='Locality' defined_by='urn:archipelago'><![CDATA[]]></attribute>
+		<attribute column='Bay/Sound' uri='urn:baySound' group='Locality' defined_by='urn:baySound'><![CDATA[The tertiary oceanic division in which the occurrence was recorded. Controlled lookup list.]]></attribute>
+		<attribute column='Continent' uri='urn:continent' group='Locality' defined_by='urn:continent'><![CDATA[DwC: The name of the continent in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names or the ISO 3166 Continent code. Example: "Antarctica". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/continent
+
+BOLD: ISO Continents
+
+ABCDDNA: name of continent (e.g. Europe)]]></attribute>
+		<attribute column='Country' uri='urn:country' group='Locality' defined_by='urn:country'><![CDATA[DwC: The name of the country or major administrative unit in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names.  Examples: "Denmark", "Colombia", "España". For discussion see http://code.google.com/p/darwincore/wiki/Location
+
+ABCDDNA: english Name of the country (e.g. United States of America)
+
+Kress Plant Barcodes: plot]]></attribute>
+		<attribute column='District/County/Shire' uri='urn:county' group='Locality' defined_by='urn:county'><![CDATA[DwC: The full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) in which the Location occurs. Examples: "Missoula", "Los Lagos", "Mataró". For discussion see http://code.google.com/p/darwincore/wiki/Location  http://rs.tdwg.org/dwc/terms/county
+
+Schultz: A political or geographic unit (above the level of a specific Locality) such as a county, island, etc.; not used consistently]]></attribute>
+		<attribute column='Habitat' uri='urn:habitat' group='Locality' defined_by='urn:habitat'><![CDATA[DwC: A category or description of the habitat in which the Event occurred. Example: "oak savanna", "pre-cordilleran steppe". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/habitat
+
+MIxS: Environmental feature level includes geographic environmental features. Examples include: harbor, cliff, or lake. EnvO (v1.53) terms listed under environmental feature can be found from the link: http://bioportal.bioontology.org/visualize/44405/?conceptid=ENVO%3A00002297
+
+IndoPacific: Habitat from which the sample was collected. Please pick from the list.]]></attribute>
+		<attribute column='Island Name' uri='urn:island' group='Locality' defined_by='urn:island'><![CDATA[DwC: The name of the island on or near which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Example: "Isla Victoria". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/island]]></attribute>
+		<attribute column='Island Grouping' uri='urn:islandGroup' group='Locality' defined_by='urn:islandGroup'><![CDATA[DwC: The name of the island group in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Example: "Alexander Archipelago". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/islandGroup]]></attribute>
+		<attribute column='Precise Locality' uri='urn:locality' group='Locality' defined_by='urn:locality'><![CDATA[DwC: The specific description of the place. Less specific geographic information can be provided in other geographic terms (higherGeography, continent, country, stateProvince, county, municipality, waterBody, island, islandGroup). This term may contain information modified from the original to correct perceived errors or standardize the description. Example: "Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/locality
+
+Schultz.Displacement: For a locality (e.g., name of a town), the direction & distance of the collection event (e.g., "10 km NE")
+
+BOLD: Exact location of collection site
+
+A Driskell: If you've got a name for the collection site, such as "left of Lucky's Bar, in front of men's restroom." (Hey, I once collected frogs from a toilet tank. I know! Right?)]]></attribute>
+		<attribute column='Locality Remarks' uri='urn:locationRemarks' group='Locality' defined_by='urn:locationRemarks'><![CDATA[DwC: Comments or notes about the Location. Example: "under water since 2005". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/locationRemarks]]></attribute>
+		<attribute column='City/Town' uri='urn:municipality' group='Locality' defined_by='urn:municipality'><![CDATA[DwC: The full, unabbreviated name of the next smaller administrative region than county (city, municipality, etc.) in which the Location occurs. Do not use this term for a nearby named place that does not contain the actual location. Examples: "Holzminden". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/municipality
+
+Kress PB Database: usda_site]]></attribute>
+		<attribute column='Ocean' uri='urn:ocean' group='Locality' defined_by='urn:ocean'><![CDATA[]]></attribute>
+		<attribute column='Sea/Gulf' uri='urn:seaGulf' group='Locality' defined_by='urn:seaGulf'><![CDATA[]]></attribute>
+		<attribute column='Site/Station Number' uri='urn:siteCode' group='Locality' defined_by='urn:siteCode'><![CDATA[BOLD: The name of the sampling location.
+
+BioCode: Loc_Num for future use.]]></attribute>
+		<attribute column='Province/State/Territory' uri='urn:stateProvince' group='Locality' defined_by='urn:stateProvince'><![CDATA[DwC: The name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs. Examples: "Montana", "Minas Gerais", "C≤rdoba". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/stateProvince
+
+BOLD: The full, unabbreviated name of the state, province, territory, or prefecture within the given country.
+
+Schultz: A political unit below "country," e.g., state, province, departamento, etc.
+
+Kress PB: usda_site
+
+IndoPacific: The state or province where the sample was found.]]></attribute>
+		<attribute column='Length' uri='urn:length' group='Measurements' defined_by='urn:length'><![CDATA[]]></attribute>
+		<attribute column='Length unit' uri='urn:lengthUnit' group='Measurements' defined_by='urn:lengthUnit'><![CDATA[]]></attribute>
+		<attribute column='Measurement 1 of' uri='urn:measurement1Of' group='Measurements' defined_by='urn:measurement1Of'><![CDATA[]]></attribute>
+		<attribute column='Measurement 1 Type' uri='urn:measurement1Type' group='Measurements' defined_by='urn:measurement1Type'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact]]></attribute>
+		<attribute column='Measurement 1 Unit' uri='urn:measurement1Unit' group='Measurements' defined_by='urn:measurement1Unit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit]]></attribute>
+		<attribute column='Measurement 1 Value' uri='urn:measurement1Value' group='Measurements' defined_by='urn:measurement1Value'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters]]></attribute>
+		<attribute column='Measured by' uri='urn:measurementDeterminedBy' group='Measurements' defined_by='urn:measurementDeterminedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the value of the MeasurementOrFact. Example: "Javier de la Torre", "Julie Woodruff; Eileen Lacey". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementDeterminedBy]]></attribute>
+		<attribute column='Measurement Date' uri='urn:measurementDeterminedDate' group='Measurements' defined_by='urn:measurementDeterminedDate'><![CDATA[DwC: The date on which the MeasurementOrFact was made. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/measurementDeterminedDate]]></attribute>
+		<attribute column='Measurement Remarks' uri='urn:measurementRemarks' group='Measurements' defined_by='urn:measurementRemarks'><![CDATA[DwC: Comments or notes accompanying the MeasurementOrFact. Example: "tip of tail missing". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementRemarks]]></attribute>
+		<attribute column='Weight' uri='urn:weight' group='Measurements' defined_by='urn:weight'><![CDATA[IndoPacific: In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
+		<attribute column='Weight unit' uri='urn:weightUnit' group='Measurements' defined_by='urn:weightUnit'><![CDATA[]]></attribute>
+		<attribute column='Preparation 1' uri='urn:preparation1' group='Preparation' defined_by='urn:preparation1'><![CDATA[DwC: A list (concatenated and separated) of preparations and preservation methods for a specimen. Examples: "skin; skull; skeleton", "whole animal (ETOH); tissue (EDTA)", "fossil", "cast", "photograph", "DNA extract". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/preparations
+
+Schultz: Type of object, e.g., "pin," "point," "cryotube," etc.  See value list image.]]></attribute>
+		<attribute column='Preparation Date' uri='urn:preparationDate' group='Preparation' defined_by='urn:preparationDate'><![CDATA[DwC_Ext: Date of preparation, year-month-day (e.g., 2012-10-26)]]></attribute>
+		<attribute column='Preparation Process' uri='urn:preparationProcess' group='Preparation' defined_by='urn:preparationProcess'><![CDATA[DwC_Ext: Process used in preparing the specimen or sample]]></attribute>
+		<attribute column='Preparator' uri='urn:preparedBy' group='Preparation' defined_by='urn:preparedBy'><![CDATA[DwC_Ext: Person and/or institution responsible for or effecting the preparation]]></attribute>
+		<attribute column='Project Name' uri='urn:projectName' group='ResearchWorkflow' defined_by='urn:projectName'><![CDATA[MIxS: Name of the project within which the sequencing was organized]]></attribute>
+		<attribute column='Kind of Object' uri='urn:basisOfRecord' group='Specimen' defined_by='urn:basisOfRecord'><![CDATA[DwC: The specific nature of the data record - a subtype of the dcterms:type. Recommended best practice is to use a controlled vocabulary such as the Darwin Core Type Vocabulary (http://rs.tdwg.org/dwc/terms/type-vocabulary/index.htm). Examples: "PreservedSpecimen", "FossilSpecimen", "LivingSpecimen", "HumanObservation", "MachineObservation", "GeneticSample". For discussion see http://code.google.com/p/darwincore/wiki/RecordLevelTerms http://rs.tdwg.org/dwc/terms/basisOfRecordall
+
+ABCDDNA: must be "OtherSpecimen"]]></attribute>
+		<attribute column='Date created' uri='urn:dateCreated' group='Specimen' defined_by='urn:dateCreated'><![CDATA[Schultz: Date the record was created]]></attribute>
+		<attribute column='Specimen count' uri='urn:individualCount' group='Specimen' defined_by='urn:individualCount'><![CDATA[DwC: The number of individuals represented present at the time of the Occurrence. Examples: "1", "25". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualCount]]></attribute>
+		<attribute column='Individual ID' uri='urn:individualID' group='Specimen' defined_by='urn:individualID'><![CDATA[DwC: An identifier for an individual or named group of individual organisms represented in the Occurrence. Meant to accommodate resampling of the same individual or group for monitoring purposes. May be a global unique identifier or an identifier specific to a Examples: "U.amer. 44", "Smedley", "Orca J 23". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualID]]></attribute>
+		<attribute column='Life Stage' uri='urn:lifeStage' group='Specimen' defined_by='urn:lifeStage'><![CDATA[DwC: The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary. Examples: "egg", "eft", "juvenile", "adult", "2 adults 4 juveniles". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/lifeStage
+
+BOLD: The age class or life stage of the specimen(s) at the time of sampling. The field supports free text but is a controlled vocabulary for validation. Example: "Adult", "Immature", "pupa", etc.]]></attribute>
+		<attribute column='Microhabitat description' uri='urn:microHabitat' group='Specimen' defined_by='urn:microHabitat'><![CDATA[IndoPacific: Information about the microhabitat from which the sample was collected.]]></attribute>
+		<attribute column='Specimen Notes' uri='urn:occurrenceRemarks' group='Specimen' defined_by='urn:occurrenceRemarks'><![CDATA[DwC_Ext: dwc already has this term, no need to add it.  (Unit/Notes) 
+
+DwC: Comments or notes about the Occurrence. Example: "found dead on road". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/OccurrenceRemarks
+
+BOLD: General notes regarding the specimen]]></attribute>
+		<attribute column='Record Creator' uri='urn:recordCreator' group='Specimen' defined_by='urn:recordCreator'><![CDATA[IndoPacific Instructions: Firstname Lastname (the person entering the data on the spreadsheet) {based on login and day/time}]]></attribute>
+		<attribute column='Primary Collector Number' uri='urn:recordNumber' group='Specimen' defined_by='urn:recordNumber'><![CDATA[DwC: An identifier given to the Occurrence at the time it was recorded. Often serves as a link between field notes and an Occurrence record, such as a specimen collector's number. Example: "OPP 7101". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/recordNumber
+
+BOLD:  Field ID: Field number from the collection event or the specimen identifier from a private collection.
+
+ABCDDNA.CollectorsFieldNumber: the number the collector gave to the specimen in the field, often used in Botany but
+not in Zoology; map it if you have content (e.g. 765/10)]]></attribute>
+		<attribute column='Sexual Maturity' uri='urn:reproductiveCondition' group='Specimen' defined_by='urn:reproductiveCondition'><![CDATA[DwC: The reproductive condition of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples" "non-reproductive", "pregnant", "in bloom", "fruit-bearing". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/reproductiveCondition]]></attribute>
+		<attribute column='Sex' uri='urn:sex' group='Specimen' defined_by='urn:sex'><![CDATA[DwC: The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples: "female", "hermaphrodite", "8 males, 4 females". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/sex
+
+BOLD: Male/female/hermaphrodite only.]]></attribute>
+		<attribute column='Specimen/Lot description' uri='urn:specimenDescription' group='Specimen' defined_by='urn:specimenDescription'><![CDATA[]]></attribute>
+		<attribute column='Class' uri='urn:class' group='Taxonomy' defined_by='urn:class'><![CDATA[DwC: The full scientific name of the class in which the taxon is classified. Example: "Mammalia", "Hepaticopsida". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/class
+
+BOLD: None provided]]></attribute>
+		<attribute column='Family' uri='urn:family' group='Taxonomy' defined_by='urn:family'><![CDATA[DwC: The full scientific name of the family in which the taxon is classified. Example: "Felidae", "Monocleaceae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/family
+
+BOLD: None provided.]]></attribute>
+		<attribute column='Genus' uri='urn:genus' group='Taxonomy' defined_by='urn:genus'><![CDATA[DwC: The full scientific name of the genus in which the taxon is classified. Example: "Puma", "Monoclea". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/genus
+
+ABCDDNA: no definition provided (e.g. Aaronsohnia)
+
+BOLD: None provided.]]></attribute>
+		<attribute column='Epithet below subspecies' uri='urn:infraspecificEpithet' group='Taxonomy' defined_by='urn:infraspecificEpithet'><![CDATA[DwC: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation. Example: "concolor", "oxyadenia", "sayi". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/infraspecificEpithet
+
+ABCDDNA: no definition provided]]></attribute>
+		<attribute column='Kingdom' uri='urn:kingdom' group='Taxonomy' defined_by='urn:kingdom'><![CDATA[DwC: The full scientific name of the kingdom in which the taxon is classified. Example: "Animalia", "Plantae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/kingdom]]></attribute>
+		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='urn:order'><![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
+
+BOLD: None provided.]]></attribute>
+		<attribute column='Phylum' uri='urn:phylum' group='Taxonomy' defined_by='urn:phylum'><![CDATA[DwC: The full scientific name of the phylum or division in which the taxon is classified. Example: "Chordata" (phylum), "Bryophyta" (division). For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/phylum
+
+BOLD: None provided.]]></attribute>
+		<attribute column='Authors' uri='urn:scientificNameAuthorship' group='Taxonomy' defined_by='urn:scientificNameAuthorship'><![CDATA[DwC: The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode. Example: "(Torr.) J.T. Howell", "(Martinovský) Tzvelev", "(Györfi, 1952)". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/scientificNameAuthorship]]></attribute>
+		<attribute column='Species' uri='urn:specificEpithet' group='Taxonomy' defined_by='urn:specificEpithet'><![CDATA[DwC: The name of the first or species epithet of the scientificName. Example: "concolor", "gottschei". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/specificEpithet
+
+ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. factorovskyi). This has to be a "valid" species name. If unknown (i.e. "sp.", leave this field blank). Use the column to the right (H) to record other taxonomic info (e.g. "poss. B. herbertus," "cf. haberdasheri"). Please don't use spaces, dashes, periods, etc. in this column.
+DO NOT PUT "sp." IN THIS COLUMN
+
+BOLD: None provided]]></attribute>
+		<attribute column='Subclass' uri='urn:subclass' group='Taxonomy' defined_by='urn:subclass'><![CDATA[]]></attribute>
+		<attribute column='Subfamily' uri='urn:subfamily' group='Taxonomy' defined_by='urn:subfamily'><![CDATA[BOLD: None provided.]]></attribute>
+		<attribute column='Subgenus' uri='urn:subgenus' group='Taxonomy' defined_by='urn:subgenus'><![CDATA[DwC: The full scientific name of the subgenus in which the taxon is classified. Values should include the genus to avoid homonym confusion. Example: "Strobus (Pinus)", "Puma (Puma)" "Loligo (Amerigo)", "Hieracium subgen. Pilosella". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/subgenus]]></attribute>
+		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'><![CDATA[]]></attribute>
+		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'><![CDATA[]]></attribute>
+		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'><![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]></attribute>
+		<attribute column='Rank below subspecies' uri='urn:taxonRank' group='Taxonomy' defined_by='urn:taxonRank'><![CDATA[DwC: The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary. Examples: "subspecies", "varietas", "forma", "species", "genus". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRank
+
+ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. var.)]]></attribute>
+		<attribute column='Taxon notes' uri='urn:taxonRemarks' group='Taxonomy' defined_by='urn:taxonRemarks'><![CDATA[DwC: Comments or notes about the taxon or name. Example: "this name is a misspelling in common use". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRemarks]]></attribute>
+		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn:biorepositoryID'><![CDATA[]]></attribute>
+		<attribute column='BOLD ID' uri='urn:boldID' group='Tissue' defined_by='urn:boldID'><![CDATA[Biocode: BOLD "processID" number (ie, MBFA001-07)]]></attribute>
+		<attribute column='Genetic Sample Notes' uri='urn:geneticSampleNotes' group='Tissue' defined_by='urn:geneticSampleNotes'><![CDATA[]]></attribute>
+		<attribute column='Genetic Sample Type Primary' uri='urn:geneticSampleTypePrimary' group='Tissue' defined_by='urn:geneticSampleTypePrimary'><![CDATA[DwC_Ext: e.g. “tissue”, “DNA”, “RNA”
+
+MIxS: The environmental material level refers to the matter that was displaced by the sample, prior to the sampling event. Environmental matter terms are generally mass nouns. Examples include: air, soil, or water. EnvO (v1.53) terms listed under environmental matter can be found from the link: http://bioportal.bioontology.org/visualize/44405/?conceptid=ENVO%3A00010483]]></attribute>
+		<attribute column='Genetic Sample Type Secondary' uri='urn:geneticSampleTypeSecondary' group='Tissue' defined_by='urn:geneticSampleTypeSecondary'><![CDATA[MIxS: The environmental material level refers to the matter that was displaced by the sample, prior to the sampling event. Environmental matter terms are generally mass nouns. Examples include: air, soil, or water. EnvO (v1.53) terms listed under environmental matter can be found from the link: http://bioportal.bioontology.org/visualize/44405/?conceptid=ENVO%3A00010483]]></attribute>
+		<attribute column='Genetic Sample Type Tertiary' uri='urn:geneticSampleTypeTertiary' group='Tissue' defined_by='urn:geneticSampleTypeTertiary'><![CDATA[]]></attribute>
+		<attribute column='Genetic Sample Type Verbatim' uri='urn:geneticSampleTypeVerbatim' group='Tissue' defined_by='urn:geneticSampleTypeVerbatim'><![CDATA[]]></attribute>
+		<attribute column='Material Sample ID' uri='urn:materialSampleID' group='Tissue' defined_by='urn:materialSampleID'><![CDATA[DwC: An identifier for the MaterialSample (as opposed to a particular digital record of the material sample). In the absence of a persistent global unique identifier, construct one from a combination of identifiers in the record that will most closely make the materialSampleID globally unique.
+
+IndoPacific: The "local" accession number that you use for your laboratory's database. This number should link EXACTLY to the genetic data you are providing for this sample. It must be unique among the numbers that your lab is providing.]]></attribute>
+		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'><![CDATA[IndoPacific: A platename where the DNA extract is stored]]></attribute>
+		<attribute column='Genetic Sample Preservation Date' uri='urn:preservationDate' group='Tissue' defined_by='urn:preservationDate'><![CDATA[DwC_Ext: preservationDate- Day/Month/year (e.g., 2012-10-26T18:35:27)]]></attribute>
+		<attribute column='Genetic Sample Preservation Medium' uri='urn:preservationMedium' group='Tissue' defined_by='urn:preservationMedium'><![CDATA[DwC_Ext: medium used for preservation, e.g. “70% ethanol”, “95-100% ethanol”, “DMSO-salt solution”, “RNAlater”, “Formalin”, “no preservative”, “frozen”, “liquid nitrogen”, “silica gel”, “other”)]]></attribute>
+		<attribute column='Genetic Sample Preservation Temperature' uri='urn:preservationTemperature' group='Tissue' defined_by='urn:preservationTemperature'><![CDATA[DwC_Ext: storage temperature (degrees C), e.g. “20”, “4”, “-20”, “-80”, “-150” ]]></attribute>
+		<attribute column='Genetic Sample quality' uri='urn:sampleQuality' group='Tissue' defined_by='urn:sampleQuality'><![CDATA[ABCDDNA: quality of the sample (e.g. high, medium, low)
+
+DwC_Ext: used for both DNA and tissue]]></attribute>
+		<attribute column='Genetic Sample Storage Conditions' uri='urn:storageConditions' group='Tissue' defined_by='urn:storageConditions'><![CDATA[MIxS: explain how and for how long the soil sample was stored before DNA extraction.]]></attribute>
+		<attribute column='Well' uri='urn:well' group='Tissue' defined_by='urn:well'><![CDATA[Biocode: Part of 96 well plate number]]></attribute>
+	</entity>
+</mapping>
 <validation>
 	<worksheet sheetname='Samples'>
 		<rule type='duplicateColumnNames' level='error'></rule>
-		<rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+		<rule type='RequiredColumns' column='RequiredColumns' level='error'>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Collection Department/Division</field>
+			<field>Holding Institution</field>
+			<field>Precise Locality</field>
+			<field>Kind of Object</field>
+			<field>Primary Collector Number</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Publish on Internet</field>
+			<field>Blocked Until Date</field>
+			<field>Agreement Name</field>
+			<field>Agreement Description</field>
+			<field>Agreement Number</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Date Identified</field>
+			<field>Barcode</field>
+			<field>Collection Department/Division</field>
+			<field>Holding Institution</field>
+			<field>Museum Acronym</field>
+			<field>Museum Acronym Voucher</field>
+			<field>Museum Acronym Sample</field>
+			<field>Biogeographic Region</field>
+			<field>Country</field>
+			<field>Precise Locality</field>
+			<field>Province/State/Territory</field>
+			<field>Preparation 1</field>
+			<field>Kind of Object</field>
+			<field>Date created</field>
+			<field>Specimen count</field>
+			<field>Record Creator</field>
+			<field>Class</field>
+			<field>Order</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Holding Institution</field>
+			<field>Kind of Object</field>
+			<field>Primary Collector Number</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Collection Department/Division</field>
+			<field>Holding Institution</field>
+			<field>Precise Locality</field>
+			<field>Kind of Object</field>
+			<field>Primary Collector Number</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Collection Department/Division</field>
+			<field>Continent</field>
+			<field>Country</field>
+			<field>Preparation 1</field>
+			<field>Preparator</field>
+			<field>Kind of Object</field>
+			<field>Sex</field>
+			<field>Genus</field>
+			<field>Species</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Collection Department/Division</field>
+			<field>Holding Institution</field>
+			<field>Precise Locality</field>
+			<field>Kind of Object</field>
+			<field>Primary Collector Number</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+			<field>Date Visited (From)</field>
+			<field>Collector 1 (Primary)</field>
+			<field>Collection Department/Division</field>
+			<field>Holding Institution</field>
+			<field>Precise Locality</field>
+			<field>Kind of Object</field>
+			<field>Primary Collector Number</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
+		</rule>
+		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Specimen/Lot description</field>
+			<field>Biorepository ID</field>
+			<field>Elevation To (m)</field>
+			<field>Coordinate Determination Method</field>
+			<field>Biorepository ID</field>
+			<field>Genetic Sample Preservation Date</field>
+			<field>Genetic Sample Preservation Medium</field>
+			<field>Genetic Sample Prepared By</field>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Collection Department/Division</field>
+			<field>Precise Locality</field>
+			<field>Biorepository ID</field>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Biorepository ID</field>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>District/County/Shire</field>
+			<field>Habitat</field>
+			<field>Precise Locality</field>
+			<field>Province/State/Territory</field>
+			<field>Measurement 1 of</field>
+			<field>Measurement 1 Type</field>
+			<field>Measurement 1 Unit</field>
+			<field>Measurement 1 Value</field>
+			<field>Preparation Date</field>
+			<field>Microhabitat description</field>
+			<field>Molt 1 Description</field>
+			<field>Molt 1 Part</field>
+			<field>Preparator number</field>
+			<field>Reproductive Part 1</field>
+			<field>Reproductive Part 1 Length</field>
+			<field>Reproductive Part 1 Remarks</field>
+			<field>Reproductive Part 1 Unit</field>
+			<field>Reproductive Part 1 Width</field>
+			<field>Sex / Life Stage Remarks</field>
+			<field>Soft Part 1</field>
+			<field>Soft Part 1 Color</field>
+			<field>Biorepository ID</field>
+			<field>Genetic Sample Type Verbatim</field>
+			<field>Genetic Sample quality</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Biorepository ID</field>
+			<field>Elevation From (m)</field>
+			<field>Latitude Decimal</field>
+			<field>Longitude Decimal</field>
+			<field>Biorepository ID</field>
+		</rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='controlledVocabulary' column='Cultivated' list='yesNo' level='warning'></rule>
+		<rule type='validateNumeric' column='Duplicates collected' level='warning' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Establishment means' list='Establishment means' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Exudate' list='Exudate' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Habit' list='habit' level='warning'></rule>
+		<rule type='validateNumeric' column='Height' level='error' value='%3E0'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='isNumber' column='Sheets per specimen' level='error'></rule>
+		<rule type='controlledVocabulary' column='Hybrid rank' list='Hybrid rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='uniqueValue' column='Barcode' level='error'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='validateNumeric' column='Bottom depth' level='error' value='%26gt%3B%3D0'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Length unit' list='Length unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='controlledVocabulary' column='Establishment means' list='Establishment means' level='warning'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Length unit' list='Length unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='controlledVocabulary' column='Measurement 2 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 2 Value' level='error'></rule>
+		<rule type='controlledVocabulary' column='Measurement 3 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 3 Value' level='error'></rule>
+		<rule type='controlledVocabulary' column='Measurement 4 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 4 Value' level='error'></rule>
+		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 3' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 4' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='isNumber' column='Age' level='error'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='isNumber' column='Bursa Length' level='error'></rule>
+		<rule type='isNumber' column='Bursa Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 1 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 1 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 2 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 2 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 3 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 3 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 4 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 4 Width' level='error'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 1' list='softParts' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 2' list='softParts' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 3' list='softParts' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 4' list='softParts' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 5' list='softParts' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Soft Part 6' list='softParts' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Length unit' list='Length unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='Continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Length unit' list='Length unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
+		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
 	</worksheet>
+	<lists>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field>Yes</field>
+			<field>No</field>
+		</list>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field>ca.</field>
+			<field>greater than</field>
+			<field>less than</field>
+			<field>±</field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field>N</field>
+			<field>S</field>
+		</list>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field>E</field>
+			<field>W</field>
+		</list>
+		<list alias='identificationQualifier' caseInsensitive='true'>
+			<field>aff.</field>
+			<field>cf.</field>
+			<field>complex</field>
+			<field>group</field>
+			<field>near</field>
+			<field>sp. nov.</field>
+			<field>subgroup</field>
+			<field>uncertain</field>
+			<field>vel aff.</field>
+		</list>
+		<list alias='collectionCode' caseInsensitive='true'>
+			<field>Botany</field>
+			<field>Entomology</field>
+			<field>Invertebrate Zoology</field>
+			<field>Amphibians and Reptiles</field>
+			<field>Birds</field>
+			<field>Fishes</field>
+			<field>Mammals</field>
+			<field>Mineral Sciences</field>
+		</list>
+		<list alias='institutionCode' caseInsensitive='true'>
+			<field>US</field>
+			<field>USNM</field>
+		</list>
+		<list alias='continent' caseInsensitive='true'>
+			<field>Africa</field>
+			<field>Antarctica</field>
+			<field>Asia</field>
+			<field>Australia</field>
+			<field>Europe</field>
+			<field>North America</field>
+			<field>Oceania</field>
+			<field>South America</field>
+		</list>
+		<list alias='ocean' caseInsensitive='true'>
+			<field>Antarctic Ocean</field>
+			<field>Arctic Ocean</field>
+			<field>Indian Ocean</field>
+			<field>North Atlantic Ocean</field>
+			<field>North Pacific Ocean</field>
+			<field>South Atlantic Ocean</field>
+			<field>South Pacific Ocean</field>
+		</list>
+		<list alias='lengthUnits' caseInsensitive='true'>
+			<field>cm</field>
+			<field>m</field>
+			<field>mm</field>
+			<field>µm</field>
+			<field>in</field>
+			<field>ft</field>
+		</list>
+		<list alias='measurementUnit' caseInsensitive='true'>
+			<field>cm</field>
+			<field>ft</field>
+			<field>g</field>
+			<field>in</field>
+			<field>ins</field>
+			<field>kg</field>
+			<field>lb</field>
+			<field>lbs</field>
+			<field>mm</field>
+			<field>oz</field>
+			<field>ct</field>
+		</list>
+		<list alias='basisOfRecord' caseInsensitive='true'>
+			<field>Bulky Specimen</field>
+			<field>Genetic Sample</field>
+			<field>Liquid Preserved</field>
+			<field>Lot</field>
+			<field>Packet</field>
+			<field>Seed</field>
+			<field>Specimen</field>
+			<field>Specimen/Lot</field>
+			<field>Rhizome</field>
+			<field>Unmounted material</field>
+			<field>Wood specimen</field>
+		</list>
+		<list alias='establishmentMeans' caseInsensitive='true'>
+			<field>cultivated</field>
+			<field>escaped</field>
+			<field>introduced</field>
+			<field>invasive</field>
+			<field>managed</field>
+			<field>native</field>
+			<field>naturalised</field>
+			<field>uncertain</field>
+			<field>waif</field>
+			<field>wild</field>
+		</list>
+		<list alias='exudate' caseInsensitive='true'>
+			<field>(NULL)</field>
+			<field>Clear</field>
+			<field>Cream</field>
+			<field>Orangish</field>
+			<field>Reddish</field>
+			<field>White</field>
+			<field>Yellow</field>
+		</list>
+		<list alias='habit' caseInsensitive='true'>
+			<field>Aquatic herb</field>
+			<field>Cespitose herb</field>
+			<field>Decumbent herb</field>
+			<field>Epilithic</field>
+			<field>Epiphyte</field>
+			<field>Erect herb</field>
+			<field>Floating herb</field>
+			<field>Hemiparasite</field>
+			<field>Herbaceous vine</field>
+			<field>Liana</field>
+			<field>Palm</field>
+			<field>Palm-like fern</field>
+			<field>Parasite</field>
+			<field>Scandent shrub</field>
+			<field>Shrub</field>
+			<field>Trailing herb</field>
+			<field>Trailing vine</field>
+			<field>Tree</field>
+			<field>Treelet</field>
+		</list>
+		<list alias='hybridRank' caseInsensitive='true'>
+			<field>Genus</field>
+			<field>Species</field>
+		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field>aberration</field>
+			<field>forma</field>
+			<field>morpha</field>
+			<field>race</field>
+			<field>subforma</field>
+			<field>subvariety</field>
+			<field>variety</field>
+		</list>
+		<list alias='sampleQuality' caseInsensitive='true'>
+			<field>High</field>
+			<field>Medium</field>
+			<field>Low</field>
+		</list>
+		<list alias='sex' caseInsensitive='true'>
+			<field>Male</field>
+			<field>Female</field>
+			<field>Unknown</field>
+			<field>Worker</field>
+		</list>
+		<list alias='geodeticDatum' caseInsensitive='true'>
+			<field>NAD27</field>
+			<field>NAD83</field>
+			<field>WGS84</field>
+		</list>
+	</lists>
 </validation>
-<mapping>
-	<entity worksheet="Samples" worksheetUniqueKey="Primary Coll. Number" conceptAlias="Resource" conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource" entityID="1">	</entity>
-</mapping>
 </fims>
