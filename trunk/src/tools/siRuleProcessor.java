@@ -31,7 +31,7 @@ public class siRuleProcessor {
 
     public siRuleProcessor(String jsonInput, String column, TreeMap treeMap) throws Exception {
         ruleTypes.add("controlledVocabulary");
-        ruleTypes.add("requiredValueFromOtherColumn");
+        //ruleTypes.add("requiredValueFromOtherColumn");
         ruleTypes.add("minimumMaximumNumberCheck");
         ruleTypes.add("uniqueValue");
         ruleTypes.add("isNumber");
