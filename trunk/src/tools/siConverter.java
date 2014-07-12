@@ -6,9 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class reads a specially built Excel spreadsheet file and generates spreadsheet templates
@@ -79,6 +77,8 @@ public class siConverter {
         Integer projectIndex = getColumnIndex(p.columnName);
         Integer rows = MatrixSheet.getLastRowNum();
 
+        TreeMap  treeMap = fieldMapping(p);
+
         // Write the mapping element
         sb.append("<mapping>\n" +
                 "\t<entity " +
@@ -143,7 +143,8 @@ public class siConverter {
                 // Populate other global validation Rules
                 if (globalValidationValue != null && !globalValidationValue.equals("")) {
                     try {
-                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column));
+
+                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column,treeMap));
                     } catch (Exception e) {
                         System.err.println("Unable to process " + globalValidationValue);
                     }
@@ -159,6 +160,20 @@ public class siConverter {
         return sb.toString();
     }
 
+    /**
+     * Build a TreeMap lookup between the primary field name and the Vernacular Names
+     * @param p
+     * @return
+     */
+    private static TreeMap fieldMapping(siProjects p) {
+        TreeMap treeMap = new TreeMap();
+        Integer rows = MatrixSheet.getLastRowNum();
+        for (int i = 0; i < rows; i++) {
+            Row row = MatrixSheet.getRow(i);
+            treeMap.put(row.getCell(uriIndex).getStringCellValue(),row.getCell(columnIndex).getStringCellValue());
+        }
+        return treeMap;
+     }
     public static String validation() {
         StringBuilder sbValidation = new StringBuilder();
 
@@ -320,14 +335,15 @@ public class siConverter {
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
         projects.add(new siProjects(14, "SIBOT", "Botany"));
-        /*    projects.add(new siProjects(15, "SIENT", "Entomology"));
+        /*
+        projects.add(new siProjects(15, "SIENT", "Entomology"));
         projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology"));
         projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles"));
         projects.add(new siProjects(18, "SIVZB", "VZ-Birds"));
         projects.add(new siProjects(19, "SIVZF", "VZ-Fishes"));
         projects.add(new siProjects(20, "SIVZM", "VZ-Mammals"));
-        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences"));
-        */
+        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences")); */
+
 
         InputStream inp = new FileInputStream(inputFile);
         Workbook workbook = WorkbookFactory.create(inp);

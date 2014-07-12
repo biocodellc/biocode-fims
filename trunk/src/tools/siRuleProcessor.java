@@ -19,22 +19,25 @@ public class siRuleProcessor {
     String type = null;
     String column = null;
     String list = null;
+    String value = null;
     String otherColumn = null;
     LinkedList values = null;
+    TreeMap treeMap = null;
 
     static ArrayList<String> ruleTypes = new ArrayList<String>();
     ArrayList<String> rules = new ArrayList<String>();
 
-    public siRuleProcessor(String jsonInput, String column) throws Exception {
+    public siRuleProcessor(String jsonInput, String column, TreeMap treeMap) throws Exception {
         ruleTypes.add("controlledVocabulary");
         ruleTypes.add("requiredValueFromOtherColumn");
         ruleTypes.add("minimumMaximumNumberCheck");
         ruleTypes.add("uniqueValue");
         ruleTypes.add("isNumber");
-
+        ruleTypes.add("validateNumeric");
 
         this.jsonInput = jsonInput;
         this.column = column;
+        this.treeMap = treeMap;
 
         // Parse the JSON
         JSONParser parser = new JSONParser();
@@ -59,6 +62,7 @@ public class siRuleProcessor {
                     try {
                         individualRuleProcessor(json);
                     } catch (Exception e) {
+                        //e.printStackTrace();
                         System.err.println(e.getMessage());
                     }
                 }
@@ -95,6 +99,7 @@ public class siRuleProcessor {
                     this.type = value;
                 }
             } else if (key.equalsIgnoreCase("column")) {
+                //System.out.println("compare this: " + column + ":" + value);
                 this.column = value;
             } else if (key.equalsIgnoreCase("list")) {
                 this.list = value;
@@ -102,6 +107,8 @@ public class siRuleProcessor {
                 this.level = value;
             } else if (key.equalsIgnoreCase("otherColumn")) {
                 this.otherColumn = value;
+            } else if (key.equalsIgnoreCase("value")) {
+                this.value = value;
             } else if (key.equalsIgnoreCase("values")) {
                 this.values = (LinkedList) entry.getValue();
             }
@@ -126,13 +133,15 @@ public class siRuleProcessor {
         sbOutput.append("\t\t<rule");
         sbOutput.append(" type='" + type + "'");
         if (column != null)
-            sbOutput.append(" column='" + column + "'");
+            sbOutput.append(" column='" + columnMapper(column) + "'");
         if (list != null)
-            sbOutput.append(" list='" + list + "'");
+            sbOutput.append(" list='" + columnMapper(list) + "'");
         if (level != null)
             sbOutput.append(" level='" + level + "'");
+         if (value != null)
+            sbOutput.append(" value='" + value + "'");
         if (otherColumn != null)
-            sbOutput.append(" otherColumn='" + otherColumn + "'");
+            sbOutput.append(" otherColumn='" + columnMapper(otherColumn) + "'");
 
         sbOutput.append(">");
         if (values != null) {
@@ -150,7 +159,31 @@ public class siRuleProcessor {
     }
 
     /**
+     * Map the Vernacular column to the primary field name
+     *
+     * @param value
+     *
+     * @return
+     */
+    private String columnMapper(String value) {
+
+        String mappedVal = null;
+        try {
+            mappedVal = treeMap.get(value).toString();
+        } catch (NullPointerException e) {
+            return value;
+        }
+        if (mappedVal != null)
+            return mappedVal;
+        else
+            return value;
+    }
+
+
+
+    /**
      * Print the results
+     *
      * @return
      */
     public String print() {
@@ -162,11 +195,12 @@ public class siRuleProcessor {
         }
         return output.toString();
     }
+
     public static void main(String[] args) throws Exception {
         //siRuleProcessor test = new siRuleProcessor("{\"type\":\"controlledVocabulary\",\"list\":\"softParts\"}", "testColumn");
         //siRuleProcessor test = new siRuleProcessor("[{\"type\":\"controlledVocabulary\",\"list\":\"geneticSampleTypePrimary\"},{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}]", "geneticSampleTypePrimary");
         //siRuleProcessor test = new siRuleProcessor("{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}","geneticSampleTypePrimary");
-        siRuleProcessor test = new siRuleProcessor("{\"type\":\"minimumMaximumNumberCheck\",\"column\":\"minimumDepthInMeters,maximumDepthInMeters\",\"level\":\"error\"}","foo");
+        siRuleProcessor test = new siRuleProcessor("{\"type\":\"minimumMaximumNumberCheck\",\"column\":\"minimumDepthInMeters,maximumDepthInMeters\",\"level\":\"error\"}", "foo", null);
 
         System.out.println(test.print());
 

@@ -18,12 +18,11 @@ import java.util.*;
  * Rule does the heavy lift for the Validation Components.
  * This is where the code is written for each of the rules
  * encountered in the XML configuration file.
- *   <p></p>
+ * <p></p>
  * You can use this javadoc to see a listing of available rules by
  * ignoring the getter and setter methods below and using the method name
  * as the rule "type" in the XML configuration file.  Examples of use, as
  * they appear in the XML configuration file are given below.
- *
  */
 public class Rule {
 
@@ -32,6 +31,7 @@ public class Rule {
     private String type;
     private String column;
     private String list;
+    private String value;
 
     // A reference to the validation object this rule belongs to
     //private Validation validation;
@@ -147,6 +147,14 @@ public class Rule {
         this.list = list;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     public String getType() {
         return type;
     }
@@ -164,7 +172,8 @@ public class Rule {
     }
 
     public String getColumn() {
-        return column;
+        // replace spaces with underscores....
+        return column.replace(" ", "_");
     }
 
     public void setColumn(String column) {
@@ -210,12 +219,12 @@ public class Rule {
 
     /**
      * Check to see if there duplicateColumn Headers on a worksheet
-     *  <p></p>
+     * <p></p>
      * Example:
      * <br></br>
      * {@code
-     *  <rule type='duplicateColumnNames' level='error'></rule>
-     *  }
+     * <rule type='duplicateColumnNames' level='error'></rule>
+     * }
      */
     public void duplicateColumnNames() {
         java.util.List<String> listSheetColumns = worksheet.getColNames();
@@ -254,8 +263,9 @@ public class Rule {
      * Example:
      * <br></br>
      * {@code
-     *  <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+     * <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
      * }
+     *
      * @throws Exception
      */
     public void uniqueValue() throws Exception {
@@ -264,10 +274,12 @@ public class Rule {
         try {
             statement = connection.createStatement();
             rs = null;
-            rs = statement.executeQuery(
-                    "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
-                            " group by " + getColumn() +
-                            " having count(*) > 1");
+            String sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
+                    " group by " + getColumn() +
+                    " having count(*) > 1";
+            //System.out.println(sql);
+
+            rs = statement.executeQuery(sql);
 
             StringBuilder values = new StringBuilder();
             int count = 0;
@@ -292,12 +304,13 @@ public class Rule {
     /**
      * Check that coordinates are inside a bounding box.
      * The bounding box declaration uses well-known text.
-     * <p>
+     * <p/>
      * Example:
      * <br></br>
      * {@code
-     * <rule type="BoundingBox" name="Moorea" decimalLatitude="DecimalLatitude" decimalLongitude="DecimalLongitude" level="warning">
-     *   <field>BOX3D(-18.5 -150.8,-16.7 -148.4)</field>
+     * <rule type="BoundingBox" name="Moorea" decimalLatitude="DecimalLatitude" decimalLongitude="DecimalLongitude"
+     * level="warning">
+     * <field>BOX3D(-18.5 -150.8,-16.7 -148.4)</field>
      * </rule>
      * }
      *
@@ -351,8 +364,8 @@ public class Rule {
      * <br>
      * </br>
      * {@code
-     *  <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
-     *             level='error'></rule>
+     * <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
+     * level='error'></rule>
      * }
      *
      * @throws Exception
@@ -423,6 +436,7 @@ public class Rule {
 
     /**
      * Check that lowestTaxonLevel and LowestTaxon are entered correctly (Biocode Database only)
+     *
      * @throws Exception
      */
     public void checkLowestTaxonLevel() throws Exception {
@@ -444,6 +458,7 @@ public class Rule {
      * Return the index of particular columns
      *
      * @param columns
+     *
      * @return
      */
     protected int[] getColumnIndices(String[] columns) {
@@ -468,7 +483,8 @@ public class Rule {
      *
      * @throws Exception
      */
-    @Deprecated  void checkGenusSpeciesCountsSI() throws Exception {
+    @Deprecated
+    void checkGenusSpeciesCountsSI() throws Exception {
         String genusHeading = "Genus";
         String speciesHeading = "Species";
         String[] headings = {genusHeading, speciesHeading};
@@ -516,9 +532,11 @@ public class Rule {
      * Smithsonian created rule to check Voucher heading
      *
      * @param worksheet
+     *
      * @throws Exception
      */
-    @Deprecated public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
+    @Deprecated
+    public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
         String[] headings = {"Voucher Specimen?", "Herbarium Accession No./Catalog No.", "Herbarium Acronym"};
         int[] columnIndices = this.getColumnIndices(headings);
         int vsIdx = columnIndices[0];
@@ -576,7 +594,8 @@ public class Rule {
      *
      * @throws Exception
      */
-    @Deprecated public void checkTissueColumnsSI() throws Exception {
+    @Deprecated
+    public void checkTissueColumnsSI() throws Exception {
         String plateNoHeading = "Plate No.";
         String rowLetterHeading = "Row Letter";
         String columnNumberHeading = "Column No.";
@@ -651,7 +670,8 @@ public class Rule {
 
 
     /**
-     * Check that well number and plate name are entered together and correctly.  Takes a tissue and plate column specificaiton
+     * Check that well number and plate name are entered together and correctly.  Takes a tissue and plate column
+     * specificaiton
      * and sees that well numbers are formatted well and with range.
      * <p></p>
      * Example:
@@ -659,7 +679,8 @@ public class Rule {
      * </br>
      * {@code
      * <rule type="checkTissueColumns" name="" plateName="format_name96" wellNumber="well_number96" level="warning"/>
-     *}
+     * }
+     *
      * @throws Exception
      */
     public void checkTissueColumns() throws Exception {
@@ -704,6 +725,44 @@ public class Rule {
         }
     }
 
+    /**
+     * Checks for valid numeric values, looking in the value attribute field for ranges.
+     * Multiple ranges can be specified in value, like:   value:">=-90 and <=90"
+     * or, simply value:">=0"
+     */
+    public void validateNumeric() throws Exception {
+        boolean validNumber = true;
+        ResultSet resultSet;
+        Statement statement = connection.createStatement();
+        String thisColumn = getColumn();
+        String msg = null;
+        try {
+            // Split the value according to our convention
+            String[] values = value.split("=");
+
+            // Construct sql for
+            String sql = "SELECT " + thisColumn +
+                    " FROM " + digesterWorksheet.getSheetname() +
+                    " WHERE " +
+                    "   abs(" + thisColumn + ") " + values[0];
+
+            if (values.length > 1) {
+                sql += "   abs(" + thisColumn + ") " + values[1];
+            }
+
+            sql += thisColumn + " != \"\";";
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                msg = "Value out of range " + resultSet.getString(thisColumn) + " for " + thisColumn + " using range validation = " + value;
+                addMessage(msg);
+                validNumber = false;
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            throw new Exception("validateNumeric Check exception", e);
+        }
+    }
 
     /**
      * checks for valid numbers.
@@ -723,7 +782,9 @@ public class Rule {
      * However, the following are recognized as numeric values ("15%", "100$", "1.02E10")
      *
      * @param thisColumn
+     *
      * @return
+     *
      * @throws Exception
      */
     private boolean checkValidNumberSQL(String thisColumn) throws Exception {
@@ -754,6 +815,7 @@ public class Rule {
      * Check that this is a valid Number, for internal use only
      *
      * @param rowValue
+     *
      * @return
      */
     private boolean checkValidNumber(String rowValue) {
@@ -837,8 +899,8 @@ public class Rule {
 
     /**
      * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
-     *  <p></p>
-     *
+     * <p></p>
+     * <p/>
      * 1. Listing values in XML fields, like: <br></br>
      * {@code
      * <rule type="checkInXMLFields" name="PreparationType" level="warning">
@@ -853,8 +915,8 @@ public class Rule {
      * <field>other</field>
      * </rule>
      * }
-     *  <p></p>
-     *
+     * <p></p>
+     * <p/>
      * 2. Refering to values in a lookup list in the configuration file list element, like: <br></br>
      * {@code
      * <rule type="checkInXMLFields" name="relaxant" level="warning" list="list3"/>
@@ -928,7 +990,7 @@ public class Rule {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
                     msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn();
-                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() +"/?project_id='>see approved</a>";
+                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() + "/?project_id='>see approved</a>";
                     addMessage(msg, null, null);
                 }
             }
@@ -1084,7 +1146,9 @@ public class Rule {
      * A simple check to see if a column exists in the SQLLite database
      *
      * @param column
+     *
      * @return
+     *
      * @throws SQLException
      */
     private boolean checkColumnExists
