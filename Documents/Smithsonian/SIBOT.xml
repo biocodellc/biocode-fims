@@ -342,24 +342,24 @@ DwC_Ext: used for both DNA and tissue]]></attribute>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
-		<rule type='validateNumeric' column='Depth from (m)' level='error' value='>=0'></rule>
+		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
 		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
-		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='>=0'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='>=-90 and <=90'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='>=-90 and <=90'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='>=-180 and <=180'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='>=-180 and <=180'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Longitude Decimal 2' level='error' value='>=-180 and <=180' otherColumn='Longitude Decimal'></rule>
+		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180' otherColumn='Longitude Decimal'></rule>
 		<rule type='controlledVocabulary' column='Datum' list='Datum' level='warning'></rule>
-		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='>=0 and <=90'></rule>
-		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='>=0 and <60'></rule>
+		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
+		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='controlledVocabulary' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
-		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='>=0 and <60'></rule>
-		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='>=0 and <=180'></rule>
+		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
 		<rule type='controlledVocabulary' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
-		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='>=0 and <60'></rule>
-		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='>=0 and <60'></rule>
+		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
+		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='controlledVocabulary' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
@@ -374,12 +374,12 @@ DwC_Ext: used for both DNA and tissue]]></attribute>
 		<rule type='controlledVocabulary' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='controlledVocabulary' column='Cultivated' list='yesNo' level='warning'></rule>
-		<rule type='validateNumeric' column='Duplicates collected' level='warning' value='>0'></rule>
+		<rule type='validateNumeric' column='Duplicates collected' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Establishment means' list='Establishment means' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Exudate' list='Exudate' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Habit' list='habit' level='warning'></rule>
-		<rule type='validateNumeric' column='Height' level='error' value='>0'></rule>
-		<rule type='validateNumeric' column='Specimen count' level='warning' value='>0'></rule>
+		<rule type='validateNumeric' column='Height' level='error' value='%3E0'></rule>
+		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='isNumber' column='Sheets per specimen' level='error'></rule>
 		<rule type='controlledVocabulary' column='Hybrid rank' list='Hybrid rank' level='warning'></rule>

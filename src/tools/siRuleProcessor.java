@@ -4,6 +4,8 @@ import org.json.simple.parser.ContainerFactory;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -139,7 +141,8 @@ public class siRuleProcessor {
         if (level != null)
             sbOutput.append(" level='" + level + "'");
          if (value != null)
-            sbOutput.append(" value='" + value + "'");
+             // Must encode the value field since it probably contains special characters
+            sbOutput.append(" value='" + URLEncoder.encode(value, "utf-8") + "'");
         if (otherColumn != null)
             sbOutput.append(" otherColumn='" + columnMapper(otherColumn) + "'");
 
