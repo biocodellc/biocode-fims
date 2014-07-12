@@ -204,7 +204,8 @@ public class Worksheet {
                     String message = "\tUnable to run " + r.getType() + " on " + r.getColumn() + " column";
                     if (e.getMessage() != null)
                         message += ", message = " + e.getMessage();
-                    fimsPrinter.out.println(message);
+                    //fimsPrinter.out.println(message);
+                    System.err.println(message);
                     //return false;
                 }
 

@@ -279,7 +279,6 @@ public class Rule {
             String sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
                     " group by " + getColumn() +
                     " having count(*) > 1";
-            //System.out.println(sql);
 
             rs = statement.executeQuery(sql);
 
@@ -1050,7 +1049,7 @@ public class Rule {
             booFound = false;
 
             // Get the next required field name
-            reqFieldName = itRequiredField.next().toString().trim();
+            reqFieldName = itRequiredField.next().toString().trim().replace(" ","_");
 
             // Simple search in hashset for required field name
             if (hashset.contains(reqFieldName)) {
