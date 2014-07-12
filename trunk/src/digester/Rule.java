@@ -9,6 +9,8 @@ import settings.fimsPrinter;
 
 import javax.xml.transform.Result;
 import java.lang.String;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -744,10 +746,10 @@ public class Rule {
             String sql = "SELECT " + thisColumn +
                     " FROM " + digesterWorksheet.getSheetname() +
                     " WHERE " +
-                    "   abs(" + thisColumn + ") " + values[0];
+                    "   abs(" + thisColumn + ") " + URLDecoder.decode(values[0], "utf-8");
 
             if (values.length > 1) {
-                sql += "   abs(" + thisColumn + ") " + values[1];
+                sql += "   abs(" + thisColumn + ") " + URLDecoder.decode(values[1], "utf-8");
             }
 
             sql += thisColumn + " != \"\";";
