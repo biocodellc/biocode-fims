@@ -46,7 +46,11 @@ public class authenticationService {
             e.printStackTrace();
         }
 
-        response.sendRedirect(sm.retrieveValue("authorize_uri") + "client_id=" + sm.retrieveValue("client_id") + "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
+System.out.println("SESS_DEBUG login: sessionid="+session.getId() +";state=" + state);
+
+        response.sendRedirect(sm.retrieveValue("authorize_uri") +
+                "client_id=" + sm.retrieveValue("client_id") +
+                "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
                 "&state=" + state);
         return;
     }
@@ -76,6 +80,17 @@ public class authenticationService {
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
         HttpSession session = request.getSession();
+
+if(session !=null) {
+    if (state != null) {
+        System.out.println("SESS_DEBUG access_token: sessionid="+session.getId() +";state=" + state);
+    }   else {
+        System.out.println("SESS_DEBUG access_token: sessionid="+session.getId() +";state=NULL");
+    }
+}   else {
+    System.out.println("SESS_DEBUG access_token: session is null!");
+}
+
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = session.getAttribute("oauth_state").toString();
 

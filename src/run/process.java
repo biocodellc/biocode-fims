@@ -433,8 +433,7 @@ public class process {
 
         // Direct output using the standardPrinter subClass of fimsPrinter which send to fimsPrinter.out (for command-line usage)
         fimsPrinter.out = new standardPrinter();
-        // Set the input format
-        fimsInputter.in = new standardInputter();
+
 
         // Some classes to help us
         CommandLineParser clp = new GnuParser();
@@ -472,6 +471,8 @@ public class process {
 
         options.addOption("U", "username", true, "Username (for uploading data)");
         options.addOption("P", "password", true, "Password (for uploading data)");
+        options.addOption("y", "yes", false, "Answer 'y' to all questions");
+
 
         // Create the commands parser and parse the command line arguments.
         try {
@@ -484,6 +485,14 @@ public class process {
             fimsPrinter.out.println("Error: " + e.getMessage());
             return;
         }
+
+        // Set the input format
+        if (cl.hasOption("y")) {
+            fimsInputter.in = new forceInputter();
+        }   else {
+            fimsInputter.in = new standardInputter();
+        }
+
 
         if (cl.hasOption("U")) {
             username = cl.getOptionValue("U");
