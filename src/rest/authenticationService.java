@@ -92,7 +92,14 @@ if(session !=null) {
 }
 
         bcidConnector bcidConnector = new bcidConnector();
-        String oauthState = session.getAttribute("oauth_state").toString();
+        String oauthState = null;
+        try {
+            oauthState = session.getAttribute("oauth_state").toString();
+        } catch (Exception e) {
+            System.out.println("Authentication Error, session id " + session.getId()+ " is not recognized");
+            response.sendRedirect("/biocode-fims/index.jsp?error=session id is not recognized... Try re-loading biocode-fims homepage, and logging in again.");
+            return;
+        }
 
         //
         if (oauthState == null) {
