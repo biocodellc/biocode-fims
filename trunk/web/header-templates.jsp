@@ -13,8 +13,12 @@
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/alerts.css"/>
 
     <script type="text/javascript" src="/biocode-fims/js/jquery.js"></script>
-    <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/templates.js"></script>
+
+    <script>$(document).ready(function() {$('.menu').dropit();});</script>
 
     <script src="/biocode-fims/js/distal.js"></script>
     <script>
@@ -24,10 +28,7 @@
     </script>
 
     <script type="text/javascript" src="/biocode-fims/js/biocode-fims.js"></script>
-    <script type="text/javascript" src="/biocode-fims/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/bootstrap.min.js"></script>
-
-
 
 </head>
 
