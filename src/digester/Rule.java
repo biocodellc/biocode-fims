@@ -175,7 +175,11 @@ public class Rule {
 
     public String getColumn() {
         // replace spaces with underscores....
-        return column.replace(" ", "_");
+        if (column == null) {
+            return null;
+        } else {
+            return column.replace(" ", "_");
+        }
     }
 
     public void setColumn(String column) {
@@ -1049,7 +1053,7 @@ public class Rule {
             booFound = false;
 
             // Get the next required field name
-            reqFieldName = itRequiredField.next().toString().trim().replace(" ","_");
+            reqFieldName = itRequiredField.next().toString().trim().replace(" ", "_");
 
             // Simple search in hashset for required field name
             if (hashset.contains(reqFieldName)) {
@@ -1093,9 +1097,13 @@ public class Rule {
      *
      * @return
      */
-    private java.util.List getListElements
-    () {
-        return digesterWorksheet.getValidation().findList(getList()).getFields();
+    private java.util.List getListElements() {
+        Validation v = digesterWorksheet.getValidation();
+        if (v == null) {
+            return null;
+        } else {
+            return v.findList(getList()).getFields();
+        }
     }
 
     /**
@@ -1173,4 +1181,62 @@ public class Rule {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Print ruleMetadata
+     * @param sList  We pass in a List of fields we want to associate with this rule
+     * @return
+     */
+    public String printRuleMetadata(List sList) {
+        StringBuilder output = new StringBuilder();
+        output.append("<li>\n");
+        //
+        String prettyTypeName = this.type;
+        if (this.type.equals("checkInXMLFields")) {
+            this.type = "Lookup Value From List";
+        }
+        // Display the Rule type
+        output.append("\t<li>type: " + this.type + "</li>\n");
+        // Display warning levels
+        output.append("\t<li>level: " + this.level + "</li>\n");
+        // Display values
+        if (value != null) {
+            output.append("\t<li>value: " + this.value + "</li>\n");
+        }
+        // Display fields
+        // Convert XML Field values to a Stringified list
+        java.util.List listFields = null;
+        if (sList != null && sList.getFields().size() > 0) {
+            listFields = sList.getFields();
+        } else {
+            listFields = getFields();
+        }
+        Iterator it = null;
+        try {
+            it = listFields.iterator();
+        } catch (NullPointerException e) {
+            return output.toString();
+        }
+        // One or the other types of list need data
+        if (!it.hasNext())
+            return output.toString();
+
+        output.append("\t<li>list: \n");
+
+        // Look at the Fields
+        output.append("\t\t<ul>\n");
+
+        if (it != null) {
+            while (it.hasNext()) {
+                String field = (String) it.next();
+                output.append("\t\t\t<li>" + field + "</li>\n");
+            }
+        }
+        output.append("\t\t</ul>\n");
+        output.append("\t</li>\n");
+
+        output.append("</li>\n");
+        return output.toString();
+    }
+
 }

@@ -128,25 +128,99 @@ public class Worksheet {
     }
 
     /**
-     * Return a list of columns given a list alias.  This shows us ALL of the columns that may reference
-     * a particular list
-     * @param list
+     * Print metadata on all the rules contained in this worksheet
      * @return
      */
-    public  ArrayList<String> getColumnsForList(String list) {
+    /*
+    public String printRuleMetadata() {
+        StringBuilder output = new StringBuilder();
+
+        Iterator rulesIt = rules.iterator();
+        while (rulesIt.hasNext()) {
+            Rule r = (Rule) rulesIt.next();
+            output.append("<li>\n");
+            //
+            String prettyTypeName = r.getType();
+            if (r.getType().equals("checkInXMLFields")) {
+                prettyTypeName = "Lookup Value From List";
+            }
+            // Display the Rule type
+            output.append("\t<li>type: " + r.getType() + "</li>\n");
+            // Display warning levels
+            output.append("\t<li>level: " + r.getLevel() + "</li>\n");
+            // Display values
+            if (r.getValue() != null) {
+                output.append("\t<li>value: " + r.getValue() + "</li>\n");
+            }
+            // Display fields
+            Iterator it = null, listIt = null;
+            try {
+                it = r.getFields().iterator();
+            } catch (Exception e) {
+                // Null List
+            }
+            try {
+                listIt = r.getListElements().iterator();
+            } catch (Exception e) {
+                // Null List
+            }
+            boolean someValuesInList = false;
+            // One or the other types of list need data
+            if (it != null || listIt != null &&
+                    (it.hasNext() || listIt.hasNext())) {
+                someValuesInList = true;
+
+            }
+            if (someValuesInList)
+                output.append("\t<li>list: \n");
+
+            // Look at the Fields
+            if (it != null) {
+                while (it.hasNext()) {
+                    String field = (String) it.next();
+                    output.append("\t\t<li>" + field + "</li>\n");
+                }
+            }
+            // Now look at lists
+            if (listIt != null) {
+                while (listIt.hasNext()) {
+                    String field = (String) listIt.next();
+                    output.append("\t\t<li>" + field + "</li>\n");
+                }
+            }
+
+            if (someValuesInList)
+                output.append("\t</li>\n");
+
+            output.append("</li>\n");
+        }
+        return output.toString();
+    }
+       */
+    /**
+     * Return a list of columns given a list alias.  This shows us ALL of the columns that may reference
+     * a particular list
+     *
+     * @param list
+     *
+     * @return
+     */
+    public ArrayList<String> getColumnsForList(String list) {
         ArrayList columns = new ArrayList();
         for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
-                Rule r = i.next();
-             if (list.equals(r.getList())) {
+            Rule r = i.next();
+            if (list.equals(r.getList())) {
                 columns.add(r.getColumn());
-             }
-         }
+            }
+        }
         return columns;
     }
+
     /**
      * Loop all validation rules associated with this worksheet
      *
      * @param parent
+     *
      * @return
      */
     public boolean run(Object parent) {

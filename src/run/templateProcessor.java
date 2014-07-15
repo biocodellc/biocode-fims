@@ -136,32 +136,82 @@ public class templateProcessor {
      * @throws settings.FIMSException
      */
     public String definition(String column_name) throws FIMSException {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         try {
 
             Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
+            // Get a list of rules for the first digester.Worksheet instance
+            Worksheet sheet = this.validation.getWorksheets().get(0);
+
+            List<Rule> rules = sheet.getRules();
+
+
             while (attributes.hasNext()) {
                 Attribute a = (Attribute) attributes.next();
                 String column = a.getColumn();
                 if (column_name.trim().equals(column.trim())) {
 
-                    if (a.getUri() != null)
-                        output += "<b>URI:</b><p><a href='" + a.getUri() + "' target='_blank'>" + a.getUri() + "</a>";
-                    else
-                        output += "<b>URI:</b><p>No URI available";
-                    if (!a.getDefinition().trim().equals(""))
-                        output += "<p><b>Definition:</b><p>" + a.getDefinition();
-                    else
-                        output += "<p><b>Definition:</b><p>No custom definition available";
+                    // URI
+                    if (a.getUri() != null) {
+                        output.append("<p><b>URI:</b>\n" +
+                                "<p>\n" +
+                                "<a href='" + a.getUri() + "' target='_blank'>" + a.getUri() + "</a>\n");
+                    } else {
+                        output.append("<b>URI:</b>\n" +
+                                "<p>\n" +
+                                "No URI available\n");
+                    }
+                    // Definition
+                    if (!a.getDefinition().trim().equals("")) {
+                        output.append("<p>\n" +
+                                "<b>Definition:</b>\n" +
+                                "<p>" + a.getDefinition() + "\n");
+                    } else {
+                        output.append("<p>\n" +
+                                "<b>Definition:</b>\n" +
+                                "<p>No custom definition available\n");
+                    }
 
-                    return output;
+                    // Rules
+                    digester.List sList = validation.findList(column);
+                    Iterator it = rules.iterator();
+                    StringBuilder ruleValidations = new StringBuilder();
+                    while (it.hasNext()) {
+
+                        Rule r = (Rule) it.next();
+                        r.setDigesterWorksheet(sheet);
+                        if (r != null) {
+                            // Convert to native state (without underscores)
+                            String ruleColumn = r.getColumn();
+
+                            if (ruleColumn != null) {
+                                // Match column names with or without underscores
+                                if (ruleColumn.replace("_"," ").equals(column) ||
+                                        ruleColumn.equals(column)) {
+                                    ruleValidations.append(r.printRuleMetadata(sList));
+                                }
+                            }
+                        }
+                    }
+                    if (!ruleValidations.toString().equals("")) {
+                        output.append("<p>\n" +
+                                "<b>Validation Rules:</b>\n<p>");
+                        output.append(ruleValidations.toString());
+                    }
+
+                    return output.toString();
                 }
             }
 
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             e.printStackTrace();
-            throw new FIMSException("exception handling templates " + e.getMessage(), e);
+            throw new FIMSException("Exception handling templates " + e.getMessage(), e);
         }
+
         return "No definition found for " + column_name;
     }
 
@@ -700,30 +750,6 @@ public class templateProcessor {
     }
 
     /**
-     * main method for testing only
-     *
-     * @param args
-     */
-    public static void main(String[] args) throws Exception {
-        // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
-
-        templateProcessor t = new templateProcessor(1, "tripleOutput", false);
-        System.out.println(t.printCheckboxes());
-        /*
-        ArrayList<String> a = new ArrayList<String>();
-        a.add("Phase");
-        a.add("Cultivated");
-
-
-        File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
-        System.out.println(outputFile.getAbsoluteFile().toString());
-         */
-        //t.getRequiredColumns();
-
-        //System.out.println(t.printCheckboxes());
-    }
-
-    /**
      * Print the abstract text
      *
      * @return
@@ -731,4 +757,33 @@ public class templateProcessor {
     public String printAbstract() {
         return getFims().getMetadata().getText_abstract();
     }
+
+    /**
+     * main method is used for testing
+     *
+     * @param args
+     */
+    public static void main(String[] args) throws Exception {
+        // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
+
+        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
+        //System.out.println(t.definition("materialSampleID"));
+
+        System.out.println(t.definition("Depth Modifier"));
+
+        //System.out.println(t.printCheckboxes());
+        /*
+       ArrayList<String> a = new ArrayList<String>();
+       a.add("Phase");
+       a.add("Cultivated");
+
+
+       File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
+       System.out.println(outputFile.getAbsoluteFile().toString());
+        */
+        //t.getRequiredColumns();
+
+        //System.out.println(t.printCheckboxes());
+    }
+
 }
