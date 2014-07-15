@@ -89,11 +89,13 @@ public class templateProcessor {
 
     /**
      * constructor for NMNH projects
+     *
      * @param project_id
      * @param outputFolder
      * @param useCache
      * @param accessionNumber
      * @param datasetCode
+     *
      * @throws Exception
      */
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
@@ -210,19 +212,22 @@ public class templateProcessor {
                             "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" + "<br>\n");
 
                     // Fetch any existing content for this key
+                    if (group == null || group.equals("")) {
+                        group = "Default Group";
+                    }
                     StringBuilder existing = groups.get(group);
 
                     // Append (not required) or Insert (required) the new content onto any existing in this key
-                     if (existing == null) {
-                         existing = thisOutput;
-                     } else {
-                         if (aRequiredColumn) {
-                            existing.insert(0,thisOutput);
-                         } else {
+                    if (existing == null) {
+                        existing = thisOutput;
+                    } else {
+                        if (aRequiredColumn) {
+                            existing.insert(0, thisOutput);
+                        } else {
                             existing.append(thisOutput);
-                         }
-                     }
-                    groups.put(group,existing);
+                        }
+                    }
+                    groups.put(group, existing);
 
                     //groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
 
@@ -360,7 +365,7 @@ public class templateProcessor {
                 namedCell.setRefersToFormula(listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + counterForRows + 2);
 
                 //String listAlias = list.getAlias();
-                
+
                 // DATA VALIDATION COMPONENT
                 // TODO: expand this to select the appropriate worksheet but for NOW there is only ONE so just get last
                 Worksheet validationWorksheet = validation.getWorksheets().getLast();
@@ -702,7 +707,7 @@ public class templateProcessor {
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
+        templateProcessor t = new templateProcessor(1, "tripleOutput", false);
         System.out.println(t.printCheckboxes());
         /*
         ArrayList<String> a = new ArrayList<String>();
