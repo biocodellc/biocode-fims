@@ -231,7 +231,8 @@ public class templateProcessor {
      * @throws FIMSException
      */
     public String printCheckboxes() throws FIMSException {
-        LinkedList<String> requiredColumns = getRequiredColumns();
+        LinkedList<String> requiredColumns = getRequiredColumns("error");
+        LinkedList<String> desiredColumns = getRequiredColumns("warning");
         // Use TreeMap for natural sorting of groups
         Map<String, StringBuilder> groups = new TreeMap<String, StringBuilder>();
 
@@ -252,18 +253,27 @@ public class templateProcessor {
                 // column names are repeated for different entities in the configuration file
                 if (!addedNames.contains(column)) {
                     // Set boolean to tell us if this is a requiredColumn
-                    Boolean aRequiredColumn = false;
+                    Boolean aRequiredColumn = false, aDesiredColumn=false;
                     if (requiredColumns == null) {
                         aRequiredColumn = false;
                     } else if (requiredColumns.contains(a.getColumn())) {
                         aRequiredColumn = true;
                     }
+                     if (desiredColumns == null) {
+                        aDesiredColumn = false;
+                    } else if (desiredColumns.contains(a.getColumn())) {
+                        aDesiredColumn = true;
+                    }
+
+
                     // Construct the checkbox text
                     thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
 
                     // If this is a required column then make it checked (and immutable)
                     if (aRequiredColumn)
                         thisOutput.append(" checked disabled");
+                    else if (aDesiredColumn)
+                        thisOutput.append(" checked");
 
                     // Close tag and insert Definition link
                     thisOutput.append(">" + column + " \n" +
@@ -464,8 +474,8 @@ public class templateProcessor {
      *
      * @return
      */
-    public LinkedList<String> getRequiredColumns() {
-        LinkedList<String> allRequiredColumns = new LinkedList<String>();
+    public LinkedList<String> getRequiredColumns(String level) {
+        LinkedList<String> columnSet = new LinkedList<String>();
         Iterator worksheetsIt = validation.getWorksheets().iterator();
         while (worksheetsIt.hasNext()) {
             Worksheet w = (Worksheet) worksheetsIt.next();
@@ -473,15 +483,16 @@ public class templateProcessor {
             while (rIt.hasNext()) {
                 Rule r = (Rule) rIt.next();
                 //System.out.println(r.getType() + r.getColumn() + r.getFields());
-                if (r.getType().equals("RequiredColumns")) {
-                    allRequiredColumns.addAll(r.getFields());
+                if (r.getType().equals("RequiredColumns") &&
+                        r.getLevel().equals(level)) {
+                    columnSet.addAll(r.getFields());
                 }
             }
         }
-        if (allRequiredColumns.size() < 1)
+        if (columnSet.size() < 1)
             return null;
         else
-            return allRequiredColumns;
+            return columnSet;
     }
 
     /**
@@ -493,7 +504,7 @@ public class templateProcessor {
         HSSFSheet dataFieldsSheet = workbook.createSheet(dataFieldsSheetName);
 
         // First find all the required columns so we can look them up
-        LinkedList<String> requiredColumns = getRequiredColumns();
+        LinkedList<String> requiredColumns = getRequiredColumns("error");
 
 
         // Loop through all fields in schema and provide names, uris, and definitions
@@ -566,7 +577,7 @@ public class templateProcessor {
         HSSFRow row = defaultSheet.createRow(0);
 
         // First find all the required columns so we can look them up
-        LinkedList<String> requiredColumns = getRequiredColumns();
+        LinkedList<String> requiredColumns = getRequiredColumns("error");
 
         // Loop the fields that the user wants in the default sheet
         int columnNum = 0;
