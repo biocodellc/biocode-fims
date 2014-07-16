@@ -343,45 +343,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='RequiredColumns' column='RequiredColumns' level='error'>
 			<field>Date Visited (From)</field>
 			<field>Collector 1 (Primary)</field>
-			<field>Collection Department/Division</field>
-			<field>Holding Institution</field>
-			<field>Precise Locality</field>
-			<field>Kind of Object</field>
-			<field>Primary Collector Number</field>
-			<field>Genetic Sample Type Primary</field>
-			<field>Genetic Sample Type Secondary</field>
-			<field>Publish on Internet</field>
-			<field>Blocked Until Date</field>
-			<field>Agreement Name</field>
-			<field>Agreement Description</field>
-			<field>Agreement Number</field>
-			<field>Date Visited (From)</field>
-			<field>Collector 1 (Primary)</field>
-			<field>Elevation From (m)</field>
-			<field>Latitude Decimal</field>
-			<field>Longitude Decimal</field>
-			<field>Date Identified</field>
-			<field>Barcode</field>
-			<field>Collection Department/Division</field>
-			<field>Holding Institution</field>
-			<field>Museum Acronym</field>
-			<field>Museum Acronym Voucher</field>
-			<field>Museum Acronym Sample</field>
-			<field>Biogeographic Region</field>
-			<field>Country</field>
-			<field>Precise Locality</field>
-			<field>Province/State/Territory</field>
-			<field>Preparation 1</field>
-			<field>Kind of Object</field>
-			<field>Date created</field>
-			<field>Specimen count</field>
-			<field>Record Creator</field>
-			<field>Class</field>
-			<field>Order</field>
-			<field>Genetic Sample Type Primary</field>
-			<field>Genetic Sample Type Secondary</field>
-			<field>Date Visited (From)</field>
-			<field>Collector 1 (Primary)</field>
 			<field>Holding Institution</field>
 			<field>Kind of Object</field>
 			<field>Primary Collector Number</field>
@@ -392,91 +353,10 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Elevation From (m)</field>
 			<field>Latitude Decimal</field>
 			<field>Longitude Decimal</field>
-			<field>Specimen/Lot description</field>
-			<field>Biorepository ID</field>
-			<field>Elevation To (m)</field>
-			<field>Coordinate Determination Method</field>
-			<field>Biorepository ID</field>
-			<field>Genetic Sample Preservation Date</field>
-			<field>Genetic Sample Preservation Medium</field>
-			<field>Genetic Sample Prepared By</field>
-			<field>Elevation From (m)</field>
-			<field>Latitude Decimal</field>
-			<field>Longitude Decimal</field>
 			<field>Collection Department/Division</field>
 			<field>Precise Locality</field>
 			<field>Biorepository ID</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
-		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
-		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='error'></rule>
-		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
-		<rule type='validateNumeric' column='Depth from (m)' level='error' value='%3E%3D0'></rule>
-		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
-		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
-		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Datum' list='Datum' level='warning'></rule>
-		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
-		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
-		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
-		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Continent' list='Continent' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Ocean' list='Ocean' level='error'></rule>
-		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
-		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='Kind of Object' level='error'></rule>
-		<rule type='checkInXMLFields' column='Cultivated' list='yesNo' level='warning'></rule>
-		<rule type='validateNumeric' column='Duplicates collected' level='warning' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Establishment means' list='Establishment means' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Exudate' list='Exudate' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Habit' list='habit' level='warning'></rule>
-		<rule type='validateNumeric' column='Height' level='error' value='%3E0'></rule>
-		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
-		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
-		<rule type='isNumber' column='Sheets per specimen' level='error'></rule>
-		<rule type='checkInXMLFields' column='Hybrid rank' list='Hybrid rank' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
-		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
-		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
-		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
-		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Datum' list='Datum' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
-		<rule type='uniqueValue' column='Barcode' level='error'></rule>
-		<rule type='checkInXMLFields' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='Kind of Object' level='error'></rule>
-		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Sex' list='Sex' level='warning'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
-		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='validateNumeric' column='Bottom depth' level='error' value='%26gt%3B%3D0'></rule>
@@ -490,39 +370,39 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Datum' list='Datum' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Datum' list='geodeticDatum' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Latitude Direction' list='Latitude Direction' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Latitude Direction' list='latitudeNorthSouth' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Longitude Direction' list='Longitude Direction' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Longitude Direction' list='longitudeEastWest' level='warning'></rule>
 		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier' list='Identification Qualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collection Department/Division' list='Collection Department/Division' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Museum Acronym' list='Museum Acronym' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Continent' list='Continent' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Ocean' list='Ocean' level='error'></rule>
+		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
 		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Length unit' list='Length unit' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Length unit' list='lengthUnit' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
 		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Weight unit' list='Weight unit' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Weight unit' list='weightUnit' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='Kind of Object' level='error'></rule>
-		<rule type='checkInXMLFields' column='Establishment means' list='Establishment means' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
+		<rule type='checkInXMLFields' column='Establishment means' list='establishmentMeans' level='warning'></rule>
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
-		<rule type='checkInXMLFields' column='Sex' list='Sex' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
 		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample quality' list='Genetic Sample quality' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
 	</worksheet>
 	<lists>
 		<list alias='yesNo' caseInsensitive='true'>
