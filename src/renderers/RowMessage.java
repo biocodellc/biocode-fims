@@ -1,7 +1,5 @@
 package renderers;
 
-import digester.Rule;
-
 /**
  * Handle messaging for
  */
