@@ -8,6 +8,7 @@ import settings.RegEx;
 import settings.fimsPrinter;
 
 import javax.xml.transform.Result;
+import java.io.UnsupportedEncodingException;
 import java.lang.String;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -1201,7 +1202,12 @@ public class Rule {
         output.append("\t<li>level: " + this.level + "</li>\n");
         // Display values
         if (value != null) {
-            output.append("\t<li>value: " + this.value + "</li>\n");
+            try {
+                output.append("\t<li>value: " + URLDecoder.decode(this.value,"utf-8") + "</li>\n");
+            } catch (UnsupportedEncodingException e) {
+                output.append("\t<li>value: " + this.value + "</li>\n");
+                e.printStackTrace();
+            }
         }
         // Display fields
         // Convert XML Field values to a Stringified list
