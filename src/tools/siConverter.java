@@ -23,6 +23,7 @@ public class siConverter {
     static Integer columnIndex;
     static Integer definitionIndex;
     static Integer uriIndex;
+    static Integer definedByIndex;
     static Integer groupIndex;
     static Integer SIFieldTemplate;
     static Integer globalValidationRuleIndex;
@@ -132,7 +133,12 @@ public class siConverter {
                 String uri = "urn:" + row.getCell(uriIndex).toString();
                 String group = row.getCell(groupIndex).toString();
 
-                String defined_by = uri;
+                // If there is a distinct URI value in the incoming spreadsheet, use that for "defined_by",
+                // otherwise, use the URI
+                String defined_by = row.getCell(definedByIndex).toString();
+                if (defined_by == null || defined_by.trim().equals("")) {
+                    defined_by = uri;
+                }
 
                 sb.append("\t\t<attribute ");
                 sb.append("column='" + column + "' ");
@@ -375,6 +381,7 @@ public class siConverter {
         definitionIndex = getColumnIndex("Definitions");
         synonymIndex = getColumnIndex("Synonyms");
         uriIndex = getColumnIndex("Primary Field Name");
+        definedByIndex = getColumnIndex("URI");
         groupIndex = getColumnIndex("Field Group");
         SIFieldTemplate = getColumnIndex("SI Field Template Flag");
         globalValidationRuleIndex = getColumnIndex("Global Validation Rule");

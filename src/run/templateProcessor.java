@@ -150,17 +150,24 @@ public class templateProcessor {
                 Attribute a = (Attribute) attributes.next();
                 String column = a.getColumn();
                 if (column_name.trim().equals(column.trim())) {
+                    // The column name
+                    output.append("<b>Column Name: " + column_name+ "</b><p>");
 
                     // URI
                     if (a.getUri() != null) {
-                        output.append("<p><b>URI:</b>\n" +
-                                "<p>\n" +
-                                "<a href='" + a.getUri() + "' target='_blank'>" + a.getUri() + "</a>\n");
-                    } else {
-                        output.append("<b>URI:</b>\n" +
-                                "<p>\n" +
-                                "No URI available\n");
+                         output.append("URI = " +
+                                 "<a href='" + a.getUri() + "' target='_blank'>" +
+                                 a.getUri() +
+                                 "</a><br>\n");
                     }
+                    // Defined_by
+                    if (a.getDefined_by() != null) {
+                         output.append("Defined_by = " +
+                                 "<a href='" + a.getDefined_by() + "' target='_blank'>" +
+                                 a.getDefined_by() +
+                                 "</a><br>\n");
+                    }
+
                     // Definition
                     if (!a.getDefinition().trim().equals("")) {
                         output.append("<p>\n" +
