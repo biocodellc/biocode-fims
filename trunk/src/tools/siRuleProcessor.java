@@ -133,6 +133,10 @@ public class siRuleProcessor {
             return;
         }
         sbOutput.append("\t\t<rule");
+        // Convert the controlledVocabulary RuleType to FIMS syntax
+        if (type.equalsIgnoreCase("controlledVocabulary")) {
+            type = "checkInXMLFields";
+        }
         sbOutput.append(" type='" + type + "'");
         if (column != null)
             sbOutput.append(" column='" + columnMapper(column) + "'");
@@ -210,3 +214,4 @@ public class siRuleProcessor {
         //System.out.println(test.print());
     }
 }
+
