@@ -140,8 +140,10 @@ public class siRuleProcessor {
         sbOutput.append(" type='" + type + "'");
         if (column != null)
             sbOutput.append(" column='" + columnMapper(column) + "'");
-        if (list != null)
-            sbOutput.append(" list='" + columnMapper(list) + "'");
+        if (list != null) {
+            //sbOutput.append(" list='" + columnMapper(list) + "'");
+            sbOutput.append(" list='" + list + "'");
+        }
         if (level != null)
             sbOutput.append(" level='" + level + "'");
          if (value != null)

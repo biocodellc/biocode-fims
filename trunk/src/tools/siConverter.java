@@ -409,7 +409,10 @@ public class siConverter {
                             ".xml");
             writeFile(outputFile, sb.toString());
 
-
+            // Clear each of these ArrayLists each time we loop
+            globalValidationRules.clear();
+            requiredColumns.clear();
+            desiredColumns.clear();
             //System.out.println(sb.toString());
         }
 
