@@ -173,7 +173,6 @@ public class templateProcessor {
                     }
 
                     // Rules
-                    digester.List sList = validation.findList(column);
                     Iterator it = rules.iterator();
                     StringBuilder ruleValidations = new StringBuilder();
                     while (it.hasNext()) {
@@ -181,6 +180,8 @@ public class templateProcessor {
                         Rule r = (Rule) it.next();
                         r.setDigesterWorksheet(sheet);
                         if (r != null) {
+                            digester.List sList = validation.findList(r.getList());
+
                             // Convert to native state (without underscores)
                             String ruleColumn = r.getColumn();
 
