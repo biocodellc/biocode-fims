@@ -450,7 +450,10 @@ public class templateProcessor {
                     ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
 
                     // Set the Constraint to a particular column on the lists sheet
-                    DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(listsSheetName + listColumnLetter);
+                    // The following syntax works well and shows popup boxes: Lists!S:S
+                    // replacing the previous syntax which does not show popup boxes ListsS
+                    String constraintSyntax = listsSheetName +"!" +listColumnLetter+":"+listColumnLetter;
+                    DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
 
                     // Create the data validation object
                     DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);

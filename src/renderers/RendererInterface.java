@@ -1,6 +1,5 @@
 package renderers;
 
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Renderer Interface
