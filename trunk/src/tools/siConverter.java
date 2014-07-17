@@ -1,6 +1,5 @@
 package tools;
 
-import com.sun.rowset.internal.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -87,7 +86,7 @@ public class siConverter {
         sb.append("<mapping>\n" +
                 "\t<entity " +
                 "worksheet=\"Samples\" " +
-                "worksheetUniqueKey=\"" + p.uniqueKey + "\" " +
+                "worksheetUniqueKey=\"" + p.worksheetUniqueKey + "\" " +
                 "conceptAlias=\"Resource\" " +
                 "conceptURI=\"http://www.w3.org/2000/01/rdf-schema#Resource\" " +
                 "entityID=\"1\">");
@@ -358,11 +357,10 @@ public class siConverter {
         projects.add(new siProjects(15, "SIENT", "Entomology", "Primary Collector Number"));
         projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology", "Primary Collector Number"));
         projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles", "Primary Collector Number"));
-        projects.add(new siProjects(18, "SIVZB", "VZ-Birds", "Primary Collector Number"));
-        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes", "Preparator number"));
+        projects.add(new siProjects(18, "SIVZB", "VZ-Birds", "Preparator number"));
+        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes", "Primary Collector Number"));
         projects.add(new siProjects(20, "SIVZM", "VZ-Mammals", "Primary Collector Number"));
         projects.add(new siProjects(21, "SIMIN", "Mineral Sciences", "Primary Collector Number"));
-
 
         InputStream inp = new FileInputStream(inputFile);
         Workbook workbook = WorkbookFactory.create(inp);
@@ -434,13 +432,13 @@ class siProjects {
     Integer project_id;
     String abbreviation;
     String columnName; // The column in the SI provided sheet that designates this resource
-    String uniqueKey;
+    String worksheetUniqueKey;
 
-    siProjects(Integer project_id, String abbreviation, String columnName, String uniqueKey) {
+    siProjects(Integer project_id, String abbreviation, String columnName, String worksheetUniqueKey) {
         this.project_id = project_id;
         this.abbreviation = abbreviation;
         this.columnName = columnName;
-        this.uniqueKey = uniqueKey;
+        this.worksheetUniqueKey = worksheetUniqueKey;
     }
 }
 
