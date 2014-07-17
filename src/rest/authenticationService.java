@@ -25,20 +25,24 @@ public class authenticationService {
 
     /**
      * Rest service that will initiate the oauth login process
+     *
      * @param response
      * @param request
+     *
      * @throws IOException
      */
     @GET
     @Path("login")
     public void login(@Context HttpServletResponse response,
                       @Context HttpServletRequest request) throws IOException {
+
+        // Prevent requests from forgery attacks by setting a state string
         stringGenerator sg = new stringGenerator();
         String state = sg.generateString(20);
-
         HttpSession session = request.getSession(true);
         session.setAttribute("oauth_state", state);
 
+        // Initialize settings
         SettingsManager sm = SettingsManager.getInstance();
         try {
             sm.loadProperties();
@@ -46,21 +50,27 @@ public class authenticationService {
             e.printStackTrace();
         }
 
-System.out.println("SESS_DEBUG login: sessionid="+session.getId() +";state=" + state);
+        // Debugging
+        System.out.println("SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + state);
 
+        // Redirect to BCID Login Service
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
                 "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
-                "&state=" + state);
+                "&state=" + state
+        );
+
         return;
     }
 
     /**
      * first, exchange the returned oauth code for an access token. Then use the access token to obtain the user's
      * profile information, and store the username, user id, access token, and refresh token in the session.
+     *
      * @param code
      * @param response
      * @param request
+     *
      * @throws IOException
      */
     @GET
@@ -70,6 +80,8 @@ System.out.println("SESS_DEBUG login: sessionid="+session.getId() +";state=" + s
                              @QueryParam("state") String state,
                              @Context HttpServletResponse response,
                              @Context HttpServletRequest request) throws IOException {
+
+        // Initialize Settings
         SettingsManager sm = SettingsManager.getInstance();
         try {
             sm.loadProperties();
@@ -81,22 +93,22 @@ System.out.println("SESS_DEBUG login: sessionid="+session.getId() +";state=" + s
         String profileURL = sm.retrieveValue("profile_uri");
         HttpSession session = request.getSession();
 
-if(session !=null) {
-    if (state != null) {
-        System.out.println("SESS_DEBUG access_token: sessionid="+session.getId() +";state=" + state);
-    }   else {
-        System.out.println("SESS_DEBUG access_token: sessionid="+session.getId() +";state=NULL");
-    }
-}   else {
-    System.out.println("SESS_DEBUG access_token: session is null!");
-}
+        if (session != null) {
+            if (state != null) {
+                System.out.println("SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=" + state);
+            } else {
+                System.out.println("SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=NULL");
+            }
+        } else {
+            System.out.println("SESS_DEBUG access_token: session is null!");
+        }
 
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = null;
         try {
             oauthState = session.getAttribute("oauth_state").toString();
         } catch (Exception e) {
-            System.out.println("Authentication Error, session id " + session.getId()+ " is not recognized");
+            System.out.println("Authentication Error, session id " + session.getId() + " is not recognized");
             response.sendRedirect("/biocode-fims/index.jsp?error=session id is not recognized... Try re-loading biocode-fims homepage, and logging in again.");
             return;
         }
@@ -150,8 +162,10 @@ if(session !=null) {
 
     /**
      * Rest service to log a user out of the biocode-fims system
+     *
      * @param req
      * @param res
+     *
      * @throws IOException
      */
     @GET
@@ -159,13 +173,13 @@ if(session !=null) {
 
     public void logout(@Context HttpServletRequest req,
                        @Context HttpServletResponse res)
-            throws IOException{
-    ////@Produces(MediaType.TEXT_HTML)
+            throws IOException {
+        ////@Produces(MediaType.TEXT_HTML)
         HttpSession session = req.getSession(true);
 
         // Invalidate the session for Biocode FIMS
         session.invalidate();
-         SettingsManager sm = SettingsManager.getInstance();
+        SettingsManager sm = SettingsManager.getInstance();
         try {
             sm.loadProperties();
         } catch (Exception e) {
@@ -173,7 +187,7 @@ if(session !=null) {
         }
 
         // Need to also logout of the BCID system
-        //res.sendRedirect(sm.retrieveValue("logout_uri"));
+        res.sendRedirect(sm.retrieveValue("logout_uri"));
 
         //res.sendRedirect("/biocode-fims/index.jsp");
         return;

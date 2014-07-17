@@ -153,8 +153,13 @@ public class templates {
         templateProcessor t;
         // Create the template processor which handles all functions related to the template, reading, generation
         if (accessionNumber != null) {
+            // Get the ARK associated with this dataset code
+            // TODO: Resource may change in future... better to figure this out programatically at some point
+            String ark = bcidConnector.getArkFromDataset(project_id,datasetCode,"Resource");
+
+            // Construct the new templateProcessor
             t = new templateProcessor(project_id, uploadPath(), true,
-                    accessionNumber, datasetCode);
+                    accessionNumber, datasetCode, ark);
         } else {
             t = new templateProcessor(project_id, uploadPath(), true);
         }

@@ -151,12 +151,15 @@ public class bcidConnector {
     }
 
     /**
-     * Authenticate against BCID system.  This is done first to set cookies in this class in the cookies class variable,
+     * Authenticate against BCID system.  This is done first to set cookies in this class in the cookies class
+     * variable,
      * unless the user authenticated via OAuth, then this method is not needed.
      *
      * @param username
      * @param password
+     *
      * @return
+     *
      * @throws Exception
      */
     public boolean authenticate(String username, String password) throws Exception {
@@ -208,10 +211,12 @@ public class bcidConnector {
     }
 
     /**
-     * Create a Dataset BCID.  Uses cookies sent during authentication method, or OAuth access tokens if accessToken != null
+     * Create a Dataset BCID.  Uses cookies sent during authentication method, or OAuth access tokens if accessToken !=
+     * null
      * suffixPassthrough is set to False since we only want to represent a single entity here
      *
      * @return
+     *
      * @throws Exception
      */
     public String createDatasetBCID(String webaddress, String graph) throws Exception {
@@ -249,6 +254,7 @@ public class bcidConnector {
      * Create BCIDs corresponding to expedition entities
      *
      * @return
+     *
      * @throws Exception
      */
     public String createEntityBCID(String webaddress, String resourceAlias, String resourceType) throws Exception {
@@ -284,6 +290,7 @@ public class bcidConnector {
      * Asscociate a expedition_code to a BCID
      *
      * @return
+     *
      * @throws Exception
      */
     public String associateBCID(Integer project_id, String expedition_code, String bcid) throws Exception {
@@ -306,6 +313,7 @@ public class bcidConnector {
      * List the available projects by User
      *
      * @return
+     *
      * @throws Exception
      */
     public ArrayList<availableProject> listAvailableProjects() throws Exception {
@@ -355,9 +363,25 @@ public class bcidConnector {
     }
 
     /**
+     * Given a project_id, dataset_code, and a resource give me an ARK
+     * @param project_id
+     * @param dataset_code
+     * @param resource
+     * @return
+     * @throws IOException
+     */
+    public String getArkFromDataset(Integer project_id, String dataset_code, String resource) throws IOException {
+        //http://localhost:8080/id/expeditionService/18/DEMO4/Resource
+        URL url = new URL(expedition_creation_uri + "/" + project_id + "/" + dataset_code + "/" + resource);
+        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+        return response.get("ark").toString();
+    }
+
+    /**
      * create a expedition
      *
      * @return
+     *
      * @throws Exception
      */
     public String createExpedition(String expedition_code,
@@ -397,14 +421,16 @@ public class bcidConnector {
     }
 
     /**
-     * validateExpedition ensures that this user is associated with this expedition and that the expedition code is unique within
+     * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
+     * unique within
      * a particular project
      *
-     * @return  true if we need to insert a new expedition
+     * @return true if we need to insert a new expedition
+     *
      * @throws Exception
      */
     public boolean checkExpedition(processController processController) throws Exception {
-       // if the expedition code isn't set we can just immediately return true which is
+        // if the expedition code isn't set we can just immediately return true which is
         if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
             return true;
         }
@@ -421,7 +447,7 @@ public class bcidConnector {
 
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
-            //if (accessToken != null && !triedToRefreshToken) {
+                //if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
                 return checkExpedition(processController);
             } else {
@@ -469,7 +495,7 @@ public class bcidConnector {
             while (it.hasNext()) {
                 Entity entity = (Entity) it.next();
                 try {
-                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI()+"\n";
+                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
                     processController.appendStatus(s);
                     fimsPrinter.out.println(s);
                     // Create the entity BCID
@@ -495,7 +521,9 @@ public class bcidConnector {
      *
      * @param url
      * @param postParams
+     *
      * @return
+     *
      * @throws IOException
      */
     public String createPOSTConnnection(URL url, String postParams) throws IOException {
@@ -563,7 +591,9 @@ public class bcidConnector {
      * Custom BCID GET connection example
      *
      * @param url
+     *
      * @return
+     *
      * @throws IOException
      */
     public String createGETConnection(URL url) throws IOException {
