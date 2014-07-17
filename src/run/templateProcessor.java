@@ -79,6 +79,7 @@ public class templateProcessor {
         requiredStyle = workbook.createCellStyle();
         HSSFFont redBold = workbook.createFont();
         redBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        redBold.setFontHeightInPoints((short)14);
         redBold.setColor(HSSFFont.COLOR_RED);
         requiredStyle.setFont(redBold);
 
@@ -381,6 +382,10 @@ public class templateProcessor {
         while (listsIt.hasNext()) {
             // Get an instance of a particular list
             digester.List list = (digester.List) listsIt.next();
+
+            //Get the number of rows in this list
+            int numRowsInList = list.getFields().size();
+
             // List of fields from this validation rule
             String[] validationFields = (String[]) list.getFields().toArray(new String[list.getFields().size()]);
 
@@ -431,11 +436,11 @@ public class templateProcessor {
 
                 // Get the letter of this column
                 String listColumnLetter = CellReference.convertNumToColString(listColumnNumber);
-
-
-                Name namedCell = workbook.createName();
+                /*Name namedCell = workbook.createName();
                 namedCell.setNameName(listsSheetName + listColumnLetter);
-                namedCell.setRefersToFormula(listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + counterForRows + 2);
+                namedCell.setRefersToFormula(listsSheetName + "!$" + listColumnLetter + "$1:$" + listColumnLetter + "$" + endRowNum);
+                */
+                int endRowNum = numRowsInList + 1;
 
                 //String listAlias = list.getAlias();
 
@@ -446,20 +451,22 @@ public class templateProcessor {
                 ArrayList<String> columnNames = validationWorksheet.getColumnsForList(list.getAlias());
 
                 Iterator columnNamesIt = columnNames.iterator();
+                // Loop all of the columnNames
                 while (columnNamesIt.hasNext()) {
                     String thisColumnName = (String) columnNamesIt.next();
                     column = fields.indexOf(thisColumnName);
-
-                    // This defines an address range for this particular list                
-                    CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, column, column);
+                    // This defines an address range for this particular list
+                    CellRangeAddressList addressList = new CellRangeAddressList(1, 10000, column, column);
                     ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
 
                     // Set the Constraint to a particular column on the lists sheet
                     // The following syntax works well and shows popup boxes: Lists!S:S
                     // replacing the previous syntax which does not show popup boxes ListsS
-                    String constraintSyntax = listsSheetName + "!" + listColumnLetter + ":" + listColumnLetter;
+                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "1:$" + listColumnLetter+""+endRowNum;
                     DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
 
+//System.out.println("constraintSyntax = " + constraintSyntax);
+//System.out.println("applying to column number =  " + column);
                     // Create the data validation object
                     DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
 
@@ -870,6 +877,9 @@ public class templateProcessor {
         ArrayList<String> a = new ArrayList<String>();
         a.add("Phase");
         a.add("Cultivated");
+        a.add("Continent");
+        a.add("Habit");
+
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
         System.out.println(outputFile.getAbsoluteFile().toString());
