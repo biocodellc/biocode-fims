@@ -29,7 +29,7 @@ public class siConverter {
     static Integer globalValidationRuleIndex;
     static Integer synonymIndex;
 
-    static String worksheetUniqueKey = "Primary Collector Number";
+    //static String worksheetUniqueKey = "Primary Collector Number";
 
     static ArrayList<String> requiredColumns = new ArrayList<String>();
     static ArrayList<String> desiredColumns = new ArrayList<String>();
@@ -87,7 +87,7 @@ public class siConverter {
         sb.append("<mapping>\n" +
                 "\t<entity " +
                 "worksheet=\"Samples\" " +
-                "worksheetUniqueKey=\"" + worksheetUniqueKey + "\" " +
+                "worksheetUniqueKey=\"" + p.uniqueKey + "\" " +
                 "conceptAlias=\"Resource\" " +
                 "conceptURI=\"http://www.w3.org/2000/01/rdf-schema#Resource\" " +
                 "entityID=\"1\">");
@@ -354,14 +354,14 @@ public class siConverter {
 
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
-        projects.add(new siProjects(14, "SIBOT", "Botany"));
-        projects.add(new siProjects(15, "SIENT", "Entomology"));
-        projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology"));
-        projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles"));
-        projects.add(new siProjects(18, "SIVZB", "VZ-Birds"));
-        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes"));
-        projects.add(new siProjects(20, "SIVZM", "VZ-Mammals"));
-        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences"));
+        projects.add(new siProjects(14, "SIBOT", "Botany", "Primary Collector Number"));
+        projects.add(new siProjects(15, "SIENT", "Entomology", "Primary Collector Number"));
+        projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology", "Primary Collector Number"));
+        projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles", "Primary Collector Number"));
+        projects.add(new siProjects(18, "SIVZB", "VZ-Birds", "Primary Collector Number"));
+        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes", "Preparator number"));
+        projects.add(new siProjects(20, "SIVZM", "VZ-Mammals", "Primary Collector Number"));
+        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences", "Primary Collector Number"));
 
 
         InputStream inp = new FileInputStream(inputFile);
@@ -434,11 +434,13 @@ class siProjects {
     Integer project_id;
     String abbreviation;
     String columnName; // The column in the SI provided sheet that designates this resource
+    String uniqueKey;
 
-    siProjects(Integer project_id, String abbreviation, String columnName) {
+    siProjects(Integer project_id, String abbreviation, String columnName, String uniqueKey) {
         this.project_id = project_id;
         this.abbreviation = abbreviation;
         this.columnName = columnName;
+        this.uniqueKey = uniqueKey;
     }
 }
 
