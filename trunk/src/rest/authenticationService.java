@@ -16,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by rjewing on 4/12/14.
@@ -51,13 +52,13 @@ public class authenticationService {
         }
 
         // Debugging
-        System.out.println("SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + state);
+        System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
 
         // Redirect to BCID Login Service
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
                 "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
-                "&state=" + state
+                "&state=" + URLEncoder.encode(state,"utf-8")
         );
 
         return;
@@ -95,12 +96,12 @@ public class authenticationService {
 
         if (session != null) {
             if (state != null) {
-                System.out.println("SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=" + state);
+                System.out.println("FIMS SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=" + state);
             } else {
-                System.out.println("SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=NULL");
+                System.out.println("FIMS SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=NULL");
             }
         } else {
-            System.out.println("SESS_DEBUG access_token: session is null!");
+            System.out.println("FIMS SESS_DEBUG access_token: session is null!");
         }
 
         bcidConnector bcidConnector = new bcidConnector();
@@ -108,8 +109,9 @@ public class authenticationService {
         try {
             oauthState = session.getAttribute("oauth_state").toString();
         } catch (Exception e) {
-            System.out.println("Authentication Error, session id " + session.getId() + " is not recognized");
-            response.sendRedirect("/biocode-fims/index.jsp?error=session id is not recognized... Try re-loading biocode-fims homepage, and logging in again.");
+            e.printStackTrace();
+            System.out.println("Authentication Error, session id " + session.getId() + " does not have a declared oauth_state");
+            response.sendRedirect("/biocode-fims/index.jsp?error=invalid+sessionid.");
             return;
         }
 
