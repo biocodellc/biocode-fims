@@ -25,6 +25,7 @@
 
     function download_file(){
         isNMNHProject(getProjectID()).done(function(accessionNumber, datasetCode, operation) {
+
 		    // TODO: create a single place for our biocode-fims service calls
 			var url = '/biocode-fims/rest/templates/createExcel/';
 			var input_string = '';

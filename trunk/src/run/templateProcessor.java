@@ -29,6 +29,8 @@ public class templateProcessor {
     private Validation validation;
     private Integer accesstionNumber;
     private String datasetCode;
+    private String ark;
+
     HSSFSheet defaultSheet;
     HSSFWorkbook workbook;
 
@@ -70,6 +72,7 @@ public class templateProcessor {
         // Set the default heading style
         headingStyle = workbook.createCellStyle();
         HSSFFont bold = workbook.createFont();
+        bold.setFontHeightInPoints((short) 14);
         bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         headingStyle.setFont(bold);
 
@@ -99,15 +102,17 @@ public class templateProcessor {
      * @throws Exception
      */
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
-                             Integer accessionNumber, String datasetCode) throws Exception {
+                             Integer accessionNumber, String datasetCode, String ark) throws Exception {
         // we can't have a null value for accessionNumber or datasetCode if using this constructor
         if (accessionNumber == null || datasetCode == null) {
             throw new FIMSException("dataset code and accession number are required");
         }
         this.accesstionNumber = accessionNumber;
         this.datasetCode = datasetCode;
-
+        this.ark = ark;
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
+
+
     }
 
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
@@ -151,21 +156,21 @@ public class templateProcessor {
                 String column = a.getColumn();
                 if (column_name.trim().equals(column.trim())) {
                     // The column name
-                    output.append("<b>Column Name: " + column_name+ "</b><p>");
+                    output.append("<b>Column Name: " + column_name + "</b><p>");
 
                     // URI
                     if (a.getUri() != null) {
-                         output.append("URI = " +
-                                 "<a href='" + a.getUri() + "' target='_blank'>" +
-                                 a.getUri() +
-                                 "</a><br>\n");
+                        output.append("URI = " +
+                                "<a href='" + a.getUri() + "' target='_blank'>" +
+                                a.getUri() +
+                                "</a><br>\n");
                     }
                     // Defined_by
                     if (a.getDefined_by() != null) {
-                         output.append("Defined_by = " +
-                                 "<a href='" + a.getDefined_by() + "' target='_blank'>" +
-                                 a.getDefined_by() +
-                                 "</a><br>\n");
+                        output.append("Defined_by = " +
+                                "<a href='" + a.getDefined_by() + "' target='_blank'>" +
+                                a.getDefined_by() +
+                                "</a><br>\n");
                     }
 
                     // Definition
@@ -194,7 +199,7 @@ public class templateProcessor {
 
                             if (ruleColumn != null) {
                                 // Match column names with or without underscores
-                                if (ruleColumn.replace("_"," ").equals(column) ||
+                                if (ruleColumn.replace("_", " ").equals(column) ||
                                         ruleColumn.equals(column)) {
                                     ruleValidations.append(r.printRuleMetadata(sList));
                                 }
@@ -253,13 +258,13 @@ public class templateProcessor {
                 // column names are repeated for different entities in the configuration file
                 if (!addedNames.contains(column)) {
                     // Set boolean to tell us if this is a requiredColumn
-                    Boolean aRequiredColumn = false, aDesiredColumn=false;
+                    Boolean aRequiredColumn = false, aDesiredColumn = false;
                     if (requiredColumns == null) {
                         aRequiredColumn = false;
                     } else if (requiredColumns.contains(a.getColumn())) {
                         aRequiredColumn = true;
                     }
-                     if (desiredColumns == null) {
+                    if (desiredColumns == null) {
                         aDesiredColumn = false;
                     } else if (desiredColumns.contains(a.getColumn())) {
                         aDesiredColumn = true;
@@ -452,7 +457,7 @@ public class templateProcessor {
                     // Set the Constraint to a particular column on the lists sheet
                     // The following syntax works well and shows popup boxes: Lists!S:S
                     // replacing the previous syntax which does not show popup boxes ListsS
-                    String constraintSyntax = listsSheetName +"!" +listColumnLetter+":"+listColumnLetter;
+                    String constraintSyntax = listsSheetName + "!" + listColumnLetter + ":" + listColumnLetter;
                     DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
 
                     // Create the data validation object
@@ -620,6 +625,8 @@ public class templateProcessor {
         // Center align & bold for title
         HSSFCellStyle titleStyle = workbook.createCellStyle();
         HSSFFont bold = workbook.createFont();
+        bold.setFontHeightInPoints((short) 14);
+
         bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         titleStyle.setFont(bold);
         titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
@@ -644,7 +651,6 @@ public class templateProcessor {
         cell.setCellValue("~project_id=" + project_id + "~");
         row.setZeroHeight(true);
 
-
         // The name of this project as specified by the sheet
         row = instructionsSheet.createRow(rowIndex);
         rowIndex++;
@@ -655,25 +661,35 @@ public class templateProcessor {
         // if we have a datasetCode and accesstionNumber, hide them in the first row and make them visible
         // if we have one, we have all three.
         if (accesstionNumber != null) {
-            // hide the accesstionNumber and datasetCode
+            // Hide the accesstionNumber and datasetCode
             row = instructionsSheet.getRow(0);
             cell = row.createCell(1);
             cell.setCellValue("~dataset_code=" + datasetCode + "~");
             cell = row.createCell(2);
             cell.setCellValue("~accesstion_number=" + accesstionNumber + "~");
 
-            // show the datasetCode and accesstionNumber
+            // Show the datasetCode
             row = instructionsSheet.createRow(rowIndex);
             rowIndex++;
             cell = row.createCell(0);
             cell.setCellStyle(titleStyle);
-            cell.setCellValue("Dataset Code: " + datasetCode);
+            cell.setCellValue(formatKeyValueString("Dataset Code: ", datasetCode));
 
+            // Show the ark
+            if (ark != null && !ark.equals("")) {
+                row = instructionsSheet.createRow(rowIndex);
+                rowIndex++;
+                cell = row.createCell(0);
+                cell.setCellStyle(titleStyle);
+                cell.setCellValue(formatKeyValueString("ARK root: ", ark));
+            }
+
+            // Show the Accession Number
             row = instructionsSheet.createRow(rowIndex);
             rowIndex++;
             cell = row.createCell(0);
             cell.setCellStyle(titleStyle);
-            cell.setCellValue("Accesstion Number: " + accesstionNumber);
+            cell.setCellValue(formatKeyValueString("Accession Number: ", accesstionNumber.toString()));
         }
 
 
@@ -734,6 +750,36 @@ public class templateProcessor {
         cell = row.createCell(0);
         cell.setCellStyle(wrapStyle);
         cell.setCellValue("This tab contains controlled vocabulary lists for certain fields.  DO NOT EDIT this sheet!");
+
+
+        // Create a Box to Hold The Critical Information
+        /*
+        HSSFPatriarch patriarch = instructionsSheet.createDrawingPatriarch();
+        HSSFClientAnchor a = new HSSFClientAnchor(0, 0, 1023, 255, (short) 1, 0, (short) 1, 0);
+        HSSFSimpleShape shape1 = patriarch.createSimpleShape(a);
+        shape1.setShapeType(HSSFSimpleShape.OBJECT_TYPE_LINE);
+
+        // Create the textbox
+        HSSFTextbox textbox = patriarch.createTextbox(
+                new HSSFClientAnchor(0, 0, 0, 0, (short) 0, 3, (short) 1, 12));
+        textbox.setHorizontalAlignment(CellStyle.ALIGN_CENTER);
+
+        // Accession ID
+        HSSFFont font = workbook.createFont();
+        font.setColor(IndexedColors.RED.getIndex());
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        font.setFontHeightInPoints((short) 18);
+        HSSFRichTextString accessionString = new HSSFRichTextString(accesstionNumber.toString());
+        accessionString.applyFont(font);
+        textbox.setString(accessionString);
+
+        //HSSFRichTextString accessionString2 = new HSSFRichTextString("foodad");
+        //accessionString.applyFont(2, 5, font);
+
+        textbox.
+        //textbox.setString(accessionString2);
+        */
+
     }
 
     /**
@@ -781,6 +827,30 @@ public class templateProcessor {
     }
 
     /**
+     * Format a key/value string to use in Instructions Sheet Header
+     *
+     * @param key
+     * @param value
+     *
+     * @return
+     */
+    private HSSFRichTextString formatKeyValueString(String key, String value) {
+        HSSFFont font = workbook.createFont();
+        font.setColor(IndexedColors.RED.getIndex());
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        font.setFontHeightInPoints((short) 14);
+        //String prefix = "Accession Number: ";
+        HSSFRichTextString totalRichTextString = new HSSFRichTextString(key + value);
+        Integer start = key.toString().length();
+        Integer end = totalRichTextString.toString().length();
+        // Only make the value portion of string RED
+        //totalRichTextString.applyFont(start, end, font);
+        // Just make the whole string RED
+        totalRichTextString.applyFont(0, end, font);
+        return totalRichTextString;
+    }
+
+    /**
      * main method is used for testing
      *
      * @param args
@@ -788,21 +858,22 @@ public class templateProcessor {
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
 
-        templateProcessor t = new templateProcessor(14, "tripleOutput", false);
+        templateProcessor t = new templateProcessor(14, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
+
         //System.out.println(t.definition("materialSampleID"));
 
-        System.out.println(t.definition("Depth Modifier"));
+
+//        System.out.println(t.definition("Depth Modifier"));
 
         //System.out.println(t.printCheckboxes());
-        /*
-       ArrayList<String> a = new ArrayList<String>();
-       a.add("Phase");
-       a.add("Cultivated");
 
+        ArrayList<String> a = new ArrayList<String>();
+        a.add("Phase");
+        a.add("Cultivated");
 
-       File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
-       System.out.println(outputFile.getAbsoluteFile().toString());
-        */
+        File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
+        System.out.println(outputFile.getAbsoluteFile().toString());
+
         //t.getRequiredColumns();
 
         //System.out.println(t.printCheckboxes());
