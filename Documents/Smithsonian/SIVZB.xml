@@ -255,6 +255,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Preparation 1</field>
 			<field>Preparator</field>
 			<field>Kind of Object</field>
+			<field>Preparator number</field>
 			<field>Sex</field>
 			<field>Genus</field>
 			<field>Species</field>
@@ -277,7 +278,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Microhabitat description</field>
 			<field>Molt 1 Description</field>
 			<field>Molt 1 Part</field>
-			<field>Preparator number</field>
 			<field>Reproductive Part 1</field>
 			<field>Reproductive Part 1 Length</field>
 			<field>Reproductive Part 1 Remarks</field>
@@ -327,6 +327,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
 		<rule type='isNumber' column='Bursa Length' level='error'></rule>
 		<rule type='isNumber' column='Bursa Width' level='error'></rule>
+		<rule type='uniqueValue' column='Preparator number' level='error'></rule>
 		<rule type='isNumber' column='Reproductive Part 1 Length' level='error'></rule>
 		<rule type='isNumber' column='Reproductive Part 1 Width' level='error'></rule>
 		<rule type='isNumber' column='Reproductive Part 2 Length' level='error'></rule>
