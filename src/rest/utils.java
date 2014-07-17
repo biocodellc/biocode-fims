@@ -92,7 +92,8 @@ public class utils {
     }
 
     /**
-     * Check whether or not an expedition code is valid
+     * Check whether or not an expedition code is valid by calling the BCID expeditionService/validateExpedition Service
+     * Should return update, insert, or error
      * @param projectId
      * @param expeditionCode
      * @param request
@@ -120,6 +121,10 @@ public class utils {
                 "?access_token=" + accessToken);
 
         String response = bcidConnector.createGETConnection(url);
+
+        // Debugging
+        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode() );
+        System.out.println("FIMS validateExpedition response = " + response);
 
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }

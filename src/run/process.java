@@ -179,6 +179,7 @@ public class process {
      */
     public void runExpeditionCreate() throws FIMSException {
         try {
+            if (connector.checkExpedition(processController))
             connector.createExpedition(processController, mapping);
             processController.setExpeditionCreateRequired(false);
             processController.setExpeditionAssignedToUserAndExists(true);
