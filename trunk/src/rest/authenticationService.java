@@ -173,7 +173,7 @@ if(session !=null) {
         }
 
         // Need to also logout of the BCID system
-        res.sendRedirect(sm.retrieveValue("logout_uri"));
+        //res.sendRedirect(sm.retrieveValue("logout_uri"));
 
         //res.sendRedirect("/biocode-fims/index.jsp");
         return;

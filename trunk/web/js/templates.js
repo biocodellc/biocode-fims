@@ -24,7 +24,7 @@
 		}
 
     function download_file(){
-        isNMNHProject(getProjectID()).done(function(accessionNumber, datasetCode) {
+        isNMNHProject(getProjectID()).done(function(accessionNumber, datasetCode, operation) {
 		    // TODO: create a single place for our biocode-fims service calls
 			var url = '/biocode-fims/rest/templates/createExcel/';
 			var input_string = '';
@@ -41,10 +41,10 @@
 			        '<input type="hidden" name="dataset_code" value="' + datasetCode + '" />';
 			}
 
-			// Pass the form to the server and submit
-			//showMessage("STILL TO CODE, CALL: " + url + " with input_string = " + input_string);
-			// Get the form parameter correct.
+            // is this an update or insert operation (no need to check this again on server)
+            input_string += '<input type="hidden" name="operation" value="' + operation +'" />';
 
+			// Pass the form to the server and submit
 			$('<form action="'+ url +'" method="post">'+input_string+'</form>').appendTo('body').submit().remove();
         });
     }
@@ -82,19 +82,25 @@
 
         var buttons = {
             "Create": function() {
+                // Verify in Jscript that accession number is valid
                 var digitRegExp = /^\d+$/;
                 var alNumRegExp = /^\w{4,16}$/;
                 if (!digitRegExp.test($("#accession_number").val()) || !alNumRegExp.test($("#dataset_code").val())) {
                     var error = "<br><p class=error>Make sure your Accession Number is an integer and the Dataset Code is " +
                         "an alphanumeric between 4 and 16 chars long!</p>";
                     dialog(message + error, title, buttons);
+                // Call
                 } else {
+
+                    // Save the context of this so it can be used inside the POST
+                    var $this = $(this);
+
                     $.getJSON("rest/utils/validateExpedition/" + $("#projects").val() + "/" + $("#dataset_code").val())
                         .done(function(data) {
-                            if (data.insert) {
+                            if (data.update) {
                                 var buttons = {
                                     "Continue": function() {
-                                        d.resolve($("#accession_number").val(), $("#dataset_code").val());
+                                        d.resolve($("#accession_number").val(), $("#dataset_code").val(),"update");
                                         $(this).dialog("close");
                                     },
                                     "Cancel": function() {
@@ -103,41 +109,31 @@
                                     }
                                 }
                                 // remember accession_number, dataset_code values using hidden form elements
-                                dialog("Warning: Dataset Code" + $("#dataset_code").val() + " already exists." +
+                                dialog("Warning: Dataset Code '" + $("#dataset_code").val() + "' already exists." +
                                 "<input type=hidden id='accession_number' value='"+$("#accession_number").val()+"' />" +
                                 "<input type=hidden id='dataset_code' value='"+$("#dataset_code").val()+"' />"
                                 , "Dataset Code", buttons);
                             } else {
-                                d.resolve($("#accession_number").val(), $("#dataset_code").val());
-                                $(this).dialog("close");
+                                d.resolve($("#accession_number").val(), $("#dataset_code").val(), "insert");
+                                $this.dialog("close");
                             }
                         }).fail(function(jqxhr) {
-                            var buttons = {
-                                "Continue": function() {
-                                    d.resolve($("#accession_number").val(), $("#dataset_code").val());
-                                    $(this).dialog("close");
-                                },
-                                "Cancel": function() {
-                                    d.reject();
-                                    $(this).dialog("close");
-                                }
-                            }
                             var cancelbutton = { "Cancel": function() {
                                     d.reject();
                                     $(this).dialog("close");
                                 }
                             }
+                            // Process status codes from server
                             if (jqxhr.status == 401) {
-                                var message = "You are not authorized... please login with appropriate credentials";
+                                var message = "Server message<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);                                dialog(message, "Dataset Error", cancelbutton);
                                 dialog(message, "Dataset Error", cancelbutton);
                             } else if (jqxhr.status != 404) {
                                 var message = "Server responded with HTTP status code = "+ jqxhr.status;
                                 dialog(message, "Dataset Error", cancelbutton);
                             } else {
                                 var message = "Dataset validation failed.<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);
-                                dialog(message, "Dataset Error", buttons);
+                                dialog(message, "Dataset Error", cancelbutton);
                             }
-
                         });
                 }
             },
@@ -150,14 +146,15 @@
         return d.promise();
     }
 
-    // check if the project is an NMNHProject. If it is, we get the user's accession number and unique collection number
+    // check if the project is an NMNHProject. If it is, we get the user's accession number and
+    // datasetCode
     function isNMNHProject(projectId) {
         var d = new $.Deferred();
         $.getJSON("/biocode-fims/rest/utils/isNMNHProject/" + projectId)
             .done(function(data) {
                 if (data.isNMNHProject == "true") {
-                    NMNHDialog().then(function(accessionNumber, datasetCode) {
-                        d.resolve(accessionNumber, datasetCode);
+                    NMNHDialog().then(function(accessionNumber, datasetCode,operation) {
+                        d.resolve(accessionNumber, datasetCode, operation);
                     });
                 } else {
                     d.resolve();

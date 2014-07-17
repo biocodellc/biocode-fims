@@ -31,6 +31,7 @@ public class templates {
      * Return the available attributes for a particular graph
      *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -38,14 +39,13 @@ public class templates {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateCheckboxes(
             @QueryParam("project_id") Integer project_id,
-                             @Context HttpServletRequest request) throws Exception {
+            @Context HttpServletRequest request) throws Exception {
 
         HttpSession session = request.getSession();
 
 
-
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(project_id,uploadPath(),true);
+        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
         String response = t.printCheckboxes();
@@ -57,10 +57,12 @@ public class templates {
             return Response.ok(response).build();
         }
     }
-     /**
+
+    /**
      * Return the abstract for a particular graph
      *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -70,7 +72,7 @@ public class templates {
             @QueryParam("project_id") Integer project_id) throws Exception {
 
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(project_id,uploadPath(),true);
+        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
         String response = t.printAbstract();
@@ -91,7 +93,8 @@ public class templates {
             @FormParam("project_id") Integer project_id,
             @FormParam("accession_number") Integer accessionNumber,
             @FormParam("dataset_code") String datasetCode,
-            @Context HttpServletRequest request ) throws Exception {
+            @FormParam("operation") String operation,
+            @Context HttpServletRequest request) throws Exception {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
@@ -100,13 +103,17 @@ public class templates {
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
                         " Both an Accession Number and a Dataset Code are required if this is an NMNH project.").build();
-            // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
-            // wasn't an Integer
+                // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
+                // wasn't an Integer
             } else if (!datasetCode.matches("^\\w{4,16}$")) {
                 return Response.status(400).entity("{\"error\": \"The Dataset Code must be an alphanumeric between" +
                         " 4 and 16 characters.").build();
             }
 
+        }
+
+        if (operation == null || !operation.equalsIgnoreCase("update")) {
+            operation = "insert";
         }
 
         // Check if the project is an NMNH project
@@ -122,13 +129,24 @@ public class templates {
                 uploadPath(),
                 bcidConnector,
                 processController);
+
+        // Handle creating an expedition on template generation
         if (p.isNMNHProject()) {
+            // Return if we don't have the necessary information
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": " +
-                    "\"This is an NMNH project. Accession number and Dataset Code are required.}").build();
+                        "\"This is an NMNH project. Accession number and Dataset Code are required.}").build();
             } else {
-                // create the expedition
-                p.runExpeditionCreate();
+
+                // Only create expedition if necessary
+                if (operation.equalsIgnoreCase("insert")) {
+                    try {
+                        p.runExpeditionCreate();
+                    } catch (Exception e) {
+                        return Response.status(400).entity("{\"error\": " +
+                                "\"Error trying to create expedition: " + e.getMessage() + "}").build();
+                    }
+                }
             }
         }
 
@@ -168,6 +186,7 @@ public class templates {
      * Return a definition for a particular column
      *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -178,7 +197,7 @@ public class templates {
             @QueryParam("column_name") String column_name) throws Exception {
 
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-         templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
+        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
 
         // Write the response to a String Variable
         String response = t.definition(column_name);
