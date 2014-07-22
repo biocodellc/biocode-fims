@@ -56,13 +56,15 @@ public class authenticationService {
         System.out.println("Biocode-FIMS redirect_uri = " + redirect_uri);
 
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
-        if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+        //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+        if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURI().toString());
             System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
 
             // Pattern match incomingURL to see if it contains a "www"
-            if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+            //if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+            if (!incomingUrl.getHost().contains("www")) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
                 System.out.println("Biocode-FIMS Login Redirecting to " + loginRedirectURL);
                 response.sendRedirect(loginRedirectURL);
