@@ -59,7 +59,7 @@ public class authenticationService {
         //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
         if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
-            URL incomingUrl = new URL(request.getRequestURI().toString());
+            URL incomingUrl = new URL(request.getRequestURL().toString());
             System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
 
             // Pattern match incomingURL to see if it contains a "www"
