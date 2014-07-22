@@ -17,4 +17,18 @@
     </div>
 </div>
 
+<script>
+// function to show incoming failure Messages, its only used on HOME page since it is the only place
+// that accepts redirects with error messages
+window.onload = function checkForFailMessageInURL(){
+    var match = RegExp('[?&]error=([^&]*)').exec(window.location.search);
+    if (match !=null) {
+        var results = decodeURIComponent(match[1].replace(/\+/g, ' '));
+        if (results!=null) {
+            alert(results);
+        }
+    }
+};
+</script>
+
 <%@ include file="footer.jsp" %>
