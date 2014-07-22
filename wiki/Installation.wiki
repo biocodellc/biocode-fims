@@ -26,3 +26,6 @@ Optional Component
 = Additional Installation Instructions =
    * The source contains a sample property file called biocode-fims.template which should be copied to biocode-fims.props  -- you will need to adjust references in this document. 
       * Note that references to URLs should begin with "www" as in www.biscicol.org instead of biscicol.org since some browsers (e.g. Firefox) automatically add the "www" and this changes the session designation and creates problems during logging in.
+
+= Notes =
+  * It is recommended ALL service calls in the properties file begin with a "www" in the hostname.  
