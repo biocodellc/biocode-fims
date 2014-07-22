@@ -53,10 +53,14 @@ public class authenticationService {
         // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
         // in the login process.
         String redirect_uri = sm.retrieveValue("redirect_uri");
+        System.out.println("Biocode-FIMS redirect_uri = " + redirect_uri);
+
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
         if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURI().toString());
+            System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
+
             // Pattern match incomingURL to see if it contains a "www"
             if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
