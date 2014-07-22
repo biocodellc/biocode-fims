@@ -110,7 +110,7 @@ public class process {
     }
 
     /**
-     * Check if this is an NMNH project
+     * Check if this is a NMNH project
      *
      * @return
      *
@@ -193,13 +193,13 @@ public class process {
      * would handle user input/output differently
      */
     public void runAllLocally(Boolean triplifier, Boolean upload) throws FIMSException {
-        // Set whether this is an NMNH project or not
+        // Set whether this is a NMNH project or not
         try {
             Fims fims = new Fims(mapping);
             addFimsRules(new Digester(), fims);
             processController.setNMNH(fims.getMetadata().getNmnh());
             if (processController.getNMNH()) {
-                System.out.println("\tthis is an NMNH designated project");
+                System.out.println("\tthis is a NMNH designated project");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.regex.Pattern;
 
 /**
  * Created by rjewing on 4/12/14.
@@ -37,12 +38,6 @@ public class authenticationService {
     public void login(@Context HttpServletResponse response,
                       @Context HttpServletRequest request) throws IOException {
 
-        // Prevent requests from forgery attacks by setting a state string
-        stringGenerator sg = new stringGenerator();
-        String state = sg.generateString(20);
-        HttpSession session = request.getSession(true);
-        session.setAttribute("oauth_state", state);
-
         // Initialize settings
         SettingsManager sm = SettingsManager.getInstance();
         try {
@@ -51,6 +46,34 @@ public class authenticationService {
             e.printStackTrace();
         }
 
+        // If the redirect_uri contains a "www" on the beginning of the hostname, and the incoming request
+        // to this login service does not contain a "www" in the hostname, then we want to call this service
+        // again with a "www" inserted.
+        // This is done because client browsers can add/remove the "www" on requests without predictability, and
+        // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
+        // in the login process.
+        String redirect_uri = sm.retrieveValue("redirect_uri");
+        // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
+        if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+            // This is the current incomingUrl
+            URL incomingUrl = new URL(request.getRequestURI().toString());
+            // Pattern match incomingURL to see if it contains a "www"
+            if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
+                String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
+                System.out.println("Biocode-FIMS Login Redirecting to " + loginRedirectURL);
+                response.sendRedirect(loginRedirectURL);
+                return;
+            }
+        }
+
+        // Prevent requests from forgery attacks by setting a state string
+        stringGenerator sg = new stringGenerator();
+        String state = sg.generateString(20);
+
+        // Set the oauthState
+        HttpSession session = request.getSession(true);
+        session.setAttribute("oauth_state", state);
+
         // Debugging
         System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
 
@@ -58,7 +81,7 @@ public class authenticationService {
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
                 "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
-                "&state=" + URLEncoder.encode(state,"utf-8")
+                "&state=" + URLEncoder.encode(state, "utf-8")
         );
 
         return;
@@ -130,7 +153,6 @@ public class authenticationService {
 
         String postParams = "client_id=" + sm.retrieveValue("client_id") + "&client_secret=" + sm.retrieveValue("client_secret") +
                 "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
-
 
         JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 

@@ -77,7 +77,7 @@
 
         var d = new $.Deferred();
         var title = "NMNH Project Additional Information"
-        var message = "This is an NMNH project. Please enter:<br>" +
+        var message = "This is a NMNH project. Please enter:<br>" +
             "Accession Number: <input type='text' id='accession_number' /><br>" +
             "Dataset Code: <input type='text' id='dataset_code' />";
 

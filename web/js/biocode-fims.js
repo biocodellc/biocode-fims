@@ -524,6 +524,7 @@ function uploadResults(data) {
         $('form').clearForm();
         $('.toggle-content#projects_toggle').hide(400);
         $('.toggle-content#expedition_code_toggle').hide(400);
+
     } else {
         // ask user if want to proceed
         var buttons = {
@@ -638,7 +639,7 @@ function validationFormToggle() {
             $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
             $.when(extractDatasetCode()).done(function(dataset_code) {
                 if (dataset_code != null) {
-                    $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code">');
+                    $("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">'+dataset_code);
                     $("#expedition_code").val(dataset_code);
                 } else {
                     getExpeditionCodes();

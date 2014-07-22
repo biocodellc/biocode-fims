@@ -102,7 +102,7 @@ public class templates {
         if (accessionNumber != null || datasetCode != null) {
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
-                        " Both an Accession Number and a Dataset Code are required if this is an NMNH project.").build();
+                        " Both an Accession Number and a Dataset Code are required if this is a NMNH project.").build();
                 // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
                 // wasn't an Integer
             } else if (!datasetCode.matches("^\\w{4,16}$")) {
@@ -135,7 +135,7 @@ public class templates {
             // Return if we don't have the necessary information
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": " +
-                        "\"This is an NMNH project. Accession number and Dataset Code are required.}").build();
+                        "\"This is a NMNH project. Accession number and Dataset Code are required.}").build();
             } else {
 
                 // Only create expedition if necessary
