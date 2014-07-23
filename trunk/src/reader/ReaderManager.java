@@ -210,14 +210,13 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new Exception(e.getMessage());
-
                     //return null;
                 }
             }
         }
 
         // no matching reader was found
-        throw new Exception("Unable to open the file named '" + filepath + "'");
+        throw new Exception("Unable to open the file you attempted to upload");
     }
 
     /**

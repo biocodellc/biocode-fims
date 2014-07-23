@@ -53,20 +53,18 @@ public class authenticationService {
         // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
         // in the login process.
         String redirect_uri = sm.retrieveValue("redirect_uri");
-        System.out.println("Biocode-FIMS redirect_uri = " + redirect_uri);
-
+        //System.out.println("Biocode-FIMS redirect_uri = " + redirect_uri);
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
         //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
         if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURL().toString());
-            System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
-
+           // System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
             // Pattern match incomingURL to see if it contains a "www"
             //if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
             if (!incomingUrl.getHost().contains("www")) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
-                System.out.println("Biocode-FIMS Login Redirecting to " + loginRedirectURL);
+               // System.out.println("Biocode-FIMS Login Redirecting to " + loginRedirectURL);
                 response.sendRedirect(loginRedirectURL);
                 return;
             }
@@ -81,7 +79,7 @@ public class authenticationService {
         session.setAttribute("oauth_state", state);
 
         // Debugging
-        System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
+        //System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
 
         // Redirect to BCID Login Service
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
@@ -123,6 +121,7 @@ public class authenticationService {
         String profileURL = sm.retrieveValue("profile_uri");
         HttpSession session = request.getSession();
 
+        /*
         if (session != null) {
             if (state != null) {
                 System.out.println("FIMS SESS_DEBUG access_token: sessionid=" + session.getId() + ";state=" + state);
@@ -132,6 +131,7 @@ public class authenticationService {
         } else {
             System.out.println("FIMS SESS_DEBUG access_token: session is null!");
         }
+        */
 
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = null;

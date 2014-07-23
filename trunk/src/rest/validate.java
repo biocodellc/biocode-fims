@@ -162,6 +162,12 @@ public class validate {
             }
         } catch (FIMSException e) {
             e.printStackTrace();
+            // Delete the input file if an exception was thrown
+            try {
+                new File(input_file).delete();
+            } catch (Exception e2) {
+                return "{\"done\": \"Server Error: " + e.getMessage() + ";" + e2.getMessage() + "\"}";
+            }
             return "{\"done\": \"Server Error: " + e.getMessage() + "\"}";
         }
 
