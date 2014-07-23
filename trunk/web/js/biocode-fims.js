@@ -66,7 +66,9 @@ function populateAbstract(targetDivId) {
 
 // Get the available projects
 function populateProjects() {
-    theUrl = "http://biscicol.org/id/projectService/list";
+    // We assume that BCID is on the same server... not always safe
+    // TODO: read properties to figure out location
+    theUrl = "/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
 	    // Call distal to load the projects data
         distal(projects,data);
@@ -89,7 +91,7 @@ function populateGraphs(project_id) {
 	    graphsMessage('Choose an project to see loaded spreadsheets');
 	    return;
     }
-    theUrl = "http://biscicol.org/id/projectService/graphs/" + project_id;
+    theUrl = "/id/projectService/graphs/" + project_id;
     var jqxhr = $.getJSON( theUrl, function(data) {
     // Check for empty object in response
     if (typeof data['data'][0] === "undefined") {
@@ -167,7 +169,7 @@ function download(url, data) {
 // Get results as Excel
 function queryGoogleMaps() {
     //theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyValue
-    theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue();
+    theUrl = "/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue();
     mapsUrl = "http://maps.google.com/maps?q=" + theUrl;
     window.open(
         mapsUrl,
