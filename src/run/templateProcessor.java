@@ -462,11 +462,10 @@ public class templateProcessor {
                     // Set the Constraint to a particular column on the lists sheet
                     // The following syntax works well and shows popup boxes: Lists!S:S
                     // replacing the previous syntax which does not show popup boxes ListsS
-                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "1:$" + listColumnLetter+""+endRowNum;
+                    // Assumes that header is in column #1
+                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter+"$"+endRowNum;
                     DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
 
-//System.out.println("constraintSyntax = " + constraintSyntax);
-//System.out.println("applying to column number =  " + column);
                     // Create the data validation object
                     DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
 
