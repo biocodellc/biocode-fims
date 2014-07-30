@@ -535,6 +535,7 @@ public class bcidConnector {
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
          System.out.println("START");
+        conn.connect();
         // Debugging related to HTTPS connections
         if (conn instanceof HttpsURLConnection) {
             Certificate[] certs = conn.getServerCertificates();
