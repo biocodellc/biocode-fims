@@ -623,17 +623,37 @@ public class bcidConnector {
         // default is GET
         conn.setRequestMethod("GET");
         conn.setUseCaches(false);
-
+                /*
         // act like a browser
         conn.setRequestProperty("User-Agent", USER_AGENT);
         conn.setRequestProperty("Accept",
-                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8");
         conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         if (cookies != null) {
             for (String cookie : this.cookies) {
                 conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
             }
+        }    */
+
+        conn.setRequestProperty("Host", HOST);
+        conn.setRequestProperty("User-Agent", USER_AGENT);
+        conn.setRequestProperty("Accept", ACCEPT);
+        conn.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
+        if (cookies != null) {
+            for (String cookie : this.cookies) {
+                conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
+            }
         }
+
+        conn.setRequestProperty("Connection", CONNECTION);
+        //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
+        conn.setRequestProperty("Content-Type", CONTENT_TYPE);
+        //conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
+
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+
+
         responseCode = conn.getResponseCode();
         //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
 
