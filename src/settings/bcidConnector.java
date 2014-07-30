@@ -546,7 +546,7 @@ public class bcidConnector {
      */
     public String createPOSTConnnection(URL url, String postParams) throws IOException {
 
-        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         // Acts like a browser
         conn.setUseCaches(false);
@@ -617,7 +617,8 @@ public class bcidConnector {
      * @throws IOException
      */
     public String createGETConnection(URL url) throws IOException {
-        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
 
         // default is GET
         conn.setRequestMethod("GET");
