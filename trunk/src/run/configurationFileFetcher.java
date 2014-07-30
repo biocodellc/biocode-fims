@@ -90,6 +90,10 @@ public class configurationFileFetcher {
         System.setProperty("javax.net.ssl.trustStore", trust_store);
         System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
 
+        System.setProperty("javax.net.ssl.keyStoreType", "pkcs12");
+        System.setProperty("javax.net.ssl.keyStore", trust_store);
+        System.setProperty("javax.net.ssl.keyStorePassword", trust_store_password);
+
        System.out.println("trust store located at: " + System.getProperty("javax.net.ssl.trustStore"));
 
         Boolean useCacheResults = false;
@@ -118,12 +122,13 @@ public class configurationFileFetcher {
             // Setup connection
 
             //URL url = new URL(urlString);
+            /*
             bcidConnector b = new bcidConnector();
-
             System.out.println("BEFORE");
             System.out.println(b.createGETConnection(new URL(urlString)));
             System.out.println("AFTER");
-            //init(new URL(urlString), defaultOutputDirectory);
+            */
+            init(new URL(urlString), defaultOutputDirectory);
         }
     }
 
