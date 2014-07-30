@@ -84,7 +84,7 @@ public class configurationFileFetcher {
         // to the appropriate keystore location on the server... The keystore stores the
         // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
         // connection this can be safely ignored
-        System.setProperty("javax.net.ssl.trustStore", sm.retrieveValue("trust_store"));
+     /*   System.setProperty("javax.net.ssl.trustStore", sm.retrieveValue("trust_store"));
         System.setProperty("javax.net.ssl.trustStorePassword", sm.retrieveValue("trust_store_password"));
 
         System.setProperty("javax.net.ssl.keyStoreType", "pkcs12");
@@ -92,7 +92,7 @@ public class configurationFileFetcher {
         System.setProperty("javax.net.ssl.keyStorePassword", sm.retrieveValue("key_store_password"));
 
        System.out.println("trust store located at: " + System.getProperty("javax.net.ssl.trustStore"));
-
+      */
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it

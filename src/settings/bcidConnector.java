@@ -161,8 +161,8 @@ public class bcidConnector {
         // to the appropriate keystore location on the server... The keystore stores the
         // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
         // connection this can be safely ignored
-        System.setProperty("javax.net.ssl.trustStore", trust_store);
-        System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
+       // System.setProperty("javax.net.ssl.trustStore", trust_store);
+       // System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
     }
 
     /**
