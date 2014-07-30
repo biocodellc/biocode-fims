@@ -55,6 +55,8 @@ public class bcidConnector {
     private String client_id;
     private String client_secret;
     private String refresh_uri;
+    private String trust_store;
+    private String trust_store_password;
 
     private Integer responseCode;
     private String accessToken;
@@ -152,6 +154,15 @@ public class bcidConnector {
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
+        trust_store = sm.retrieveValue("trust_store");
+        trust_store_password = sm.retrieveValue("trust_store_password");
+
+        // The following System properties are set to direct the Java-specific connection here
+        // to the appropriate keystore location on the server... The keystore stores the
+        // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
+        // connection this can be safely ignored
+        System.setProperty("javax.net.ssl.trustStore", trust_store);
+        System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
     }
 
     /**
@@ -536,24 +547,6 @@ public class bcidConnector {
     public String createPOSTConnnection(URL url, String postParams) throws IOException {
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-        /* System.out.println("START");
-        // testing
-        conn.connect();
-        // Debugging related to HTTPS connections
-        if (conn instanceof HttpsURLConnection) {
-            Certificate[] certs = conn.getServerCertificates();
-            for (Certificate cert : certs) {
-                System.out.println("Cert Type : " + cert.getType());
-                System.out.println("Cert Hash Code : " + cert.hashCode());
-                System.out.println("Cert Public Key Algorithm : "
-                        + cert.getPublicKey().getAlgorithm());
-                System.out.println("Cert Public Key Format : "
-                        + cert.getPublicKey().getFormat());
-                System.out.println("\n");
-            }
-        }
-         System.out.println("END");  */
-
 
         // Acts like a browser
         conn.setUseCaches(false);
@@ -572,12 +565,6 @@ public class bcidConnector {
         //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
         conn.setRequestProperty("Content-Type", CONTENT_TYPE);
         conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
-
-       // conn.setHostnameVerifier(getHostNameVerifier());
-
-         System.setProperty("javax.net.ssl.keyStore",                    "/opt/jetty/etc/keystore");
-   // System.setProperty("javax.net.ssl.keyStorePassword",            "password");
-    System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", "true");
 
         conn.setDoOutput(true);
         conn.setDoInput(true);
@@ -621,50 +608,6 @@ public class bcidConnector {
     }
 
     /**
-     * TrustALL (hack to get biocode-fims talking to bcid using HTTPS
-     *
-     * @return
-     */
-    private HostnameVerifier getHostNameVerifier() {
-
-        // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-
-                    public void checkClientTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-
-                    public void checkServerTrusted(
-                            java.security.cert.X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-        // Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (Exception e) {
-            System.out.println("Error" + e);
-        }
-        // Now you can access an https URL without having the certificate in the truststore
-
-
-        HostnameVerifier hv = new HostnameVerifier() {
-            public boolean verify(String urlHostName, SSLSession session) {
-                System.out.println("Warning: URL Host: " + urlHostName + " vs. "
-                        + session.getPeerHost());
-                return true;
-            }
-        };
-        return hv;
-    }
-
-    /**
      * Custom BCID GET connection example
      *
      * @param url
@@ -674,7 +617,7 @@ public class bcidConnector {
      * @throws IOException
      */
     public String createGETConnection(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
         // default is GET
         conn.setRequestMethod("GET");
