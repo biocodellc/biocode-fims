@@ -573,7 +573,12 @@ public class bcidConnector {
         conn.setRequestProperty("Content-Type", CONTENT_TYPE);
         conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
 
-        conn.setHostnameVerifier(getHostNameVerifier());
+       // conn.setHostnameVerifier(getHostNameVerifier());
+
+         System.setProperty("javax.net.ssl.keyStore",                    "/opt/jetty/etc/keystore");
+   // System.setProperty("javax.net.ssl.keyStorePassword",            "password");
+    System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", "true");
+
         conn.setDoOutput(true);
         conn.setDoInput(true);
 
