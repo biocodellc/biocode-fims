@@ -40,7 +40,7 @@
     </filter>
     <filter-mapping>
         <filter-name>secureFilter</filter-name>
-        <url-pattern>/biocode-fims/templates.jsp</url-pattern>
+        <url-pattern>/biocode-fims/secure/*</url-pattern>
     </filter-mapping>
 
 
