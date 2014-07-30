@@ -90,8 +90,7 @@ public class configurationFileFetcher {
         System.setProperty("javax.net.ssl.trustStore", trust_store);
         System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
 
-        System.setProperty("javax.net.ssl.keyStore",trust_store);
-        System.setProperty("javax.net.ssl.keyStorePassword",trust_store_password);
+       System.out.println("trust store located at: " + System.getProperty("javax.net.ssl.trustStore"));
 
         Boolean useCacheResults = false;
 
@@ -145,6 +144,7 @@ public class configurationFileFetcher {
                     || status == HttpURLConnection.HTTP_SEE_OTHER)
                 redirect = true;
         }
+
 
         // Handle redirects
         if (redirect) {
