@@ -117,8 +117,13 @@ public class configurationFileFetcher {
             String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
             // Setup connection
 
-            URL url = new URL(urlString);
-                init(new URL(urlString), defaultOutputDirectory);
+            //URL url = new URL(urlString);
+            bcidConnector b = new bcidConnector();
+
+            System.out.println("BEFORE");
+            System.out.println(b.createGETConnection(new URL(urlString)));
+            System.out.println("AFTER");
+            //init(new URL(urlString), defaultOutputDirectory);
         }
     }
 
