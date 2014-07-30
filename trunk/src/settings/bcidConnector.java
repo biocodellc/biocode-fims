@@ -11,10 +11,12 @@ import org.json.simple.parser.ParseException;
 import run.processController;
 import utils.SettingsManager;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
 import java.nio.charset.Charset;
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -364,10 +366,13 @@ public class bcidConnector {
 
     /**
      * Given a project_id, dataset_code, and a resource give me an ARK
+     *
      * @param project_id
      * @param dataset_code
      * @param resource
+     *
      * @return
+     *
      * @throws IOException
      */
     public String getArkFromDataset(Integer project_id, String dataset_code, String resource) throws IOException {
@@ -527,7 +532,23 @@ public class bcidConnector {
      * @throws IOException
      */
     public String createPOSTConnnection(URL url, String postParams) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+         System.out.println("START");
+        // Debugging related to HTTPS connections
+        if (conn instanceof HttpsURLConnection) {
+            Certificate[] certs = conn.getServerCertificates();
+            for (Certificate cert : certs) {
+                System.out.println("Cert Type : " + cert.getType());
+                System.out.println("Cert Hash Code : " + cert.hashCode());
+                System.out.println("Cert Public Key Algorithm : "
+                        + cert.getPublicKey().getAlgorithm());
+                System.out.println("Cert Public Key Format : "
+                        + cert.getPublicKey().getFormat());
+                System.out.println("\n");
+            }
+        }
+         System.out.println("END");
 
         // Acts like a browser
         conn.setUseCaches(false);
@@ -553,8 +574,9 @@ public class bcidConnector {
         // Send post request
         //System.out.println("URL = " + url.toString());
         //System.out.println("postparams = " + postParams);
-
+        System.out.println("Starting getting output stream");
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        System.out.println("Ending getting output stream");
         wr.writeBytes(postParams);
         wr.flush();
         wr.close();
