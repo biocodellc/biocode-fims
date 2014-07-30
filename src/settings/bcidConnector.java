@@ -572,9 +572,9 @@ public class bcidConnector {
         // Send post request
         //System.out.println("URL = " + url.toString());
         //System.out.println("postparams = " + postParams);
-        System.out.println("Starting getting output stream");
+        //System.out.println("Starting getting output stream");
         DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        System.out.println("Ending getting output stream");
+        //System.out.println("Ending getting output stream");
         wr.writeBytes(postParams);
         wr.flush();
         wr.close();
