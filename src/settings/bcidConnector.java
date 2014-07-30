@@ -554,37 +554,6 @@ public class bcidConnector {
         }
          System.out.println("END");  */
 
-        // Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            public void checkClientTrusted(X509Certificate[] certs, String authType) {
-            }
-
-            public void checkServerTrusted(X509Certificate[] certs, String authType) {
-            }
-        }};
-        // Install the all-trusting trust manager
-        try {
-
-            final SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            // Create all-trusting host name verifier
-            HostnameVerifier allHostsValid = new HostnameVerifier() {
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            };
-
-            // Install the all-trusting host verifier
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
         // Acts like a browser
         conn.setUseCaches(false);
@@ -604,6 +573,7 @@ public class bcidConnector {
         conn.setRequestProperty("Content-Type", CONTENT_TYPE);
         conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
 
+        conn.setHostnameVerifier(getHostNameVerifier());
         conn.setDoOutput(true);
         conn.setDoInput(true);
 
@@ -643,6 +613,50 @@ public class bcidConnector {
         // Get the response cookies
         setCookies(conn.getHeaderFields().get("Set-Cookie"));
         return response.toString();
+    }
+
+    /**
+     * TrustALL (hack to get biocode-fims talking to bcid using HTTPS
+     *
+     * @return
+     */
+    private HostnameVerifier getHostNameVerifier() {
+
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            System.out.println("Error" + e);
+        }
+        // Now you can access an https URL without having the certificate in the truststore
+
+
+        HostnameVerifier hv = new HostnameVerifier() {
+            public boolean verify(String urlHostName, SSLSession session) {
+                System.out.println("Warning: URL Host: " + urlHostName + " vs. "
+                        + session.getPeerHost());
+                return true;
+            }
+        };
+        return hv;
     }
 
     /**
