@@ -131,6 +131,9 @@ public class configurationFileFetcher {
         connection.addRequestProperty("User-Agent", "Mozilla");
         connection.addRequestProperty("Referer", "google.com");
 
+connection.setDoOutput(true);
+connection.setDoInput(true);
+
         // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
         int status = connection.getResponseCode();
         if (status != HttpURLConnection.HTTP_OK) {
