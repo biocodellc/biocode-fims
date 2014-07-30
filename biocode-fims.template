@@ -22,3 +22,6 @@ logout_uri = http://www.biscicol.org/id/authenticationService/logout?redirect_ur
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 
+trust_store = /opt/jetty/etc/keystore
+trust_store_password = mypassword
+
