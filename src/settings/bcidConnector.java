@@ -11,12 +11,14 @@ import org.json.simple.parser.ParseException;
 import run.processController;
 import utils.SettingsManager;
 
-import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -534,7 +536,8 @@ public class bcidConnector {
     public String createPOSTConnnection(URL url, String postParams) throws IOException {
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-         System.out.println("START");
+        /* System.out.println("START");
+        // testing
         conn.connect();
         // Debugging related to HTTPS connections
         if (conn instanceof HttpsURLConnection) {
@@ -549,7 +552,39 @@ public class bcidConnector {
                 System.out.println("\n");
             }
         }
-         System.out.println("END");
+         System.out.println("END");  */
+
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
+        }};
+        // Install the all-trusting trust manager
+        try {
+
+            final SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
         // Acts like a browser
         conn.setUseCaches(false);
