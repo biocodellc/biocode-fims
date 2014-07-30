@@ -10,7 +10,12 @@
             <tr>
                 <td align=right>&nbsp;&nbsp;Choose Project&nbsp;&nbsp;</td>
                 <td align=left>
-                <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
+                <c:if test="${user != null}">
+                    <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
+                </c:if>
+                <c:if test="${user == null}">
+                    <select width=20 id=projects onChange="alert('Must login before generating template');">
+                </c:if>
                         <option qdup=1 value=0>Select an project ...</option>
                         <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
                             Loading Projects ...
