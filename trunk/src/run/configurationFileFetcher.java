@@ -80,6 +80,16 @@ public class configurationFileFetcher {
 
         String project_lookup_uri = sm.retrieveValue("project_lookup_uri");
 
+        String trust_store = sm.retrieveValue("trust_store");
+        String trust_store_password = sm.retrieveValue("trust_store_password");
+
+        // The following System properties are set to direct the Java-specific connection here
+        // to the appropriate keystore location on the server... The keystore stores the
+        // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
+        // connection this can be safely ignored
+        System.setProperty("javax.net.ssl.trustStore", trust_store);
+        System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
+
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it
@@ -173,7 +183,6 @@ public class configurationFileFetcher {
             throw new Exception("Unable to get configuration file, server down or network error ", e);
         }
     }
-
 
 
     /**
