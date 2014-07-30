@@ -90,6 +90,9 @@ public class configurationFileFetcher {
         System.setProperty("javax.net.ssl.trustStore", trust_store);
         System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
 
+        System.setProperty("javax.net.ssl.keyStore",trust_store);
+        System.setProperty("javax.net.ssl.keyStorePassword",trust_store_password);
+
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it
@@ -116,7 +119,7 @@ public class configurationFileFetcher {
             // Setup connection
 
             URL url = new URL(urlString);
-            init(new URL(urlString), defaultOutputDirectory);
+                init(new URL(urlString), defaultOutputDirectory);
         }
     }
 
@@ -124,18 +127,18 @@ public class configurationFileFetcher {
         boolean redirect = false;
 
         HttpURLConnection.setFollowRedirects(true);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setReadTimeout(5000);
-        connection.setUseCaches(false);
-        connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-        connection.addRequestProperty("User-Agent", "Mozilla");
-        connection.addRequestProperty("Referer", "google.com");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        
+        conn.setReadTimeout(5000);
+        conn.setUseCaches(false);
+        conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+        conn.addRequestProperty("User-Agent", "Mozilla");
+        conn.addRequestProperty("Referer", "google.com");
 
-connection.setDoOutput(true);
-connection.setDoInput(true);
-
+//conn.setDoOutput(true);
+//conn.setDoInput(true);
         // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
-        int status = connection.getResponseCode();
+        int status = conn.getResponseCode();
         if (status != HttpURLConnection.HTTP_OK) {
             if (status == HttpURLConnection.HTTP_MOVED_TEMP
                     || status == HttpURLConnection.HTTP_MOVED_PERM
@@ -147,21 +150,21 @@ connection.setDoInput(true);
         if (redirect) {
 
             // get redirect url from "location" header field
-            String newUrl = connection.getHeaderField("Location");
+            String newUrl = conn.getHeaderField("Location");
 
             // open the  connnection
-            connection = (HttpURLConnection) new URL(newUrl).openConnection();
-            connection.setUseCaches(false);
-            connection.setDefaultUseCaches(false);
-            connection.addRequestProperty("Cache-Control", "no-cache");
+            conn = (HttpURLConnection) new URL(newUrl).openConnection();
+            conn.setUseCaches(false);
+            conn.setDefaultUseCaches(false);
+            conn.addRequestProperty("Cache-Control", "no-cache");
 
             // connection.setRequestProperty("Cookie", cookies);
-            connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-            connection.addRequestProperty("User-Agent", "Mozilla");
-            connection.addRequestProperty("Referer", "google.com");
+            conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+            conn.addRequestProperty("User-Agent", "Mozilla");
+            conn.addRequestProperty("Referer", "google.com");
 
         }
-        InputStream inputStream = connection.getInputStream();
+        InputStream inputStream = conn.getInputStream();
 
         // Write configuration file to output directory
         try {
