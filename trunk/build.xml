@@ -187,6 +187,15 @@
         </war>
     </target>
 
+    <target name="war_nmnh" depends="compile.module.biocode-fims.production">
+        <war destfile="dist/nmnh-fims.war" webxml="web_nmnh/WEB-INF/web.xml">
+            <fileset dir="web_nmnh"/>
+            <lib dir="lib" excludes="servlet-api.jar"/>
+            <classes dir="${biocode-fims.output.dir}"/>
+            <classes dir="" includes="biocode-fims.props"/>
+        </war>
+    </target>
+
     <!-- added by BJS -->
     <target name="test" depends="compile.module.biocode-fims">
         <junit>
