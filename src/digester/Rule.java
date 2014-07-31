@@ -6,6 +6,7 @@ import renderers.RowMessage;
 import settings.Connection;
 import settings.RegEx;
 import settings.fimsPrinter;
+import utils.sqlLiteNameCleaner;
 
 import javax.xml.transform.Result;
 import java.io.UnsupportedEncodingException;
@@ -174,13 +175,26 @@ public class Rule {
         this.level = level;
     }
 
+    /**
+     * Returns the name of the column as it appears to SQLLite
+     * @return
+     */
     public String getColumn() {
         // replace spaces with underscores....
         if (column == null) {
             return null;
         } else {
-            return column.replace(" ", "_");
+            return new sqlLiteNameCleaner().fixNames(column);
+            //return column.replace(" ", "_");
         }
+    }
+
+    /**
+     * Returns the name of the columnn as it appears to the worksheet
+     * @return
+     */
+    public String getColumnWorksheetName() {
+       return column;
     }
 
     public void setColumn(String column) {
@@ -295,7 +309,7 @@ public class Rule {
                 count++;
             }
             if (count > 0) {
-                addMessage(getColumn() + " column is defined as unique but some values used more than once: " + values.toString());
+                addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -351,11 +365,11 @@ public class Rule {
                 longValue = worksheet.getDoubleValue(getDecimalLongitude(), j);
 
                 if (latValue != null && latValue != 0.0 && (latValue < minLat || latValue > maxLat)) {
-                    msg = getDecimalLatitude() + " " + latValue + " outside of " + getColumn() + " bounding box.";
+                    msg = getDecimalLatitude() + " " + latValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
                     addMessage(j, msg);
                 }
                 if (longValue != null && longValue != 0.0 && (longValue < minLng || longValue > maxLng)) {
-                    msg = getDecimalLongitude() + " " + longValue + " outside of " + getColumn() + " bounding box.";
+                    msg = getDecimalLongitude() + " " + longValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
                     addMessage(j, msg);
                 }
             }
@@ -759,7 +773,7 @@ public class Rule {
             sql += thisColumn + " != \"\";";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                msg = "Value out of range " + resultSet.getString(thisColumn) + " for " + thisColumn + " using range validation = " + value;
+                msg = "Value out of range " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\" using range validation = " + value;
                 addMessage(msg);
                 validNumber = false;
             }
@@ -806,7 +820,7 @@ public class Rule {
                     thisColumn + " != \"\";";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
+                msg = "non-numeric value " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\"";
                 addMessage(msg);
                 validNumber = false;
             }
@@ -995,7 +1009,7 @@ public class Rule {
                 if (!value.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
-                    msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn();
+                    msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved \"" + getColumnWorksheetName() + "\"";
                     msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() + "/?project_id='>see approved</a>";
                     addMessage(msg, null, null);
                 }
@@ -1044,7 +1058,8 @@ public class Rule {
             levelValue = "suggested";
         }
 
-        String strNotFound = "", reqFieldName = "", msg = "";
+        String strNotFound = "", fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
+        sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
         boolean booFound = false;
         // Create a hashset of column names for easy lookup
         Set<String> hashset = new HashSet<String>(worksheet.getColNames());
@@ -1053,29 +1068,32 @@ public class Rule {
         while (itRequiredField.hasNext()) {
             booFound = false;
 
-            // Get the next required field name
-            reqFieldName = itRequiredField.next().toString().trim().replace(" ", "_");
+            // fieldNameWorksheet has spaces
+            fieldNameWorksheet = itRequiredField.next().toString().trim();
+            // fieldNameSQLLite has underscores instead of spaces
+            fieldNameSQLLite = cleaner.fixNames(fieldNameWorksheet);
 
             // Simple search in hashset for required field name
-            if (hashset.contains(reqFieldName)) {
+            if (hashset.contains(fieldNameWorksheet)) {
                 booFound = true;
             }
 
             // Error message if column not found
             if (!booFound) {
-                strNotFound += reqFieldName + " ";
+                strNotFound += fieldNameWorksheet + " ";
                 // Examine column contents -- required columns need some content
             } else {
+                String sql = "";
 
                 try {
-                    String sql;
-                    sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + reqFieldName + "`='' or `" + reqFieldName + "` is null";
+                    sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + fieldNameSQLLite + "`='' or `" + fieldNameSQLLite + "` is null";
                     rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
                         //System.out.println(sql);
-                        addMessage(levelValue + " column " + reqFieldName + " has a missing cell value");
+                        addMessage(levelValue + " column \"" + fieldNameWorksheet + "\" has a missing cell value");
                     }
                 } catch (SQLException e) {
+                    System.out.println(sql);
                     e.printStackTrace();
                 }
 

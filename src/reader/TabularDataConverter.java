@@ -10,6 +10,7 @@ import digester.Attribute;
 import digester.Entity;
 import reader.plugins.TabularDataReader;
 import settings.hasher;
+import utils.sqlLiteNameCleaner;
 
 
 /**
@@ -109,22 +110,8 @@ public final class TabularDataConverter {
      * @return The corrected table name.
      */
     private String fixSQLiteIdentifierName(String tname) {
-        String newname;
-
-        // replace spaces with underscores
-        newname = tname.replace(' ', '_');
-
-        // replace periods with underscores
-        newname = newname.replace('.', '_');
-
-        // Remove any remaining non-alphanumeric characters.
-        newname = newname.replaceAll("[^_a-zA-Z0-9]", "");
-
-        // if the table name starts with a digit, prepend an underscore
-        if (newname.matches("[0-9].*"))
-            newname = "_" + newname;
-
-        return newname;
+        sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
+        return cleaner.fixNames(tname);
     }
 
     /**

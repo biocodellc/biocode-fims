@@ -1,10 +1,8 @@
 package digester;
 
-import org.openjena.riot.pipeline.SinkTripleNodeTransform;
 import renderers.Message;
 import renderers.RowMessage;
 import settings.fimsPrinter;
-import sun.rmi.transport.Connection;
 import utils.SettingsManager;
 
 import java.lang.reflect.Method;
@@ -269,13 +267,13 @@ public class Worksheet {
                     if (method != null) {
                         method.invoke(r);
                     } else {
-                        fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumn() + ")");
+                        fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumnWorksheetName() + ")");
                     }
 
                     // Close the connection
                 } catch (Exception e) {
                     //e.printStackTrace();
-                    String message = "\tUnable to run " + r.getType() + " on " + r.getColumn() + " column";
+                    String message = "\tUnable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column";
                     if (e.getMessage() != null)
                         message += ", message = " + e.getMessage();
                     //fimsPrinter.out.println(message);
