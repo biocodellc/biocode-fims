@@ -154,8 +154,9 @@ public class bcidConnector {
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
-        trust_store = sm.retrieveValue("trust_store");
-        trust_store_password = sm.retrieveValue("trust_store_password");
+        //trust_store = sm.retrieveValue("trust_store");
+        //ls
+        // trust_store_password = sm.retrieveValue("trust_store_password");
 
         // The following System properties are set to direct the Java-specific connection here
         // to the appropriate keystore location on the server... The keystore stores the
