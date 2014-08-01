@@ -643,7 +643,8 @@ function validationFormToggle() {
             $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
             $.when(extractDatasetCode()).done(function(dataset_code) {
                 if (dataset_code != null) {
-                    $("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code" value="' + dataset_code + '">');
+                    $("#expedition_code").empty();
+                    $("#expedition_code").add('<input type="hidden" name="expedition_code" id="expedition_code" value="' + dataset_code + '">' + dataset_code);
                     //$("#expedition_code").val(dataset_code);
                 } else {
                     // getExpeditionCodes();
