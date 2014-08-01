@@ -404,7 +404,7 @@ function validForm() {
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     // User wants to create a new expedition
-    if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
+   /* if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
         createExpedition().done(function (e) {
             $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
             if (validForm()) {
@@ -416,6 +416,8 @@ function validatorSubmit() {
             }
         })
     } else if (validForm()) {
+    */
+    if (validForm()) {
         submitForm().done(function(data) {
             validationResults(data);
         }).fail(function(jqxhr) {
