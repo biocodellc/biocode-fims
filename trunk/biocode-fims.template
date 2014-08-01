@@ -8,6 +8,7 @@ profile_uri = http://www.biscicol.org/id/userService/oauth?access_token=
 refresh_uri = http://biscicol.org/id/authenticationService/oauth/refresh
 
 # BCID URI's
+bcid_naan = 21547
 authentication_uri = http://www.biscicol.org/id/authenticationService/login
 ark_creation_uri = http://www.biscicol.org/id/groupService
 associate_uri = http://www.biscicol.org/id/expeditionService/associate
