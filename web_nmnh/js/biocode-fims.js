@@ -642,9 +642,10 @@ function validationFormToggle() {
             $.when(extractDatasetCode()).done(function(dataset_code) {
                 if (dataset_code != null) {
                     $("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">'+dataset_code);
-                    $("#expedition_code").val(dataset_code);
+                    //$("#expedition_code").val(dataset_code);
                 } else {
-                    getExpeditionCodes();
+                    // getExpeditionCodes();
+                    alert("Problem reading dataset code from spreadsheet");
                 }
             });
         }
