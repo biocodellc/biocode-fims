@@ -8,6 +8,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import settings.FIMSException;
 import settings.PathManager;
+import settings.bcidConnector;
+import utils.SettingsManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,8 +29,10 @@ public class templateProcessor {
     private Mapping mapping;
     private Fims fims;
     private Validation validation;
-    private Integer accesstionNumber;
+    private Integer accessionNumber;
     private String datasetCode;
+    private Integer naan;
+
     private String ark;
 
     HSSFSheet defaultSheet;
@@ -50,6 +54,9 @@ public class templateProcessor {
     Integer project_id;
 
     public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+         bcidConnector bcidConnector = new bcidConnector();
+         naan = bcidConnector.getNAAN();
+
         // Instantiate the project output Folder
         configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
         configFile = fetcher.getOutputFile();
@@ -108,7 +115,7 @@ public class templateProcessor {
         if (accessionNumber == null || datasetCode == null) {
             throw new FIMSException("dataset code and accession number are required");
         }
-        this.accesstionNumber = accessionNumber;
+        this.accessionNumber = accessionNumber;
         this.datasetCode = datasetCode;
         this.ark = ark;
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
@@ -653,8 +660,15 @@ public class templateProcessor {
         row = instructionsSheet.createRow(rowIndex);
         rowIndex++;
         rowIndex++;
+
+        // Hide NAAN in first row, first column
         cell = row.createCell(0);
+        cell.setCellValue("~naan=" + naan + "~");
+
+        // Hide Project_id in first row, second column
+        cell = row.createCell(1);
         cell.setCellValue("~project_id=" + project_id + "~");
+
         row.setZeroHeight(true);
 
         // The name of this project as specified by the sheet
@@ -666,13 +680,15 @@ public class templateProcessor {
 
         // if we have a datasetCode and accesstionNumber, hide them in the first row and make them visible
         // if we have one, we have all three.
-        if (accesstionNumber != null) {
-            // Hide the accesstionNumber and datasetCode
+        if (accessionNumber != null) {
+            // Hide the dataset_code in first row, third column
             row = instructionsSheet.getRow(0);
-            cell = row.createCell(1);
-            cell.setCellValue("~dataset_code=" + datasetCode + "~");
             cell = row.createCell(2);
-            cell.setCellValue("~accesstion_number=" + accesstionNumber + "~");
+            cell.setCellValue("~dataset_code=" + datasetCode + "~");
+
+            // Hide the accession number in first row, fourth column
+            cell = row.createCell(3);
+            cell.setCellValue("~accesstion_number=" + accessionNumber + "~");
 
             // Show the datasetCode
             row = instructionsSheet.createRow(rowIndex);
@@ -695,7 +711,7 @@ public class templateProcessor {
             rowIndex++;
             cell = row.createCell(0);
             cell.setCellStyle(titleStyle);
-            cell.setCellValue(formatKeyValueString("Accession Number: ", accesstionNumber.toString()));
+            cell.setCellValue(formatKeyValueString("Accession Number: ", accessionNumber.toString()));
         }
 
 
