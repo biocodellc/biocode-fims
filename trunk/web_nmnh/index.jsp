@@ -3,17 +3,17 @@
 <div id="validation" class="section">
     <div class="sectioncontent">
 
-        A Field Information Management System (FIMS) enables data collection at the source (in the field) by
-        generating spreadsheet templates, validating data, and assigning persistent identifiers for every unique biological sample.
-        The following diagram shows how the system works.  The most typical functions are <b>Generating Templates</b> and <b>Validating Data</b>,
-              both of which can be found under the Tools menu.
-        <!--using
-                <a href="http://biscicol.org/bcid" target="_blank">BCIDs</a>, which extends <a href="http://ezid.cdlib.org/">EZIDs</a>.
-                <p>-->
+        <p style='margin-bottom: 3cm;'>
+            <ol>
+                <li style="margin-bottom: 10px;">Start with <b>Generate Template</b> (in Tools Menu) to create spreadsheet template</li>
+                <li style="margin-bottom: 10px;">Fill in your spreadsheet</li>
+                <li style="margin-bottom: 10px;">Validate and Load Data using <b>Validation</b> (in Tools Menu)</li>
+            </ol>
+        </p>
 
-<p><img id='workflowImage' src='docs/Workflow.jpeg'>
-        <!--<img id='workflowImage' src='docs/Workflow_simple.jpeg'>
-        <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
+        <p style='margin-bottom: 3cm;'></p>
+
+        <img id='workflowImage' src='docs/Workflow_simple.jpeg'>
     </div>
 </div>
 
