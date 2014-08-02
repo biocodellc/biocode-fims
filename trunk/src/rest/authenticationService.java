@@ -188,7 +188,7 @@ public class authenticationService {
         session.setAttribute("access_token", access_token);
         session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
 
-        response.sendRedirect(homepage +"index.jsp");
+        response.sendRedirect(homepage);
         return;
     }
 
