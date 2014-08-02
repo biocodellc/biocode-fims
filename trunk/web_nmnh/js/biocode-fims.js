@@ -656,16 +656,19 @@ function validationFormToggle() {
         $.when(extractNAAN()).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 if (spreadsheetNaan != naan) {
-                      // ask user if want to proceed
-                    var buttons = {
-                        "Continue": function() {
-                            continueUpload(false);
-                    },
-                        "Cancel": function() {
-                            writeResults(data.continue.message);
-                            $(this).dialog("close");
-                    }
-                    dialog("Spreadsheet appears to have been created using a different FIMS/BCID system.  Are you sure you want to continue?", "NAAN check", buttons);
+			var buttons = {
+            			"Ok": function() {
+                		$("#dialogContainer").removeClass("error");
+                		$(this).dialog("close");
+            			}
+        		}
+			var message = "Spreadsheet appears to have been created using a different FIMS/BCID system.<br>";
+			message += "Spreadsheet says NAAN = " + spreadsheetNaan + "<br>";
+			message += "System says NAAN = " + naan + "<br>";
+			message += "Proceed only if you are SURE that this spreadsheet is being called.<br>";
+			message += "Otherwise, re-load the proper FIMS system or re-generate your spreadsheet template.";
+
+                    	dialog(message, "NAAN check", buttons);
                 }
             }
         });
@@ -701,7 +704,6 @@ function validationFormToggle() {
                 if (dataset_code != null) {
                     $("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                     $("#expedition_code").val(dataset_code);
-alert('setting dataset code = ' +dataset_code);
                 } else {
                     // getExpeditionCodes();
                     alert("Problem reading dataset code from spreadsheet");
