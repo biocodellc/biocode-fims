@@ -1,7 +1,7 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="validation" class="section">
-    <div class="sectioncontent">
+    <div style="margin: 0 auto;width: 100%;">
 
         <p style='margin-bottom: 2cm;'></p>
 
@@ -36,16 +36,18 @@
                 <td>
                         <img src="docs/images/Workflow_simple_08.jpg" width="171" height="15" alt="" border="0" ></td>
         </tr>
-        </tbody>
-</table>
-<!-- End Save for Web Slices -->
-    <p style='margin-bottom: 20px;'><p>
-     <div width="935">
+	<tr>
+                <td colspan="5">
     The image above describes the workflow for working with the FIMS.  Blue boxes are clickable.
     Begin with generating a spreadsheet template. You will then need to fill out your data in the provided spreadsheet.
     Once you have completed filling out your spreadsheet, you can validate your spreadsheet data.  When validation is
     passed you will be given the option to upload your file for ingestion into RCIS.
-    </div>
+	</td>
+
+	</tr>
+        </tbody>
+</table>
+<!-- End Save for Web Slices -->
     </div>
 </div>
 
