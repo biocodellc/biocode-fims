@@ -384,7 +384,7 @@ public class validate {
                 processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
-                        "spreadsheet name = " + outputFile.getName() + "<br>" +
+                        "server filename = " + outputFile.getName() + "<br>" +
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "please maintain a local copy for now.  You should be notified of action soon.\"}";
 
@@ -453,6 +453,9 @@ public class validate {
                 destination.close();
             }
         }
+        // Not real clean but need to be able to allow others on the system to see file
+        Runtime.getRuntime().exec("chmod 775 " + destFile);
+
     }
 
 }
