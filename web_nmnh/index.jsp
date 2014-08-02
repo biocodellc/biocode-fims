@@ -3,15 +3,15 @@
 <div id="validation" class="section">
     <div class="sectioncontent">
 
-        <p style='margin-bottom: 3cm;'>
-            <ol>
-                <li style="margin-bottom: 10px;">Start with <b>Generate Template</b> (in Tools Menu) to create spreadsheet template</li>
-                <li style="margin-bottom: 10px;">Fill in your spreadsheet</li>
-                <li style="margin-bottom: 10px;">Validate and Load Data using <b>Validation</b> (in Tools Menu)</li>
-            </ol>
+        <p style='margin-bottom: 2cm;'>
+            <ul>
+                <li style="margin-bottom: 10px;">1. Start with <b>Generate Template</b> (in Tools Menu) to create spreadsheet template</li>
+                <li style="margin-bottom: 10px;">2. Fill in your spreadsheet</li>
+                <li style="margin-bottom: 10px;">3. Validate and Load Data using <b>Validation</b> (in Tools Menu)</li>
+            </ul>
         </p>
 
-        <p style='margin-bottom: 3cm;'></p>
+        <p style='margin-bottom: 2cm;'></p>
 
         <img id='workflowImage' src='docs/Workflow_simple.jpeg'>
     </div>
