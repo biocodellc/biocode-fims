@@ -656,19 +656,19 @@ function validationFormToggle() {
         $.when(extractNAAN()).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 if (spreadsheetNaan != naan) {
-			var buttons = {
+			    var buttons = {
             			"Ok": function() {
                 		$("#dialogContainer").removeClass("error");
                 		$(this).dialog("close");
             			}
         		}
-			var message = "Spreadsheet appears to have been created using a different FIMS/BCID system.<br>";
-			message += "Spreadsheet says NAAN = " + spreadsheetNaan + "<br>";
-			message += "System says NAAN = " + naan + "<br>";
-			message += "Proceed only if you are SURE that this spreadsheet is being called.<br>";
-			message += "Otherwise, re-load the proper FIMS system or re-generate your spreadsheet template.";
+			    var message = "Spreadsheet appears to have been created using a different FIMS/BCID system.<br>";
+			    message += "Spreadsheet says NAAN = " + spreadsheetNaan + "<br>";
+			    message += "System says NAAN = " + naan + "<br>";
+			    message += "Proceed only if you are SURE that this spreadsheet is being called.<br>";
+			    message += "Otherwise, re-load the proper FIMS system or re-generate your spreadsheet template.";
 
-                    	dialog(message, "NAAN check", buttons);
+                dialog(message, "NAAN check", buttons);
                 }
             }
         });
