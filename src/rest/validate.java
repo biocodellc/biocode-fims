@@ -380,7 +380,7 @@ public class validate {
                 // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
                 String ark = null;
                 try {
-                    ark = connector.createDatasetBCID(outputFileName, null);
+                    ark = connector.createDatasetBCID(null, inputFile.getName());
                     connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), ark);
                 } catch (Exception e) {
                     throw new FIMSException("{\"error\": \"Error writing file data to database. Server Message: " + e.getMessage() + "\"}");
@@ -396,7 +396,7 @@ public class validate {
 
                 processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
-                return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
+                return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
                         //"server filename = " + outputFile.getName() + "<br>" +
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "dataset ARK = " + ark + "<br>" +
