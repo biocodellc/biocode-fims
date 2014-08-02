@@ -361,10 +361,10 @@ public class validate {
 
                 // Copy file to a standard location
                 File inputFile = new File(processController.getInputFilename());
-                String outputFileName = "/opt/jetty_files/" +
-                        "project_" + processController.getProject_id() + "_" +
-                        "dataset_" + processController.getExpeditionCode() +
-                        ".xls";
+                String outputFileName = "/opt/jetty_files/" + inputFile.getName();
+                        //"project_" + processController.getProject_id() + "_" +
+                        //"dataset_" + processController.getExpeditionCode() +
+                        //".xls";
                 File outputFile = new File(outputFileName);
                 try {
                     copyFile(inputFile, outputFile);
@@ -397,10 +397,11 @@ public class validate {
                 processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
-                        "server filename = " + outputFile.getName() + "<br>" +
+                        //"server filename = " + outputFile.getName() + "<br>" +
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "dataset ARK = " + ark + "<br>" +
-                        "please maintain a local copy for now.  You should be notified of action soon.\"}";
+                        "Please maintain a local copy of your File!<br>" +
+                        "Your file will be processed soon for ingestion into RCIS.\"}";
 
             } catch (FIMSException e) {
                 e.printStackTrace();
