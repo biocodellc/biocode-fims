@@ -40,11 +40,12 @@
 </table>
 <!-- End Save for Web Slices -->
     <p style='margin-bottom: 20px;'><p>
-
+     <div width="935">
     The image above describes the workflow for working with the FIMS.  Blue boxes are clickable.
-    <br>Begin with generating a spreadsheet template. You will then need to fill out your data in the provided spreadsheet.
-    <br>Once you have completed filling out your spreadsheet, you can validate your spreadsheet data.  When validation is
-    <br>passed you will be given the option to upload your file for ingestion into RCIS.
+    Begin with generating a spreadsheet template. You will then need to fill out your data in the provided spreadsheet.
+    Once you have completed filling out your spreadsheet, you can validate your spreadsheet data.  When validation is
+    passed you will be given the option to upload your file for ingestion into RCIS.
+    </div>
     </div>
 </div>
 
