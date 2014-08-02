@@ -352,7 +352,7 @@ public class validate {
                         session.setAttribute("access_token", connector.getAccessToken());
                         session.setAttribute("refresh_token", connector.getRefreshToken());
                     }
-                    // ask the user if they want to create this expedition
+                    // Ask the user if they want to create this expedition
                     return "{\"continue\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                             "\\\" does not exist.  " +
                             "Do you wish to create it now?<br><br>" +
@@ -361,19 +361,32 @@ public class validate {
 
                 // Copy file to a standard location
                 File inputFile = new File(processController.getInputFilename());
-                File outputFile = new File("/opt/jetty_files/" +
+                String outputFileName = "/opt/jetty_files/" +
                         "project_" + processController.getProject_id() + "_" +
                         "dataset_" + processController.getExpeditionCode() +
-                        ".xls");
+                        ".xls";
+                File outputFile = new File(outputFileName);
                 try {
-                    copyFile(inputFile,outputFile);
+                    copyFile(inputFile, outputFile);
                 } catch (Exception e) {
                     throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
+                } finally {
+                    // Always remove the file from tmp directory... we do not want to leave them there.
+                    new File(processController.getInputFilename()).delete();
                 }
 
-                new File(processController.getInputFilename()).delete();
+                // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
+                // gives us a way to track what spreadsheets are uploaded into the system as they can
+                // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
+                String ark = null;
+                try {
+                    ark = connector.createDatasetBCID(outputFileName, null);
+                    connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), ark);
+                } catch (Exception e) {
+                    throw new FIMSException("{\"error\": \"Error writing file data to database. Server Message: " + e.getMessage() + "\"}");
+                }
 
-                // remove the processController from the session
+                // Remove the processController from the session
                 session.removeAttribute("processController");
 
                 if (connector.getRefreshedToken()) {
@@ -386,6 +399,7 @@ public class validate {
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
                         "server filename = " + outputFile.getName() + "<br>" +
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
+                        "dataset ARK = " + ark + "<br>" +
                         "please maintain a local copy for now.  You should be notified of action soon.\"}";
 
             } catch (FIMSException e) {
@@ -429,8 +443,10 @@ public class validate {
 
     /**
      * Copying files utility for organizing loaded spreadsheets on server if needed
+     *
      * @param sourceFile
      * @param destFile
+     *
      * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
