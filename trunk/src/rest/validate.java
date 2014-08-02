@@ -361,7 +361,10 @@ public class validate {
 
                 // Copy file to a standard location
                 File inputFile = new File(processController.getInputFilename());
-                File outputFile = new File("/opt/jetty_files/project_" + processController.getProject_id() + "_dataset_" + processController.getExpeditionCode());
+                File outputFile = new File("/opt/jetty_files/" +
+                        "project_" + processController.getProject_id() + "_" +
+                        "dataset_" + processController.getExpeditionCode() +
+                        ".xls");
                 try {
                     copyFile(inputFile,outputFile);
                 } catch (Exception e) {
@@ -381,7 +384,7 @@ public class validate {
                 processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
-                        "spreadsheet name = " + processController.getInputFilename() + "<br>" +
+                        "spreadsheet name = " + outputFile.getName() + "<br>" +
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "please maintain a local copy for now.  You should be notified of action soon.\"}";
 
