@@ -1,7 +1,7 @@
     function showVersion() {
         var text ='<strong>Version 0.2 January 11, 2014</strong>' +
               "<p>This is the first mock-up of a FIMS spreadsheet customization tool, based on Mike Trizna's "+
-               '0.1 Spreadsheet customization tool. This version reads Biocode-FIMS XML Configuration Files to '+
+               '0.1 Spreadsheet customization tool. This version reads FIMS XML Configuration Files to '+
                'to generate the available mappings.  In addition, it also now reads the RequiredColumns rule ' +
                'and automatically checks those boxes for the user (and disabling unchecking).' +
                '</p>';
@@ -26,8 +26,8 @@
     function download_file(){
         isNMNHProject(getProjectID()).done(function(accessionNumber, datasetCode, operation) {
 
-		    // TODO: create a single place for our biocode-fims service calls
-			var url = '/biocode-fims/rest/templates/createExcel/';
+		    // TODO: create a single place for our fims service calls
+			var url = '/fims/rest/templates/createExcel/';
 			var input_string = '';
 			// Loop through CheckBoxes and find ones that are checked
 			$(".check_boxes").each(function(index) {
@@ -126,7 +126,7 @@
                             }
                             // Process status codes from server
                             if (jqxhr.status == 401) {
-                                var message = "Server message<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);                                dialog(message, "Dataset Error", cancelbutton);
+                                var message = "Server message<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error);
                                 dialog(message, "Dataset Error", cancelbutton);
                             } else if (jqxhr.status != 404) {
                                 var message = "Server responded with HTTP status code = "+ jqxhr.status;
@@ -151,7 +151,7 @@
     // datasetCode
     function isNMNHProject(projectId) {
         var d = new $.Deferred();
-        $.getJSON("/biocode-fims/rest/utils/isNMNHProject/" + projectId)
+        $.getJSON("/fims/rest/utils/isNMNHProject/" + projectId)
             .done(function(data) {
                 if (data.isNMNHProject == "true") {
                     NMNHDialog().then(function(accessionNumber, datasetCode,operation) {

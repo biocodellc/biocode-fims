@@ -10,7 +10,7 @@
                 <a id="login" href="rest/authenticationService/login">Login</a>
             </c:if>
             <c:if test="${user != null}">
-                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a>
+                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a>
             </c:if>
             | <a href="https://code.google.com/p/biocode-fims/">Help</a>
         </div>
@@ -18,7 +18,7 @@
         <div style="clear: both;"></div>
 
         <div style="overflow: auto;width: 100%;">
-            <div class="link"><a href='/biocode-fims/index.jsp'>Home</a></div>
+            <div class="link"><a href='/fims/index.jsp'>Home</a></div>
 
             <div class="separator">|</div>
 
@@ -27,15 +27,15 @@
 
                     <c:if test="${user != null}">
                         <ul>
-                            <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                            <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
+                            <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                            <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
                         </ul>
                     </c:if>
 
                     <c:if test="${user == null}">
                         <ul>
-                            <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                            <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
+                            <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                            <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
                          </ul>
                     </c:if>
                 </li>

@@ -6,7 +6,7 @@ function populateDefinitions(column) {
  var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "/biocode-fims/rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
+    theUrl = "/fims/rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
 
     $.ajax({
         type: "GET",
@@ -24,7 +24,7 @@ function populateColumns(targetDivId) {
     var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "/biocode-fims/rest/templates/attributes/?project_id=" + project_id;
+    theUrl = "/fims/rest/templates/attributes/?project_id=" + project_id;
 
     var jqxhr = $.ajax( {
         url: theUrl,
@@ -50,7 +50,7 @@ function populateAbstract(targetDivId) {
     var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "/biocode-fims/rest/templates/abstract/?project_id=" + project_id;
+    theUrl = "/fims/rest/templates/abstract/?project_id=" + project_id;
 
     var jqxhr = $.ajax( {
         url: theUrl,
@@ -115,7 +115,7 @@ function populateGraphs(project_id) {
 // Get results as JSON
 function queryJSON(params) {
    // serialize the params object using a shallow serialization
-    var jqxhr = $.post("/biocode-fims/rest/query/json/", $.param(params, true))
+    var jqxhr = $.post("/fims/rest/query/json/", $.param(params, true))
         .done(function(data) {
             $("#resultsContainer").show();
             distal(results,data);
@@ -131,13 +131,13 @@ function queryJSON(params) {
 // Get results as Excel
 function queryExcel(params) {
     showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
-    download("/biocode-fims/rest/query/excel/", params);
+    download("/fims/rest/query/excel/", params);
 }
 
 // Get results as Excel
 function queryKml(params) {
     showMessage ("Downloading results as an KML document<br>If Google Earth does not open you can point to it directly");
-    download("/biocode-fims/rest/query/kml/", params);
+    download("/fims/rest/query/kml/", params);
 }
 
 // create a form and then submit that form in order to download files
@@ -171,8 +171,7 @@ function download(url, data) {
 
 // Get results as Excel
 function queryGoogleMaps() {
-    //theUrl = "http://biscicol.org/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue() + encodeURIComponent("&") +  getFilterKeyValue
-    theUrl = "/biocode-fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue();
+    theUrl = "/fims/rest/query/kml/" +encodeURIComponent("?") + getGraphsKeyValue() + encodeURIComponent("&") + getProjectKeyValue();
     mapsUrl = "http://maps.google.com/maps?q=" + theUrl;
     window.open(
         mapsUrl,
@@ -319,7 +318,7 @@ function submitForm(){
     var de = new $.Deferred();
     var promise = de.promise();
     var options = {
-        url: "/biocode-fims/rest/validate/",
+        url: "/fims/rest/validate/",
         type: "POST",
         contentType: "multipart/form-data",
         beforeSerialize: function(form, options) {
@@ -449,7 +448,7 @@ function loopStatus(promise) {
 // poll the server to get the validation/upload status
 function pollStatus() {
     var def = new $.Deferred();
-    $.getJSON("/biocode-fims/rest/validate/status")
+    $.getJSON("/fims/rest/validate/status")
         .done(function(data) {
             def.resolve(data);
         }).fail(function() {
@@ -462,7 +461,7 @@ function pollStatus() {
 // a new expedition
 function continueUpload(createExpedition) {
     var d = new $.Deferred();
-    var url = "/biocode-fims/rest/validate/continue_spreadsheet";
+    var url = "/fims/rest/validate/continue_spreadsheet";
     if (createExpedition) {
         url += "?createExpedition=true";
     }
@@ -477,7 +476,7 @@ function continueUpload(createExpedition) {
     loopStatus(d.promise());
 }
 
-// function to handle the results from the rest service /biocode-fims/rest/validate
+// function to handle the results from the rest service /fims/rest/validate
 function validationResults(data) {
     var title = "Validation Results";
     if (data.done != null) {
@@ -508,7 +507,7 @@ function validationResults(data) {
     }
 }
 
-// function to handle the results from the rest service /biocode-fims/rest/validate/continue
+// function to handle the results from the rest service /fims/rest/validate/continue
 function uploadResults(data) {
     var title = "Upload Results";
     if (data.done != null || data.error != null) {
@@ -717,7 +716,7 @@ function validationFormToggle() {
 // get the expeditions codes a user owns for a project
 function getExpeditionCodes() {
     var projectID = $("#projects").val();
-    $.getJSON("/biocode-fims/rest/utils/expeditionCodes/" + projectID)
+    $.getJSON("/fims/rest/utils/expeditionCodes/" + projectID)
         .done(function(data) {
             var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
                 "<option value='0'>Create New Dataset</option>";
