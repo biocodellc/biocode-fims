@@ -286,6 +286,113 @@ public class validate {
     }
 
     /**
+     * Service to upload a dataset to an expedition. The validate service must be called before this service.
+     *
+     * @param createExpedition
+     * @param request
+     *
+     * @return
+     */
+    @GET
+    @Path("/continue_spreadsheet")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
+                         @Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        processController processController = (processController) session.getAttribute("processController");
+
+        // if no processController is found, we can't do anything
+        if (processController == null) {
+            return "{\"error\": \"No process was detected.\"}";
+        }
+
+        // if the process controller was stored in the session, then the user wants to continue, set warning cleared
+        processController.setClearedOfWarnings(true);
+        processController.setValidated(true);
+
+        bcidConnector connector = new bcidConnector(accessToken, refreshToken);
+
+        // Create the process object --- this is done each time to orient the application
+        process p = null;
+        try {
+            try {
+                p = new process(
+                        processController.getInputFilename(),
+                        uploadpath(),
+                        connector,
+                        processController
+                );
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                //throw new FIMSException("{\"error\": \"Server Error.\"}");
+                throw new FIMSException("{\"error\": \"Server Error: " + e.getMessage() + "\"}");
+            }
+
+            // create this expedition if the user wants to
+            if (createExpedition) {
+                try {
+                    p.runExpeditionCreate();
+                } catch (FIMSException e) {
+                    e.printStackTrace();
+                    throw new FIMSException("{\"error\": \"Error creating dataset.\"}");
+                }
+            }
+
+            try {
+                if (!processController.isExpeditionAssignedToUserAndExists()) {
+                    p.runExpeditionCheck();
+                }
+
+                if (processController.isExpeditionCreateRequired()) {
+                    // if a new access token was issued, update the session variables
+                    if (connector.getRefreshedToken()) {
+                        session.setAttribute("access_token", connector.getAccessToken());
+                        session.setAttribute("refresh_token", connector.getRefreshToken());
+                    }
+                    // ask the user if they want to create this expedition
+                    return "{\"continue\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                            "\\\" does not exist.  " +
+                            "Do you wish to create it now?<br><br>" +
+                            "If you choose to continue, your data will be associated with this new dataset code.\"}";
+                }
+
+                // upload the dataset
+                //p.runUpload();
+
+                // delete the temporary file now that it has been uploaded
+                new File(processController.getInputFilename()).delete();
+
+                // remove the processController from the session
+                session.removeAttribute("processController");
+
+                if (connector.getRefreshedToken()) {
+                    session.setAttribute("access_token", connector.getAccessToken());
+                    session.setAttribute("refresh_token", connector.getRefreshToken());
+                }
+
+                processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
+
+                return "{\"done\": \"Successfully uploaded your spreadsheet to the server, <br>" +
+                        "spreadsheet name = " + processController.getInputFilename() + "<br>" +
+                        "dataset code = " + processController.getExpeditionCode() + "<br>" +
+                        "please maintain a local copy for now.  You should be notified of action soon.\"}";
+
+            } catch (FIMSException e) {
+                e.printStackTrace();
+                throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
+            }
+        } catch (FIMSException e) {
+            // delete the temporary file now that it has been uploaded
+            new File(processController.getInputFilename()).delete();
+            // remove the processController from the session
+            session.removeAttribute("processController");
+
+            return e.getMessage();
+        }
+    }
+    /**
      * Service used for getting the current status of the dataset validation/upload.
      *
      * @param request
