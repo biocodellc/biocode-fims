@@ -50,7 +50,7 @@
 
                 <tr class="toggle-content" id="expedition_code_toggle">
                     <td align="right">Dataset Code&nbsp;&nbsp;</td>
-                    <td><input type="text" name="expedition_code" id="expedition_code" /></td>
+                    <td id="expedition_code_container"><input type="text" name="expedition_code" id="expedition_code" /></td>
                 </tr>
 
                 <tr>
