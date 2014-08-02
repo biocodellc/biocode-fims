@@ -148,9 +148,6 @@ public class process {
         }
 
 
-
-
-
         return bcidConnector;
     }
 
@@ -179,8 +176,10 @@ public class process {
      */
     public void runExpeditionCreate() throws FIMSException {
         try {
-            if (connector.checkExpedition(processController))
-            connector.createExpedition(processController, mapping);
+            if (connector.checkExpedition(processController))  {
+                System.out.println("Creating expedition " + processController.getExpeditionCode()  + "...");
+                connector.createExpedition(processController, mapping);
+            }
             processController.setExpeditionCreateRequired(false);
             processController.setExpeditionAssignedToUserAndExists(true);
         } catch (Exception e) {
@@ -490,7 +489,7 @@ public class process {
         // Set the input format
         if (cl.hasOption("y")) {
             fimsInputter.in = new forceInputter();
-        }   else {
+        } else {
             fimsInputter.in = new standardInputter();
         }
 
