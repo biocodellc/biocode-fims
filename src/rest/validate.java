@@ -18,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
+import java.nio.channels.FileChannel;
 
 /**
  * Created by rjewing on 4/18/14.
@@ -297,7 +298,7 @@ public class validate {
     @Path("/continue_spreadsheet")
     @Produces(MediaType.APPLICATION_JSON)
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
-                         @Context HttpServletRequest request) {
+                                     @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
@@ -358,10 +359,15 @@ public class validate {
                             "If you choose to continue, your data will be associated with this new dataset code.\"}";
                 }
 
-                // upload the dataset
-                //p.runUpload();
+                // Copy file to a standard location
+                File inputFile = new File(processController.getInputFilename());
+                File outputFile = new File("/opt/jetty_files/project_" + processController.getProject_id() + "_dataset_" + processController.getExpeditionCode());
+                try {
+                    copyFile(inputFile,outputFile);
+                } catch (Exception e) {
+                    throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
+                }
 
-                // delete the temporary file now that it has been uploaded
                 new File(processController.getInputFilename()).delete();
 
                 // remove the processController from the session
@@ -392,6 +398,7 @@ public class validate {
             return e.getMessage();
         }
     }
+
     /**
      * Service used for getting the current status of the dataset validation/upload.
      *
@@ -415,6 +422,34 @@ public class validate {
 
     static String uploadpath() {
         return context.getRealPath("tripleOutput") + File.separator;
+    }
+
+    /**
+     * Copying files utility for organizing loaded spreadsheets on server if needed
+     * @param sourceFile
+     * @param destFile
+     * @throws IOException
+     */
+    public static void copyFile(File sourceFile, File destFile) throws IOException {
+        if (!destFile.exists()) {
+            destFile.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        try {
+            source = new FileInputStream(sourceFile).getChannel();
+            destination = new FileOutputStream(destFile).getChannel();
+            destination.transferFrom(source, 0, source.size());
+        } finally {
+            if (source != null) {
+                source.close();
+            }
+            if (destination != null) {
+                destination.close();
+            }
+        }
     }
 
 }
