@@ -155,7 +155,7 @@ public class bcidConnector {
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
-        naan = Integer.parseInt("naan");
+        naan = Integer.parseInt(sm.retrieveValue("naan"));
         //trust_store = sm.retrieveValue("trust_store");
         //ls
         // trust_store_password = sm.retrieveValue("trust_store_password");
