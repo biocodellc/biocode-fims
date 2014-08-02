@@ -462,7 +462,7 @@ function pollStatus() {
 // a new expedition
 function continueUpload(createExpedition) {
     var d = new $.Deferred();
-    var url = "/biocode-fims/rest/validate/continue";
+    var url = "/biocode-fims/rest/validate/continue_spreadsheet";
     if (createExpedition) {
         url += "?createExpedition=true";
     }
