@@ -22,6 +22,8 @@ expedition_list_uri = http://www.biscicol.org/id/expeditionService/list/
 logout_uri = http://www.biscicol.org/id/authenticationService/logout?redirect_uri=http://www.biscicol.org/biocode-fims/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
+rootName = biocode-fims
+
 
 
 

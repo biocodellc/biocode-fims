@@ -53,18 +53,18 @@ public class authenticationService {
         // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
         // in the login process.
         String redirect_uri = sm.retrieveValue("redirect_uri");
-        //System.out.println("Biocode-FIMS redirect_uri = " + redirect_uri);
+        //System.out.println("FIMS redirect_uri = " + redirect_uri);
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
         //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
         if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURL().toString());
-           // System.out.println("Biocode-FIMS incomingURL = " + incomingUrl);
+           // System.out.println("FIMS incomingURL = " + incomingUrl);
             // Pattern match incomingURL to see if it contains a "www"
             //if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
             if (!incomingUrl.getHost().contains("www")) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
-               // System.out.println("Biocode-FIMS Login Redirecting to " + loginRedirectURL);
+               // System.out.println("FIMS Login Redirecting to " + loginRedirectURL);
                 response.sendRedirect(loginRedirectURL);
                 return;
             }
@@ -119,6 +119,8 @@ public class authenticationService {
 
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
+        String rootName = sm.retrieveValue("rootName");
+        String homepage = "/" + rootName + "/index.jsp";
         HttpSession session = request.getSession();
 
         /*
@@ -140,20 +142,20 @@ public class authenticationService {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Authentication Error, session id " + session.getId() + " does not have a declared oauth_state");
-            response.sendRedirect("/biocode-fims/index.jsp?error=invalid+sessionid.");
+            response.sendRedirect(homepage +"?error=invalid+sessionid.");
             return;
         }
 
         //
         if (oauthState == null) {
             System.out.println("Authentication Error, oauth state is null");
-            response.sendRedirect("/biocode-fims/index.jsp?error=oauth state is null, there is an issue with the session.");
+            response.sendRedirect(homepage +"?error=oauth state is null, there is an issue with the session.");
             return;
         }
 
         if (code == null || state == null || !state.equals(oauthState)) {
             System.out.println("Authentication Error, code or state is null");
-            response.sendRedirect("/biocode-fims/index.jsp?error=Code or state is null.");
+            response.sendRedirect(homepage +"?error=Code or state is null.");
             return;
         }
 
@@ -165,10 +167,10 @@ public class authenticationService {
         if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
             System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
             if (tokenJSON.containsKey("error")) {
-                response.sendRedirect("/biocode-fims/index.jsp?error=" + tokenJSON.get("error"));
+                response.sendRedirect(homepage +"?error=" + tokenJSON.get("error"));
                 return;
             } else {
-                response.sendRedirect("/biocode-fims/index.jsp?error=Returned state variable was not the same. Was the request/response hacked?");
+                response.sendRedirect(homepage +"?error=Returned state variable was not the same. Was the request/response hacked?");
             }
         }
 
@@ -177,7 +179,7 @@ public class authenticationService {
         JSONObject profileJSON = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
 
         if (profileJSON.containsKey("error")) {
-            response.sendRedirect("/biocode-fims/index.jsp?error=" + profileJSON.get("error"));
+            response.sendRedirect(homepage +"?error=" + profileJSON.get("error"));
             return;
         }
 
@@ -186,12 +188,12 @@ public class authenticationService {
         session.setAttribute("access_token", access_token);
         session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
 
-        response.sendRedirect("/biocode-fims/index.jsp");
+        response.sendRedirect(homepage +"index.jsp");
         return;
     }
 
     /**
-     * Rest service to log a user out of the biocode-fims system
+     * Rest service to log a user out of the fims system
      *
      * @param req
      * @param res
@@ -219,7 +221,6 @@ public class authenticationService {
         // Need to also logout of the BCID system
         res.sendRedirect(sm.retrieveValue("logout_uri"));
 
-        //res.sendRedirect("/biocode-fims/index.jsp");
         return;
     }
 }
