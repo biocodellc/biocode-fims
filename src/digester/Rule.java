@@ -1010,7 +1010,10 @@ public class Rule {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
                     msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved \"" + getColumnWorksheetName() + "\"";
-                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() + "/?project_id='>see approved</a>";
+                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
+                            "column_name="+ URLEncoder.encode(column,"utf-8") + "&" +
+                            "project_id='>see approved</a>";
+
                     addMessage(msg, null, null);
                 }
             }
