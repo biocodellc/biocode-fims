@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.List;
 
@@ -141,7 +142,8 @@ public class utils {
     @Path("/getListFields/{list_name}/")
     @Produces(MediaType.TEXT_HTML)
     public Response getListFields(@QueryParam("project_id") Integer projectId,
-                                  @PathParam("list_name") String list_name) throws Exception {
+                                  @PathParam("list_name") String list_name,
+                                  @QueryParam("column_name") String column_name) throws Exception {
 
         File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
 
@@ -156,7 +158,13 @@ public class utils {
         digester.List results = (digester.List) validation.findList(list_name);
         Iterator it = results.getFields().iterator();
         StringBuilder sb = new StringBuilder();
-        sb.append("Acceptable values for " + list_name + "<br>\n");
+
+        if (column_name != null && !column_name.trim().equals("")) {
+            sb.append("Acceptable values for " + URLDecoder.decode(column_name,"utf-8") + "<br>\n");
+        } else {
+            sb.append("Acceptable values for " + list_name + "<br>\n");
+        }
+
         while (it.hasNext()) {
             sb.append("<li>" + (String) it.next() + "</li>\n");
         }
