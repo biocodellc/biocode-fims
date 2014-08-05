@@ -13,7 +13,8 @@ import java.util.*;
 public class siConverter {
     static public ArrayList<siProjects> projects = new ArrayList<siProjects>();
     static File inputFile;
-    static File output_directory;
+    static File listsFile;
+   public static File output_directory;
     static Sheet MatrixSheet;
     static Sheet ListsSheet;
     static Sheet PreparationsSheet;
@@ -193,7 +194,7 @@ public class siConverter {
         return treeMap;
     }
 
-    public static String validation() {
+    public static String validation(String abbreviation) throws IOException {
         StringBuilder sbValidation = new StringBuilder();
 
         // header
@@ -236,7 +237,7 @@ public class siConverter {
         sbValidation.append("\t</worksheet>\n");
 
         // Generate Lists section
-        sbValidation.append(lists());
+        sbValidation.append(lists(abbreviation));
 
         sbValidation.append("</validation>\n");
 
@@ -244,11 +245,20 @@ public class siConverter {
     }
 
     /**
+     * Loop through the list file using the siListProcessor Class
+     * @return
+     */
+    private static String lists(String abbreviation) throws IOException {
+        siListProcessor listProcessor = new siListProcessor();
+        return listProcessor.printList(listProcessor.loopDepartment(abbreviation)).toString();
+    }
+
+    /**
      * Generate the elements for the Lists worksheet
      *
      * @return
      */
-    private static String lists() {
+    private static String listsOld() {
         //ListsSheet.
         StringBuilder sb = new StringBuilder();
 
@@ -350,6 +360,7 @@ public class siConverter {
                 "Smithsonian" + System.getProperty("file.separator"));
 
         inputFile = new File(output_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_master.xlsx");
+        listsFile = new File(output_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_lookups.txt");
 
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
@@ -403,7 +414,7 @@ public class siConverter {
             sb.append(mapping(project));
 
             // Print the validations element
-            sb.append(validation());
+            sb.append(validation(project.abbreviation));
 
             // Print the footers
             sb.append(footer());
@@ -421,6 +432,9 @@ public class siConverter {
             requiredColumns.clear();
             desiredColumns.clear();
             //System.out.println(sb.toString());
+
+
+
         }
 
     }
@@ -428,17 +442,5 @@ public class siConverter {
 
 }
 
-class siProjects {
-    Integer project_id;
-    String abbreviation;
-    String columnName; // The column in the SI provided sheet that designates this resource
-    String worksheetUniqueKey;
 
-    siProjects(Integer project_id, String abbreviation, String columnName, String worksheetUniqueKey) {
-        this.project_id = project_id;
-        this.abbreviation = abbreviation;
-        this.columnName = columnName;
-        this.worksheetUniqueKey = worksheetUniqueKey;
-    }
-}
 

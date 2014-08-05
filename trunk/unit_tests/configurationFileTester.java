@@ -1,8 +1,12 @@
-package run;
+package unit_tests;
 
+import org.junit.Test;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import run.configurationFileError;
+import run.configurationFileErrorHandler;
+import run.configurationFileFetcher;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,28 +18,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Test the Configuration File... these tests can be Extremely important and ensure that all things work
- * correctly downstream, especially during the triplification step.
+ * Test Components of the
+ * The publicly accessible tests typically return a stringBuilder, containing any errorMessages
  */
 public class configurationFileTester {
-    StringBuilder errorMessages = null;
+    DocumentBuilder builder = null;
+    Document document = null;
+    public File fileToTest = null;
+    private configurationFileErrorMessager messages = new configurationFileErrorMessager();
 
     /**
-     * Constructor for class, storing messages in the errorMessages class variable
+     * Return all the messages from this Configuration File Test
      */
-    public configurationFileTester() {
-        errorMessages = new StringBuilder();
+    public String getMessages() {
+        return messages.printMessages();
     }
 
     /**
-     * Test that the configuration file is OK!
+     * Test that we can initialize the document
+     *
+     * @param fileToTest
      *
      * @return
      */
-    public boolean testConfigFile(File fileToTest) throws configurationFileError {
-
-        DocumentBuilder builder = null;
-
+    @Test
+    public boolean init(File fileToTest) {
+        this.fileToTest = fileToTest;
         Document document;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -47,22 +55,91 @@ public class configurationFileTester {
             builder.setErrorHandler(new configurationFileErrorHandler());
 
         } catch (ParserConfigurationException e) {
-            throw new configurationFileError(e.getMessage() + " for " + fileToTest.getAbsoluteFile());
+            return false;
         }
+        return true;
+    }
 
+    /**
+     * Test parsing the file
+     *
+     * @return
+     */
+    @Test
+    public boolean parse() {
         // A simple first check that the document is valid
         try {
             document = builder.parse(new InputSource(fileToTest.getAbsoluteFile().toString()));
         } catch (IOException e) {
-            throw new configurationFileError(e.getMessage() + " for " + fileToTest.getAbsoluteFile());
+            return false;
         } catch (SAXException e) {
-            throw new configurationFileError("Bad formatting for " + fileToTest.getAbsoluteFile());
+            return false;
         }
+        return true;
+    }
+
+    /**
+     * Check the structure of our lists
+     *
+     * @return StringBuilder
+     *
+     * @throws configurationFileError
+     */
+    public boolean checkLists() {
+        if (!parse()) {
+            return false;
+        }
+
+        boolean passedTest = true;
+        ArrayList listAliases = new ArrayList();
+        // Loop Rules
+        NodeList lists = document.getElementsByTagName("list");
+        for (int i = 0; i < lists.getLength(); i++) {
+            NamedNodeMap listAttributes = lists.item(i).getAttributes();
+            listAliases.add(listAttributes.getNamedItem("alias").getNodeValue());
+        }
+
+        // Build an array of CheckInXMLFields Rules
+        ArrayList rulesCheckInXMLFields = new ArrayList();
+        NodeList rules = document.getElementsByTagName("rule");
+        for (int i = 0; i < rules.getLength(); i++) {
+            if (rules.item(i) != null) {
+                NamedNodeMap ruleAttributes = rules.item(i).getAttributes();
+                if (ruleAttributes != null &&
+                        ruleAttributes.getNamedItem("type") != null &&
+                        ruleAttributes.getNamedItem("type").getNodeValue().equalsIgnoreCase("CheckInXMLFields")) {
+                    String list = ruleAttributes.getNamedItem("list").getNodeValue();
+                    rulesCheckInXMLFields.add(list);
+                }
+            }
+        }
+
+        Iterator it = rulesCheckInXMLFields.iterator();
+        while (it.hasNext()) {
+            String ruleListName = (String) it.next();
+            if (!listAliases.contains(ruleListName)) {
+                messages.add(this, ruleListName + " is specified by a rule as a list, but was not named as a list", "checkList");
+                passedTest = false;
+            }
+        }
+
+        return passedTest;
+    }
+
+    /**
+     * Test that the configuration file is OK!
+     *
+     * @return
+     */
+    public boolean checkUniqueKeys()  {
+        if (!parse()) {
+            return false;
+        }
+        boolean passedTest = true;
 
         // Loop Rules
         NodeList rules = document.getElementsByTagName("rule");
         ArrayList<String> uniqueKeys = getUniqueValueRules(rules);
-
         // Loop Entities
         NodeList entities = document.getElementsByTagName("entity");
         // atLeastOneUniqueKey
@@ -106,26 +183,26 @@ public class configurationFileTester {
                     } catch (NullPointerException e) {
                     }
                     if (column != null) {
-                        checkSpecialCharacters(column);
+                        if (!checkSpecialCharacters(column)) {
+                            passedTest = false;
+                        }
                     }
                 }
 
             }
             // Run the URI list unique Value check for each entity
-            checkUniqueValuesInList("URI attribute value", uriList);
+            if (!checkUniqueValuesInList("URI attribute value", uriList)) {
+                passedTest = false;
+            }
         }
 
         // Tell is if atLeastOneUniqueKey is not found.
         if (!atLeastOneUniqueKeyFound) {
-            errorMessages.append("\tMust define a at least one Entity worksheetUniqueKey that has a uniqueValue rule\n");
+            messages.add(this, "Must define a at least one Entity worksheetUniqueKey that has a uniqueValue rule", "atLeastOneUniqueKeyFound");
+            passedTest = false;
         }
 
-
-        // Send out errorMessages
-        if (errorMessages.length() > 0) {
-            throw new configurationFileError(errorMessages.toString());
-        }
-        return true;
+        return passedTest;
     }
 
     /**
@@ -151,14 +228,18 @@ public class configurationFileTester {
      * @param message
      * @param list
      */
-    private void checkUniqueValuesInList(String message, List<String> list) {
+    private boolean checkUniqueValuesInList(String message, List<String> list) {
+        boolean passedTest = true;
+
         Set<String> uniqueSet = new HashSet<String>(list);
         for (String temp : uniqueSet) {
             Integer count = Collections.frequency(list, temp);
             if (count > 1) {
-                errorMessages.append("\t" + message + " " + temp + " used more than once in list\n");
+                messages.add(this, message + " " + temp + " used more than once", "checkUniqueValuesInList");
+                passedTest = false;
             }
         }
+        return passedTest;
     }
 
     /**
@@ -166,14 +247,17 @@ public class configurationFileTester {
      *
      * @param stringToCheck
      */
-    private void checkSpecialCharacters(String stringToCheck) {
+    private boolean checkSpecialCharacters(String stringToCheck) {
+        boolean passedTest = true;
         // Check worksheetUniqueKeys
         //String column = attributeAttributes.getNamedItem("column").getNodeValue();
         Pattern p = Pattern.compile("[^a-z0-9 \\(\\)\\/\\_-]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(stringToCheck);
         if (m.find()) {
-            errorMessages.append("\tColumn attribute value " + stringToCheck + " contains an invalid character\n");
+            messages.add(this, "Column attribute value " + stringToCheck + " contains an invalid character", "checkSpecialCharacters");
+            passedTest = false;
         }
+        return passedTest;
     }
 
     /**
@@ -201,11 +285,16 @@ public class configurationFileTester {
         return keys;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
-
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/Documents/Smithsonian/SIBOT.xml");
+        configurationFileTester cFT = new configurationFileTester();
+        cFT.init(file);
+        cFT.parse();
+        cFT.checkLists();
+        /*
         // Check ACTIVE Project configuration files
-        Integer projects[] = {1,3,4,5,8,9,10,11,12,22};
+        Integer projects[] = {1, 3, 4, 5, 8, 9, 10, 11, 12, 22};
 
         for (int i = 0; i < projects.length; i++) {
             int project_id = projects[i];
@@ -213,13 +302,16 @@ public class configurationFileTester {
             try {
                 configurationFileTester cFT = new configurationFileTester();
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
-                cFT.testConfigFile(file);
+                cFT.init(file);
+                //cFT.readConfigFile();
+                cFT.checkLists();
             } catch (configurationFileError e) {
                 System.out.println("Configuration File Construction Error Messages: \n" + e.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        */
 
 
         // Check for well-formedness -- this one passes
