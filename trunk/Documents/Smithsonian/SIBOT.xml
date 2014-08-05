@@ -30,7 +30,7 @@ Biocode specimen: 1 = photo in CalPhotos<p><b>Synonyms:</b><p>"associatedMedia" 
 BOLD: A list (concatenated and comma separated) of other specimens associated with the subject specimen at the time of its collection. References to other specimen identifiers should be preceded by the relationship. Examples: "host: PLANT23452, prey: USNM45677" when both prey and host specimens have been captured.<p><b>Synonyms:</b><p>"associatedOccurrences" = DwC,<br />"DarRelatedCatalogItem" = EMuDwC,<br />"Associated Specimens" = Fishes,<br />"Associated Specimens" = LAB Field Collection Spreadsheet,<br />"Associated Specimens" = BOLD,<br />"RelatedCatalogItem" = Biocode Backend.specimen,]]></attribute>
 		<attribute column='Associated Taxa' uri='urn:associatedTaxa' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#associatedTaxa'><![CDATA[DwC: A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence. Example: "host: Quercus alba". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedTaxa
 
-BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,]]></attribute>
+BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,<br />"Host" = Biocode,]]></attribute>
 		<attribute column='Relationship of resource' uri='urn:relationshipOfResource' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#relationshipOfResource'><![CDATA[DwC: The relationship of the resource identified by relatedResourceID to the subject (optionally identified by the resourceID). Recommended best practice is to use a controlled vocabulary. Examples: "duplicate of", "mother of", "endoparasite of", "host to", "sibling of", "valid synonym of", "located within". For discussion see http://code.google.com/p/darwincore/wiki/ResourceRelationship http://rs.tdwg.org/dwc/terms/relationshipOfResource.
 
 ABCDDNA: the Relation between the DNA and the voucher (e.g. "DNA and voucher from same individual").
@@ -86,7 +86,7 @@ BOLD: For organisms collected beneath the surface of a water body. Measured in m
 		<attribute column='Elevation From (m)' uri='urn:minimumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#minimumElevationInMeters'><![CDATA[DwC: The lower limit of the range of elevation (altitude, usually above sea level), in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumElevationInMeters.
 
 BOLD: Elevation of sampling site. Measured in meters relative to sea level. Negative values indicate a position below sea level.<p><b>Synonyms:</b><p>"minimumElevationInMeters" = DwC,<br />"DarMinimumElevationInMeters" = EMuDwC,<br />"MinElevationMeters" = Biocode Backend,<br />"MinElevationMeters" = Biocode Batch,<br />"elevation" = Botany - Acevedo,<br />"Elevation" = BOLD,<br />"elevation" = MIxS,<br />"Elevation(m)" - Entomology - Sean Brady,<br />"specimen_ElevationMeters" = Biocode.specimen,<br />"Elevation meters" = Entomology - Ted Schultz,<br />"Elevation meters Calc" = Entomology - Ted Schultz,<br />"ELEV1" = Kress Coll. tblKresFile (if ELEV_UNIT= m),<br />"Gathering/Altitude/LowerValue" = ABCDDNA,<br />"altitude" = MIxS,]]></attribute>
-		<attribute column='Text depth' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
+		<attribute column='Depth Text' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
 		<attribute column='Elevation Text' uri='urn:verbatimElevation' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimElevation'><![CDATA[DwC: The original description of the elevation (altitude, usually above sea level) of the Location. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimElevation<p><b>Synonyms:</b><p>"verbatimElevation" = DwC,<br />"DarVerbatimElevation" = EMuDwC,<br />"Elev Lat Long Label Text" = Entomology - Ted Schultz (in part),]]></attribute>
 		<attribute column='Extraction Date' uri='urn:extractionDate' group='DNA' defined_by='urn:extractionDate'><![CDATA[ABCDDNA: date of DNA extraction
 
@@ -209,6 +209,12 @@ IndoPacific: The state or province where the sample was found.<p><b>Synonyms:</b
 		<attribute column='Measurement 1 Type' uri='urn:measurement1Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
 		<attribute column='Measurement 1 Unit' uri='urn:measurement1Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
 		<attribute column='Measurement 1 Value' uri='urn:measurement1Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 5 of' uri='urn:measurement5Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 5 Type' uri='urn:measurement5Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Unit' uri='urn:measurement5Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Value' uri='urn:measurement5Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
 
 MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
 		<attribute column='Measured by' uri='urn:measurementDeterminedBy' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementDeterminedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the value of the MeasurementOrFact. Example: "Javier de la Torre", "Julie Woodruff; Eileen Lacey". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementDeterminedBy<p><b>Synonyms:</b><p>"measurementDeterminedBy" = DwC,]]></attribute>
@@ -337,6 +343,14 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Biorepository ID</field>
 		</rule>
 		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 2' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 3' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 4' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 5' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 6' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 7' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
@@ -363,12 +377,16 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Biogeographic Region' list='Biogeography Region' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
 		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Kind of Object' list='Object Type' level='error'></rule>
 		<rule type='checkInXMLFields' column='Cultivated' list='yesNo' level='warning'></rule>
 		<rule type='validateNumeric' column='Duplicates collected' level='warning' value='%3E0'></rule>
 		<rule type='checkInXMLFields' column='Establishment means' list='establishmentMeans' level='warning'></rule>
@@ -378,181 +396,2143 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='isNumber' column='Sheets per specimen' level='error'></rule>
+		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Hybrid rank' list='hybridRank' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Phylum' list='phylum' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
 	</worksheet>
 	<lists>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field>Yes</field>
-			<field>No</field>
+		<list alias='Zoology Preparation' caseInsensitive='true'>
+			<field><![CDATA[Bulky fruit]]></field>
+			<field><![CDATA[Living material]]></field>
+			<field><![CDATA[Microslide]]></field>
+			<field><![CDATA[Seed]]></field>
+			<field><![CDATA[Wet Lot]]></field>
+			<field><![CDATA[Wood]]></field>
 		</list>
-		<list alias='elevDepthModifier' caseInsensitive='true'>
-			<field>ca.</field>
-			<field>greater than</field>
-			<field>less than</field>
-			<field>±</field>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[Bell, D. A.]]></field>
+			<field><![CDATA[Brooks, B. L.]]></field>
+			<field><![CDATA[Knight, J.]]></field>
+			<field><![CDATA[Rankin, K.]]></field>
 		</list>
-		<list alias='latitudeNorthSouth' caseInsensitive='true'>
-			<field>N</field>
-			<field>S</field>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
 		</list>
-		<list alias='longitudeEastWest' caseInsensitive='true'>
-			<field>E</field>
-			<field>W</field>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[12 - Southwestern Europe / 13 - Southeastern Europe]]></field>
+			<field><![CDATA[13 - Southeastern Europe]]></field>
+			<field><![CDATA[13 - Southeastern Europe / 11 - Middle Europe]]></field>
+			<field><![CDATA[14 - Eastern Europe]]></field>
+			<field><![CDATA[2 - Africa]]></field>
+			<field><![CDATA[20 - Northern Africa]]></field>
+			<field><![CDATA[20 - Northern Africa / 24 - Northeast Tropical Africa]]></field>
+			<field><![CDATA[21 - Macaronesia]]></field>
+			<field><![CDATA[22 - West Tropical Africa]]></field>
+			<field><![CDATA[22 - West Tropical Africa / 27 - Southern Africa]]></field>
+			<field><![CDATA[23 - West-Central Tropical Africa]]></field>
+			<field><![CDATA[23 - West-Central Tropical Africa / 22 - West Tropical Africa]]></field>
+			<field><![CDATA[24 - Northeast Tropical Africa]]></field>
+			<field><![CDATA[25 - East Tropical Africa]]></field>
+			<field><![CDATA[25 - Northeast Tropical Africa]]></field>
+			<field><![CDATA[26 - South Tropical Africa]]></field>
+			<field><![CDATA[26 - South Tropical Africa / 23 - West Central Tropical Africa]]></field>
+			<field><![CDATA[26 - South Tropical Africa / 27 - Southern Africa]]></field>
+			<field><![CDATA[27 - Southern Africa]]></field>
+			<field><![CDATA[28 - Middle Atlantic Ocean]]></field>
+			<field><![CDATA[29 - West Indian Ocean]]></field>
+			<field><![CDATA[29 - Western Indian Ocean]]></field>
+			<field><![CDATA[3 - Asia-Temperate]]></field>
+			<field><![CDATA[30 - Siberia]]></field>
+			<field><![CDATA[30 - Siberia / 31 - Russian Far East]]></field>
+			<field><![CDATA[31 - Russian Far East]]></field>
+			<field><![CDATA[32 - Middle Asia]]></field>
+			<field><![CDATA[32 - Middle Asia / 14 - Eastern Europe]]></field>
+			<field><![CDATA[33 - Caucasus]]></field>
+			<field><![CDATA[34 - Western Asia]]></field>
+			<field><![CDATA[34 - Western Asia / 35 - Arabian Peninsula]]></field>
+			<field><![CDATA[34 - Western Asia / 40 - Indian Subcontinent]]></field>
+			<field><![CDATA[35 - Arabian Peninsula]]></field>
+			<field><![CDATA[36 - China]]></field>
+			<field><![CDATA[36 - China / 38 - Eastern Asia]]></field>
+			<field><![CDATA[36 - China / 41 - Indo-China]]></field>
+			<field><![CDATA[36 - China Hainan]]></field>
+			<field><![CDATA[36 - China North-Central]]></field>
+			<field><![CDATA[36 - China South-Central]]></field>
+			<field><![CDATA[36 - China South-Central / 36 - Tibet-Qinghai]]></field>
+			<field><![CDATA[36 - China South-Central South-Central]]></field>
+			<field><![CDATA[36 - China Southeast]]></field>
+			<field><![CDATA[36 - Hainan]]></field>
+			<field><![CDATA[36 - Inner Mongolia]]></field>
+			<field><![CDATA[36 - Manchuria]]></field>
+			<field><![CDATA[36 - Qinghai]]></field>
+			<field><![CDATA[36 - Tibet]]></field>
+			<field><![CDATA[36 - Tibet / 36 - China South-Central]]></field>
+			<field><![CDATA[36 - Xinjiang]]></field>
+			<field><![CDATA[37 - Mongolia]]></field>
+			<field><![CDATA[38 - Eastern Asia]]></field>
+			<field><![CDATA[4 - Asia-Tropical]]></field>
+			<field><![CDATA[40 - Indian Subcontinent]]></field>
+			<field><![CDATA[40 - Indian Subcontinent / 41 - Indo-China]]></field>
+			<field><![CDATA[40 - Indian Subcontinent / 42 - Malesia]]></field>
+			<field><![CDATA[41 - Indo-China]]></field>
+			<field><![CDATA[41 - Indo-China / 42 - Malesia]]></field>
+			<field><![CDATA[42 - Malesia]]></field>
+			<field><![CDATA[42 - Malesia / 41 - Indo-China]]></field>
+			<field><![CDATA[43 - Papuasia]]></field>
+			<field><![CDATA[50 - Australasia]]></field>
+			<field><![CDATA[50 - Australia]]></field>
+			<field><![CDATA[51 - New Zealand]]></field>
+			<field><![CDATA[6 - Pacific Islands]]></field>
+			<field><![CDATA[60 - Southwestern Pacific]]></field>
+			<field><![CDATA[61 - South-Central Pacific]]></field>
+			<field><![CDATA[62 - Northwestern Pacfic]]></field>
+			<field><![CDATA[62 - Northwestern Pacific]]></field>
+			<field><![CDATA[62 - South-Central Pacific]]></field>
+			<field><![CDATA[63 - North-Central Pacific]]></field>
+			<field><![CDATA[63 - Northwestern Pacific]]></field>
+			<field><![CDATA[70 - Subarctic America]]></field>
+			<field><![CDATA[71 - Western Canada]]></field>
+			<field><![CDATA[71 - Western Canada / 72 - Eastern Canada]]></field>
+			<field><![CDATA[72 - Eastern Canada]]></field>
+			<field><![CDATA[73 - Northwestern U.S.A.]]></field>
+			<field><![CDATA[74 - North-Central U.S.A.]]></field>
+			<field><![CDATA[75 - Northeastern U.S.A.]]></field>
+			<field><![CDATA[75 - Northeastern U.S.A. / 78 - Southeastern U.S.A.]]></field>
+			<field><![CDATA[76 - Southwestern U.S.A.]]></field>
+			<field><![CDATA[76 - Southwestern U.S.A. / 73 - Northwestern U.S.A.]]></field>
+			<field><![CDATA[76 - Southwestern U.S.A. / 77 - South-Central U.S.A.]]></field>
+			<field><![CDATA[77 - South-Central U.S.A.]]></field>
+			<field><![CDATA[78 - Southeastern U.S.A.]]></field>
+			<field><![CDATA[78 - Southeastern U.S.A./ 75 - Northeastern U.S.A.]]></field>
+			<field><![CDATA[78 - Southwestern U.S.A.]]></field>
+			<field><![CDATA[79 - Mexican Pacific Islands]]></field>
+			<field><![CDATA[79 - Mexico]]></field>
+			<field><![CDATA[79 - Mexico Central]]></field>
+			<field><![CDATA[79 - Mexico Gulf]]></field>
+			<field><![CDATA[79 - Mexico Northeast]]></field>
+			<field><![CDATA[79 - Mexico Northwest]]></field>
+			<field><![CDATA[79 - Mexico Northwest / 76 - Southwestern U.S.A.]]></field>
+			<field><![CDATA[79 - Mexico Southeast]]></field>
+			<field><![CDATA[79 - Mexico Southeast / 79 - Mexico Southwest]]></field>
+			<field><![CDATA[79 - Mexico Southwest]]></field>
+			<field><![CDATA[8 - South America]]></field>
+			<field><![CDATA[80 - Central America]]></field>
+			<field><![CDATA[80 - Central America / 79 - Mexico]]></field>
+			<field><![CDATA[80 - Central America / 83 - Western South America]]></field>
+			<field><![CDATA[81 - Caribbean]]></field>
+			<field><![CDATA[82 - Northern South America]]></field>
+			<field><![CDATA[82 - Northern South America / 84 - Brazil]]></field>
+			<field><![CDATA[83 - Western South America]]></field>
+			<field><![CDATA[83 - Western South America / 80 - Central America]]></field>
+			<field><![CDATA[83 - Western South America / 82 - Northern South America]]></field>
+			<field><![CDATA[84 - Brazil]]></field>
+			<field><![CDATA[84 - Brazil North]]></field>
+			<field><![CDATA[84 - Brazil North / 82 - Northern South America]]></field>
+			<field><![CDATA[84 - Brazil North / 83 - Western South America]]></field>
+			<field><![CDATA[??]]></field>
+			<field><![CDATA[1 - Europe]]></field>
+			<field><![CDATA[10 - Northern Europe]]></field>
+			<field><![CDATA[10 - Northern Europe / 13 - Southeastern Europe]]></field>
+			<field><![CDATA[11 - Middle Europe]]></field>
+			<field><![CDATA[11 - Middle Europe / 13 - Southeastern Europe]]></field>
+			<field><![CDATA[12 - Southwestern Europe]]></field>
+			<field><![CDATA[12 - Southwestern Europe / 11 - Middle Europe]]></field>
+			<field><![CDATA[84 - Brazil North / 84 - Brazil West Central]]></field>
+			<field><![CDATA[84 - Brazil Northeast]]></field>
+			<field><![CDATA[84 - Brazil Northeast / 84 - Brazil Southeast]]></field>
+			<field><![CDATA[84 - Brazil South]]></field>
+			<field><![CDATA[84 - Brazil South / 85 - Southern South America]]></field>
+			<field><![CDATA[84 - Brazil Southeast]]></field>
+			<field><![CDATA[84 - Brazil West-Central]]></field>
+			<field><![CDATA[84 - Brazil West-Central / 84 - Brazil Southeast]]></field>
+			<field><![CDATA[85 - Southern South America]]></field>
+			<field><![CDATA[85 - Southern South America / 83 - Western South America]]></field>
+			<field><![CDATA[85 - Southern South America / 84 - Brazil]]></field>
+			<field><![CDATA[85 - Southern South America / 84 - Brazil South]]></field>
+			<field><![CDATA[90 - Subantarctic Islands]]></field>
+			<field><![CDATA[91 - Antarctic Continent]]></field>
+			<field><![CDATA[African Terrestrial]]></field>
+			<field><![CDATA[Aleutian]]></field>
+			<field><![CDATA[Antarctic]]></field>
+			<field><![CDATA[Arctic]]></field>
+			<field><![CDATA[Asian Terrestrial]]></field>
+			<field><![CDATA[Atlantic Ocean Terrestrial]]></field>
+			<field><![CDATA[Australian Province]]></field>
+			<field><![CDATA[Australian Province or Australian Terrestrial]]></field>
+			<field><![CDATA[Australian Province or Indo-West Pacific]]></field>
+			<field><![CDATA[Australian Terrestrial]]></field>
+			<field><![CDATA[Boreale]]></field>
+			<field><![CDATA[Boreale / Lusitania / Mediterranean]]></field>
+			<field><![CDATA[Boreale or Mediterranean]]></field>
+			<field><![CDATA[Cape]]></field>
+			<field><![CDATA[Caribbean]]></field>
+			<field><![CDATA[Carolinian]]></field>
+			<field><![CDATA[Carolinian or Tropical West Atlantic]]></field>
+			<field><![CDATA[Carolinian or West Atlantic Boreale]]></field>
+			<field><![CDATA[Central American Terrestrial]]></field>
+			<field><![CDATA[CUL]]></field>
+			<field><![CDATA[Eastern South American]]></field>
+			<field><![CDATA[European Terrestrial]]></field>
+			<field><![CDATA[Foreign Language]]></field>
+			<field><![CDATA[Fuegian]]></field>
+			<field><![CDATA[Gulf of California]]></field>
+			<field><![CDATA[Gulf of Mexico]]></field>
+			<field><![CDATA[Illegible]]></field>
+			<field><![CDATA[Indian Ocean Terrestrial]]></field>
+			<field><![CDATA[Indo-West 42 - Malesia]]></field>
+			<field><![CDATA[Indo-West Pacific]]></field>
+			<field><![CDATA[Japan]]></field>
+			<field><![CDATA[Japan Terrestrial]]></field>
+			<field><![CDATA[Lusitania]]></field>
+			<field><![CDATA[Lusitania / Mediterranean]]></field>
+			<field><![CDATA[Mediterranean]]></field>
+			<field><![CDATA[New Zealand Cold]]></field>
+			<field><![CDATA[New Zealand Cold or New Zealand Warm]]></field>
+			<field><![CDATA[New Zealand Terrestrial]]></field>
+			<field><![CDATA[New Zealand Warm]]></field>
+			<field><![CDATA[North American Terrestrial]]></field>
+			<field><![CDATA[North and Central Mexico]]></field>
+			<field><![CDATA[North Pacific Boreale]]></field>
+			<field><![CDATA[North Pacific Boreale / Northeast Pacific Temperate]]></field>
+			<field><![CDATA[Northeast Pacific Temperate]]></field>
+			<field><![CDATA[Not Determined]]></field>
+			<field><![CDATA[Pacific]]></field>
+			<field><![CDATA[Pacific Ocean Terrestrial]]></field>
+			<field><![CDATA[South American Terrestrial]]></field>
+			<field><![CDATA[Southeast Pacific Temperate]]></field>
+			<field><![CDATA[Sub Arctic]]></field>
+			<field><![CDATA[Subarctic America]]></field>
+			<field><![CDATA[Tasmanian Province]]></field>
+			<field><![CDATA[Tropical East Atlantic]]></field>
+			<field><![CDATA[Tropical East Pacific]]></field>
+			<field><![CDATA[Tropical East Pacific or Tropical West Atlantic]]></field>
+			<field><![CDATA[Tropical West Atlantic]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[West Atlantic Boreale]]></field>
+			<field><![CDATA[West Indies Terrestrial]]></field>
 		</list>
-		<list alias='identificationQualifier' caseInsensitive='true'>
-			<field>aff.</field>
-			<field>cf.</field>
-			<field>complex</field>
-			<field>group</field>
-			<field>near</field>
-			<field>sp. nov.</field>
-			<field>subgroup</field>
-			<field>uncertain</field>
-			<field>vel aff.</field>
+		<list alias='family' caseInsensitive='true'>
+			<field><![CDATA[Acanthaceae]]></field>
+			<field><![CDATA[Acarosporaceae]]></field>
+			<field><![CDATA[Aceraceae]]></field>
+			<field><![CDATA[Achariaceae]]></field>
+			<field><![CDATA[Acinetosporaceae]]></field>
+			<field><![CDATA[Acrobolbaceae]]></field>
+			<field><![CDATA[Acrochaetiaceae]]></field>
+			<field><![CDATA[Acrotrichaceae]]></field>
+			<field><![CDATA[Acrotylaceae]]></field>
+			<field><![CDATA[Adelococcaceae]]></field>
+			<field><![CDATA[Adelotheciaceae]]></field>
+			<field><![CDATA[Adiantaceae]]></field>
+			<field><![CDATA[Adoxaceae]]></field>
+			<field><![CDATA[Agaricaceae]]></field>
+			<field><![CDATA[Agaricales]]></field>
+			<field><![CDATA[Agaricomycetidae]]></field>
+			<field><![CDATA[Agyriaceae]]></field>
+			<field><![CDATA[Aizoaceae]]></field>
+			<field><![CDATA[Akaniaceae]]></field>
+			<field><![CDATA[Alangiaceae]]></field>
+			<field><![CDATA[Alariaceae]]></field>
+			<field><![CDATA[Alga]]></field>
+			<field><![CDATA[Alismataceae]]></field>
+			<field><![CDATA[Allisoniaceae]]></field>
+			<field><![CDATA[Alseousmiaceae]]></field>
+			<field><![CDATA[Alseuosmiaceae]]></field>
+			<field><![CDATA[Amanitaceae]]></field>
+			<field><![CDATA[Amaranthaceae]]></field>
+			<field><![CDATA[Amaryllidaceae]]></field>
+			<field><![CDATA[Amblystegiaceae]]></field>
+			<field><![CDATA[Amborellaceae]]></field>
+			<field><![CDATA[Amygdalaceae]]></field>
+			<field><![CDATA[Anacardiaceae]]></field>
+			<field><![CDATA[Anadyomenaceae]]></field>
+			<field><![CDATA[Anamorphic]]></field>
+			<field><![CDATA[Anamylopsoraceae]]></field>
+			<field><![CDATA[Anarthriaceae]]></field>
+			<field><![CDATA[Ancistrocladaceae]]></field>
+			<field><![CDATA[Andreaeaceae]]></field>
+			<field><![CDATA[Andreaeceae]]></field>
+			<field><![CDATA[Aneuraceae]]></field>
+			<field><![CDATA[Angiopteridaceae]]></field>
+			<field><![CDATA[Anisophylleaceae]]></field>
+			<field><![CDATA[Annonaceae]]></field>
+			<field><![CDATA[Anthericaceae]]></field>
+			<field><![CDATA[Anthocerophyte]]></field>
+			<field><![CDATA[Anthocerotaceae]]></field>
+			<field><![CDATA[Antoniaceae]]></field>
+			<field><![CDATA[Aphanopsidaceae]]></field>
+			<field><![CDATA[Aphyllophorales]]></field>
+			<field><![CDATA[Apiaceae]]></field>
+			<field><![CDATA[Apocynaceae]]></field>
+			<field><![CDATA[Aponogetonaceae]]></field>
+			<field><![CDATA[Aquifoliaceae]]></field>
+			<field><![CDATA[Araceae]]></field>
+			<field><![CDATA[Araliaceae]]></field>
+			<field><![CDATA[Archidiaceae]]></field>
+			<field><![CDATA[Arecaceae]]></field>
+			<field><![CDATA[Areschougiaceae]]></field>
+			<field><![CDATA[Aristolochiaceae]]></field>
+			<field><![CDATA[Arnelliaceae]]></field>
+			<field><![CDATA[Arnoldiellaceae]]></field>
+			<field><![CDATA[Arthoniaceae]]></field>
+			<field><![CDATA[Arthoniales]]></field>
+			<field><![CDATA[Arthopyreniaceae]]></field>
+			<field><![CDATA[Arthrocladiaceae]]></field>
+			<field><![CDATA[Arthrorhaphidaceae]]></field>
+			<field><![CDATA[Asclepiadacae]]></field>
+			<field><![CDATA[Asclepiadaceae]]></field>
+			<field><![CDATA[Ascocarpaceae]]></field>
+			<field><![CDATA[Ascomycete]]></field>
+			<field><![CDATA[Ascomycota]]></field>
+			<field><![CDATA[Ascoseiraceae]]></field>
+			<field><![CDATA[Asparagaceae]]></field>
+			<field><![CDATA[Aspidiaceae]]></field>
+			<field><![CDATA[Aspidotheliaceae]]></field>
+			<field><![CDATA[Aspleniaceae]]></field>
+			<field><![CDATA[Asteliaceae]]></field>
+			<field><![CDATA[Asteraceae]]></field>
+			<field><![CDATA[Asteropeiaceae]]></field>
+			<field><![CDATA[Asterothyriaceae]]></field>
+			<field><![CDATA[Athyriaceae]]></field>
+			<field><![CDATA[Aulacomniaceae]]></field>
+			<field><![CDATA[Auriculariaceae]]></field>
+			<field><![CDATA[Averrhoaceae]]></field>
+			<field><![CDATA[Aytoniaceae]]></field>
+			<field><![CDATA[Azollaceae]]></field>
+			<field><![CDATA[Bacidiaceae]]></field>
+			<field><![CDATA[Baeomycetaceae]]></field>
+			<field><![CDATA[Balanophoraceae]]></field>
+			<field><![CDATA[Balanopsidaceae]]></field>
+			<field><![CDATA[Balantiopsaceae]]></field>
+			<field><![CDATA[Balbianiaceae]]></field>
+			<field><![CDATA[Balsaminaceae]]></field>
+			<field><![CDATA[Bangiaceae]]></field>
+			<field><![CDATA[Bartramiaceae]]></field>
+			<field><![CDATA[Basellaceae]]></field>
+			<field><![CDATA[Basidiomycete]]></field>
+			<field><![CDATA[Batidaceae]]></field>
+			<field><![CDATA[Batrachospermaceae]]></field>
+			<field><![CDATA[Begoniaceae]]></field>
+			<field><![CDATA[Berberidaceae]]></field>
+			<field><![CDATA[Betulaceae]]></field>
+			<field><![CDATA[Biatorellaceae]]></field>
+			<field><![CDATA[Bignoniaceae]]></field>
+			<field><![CDATA[Bixaceae]]></field>
+			<field><![CDATA[Blechnaceae]]></field>
+			<field><![CDATA[Blinksiaceae]]></field>
+			<field><![CDATA[Boldiaceae]]></field>
+			<field><![CDATA[Boletaceae]]></field>
+			<field><![CDATA[Bombacaceae]]></field>
+			<field><![CDATA[Bonnemaisoniaceae]]></field>
+			<field><![CDATA[Bonnetaceae]]></field>
+			<field><![CDATA[Bonnetiaceae]]></field>
+			<field><![CDATA[Boodleaceae]]></field>
+			<field><![CDATA[Boraginaceae]]></field>
+			<field><![CDATA[Borzinemataceae]]></field>
+			<field><![CDATA[Botrydiaceae]]></field>
+			<field><![CDATA[Botryochloridaceae]]></field>
+			<field><![CDATA[Botryococcaceae]]></field>
+			<field><![CDATA[Brachytheciaceae]]></field>
+			<field><![CDATA[Brassicaceae]]></field>
+			<field><![CDATA[Brigantiaceae]]></field>
+			<field><![CDATA[Brigantiaeaceae]]></field>
+			<field><![CDATA[Bromeliaceae]]></field>
+			<field><![CDATA[Brunelliaceae]]></field>
+			<field><![CDATA[Bruniaceae]]></field>
+			<field><![CDATA[Bryaceae]]></field>
+			<field><![CDATA[Bryopsidaceae]]></field>
+			<field><![CDATA[Buddlejaceae]]></field>
+			<field><![CDATA[Burmanniaceae]]></field>
+			<field><![CDATA[Burseraceae]]></field>
+			<field><![CDATA[Butomaceae]]></field>
+			<field><![CDATA[Buxaceae]]></field>
+			<field><![CDATA[Buxbaumiaceae]]></field>
+			<field><![CDATA[Byssolomataceae]]></field>
+			<field><![CDATA[Cactaceae]]></field>
+			<field><![CDATA[Caesalpiniaceae]]></field>
+			<field><![CDATA[Calciodinellaceae]]></field>
+			<field><![CDATA[Caliciaceae]]></field>
+			<field><![CDATA[Callicostaceae]]></field>
+			<field><![CDATA[Callitrichaceae]]></field>
+			<field><![CDATA[Calosiphoniaceae]]></field>
+			<field><![CDATA[Calycanthaceae]]></field>
+			<field><![CDATA[Calyceraceae]]></field>
+			<field><![CDATA[Calycidiaceae]]></field>
+			<field><![CDATA[Calymperaceae]]></field>
+			<field><![CDATA[Calypogeiaceae]]></field>
+			<field><![CDATA[Campanulaceae]]></field>
+			<field><![CDATA[Candelariaceae]]></field>
+			<field><![CDATA[Canellaceae]]></field>
+			<field><![CDATA[Cannaceae]]></field>
+			<field><![CDATA[Cantharellaceae]]></field>
+			<field><![CDATA[Capnodiaceae]]></field>
+			<field><![CDATA[Capparaceae]]></field>
+			<field><![CDATA[Capparidaceae]]></field>
+			<field><![CDATA[Caprifoliaceae]]></field>
+			<field><![CDATA[Capsosiraceae]]></field>
+			<field><![CDATA[Caricaceae]]></field>
+			<field><![CDATA[Caryocaraceae]]></field>
+			<field><![CDATA[Caryophyllaceae]]></field>
+			<field><![CDATA[Casuarinaceae]]></field>
+			<field><![CDATA[Catillariaceae]]></field>
+			<field><![CDATA[Catoscopiaceae]]></field>
+			<field><![CDATA[Caulacanthaceae]]></field>
+			<field><![CDATA[Caulerpaceae]]></field>
+			<field><![CDATA[Cecropiaceae]]></field>
+			<field><![CDATA[Celastraceae]]></field>
+			<field><![CDATA[Celotheliaceae]]></field>
+			<field><![CDATA[Centrolepidaceae]]></field>
+			<field><![CDATA[Cephalotaceae]]></field>
+			<field><![CDATA[Cephaloziaceae]]></field>
+			<field><![CDATA[Cephaloziellaceae]]></field>
+			<field><![CDATA[Ceramiaceae]]></field>
+			<field><![CDATA[Ceratiaceae]]></field>
+			<field><![CDATA[Ceratiomyxaceae]]></field>
+			<field><![CDATA[Ceratophyllaceae]]></field>
+			<field><![CDATA[Chaenothecopsis]]></field>
+			<field><![CDATA[Chaetangiaceae]]></field>
+			<field><![CDATA[Chaetocerotaceae]]></field>
+			<field><![CDATA[Chaetophoraceae]]></field>
+			<field><![CDATA[Chaetosiphoniaceae]]></field>
+			<field><![CDATA[Chaetosphaeridiaceae]]></field>
+			<field><![CDATA[Chamaesiphonaceae]]></field>
+			<field><![CDATA[Champiaceae]]></field>
+			<field><![CDATA[Characeae]]></field>
+			<field><![CDATA[Characiaceae]]></field>
+			<field><![CDATA[Characiopsidaceae]]></field>
+			<field><![CDATA[Characiosiphonaceae]]></field>
+			<field><![CDATA[Chattonellaceae]]></field>
+			<field><![CDATA[Cheiropleuriaceae]]></field>
+			<field><![CDATA[Chenopodiaceae]]></field>
+			<field><![CDATA[Chlaenaceae]]></field>
+			<field><![CDATA[Chlamydomonadaceae]]></field>
+			<field><![CDATA[Chlorangiaceae]]></field>
+			<field><![CDATA[Chloranthaceae]]></field>
+			<field><![CDATA[Chlorellaceae]]></field>
+			<field><![CDATA[Chlorobotrydaceae]]></field>
+			<field><![CDATA[Chlorococcaceae]]></field>
+			<field><![CDATA[Chlorophyceae]]></field>
+			<field><![CDATA[Chlorosaccaceae]]></field>
+			<field><![CDATA[Chlorosarcinaceae]]></field>
+			<field><![CDATA[Chnoosporaceae]]></field>
+			<field><![CDATA[Chordaceae]]></field>
+			<field><![CDATA[Chordariaceae]]></field>
+			<field><![CDATA[Chordariopsidaceae]]></field>
+			<field><![CDATA[Choreocolacaceae]]></field>
+			<field><![CDATA[Choristocarpaceae]]></field>
+			<field><![CDATA[Chroococcaceae]]></field>
+			<field><![CDATA[Chroococcidiaceae]]></field>
+			<field><![CDATA[Chroolepidaceae]]></field>
+			<field><![CDATA[Chrysobalanaceae]]></field>
+			<field><![CDATA[Chrysosaccaceae]]></field>
+			<field><![CDATA[Chrysothricaceae]]></field>
+			<field><![CDATA[Chrysothrichaceae]]></field>
+			<field><![CDATA[Cistaceae]]></field>
+			<field><![CDATA[Cladoniaceae]]></field>
+			<field><![CDATA[Cladophoraceae]]></field>
+			<field><![CDATA[Cladostephaceae]]></field>
+			<field><![CDATA[Clastidiaceae]]></field>
+			<field><![CDATA[Clavariaceae]]></field>
+			<field><![CDATA[Clavicipitaceae]]></field>
+			<field><![CDATA[Clavulinaceae]]></field>
+			<field><![CDATA[Clethraceae]]></field>
+			<field><![CDATA[Cleveaceae]]></field>
+			<field><![CDATA[Climaciaceae]]></field>
+			<field><![CDATA[Clusiaceae]]></field>
+			<field><![CDATA[Cneoraceae]]></field>
+			<field><![CDATA[Coccocarpiaceae]]></field>
+			<field><![CDATA[Coccomyxaceae]]></field>
+			<field><![CDATA[Coccotremataceae]]></field>
+			<field><![CDATA[Cochlospermaceae]]></field>
+			<field><![CDATA[Codiaceae]]></field>
+			<field><![CDATA[Coelastraceae]]></field>
+			<field><![CDATA[Coenogoniaceae]]></field>
+			<field><![CDATA[Colaconemataceae]]></field>
+			<field><![CDATA[Coleochaetaceae]]></field>
+			<field><![CDATA[Collemataceae]]></field>
+			<field><![CDATA[Coltrichiaceae]]></field>
+			<field><![CDATA[Columelliaceae]]></field>
+			<field><![CDATA[Combretaceae]]></field>
+			<field><![CDATA[Commelinaceae]]></field>
+			<field><![CDATA[Compsopogonaceae]]></field>
+			<field><![CDATA[Confervaceae]]></field>
+			<field><![CDATA[Coniocybaceae]]></field>
+			<field><![CDATA[Coniophoraceae]]></field>
+			<field><![CDATA[Connaraceae]]></field>
+			<field><![CDATA[Conocephalaceae]]></field>
+			<field><![CDATA[Convolvulaceae]]></field>
+			<field><![CDATA[Coprinaceae]]></field>
+			<field><![CDATA[Corallinaceae]]></field>
+			<field><![CDATA[Coriariaceae]]></field>
+			<field><![CDATA[Cornaceae]]></field>
+			<field><![CDATA[Corticiaceae]]></field>
+			<field><![CDATA[Cortinariaceae]]></field>
+			<field><![CDATA[Corynocarpaceae]]></field>
+			<field><![CDATA[Corynophlaeaceae]]></field>
+			<field><![CDATA[Costaceae]]></field>
+			<field><![CDATA[Crassulaceae]]></field>
+			<field><![CDATA[Crocyniaceae]]></field>
+			<field><![CDATA[Crossosomataceae]]></field>
+			<field><![CDATA[Cruoriaceae]]></field>
+			<field><![CDATA[Cryphaeaceae]]></field>
+			<field><![CDATA[Crypheaceae]]></field>
+			<field><![CDATA[Crypteroniaceae]]></field>
+			<field><![CDATA[Cryptomonadaceae]]></field>
+			<field><![CDATA[Cryptonemiaceae]]></field>
+			<field><![CDATA[Ctenolophonaceae]]></field>
+			<field><![CDATA[Cubiculosporaceae]]></field>
+			<field><![CDATA[Cucurbitaceae]]></field>
+			<field><![CDATA[Cunoniaceae]]></field>
+			<field><![CDATA[Cuscutaceae]]></field>
+			<field><![CDATA[Cutleriaceae]]></field>
+			<field><![CDATA[Cyanastraceae]]></field>
+			<field><![CDATA[Cyatheaceae]]></field>
+			<field><![CDATA[Cycadaceae]]></field>
+			<field><![CDATA[Cyclanthaceae]]></field>
+			<field><![CDATA[Cylindrocapsaceae]]></field>
+			<field><![CDATA[Cynomoriaceae]]></field>
+			<field><![CDATA[Cyperaceae]]></field>
+			<field><![CDATA[Cyphellaceae]]></field>
+			<field><![CDATA[Cyrillaceae]]></field>
+			<field><![CDATA[Cyrtopodaceae]]></field>
+			<field><![CDATA[Cystoseiraceae]]></field>
+			<field><![CDATA[Dacampiaceae]]></field>
+			<field><![CDATA[Dacrymycetaceae]]></field>
+			<field><![CDATA[Dactylosporaceae]]></field>
+			<field><![CDATA[Daltoniaceae]]></field>
+			<field><![CDATA[Dasyaceae]]></field>
+			<field><![CDATA[Dasycladaceae]]></field>
+			<field><![CDATA[Datiscaceae]]></field>
+			<field><![CDATA[Davalliaceae]]></field>
+			<field><![CDATA[Dawsoniaceae]]></field>
+			<field><![CDATA[Degeneriaceae]]></field>
+			<field><![CDATA[Delesseriaceae]]></field>
+			<field><![CDATA[Dennstaedtiaceae]]></field>
+			<field><![CDATA[Derbesiaceae]]></field>
+			<field><![CDATA[Dermateaceae]]></field>
+			<field><![CDATA[Dermocorynidaceae]]></field>
+			<field><![CDATA[Desmarestiaceae]]></field>
+			<field><![CDATA[Desmidiaceae]]></field>
+			<field><![CDATA[Deuteromycete]]></field>
+			<field><![CDATA[Diapensiaceae]]></field>
+			<field><![CDATA[Dichapetalaceae]]></field>
+			<field><![CDATA[Dichotomosiphonaceae]]></field>
+			<field><![CDATA[Dicksoniaceae]]></field>
+			<field><![CDATA[Dicranaceae]]></field>
+			<field><![CDATA[Dicranemataceae]]></field>
+			<field><![CDATA[Dictyosiphonaceae]]></field>
+			<field><![CDATA[Dictyosphaeriaceae]]></field>
+			<field><![CDATA[Dictyotaceae]]></field>
+			<field><![CDATA[Didiereaceae]]></field>
+			<field><![CDATA[Didymelaceae]]></field>
+			<field><![CDATA[Dilleniaceae]]></field>
+			<field><![CDATA[Dinobryaceae]]></field>
+			<field><![CDATA[Dinophysaceae]]></field>
+			<field><![CDATA[Dioncophyllaceae]]></field>
+			<field><![CDATA[Dioscoreaceae]]></field>
+			<field><![CDATA[Diphysciaceae]]></field>
+			<field><![CDATA[Diplopsaliaceae]]></field>
+			<field><![CDATA[Dipsacaceae]]></field>
+			<field><![CDATA[Dipteridaceae]]></field>
+			<field><![CDATA[Dipterocarpaceae]]></field>
+			<field><![CDATA[Discomycetaceae]]></field>
+			<field><![CDATA[Discomycete]]></field>
+			<field><![CDATA[Ditrichaceae]]></field>
+			<field><![CDATA[Dothideomycetes]]></field>
+			<field><![CDATA[Droseraceae]]></field>
+			<field><![CDATA[Dryopteridaceae]]></field>
+			<field><![CDATA[Dumontiaceae]]></field>
+			<field><![CDATA[Durvillaeaceae]]></field>
+			<field><![CDATA[Ebenaceae]]></field>
+			<field><![CDATA[Echinostelliales]]></field>
+			<field><![CDATA[Ectocarpaceae]]></field>
+			<field><![CDATA[Ectolechiaceae]]></field>
+			<field><![CDATA[Elachistaceae]]></field>
+			<field><![CDATA[Elaeagnaceae]]></field>
+			<field><![CDATA[Elaeocarpaceae]]></field>
+			<field><![CDATA[Elaphomycetaceae]]></field>
+			<field><![CDATA[Elatinaceae]]></field>
+			<field><![CDATA[Eleaocarpaceae]]></field>
+			<field><![CDATA[Elixiaceae]]></field>
+			<field><![CDATA[Empetraceae]]></field>
+			<field><![CDATA[Encalyptaceae]]></field>
+			<field><![CDATA[Endocladiaceae]]></field>
+			<field><![CDATA[Endosphaeraceae]]></field>
+			<field><![CDATA[Entodontaceae]]></field>
+			<field><![CDATA[Entolomataceae]]></field>
+			<field><![CDATA[Entophysalidaceae]]></field>
+			<field><![CDATA[Epacridaceae]]></field>
+			<field><![CDATA[Ephedraceae]]></field>
+			<field><![CDATA[Ephemeraceae]]></field>
+			<field><![CDATA[Equisetaceae]]></field>
+			<field><![CDATA[Ericaceae]]></field>
+			<field><![CDATA[Eriocaulaceae]]></field>
+			<field><![CDATA[Erpodiaceae]]></field>
+			<field><![CDATA[Erythropeltidaceae]]></field>
+			<field><![CDATA[Erythroxylaceae]]></field>
+			<field><![CDATA[Escalloniaceae]]></field>
+			<field><![CDATA[Eucryphiaceae]]></field>
+			<field><![CDATA[Euglenaceae]]></field>
+			<field><![CDATA[Euphorbiaceae]]></field>
+			<field><![CDATA[Fabaceae]]></field>
+			<field><![CDATA[Fabroniaceae]]></field>
+			<field><![CDATA[Fagaceae]]></field>
+			<field><![CDATA[Faucheaceae]]></field>
+			<field><![CDATA[Fissidentaceae]]></field>
+			<field><![CDATA[Flacouritiaceae]]></field>
+			<field><![CDATA[Flacourtiaceae]]></field>
+			<field><![CDATA[Flagellariaceae]]></field>
+			<field><![CDATA[Foetidiaceae]]></field>
+			<field><![CDATA[Fontinalaceae]]></field>
+			<field><![CDATA[Fossombroniaceae]]></field>
+			<field><![CDATA[Fouquieriaceae]]></field>
+			<field><![CDATA[Frankeniaceae]]></field>
+			<field><![CDATA[Frullanaceae]]></field>
+			<field><![CDATA[Fucaceae]]></field>
+			<field><![CDATA[Funariaceae]]></field>
+			<field><![CDATA[Furcellariaceae]]></field>
+			<field><![CDATA[Fuscideaceae]]></field>
+			<field><![CDATA[Futolomataceae]]></field>
+			<field><![CDATA[Galaxauraceae]]></field>
+			<field><![CDATA[Ganodermataceae]]></field>
+			<field><![CDATA[Gastromycete]]></field>
+			<field><![CDATA[Gayraliaceae]]></field>
+			<field><![CDATA[Geastraceae]]></field>
+			<field><![CDATA[Geissolomataceae]]></field>
+			<field><![CDATA[Gelidiaceae]]></field>
+			<field><![CDATA[Gelidiellaceae]]></field>
+			<field><![CDATA[Gentianaceae]]></field>
+			<field><![CDATA[Geocalycaceae]]></field>
+			<field><![CDATA[Geraniaceae]]></field>
+			<field><![CDATA[Gesneriaceae]]></field>
+			<field><![CDATA[Gigartinaceae]]></field>
+			<field><![CDATA[Ginkgoaceae]]></field>
+			<field><![CDATA[Giraudiaceae]]></field>
+			<field><![CDATA[Gleicheniaceae]]></field>
+			<field><![CDATA[Glenodiniaceae]]></field>
+			<field><![CDATA[Globulariaceae]]></field>
+			<field><![CDATA[Gloeodiniaceae]]></field>
+			<field><![CDATA[Gloeoheppiaceae]]></field>
+			<field><![CDATA[Gloiosiphoniaceae]]></field>
+			<field><![CDATA[Gnetaceae]]></field>
+			<field><![CDATA[Gomontiaceae]]></field>
+			<field><![CDATA[Gomontiellaceae]]></field>
+			<field><![CDATA[Gomortegaceae]]></field>
+			<field><![CDATA[Gomphillaceae]]></field>
+			<field><![CDATA[Gomphyllaceae]]></field>
+			<field><![CDATA[Goniodomataceae]]></field>
+			<field><![CDATA[Goniotrichaceae]]></field>
+			<field><![CDATA[Gonyaulacaceae]]></field>
+			<field><![CDATA[Gonystylaceae]]></field>
+			<field><![CDATA[Goodeniaceae]]></field>
+			<field><![CDATA[Gracilariaceae]]></field>
+			<field><![CDATA[Graminae]]></field>
+			<field><![CDATA[Grammitidaceae]]></field>
+			<field><![CDATA[Graphidaceae]]></field>
+			<field><![CDATA[Graphidiaceae]]></field>
+			<field><![CDATA[Grimmiaceae]]></field>
+			<field><![CDATA[Grubbiaceae]]></field>
+			<field><![CDATA[Gyalectaceae]]></field>
+			<field><![CDATA[Gymnodiniaceae]]></field>
+			<field><![CDATA[Gymnomitriaceae]]></field>
+			<field><![CDATA[Gymnophlaeaceae]]></field>
+			<field><![CDATA[Gypsoplacaceae]]></field>
+			<field><![CDATA[Gyrothyraceae]]></field>
+			<field><![CDATA[Haematococcaceae]]></field>
+			<field><![CDATA[Haematommataceae]]></field>
+			<field><![CDATA[Haemodoraceae]]></field>
+			<field><![CDATA[Halimedaceae]]></field>
+			<field><![CDATA[Haloragidaceae]]></field>
+			<field><![CDATA[Halymeniaceae]]></field>
+			<field><![CDATA[Hamamelidaceae]]></field>
+			<field><![CDATA[Hanguanaceae]]></field>
+			<field><![CDATA[Hapalidiaceae]]></field>
+			<field><![CDATA[Haplomitraceae]]></field>
+			<field><![CDATA[Hedwigiaceae]]></field>
+			<field><![CDATA[Heliconiaceae]]></field>
+			<field><![CDATA[Helicophyllaceae]]></field>
+			<field><![CDATA[Helminthocladiaceae]]></field>
+			<field><![CDATA[Helotiaceae]]></field>
+			<field><![CDATA[Hemerocallidaceae]]></field>
+			<field><![CDATA[Hemidiscaceae]]></field>
+			<field><![CDATA[Heppiaceae]]></field>
+			<field><![CDATA[Herbertaceae]]></field>
+			<field><![CDATA[Hericiaceae]]></field>
+			<field><![CDATA[Hernandiaceae]]></field>
+			<field><![CDATA[Heterococcaceae]]></field>
+			<field><![CDATA[Heterotrichaceae]]></field>
+			<field><![CDATA[Hildenbrandiaceae]]></field>
+			<field><![CDATA[Himanthaliaceae]]></field>
+			<field><![CDATA[Himantothallaceae]]></field>
+			<field><![CDATA[Hippocastanaceae]]></field>
+			<field><![CDATA[Hippocrateaceae]]></field>
+			<field><![CDATA[Hippuridaceae]]></field>
+			<field><![CDATA[Hookeriaceae]]></field>
+			<field><![CDATA[Hormosiraceae]]></field>
+			<field><![CDATA[Humiriaceae]]></field>
+			<field><![CDATA[Hydnaceae]]></field>
+			<field><![CDATA[Hydnodontaceae]]></field>
+			<field><![CDATA[Hydnoraceae]]></field>
+			<field><![CDATA[Hydrocharitaceae]]></field>
+			<field><![CDATA[Hydrococcaceae]]></field>
+			<field><![CDATA[Hydrodictyaceae]]></field>
+			<field><![CDATA[Hydrophyllaceae]]></field>
+			<field><![CDATA[Hydropogonaceae]]></field>
+			<field><![CDATA[Hydrostachyaceae]]></field>
+			<field><![CDATA[Hydruraceae]]></field>
+			<field><![CDATA[Hygrophoraceae]]></field>
+			<field><![CDATA[Hylocomiaceae]]></field>
+			<field><![CDATA[Hymeneliaceae]]></field>
+			<field><![CDATA[Hymenochaetaceae]]></field>
+			<field><![CDATA[Hymenophyllaceae]]></field>
+			<field><![CDATA[Hymenophyllopsidaceae]]></field>
+			<field><![CDATA[Hypericaceae]]></field>
+			<field><![CDATA[Hypnaceae]]></field>
+			<field><![CDATA[Hypneaceae]]></field>
+			<field><![CDATA[Hypnodendraceae]]></field>
+			<field><![CDATA[Hypocreaceae]]></field>
+			<field><![CDATA[Hypopterygiaceae]]></field>
+			<field><![CDATA[Hypoxidaceae]]></field>
+			<field><![CDATA[Hysterangiaceae]]></field>
+			<field><![CDATA[Icacinaceae]]></field>
+			<field><![CDATA[Icmadophilaceae]]></field>
+			<field><![CDATA[Indet.]]></field>
+			<field><![CDATA[Inkyuleeaceae]]></field>
+			<field><![CDATA[Iridaceae]]></field>
+			<field><![CDATA[Ishigeaceae]]></field>
+			<field><![CDATA[Isoδtaceae]]></field>
+			<field><![CDATA[Ixonanthaceae]]></field>
+			<field><![CDATA[Joinvilleaceae]]></field>
+			<field><![CDATA[Juglandaceae]]></field>
+			<field><![CDATA[Juncaceae]]></field>
+			<field><![CDATA[Juncaginaceae]]></field>
+			<field><![CDATA[Jungermanniaceae]]></field>
+			<field><![CDATA[Kallymeniaceae]]></field>
+			<field><![CDATA[Kareniaceae]]></field>
+			<field><![CDATA[Koeberliniaceae]]></field>
+			<field><![CDATA[Kornmanniaceae]]></field>
+			<field><![CDATA[Lacistemaceae]]></field>
+			<field><![CDATA[Lacistemataceae]]></field>
+			<field><![CDATA[Lactoridaceae]]></field>
+			<field><![CDATA[Lamiaceae]]></field>
+			<field><![CDATA[Laminariaceae]]></field>
+			<field><![CDATA[Lardizabalaceae]]></field>
+			<field><![CDATA[Lauraceae]]></field>
+			<field><![CDATA[Leathesiaceae]]></field>
+			<field><![CDATA[Lecanoraceae]]></field>
+			<field><![CDATA[Lecanorales]]></field>
+			<field><![CDATA[Lecideaceae]]></field>
+			<field><![CDATA[Lecythidaceae]]></field>
+			<field><![CDATA[Leguminosae]]></field>
+			<field><![CDATA[Leitneriaceae]]></field>
+			<field><![CDATA[Lejeuneaceae]]></field>
+			<field><![CDATA[Lemaneaceae]]></field>
+			<field><![CDATA[Lembophyllaceae]]></field>
+			<field><![CDATA[Lemnaceae]]></field>
+			<field><![CDATA[Lennoaceae]]></field>
+			<field><![CDATA[Lentibulariaceae]]></field>
+			<field><![CDATA[Leotiales]]></field>
+			<field><![CDATA[Leotiomycetes]]></field>
+			<field><![CDATA[Lepicoleaceae]]></field>
+			<field><![CDATA[Lepidobotryaceae]]></field>
+			<field><![CDATA[Lepidolaenaceae]]></field>
+			<field><![CDATA[Lepidoziaceae]]></field>
+			<field><![CDATA[Lepiotaceae]]></field>
+			<field><![CDATA[Leptostomataceae]]></field>
+			<field><![CDATA[Lepyrodontaceae]]></field>
+			<field><![CDATA[Leskeaceae]]></field>
+			<field><![CDATA[Lessoniaceae]]></field>
+			<field><![CDATA[Letrouitiaceae]]></field>
+			<field><![CDATA[Leucobryaceae]]></field>
+			<field><![CDATA[Leucodontaceae]]></field>
+			<field><![CDATA[Leucomiaceae]]></field>
+			<field><![CDATA[Leucorbryaceae]]></field>
+			<field><![CDATA[Liagoraceae]]></field>
+			<field><![CDATA[Liceales]]></field>
+			<field><![CDATA[Lichen]]></field>
+			<field><![CDATA[Lichinaceae]]></field>
+			<field><![CDATA[Liliaceae]]></field>
+			<field><![CDATA[Limnanthaceae]]></field>
+			<field><![CDATA[Linaceae]]></field>
+			<field><![CDATA[Lindsaeaceae]]></field>
+			<field><![CDATA[Liverwort]]></field>
+			<field><![CDATA[Loasaceae]]></field>
+			<field><![CDATA[Lobariaceae]]></field>
+			<field><![CDATA[Lobeliaceae]]></field>
+			<field><![CDATA[Loganiaceae]]></field>
+			<field><![CDATA[Lomariopsidaceae]]></field>
+			<field><![CDATA[Lomentariaceae]]></field>
+			<field><![CDATA[Lophosoriaceae]]></field>
+			<field><![CDATA[Loranthaceae]]></field>
+			<field><![CDATA[Loriellaceae]]></field>
+			<field><![CDATA[Lowiaceae]]></field>
+			<field><![CDATA[Loxsomataceae]]></field>
+			<field><![CDATA[Lycoperdaceae]]></field>
+			<field><![CDATA[Lycopodiaceae]]></field>
+			<field><![CDATA[Lythraceae]]></field>
+			<field><![CDATA[Macromitriaceae]]></field>
+			<field><![CDATA[Magnoliaceae]]></field>
+			<field><![CDATA[Malesherbiaceae]]></field>
+			<field><![CDATA[Malpighiaceae]]></field>
+			<field><![CDATA[Malvaceae]]></field>
+			<field><![CDATA[Marantaceae]]></field>
+			<field><![CDATA[Marasmiaceae]]></field>
+			<field><![CDATA[Marattiaceae]]></field>
+			<field><![CDATA[Marcgraviaceae]]></field>
+			<field><![CDATA[Marchantiaceae]]></field>
+			<field><![CDATA[Marsileaceae]]></field>
+			<field><![CDATA[Martyniaceae]]></field>
+			<field><![CDATA[Massalongiaceae]]></field>
+			<field><![CDATA[Mastigocladaceae]]></field>
+			<field><![CDATA[Mastixiaceae]]></field>
+			<field><![CDATA[Mastodiaceae]]></field>
+			<field><![CDATA[Matoniaceae]]></field>
+			<field><![CDATA[Mayacaceae]]></field>
+			<field><![CDATA[Medusandraceae]]></field>
+			<field><![CDATA[Meesiaceae]]></field>
+			<field><![CDATA[Megalariaceae]]></field>
+			<field><![CDATA[Megalosporaceae]]></field>
+			<field><![CDATA[Megasporaceae]]></field>
+			<field><![CDATA[Melaspileaceae]]></field>
+			<field><![CDATA[Melastomaceae]]></field>
+			<field><![CDATA[Melastomataceae]]></field>
+			<field><![CDATA[Meliaceae]]></field>
+			<field><![CDATA[Meliaceae/sabiaceae]]></field>
+			<field><![CDATA[Melianthaceae]]></field>
+			<field><![CDATA[Menispermaceae]]></field>
+			<field><![CDATA[Menyanthaceae]]></field>
+			<field><![CDATA[Mesotaeniaceae]]></field>
+			<field><![CDATA[Messiaceae]]></field>
+			<field><![CDATA[Metaxyaceae]]></field>
+			<field><![CDATA[Meteoriaceae]]></field>
+			<field><![CDATA[Metzgeriaceae]]></field>
+			<field><![CDATA[Micareaceae]]></field>
+			<field><![CDATA[Micractiniaceae]]></field>
+			<field><![CDATA[Microcaliciaceae]]></field>
+			<field><![CDATA[Microchaetaceae]]></field>
+			<field><![CDATA[Microsporaceae]]></field>
+			<field><![CDATA[Microthyriaceae]]></field>
+			<field><![CDATA[Mimosaceae]]></field>
+			<field><![CDATA[Mniaceae]]></field>
+			<field><![CDATA[Molluginaceae]]></field>
+			<field><![CDATA[Monimiaceae]]></field>
+			<field><![CDATA[Monoblastiaceae]]></field>
+			<field><![CDATA[Monocleaceae]]></field>
+			<field><![CDATA[Monostromataceae]]></field>
+			<field><![CDATA[Montiaceae]]></field>
+			<field><![CDATA[Moraceae]]></field>
+			<field><![CDATA[Moringaceae]]></field>
+			<field><![CDATA[Muntingiaceae]]></field>
+			<field><![CDATA[Musaceae]]></field>
+			<field><![CDATA[Mycenaceae]]></field>
+			<field><![CDATA[Mychodeaceae]]></field>
+			<field><![CDATA[Mycoblastaceae]]></field>
+			<field><![CDATA[Mycocalicaceae]]></field>
+			<field><![CDATA[Mycocaliciaceae]]></field>
+			<field><![CDATA[Mycoporaceae]]></field>
+			<field><![CDATA[Mycosphaerellaceae]]></field>
+			<field><![CDATA[Myoporaceae]]></field>
+			<field><![CDATA[Myricaceae]]></field>
+			<field><![CDATA[Myriniaceae]]></field>
+			<field><![CDATA[Myrionemataceae]]></field>
+			<field><![CDATA[Myriotrichiaceae]]></field>
+			<field><![CDATA[Myristicaceae]]></field>
+			<field><![CDATA[Myrothamnaceae]]></field>
+			<field><![CDATA[Myrsinaceae]]></field>
+			<field><![CDATA[Myrtaceae]]></field>
+			<field><![CDATA[Myxomycete]]></field>
+			<field><![CDATA[Myzodendraceae]]></field>
+			<field><![CDATA[Naccariaceae]]></field>
+			<field><![CDATA[Naegeliellaceae]]></field>
+			<field><![CDATA[Najadaceae]]></field>
+			<field><![CDATA[Neckeraceae]]></field>
+			<field><![CDATA[Nelumbonaceae]]></field>
+			<field><![CDATA[Nemaliaceae]]></field>
+			<field><![CDATA[Nemastomataceae]]></field>
+			<field><![CDATA[Nepenthaceae]]></field>
+			<field><![CDATA[Nephrolepidaceae]]></field>
+			<field><![CDATA[Nephromataceae]]></field>
+			<field><![CDATA[Nidulariaceae]]></field>
+			<field><![CDATA[Nidulariales]]></field>
+			<field><![CDATA[Nolanaceae]]></field>
+			<field><![CDATA[Nostocaceae]]></field>
+			<field><![CDATA[Nostochopsidaceae]]></field>
+			<field><![CDATA[Notheiaceae]]></field>
+			<field><![CDATA[Notothyladaceae]]></field>
+			<field><![CDATA[Nyctaginaceae]]></field>
+			<field><![CDATA[Nymphaeaceae]]></field>
+			<field><![CDATA[Nyssaceae]]></field>
+			<field><![CDATA[Ochnaceae]]></field>
+			<field><![CDATA[Ochrolechiaceae]]></field>
+			<field><![CDATA[Odontotremataceae]]></field>
+			<field><![CDATA[Oedogoniaceae]]></field>
+			<field><![CDATA[Olacaceae]]></field>
+			<field><![CDATA[Oleaceae]]></field>
+			<field><![CDATA[Oliniaceae]]></field>
+			<field><![CDATA[Onagraceae]]></field>
+			<field><![CDATA[Oocystaceae]]></field>
+			<field><![CDATA[Ophioglossaceae]]></field>
+			<field><![CDATA[Ophioparmaceae]]></field>
+			<field><![CDATA[Opiliaceae]]></field>
+			<field><![CDATA[Orchidaceae]]></field>
+			<field><![CDATA[Orobanchaceae]]></field>
+			<field><![CDATA[Orthotrichaceae]]></field>
+			<field><![CDATA[Oscillatoriaceae]]></field>
+			<field><![CDATA[Osmundaceae]]></field>
+			<field><![CDATA[Ostreopsidaceae]]></field>
+			<field><![CDATA[Ostropales]]></field>
+			<field><![CDATA[Oxalidaceae]]></field>
+			<field><![CDATA[Pallaviciniaceae]]></field>
+			<field><![CDATA[Palmellaceae]]></field>
+			<field><![CDATA[Palmellopsidaceae]]></field>
+			<field><![CDATA[Pandaceae]]></field>
+			<field><![CDATA[Pandanaceae]]></field>
+			<field><![CDATA[Pannariaceae]]></field>
+			<field><![CDATA[Papaveraceae]]></field>
+			<field><![CDATA[Papilionaceae]]></field>
+			<field><![CDATA[Parkeriaceae]]></field>
+			<field><![CDATA[Parmeliaceae]]></field>
+			<field><![CDATA[Passifloraceae]]></field>
+			<field><![CDATA[Paxillaceae]]></field>
+			<field><![CDATA[Pedaliaceae]]></field>
+			<field><![CDATA[Pelliaceae]]></field>
+			<field><![CDATA[Peltigeraceae]]></field>
+			<field><![CDATA[Peltigerales]]></field>
+			<field><![CDATA[Peltulaceae]]></field>
+			<field><![CDATA[Penaeaceae]]></field>
+			<field><![CDATA[Pennariaceae]]></field>
+			<field><![CDATA[Pentadiplandraceae]]></field>
+			<field><![CDATA[Pentaphragmataceae]]></field>
+			<field><![CDATA[Pentaphylacaceae]]></field>
+			<field><![CDATA[Pentaphylaceae]]></field>
+			<field><![CDATA[Peridiniaceae]]></field>
+			<field><![CDATA[Periplocaceae]]></field>
+			<field><![CDATA[Pertusariaceae]]></field>
+			<field><![CDATA[Peyssonneliaceae]]></field>
+			<field><![CDATA[Pezizaceae]]></field>
+			<field><![CDATA[Pezizales]]></field>
+			<field><![CDATA[Pezizomycotina]]></field>
+			<field><![CDATA[Pfisteriaceae]]></field>
+			<field><![CDATA[Phacelocarpaceae]]></field>
+			<field><![CDATA[Phacotaceae]]></field>
+			<field><![CDATA[Phaeodermatiaceae]]></field>
+			<field><![CDATA[Phaeophilaceae]]></field>
+			<field><![CDATA[Phaeosacciaceae]]></field>
+			<field><![CDATA[Phaeothamniaceae]]></field>
+			<field><![CDATA[Phallaceae]]></field>
+			<field><![CDATA[Philydraceae]]></field>
+			<field><![CDATA[Phlyctidaceae]]></field>
+			<field><![CDATA[Phragmonemataceae]]></field>
+			<field><![CDATA[Phrymaceae]]></field>
+			<field><![CDATA[Phycolepidoziaceae]]></field>
+			<field><![CDATA[Phyllanthaceae]]></field>
+			<field><![CDATA[Phyllocladaceae]]></field>
+			<field><![CDATA[Phyllodrepaniaceae]]></field>
+			<field><![CDATA[Phyllogoniaceae]]></field>
+			<field><![CDATA[Phyllophoraceae]]></field>
+			<field><![CDATA[Phyllosiphonaceae]]></field>
+			<field><![CDATA[Physalacriaceae]]></field>
+			<field><![CDATA[Physarales]]></field>
+			<field><![CDATA[Physciaceae]]></field>
+			<field><![CDATA[Phytolaccaceae]]></field>
+			<field><![CDATA[Picrmniaceae]]></field>
+			<field><![CDATA[Pilocarpaceae]]></field>
+			<field><![CDATA[Pilotrichaceae]]></field>
+			<field><![CDATA[Pinaceae]]></field>
+			<field><![CDATA[Pinguiochrysidaceae]]></field>
+			<field><![CDATA[Piperaceae]]></field>
+			<field><![CDATA[Pittosporaceae]]></field>
+			<field><![CDATA[Placynthiaceae]]></field>
+			<field><![CDATA[Plagiochilaceae]]></field>
+			<field><![CDATA[Plagiogyriaceae]]></field>
+			<field><![CDATA[Plagioiaceae]]></field>
+			<field><![CDATA[Plagiotheciaceae]]></field>
+			<field><![CDATA[Plantaginaceae]]></field>
+			<field><![CDATA[Platanaceae]]></field>
+			<field><![CDATA[Pleomassariaceae]]></field>
+			<field><![CDATA[Pleurochloridaceae]]></field>
+			<field><![CDATA[Pleurotaceae]]></field>
+			<field><![CDATA[Pleuroziaceae]]></field>
+			<field><![CDATA[Plocamiaceae]]></field>
+			<field><![CDATA[Plumbaginaceae]]></field>
+			<field><![CDATA[Pluteaceae]]></field>
+			<field><![CDATA[Poaceae]]></field>
+			<field><![CDATA[Podocarpaceae]]></field>
+			<field><![CDATA[Podolampadaceae]]></field>
+			<field><![CDATA[Podoscyphaceae]]></field>
+			<field><![CDATA[Podostemaceae]]></field>
+			<field><![CDATA[Podostemonaceae]]></field>
+			<field><![CDATA[Polemoniaceae]]></field>
+			<field><![CDATA[Polyblepharidaceae]]></field>
+			<field><![CDATA[Polygalaceae]]></field>
+			<field><![CDATA[Polygonaceae]]></field>
+			<field><![CDATA[Polyphysaceae]]></field>
+			<field><![CDATA[Polypodiaceae]]></field>
+			<field><![CDATA[Polyporaceae]]></field>
+			<field><![CDATA[Polyporales]]></field>
+			<field><![CDATA[Polytrichaceae]]></field>
+			<field><![CDATA[Pontederiaceae]]></field>
+			<field><![CDATA[Porellaceae]]></field>
+			<field><![CDATA[Porinaceae]]></field>
+			<field><![CDATA[Porphyridiaceae]]></field>
+			<field><![CDATA[Porpidiaceae]]></field>
+			<field><![CDATA[Portulacaceae]]></field>
+			<field><![CDATA[Potaliaceae]]></field>
+			<field><![CDATA[Potamogetonaceae]]></field>
+			<field><![CDATA[Pottiaceae]]></field>
+			<field><![CDATA[Prasiolaceae]]></field>
+			<field><![CDATA[Primulaceae]]></field>
+			<field><![CDATA[Prionodantaceae]]></field>
+			<field><![CDATA[Prionodontaceae]]></field>
+			<field><![CDATA[Prorocentraceae]]></field>
+			<field><![CDATA[Proteaceae]]></field>
+			<field><![CDATA[Protoceratiaceae]]></field>
+			<field><![CDATA[Protoperidiniaceae]]></field>
+			<field><![CDATA[Protosiphonaceae]]></field>
+			<field><![CDATA[Psathyrellaceae]]></field>
+			<field><![CDATA[Pseudanabenaceae]]></field>
+			<field><![CDATA[Pseudoanemoniaceae]]></field>
+			<field><![CDATA[Pseudolepicoleaceae]]></field>
+			<field><![CDATA[Psilotaceae]]></field>
+			<field><![CDATA[Psoraceae]]></field>
+			<field><![CDATA[Ptaeroxylaceae]]></field>
+			<field><![CDATA[Pteridaceae]]></field>
+			<field><![CDATA[Pterigynandraceae]]></field>
+			<field><![CDATA[Pterobryaceae]]></field>
+			<field><![CDATA[Pterulaceae]]></field>
+			<field><![CDATA[Ptilidiaceae]]></field>
+			<field><![CDATA[Ptychomitriaceae]]></field>
+			<field><![CDATA[Pulvinulariaceae]]></field>
+			<field><![CDATA[Punctariaceae]]></field>
+			<field><![CDATA[Punicaceae]]></field>
+			<field><![CDATA[Pylaiellaceae]]></field>
+			<field><![CDATA[Pyrenomycete]]></field>
+			<field><![CDATA[Pyrenulaceae]]></field>
+			<field><![CDATA[Pyrolaceae]]></field>
+			<field><![CDATA[Pyronemataceae]]></field>
+			<field><![CDATA[Quiinaceae]]></field>
+			<field><![CDATA[Racopilaceae]]></field>
+			<field><![CDATA[Radulaceae]]></field>
+			<field><![CDATA[Rafflesiaceae]]></field>
+			<field><![CDATA[Ralfsiaceae]]></field>
+			<field><![CDATA[Ramalinaceae]]></field>
+			<field><![CDATA[Ranunculaceae]]></field>
+			<field><![CDATA[Rapateaceae]]></field>
+			<field><![CDATA[Resedaceae]]></field>
+			<field><![CDATA[Restionaceae]]></field>
+			<field><![CDATA[Revouleaceae]]></field>
+			<field><![CDATA[Rhabdodendraceae]]></field>
+			<field><![CDATA[Rhabdoniaceae]]></field>
+			<field><![CDATA[Rhacocarpaceae]]></field>
+			<field><![CDATA[Rhacopilaceae]]></field>
+			<field><![CDATA[Rhamnaceae]]></field>
+			<field><![CDATA[Rhizocarpaceae]]></field>
+			<field><![CDATA[Rhizogoniaceae]]></field>
+			<field><![CDATA[Rhizophoraceae]]></field>
+			<field><![CDATA[Rhizophyllidaceae]]></field>
+			<field><![CDATA[Rhodochaetaceae]]></field>
+			<field><![CDATA[Rhodogorgonaceae]]></field>
+			<field><![CDATA[Rhodomelaceae]]></field>
+			<field><![CDATA[Rhodophyllidaceae]]></field>
+			<field><![CDATA[Rhodymeniaceae]]></field>
+			<field><![CDATA[Rhysciaceae]]></field>
+			<field><![CDATA[Rhytidiaceae]]></field>
+			<field><![CDATA[Ricciaceae]]></field>
+			<field><![CDATA[Riellaceae]]></field>
+			<field><![CDATA[Rissoellaceae]]></field>
+			<field><![CDATA[Rivulariaceae]]></field>
+			<field><![CDATA[Roccellaceae]]></field>
+			<field><![CDATA[Rocellaceae]]></field>
+			<field><![CDATA[Ropalosporaceae]]></field>
+			<field><![CDATA[Rosaceae]]></field>
+			<field><![CDATA[Rubiaceae]]></field>
+			<field><![CDATA[Russulaceae]]></field>
+			<field><![CDATA[Rutaceae]]></field>
+			<field><![CDATA[Sabiaceae]]></field>
+			<field><![CDATA[Salicaceae]]></field>
+			<field><![CDATA[Salvadoraceae]]></field>
+			<field><![CDATA[Salviniaceae]]></field>
+			<field><![CDATA[Santalaceae]]></field>
+			<field><![CDATA[Sapindaceae]]></field>
+			<field><![CDATA[Sapotaceae]]></field>
+			<field><![CDATA[Sarcodiaceae]]></field>
+			<field><![CDATA[Sargassaceae]]></field>
+			<field><![CDATA[Sarraceniaceae]]></field>
+			<field><![CDATA[Sarrameanaceae]]></field>
+			<field><![CDATA[Saururaceae]]></field>
+			<field><![CDATA[Saxifragaceae]]></field>
+			<field><![CDATA[Scapaniaceae]]></field>
+			<field><![CDATA[Scenedesmaceae]]></field>
+			<field><![CDATA[Schaereriaceae]]></field>
+			<field><![CDATA[Schistochilaceae]]></field>
+			<field><![CDATA[Schizaeaceae]]></field>
+			<field><![CDATA[Schizomeridaceae]]></field>
+			<field><![CDATA[Schizymeniaceae]]></field>
+			<field><![CDATA[Schlegeliaceae]]></field>
+			<field><![CDATA[Sciadiaceae]]></field>
+			<field><![CDATA[Sclerodermataceae]]></field>
+			<field><![CDATA[Sclerotiniaceae]]></field>
+			<field><![CDATA[Scrophulariaceae]]></field>
+			<field><![CDATA[Scytonemataceae]]></field>
+			<field><![CDATA[Scytopetalaceae]]></field>
+			<field><![CDATA[Scytosiphonaceae]]></field>
+			<field><![CDATA[Scytothamnaceae]]></field>
+			<field><![CDATA[Sebacinaceae]]></field>
+			<field><![CDATA[Sebdeniaceae]]></field>
+			<field><![CDATA[Selaginellaceae]]></field>
+			<field><![CDATA[Seligeriaceae]]></field>
+			<field><![CDATA[Sematophyllaceae]]></field>
+			<field><![CDATA[Simaroubaceae]]></field>
+			<field><![CDATA[Sinopteridaceae]]></field>
+			<field><![CDATA[Siparunaceae]]></field>
+			<field><![CDATA[Siphonocladaceae]]></field>
+			<field><![CDATA[Siphulaceae]]></field>
+			<field><![CDATA[Smilacaceae]]></field>
+			<field><![CDATA[Solanaceae]]></field>
+			<field><![CDATA[Solieriaceae]]></field>
+			<field><![CDATA[Sonneratiaceae]]></field>
+			<field><![CDATA[Sparganiaceae]]></field>
+			<field><![CDATA[Spermatochnaceae]]></field>
+			<field><![CDATA[Sphacelariaceae]]></field>
+			<field><![CDATA[Sphaerocarpaceae]]></field>
+			<field><![CDATA[Sphaerococcaceae]]></field>
+			<field><![CDATA[Sphaerophoaceae]]></field>
+			<field><![CDATA[Sphaerophoraceae]]></field>
+			<field><![CDATA[Sphaeropleaceae]]></field>
+			<field><![CDATA[Sphaerosepalaceae]]></field>
+			<field><![CDATA[Sphagnaceae]]></field>
+			<field><![CDATA[Sphinctrinaceae]]></field>
+			<field><![CDATA[Splachnaceae]]></field>
+			<field><![CDATA[Splachnidiaceae]]></field>
+			<field><![CDATA[Spondylomoraceae]]></field>
+			<field><![CDATA[Sporochnaceae]]></field>
+			<field><![CDATA[Stachyuraceae]]></field>
+			<field><![CDATA[Stackhousiaceae]]></field>
+			<field><![CDATA[Staphyeaceae]]></field>
+			<field><![CDATA[Staphyleaceae]]></field>
+			<field><![CDATA[Stemonaceae]]></field>
+			<field><![CDATA[Stemonitales]]></field>
+			<field><![CDATA[Stemonuraceae]]></field>
+			<field><![CDATA[Sterculiaceae]]></field>
+			<field><![CDATA[Stereaceae]]></field>
+			<field><![CDATA[Stereocaulaceae]]></field>
+			<field><![CDATA[Stereophyllaceae]]></field>
+			<field><![CDATA[Stictidaceae]]></field>
+			<field><![CDATA[Stigonemataceae]]></field>
+			<field><![CDATA[Streblonemataceae]]></field>
+			<field><![CDATA[Strelitziaceae]]></field>
+			<field><![CDATA[Striariaceae]]></field>
+			<field><![CDATA[Strigulaceae]]></field>
+			<field><![CDATA[Strophariaceae]]></field>
+			<field><![CDATA[Stylidiaceae]]></field>
+			<field><![CDATA[Stylococcaceae]]></field>
+			<field><![CDATA[Stylonemataceae]]></field>
+			<field><![CDATA[Stypocaulaceae]]></field>
+			<field><![CDATA[Styracaceae]]></field>
+			<field><![CDATA[Surirellaceae]]></field>
+			<field><![CDATA[Symphyodontaceae]]></field>
+			<field><![CDATA[Symplocaceae]]></field>
+			<field><![CDATA[Synuraceae]]></field>
+			<field><![CDATA[Taccaceae]]></field>
+			<field><![CDATA[Takakiaceae]]></field>
+			<field><![CDATA[Tamaricaceae]]></field>
+			<field><![CDATA[Taphrinaceae]]></field>
+			<field><![CDATA[Tapisciaceae]]></field>
+			<field><![CDATA[Targioniaceae]]></field>
+			<field><![CDATA[Taxaceae]]></field>
+			<field><![CDATA[Tectariaceae]]></field>
+			<field><![CDATA[Teloschistaceae]]></field>
+			<field><![CDATA[Tepromelataceae]]></field>
+			<field><![CDATA[Tetrameristaceae]]></field>
+			<field><![CDATA[Tetraphidaceae]]></field>
+			<field><![CDATA[Tetrasporaceae]]></field>
+			<field><![CDATA[Thamnobryaceae]]></field>
+			<field><![CDATA[Theaceae]]></field>
+			<field><![CDATA[Thecadiniaceae]]></field>
+			<field><![CDATA[Thelenellaceae]]></field>
+			<field><![CDATA[Thelephoraceae]]></field>
+			<field><![CDATA[Theliaceae]]></field>
+			<field><![CDATA[Theligonaceae]]></field>
+			<field><![CDATA[Thelocarpaceae]]></field>
+			<field><![CDATA[Thelotremataceae]]></field>
+			<field><![CDATA[Thelypteridaceae]]></field>
+			<field><![CDATA[Theophrastaceae]]></field>
+			<field><![CDATA[Thoreaceae]]></field>
+			<field><![CDATA[Thuidiaceae]]></field>
+			<field><![CDATA[Thymelaeaceae]]></field>
+			<field><![CDATA[Thymeleaceae]]></field>
+			<field><![CDATA[Thyrsopteridaceae]]></field>
+			<field><![CDATA[Tichocarpaceae]]></field>
+			<field><![CDATA[Tileaceae]]></field>
+			<field><![CDATA[Tiliaceae]]></field>
+			<field><![CDATA[Tilopteridaceae]]></field>
+			<field><![CDATA[Timmiaceae]]></field>
+			<field><![CDATA[Tmesipteridaceae]]></field>
+			<field><![CDATA[Tovariaceae]]></field>
+			<field><![CDATA[Trachypodaceae]]></field>
+			<field><![CDATA[Trapaceae]]></field>
+			<field><![CDATA[Trapeliaceae]]></field>
+			<field><![CDATA[Trebouxiaceae]]></field>
+			<field><![CDATA[Tremellaceae]]></field>
+			<field><![CDATA[Tremellales]]></field>
+			<field><![CDATA[Trentepohliaceae]]></field>
+			<field><![CDATA[Tribonemataceae]]></field>
+			<field><![CDATA[Trichiales]]></field>
+			<field><![CDATA[Trichocoleaceae]]></field>
+			<field><![CDATA[Tricholomataceae]]></field>
+			<field><![CDATA[Trichotheliaceae]]></field>
+			<field><![CDATA[Trigoniaceae]]></field>
+			<field><![CDATA[Trilliaceae]]></field>
+			<field><![CDATA[Trimeniaceae]]></field>
+			<field><![CDATA[Triplochitonaceae]]></field>
+			<field><![CDATA[Triuridaceae]]></field>
+			<field><![CDATA[Trochodendraceae]]></field>
+			<field><![CDATA[Tropaeolaceae]]></field>
+			<field><![CDATA[Trypetheliaceae]]></field>
+			<field><![CDATA[Tubiellaceae]]></field>
+			<field><![CDATA[Turneraceae]]></field>
+			<field><![CDATA[Typhaceae]]></field>
+			<field><![CDATA[Udoteaceae]]></field>
+			<field><![CDATA[Ulmaceae]]></field>
+			<field><![CDATA[Ulotrichaceae]]></field>
+			<field><![CDATA[Ulvaceae]]></field>
+			<field><![CDATA[Ulvellaceae]]></field>
+			<field><![CDATA[Umbicariaceae]]></field>
+			<field><![CDATA[Umbilicariaceae]]></field>
+			<field><![CDATA[Uredinales]]></field>
+			<field><![CDATA[Urediniomycete]]></field>
+			<field><![CDATA[Urticaceae]]></field>
+			<field><![CDATA[Usneaceae]]></field>
+			<field><![CDATA[Vacciniaceae]]></field>
+			<field><![CDATA[Vacuolariaceae]]></field>
+			<field><![CDATA[Valarianaceae]]></field>
+			<field><![CDATA[Valerianaceae]]></field>
+			<field><![CDATA[Valoniaceae]]></field>
+			<field><![CDATA[Vaucheriaceae]]></field>
+			<field><![CDATA[Velloziaceae]]></field>
+			<field><![CDATA[Verbenaceae]]></field>
+			<field><![CDATA[Verrucariaceae]]></field>
+			<field><![CDATA[Verrucariales]]></field>
+			<field><![CDATA[Vezdaeaceae]]></field>
+			<field><![CDATA[Viciaceae]]></field>
+			<field><![CDATA[Violaceae]]></field>
+			<field><![CDATA[Viscaceae]]></field>
+			<field><![CDATA[Vitaceae]]></field>
+			<field><![CDATA[Vitidaceae]]></field>
+			<field><![CDATA[Vittariaceae]]></field>
+			<field><![CDATA[Vochysiaceae]]></field>
+			<field><![CDATA[Volvocaceae]]></field>
+			<field><![CDATA[Wittrockiellaceae]]></field>
+			<field><![CDATA[Woodsiaceae]]></field>
+			<field><![CDATA[Wrangeliaceae]]></field>
+			<field><![CDATA[Wurdemanniaceae]]></field>
+			<field><![CDATA[Xanthophyllaceae]]></field>
+			<field><![CDATA[Xanthopyreniaceae]]></field>
+			<field><![CDATA[Xylariaceae]]></field>
+			<field><![CDATA[Xylariales]]></field>
+			<field><![CDATA[Xyridaceae]]></field>
+			<field><![CDATA[Zingiberaceae]]></field>
+			<field><![CDATA[Zygnemataceae]]></field>
+			<field><![CDATA[Zygophyllaceae]]></field>
 		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field>Botany</field>
-			<field>Entomology</field>
-			<field>Invertebrate Zoology</field>
-			<field>Amphibians and Reptiles</field>
-			<field>Birds</field>
-			<field>Fishes</field>
-			<field>Mammals</field>
-			<field>Mineral Sciences</field>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Bulky Specimen]]></field>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Liquid Preserved]]></field>
+			<field><![CDATA[Packet]]></field>
+			<field><![CDATA[Seed]]></field>
+			<field><![CDATA[Rhizome]]></field>
+			<field><![CDATA[Unmounted material]]></field>
+			<field><![CDATA[Wood specimen]]></field>
 		</list>
-		<list alias='institutionCode' caseInsensitive='true'>
-			<field>US</field>
-			<field>USNM</field>
+		<list alias='Sexual Maturity' caseInsensitive='true'>
+			<field><![CDATA[-]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Calf]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[immature (avascular uterus)]]></field>
+			<field><![CDATA[Immature (Ovaries immature)]]></field>
+			<field><![CDATA[immature (uterus immature)]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Lactating]]></field>
+			<field><![CDATA[Lactating? Mature]]></field>
+			<field><![CDATA[Mature]]></field>
+			<field><![CDATA[Mature (dilated)]]></field>
+			<field><![CDATA[Mature (lactating questionable)]]></field>
+			<field><![CDATA[Mature (lactating)]]></field>
+			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
+			<field><![CDATA[Mature (lactating, pregnant)]]></field>
+			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
+			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
+			<field><![CDATA[Mature (pregnant)]]></field>
+			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
+			<field><![CDATA[Mature (pregnant, lactating)]]></field>
+			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididymus]]></field>
+			<field><![CDATA[mature (sperm in epididymuse)]]></field>
+			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
+			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
+			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
+			<field><![CDATA[Mature (uterus dialated)]]></field>
+			<field><![CDATA[Mature (uterus mature)]]></field>
+			<field><![CDATA[Mature (with calf)]]></field>
+			<field><![CDATA[Maturing?]]></field>
+			<field><![CDATA[Need]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Resting]]></field>
+			<field><![CDATA[Stillborn]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown, immature]]></field>
+			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
 		</list>
-		<list alias='continent' caseInsensitive='true'>
-			<field>Africa</field>
-			<field>Antarctica</field>
-			<field>Asia</field>
-			<field>Australia</field>
-			<field>Europe</field>
-			<field>North America</field>
-			<field>Oceania</field>
-			<field>South America</field>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Aerosol]]></field>
+			<field><![CDATA[Air]]></field>
+			<field><![CDATA[Anterior piece]]></field>
+			<field><![CDATA[Bacteria]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Cells]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Clay]]></field>
+			<field><![CDATA[Cone]]></field>
+			<field><![CDATA[Dust]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Estuarine]]></field>
+			<field><![CDATA[Flower]]></field>
+			<field><![CDATA[Foam]]></field>
+			<field><![CDATA[Follicles]]></field>
+			<field><![CDATA[Fresh water lentic]]></field>
+			<field><![CDATA[Fresh water lotic]]></field>
+			<field><![CDATA[Fruit]]></field>
+			<field><![CDATA[Fungus mycelium]]></field>
+			<field><![CDATA[Gamete]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Host-Associated]]></field>
+			<field><![CDATA[Ice]]></field>
+			<field><![CDATA[Inflorescence]]></field>
+			<field><![CDATA[Leaf]]></field>
+			<field><![CDATA[Marine benthic]]></field>
+			<field><![CDATA[Marine pelagic]]></field>
+			<field><![CDATA[Microbial Mat/Biofilm]]></field>
+			<field><![CDATA[Misc/Artificial]]></field>
+			<field><![CDATA[Mixed sample, multiple organisms]]></field>
+			<field><![CDATA[Mixed tissue sample]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Mud]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Oil]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Placenta]]></field>
+			<field><![CDATA[Plant-Associated]]></field>
+			<field><![CDATA[Pollen]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Protoplast]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[Rest of body]]></field>
+			<field><![CDATA[Rhizome]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Root]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Scum]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Seed]]></field>
+			<field><![CDATA[Snow]]></field>
+			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spore]]></field>
+			<field><![CDATA[Stem]]></field>
+			<field><![CDATA[Stem cells]]></field>
+			<field><![CDATA[Tendrils]]></field>
+			<field><![CDATA[Unknown cell sample]]></field>
+			<field><![CDATA[Unknown clone]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown environmental sample]]></field>
+			<field><![CDATA[Unknown excretion/secretion]]></field>
+			<field><![CDATA[Unknown germplasm]]></field>
+			<field><![CDATA[Unknown organ]]></field>
+			<field><![CDATA[Unknown part]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Unknown whole organism]]></field>
+			<field><![CDATA[Water]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
+			<field><![CDATA[Yeast]]></field>
 		</list>
-		<list alias='ocean' caseInsensitive='true'>
-			<field>Antarctic Ocean</field>
-			<field>Arctic Ocean</field>
-			<field>Indian Ocean</field>
-			<field>North Atlantic Ocean</field>
-			<field>North Pacific Ocean</field>
-			<field>South Atlantic Ocean</field>
-			<field>South Pacific Ocean</field>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[Androecium]]></field>
+			<field><![CDATA[Blade]]></field>
+			<field><![CDATA[Female]]></field>
+			<field><![CDATA[Gynoecium]]></field>
+			<field><![CDATA[Male]]></field>
+			<field><![CDATA[Marine benthic other]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Ova/Ovum]]></field>
+			<field><![CDATA[Ovary]]></field>
+			<field><![CDATA[Ovules]]></field>
+			<field><![CDATA[Parts, mature]]></field>
+			<field><![CDATA[Parts, young]]></field>
+			<field><![CDATA[Petal]]></field>
+			<field><![CDATA[Petiole]]></field>
+			<field><![CDATA[Reef structure]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Sepal]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Sperm]]></field>
+			<field><![CDATA[Stamen]]></field>
+			<field><![CDATA[Surface scraping]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Whole]]></field>
+			<field><![CDATA[Whole Flower]]></field>
+			<field><![CDATA[Whole, mature]]></field>
+			<field><![CDATA[Whole, young]]></field>
+			<field><![CDATA[Wood]]></field>
 		</list>
-		<list alias='lengthUnits' caseInsensitive='true'>
-			<field>cm</field>
-			<field>m</field>
-			<field>mm</field>
-			<field>µm</field>
-			<field>in</field>
-			<field>ft</field>
-		</list>
-		<list alias='measurementUnit' caseInsensitive='true'>
-			<field>cm</field>
-			<field>ft</field>
-			<field>g</field>
-			<field>in</field>
-			<field>ins</field>
-			<field>kg</field>
-			<field>lb</field>
-			<field>lbs</field>
-			<field>mm</field>
-			<field>oz</field>
-			<field>ct</field>
-		</list>
-		<list alias='basisOfRecord' caseInsensitive='true'>
-			<field>Bulky Specimen</field>
-			<field>Genetic Sample</field>
-			<field>Liquid Preserved</field>
-			<field>Lot</field>
-			<field>Packet</field>
-			<field>Seed</field>
-			<field>Specimen</field>
-			<field>Specimen/Lot</field>
-			<field>Rhizome</field>
-			<field>Unmounted material</field>
-			<field>Wood specimen</field>
-		</list>
-		<list alias='establishmentMeans' caseInsensitive='true'>
-			<field>cultivated</field>
-			<field>escaped</field>
-			<field>introduced</field>
-			<field>invasive</field>
-			<field>managed</field>
-			<field>native</field>
-			<field>naturalised</field>
-			<field>uncertain</field>
-			<field>waif</field>
-			<field>wild</field>
-		</list>
-		<list alias='exudate' caseInsensitive='true'>
-			<field>(NULL)</field>
-			<field>Clear</field>
-			<field>Cream</field>
-			<field>Orangish</field>
-			<field>Reddish</field>
-			<field>White</field>
-			<field>Yellow</field>
-		</list>
-		<list alias='habit' caseInsensitive='true'>
-			<field>Aquatic herb</field>
-			<field>Cespitose herb</field>
-			<field>Decumbent herb</field>
-			<field>Epilithic</field>
-			<field>Epiphyte</field>
-			<field>Erect herb</field>
-			<field>Floating herb</field>
-			<field>Hemiparasite</field>
-			<field>Herbaceous vine</field>
-			<field>Liana</field>
-			<field>Palm</field>
-			<field>Palm-like fern</field>
-			<field>Parasite</field>
-			<field>Scandent shrub</field>
-			<field>Shrub</field>
-			<field>Trailing herb</field>
-			<field>Trailing vine</field>
-			<field>Tree</field>
-			<field>Treelet</field>
-		</list>
-		<list alias='hybridRank' caseInsensitive='true'>
-			<field>Genus</field>
-			<field>Species</field>
-		</list>
-		<list alias='taxonRank' caseInsensitive='true'>
-			<field>aberration</field>
-			<field>forma</field>
-			<field>morpha</field>
-			<field>race</field>
-			<field>subforma</field>
-			<field>subvariety</field>
-			<field>variety</field>
-		</list>
-		<list alias='sampleQuality' caseInsensitive='true'>
-			<field>High</field>
-			<field>Medium</field>
-			<field>Low</field>
-		</list>
-		<list alias='sex' caseInsensitive='true'>
-			<field>Male</field>
-			<field>Female</field>
-			<field>Unknown</field>
-			<field>Worker</field>
-		</list>
-		<list alias='geodeticDatum' caseInsensitive='true'>
-			<field>NAD27</field>
-			<field>NAD83</field>
-			<field>WGS84</field>
+		<list alias='country' caseInsensitive='true'>
+			<field><![CDATA["America Australis"]]></field>
+			<field><![CDATA["America Boreal"]]></field>
+			<field><![CDATA["America"]]></field>
+			<field><![CDATA["Amerique Equatoriale"]]></field>
+			<field><![CDATA["Arabia"]]></field>
+			<field><![CDATA["Asia Minor"]]></field>
+			<field><![CDATA["Central Africa"]]></field>
+			<field><![CDATA["Congo Africa"]]></field>
+			<field><![CDATA["East Africa"]]></field>
+			<field><![CDATA["East Indies"]]></field>
+			<field><![CDATA["Europa Australi"]]></field>
+			<field><![CDATA["Europe"]]></field>
+			<field><![CDATA["French Equitorial Africa"]]></field>
+			<field><![CDATA["Indies Orient"]]></field>
+			<field><![CDATA["Indochina"]]></field>
+			<field><![CDATA["Lesser Antilles"]]></field>
+			<field><![CDATA["North America"]]></field>
+			<field><![CDATA["Old World"]]></field>
+			<field><![CDATA["Pacific Islands"]]></field>
+			<field><![CDATA["Rhodesia"]]></field>
+			<field><![CDATA["Scandinavia"]]></field>
+			<field><![CDATA["South Africa"/ "East Indies"]]></field>
+			<field><![CDATA["South America"]]></field>
+			<field><![CDATA["Transcaucasia"]]></field>
+			<field><![CDATA["Tropical America"]]></field>
+			<field><![CDATA["Turkestan"]]></field>
+			<field><![CDATA["West Africa"]]></field>
+			<field><![CDATA[Afghanistan]]></field>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Albania]]></field>
+			<field><![CDATA[Aldabra Islands]]></field>
+			<field><![CDATA[Algeria]]></field>
+			<field><![CDATA[American Samoa]]></field>
+			<field><![CDATA[American Samoa / Western Samoa]]></field>
+			<field><![CDATA[Andaman]]></field>
+			<field><![CDATA[Andaman and Nicobar Islands]]></field>
+			<field><![CDATA[Angola]]></field>
+			<field><![CDATA[Angola / Congo / Congo, Democratic Rep. of  [Zaire]]]></field>
+			<field><![CDATA[Angola / Congo / Zaire]]></field>
+			<field><![CDATA[Angola / Congo, Democratic Rep. of  [Zaire]]]></field>
+			<field><![CDATA[Angola / Zaire]]></field>
+			<field><![CDATA[Anguilla]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Antigua]]></field>
+			<field><![CDATA[Antigua / Costa Rica]]></field>
+			<field><![CDATA[Antigua and Barbuda]]></field>
+			<field><![CDATA[Antigua-Barbuda]]></field>
+			<field><![CDATA[Antilles]]></field>
+			<field><![CDATA[Argenitina]]></field>
+			<field><![CDATA[Argentina]]></field>
+			<field><![CDATA[Argentina / Bolivia]]></field>
+			<field><![CDATA[Argentina / Brazil]]></field>
+			<field><![CDATA[Argentina / Brazil / Paraguay]]></field>
+			<field><![CDATA[Argentina / Chile]]></field>
+			<field><![CDATA[Argentina / Paraguay]]></field>
+			<field><![CDATA[Argentina / Uruguay]]></field>
+			<field><![CDATA[Argentina/Chile]]></field>
+			<field><![CDATA[Armenia]]></field>
+			<field><![CDATA[Armenia / Azerbaijan]]></field>
+			<field><![CDATA[Armenia / Azerbaijan / Georgia / Russian Federation]]></field>
+			<field><![CDATA[Armeniya]]></field>
+			<field><![CDATA[Armeniya / Azerbaijan]]></field>
+			<field><![CDATA[Armeniya / Azerbaijan / Georgia / Russian Federation]]></field>
+			<field><![CDATA[Aruba]]></field>
+			<field><![CDATA[Astove Island]]></field>
+			<field><![CDATA[Auckland]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Australia / Indonesia]]></field>
+			<field><![CDATA[Austria]]></field>
+			<field><![CDATA[Austria / Germany]]></field>
+			<field><![CDATA[Austria / Germany / Italy]]></field>
+			<field><![CDATA[Austria / Hungary]]></field>
+			<field><![CDATA[Austria / Italy]]></field>
+			<field><![CDATA[Austria/Germany]]></field>
+			<field><![CDATA[Austria/Spain]]></field>
+			<field><![CDATA[Azerbaijan]]></field>
+			<field><![CDATA[Azerbaijan / Iran / Russian Federation]]></field>
+			<field><![CDATA[Azores]]></field>
+			<field><![CDATA[Bahamas]]></field>
+			<field><![CDATA[Bahrain]]></field>
+			<field><![CDATA[Bangladesh]]></field>
+			<field><![CDATA[Bangladesh / India]]></field>
+			<field><![CDATA[Bangladesh / Pakistan]]></field>
+			<field><![CDATA[Barbados]]></field>
+			<field><![CDATA[Belarus]]></field>
+			<field><![CDATA[Belau]]></field>
+			<field><![CDATA[Belau [Palau]]]></field>
+			<field><![CDATA[Belau [Palau] Islands]]></field>
+			<field><![CDATA[Belgium]]></field>
+			<field><![CDATA[Belgium / France]]></field>
+			<field><![CDATA[Belgium / Germany]]></field>
+			<field><![CDATA[Belize]]></field>
+			<field><![CDATA[Belize (as British Honduras)]]></field>
+			<field><![CDATA[Belize [British Honduras]]]></field>
+			<field><![CDATA[Benin]]></field>
+			<field><![CDATA[Benin / Nigeria]]></field>
+			<field><![CDATA[Bermuda]]></field>
+			<field><![CDATA[Bhutan]]></field>
+			<field><![CDATA[Bolivia]]></field>
+			<field><![CDATA[Bolivia / Paraguay]]></field>
+			<field><![CDATA[Bolivia / Peru]]></field>
+			<field><![CDATA[Borneo]]></field>
+			<field><![CDATA[Borneo / Philippines]]></field>
+			<field><![CDATA[Bosnia and Herzegovina]]></field>
+			<field><![CDATA[Botswana]]></field>
+			<field><![CDATA[Boyaca]]></field>
+			<field><![CDATA[Brazil]]></field>
+			<field><![CDATA[Brazil / Colombia]]></field>
+			<field><![CDATA[Brazil / French Guiana / Suriname]]></field>
+			<field><![CDATA[Brazil / Guyana]]></field>
+			<field><![CDATA[Brazil / Paraguay]]></field>
+			<field><![CDATA[Brazil / Peru]]></field>
+			<field><![CDATA[Brazil / Uruguay]]></field>
+			<field><![CDATA[Brazil / Venezuela]]></field>
+			<field><![CDATA[Brazil?]]></field>
+			<field><![CDATA[British]]></field>
+			<field><![CDATA[British Antarctic Territory]]></field>
+			<field><![CDATA[British Antarctic Territory / Argentina]]></field>
+			<field><![CDATA[British Antarctic Territory / Argentina / Chile]]></field>
+			<field><![CDATA[British Atlantic Islands]]></field>
+			<field><![CDATA[British Crown Dependencies]]></field>
+			<field><![CDATA[British Guiana]]></field>
+			<field><![CDATA[British Honduras]]></field>
+			<field><![CDATA[British Indian Ocean Territory]]></field>
+			<field><![CDATA[British Isles]]></field>
+			<field><![CDATA[British Overseas Territory]]></field>
+			<field><![CDATA[British Unknown (N. Amer.)]]></field>
+			<field><![CDATA[British Virgin Islands]]></field>
+			<field><![CDATA[British West Indies]]></field>
+			<field><![CDATA[Brtitish Guiana]]></field>
+			<field><![CDATA[Brunei]]></field>
+			<field><![CDATA[Brunei / Indonesia / Malaysia]]></field>
+			<field><![CDATA[Bruneo]]></field>
+			<field><![CDATA[Bulgaria]]></field>
+			<field><![CDATA[Bulgaria / Yugoslavia]]></field>
+			<field><![CDATA[Burkina]]></field>
+			<field><![CDATA[Burkina Faso]]></field>
+			<field><![CDATA[Burma]]></field>
+			<field><![CDATA[Burundi]]></field>
+			<field><![CDATA[Burundi/Rwanda/Tanzania]]></field>
+			<field><![CDATA[Cambodia]]></field>
+			<field><![CDATA[Cambodia / Laos]]></field>
+			<field><![CDATA[Cambodia / Vietnam]]></field>
+			<field><![CDATA[Cameroon]]></field>
+			<field><![CDATA[Cameroon / Nigeria]]></field>
+			<field><![CDATA[Camerooon]]></field>
+			<field><![CDATA[Camoro Islands]]></field>
+			<field><![CDATA[Canada]]></field>
+			<field><![CDATA[Canada / Greenland]]></field>
+			<field><![CDATA[Canada / United States]]></field>
+			<field><![CDATA[Canary Islands]]></field>
+			<field><![CDATA[Canary Islands / Madiera]]></field>
+			<field><![CDATA[Cape Verde]]></field>
+			<field><![CDATA[Cape Verde Islands]]></field>
+			<field><![CDATA[Caribbean]]></field>
+			<field><![CDATA[Caribbean Archipelago]]></field>
+			<field><![CDATA[Caroline Islands]]></field>
+			<field><![CDATA[Carribbean Archipelago]]></field>
+			<field><![CDATA[Carribean]]></field>
+			<field><![CDATA[Cayman Islands]]></field>
+			<field><![CDATA[Central African Republic]]></field>
+			<field><![CDATA[Central African Republic / Congo]]></field>
+			<field><![CDATA[Central Am. Pac. Islands]]></field>
+			<field><![CDATA[Central American Pacific Islands]]></field>
+			<field><![CDATA[Ceylon]]></field>
+			<field><![CDATA[Chad]]></field>
+			<field><![CDATA[Chagos Archipelago]]></field>
+			<field><![CDATA[Chile]]></field>
+			<field><![CDATA[Chile / Peru]]></field>
+			<field><![CDATA[China]]></field>
+			<field><![CDATA[China (Taiwan)]]></field>
+			<field><![CDATA[China / India]]></field>
+			<field><![CDATA[China / India / Nepal / Burm]]></field>
+			<field><![CDATA[China / India / Nepal / Myanmar]]></field>
+			<field><![CDATA[China / Japan]]></field>
+			<field><![CDATA[China / Korea / Russia]]></field>
+			<field><![CDATA[China / Myanmar]]></field>
+			<field><![CDATA[China / Russia]]></field>
+			<field><![CDATA[China / Russian Federation]]></field>
+			<field><![CDATA[China / Taiwan]]></field>
+			<field><![CDATA[China / Thailand]]></field>
+			<field><![CDATA[China / Thailand / Vietnam]]></field>
+			<field><![CDATA[China / Tibet]]></field>
+			<field><![CDATA[China / Vietnam]]></field>
+			<field><![CDATA[China / Vietnam / Myanmar]]></field>
+			<field><![CDATA[Clipperton Island]]></field>
+			<field><![CDATA[Clipperton Island  (France)]]></field>
+			<field><![CDATA[Colombia]]></field>
+			<field><![CDATA[Colombia / Ecuador]]></field>
+			<field><![CDATA[Colombia / Ecuador / Peru]]></field>
+			<field><![CDATA[Colombia / Panama]]></field>
+			<field><![CDATA[Colombia / Peru]]></field>
+			<field><![CDATA[Colombia / Trinidad and Tobago]]></field>
+			<field><![CDATA[Colombia / Venezuela]]></field>
+			<field><![CDATA[Colombia ?]]></field>
+			<field><![CDATA[Columbia]]></field>
+			<field><![CDATA[Comoro Islands]]></field>
+			<field><![CDATA[Comoros]]></field>
+			<field><![CDATA[Congo]]></field>
+			<field><![CDATA[Congo / Congo, Democratic Rep. of  [Zaire]]]></field>
+			<field><![CDATA[Congo / Rwanda]]></field>
+			<field><![CDATA[Congo / Zaire]]></field>
+			<field><![CDATA[Congo Belge]]></field>
+			<field><![CDATA[Congo, Democratic Rep. of  [Zaire]]]></field>
+			<field><![CDATA[Congo, Democratic Republic of the]]></field>
+			<field><![CDATA[Congo, Republic of]]></field>
+			<field><![CDATA[Cook Islands]]></field>
+			<field><![CDATA[Corse]]></field>
+			<field><![CDATA[Corsica]]></field>
+			<field><![CDATA[Costa Rica]]></field>
+			<field><![CDATA[Costa Rica / Antigua]]></field>
+			<field><![CDATA[Costa Rica / Panama]]></field>
+			<field><![CDATA[Costa Rica / Peru]]></field>
+			<field><![CDATA[Costa Rica or Panama]]></field>
+			<field><![CDATA[Costa Rica/Panama]]></field>
+			<field><![CDATA[Costa Ricato Amazon]]></field>
+			<field><![CDATA[Country unknown]]></field>
+			<field><![CDATA[Croatia]]></field>
+			<field><![CDATA[Croatia / Bosnia and Herzegovina [Yugoslavia]]]></field>
+			<field><![CDATA[Croatia / Bosnia and Herzegovinia [Yugoslavia]]]></field>
+			<field><![CDATA[Croatia / Montenegro]]></field>
+			<field><![CDATA[Croatia [Yugoslavia]]]></field>
+			<field><![CDATA[Cuba]]></field>
+			<field><![CDATA[Cuba / Mexico]]></field>
+			<field><![CDATA[Curacao]]></field>
+			<field><![CDATA[Curaçao]]></field>
+			<field><![CDATA[Cyprus]]></field>
+			<field><![CDATA[Czech Republic]]></field>
+			<field><![CDATA[Czech Republic / Germany]]></field>
+			<field><![CDATA[Czech Republic / Slovakia]]></field>
+			<field><![CDATA[Czechoslovakia]]></field>
+			<field><![CDATA[Czechoslovakia / Poland]]></field>
+			<field><![CDATA[Democratic Republic of the Congo]]></field>
+			<field><![CDATA[Denmark]]></field>
+			<field><![CDATA[Denmark / Norway / Sweden]]></field>
+			<field><![CDATA[Denmark / Sweden]]></field>
+			<field><![CDATA[Djibouti]]></field>
+			<field><![CDATA[Dominica]]></field>
+			<field><![CDATA[Dominican Rep.]]></field>
+			<field><![CDATA[Dominican Republic]]></field>
+			<field><![CDATA[Dominican Republic / Haiti]]></field>
+			<field><![CDATA[East Timor]]></field>
+			<field><![CDATA[Easter Island]]></field>
+			<field><![CDATA[Ecuador]]></field>
+			<field><![CDATA[Ecuador / Peru]]></field>
+			<field><![CDATA[Egypt]]></field>
+			<field><![CDATA[Egypt / Sudan]]></field>
+			<field><![CDATA[El Salvador]]></field>
+			<field><![CDATA[England]]></field>
+			<field><![CDATA[Equatceorial Guinea]]></field>
+			<field><![CDATA[Equatorial Guinea]]></field>
+			<field><![CDATA[Equatorial Guineal]]></field>
+			<field><![CDATA[Eritrea]]></field>
+			<field><![CDATA[Estonia]]></field>
+			<field><![CDATA[Ethiopia]]></field>
+			<field><![CDATA[Ethiopia / Sudan]]></field>
+			<field><![CDATA[ex hort.]]></field>
+			<field><![CDATA[ex hort., Brazil]]></field>
+			<field><![CDATA[ex hort., China]]></field>
+			<field><![CDATA[ex hort., Costa Rica]]></field>
+			<field><![CDATA[ex hort., Great Britain]]></field>
+			<field><![CDATA[ex hort., Panama]]></field>
+			<field><![CDATA[ex hort., Scotland]]></field>
+			<field><![CDATA[ex hort., U.S.A.]]></field>
+			<field><![CDATA[ex hort., United States]]></field>
+			<field><![CDATA[Faeroe Islands]]></field>
+			<field><![CDATA[Falkland Islands]]></field>
+			<field><![CDATA[Falklands]]></field>
+			<field><![CDATA[Fiji]]></field>
+			<field><![CDATA[Fiji / French Polynesia]]></field>
+			<field><![CDATA[Fiji / Samoa]]></field>
+			<field><![CDATA[Fiji / Tonga]]></field>
+			<field><![CDATA[Finland]]></field>
+			<field><![CDATA[Finland / Sweden]]></field>
+			<field><![CDATA[Flores]]></field>
+			<field><![CDATA[Florida]]></field>
+			<field><![CDATA[Formosa]]></field>
+			<field><![CDATA[France]]></field>
+			<field><![CDATA[France / Germany]]></field>
+			<field><![CDATA[France / Italy]]></field>
+			<field><![CDATA[France / Italy/Sweden]]></field>
+			<field><![CDATA[France / Spain]]></field>
+			<field><![CDATA[France and Germany]]></field>
+			<field><![CDATA[French]]></field>
+			<field><![CDATA[French Antilles]]></field>
+			<field><![CDATA[French Equatorial Africa]]></field>
+			<field><![CDATA[French Guiana]]></field>
+			<field><![CDATA[French Guiana / Guyana]]></field>
+			<field><![CDATA[French Overseas Territory]]></field>
+			<field><![CDATA[French Polynesia]]></field>
+			<field><![CDATA[French Southern and Antarctic Lands]]></field>
+			<field><![CDATA[Gabon]]></field>
+			<field><![CDATA[Gambia]]></field>
+			<field><![CDATA[Gapalagos Islands]]></field>
+			<field><![CDATA[Georgia]]></field>
+			<field><![CDATA[Georgia / Russia]]></field>
+			<field><![CDATA[Georgia / Russian Federation]]></field>
+			<field><![CDATA[Georgia [Gruziya]]]></field>
+			<field><![CDATA[Germany]]></field>
+			<field><![CDATA[Germany / Poland]]></field>
+			<field><![CDATA[Germany or Norway]]></field>
+			<field><![CDATA[Germany/Austria]]></field>
+			<field><![CDATA[Germany/Czech Republic]]></field>
+			<field><![CDATA[Ghana]]></field>
+			<field><![CDATA[Gibraltar]]></field>
+			<field><![CDATA[Great Britain]]></field>
+			<field><![CDATA[Great Britain / Spain]]></field>
+			<field><![CDATA[Great Britain or Italy]]></field>
+			<field><![CDATA[Great Britian]]></field>
+			<field><![CDATA[Greece]]></field>
+			<field><![CDATA[Greece / Italy]]></field>
+			<field><![CDATA[Greece / Turkey]]></field>
+			<field><![CDATA[Greenland]]></field>
+			<field><![CDATA[Grenada]]></field>
+			<field><![CDATA[Grenadines]]></field>
+			<field><![CDATA[Greneda]]></field>
+			<field><![CDATA[Gruziya]]></field>
+			<field><![CDATA[Guadeloupe]]></field>
+			<field><![CDATA[Guadeloupe / Martinique]]></field>
+			<field><![CDATA[Guam]]></field>
+			<field><![CDATA[Guatemala]]></field>
+			<field><![CDATA[Guatemala / Honduras]]></field>
+			<field><![CDATA[Guatemala / Mexico]]></field>
+			<field><![CDATA[Guiana]]></field>
+			<field><![CDATA[Guinea]]></field>
+			<field><![CDATA[Guinea-Bissau]]></field>
+			<field><![CDATA[Guinea-Conakry]]></field>
+			<field><![CDATA[Guyana]]></field>
+			<field><![CDATA[Guyana (as British Guiana)]]></field>
+			<field><![CDATA[Guyana / Suriname]]></field>
+			<field><![CDATA[Guyana / Venezuela]]></field>
+			<field><![CDATA[Guyana [British Guiana]]]></field>
+			<field><![CDATA[Guyane]]></field>
+			<field><![CDATA[Haiti]]></field>
+			<field><![CDATA[Haiti / Dominican Republic]]></field>
+			<field><![CDATA[Hawaiian Islands]]></field>
+			<field><![CDATA[Herzegovinia]]></field>
+			<field><![CDATA[Himalaya and China]]></field>
+			<field><![CDATA[Hispaniola]]></field>
+			<field><![CDATA[Honduras]]></field>
+			<field><![CDATA[Honduras ?]]></field>
+			<field><![CDATA[Hong Kong]]></field>
+			<field><![CDATA[Hungary]]></field>
+			<field><![CDATA[Hungary / Romania]]></field>
+			<field><![CDATA[Iceland]]></field>
+			<field><![CDATA[Illegible]]></field>
+			<field><![CDATA[Illegible (Russia?)]]></field>
+			<field><![CDATA[Illegible (Russian Federation?)]]></field>
+			<field><![CDATA[India]]></field>
+			<field><![CDATA[India / China]]></field>
+			<field><![CDATA[India / China / South Asia]]></field>
+			<field><![CDATA[India / India]]></field>
+			<field><![CDATA[India / Myanmar]]></field>
+			<field><![CDATA[India / Nepal]]></field>
+			<field><![CDATA[India / Nepal / Pakistan]]></field>
+			<field><![CDATA[India / Pakistan]]></field>
+			<field><![CDATA[India / Sikkim]]></field>
+			<field><![CDATA[India / Singapore]]></field>
+			<field><![CDATA[India or Nepal]]></field>
+			<field><![CDATA[Indochina]]></field>
+			<field><![CDATA[Indonesia]]></field>
+			<field><![CDATA[Indonesia / Malaysia]]></field>
+			<field><![CDATA[Indonesia / Papua New Guinea]]></field>
+			<field><![CDATA[Iran]]></field>
+			<field><![CDATA[Iran / Pakistan]]></field>
+			<field><![CDATA[Iran / Turkey]]></field>
+			<field><![CDATA[Iraq]]></field>
+			<field><![CDATA[Iraq / Saudi Arabia]]></field>
+			<field><![CDATA[Iraq/Turkey]]></field>
+			<field><![CDATA[Iraq/TurkeyValle Teng.]]></field>
+			<field><![CDATA[Ireland]]></field>
+			<field><![CDATA[Israel]]></field>
+			<field><![CDATA[Israel / Jordan]]></field>
+			<field><![CDATA[Israel [Palestine]]]></field>
+			<field><![CDATA[Italy]]></field>
+			<field><![CDATA[Italy / Switzerland]]></field>
+			<field><![CDATA[Italy ?]]></field>
+			<field><![CDATA[Ivory Coast]]></field>
+			<field><![CDATA[Ivory Coast / South Africa]]></field>
+			<field><![CDATA[Jamaica]]></field>
+			<field><![CDATA[Japan]]></field>
+			<field><![CDATA[Japan / Korea]]></field>
+			<field><![CDATA[Japan / South Korea]]></field>
+			<field><![CDATA[Java]]></field>
+			<field><![CDATA[Jawa]]></field>
+			<field><![CDATA[Johnston Island]]></field>
+			<field><![CDATA[Jordan]]></field>
+			<field><![CDATA[Jordan [Palestine]]]></field>
+			<field><![CDATA[Kashmir]]></field>
+			<field><![CDATA[Kazakhstan]]></field>
+			<field><![CDATA[Kazakhstan / Kyrgyzstan]]></field>
+			<field><![CDATA[Kazakhstan / Russia]]></field>
+			<field><![CDATA[Kazakhstan / Russian Federation]]></field>
+			<field><![CDATA[Kazakhstan / Ukraine]]></field>
+			<field><![CDATA[Kedah]]></field>
+			<field><![CDATA[Kenya]]></field>
+			<field><![CDATA[Kenya / Tanzania]]></field>
+			<field><![CDATA[Kenya / Tanzania / Uganda]]></field>
+			<field><![CDATA[Kerguelen]]></field>
+			<field><![CDATA[Kerguelen Islands]]></field>
+			<field><![CDATA[Kirgizistan]]></field>
+			<field><![CDATA[Kiribati]]></field>
+			<field><![CDATA[Komi]]></field>
+			<field><![CDATA[Korea]]></field>
+			<field><![CDATA[Kurdistan]]></field>
+			<field><![CDATA[Kuwait]]></field>
+			<field><![CDATA[Kyrgyzstan]]></field>
+			<field><![CDATA[Kyrgyzstan / Tajikistan]]></field>
+			<field><![CDATA[La Désirade]]></field>
+			<field><![CDATA[Laos]]></field>
+			<field><![CDATA[Laos / Vietnam]]></field>
+			<field><![CDATA[Latvia]]></field>
+			<field><![CDATA[Lebanon]]></field>
+			<field><![CDATA[Lesotho]]></field>
+			<field><![CDATA[Lesser Antilles]]></field>
+			<field><![CDATA[Liberia]]></field>
+			<field><![CDATA[Libya]]></field>
+			<field><![CDATA[Liechtenstein]]></field>
+			<field><![CDATA[Line Islands]]></field>
+			<field><![CDATA[Little Cayman Island]]></field>
+			<field><![CDATA[Luxembourg]]></field>
+			<field><![CDATA[Luzon]]></field>
+			<field><![CDATA[Macao]]></field>
+			<field><![CDATA[Macedonia]]></field>
+			<field><![CDATA[Macedonia [Yugoslavia]]]></field>
+			<field><![CDATA[Madagascar]]></field>
+			<field><![CDATA[Madeira]]></field>
+			<field><![CDATA[Madeira Islands]]></field>
+			<field><![CDATA[Malasia]]></field>
+			<field><![CDATA[Malawi]]></field>
+			<field><![CDATA[Malawi / Mozambique]]></field>
+			<field><![CDATA[Malaya]]></field>
+			<field><![CDATA[Malaya?]]></field>
+			<field><![CDATA[Malayasia]]></field>
+			<field><![CDATA[Malaysia]]></field>
+			<field><![CDATA[Malaysia / Myanmar]]></field>
+			<field><![CDATA[Malaysia / Philippines]]></field>
+			<field><![CDATA[Malaysia / Thailand]]></field>
+			<field><![CDATA[Malaysiasia]]></field>
+			<field><![CDATA[Maldive Islands]]></field>
+			<field><![CDATA[Maldives]]></field>
+			<field><![CDATA[Mali]]></field>
+			<field><![CDATA[Mali / Senegal]]></field>
+			<field><![CDATA[Malta]]></field>
+			<field><![CDATA[Marianas]]></field>
+			<field><![CDATA[Marianas Islands]]></field>
+			<field><![CDATA[Marie Galante]]></field>
+			<field><![CDATA[Marie-Galante]]></field>
+			<field><![CDATA[Marquesas Islands]]></field>
+			<field><![CDATA[Marshall Islands]]></field>
+			<field><![CDATA[Martinique]]></field>
+			<field><![CDATA[Mauritania]]></field>
+			<field><![CDATA[Mauritius]]></field>
+			<field><![CDATA[Mayenezuela]]></field>
+			<field><![CDATA[Mexico]]></field>
+			<field><![CDATA[México]]></field>
+			<field><![CDATA[Mexico / Guatemala]]></field>
+			<field><![CDATA[Mexico / United States]]></field>
+			<field><![CDATA[Mexico/Central America]]></field>
+			<field><![CDATA[Micronesa, Federated States of]]></field>
+			<field><![CDATA[Micronesia]]></field>
+			<field><![CDATA[Micronesia, Federated States]]></field>
+			<field><![CDATA[Micronesia, Federated States of]]></field>
+			<field><![CDATA[Midway Islands]]></field>
+			<field><![CDATA[Moldova]]></field>
+			<field><![CDATA[Monaco]]></field>
+			<field><![CDATA[Mongolia]]></field>
+			<field><![CDATA[Monserrat]]></field>
+			<field><![CDATA[Montenegro]]></field>
+			<field><![CDATA[Montenegro [Yugoslavia]]]></field>
+			<field><![CDATA[Montserrat]]></field>
+			<field><![CDATA[Morocco]]></field>
+			<field><![CDATA[Morroco]]></field>
+			<field><![CDATA[Moule]]></field>
+			<field><![CDATA[Mozambique]]></field>
+			<field><![CDATA[Mozambique / South Africa]]></field>
+			<field><![CDATA[Mozambique / Zambia]]></field>
+			<field><![CDATA[Myanmar]]></field>
+			<field><![CDATA[Myanmar / India]]></field>
+			<field><![CDATA[Myanmar [Burma]]]></field>
+			<field><![CDATA[Nairobi]]></field>
+			<field><![CDATA[Nairobi/Kenya]]></field>
+			<field><![CDATA[Namibia]]></field>
+			<field><![CDATA[Natal]]></field>
+			<field><![CDATA[Nauru]]></field>
+			<field><![CDATA[Navassa]]></field>
+			<field><![CDATA[Navassa Island]]></field>
+			<field><![CDATA[Nepal]]></field>
+			<field><![CDATA[Netherland Antilles]]></field>
+			<field><![CDATA[Netherlands]]></field>
+			<field><![CDATA[Netherlands Antilles]]></field>
+			<field><![CDATA[Nevis]]></field>
+			<field><![CDATA[New Britain]]></field>
+			<field><![CDATA[New Caledonia]]></field>
+			<field><![CDATA[New Grenada]]></field>
+			<field><![CDATA[New Guinea]]></field>
+			<field><![CDATA[New Hebrides]]></field>
+			<field><![CDATA[New Zealand]]></field>
+			<field><![CDATA[Nicaragua]]></field>
+			<field><![CDATA[Niger]]></field>
+			<field><![CDATA[Nigeria]]></field>
+			<field><![CDATA[Niue]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[North Korea]]></field>
+			<field><![CDATA[North Korea / South Korea]]></field>
+			<field><![CDATA[North North Korea / South Korea]]></field>
+			<field><![CDATA[North Vietnam]]></field>
+			<field><![CDATA[Northern Ireland]]></field>
+			<field><![CDATA[Northern Mariana Islands]]></field>
+			<field><![CDATA[Northern Marianas Islands]]></field>
+			<field><![CDATA[Norway]]></field>
+			<field><![CDATA[Norway / Sweden]]></field>
+			<field><![CDATA[Nyassaland]]></field>
+			<field><![CDATA[Okinawa]]></field>
+			<field><![CDATA[Oman]]></field>
+			<field><![CDATA[Pakistan]]></field>
+			<field><![CDATA[Palau]]></field>
+			<field><![CDATA[Palestine]]></field>
+			<field><![CDATA[Panama]]></field>
+			<field><![CDATA[Panama / United States]]></field>
+			<field><![CDATA[Papua New Guinea]]></field>
+			<field><![CDATA[Paraguay]]></field>
+			<field><![CDATA[Paraguay / Uruguay]]></field>
+			<field><![CDATA[Peru]]></field>
+			<field><![CDATA[Peru / Colombia]]></field>
+			<field><![CDATA[Peru/Chile]]></field>
+			<field><![CDATA[Petite Terre]]></field>
+			<field><![CDATA[Philippine Islands]]></field>
+			<field><![CDATA[Philippines]]></field>
+			<field><![CDATA[Philippnes]]></field>
+			<field><![CDATA[Pitcairn Island]]></field>
+			<field><![CDATA[Pitcairn Islands]]></field>
+			<field><![CDATA[Pitcarn Islands]]></field>
+			<field><![CDATA[Poland]]></field>
+			<field><![CDATA[Poland ?]]></field>
+			<field><![CDATA[Portugal]]></field>
+			<field><![CDATA[Portugal / Spain]]></field>
+			<field><![CDATA[Puerto Rico]]></field>
+			<field><![CDATA[Puerto Rico or Dominican Republic]]></field>
+			<field><![CDATA[Qatar]]></field>
+			<field><![CDATA[Redonda]]></field>
+			<field><![CDATA[Republic of Equatorial Guinea]]></field>
+			<field><![CDATA[Republic of Guatemala]]></field>
+			<field><![CDATA[Republic of Moldova]]></field>
+			<field><![CDATA[Republic of Palau]]></field>
+			<field><![CDATA[Republic of Zimbabwe Rhodesia]]></field>
+			<field><![CDATA[Réunion]]></field>
+			<field><![CDATA[Romania]]></field>
+			<field><![CDATA[Romania / Yugoslavia]]></field>
+			<field><![CDATA[Russia]]></field>
+			<field><![CDATA[Russian Federation]]></field>
+			<field><![CDATA[Russian Federation / Turkey?]]></field>
+			<field><![CDATA[Russian Federation / United States]]></field>
+			<field><![CDATA[Rwanda]]></field>
+			<field><![CDATA[Rwanda / Burundi]]></field>
+			<field><![CDATA[Rwanda / Congo, Democratic Rep. of  [Zaire]]]></field>
+			<field><![CDATA[Rwanda / Zaire]]></field>
+			<field><![CDATA[S. Africa]]></field>
+			<field><![CDATA[Sabah]]></field>
+			<field><![CDATA[Saint Barthelemy]]></field>
+			<field><![CDATA[Saint Kitts and Nevis]]></field>
+			<field><![CDATA[Saint Lucia]]></field>
+			<field><![CDATA[Saint Vincent and the Grenadines]]></field>
+			<field><![CDATA[Salvador]]></field>
+			<field><![CDATA[Samoa]]></field>
+			<field><![CDATA[Santa Cecelia]]></field>
+			<field><![CDATA[Santander]]></field>
+			<field><![CDATA[Santo Domingo]]></field>
+			<field><![CDATA[Sao Tome and Principe]]></field>
+			<field><![CDATA[Sarawak]]></field>
+			<field><![CDATA[Saudi Arabia]]></field>
+			<field><![CDATA[Scandinavia]]></field>
+			<field><![CDATA[Scotland]]></field>
+			<field><![CDATA[Senegal]]></field>
+			<field><![CDATA[Serbia]]></field>
+			<field><![CDATA[Seychelles]]></field>
+			<field><![CDATA[Sierra Leone]]></field>
+			<field><![CDATA[Sikkim]]></field>
+			<field><![CDATA[Singapore]]></field>
+			<field><![CDATA[Sint Maarten]]></field>
+			<field><![CDATA[Slovacia]]></field>
+			<field><![CDATA[Slovakia]]></field>
+			<field><![CDATA[Slovenia]]></field>
+			<field><![CDATA[Society Islands]]></field>
+			<field><![CDATA[Solomon Islands]]></field>
+			<field><![CDATA[Somalia]]></field>
+			<field><![CDATA[South Africa]]></field>
+			<field><![CDATA[South Korea]]></field>
+			<field><![CDATA[South Korea / North Korea]]></field>
+			<field><![CDATA[South North Korea / South Korea]]></field>
+			<field><![CDATA[South Sudan]]></field>
+			<field><![CDATA[Southern Yemen]]></field>
+			<field><![CDATA[Spain]]></field>
+			<field><![CDATA[Spratly Island Area]]></field>
+			<field><![CDATA[Sri Lanka]]></field>
+			<field><![CDATA[Sri Lanka [Ceylon]]]></field>
+			<field><![CDATA[St. Barthélemy]]></field>
+			<field><![CDATA[St. Barthélemy / Sint Maarten]]></field>
+			<field><![CDATA[St. Christopher-Nevis]]></field>
+			<field><![CDATA[St. Claude]]></field>
+			<field><![CDATA[St. Helena]]></field>
+			<field><![CDATA[St. Helena Islands]]></field>
+			<field><![CDATA[St. Kitts and Nevis]]></field>
+			<field><![CDATA[St. Kitts, W. I.]]></field>
+			<field><![CDATA[St. Kitts-Nevis]]></field>
+			<field><![CDATA[St. Lucia]]></field>
+			<field><![CDATA[St. Marteen]]></field>
+			<field><![CDATA[St. Martens]]></field>
+			<field><![CDATA[St. Martin]]></field>
+			<field><![CDATA[St. Mary's I.]]></field>
+			<field><![CDATA[St. Pierre And Miquelon]]></field>
+			<field><![CDATA[St. Thomas]]></field>
+			<field><![CDATA[St. Vincent]]></field>
+			<field><![CDATA[St. Vincent - Grenadines]]></field>
+			<field><![CDATA[St. Vincent and the Grenadines]]></field>
+			<field><![CDATA[St-Pierre-Miquelon]]></field>
+			<field><![CDATA[Sudan]]></field>
+			<field><![CDATA[Sudan/Egypt]]></field>
+			<field><![CDATA[Sumatra]]></field>
+			<field><![CDATA[Sunda Islands]]></field>
+			<field><![CDATA[Surinam]]></field>
+			<field><![CDATA[Suriname]]></field>
+			<field><![CDATA[Swaziland]]></field>
+			<field><![CDATA[Swedan]]></field>
+			<field><![CDATA[Sweden]]></field>
+			<field><![CDATA[Sweden / Finland]]></field>
+			<field><![CDATA[Sweden or Findland]]></field>
+			<field><![CDATA[Sweden or Finland]]></field>
+			<field><![CDATA[Switzerland]]></field>
+			<field><![CDATA[Syria]]></field>
+			<field><![CDATA[Tadzhikistan]]></field>
+			<field><![CDATA[Tahiti]]></field>
+			<field><![CDATA[Taiwan]]></field>
+			<field><![CDATA[Taiwan or Japan]]></field>
+			<field><![CDATA[Taiwan(?)]]></field>
+			<field><![CDATA[Tajikistan]]></field>
+			<field><![CDATA[Tanganyika]]></field>
+			<field><![CDATA[Tanganyika Territory]]></field>
+			<field><![CDATA[Tanzania]]></field>
+			<field><![CDATA[Tanzania  [Tanzania  [Tanganyika]]]]></field>
+			<field><![CDATA[Tanzania / Uganda]]></field>
+			<field><![CDATA[Tanzania, Tanganyika]]></field>
+			<field><![CDATA[Texas]]></field>
+			<field><![CDATA[Thailand]]></field>
+			<field><![CDATA[Thailand or Vietnam]]></field>
+			<field><![CDATA[Tiawan]]></field>
+			<field><![CDATA[Tobago]]></field>
+			<field><![CDATA[Togo]]></field>
+			<field><![CDATA[Tokelau]]></field>
+			<field><![CDATA[Tonga]]></field>
+			<field><![CDATA[Tongoland]]></field>
+			<field><![CDATA[Trinidad]]></field>
+			<field><![CDATA[Trinidad and Tobago]]></field>
+			<field><![CDATA[Tunisia]]></field>
+			<field><![CDATA[Turkey]]></field>
+			<field><![CDATA[Turkey / USSR]]></field>
+			<field><![CDATA[Turkistan]]></field>
+			<field><![CDATA[Turkmenistan]]></field>
+			<field><![CDATA[Turks and Caicos Islands]]></field>
+			<field><![CDATA[Tuvalu]]></field>
+			<field><![CDATA[U.S. Administered Islands]]></field>
+			<field><![CDATA[U.S. Administered Pacific Islands]]></field>
+			<field><![CDATA[U.S. Virgin Islands]]></field>
+			<field><![CDATA[Uganda]]></field>
+			<field><![CDATA[Ukraine]]></field>
+			<field><![CDATA[United Arab Emirates]]></field>
+			<field><![CDATA[United Kingdom]]></field>
+			<field><![CDATA[United S2007812s]]></field>
+			<field><![CDATA[United States]]></field>
+			<field><![CDATA[United States / Canada]]></field>
+			<field><![CDATA[United States / Mexico]]></field>
+			<field><![CDATA[United States Minor Outlying Islands]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown (Africa)]]></field>
+			<field><![CDATA[Unknown (Arabia)]]></field>
+			<field><![CDATA[Unknown (Asia)]]></field>
+			<field><![CDATA[Unknown (Asia-Temperate)]]></field>
+			<field><![CDATA[Unknown (asia-tropical)]]></field>
+			<field><![CDATA[Unknown (Australasia?)]]></field>
+			<field><![CDATA[Unknown (Cent. Amer.)]]></field>
+			<field><![CDATA[Unknown (Europe)]]></field>
+			<field><![CDATA[Unknown (Mexico)]]></field>
+			<field><![CDATA[Unknown (N. Amer.)]]></field>
+			<field><![CDATA[Unknown (Pac. Is.)]]></field>
+			<field><![CDATA[Unknown (Pacific)]]></field>
+			<field><![CDATA[Unknown (S. Amer.)]]></field>
+			<field><![CDATA[Unknown (S. America)]]></field>
+			<field><![CDATA[Unknown (South America)]]></field>
+			<field><![CDATA[Unknown (Unknown (N. Amer.))]]></field>
+			<field><![CDATA[Unknown (Virgin Islands)]]></field>
+			<field><![CDATA[Unknown (West Africa)]]></field>
+			<field><![CDATA[Unknown (West Indies)]]></field>
+			<field><![CDATA[Urubamba]]></field>
+			<field><![CDATA[Uruguay]]></field>
+			<field><![CDATA[USA]]></field>
+			<field><![CDATA[USSR]]></field>
+			<field><![CDATA[Uzbekistan]]></field>
+			<field><![CDATA[Vanuatu]]></field>
+			<field><![CDATA[Venezuela]]></field>
+			<field><![CDATA[Venezuela / Brazil]]></field>
+			<field><![CDATA[Viet Nam]]></field>
+			<field><![CDATA[Vietnam]]></field>
+			<field><![CDATA[Virgin Gorda]]></field>
+			<field><![CDATA[Virgin Islands]]></field>
+			<field><![CDATA[Virginia]]></field>
+			<field><![CDATA[Wales]]></field>
+			<field><![CDATA[Wallis and Futuna]]></field>
+			<field><![CDATA[West Indies]]></field>
+			<field><![CDATA[Western Europe]]></field>
+			<field><![CDATA[Western Samoa]]></field>
+			<field><![CDATA[Yemen]]></field>
+			<field><![CDATA[Yemen Arab Republic]]></field>
+			<field><![CDATA[Yemen Arab Republic / Yemen, Republic of]]></field>
+			<field><![CDATA[Yemen, Republic of]]></field>
+			<field><![CDATA[Yemen, Republic of Arab Republic]]></field>
+			<field><![CDATA[Yugoslavia]]></field>
+			<field><![CDATA[Zaire]]></field>
+			<field><![CDATA[Zambia]]></field>
+			<field><![CDATA[Zambia / Zimbabwe]]></field>
+			<field><![CDATA[Zimbabwe]]></field>
+			<field><![CDATA[Zimbabwe [Rhodesia]]]></field>
+			<field><![CDATA[Zimbabwe [Zimbabwe [Rhodesia]]]]></field>
 		</list>
 	</lists>
 </validation>

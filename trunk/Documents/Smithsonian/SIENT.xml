@@ -24,10 +24,16 @@ ABCDDNA: in case the DNA sample is blocked until a specific date it's neverthele
 ABCDDNA: the complete path to your image; you can provide as much multimedia items as you want.
 
 Biocode specimen: 1 = photo in CalPhotos<p><b>Synonyms:</b><p>"associatedMedia" = DwC,<br />"associatedMedia" = IndoPacifc Template v7,<br />"DarImageURL" = EMuDwC,<br />"MultiMediaObject/FileURI" = ABCDDNA,<br />"photo" = Biocode.Taxonomy,<br />"photo" = Botany - Acevedo,<br />"pic" = Biocode Backend.specimen,<br />"Photograph" = Kress PB tblKresFile,]]></attribute>
-		<attribute column='Related Objects' uri='urn:associatedOccurrences' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#associatedOccurrences'><![CDATA[DwC: A list (concatenated and separated) of identifiers of other Occurrence records and their associations to this Occurrence. Example: "sibling of FMNH:Mammal:1234; sibling of FMNH:Mammal:1235". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedOccurrences
-
-BOLD: A list (concatenated and comma separated) of other specimens associated with the subject specimen at the time of its collection. References to other specimen identifiers should be preceded by the relationship. Examples: "host: PLANT23452, prey: USNM45677" when both prey and host specimens have been captured.<p><b>Synonyms:</b><p>"associatedOccurrences" = DwC,<br />"DarRelatedCatalogItem" = EMuDwC,<br />"Associated Specimens" = Fishes,<br />"Associated Specimens" = LAB Field Collection Spreadsheet,<br />"Associated Specimens" = BOLD,<br />"RelatedCatalogItem" = Biocode Backend.specimen,]]></attribute>
-		<attribute column='Date Visited (To)' uri='urn:endEventDate' group='CollectingEvent' defined_by='urn:endEventDate'><![CDATA[<p><b>Synonyms:</b><p>DateCollEnd = Entomology - Sean Brady,]]></attribute>
+		<attribute column='Host Class' uri='urn:hostClass' group='Associations' defined_by='urn:hostClass'><![CDATA[]]></attribute>
+		<attribute column='Host Comments' uri='urn:hostComments' group='Associations' defined_by='urn:hostComments'><![CDATA[]]></attribute>
+		<attribute column='Host Common Name' uri='urn:hostCommonName' group='Associations' defined_by='urn:hostCommonName'><![CDATA[]]></attribute>
+		<attribute column='Host Family' uri='urn:hostFamily' group='Associations' defined_by='urn:hostFamily'><![CDATA[]]></attribute>
+		<attribute column='Host Genus' uri='urn:hostGenus' group='Associations' defined_by='urn:hostGenus'><![CDATA[]]></attribute>
+		<attribute column='Host Kingdom' uri='urn:hostKingdom' group='Associations' defined_by='urn:hostKingdom'><![CDATA[]]></attribute>
+		<attribute column='Host Order' uri='urn:hostOrder' group='Associations' defined_by='urn:hostOrder'><![CDATA[]]></attribute>
+		<attribute column='Host Phylum' uri='urn:hostPhylum' group='Associations' defined_by='urn:hostPhylum'><![CDATA[]]></attribute>
+		<attribute column='Host Species' uri='urn:hostSpecies' group='Associations' defined_by='urn:hostSpecies'><![CDATA[]]></attribute>
+		<attribute column='Host Species Author' uri='urn:hostSpeciesAuthor' group='Associations' defined_by='urn:hostSpeciesAuthor'><![CDATA[]]></attribute>
 		<attribute column='Time Visited (To)' uri='urn:endEventTime' group='CollectingEvent' defined_by='urn:endEventTime'><![CDATA[<p><b>Synonyms:</b><p>"TimeofDay2" = Biocode.collectingevent,]]></attribute>
 		<attribute column='Date Visited (From)' uri='urn:eventDate' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#eventDate'><![CDATA[DwC: The date-time or interval during which an Event occurred. For occurrences, this is the date-time when the event was recorded. Not suitable for a time in a geological context. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E) Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/EventDate
 
@@ -38,8 +44,6 @@ FROM MIGS: The time of sampling, either as an instance (single point in time) or
 ABCDDNA: date when voucher was collected, if you have content you can also use ISO format (e.g. 21. April 1951)
 
 Birds: Calculation field; extracts date from standard Collector's Number<p><b>Synonyms:</b><p>"eventDate" = DwC,<br />"Gathering/DateTime/DateText" = ABCDDNA, <br />"collection date" = MIxS,<br />"DateCollected" = Entomology - Sean Brady,<br />"Collection Date" = Kress PB Collect'n Spreadsheet,<br />"collection_date" = Plantbarcodes.individual, <br />"Collection Date" = BOLD,<br />"Coll_Date" = Botany - Acevedo,<br />"Date" = Birds,<br />"Date" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='Event ID' uri='urn:eventID' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#eventID'><![CDATA[DwC: An identifier for the set of information associated with an Event (something that occurs at a place and time). May be a global unique identifier or an identifier specific to the data set. For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/eventID
-BOLD: An optional event ID.<p><b>Synonyms:</b><p>"eventID" = DwC,<br />"EventID" = Biocode backend.collectingevent,<br />"Collection Event ID" = BOLD,<br />"Collection Event ID" = LAB Field Collection SS,<br />"Collection Event ID" = Fishes,<br />"Coll_EventID" = Biocode.specimen,<br />"BiocodeEventID#" = BioCode Search Screen,]]></attribute>
 		<attribute column='Collection Event Notes' uri='urn:eventRemarks' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#eventRemarks'><![CDATA[DwC: Comments or notes about the Event. Example: "after the recent rains the river is nearly at flood stage". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/eventRemarks
 
 BOLD: Comments or notes about the collection event.<p><b>Synonyms:</b><p>"eventRemarks" = DwC,<br />"eventRemarks" = IndoPacific Template v7,<br />"Collection Notes" = BOLD,<br />"Collection Notes" = LAB Collection SS,<br />"Collection Notes" = Fishes,<br />"Remarks" = Biocode.CollectingEvent,]]></attribute>
@@ -147,6 +151,7 @@ IndoPacific: The state or province where the sample was found.<p><b>Synonyms:</b
 		<attribute column='Preparation 1' uri='urn:preparation1' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[DwC: A list (concatenated and separated) of preparations and preservation methods for a specimen. Examples: "skin; skull; skeleton", "whole animal (ETOH); tissue (EDTA)", "fossil", "cast", "photograph", "DNA extract". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/preparations
 
 Schultz: Type of object, e.g., "pin," "point," "cryotube," etc.  See value list image.<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
+		<attribute column='Preparation 2' uri='urn:preparation2' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Preparation Date' uri='urn:preparationDate' group='Preparation' defined_by='urn:preparationDate'><![CDATA[DwC_Ext: Date of preparation, year-month-day (e.g., 2012-10-26)<p><b>Synonyms:</b><p>"preparationDate" = DwC_Ext,]]></attribute>
 		<attribute column='Preparation Process' uri='urn:preparationProcess' group='Preparation' defined_by='urn:preparationProcess'><![CDATA[DwC_Ext: Process used in preparing the specimen or sample<p><b>Synonyms:</b><p>"preparationProcess" = DwC_Ext,<br />"Method" = Entomology - Sean Brady,]]></attribute>
 		<attribute column='Preparator' uri='urn:preparedBy' group='Preparation' defined_by='urn:preparedBy'><![CDATA[DwC_Ext: Person and/or institution responsible for or effecting the preparation<p><b>Synonyms:</b><p>"preparedBy" = DwC_Ext,<br />"Preparator" = Birds,]]></attribute>
@@ -180,14 +185,10 @@ BOLD: None provided.<p><b>Synonyms:</b><p>"family" = DwC,<br />"family" = IndoPa
 ABCDDNA: no definition provided (e.g. Aaronsohnia)
 
 BOLD: None provided.<p><b>Synonyms:</b><p>"genus" = DwC,<br />"genus" = IndoPacific Template v7,<br />"genus" = Plantbarcodes.individual,<br />"Genus" = BOLD,<br />"Genus" = Kress Coll'n SS,<br />"Genus" = Entomology - Ted Schultz,<br />"Genus" = Biocode Backend.specimen,<br />"genus" = Biocode Backend.Taxonomy,<br />"Genus" = Biocode Batch Upload,<br />"Genus" = Biocode Search Screen,<br />"Genus" = Kress Coll'n DB,<br />"Genus" = LAB Field Coll'n SS,<br />"Genus" = BOLD Batch Upload (Amy's),<br />"Genus" = Fishes,<br />"Genus" = Entomology - Sean Brady,<br />"Genus" = Birds, <br />"Identification/ScientificName/NameAtomised/GenusOrMonomial" = ABCDDNA,<br />"DarGenus" = EMuDwC,]]></attribute>
-		<attribute column='Kingdom' uri='urn:kingdom' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#kingdom'><![CDATA[DwC: The full scientific name of the kingdom in which the taxon is classified. Example: "Animalia", "Plantae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/kingdom<p><b>Synonyms:</b><p>"DarKingdom" = EMuDwC,<br />"kingdom" = DwC,<br />"Kingdom" = Biocode.specimen, <br />"kingdom" = Biocode.Taxonomy,]]></attribute>
 		<attribute column='Year Name Published' uri='urn:namePublishedInYear' group='Taxonomy' defined_by='urn:namePublishedInYear'><![CDATA[DwC: The four-digit year in which the scientificName was published. Examples: "1915", "2008". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/namePublishedInYear<p><b>Synonyms:</b><p>"namePublishedInYear" = DwC,]]></attribute>
 		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'><![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
 
 BOLD: None provided.<p><b>Synonyms:</b><p>"order" = DwC,<br />"order" = IndoPacific Template v7,<br />"Ordr" = Biocode.specimen, <br />"ordr" = Biocode.Taxonomy,<br />"Order" = Kress PB Collect'n Spreadsheet,<br />"order" = Kress Plantbarcodes DB,<br />"Order" = BOLD,<br />"Order" = Entomology - Ted Schultz,<br />"Order" = Biocode Search Screen,<br />"Order" = LAB Field Coll'n SS,<br />"Order" = BOLD Batch Upload (Amy's),<br />"Order" = BOLD Batch Upload,<br />"Order" = Fishes,<br />"Order" = Entomology - Sean Brady,<br />"Order" = Birds,<br />"DarOrder" = EMuDwC,]]></attribute>
-		<attribute column='Phylum' uri='urn:phylum' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#phylum'><![CDATA[DwC: The full scientific name of the phylum or division in which the taxon is classified. Example: "Chordata" (phylum), "Bryophyta" (division). For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/phylum
-
-BOLD: None provided.<p><b>Synonyms:</b><p>"phylum" = DwC,<br />"phylum" = IndoPacific Template v7,<br />"Phylum" = Biocode. Specimen, <br />"phylum" = Biocode.Taxonomy,<br />"Phylum" = BOLD,<br />"Phylum" = Kress Plantbarcodes,<br />"Phylum" = Biocode Backend,<br />"Phylum" = LAB Field Coll'n SS,<br />"Phylum" = BOLD Batch Upload (Amy's),<br />"Phylum" = BOLD Batch Upload,<br />"Phylum" = DwC 1.4,<br />"Phylum" = Fishes,<br />"DarPhylum" = EMuDwC,]]></attribute>
 		<attribute column='Authors' uri='urn:scientificNameAuthorship' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#scientificNameAuthorship'><![CDATA[DwC: The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode. Example: "(Torr.) J.T. Howell", "(Martinovský) Tzvelev", "(Györfi, 1952)". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/scientificNameAuthorship<p><b>Synonyms:</b><p>"scientificNameAuthorship" = DwC,<br />"ScientificNameAuthor" = Biocode Backend,<br />"DarScientificNameAuthor" = EMuDwC,<br />"author" = Biocode.Taxonomy,<br />"Author" = Kress PB Collect'n Spreadsheet, <br />"author" = Kress Plantbarcodes.individual,]]></attribute>
 		<attribute column='Species' uri='urn:specificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#specificEpithet'><![CDATA[DwC: The name of the first or species epithet of the scientificName. Example: "concolor", "gottschei". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/specificEpithet
 
@@ -229,7 +230,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Elevation From (m)</field>
 			<field>Latitude Decimal</field>
 			<field>Longitude Decimal</field>
-			<field>Date Identified</field>
 			<field>Barcode</field>
 			<field>Collection Department/Division</field>
 			<field>Holding Institution</field>
@@ -253,12 +253,21 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
 			<field>Elevation To (m)</field>
 			<field>Coordinate Determination Method</field>
+			<field>Date Identified</field>
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Preservation Date</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Prepared By</field>
 		</rule>
 		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 2' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 3' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 4' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 5' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 6' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 7' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
@@ -271,182 +280,3022 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
+		<rule type='checkInXMLFields' column='Biogeographic Region' list='Biogeography Region' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Preparation 2' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Kind of Object' list='Object Type' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='checkInXMLFields' column='Life Stage' list='Zoology Stage' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
+		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 	</worksheet>
 	<lists>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field>Yes</field>
-			<field>No</field>
-		</list>
-		<list alias='elevDepthModifier' caseInsensitive='true'>
-			<field>ca.</field>
-			<field>greater than</field>
-			<field>less than</field>
-			<field>±</field>
-		</list>
-		<list alias='latitudeNorthSouth' caseInsensitive='true'>
-			<field>N</field>
-			<field>S</field>
-		</list>
-		<list alias='longitudeEastWest' caseInsensitive='true'>
-			<field>E</field>
-			<field>W</field>
-		</list>
-		<list alias='identificationQualifier' caseInsensitive='true'>
-			<field>aff.</field>
-			<field>cf.</field>
-			<field>complex</field>
-			<field>group</field>
-			<field>near</field>
-			<field>sp. nov.</field>
-			<field>subgroup</field>
-			<field>uncertain</field>
-			<field>vel aff.</field>
-		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field>Botany</field>
-			<field>Entomology</field>
-			<field>Invertebrate Zoology</field>
-			<field>Amphibians and Reptiles</field>
-			<field>Birds</field>
-			<field>Fishes</field>
-			<field>Mammals</field>
-			<field>Mineral Sciences</field>
-		</list>
-		<list alias='institutionCode' caseInsensitive='true'>
-			<field>US</field>
-			<field>USNM</field>
-		</list>
-		<list alias='continent' caseInsensitive='true'>
-			<field>Africa</field>
-			<field>Antarctica</field>
-			<field>Asia</field>
-			<field>Australia</field>
-			<field>Europe</field>
-			<field>North America</field>
-			<field>Oceania</field>
-			<field>South America</field>
-		</list>
-		<list alias='ocean' caseInsensitive='true'>
-			<field>Antarctic Ocean</field>
-			<field>Arctic Ocean</field>
-			<field>Indian Ocean</field>
-			<field>North Atlantic Ocean</field>
-			<field>North Pacific Ocean</field>
-			<field>South Atlantic Ocean</field>
-			<field>South Pacific Ocean</field>
-		</list>
-		<list alias='lengthUnits' caseInsensitive='true'>
-			<field>cm</field>
-			<field>m</field>
-			<field>mm</field>
-			<field>µm</field>
-			<field>in</field>
-			<field>ft</field>
+		<list alias='sex' caseInsensitive='true'>
+			<field><![CDATA[Male]]></field>
+			<field><![CDATA[Female]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Worker]]></field>
 		</list>
 		<list alias='measurementUnit' caseInsensitive='true'>
-			<field>cm</field>
-			<field>ft</field>
-			<field>g</field>
-			<field>in</field>
-			<field>ins</field>
-			<field>kg</field>
-			<field>lb</field>
-			<field>lbs</field>
-			<field>mm</field>
-			<field>oz</field>
-			<field>ct</field>
-		</list>
-		<list alias='basisOfRecord' caseInsensitive='true'>
-			<field>Bulky Specimen</field>
-			<field>Genetic Sample</field>
-			<field>Liquid Preserved</field>
-			<field>Lot</field>
-			<field>Packet</field>
-			<field>Seed</field>
-			<field>Specimen</field>
-			<field>Specimen/Lot</field>
-			<field>Rhizome</field>
-			<field>Unmounted material</field>
-			<field>Wood specimen</field>
-		</list>
-		<list alias='establishmentMeans' caseInsensitive='true'>
-			<field>cultivated</field>
-			<field>escaped</field>
-			<field>introduced</field>
-			<field>invasive</field>
-			<field>managed</field>
-			<field>native</field>
-			<field>naturalised</field>
-			<field>uncertain</field>
-			<field>waif</field>
-			<field>wild</field>
-		</list>
-		<list alias='exudate' caseInsensitive='true'>
-			<field>(NULL)</field>
-			<field>Clear</field>
-			<field>Cream</field>
-			<field>Orangish</field>
-			<field>Reddish</field>
-			<field>White</field>
-			<field>Yellow</field>
-		</list>
-		<list alias='habit' caseInsensitive='true'>
-			<field>Aquatic herb</field>
-			<field>Cespitose herb</field>
-			<field>Decumbent herb</field>
-			<field>Epilithic</field>
-			<field>Epiphyte</field>
-			<field>Erect herb</field>
-			<field>Floating herb</field>
-			<field>Hemiparasite</field>
-			<field>Herbaceous vine</field>
-			<field>Liana</field>
-			<field>Palm</field>
-			<field>Palm-like fern</field>
-			<field>Parasite</field>
-			<field>Scandent shrub</field>
-			<field>Shrub</field>
-			<field>Trailing herb</field>
-			<field>Trailing vine</field>
-			<field>Tree</field>
-			<field>Treelet</field>
-		</list>
-		<list alias='hybridRank' caseInsensitive='true'>
-			<field>Genus</field>
-			<field>Species</field>
-		</list>
-		<list alias='taxonRank' caseInsensitive='true'>
-			<field>aberration</field>
-			<field>forma</field>
-			<field>morpha</field>
-			<field>race</field>
-			<field>subforma</field>
-			<field>subvariety</field>
-			<field>variety</field>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[ft]]></field>
+			<field><![CDATA[g]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ins]]></field>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[lbs]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ct]]></field>
 		</list>
 		<list alias='sampleQuality' caseInsensitive='true'>
-			<field>High</field>
-			<field>Medium</field>
-			<field>Low</field>
+			<field><![CDATA[High]]></field>
+			<field><![CDATA[Medium]]></field>
+			<field><![CDATA[Low]]></field>
 		</list>
-		<list alias='sex' caseInsensitive='true'>
-			<field>Male</field>
-			<field>Female</field>
-			<field>Unknown</field>
-			<field>Worker</field>
+		<list alias='ocean' caseInsensitive='true'>
+			<field><![CDATA[Antarctic Ocean]]></field>
+			<field><![CDATA[Arctic Ocean]]></field>
+			<field><![CDATA[Indian Ocean]]></field>
+			<field><![CDATA[North Atlantic Ocean]]></field>
+			<field><![CDATA[North Pacific Ocean]]></field>
+			<field><![CDATA[South Atlantic Ocean]]></field>
+			<field><![CDATA[South Pacific Ocean]]></field>
+		</list>
+		<list alias='hybridRank' caseInsensitive='true'>
+			<field><![CDATA[Genus]]></field>
+			<field><![CDATA[Species]]></field>
+		</list>
+		<list alias='Zoology Stage' caseInsensitive='true'>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[bottom]]></field>
+			<field><![CDATA[dault]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Eggs]]></field>
+			<field><![CDATA[exuviae]]></field>
+			<field><![CDATA[First instar]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[larva]]></field>
+			<field><![CDATA[morphotype]]></field>
+			<field><![CDATA[Nymph]]></field>
+			<field><![CDATA[Penultimate instar]]></field>
+			<field><![CDATA[Pupa]]></field>
+			<field><![CDATA[pupal exuvia]]></field>
+			<field><![CDATA[research]]></field>
+			<field><![CDATA[S]]></field>
+			<field><![CDATA[Second instar]]></field>
+			<field><![CDATA[top]]></field>
+			<field><![CDATA[Ultimate instar]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Wings Alate]]></field>
+			<field><![CDATA[Wings Alatoid]]></field>
+			<field><![CDATA[Wings Aptera]]></field>
+			<field><![CDATA[Wings Apterous]]></field>
+			<field><![CDATA[Wings Brachypterous]]></field>
+			<field><![CDATA[Wings Unknown]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[Adamski, D.]]></field>
+			<field><![CDATA[Beati, L.]]></field>
+			<field><![CDATA[Brady, S. G.]]></field>
+			<field><![CDATA[Brown, J. W.]]></field>
+			<field><![CDATA[Buffington, M.]]></field>
+			<field><![CDATA[Burns, J. M.]]></field>
+			<field><![CDATA[Chamorro, L.]]></field>
+			<field><![CDATA[Coddington, J.]]></field>
+			<field><![CDATA[Davis, D. R.]]></field>
+			<field><![CDATA[Dikow, T.]]></field>
+			<field><![CDATA[Erwin, T. L.]]></field>
+			<field><![CDATA[Evenhuis, N. L.]]></field>
+			<field><![CDATA[Flint, O. S.]]></field>
+			<field><![CDATA[Furth, D. G.]]></field>
+			<field><![CDATA[Gagne, R. J.]]></field>
+			<field><![CDATA[Gates, M. W.]]></field>
+			<field><![CDATA[Gentili-Poole, P.]]></field>
+			<field><![CDATA[Hall, J. P.]]></field>
+			<field><![CDATA[Harris, B. P.]]></field>
+			<field><![CDATA[Harvey, D. J.]]></field>
+			<field><![CDATA[Henry, T. J.]]></field>
+			<field><![CDATA[Hevel, G. F.]]></field>
+			<field><![CDATA[Huang, Y.]]></field>
+			<field><![CDATA[Kolski, E.]]></field>
+			<field><![CDATA[Konstantinov, A.]]></field>
+			<field><![CDATA[Kula, R.]]></field>
+			<field><![CDATA[Lingafelter, S. W.]]></field>
+			<field><![CDATA[Mathis, W. N.]]></field>
+			<field><![CDATA[Mawdsley, J. R.]]></field>
+			<field><![CDATA[McKamey, S.]]></field>
+			<field><![CDATA[Micheli, C.]]></field>
+			<field><![CDATA[Miller, D. R.]]></field>
+			<field><![CDATA[Miller, G. L.]]></field>
+			<field><![CDATA[Miller, S.]]></field>
+			<field><![CDATA[Norrbom, A. L.]]></field>
+			<field><![CDATA[Nuhn, T. P.]]></field>
+			<field><![CDATA[Ochoa, R. A.]]></field>
+			<field><![CDATA[Pecor, J.]]></field>
+			<field><![CDATA[Perez-Gelabert, D.]]></field>
+			<field><![CDATA[Pogue, M. G.]]></field>
+			<field><![CDATA[Ratcliffe, B. C.]]></field>
+			<field><![CDATA[Robbins, R. K.]]></field>
+			<field><![CDATA[Roberts, L. P.]]></field>
+			<field><![CDATA[Rodriguez, L. H.]]></field>
+			<field><![CDATA[Scheffer, S.]]></field>
+			<field><![CDATA[Schultz, T. R.]]></field>
+			<field><![CDATA[Shockley, F. W.]]></field>
+			<field><![CDATA[Smith, D. R.]]></field>
+			<field><![CDATA[Solis, M. A.]]></field>
+			<field><![CDATA[Steiner, W. E.]]></field>
+			<field><![CDATA[Thompson, F. C.]]></field>
+			<field><![CDATA[Vandenberg, N. J.]]></field>
+			<field><![CDATA[Wilkerson, R. C.]]></field>
+			<field><![CDATA[Woodley, N. E.]]></field>
+		</list>
+		<list alias='habit' caseInsensitive='true'>
+			<field><![CDATA[Aquatic herb]]></field>
+			<field><![CDATA[Cespitose herb]]></field>
+			<field><![CDATA[Decumbent herb]]></field>
+			<field><![CDATA[Epilithic]]></field>
+			<field><![CDATA[Epiphyte]]></field>
+			<field><![CDATA[Erect herb]]></field>
+			<field><![CDATA[Floating herb]]></field>
+			<field><![CDATA[Hemiparasite]]></field>
+			<field><![CDATA[Herbaceous vine]]></field>
+			<field><![CDATA[Liana]]></field>
+			<field><![CDATA[Palm]]></field>
+			<field><![CDATA[Palm-like fern]]></field>
+			<field><![CDATA[Parasite]]></field>
+			<field><![CDATA[Scandent shrub]]></field>
+			<field><![CDATA[Shrub]]></field>
+			<field><![CDATA[Trailing herb]]></field>
+			<field><![CDATA[Trailing vine]]></field>
+			<field><![CDATA[Tree]]></field>
+			<field><![CDATA[Treelet]]></field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field><![CDATA[N]]></field>
+			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
-			<field>NAD27</field>
-			<field>NAD83</field>
-			<field>WGS84</field>
+			<field><![CDATA[NAD27]]></field>
+			<field><![CDATA[NAD83]]></field>
+			<field><![CDATA[WGS84]]></field>
+		</list>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[Afrotropical]]></field>
+			<field><![CDATA[Australasian]]></field>
+			<field><![CDATA[Nearctic]]></field>
+			<field><![CDATA[Neotropical]]></field>
+			<field><![CDATA[Oriental]]></field>
+			<field><![CDATA[Palaearctic]]></field>
+		</list>
+		<list alias='family' caseInsensitive='true'>
+			<field><![CDATA[Abacionidae]]></field>
+			<field><![CDATA[Acalyptonotidae]]></field>
+			<field><![CDATA[Acanaloniidae]]></field>
+			<field><![CDATA[Acanthocnemidae]]></field>
+			<field><![CDATA[Acanthopidae]]></field>
+			<field><![CDATA[Acanthopteroctetidae]]></field>
+			<field><![CDATA[Acanthosomatidae]]></field>
+			<field><![CDATA[Acaridae]]></field>
+			<field><![CDATA[Acaronychidae]]></field>
+			<field><![CDATA[Acarophenacidae]]></field>
+			<field><![CDATA[Acartophthalmidae]]></field>
+			<field><![CDATA[Acerentomidae]]></field>
+			<field><![CDATA[Acherontacaridae]]></field>
+			<field><![CDATA[Achiidae]]></field>
+			<field><![CDATA[Achilixiidae]]></field>
+			<field><![CDATA[Achipteriidae]]></field>
+			<field><![CDATA[Acrididae]]></field>
+			<field><![CDATA[Acroceridae]]></field>
+			<field><![CDATA[Acrolophidae]]></field>
+			<field><![CDATA[Actaletidae]]></field>
+			<field><![CDATA[Actinopodidae]]></field>
+			<field><![CDATA[Adamystidae]]></field>
+			<field><![CDATA[Adelgidae]]></field>
+			<field><![CDATA[Adelidae]]></field>
+			<field><![CDATA[Adelphacaridae]]></field>
+			<field><![CDATA[Ademosynidae]]></field>
+			<field><![CDATA[Adhaesozetidae]]></field>
+			<field><![CDATA[Adiaphorostreptidae]]></field>
+			<field><![CDATA[Adiheterothripidae]]></field>
+			<field><![CDATA[Adritylidae]]></field>
+			<field><![CDATA[Aenictequidae]]></field>
+			<field><![CDATA[Aenictopecheidae]]></field>
+			<field><![CDATA[Aeolothripidae]]></field>
+			<field><![CDATA[Aepophilidae]]></field>
+			<field><![CDATA[Aeroglyphidae]]></field>
+			<field><![CDATA[Aeshnidae]]></field>
+			<field><![CDATA[Aetalionidae]]></field>
+			<field><![CDATA[Afrauropodidae]]></field>
+			<field><![CDATA[Agaonidae]]></field>
+			<field><![CDATA[Agapythidae]]></field>
+			<field><![CDATA[Agathemeridae]]></field>
+			<field><![CDATA[Agathiphagidae]]></field>
+			<field><![CDATA[Agelenidae]]></field>
+			<field><![CDATA[Agoristenidae]]></field>
+			<field><![CDATA[Agromyzidae]]></field>
+			<field><![CDATA[Agyrtidae]]></field>
+			<field><![CDATA[Aididae]]></field>
+			<field><![CDATA[Akalyptoischiidae]]></field>
+			<field><![CDATA[Aleurodamaeidae]]></field>
+			<field><![CDATA[Alexiidae]]></field>
+			<field><![CDATA[Aleyrodidae]]></field>
+			<field><![CDATA[Algophagidae]]></field>
+			<field><![CDATA[Alicorhagiidae]]></field>
+			<field><![CDATA[Allochaetophoridae]]></field>
+			<field><![CDATA[Allopocockiidae]]></field>
+			<field><![CDATA[Alloptidae]]></field>
+			<field><![CDATA[Allothyridae]]></field>
+			<field><![CDATA[Altajellidae]]></field>
+			<field><![CDATA[Alucitidae]]></field>
+			<field><![CDATA[Alycidae]]></field>
+			<field><![CDATA[Alydidae]]></field>
+			<field><![CDATA[Amaurobiidae]]></field>
+			<field><![CDATA[Ameletopsidae]]></field>
+			<field><![CDATA[Ameridae]]></field>
+			<field><![CDATA[Amerobelbidae]]></field>
+			<field><![CDATA[Ameronothridae]]></field>
+			<field><![CDATA[Ameroseiidae]]></field>
+			<field><![CDATA[Ametropodidae]]></field>
+			<field><![CDATA[Ammodesmidae]]></field>
+			<field><![CDATA[Ammotrechidae]]></field>
+			<field><![CDATA[Ammoxenidae]]></field>
+			<field><![CDATA[Amoenacaridae]]></field>
+			<field><![CDATA[Amorphoscelidae]]></field>
+			<field><![CDATA[Amphientomidae]]></field>
+			<field><![CDATA[Amphinectidae]]></field>
+			<field><![CDATA[Amphipsocidae]]></field>
+			<field><![CDATA[Amphipterygidae]]></field>
+			<field><![CDATA[Amphizoidae]]></field>
+			<field><![CDATA[Anajapygidae]]></field>
+			<field><![CDATA[Analgidae]]></field>
+			<field><![CDATA[Anapidae]]></field>
+			<field><![CDATA[Anaxyelidae]]></field>
+			<field><![CDATA[Ancistropsyllidae]]></field>
+			<field><![CDATA[Anderemaeidae]]></field>
+			<field><![CDATA[Andesembiidae]]></field>
+			<field><![CDATA[Andesianidae]]></field>
+			<field><![CDATA[Andrenidae]]></field>
+			<field><![CDATA[Andrognathidae]]></field>
+			<field><![CDATA[Anisembiidae]]></field>
+			<field><![CDATA[Anisitsiellidae]]></field>
+			<field><![CDATA[Anisolabididae]]></field>
+			<field><![CDATA[Anisopodidae]]></field>
+			<field><![CDATA[Anobiidae]]></field>
+			<field><![CDATA[Anomalopsychidae]]></field>
+			<field><![CDATA[Anomosetidae]]></field>
+			<field><![CDATA[Anopsobiidae]]></field>
+			<field><![CDATA[Anostostomatidae]]></field>
+			<field><![CDATA[Antelientomidae]]></field>
+			<field><![CDATA[Antennophoridae]]></field>
+			<field><![CDATA[Anthelidae]]></field>
+			<field><![CDATA[Anthicidae]]></field>
+			<field><![CDATA[Anthocoridae]]></field>
+			<field><![CDATA[Anthomyiidae]]></field>
+			<field><![CDATA[Anthomyzidae]]></field>
+			<field><![CDATA[Anthribidae]]></field>
+			<field><![CDATA[Anthroleucosomatidae]]></field>
+			<field><![CDATA[Antipodoeciidae]]></field>
+			<field><![CDATA[Antrodiaetidae]]></field>
+			<field><![CDATA[Anyphaenidae]]></field>
+			<field><![CDATA[Anystidae]]></field>
+			<field><![CDATA[Apachyidae]]></field>
+			<field><![CDATA[Apataniidae]]></field>
+			<field><![CDATA[Apatelodidae]]></field>
+			<field><![CDATA[Aphelacaridae]]></field>
+			<field><![CDATA[Aphelidesmidae]]></field>
+			<field><![CDATA[Aphelinidae]]></field>
+			<field><![CDATA[Aphelocheiridae]]></field>
+			<field><![CDATA[Apheviderulicidae]]></field>
+			<field><![CDATA[Aphididae]]></field>
+			<field><![CDATA[Aphilodontidae]]></field>
+			<field><![CDATA[Aphylidae]]></field>
+			<field><![CDATA[Apidae]]></field>
+			<field><![CDATA[Apioceridae]]></field>
+			<field><![CDATA[Apionacaridae]]></field>
+			<field><![CDATA[Aproshylosomatidae]]></field>
+			<field><![CDATA[Apsilocephalidae]]></field>
+			<field><![CDATA[Apteropanorpidae]]></field>
+			<field><![CDATA[Apterouridae]]></field>
+			<field><![CDATA[Apystomyiidae]]></field>
+			<field><![CDATA[Aradidae]]></field>
+			<field><![CDATA[Araneidae]]></field>
+			<field><![CDATA[Araripelocustidae]]></field>
+			<field><![CDATA[Arborichthoniidae]]></field>
+			<field><![CDATA[Arceremaeidae]]></field>
+			<field><![CDATA[Archaeidae]]></field>
+			<field><![CDATA[Archaeotropidae]]></field>
+			<field><![CDATA[Archeocrypticidae]]></field>
+			<field><![CDATA[Archeonothridae]]></field>
+			<field><![CDATA[Archipseudophasmatidae]]></field>
+			<field><![CDATA[Archipsocidae]]></field>
+			<field><![CDATA[Arctacaridae]]></field>
+			<field><![CDATA[Arenohydracaridae]]></field>
+			<field><![CDATA[Areozetidae]]></field>
+			<field><![CDATA[Argasidae]]></field>
+			<field><![CDATA[Argidae]]></field>
+			<field><![CDATA[Argyresthiidae]]></field>
+			<field><![CDATA[Aribatidae]]></field>
+			<field><![CDATA[Arixeniidae]]></field>
+			<field><![CDATA[Arrenuridae]]></field>
+			<field><![CDATA[Arrhopalitidae]]></field>
+			<field><![CDATA[Artematopodidae]]></field>
+			<field><![CDATA[Artheneidae]]></field>
+			<field><![CDATA[Arthropleidae]]></field>
+			<field><![CDATA[Ascalaphidae]]></field>
+			<field><![CDATA[Aschiphasmatidae]]></field>
+			<field><![CDATA[Ascidae]]></field>
+			<field><![CDATA[Ascouracaridae]]></field>
+			<field><![CDATA[Asilidae]]></field>
+			<field><![CDATA[Asiocoleidae]]></field>
+			<field><![CDATA[Asiopsocidae]]></field>
+			<field><![CDATA[Aspidytidae]]></field>
+			<field><![CDATA[Assamiidae]]></field>
+			<field><![CDATA[Astacocrotonidae]]></field>
+			<field><![CDATA[Astegistidae]]></field>
+			<field><![CDATA[Asteiidae]]></field>
+			<field><![CDATA[Asternoseiidae]]></field>
+			<field><![CDATA[Asterolecaniidae]]></field>
+			<field><![CDATA[Atelestidae]]></field>
+			<field><![CDATA[Atemnidae]]></field>
+			<field><![CDATA[Athericidae]]></field>
+			<field><![CDATA[Athienemanniidae]]></field>
+			<field><![CDATA[Athyreacaridae]]></field>
+			<field><![CDATA[Atopetholidae]]></field>
+			<field><![CDATA[Atopochthoniidae]]></field>
+			<field><![CDATA[Atopogestidae]]></field>
+			<field><![CDATA[Atopomelidae]]></field>
+			<field><![CDATA[Atriplectidae]]></field>
+			<field><![CDATA[Atriplectididae]]></field>
+			<field><![CDATA[Attelabidae]]></field>
+			<field><![CDATA[Attemsiidae]]></field>
+			<field><![CDATA[Attevidae]]></field>
+			<field><![CDATA[Aturidae]]></field>
+			<field><![CDATA[Atypidae]]></field>
+			<field><![CDATA[Audyanidae]]></field>
+			<field><![CDATA[Aulacidae]]></field>
+			<field><![CDATA[Aulacigastridae]]></field>
+			<field><![CDATA[Australembiidae]]></field>
+			<field><![CDATA[Australimyzidae]]></field>
+			<field><![CDATA[Austrochilidae]]></field>
+			<field><![CDATA[Austroniidae]]></field>
+			<field><![CDATA[Austroperlidae]]></field>
+			<field><![CDATA[Austropetaliidae]]></field>
+			<field><![CDATA[Autognetidae]]></field>
+			<field><![CDATA[Autostichidae]]></field>
+			<field><![CDATA[Avenzoariidae]]></field>
+			<field><![CDATA[Axymyiidae]]></field>
+			<field><![CDATA[Bacillidae]]></field>
+			<field><![CDATA[Baetidae]]></field>
+			<field><![CDATA[Baetiscidae]]></field>
+			<field><![CDATA[Ballophilidae]]></field>
+			<field><![CDATA[Barbarochthonidae]]></field>
+			<field><![CDATA[Barbutiidae]]></field>
+			<field><![CDATA[Barychelidae]]></field>
+			<field><![CDATA[Basilobelbidae]]></field>
+			<field><![CDATA[Batrachedridae]]></field>
+			<field><![CDATA[Bdellidae]]></field>
+			<field><![CDATA[Bedelliidae]]></field>
+			<field><![CDATA[Beesoniidae]]></field>
+			<field><![CDATA[Behningiidae]]></field>
+			<field><![CDATA[Belidae]]></field>
+			<field><![CDATA[Belohinidae]]></field>
+			<field><![CDATA[Belostomatidae]]></field>
+			<field><![CDATA[Beraeidae]]></field>
+			<field><![CDATA[Berendtimiridae]]></field>
+			<field><![CDATA[Berothidae]]></field>
+			<field><![CDATA[Berytidae]]></field>
+			<field><![CDATA[Bethylidae]]></field>
+			<field><![CDATA[Biantidae]]></field>
+			<field><![CDATA[Bibionidae]]></field>
+			<field><![CDATA[Bimichaeliidae]]></field>
+			<field><![CDATA[Biokoviellidae]]></field>
+			<field><![CDATA[Biphyllidae]]></field>
+			<field><![CDATA[Birobatidae]]></field>
+			<field><![CDATA[Bittacidae]]></field>
+			<field><![CDATA[Blaberidae]]></field>
+			<field><![CDATA[Blaniulidae]]></field>
+			<field><![CDATA[Blasticotomidae]]></field>
+			<field><![CDATA[Blastobasidae]]></field>
+			<field><![CDATA[Blattellidae]]></field>
+			<field><![CDATA[Blattidae]]></field>
+			<field><![CDATA[Blattisociidae]]></field>
+			<field><![CDATA[Blephariceridae]]></field>
+			<field><![CDATA[Blissidae]]></field>
+			<field><![CDATA[Bochicidae]]></field>
+			<field><![CDATA[Boganiidae]]></field>
+			<field><![CDATA[Bogatiidae]]></field>
+			<field><![CDATA[Bolitophilidae]]></field>
+			<field><![CDATA[Bombycidae]]></field>
+			<field><![CDATA[Bombyliidae]]></field>
+			<field><![CDATA[Boopidae]]></field>
+			<field><![CDATA[Boreidae]]></field>
+			<field><![CDATA[Boridae]]></field>
+			<field><![CDATA[Bostrichidae]]></field>
+			<field><![CDATA[Bothrideridae]]></field>
+			<field><![CDATA[Bothriuridae]]></field>
+			<field><![CDATA[Bouretidae]]></field>
+			<field><![CDATA[Bourletiellidae]]></field>
+			<field><![CDATA[Brachodidae]]></field>
+			<field><![CDATA[Brachycentridae]]></field>
+			<field><![CDATA[Brachyceridae]]></field>
+			<field><![CDATA[Brachychaeteumatidae]]></field>
+			<field><![CDATA[Brachychthoniidae]]></field>
+			<field><![CDATA[Brachypauropodidae]]></field>
+			<field><![CDATA[Brachypsectridae]]></field>
+			<field><![CDATA[Brachystomatidae]]></field>
+			<field><![CDATA[Brachystomellidae]]></field>
+			<field><![CDATA[Braconidae]]></field>
+			<field><![CDATA[Bradynobaenidae]]></field>
+			<field><![CDATA[Brahmaeidae]]></field>
+			<field><![CDATA[Branneriidae]]></field>
+			<field><![CDATA[Braulidae]]></field>
+			<field><![CDATA[Brentidae]]></field>
+			<field><![CDATA[Bryopsocidae]]></field>
+			<field><![CDATA[Bucculatricidae]]></field>
+			<field><![CDATA[Buprestidae]]></field>
+			<field><![CDATA[Buthidae]]></field>
+			<field><![CDATA[Byrrhidae]]></field>
+			<field><![CDATA[Caddidae]]></field>
+			<field><![CDATA[Caeciliusidae]]></field>
+			<field><![CDATA[Caeculidae]]></field>
+			<field><![CDATA[Caenidae]]></field>
+			<field><![CDATA[Calamoceratidae]]></field>
+			<field><![CDATA[Calcitronidae]]></field>
+			<field><![CDATA[Caleremaeidae]]></field>
+			<field><![CDATA[Caligonellidae]]></field>
+			<field><![CDATA[Calipappidae]]></field>
+			<field><![CDATA[Callidulidae]]></field>
+			<field><![CDATA[Calliphoridae]]></field>
+			<field><![CDATA[Callipodidae]]></field>
+			<field><![CDATA[Callirhipidae]]></field>
+			<field><![CDATA[Calocidae]]></field>
+			<field><![CDATA[Caloppiidae]]></field>
+			<field><![CDATA[Calopsocidae]]></field>
+			<field><![CDATA[Calopterygidae]]></field>
+			<field><![CDATA[Calyptostomatidae]]></field>
+			<field><![CDATA[Cambalidae]]></field>
+			<field><![CDATA[Cambalospidae]]></field>
+			<field><![CDATA[Camerobiidae]]></field>
+			<field><![CDATA[Camillidae]]></field>
+			<field><![CDATA[Camisiidae]]></field>
+			<field><![CDATA[Campbellobatidae]]></field>
+			<field><![CDATA[Campodeidae]]></field>
+			<field><![CDATA[Campodesmidae]]></field>
+			<field><![CDATA[Canacidae]]></field>
+			<field><![CDATA[Canestriniidae]]></field>
+			<field><![CDATA[Canopidae]]></field>
+			<field><![CDATA[Cantharidae]]></field>
+			<field><![CDATA[Canthyloscelididae]]></field>
+			<field><![CDATA[Capniidae]]></field>
+			<field><![CDATA[Caponiidae]]></field>
+			<field><![CDATA[Carabidae]]></field>
+			<field><![CDATA[Caraboacaridae]]></field>
+			<field><![CDATA[Carabocepheidae]]></field>
+			<field><![CDATA[Carabodidae]]></field>
+			<field><![CDATA[Carayonemidae]]></field>
+			<field><![CDATA[Caridae]]></field>
+			<field><![CDATA[Carnidae]]></field>
+			<field><![CDATA[Carpoglyphidae]]></field>
+			<field><![CDATA[Carposinidae]]></field>
+			<field><![CDATA[Carthaeidae]]></field>
+			<field><![CDATA[Caseyidae]]></field>
+			<field><![CDATA[Caspiopetalidae]]></field>
+			<field><![CDATA[Castniidae]]></field>
+			<field><![CDATA[Catiniidae]]></field>
+			<field><![CDATA[Caudiferidae]]></field>
+			<field><![CDATA[Cavognathidae]]></field>
+			<field><![CDATA[Cecidomyiidae]]></field>
+			<field><![CDATA[Cecidosidae]]></field>
+			<field><![CDATA[Celaenopsidae]]></field>
+			<field><![CDATA[Celyphidae]]></field>
+			<field><![CDATA[Cepheidae]]></field>
+			<field><![CDATA[Cephidae]]></field>
+			<field><![CDATA[Cerambycidae]]></field>
+			<field><![CDATA[Ceraphronidae]]></field>
+			<field><![CDATA[Ceratocombidae]]></field>
+			<field><![CDATA[Ceratokalummidae]]></field>
+			<field><![CDATA[Ceratolasmatidae]]></field>
+			<field><![CDATA[Ceratophyllidae]]></field>
+			<field><![CDATA[Ceratopogonidae]]></field>
+			<field><![CDATA[Ceratozetidae]]></field>
+			<field><![CDATA[Cercomegistidae]]></field>
+			<field><![CDATA[Cercopidae]]></field>
+			<field><![CDATA[Cerocepheidae]]></field>
+			<field><![CDATA[Cerococcidae]]></field>
+			<field><![CDATA[Ceromidae]]></field>
+			<field><![CDATA[Cerophytidae]]></field>
+			<field><![CDATA[Cerylonidae]]></field>
+			<field><![CDATA[Chactidae]]></field>
+			<field><![CDATA[Chaerilidae]]></field>
+			<field><![CDATA[Chaeteessidae]]></field>
+			<field><![CDATA[Chaetodactylidae]]></field>
+			<field><![CDATA[Chaetosomatidae]]></field>
+			<field><![CDATA[Chalcididae]]></field>
+			<field><![CDATA[Chalcodryidae]]></field>
+			<field><![CDATA[Chamaemyiidae]]></field>
+			<field><![CDATA[Chamaesomatidae]]></field>
+			<field><![CDATA[Chamobatidae]]></field>
+			<field><![CDATA[Chaoboridae]]></field>
+			<field><![CDATA[Chaoboridae or dixidae]]></field>
+			<field><![CDATA[Chappuisididae]]></field>
+			<field><![CDATA[Charassobatidae]]></field>
+			<field><![CDATA[Charilaidae]]></field>
+			<field><![CDATA[Charinidae]]></field>
+			<field><![CDATA[Charontidae]]></field>
+			<field><![CDATA[Chathamiidae]]></field>
+			<field><![CDATA[Chaviniidae]]></field>
+			<field><![CDATA[Cheiridiidae]]></field>
+			<field><![CDATA[Cheliferidae]]></field>
+			<field><![CDATA[Chelisochidae]]></field>
+			<field><![CDATA[Chelodesmidae]]></field>
+			<field><![CDATA[Chelojulidae]]></field>
+			<field><![CDATA[Chelonariidae]]></field>
+			<field><![CDATA[Chernetidae]]></field>
+			<field><![CDATA[Cheylabididae]]></field>
+			<field><![CDATA[Cheyletidae]]></field>
+			<field><![CDATA[Chilenophilidae]]></field>
+			<field><![CDATA[Chimabachidae]]></field>
+			<field><![CDATA[Chimaeropsyllidae]]></field>
+			<field><![CDATA[Chirodiscidae]]></field>
+			<field><![CDATA[Chironomidae]]></field>
+			<field><![CDATA[Chirorhynchobiidae]]></field>
+			<field><![CDATA[Chlorocyphidae]]></field>
+			<field><![CDATA[Chlorogomphidae]]></field>
+			<field><![CDATA[Chlorolestidae]]></field>
+			<field><![CDATA[Chloroperlidae]]></field>
+			<field><![CDATA[Chloropidae]]></field>
+			<field><![CDATA[Choctellidae]]></field>
+			<field><![CDATA[Chordeumatidae]]></field>
+			<field><![CDATA[Choreutidae]]></field>
+			<field><![CDATA[Choristidae]]></field>
+			<field><![CDATA[Chorotypidae]]></field>
+			<field><![CDATA[Chortoglyphidae]]></field>
+			<field><![CDATA[Chrysididae]]></field>
+			<field><![CDATA[Chrysomelidae]]></field>
+			<field><![CDATA[Chrysopidae]]></field>
+			<field><![CDATA[Chthoniidae]]></field>
+			<field><![CDATA[Chummidae]]></field>
+			<field><![CDATA[Chyromyidae]]></field>
+			<field><![CDATA[Chyzeriidae]]></field>
+			<field><![CDATA[Cicadellidae]]></field>
+			<field><![CDATA[Cicadidae]]></field>
+			<field><![CDATA[Cicindellidae]]></field>
+			<field><![CDATA[Ciidae]]></field>
+			<field><![CDATA[Cimbicidae]]></field>
+			<field><![CDATA[Cimeliidae]]></field>
+			<field><![CDATA[Cimicidae]]></field>
+			<field><![CDATA[Circumdehiscentiae]]></field>
+			<field><![CDATA[Cithaeronidae]]></field>
+			<field><![CDATA[Cixiidae]]></field>
+			<field><![CDATA[Cladiopsocidae]]></field>
+			<field><![CDATA[Cladonychiidae]]></field>
+			<field><![CDATA[Clambidae]]></field>
+			<field><![CDATA[Clastopteridae]]></field>
+			<field><![CDATA[Cleidogonidae]]></field>
+			<field><![CDATA[Cleridae]]></field>
+			<field><![CDATA[Cloacaridae]]></field>
+			<field><![CDATA[Clothodidae]]></field>
+			<field><![CDATA[Clubionidae]]></field>
+			<field><![CDATA[Clusiidae]]></field>
+			<field><![CDATA[Cneoglossidae]]></field>
+			<field><![CDATA[Coccidae]]></field>
+			<field><![CDATA[Coccinellidae]]></field>
+			<field><![CDATA[Coelopidae]]></field>
+			<field><![CDATA[Coelopoetidae]]></field>
+			<field><![CDATA[Coelostomidiidae]]></field>
+			<field><![CDATA[Coenagrionidae]]></field>
+			<field><![CDATA[Coenaletidae]]></field>
+			<field><![CDATA[Coleophoridae]]></field>
+			<field><![CDATA[Colletidae]]></field>
+			<field><![CDATA[Collohmanniidae]]></field>
+			<field><![CDATA[Collophoridae]]></field>
+			<field><![CDATA[Colobathristidae]]></field>
+			<field><![CDATA[Coloburiscidae]]></field>
+			<field><![CDATA[Colymbotethidae]]></field>
+			<field><![CDATA[Compsocidae]]></field>
+			<field><![CDATA[Conchaspididae]]></field>
+			<field><![CDATA[Coniopterygidae]]></field>
+			<field><![CDATA[Conoesucidae]]></field>
+			<field><![CDATA[Conopidae]]></field>
+			<field><![CDATA[Conotylidae]]></field>
+			<field><![CDATA[Cooloolidae]]></field>
+			<field><![CDATA[Coprinisphaeridae]]></field>
+			<field><![CDATA[Copromorphidae]]></field>
+			<field><![CDATA[Coprozerconidae]]></field>
+			<field><![CDATA[Coptoclavidae]]></field>
+			<field><![CDATA[Coptopsyllidae]]></field>
+			<field><![CDATA[Cordulegastridae]]></field>
+			<field><![CDATA[Corduliidae]]></field>
+			<field><![CDATA[Coreidae]]></field>
+			<field><![CDATA[Corethrellidae]]></field>
+			<field><![CDATA[Corinnidae]]></field>
+			<field><![CDATA[Corixidae]]></field>
+			<field><![CDATA[Corydalidae]]></field>
+			<field><![CDATA[Corylophidae]]></field>
+			<field><![CDATA[Cosmetidae]]></field>
+			<field><![CDATA[Cosmochthoniidae]]></field>
+			<field><![CDATA[Cosmopterigidae]]></field>
+			<field><![CDATA[Cossidae]]></field>
+			<field><![CDATA[Costacaridae]]></field>
+			<field><![CDATA[Crambidae]]></field>
+			<field><![CDATA[Cranaidae]]></field>
+			<field><![CDATA[Craspedosomatidae]]></field>
+			<field><![CDATA[Crassoribatulidae]]></field>
+			<field><![CDATA[Craterostigmidae]]></field>
+			<field><![CDATA[Crotalomorphidae]]></field>
+			<field><![CDATA[Crotoniidae]]></field>
+			<field><![CDATA[Crowsoniellidae]]></field>
+			<field><![CDATA[Cryptocercidae]]></field>
+			<field><![CDATA[Cryptochetidae]]></field>
+			<field><![CDATA[Cryptodesmidae]]></field>
+			<field><![CDATA[Cryptognathidae]]></field>
+			<field><![CDATA[Cryptophagidae]]></field>
+			<field><![CDATA[Cryptopidae]]></field>
+			<field><![CDATA[Crypturoptidae]]></field>
+			<field><![CDATA[Ctenacaridae]]></field>
+			<field><![CDATA[Ctenidae]]></field>
+			<field><![CDATA[Ctenizidae]]></field>
+			<field><![CDATA[Ctenobelbidae]]></field>
+			<field><![CDATA[Ctenophthalmidae]]></field>
+			<field><![CDATA[Ctenostylidae]]></field>
+			<field><![CDATA[Ctenothyadidae]]></field>
+			<field><![CDATA[Cucujidae]]></field>
+			<field><![CDATA[Culicidae]]></field>
+			<field><![CDATA[Cunaxidae]]></field>
+			<field><![CDATA[Cuneoppiidae]]></field>
+			<field><![CDATA[Cupedidae]]></field>
+			<field><![CDATA[Curaliidae]]></field>
+			<field><![CDATA[Curculioididae]]></field>
+			<field><![CDATA[Curculionidae]]></field>
+			<field><![CDATA[Curtonotidae]]></field>
+			<field><![CDATA[Cyatholipidae]]></field>
+			<field><![CDATA[Cybaeidae]]></field>
+			<field><![CDATA[Cyclaxyridae]]></field>
+			<field><![CDATA[Cycloctenidae]]></field>
+			<field><![CDATA[Cyclotornidae]]></field>
+			<field><![CDATA[Cydnidae]]></field>
+			<field><![CDATA[Cylindrachetidae]]></field>
+			<field><![CDATA[Cylindrotomidae]]></field>
+			<field><![CDATA[Cymbaeremaeidae]]></field>
+			<field><![CDATA[Cymidae]]></field>
+			<field><![CDATA[Cynipidae]]></field>
+			<field><![CDATA[Cypselosomatidae]]></field>
+			<field><![CDATA[Cyrtaucheniidae]]></field>
+			<field><![CDATA[Cyrtocoridae]]></field>
+			<field><![CDATA[Cyrtodesmidae]]></field>
+			<field><![CDATA[Cyryptorhamphidae]]></field>
+			<field><![CDATA[Cytoditidae]]></field>
+			<field><![CDATA[Dactylopiidae]]></field>
+			<field><![CDATA[Daesiidae]]></field>
+			<field><![CDATA[Dalceridae]]></field>
+			<field><![CDATA[Dalodesmidae]]></field>
+			<field><![CDATA[Damaeidae]]></field>
+			<field><![CDATA[Damaeolidae]]></field>
+			<field><![CDATA[Dampfiellidae]]></field>
+			<field><![CDATA[Dascillidae]]></field>
+			<field><![CDATA[Dasydemellidae]]></field>
+			<field><![CDATA[Dasyponyssidae]]></field>
+			<field><![CDATA[Dasythyreidae]]></field>
+			<field><![CDATA[Davacaridae]]></field>
+			<field><![CDATA[Decliniidae]]></field>
+			<field><![CDATA[Deinopidae]]></field>
+			<field><![CDATA[Delphacidae]]></field>
+			<field><![CDATA[Demodicidae]]></field>
+			<field><![CDATA[Dendroeremaeidae]]></field>
+			<field><![CDATA[Derbidae]]></field>
+			<field><![CDATA[Dericorythidae]]></field>
+			<field><![CDATA[Dermanyssidae]]></field>
+			<field><![CDATA[Dermationidae]]></field>
+			<field><![CDATA[Dermestidae]]></field>
+			<field><![CDATA[Dermoglyphidae]]></field>
+			<field><![CDATA[Derodontidae]]></field>
+			<field><![CDATA[Desidae]]></field>
+			<field><![CDATA[Deuterophlebiidae]]></field>
+			<field><![CDATA[Diadocidiidae]]></field>
+			<field><![CDATA[Diamphipnoidae]]></field>
+			<field><![CDATA[Diapheromeridae]]></field>
+			<field><![CDATA[Diapriidae]]></field>
+			<field><![CDATA[Diarthrophallidae]]></field>
+			<field><![CDATA[Diaspididae]]></field>
+			<field><![CDATA[Diastatidae]]></field>
+			<field><![CDATA[Dicranolasmatidae]]></field>
+			<field><![CDATA[Dicteriadidae]]></field>
+			<field><![CDATA[Dictynidae]]></field>
+			<field><![CDATA[Dictyopharidae]]></field>
+			<field><![CDATA[Dicyrtomidae]]></field>
+			<field><![CDATA[Digamasellidae]]></field>
+			<field><![CDATA[Dignathodontidae]]></field>
+			<field><![CDATA[Diguetidae]]></field>
+			<field><![CDATA[Dilaridae]]></field>
+			<field><![CDATA[Dinidoridae]]></field>
+			<field><![CDATA[Dinjapygidae]]></field>
+			<field><![CDATA[Dinychidae]]></field>
+			<field><![CDATA[Diopsidae]]></field>
+			<field><![CDATA[Diphyllostomatidae]]></field>
+			<field><![CDATA[Diplatyidae]]></field>
+			<field><![CDATA[Diplocentridae]]></field>
+			<field><![CDATA[Diplogyniidae]]></field>
+			<field><![CDATA[Diplomaragnidae]]></field>
+			<field><![CDATA[Dipluridae]]></field>
+			<field><![CDATA[Diprionidae]]></field>
+			<field><![CDATA[Dipseudopsidae]]></field>
+			<field><![CDATA[Dipsocoridae]]></field>
+			<field><![CDATA[Diptilomiopidae]]></field>
+			<field><![CDATA[Discolomatidae]]></field>
+			<field><![CDATA[Discozerconidae]]></field>
+			<field><![CDATA[Dithinozerconidae]]></field>
+			<field><![CDATA[Ditomyiidae]]></field>
+			<field><![CDATA[Dixidae]]></field>
+			<field><![CDATA[Doderiidae]]></field>
+			<field><![CDATA[Doidae]]></field>
+			<field><![CDATA[Dolabellopsocidae]]></field>
+			<field><![CDATA[Dolichocybidae]]></field>
+			<field><![CDATA[Dolichopodidae]]></field>
+			<field><![CDATA[Doratodesmidae]]></field>
+			<field><![CDATA[Dorsoporidae]]></field>
+			<field><![CDATA[Dorypetalidae]]></field>
+			<field><![CDATA[Douglasiidae]]></field>
+			<field><![CDATA[Dracochelidae]]></field>
+			<field><![CDATA[Drepanidae]]></field>
+			<field><![CDATA[Drilidae]]></field>
+			<field><![CDATA[Drosophilidae]]></field>
+			<field><![CDATA[Dryinidae]]></field>
+			<field><![CDATA[Drymobatidae]]></field>
+			<field><![CDATA[Drymusidae]]></field>
+			<field><![CDATA[Dryomyzidae]]></field>
+			<field><![CDATA[Dryophthoridae]]></field>
+			<field><![CDATA[Dryopidae]]></field>
+			<field><![CDATA[Dudgeoneidae]]></field>
+			<field><![CDATA[Dysderidae]]></field>
+			<field><![CDATA[Dytiscidae]]></field>
+			<field><![CDATA[Dzhajloutshellidae]]></field>
+			<field><![CDATA[Echimyopodidae]]></field>
+			<field><![CDATA[Echinophthiriidae]]></field>
+			<field><![CDATA[Ecnomiidae]]></field>
+			<field><![CDATA[Ectopsocidae]]></field>
+			<field><![CDATA[Elachistidae]]></field>
+			<field><![CDATA[Elateridae]]></field>
+			<field><![CDATA[Electrentomidae]]></field>
+			<field><![CDATA[Elipsocidae]]></field>
+			<field><![CDATA[Elliptochthoniidae]]></field>
+			<field><![CDATA[Elmidae]]></field>
+			<field><![CDATA[Elodophthalmidae]]></field>
+			<field><![CDATA[Embiidae]]></field>
+			<field><![CDATA[Embolemidae]]></field>
+			<field><![CDATA[Embonychidae]]></field>
+			<field><![CDATA[Empheriidae]]></field>
+			<field><![CDATA[Empididae]]></field>
+			<field><![CDATA[Empusidae]]></field>
+			<field><![CDATA[Enantioppiidae]]></field>
+			<field><![CDATA[Encyrtidae]]></field>
+			<field><![CDATA[Endecatomidae]]></field>
+			<field><![CDATA[Enderleinellidae]]></field>
+			<field><![CDATA[Endomychidae]]></field>
+			<field><![CDATA[Endromidae]]></field>
+			<field><![CDATA[Enicocephalidae]]></field>
+			<field><![CDATA[Eniochthoniidae]]></field>
+			<field><![CDATA[Entomobielziidae]]></field>
+			<field><![CDATA[Entomobryidae]]></field>
+			<field><![CDATA[Entonyssidae]]></field>
+			<field><![CDATA[Eolocustopsidae]]></field>
+			<field><![CDATA[Eomeropidae]]></field>
+			<field><![CDATA[Eosentomidae]]></field>
+			<field><![CDATA[Eotrogulidae]]></field>
+			<field><![CDATA[Epactozetidae]]></field>
+			<field><![CDATA[Epedanidae]]></field>
+			<field><![CDATA[Epermeniidae]]></field>
+			<field><![CDATA[Ephemerellidae]]></field>
+			<field><![CDATA[Ephemeridae]]></field>
+			<field><![CDATA[Ephydridae]]></field>
+			<field><![CDATA[Epicopeiidae]]></field>
+			<field><![CDATA[Epicriidae]]></field>
+			<field><![CDATA[Epidermoptidae]]></field>
+			<field><![CDATA[Epilohmanniidae]]></field>
+			<field><![CDATA[Epimarptidae]]></field>
+			<field><![CDATA[Epimerellidae]]></field>
+			<field><![CDATA[Epimyodicidae]]></field>
+			<field><![CDATA[Epiophlebiidae]]></field>
+			<field><![CDATA[Epipsocidae]]></field>
+			<field><![CDATA[Epipygidae]]></field>
+			<field><![CDATA[Epipyropidae]]></field>
+			<field><![CDATA[Episactidae]]></field>
+			<field><![CDATA[Erebidae]]></field>
+			<field><![CDATA[Eremaeidae]]></field>
+			<field><![CDATA[Eremaeozetidae]]></field>
+			<field><![CDATA[Eremellidae]]></field>
+			<field><![CDATA[Eremiaphilidae]]></field>
+			<field><![CDATA[Eremobatidae]]></field>
+			<field><![CDATA[Eremobelbidae]]></field>
+			<field><![CDATA[Eremulidae]]></field>
+			<field><![CDATA[Eresidae]]></field>
+			<field><![CDATA[Ereynetidae]]></field>
+			<field><![CDATA[Eriococcidae]]></field>
+			<field><![CDATA[Eriocottidae]]></field>
+			<field><![CDATA[Eriocraniidae]]></field>
+			<field><![CDATA[Eriophyidae]]></field>
+			<field><![CDATA[Eriorhynchidae]]></field>
+			<field><![CDATA[Eriphantidae]]></field>
+			<field><![CDATA[Erotylidae]]></field>
+			<field><![CDATA[Erythraeidae]]></field>
+			<field><![CDATA[Escadabiidae]]></field>
+			<field><![CDATA[Ethopolidae]]></field>
+			<field><![CDATA[Eucharitidae]]></field>
+			<field><![CDATA[Eucinetidae]]></field>
+			<field><![CDATA[Eucnemidae]]></field>
+			<field><![CDATA[Eucratonychidae]]></field>
+			<field><![CDATA[Eudigonidae]]></field>
+			<field><![CDATA[Euglycyphagidae]]></field>
+			<field><![CDATA[Eukoeneniidae]]></field>
+			<field><![CDATA[Eulichadidae]]></field>
+			<field><![CDATA[Eulohmanniidae]]></field>
+			<field><![CDATA[Eulophidae]]></field>
+			<field><![CDATA[Eumastacidae]]></field>
+			<field><![CDATA[Eupalopsellidae]]></field>
+			<field><![CDATA[Eupelmidae]]></field>
+			<field><![CDATA[Euphaeidae]]></field>
+			<field><![CDATA[Euphthiracaridae]]></field>
+			<field><![CDATA[Eupodidae]]></field>
+			<field><![CDATA[Eupterotidae]]></field>
+			<field><![CDATA[Eurybrachidae]]></field>
+			<field><![CDATA[Eurymerodesmidae]]></field>
+			<field><![CDATA[Eurypauropodidae]]></field>
+			<field><![CDATA[Eurytomidae]]></field>
+			<field><![CDATA[Euryuridae]]></field>
+			<field><![CDATA[Euschmidtiidae]]></field>
+			<field><![CDATA[Euscorpiidae]]></field>
+			<field><![CDATA[Eustathiidae]]></field>
+			<field><![CDATA[Eustheniidae]]></field>
+			<field><![CDATA[Eutegaeidae]]></field>
+			<field><![CDATA[Euteliidae]]></field>
+			<field><![CDATA[Euthyplociidae]]></field>
+			<field><![CDATA[Eutrombidiidae]]></field>
+			<field><![CDATA[Euzerconidae]]></field>
+			<field><![CDATA[Euzetidae]]></field>
+			<field><![CDATA[Evalljapygidae]]></field>
+			<field><![CDATA[Evaniidae]]></field>
+			<field><![CDATA[Eviphididae]]></field>
+			<field><![CDATA[Evocoidae]]></field>
+			<field><![CDATA[Eylaidae]]></field>
+			<field><![CDATA[Faginidae]]></field>
+			<field><![CDATA[Falculiferidae]]></field>
+			<field><![CDATA[Fanniidae]]></field>
+			<field><![CDATA[Fauriellidae]]></field>
+			<field><![CDATA[Feaellidae]]></field>
+			<field><![CDATA[Fedrizziidae]]></field>
+			<field><![CDATA[Feltriidae]]></field>
+			<field><![CDATA[Fenicheliidae]]></field>
+			<field><![CDATA[Fergusoninidae]]></field>
+			<field><![CDATA[Ferradasiidae]]></field>
+			<field><![CDATA[Figitidae]]></field>
+			<field><![CDATA[Filistatidae]]></field>
+			<field><![CDATA[Flatidae]]></field>
+			<field><![CDATA[Floridabolidae]]></field>
+			<field><![CDATA[Forficulidae]]></field>
+			<field><![CDATA[Formicidae]]></field>
+			<field><![CDATA[Fortuyniidae]]></field>
+			<field><![CDATA[Freyanidae]]></field>
+			<field><![CDATA[Frontipodopsidae]]></field>
+			<field><![CDATA[Fuhrmannodesmidae]]></field>
+			<field><![CDATA[Fujientomidae]]></field>
+			<field><![CDATA[Fulgoridae]]></field>
+			<field><![CDATA[Gabuciniidae]]></field>
+			<field><![CDATA[Gagrellidae]]></field>
+			<field><![CDATA[Galacticidae]]></field>
+			<field><![CDATA[Galeodidae]]></field>
+			<field><![CDATA[Gallieniellidae]]></field>
+			<field><![CDATA[Galliobatidae]]></field>
+			<field><![CDATA[Galumnellidae]]></field>
+			<field><![CDATA[Galumnidae]]></field>
+			<field><![CDATA[Garypidae]]></field>
+			<field><![CDATA[Garypinidae]]></field>
+			<field><![CDATA[Gasteruptiidae]]></field>
+			<field><![CDATA[Gastronyssidae]]></field>
+			<field><![CDATA[Gaudiellidae]]></field>
+			<field><![CDATA[Gaudoglyphidae]]></field>
+			<field><![CDATA[Gehypochthoniidae]]></field>
+			<field><![CDATA[Gelastocoridae]]></field>
+			<field><![CDATA[Gelechiidae]]></field>
+			<field><![CDATA[Gengidae]]></field>
+			<field><![CDATA[Geocoridae]]></field>
+			<field><![CDATA[Geogarypidae]]></field>
+			<field><![CDATA[Geometridae]]></field>
+			<field><![CDATA[Geophilidae]]></field>
+			<field><![CDATA[Geotrupidae]]></field>
+			<field><![CDATA[Gerridae]]></field>
+			<field><![CDATA[Glaphyridae]]></field>
+			<field><![CDATA[Glaresidae]]></field>
+			<field><![CDATA[Glomeridae]]></field>
+			<field><![CDATA[Glomeridellidae]]></field>
+			<field><![CDATA[Glomeridesmidae]]></field>
+			<field><![CDATA[Glossinidae]]></field>
+			<field><![CDATA[Glossosomatidae]]></field>
+			<field><![CDATA[Glycacaridae]]></field>
+			<field><![CDATA[Glycyphagidae]]></field>
+			<field><![CDATA[Glyphipterigidae]]></field>
+			<field><![CDATA[Glyphiulidae]]></field>
+			<field><![CDATA[Gnaphosidae]]></field>
+			<field><![CDATA[Gobryidae]]></field>
+			<field><![CDATA[Goeridae]]></field>
+			<field><![CDATA[Golovatchiidae]]></field>
+			<field><![CDATA[Gomphidae]]></field>
+			<field><![CDATA[Gomphodesmidae]]></field>
+			<field><![CDATA[Gonibregmatidae]]></field>
+			<field><![CDATA[Goniodidae]]></field>
+			<field><![CDATA[Gonyleptidae]]></field>
+			<field><![CDATA[Gosibiidae]]></field>
+			<field><![CDATA[Gracillariidae]]></field>
+			<field><![CDATA[Gradungulidae]]></field>
+			<field><![CDATA[Grandjeanicidae]]></field>
+			<field><![CDATA[Granuloppiidae]]></field>
+			<field><![CDATA[Grassatores incertae]]></field>
+			<field><![CDATA[Gripopterygidae]]></field>
+			<field><![CDATA[Gryllacrididae]]></field>
+			<field><![CDATA[Gryllidae]]></field>
+			<field><![CDATA[Grylloblattidae]]></field>
+			<field><![CDATA[Gryllotalpidae]]></field>
+			<field><![CDATA[Guanolichidae]]></field>
+			<field><![CDATA[Guasiniidae]]></field>
+			<field><![CDATA[Gulgastruridae]]></field>
+			<field><![CDATA[Gustaviidae]]></field>
+			<field><![CDATA[Gylippidae]]></field>
+			<field><![CDATA[Gymnobisiidae]]></field>
+			<field><![CDATA[Gymnodamaeidae]]></field>
+			<field><![CDATA[Gyrinidae]]></field>
+			<field><![CDATA[Gyropidae]]></field>
+			<field><![CDATA[Haaseidae]]></field>
+			<field><![CDATA[Haasiidae]]></field>
+			<field><![CDATA[Haematomyzidae]]></field>
+			<field><![CDATA[Haematopinidae]]></field>
+			<field><![CDATA[Haglidae]]></field>
+			<field><![CDATA[Hagloedischiidae]]></field>
+			<field><![CDATA[Haglotettigoniidae]]></field>
+			<field><![CDATA[Hahniidae]]></field>
+			<field><![CDATA[Halacaridae]]></field>
+			<field><![CDATA[Halarachnidae]]></field>
+			<field><![CDATA[Halictidae]]></field>
+			<field><![CDATA[Halimococcidae]]></field>
+			<field><![CDATA[Haliplidae]]></field>
+			<field><![CDATA[Halolaelapidae]]></field>
+			<field><![CDATA[Hammeriellidae]]></field>
+			<field><![CDATA[Hamophthiriidae]]></field>
+			<field><![CDATA[Haplobainosomatidae]]></field>
+			<field><![CDATA[Haplochthoniidae]]></field>
+			<field><![CDATA[Haplodesmidae]]></field>
+			<field><![CDATA[Haplozetidae]]></field>
+			<field><![CDATA[Harpagopalpidae]]></field>
+			<field><![CDATA[Harpagophoridae]]></field>
+			<field><![CDATA[Harpirhynchidae]]></field>
+			<field><![CDATA[Heatherellidae]]></field>
+			<field><![CDATA[Hebridae]]></field>
+			<field><![CDATA[Hectopsyllidae]]></field>
+			<field><![CDATA[Hedylidae]]></field>
+			<field><![CDATA[Helcomyzidae]]></field>
+			<field><![CDATA[Heleomyzidae]]></field>
+			<field><![CDATA[Helicophidae]]></field>
+			<field><![CDATA[Helicopsychidae]]></field>
+			<field><![CDATA[Heliodinidae]]></field>
+			<field><![CDATA[Heliozelidae]]></field>
+			<field><![CDATA[Heloridae]]></field>
+			<field><![CDATA[Helosciomyzidae]]></field>
+			<field><![CDATA[Helotidae]]></field>
+			<field><![CDATA[Helotrephidae]]></field>
+			<field><![CDATA[Hemerobiidae]]></field>
+			<field><![CDATA[Hemimeridae]]></field>
+			<field><![CDATA[Hemiphlebiidae]]></field>
+			<field><![CDATA[Hemipsocidae]]></field>
+			<field><![CDATA[Hemiptera]]></field>
+			<field><![CDATA[Hemisarcoptidae]]></field>
+			<field><![CDATA[Hemiscorpiidae]]></field>
+			<field><![CDATA[Hemithripidae]]></field>
+			<field><![CDATA[Henicocoridae]]></field>
+			<field><![CDATA[Henicopidae]]></field>
+			<field><![CDATA[Hepialidae]]></field>
+			<field><![CDATA[Heptageniidae]]></field>
+			<field><![CDATA[Heptapsogasteridae]]></field>
+			<field><![CDATA[Hermanniellidae]]></field>
+			<field><![CDATA[Hermanniidae]]></field>
+			<field><![CDATA[Hermatobatidae]]></field>
+			<field><![CDATA[Hersiliidae]]></field>
+			<field><![CDATA[Hesperentomidae]]></field>
+			<field><![CDATA[Hesperiidae]]></field>
+			<field><![CDATA[Hesperinidae]]></field>
+			<field><![CDATA[Heterobathmiidae]]></field>
+			<field><![CDATA[Heterobelbidae]]></field>
+			<field><![CDATA[Heteroceridae]]></field>
+			<field><![CDATA[Heterocheilidae]]></field>
+			<field><![CDATA[Heterocheylidae]]></field>
+			<field><![CDATA[Heterochordeumatidae]]></field>
+			<field><![CDATA[Heterochthoniidae]]></field>
+			<field><![CDATA[Heterocoptidae]]></field>
+			<field><![CDATA[Heterogastridae]]></field>
+			<field><![CDATA[Heterogynaidae]]></field>
+			<field><![CDATA[Heterogynidae]]></field>
+			<field><![CDATA[Heterojapygidae]]></field>
+			<field><![CDATA[Heterolatzeliidae]]></field>
+			<field><![CDATA[Heteromyzidae]]></field>
+			<field><![CDATA[Heteronemiidae]]></field>
+			<field><![CDATA[Heteroscorpionidae]]></field>
+			<field><![CDATA[Heterothripidae]]></field>
+			<field><![CDATA[Heterozerconidae]]></field>
+			<field><![CDATA[Hexathelidae]]></field>
+			<field><![CDATA[Hexisopodidae]]></field>
+			<field><![CDATA[Hexoppiidae]]></field>
+			<field><![CDATA[Hilarimorphidae]]></field>
+			<field><![CDATA[Himantariidae]]></field>
+			<field><![CDATA[Himantopteridae]]></field>
+			<field><![CDATA[Hippoboscidae]]></field>
+			<field><![CDATA[Hirudisomatidae]]></field>
+			<field><![CDATA[Histeridae]]></field>
+			<field><![CDATA[Histiostomatidae]]></field>
+			<field><![CDATA[Hobartiidae]]></field>
+			<field><![CDATA[Hodotermitidae]]></field>
+			<field><![CDATA[Hoffmaneumatidae]]></field>
+			<field><![CDATA[Hoffmanobolidae]]></field>
+			<field><![CDATA[Holarchaeidae]]></field>
+			<field><![CDATA[Holistophallidae]]></field>
+			<field><![CDATA[Holothyridae]]></field>
+			<field><![CDATA[Homalocnemiidae]]></field>
+			<field><![CDATA[Homalonychidae]]></field>
+			<field><![CDATA[Homocaligidae]]></field>
+			<field><![CDATA[Hoplomegistidae]]></field>
+			<field><![CDATA[Hoplopleuridae]]></field>
+			<field><![CDATA[Hubbardiidae]]></field>
+			<field><![CDATA[Humerobatidae]]></field>
+			<field><![CDATA[Hungarobelbidae]]></field>
+			<field><![CDATA[Hungarohydracaridae]]></field>
+			<field><![CDATA[Huttoninidae]]></field>
+			<field><![CDATA[Hyadesiidae]]></field>
+			<field><![CDATA[Hyblaeidae]]></field>
+			<field><![CDATA[Hybosoridae]]></field>
+			<field><![CDATA[Hybothiridae]]></field>
+			<field><![CDATA[Hybotidae]]></field>
+			<field><![CDATA[Hybrizontidae]]></field>
+			<field><![CDATA[Hydrachnidae]]></field>
+			<field><![CDATA[Hydraenidae]]></field>
+			<field><![CDATA[Hydrobiosidae]]></field>
+			<field><![CDATA[Hydrodromidae]]></field>
+			<field><![CDATA[Hydrometridae]]></field>
+			<field><![CDATA[Hydrophilidae]]></field>
+			<field><![CDATA[Hydropsychidae]]></field>
+			<field><![CDATA[Hydroptilidae]]></field>
+			<field><![CDATA[Hydrosalpingidae]]></field>
+			<field><![CDATA[Hydroscaphidae]]></field>
+			<field><![CDATA[Hydrovolziidae]]></field>
+			<field><![CDATA[Hydrozetidae]]></field>
+			<field><![CDATA[Hydryphantidae]]></field>
+			<field><![CDATA[Hygrobatidae]]></field>
+			<field><![CDATA[Hygrobiidae]]></field>
+			<field><![CDATA[Hyidae]]></field>
+			<field><![CDATA[Hymenopodidae]]></field>
+			<field><![CDATA[Hyocephalidae]]></field>
+			<field><![CDATA[Hypochthonellidae]]></field>
+			<field><![CDATA[Hypochthoniidae]]></field>
+			<field><![CDATA[Hypoderatidae]]></field>
+			<field><![CDATA[Hypogastruridae]]></field>
+			<field><![CDATA[Hypogexenidae]]></field>
+			<field><![CDATA[Hypsipterygidae]]></field>
+			<field><![CDATA[Hystrichonyssidae]]></field>
+			<field><![CDATA[Hystrichopsyllidae]]></field>
+			<field><![CDATA[Ibaliidae]]></field>
+			<field><![CDATA[Icaleptidae]]></field>
+			<field><![CDATA[Ichneumonidae]]></field>
+			<field><![CDATA[Ichthyostomatogasteridae]]></field>
+			<field><![CDATA[Ideoroncidae]]></field>
+			<field><![CDATA[Idiodamaeidae]]></field>
+			<field><![CDATA[Idiopidae]]></field>
+			<field><![CDATA[Idiostolidae]]></field>
+			<field><![CDATA[Idiozetidae]]></field>
+			<field><![CDATA[Immidae]]></field>
+			<field><![CDATA[Inbiomyiidae]]></field>
+			<field><![CDATA[Incurvariidae]]></field>
+			<field><![CDATA[Inocellidae]]></field>
+			<field><![CDATA[Iolinidae]]></field>
+			<field><![CDATA[Iphiopsididae]]></field>
+			<field><![CDATA[Iridopterygidae]]></field>
+			<field><![CDATA[Ironomyiidae]]></field>
+			<field><![CDATA[Ischnopsyllidae]]></field>
+			<field><![CDATA[Ischyropsalididae]]></field>
+			<field><![CDATA[Isogastruridae]]></field>
+			<field><![CDATA[Isonychiidae]]></field>
+			<field><![CDATA[Isostictidae]]></field>
+			<field><![CDATA[Isotomidae]]></field>
+			<field><![CDATA[Issidae]]></field>
+			<field><![CDATA[Ithonidae]]></field>
+			<field><![CDATA[Iulomorphidae]]></field>
+			<field><![CDATA[Iuridae]]></field>
+			<field><![CDATA[Ixodidae]]></field>
+			<field><![CDATA[Ixodorhynchidae]]></field>
+			<field><![CDATA[Jacobsoniidae]]></field>
+			<field><![CDATA[Japanosomatidae]]></field>
+			<field><![CDATA[Japygidae]]></field>
+			<field><![CDATA[Jezzinothripidae]]></field>
+			<field><![CDATA[Johnstonianidae]]></field>
+			<field><![CDATA[Joppeicidae]]></field>
+			<field><![CDATA[Julidae]]></field>
+			<field><![CDATA[Jurodidae]]></field>
+			<field><![CDATA[Kalotermitidae]]></field>
+			<field><![CDATA[Kantacaridae]]></field>
+			<field><![CDATA[Karataothripidae]]></field>
+			<field><![CDATA[Karschiellidae]]></field>
+			<field><![CDATA[Karschiidae]]></field>
+			<field><![CDATA[Kashmireumatidae]]></field>
+			<field><![CDATA[Kateretidae]]></field>
+			<field><![CDATA[Katiannidae]]></field>
+			<field><![CDATA[Kermesidae]]></field>
+			<field><![CDATA[Keroplatidae]]></field>
+			<field><![CDATA[Kerriidae]]></field>
+			<field><![CDATA[Kinnaridae]]></field>
+			<field><![CDATA[Kitagamiidae]]></field>
+			<field><![CDATA[Kiwilichidae]]></field>
+			<field><![CDATA[Klinckowstroemiidae]]></field>
+			<field><![CDATA[Kodiakellidae]]></field>
+			<field><![CDATA[Kokiriidae]]></field>
+			<field><![CDATA[Kramerellidae]]></field>
+			<field><![CDATA[Krendowskiidae]]></field>
+			<field><![CDATA[Kuwaniidae]]></field>
+			<field><![CDATA[Labidostomatidae]]></field>
+			<field><![CDATA[Labiduridae]]></field>
+			<field><![CDATA[Labiidae]]></field>
+			<field><![CDATA[Labradorocoleidae]]></field>
+			<field><![CDATA[Lachesillidae]]></field>
+			<field><![CDATA[Lacturidae]]></field>
+			<field><![CDATA[Laelapidae]]></field>
+			<field><![CDATA[Laelaptonyssidae]]></field>
+			<field><![CDATA[Laemobothriidae]]></field>
+			<field><![CDATA[Laemophloeidae]]></field>
+			<field><![CDATA[Lamellareidae]]></field>
+			<field><![CDATA[Lamingtoniidae]]></field>
+			<field><![CDATA[Laminosioptidae]]></field>
+			<field><![CDATA[Lamponidae]]></field>
+			<field><![CDATA[Lamproblattidae]]></field>
+			<field><![CDATA[Lampyridae]]></field>
+			<field><![CDATA[Lankasomatidae]]></field>
+			<field><![CDATA[Larcidae]]></field>
+			<field><![CDATA[Lardoglyphidae]]></field>
+			<field><![CDATA[Largidae]]></field>
+			<field><![CDATA[Larvamimidae]]></field>
+			<field><![CDATA[Lasiocampidae]]></field>
+			<field><![CDATA[Lasiochilidae]]></field>
+			<field><![CDATA[Lathiceridae]]></field>
+			<field><![CDATA[Latridiidae]]></field>
+			<field><![CDATA[Lauxaniidae]]></field>
+			<field><![CDATA[Laversiidae]]></field>
+			<field><![CDATA[Lebertiidae]]></field>
+			<field><![CDATA[Lecanodiaspididae]]></field>
+			<field><![CDATA[Lechytiidae]]></field>
+			<field><![CDATA[Lecithoceridae]]></field>
+			<field><![CDATA[Leeuwenhoekiidae]]></field>
+			<field><![CDATA[Leiodidae]]></field>
+			<field><![CDATA[Lemanniellidae]]></field>
+			<field><![CDATA[Lemurnyssidae]]></field>
+			<field><![CDATA[Lentulidae]]></field>
+			<field><![CDATA[Lepiceridae]]></field>
+			<field><![CDATA[Lepidopsocidae]]></field>
+			<field><![CDATA[Lepidostomatidae]]></field>
+			<field><![CDATA[Lepidothrichidae]]></field>
+			<field><![CDATA[Lepismatidae]]></field>
+			<field><![CDATA[Leptoceridae]]></field>
+			<field><![CDATA[Leptohyphidae]]></field>
+			<field><![CDATA[Leptonetidae]]></field>
+			<field><![CDATA[Leptophlebiidae]]></field>
+			<field><![CDATA[Leptopodidae]]></field>
+			<field><![CDATA[Leptopsyllidae]]></field>
+			<field><![CDATA[Lestidae]]></field>
+			<field><![CDATA[Lestoideidae]]></field>
+			<field><![CDATA[Lestoniidae]]></field>
+			<field><![CDATA[Lethaxonidae]]></field>
+			<field><![CDATA[Leucospidae]]></field>
+			<field><![CDATA[Leuctridae]]></field>
+			<field><![CDATA[Liacaridae]]></field>
+			<field><![CDATA[Liadytidae]]></field>
+			<field><![CDATA[Libellulidae]]></field>
+			<field><![CDATA[Licneremaeidae]]></field>
+			<field><![CDATA[Licnobelbidae]]></field>
+			<field><![CDATA[Licnodamaeidae]]></field>
+			<field><![CDATA[Limacodidae]]></field>
+			<field><![CDATA[Limnephilidae]]></field>
+			<field><![CDATA[Limnesiidae]]></field>
+			<field><![CDATA[Limnichidae]]></field>
+			<field><![CDATA[Limnocentropodidae]]></field>
+			<field><![CDATA[Limnocharidae]]></field>
+			<field><![CDATA[Limnozetidae]]></field>
+			<field><![CDATA[Limoniidae]]></field>
+			<field><![CDATA[Linognathidae]]></field>
+			<field><![CDATA[Linotaeniidae]]></field>
+			<field><![CDATA[Linotetranidae]]></field>
+			<field><![CDATA[Linyphiidae]]></field>
+			<field><![CDATA[Liochelidae]]></field>
+			<field><![CDATA[Liocranidae]]></field>
+			<field><![CDATA[Liopteridae]]></field>
+			<field><![CDATA[Liphistiidae]]></field>
+			<field><![CDATA[Liposcelididae]]></field>
+			<field><![CDATA[Listrophoridae]]></field>
+			<field><![CDATA[Lithidiidae]]></field>
+			<field><![CDATA[Lithobiidae]]></field>
+			<field><![CDATA[Liturgusidae]]></field>
+			<field><![CDATA[Lobalgidae]]></field>
+			<field><![CDATA[Locustavidae]]></field>
+			<field><![CDATA[Locustopsidae]]></field>
+			<field><![CDATA[Lohmanniidae]]></field>
+			<field><![CDATA[Lonchaeidae]]></field>
+			<field><![CDATA[Lonchopteridae]]></field>
+			<field><![CDATA[Lophocoronidae]]></field>
+			<field><![CDATA[Lophopidae]]></field>
+			<field><![CDATA[Lophoproctidae]]></field>
+			<field><![CDATA[Lordalycidae]]></field>
+			<field><![CDATA[Lucanidae]]></field>
+			<field><![CDATA[Lusitaniosomatidae]]></field>
+			<field><![CDATA[Lutrochidae]]></field>
+			<field><![CDATA[Luxtoniidae]]></field>
+			<field><![CDATA[Lycaenidae]]></field>
+			<field><![CDATA[Lycidae]]></field>
+			<field><![CDATA[Lycopsyllidae]]></field>
+			<field><![CDATA[Lycosidae]]></field>
+			<field><![CDATA[Lyctocoridae]]></field>
+			<field><![CDATA[Lygaeidae]]></field>
+			<field><![CDATA[Lygistorrhinidae]]></field>
+			<field><![CDATA[Lymexylidae]]></field>
+			<field><![CDATA[Lyonetiidae]]></field>
+			<field><![CDATA[Lypusidae]]></field>
+			<field><![CDATA[Lyrifissellidae]]></field>
+			<field><![CDATA[Maamingidae]]></field>
+			<field><![CDATA[Machadobelbidae]]></field>
+			<field><![CDATA[Machaerotidae]]></field>
+			<field><![CDATA[Machuellidae]]></field>
+			<field><![CDATA[Mackenziellidae]]></field>
+			<field><![CDATA[Macrochaeteumatidae]]></field>
+			<field><![CDATA[Macrochelidae]]></field>
+			<field><![CDATA[Macromiidae]]></field>
+			<field><![CDATA[Macronicophilidae]]></field>
+			<field><![CDATA[Macronyssidae]]></field>
+			<field><![CDATA[Macropsyllidae]]></field>
+			<field><![CDATA[Macrosternodesmidae]]></field>
+			<field><![CDATA[Macroveliidae]]></field>
+			<field><![CDATA[Magnocoleidae]]></field>
+			<field><![CDATA[Maindroniidae]]></field>
+			<field><![CDATA[Malaconothridae]]></field>
+			<field><![CDATA[Malacopsyllidae]]></field>
+			<field><![CDATA[Malcidae]]></field>
+			<field><![CDATA[Malkaridae]]></field>
+			<field><![CDATA[Manaosbiidae]]></field>
+			<field><![CDATA[Manitherionyssidae]]></field>
+			<field><![CDATA[Mantidae]]></field>
+			<field><![CDATA[Mantispidae]]></field>
+			<field><![CDATA[Mantoididae]]></field>
+			<field><![CDATA[Mantophasmidae]]></field>
+			<field><![CDATA[Marchalinidae]]></field>
+			<field><![CDATA[Margarodidae]]></field>
+			<field><![CDATA[Marginidae]]></field>
+			<field><![CDATA[Mastacideidae]]></field>
+			<field><![CDATA[Mastigophorophyllidae]]></field>
+			<field><![CDATA[Mastotermitidae]]></field>
+			<field><![CDATA[Matsucoccidae]]></field>
+			<field><![CDATA[Maudheimiidae]]></field>
+			<field><![CDATA[Mauroniscidae]]></field>
+			<field><![CDATA[Mecicobothriidae]]></field>
+			<field><![CDATA[Mecistocephalidae]]></field>
+			<field><![CDATA[Mecognathidae]]></field>
+			<field><![CDATA[Mecysmaucheniidae]]></field>
+			<field><![CDATA[Medocostidae]]></field>
+			<field><![CDATA[Meenoplidae]]></field>
+			<field><![CDATA[Megacelaenopsidae]]></field>
+			<field><![CDATA[Megachilidae]]></field>
+			<field><![CDATA[Megalodontesidae]]></field>
+			<field><![CDATA[Megalopodidae]]></field>
+			<field><![CDATA[Megalopygidae]]></field>
+			<field><![CDATA[Megalotylidae]]></field>
+			<field><![CDATA[Megalyridae]]></field>
+			<field><![CDATA[Megamerinidae]]></field>
+			<field><![CDATA[Megapodagrionidae]]></field>
+			<field><![CDATA[Megarididae]]></field>
+			<field><![CDATA[Megaspilidae]]></field>
+			<field><![CDATA[Megeremaeidae]]></field>
+			<field><![CDATA[Megisthanidae]]></field>
+			<field><![CDATA[Melandryidae]]></field>
+			<field><![CDATA[Melanoblossiidae]]></field>
+			<field><![CDATA[Melanothripidae]]></field>
+			<field><![CDATA[Melicharidae]]></field>
+			<field><![CDATA[Meliponocoptidae]]></field>
+			<field><![CDATA[Melittidae]]></field>
+			<field><![CDATA[Melizoderidae]]></field>
+			<field><![CDATA[Meloidae]]></field>
+			<field><![CDATA[Melyridae]]></field>
+			<field><![CDATA[Membracidae]]></field>
+			<field><![CDATA[Menoponidae]]></field>
+			<field><![CDATA[Menthidae]]></field>
+			<field><![CDATA[Meropeidae]]></field>
+			<field><![CDATA[Merothripidae]]></field>
+			<field><![CDATA[Meruidae]]></field>
+			<field><![CDATA[Mesocinetidae]]></field>
+			<field><![CDATA[Mesoplophoridae]]></field>
+			<field><![CDATA[Mesopsocidae]]></field>
+			<field><![CDATA[Mesoveliidae]]></field>
+			<field><![CDATA[Messicobolidae]]></field>
+			<field><![CDATA[Messoracaridae]]></field>
+			<field><![CDATA[Metagynuridae]]></field>
+			<field><![CDATA[Metallyticidae]]></field>
+			<field><![CDATA[Metamoniidae]]></field>
+			<field><![CDATA[Metaxinidae]]></field>
+			<field><![CDATA[Metopidiotrichidae]]></field>
+			<field><![CDATA[Metretopodidae]]></field>
+			<field><![CDATA[Micreremidae]]></field>
+			<field><![CDATA[Microcharmidae]]></field>
+			<field><![CDATA[Micrococcidae]]></field>
+			<field><![CDATA[Microdispidae]]></field>
+			<field><![CDATA[Microfalculidae]]></field>
+			<field><![CDATA[Microgyniidae]]></field>
+			<field><![CDATA[Microlympiidae]]></field>
+			<field><![CDATA[Micromalthidae]]></field>
+			<field><![CDATA[Micropezidae]]></field>
+			<field><![CDATA[Micropholcommatidae]]></field>
+			<field><![CDATA[Microphysidae]]></field>
+			<field><![CDATA[Micropsammidae]]></field>
+			<field><![CDATA[Micropterigidae]]></field>
+			<field><![CDATA[Microstigmatidae]]></field>
+			<field><![CDATA[Microtegeidae]]></field>
+			<field><![CDATA[Microthoraciidae]]></field>
+			<field><![CDATA[Microtrombidiidae]]></field>
+			<field><![CDATA[Microzetidae]]></field>
+			<field><![CDATA[Mideidae]]></field>
+			<field><![CDATA[Mideopsidae]]></field>
+			<field><![CDATA[Migidae]]></field>
+			<field><![CDATA[Milichiidae]]></field>
+			<field><![CDATA[Millieriidae]]></field>
+			<field><![CDATA[Millotauropodidae]]></field>
+			<field><![CDATA[Mimallonidae]]></field>
+			<field><![CDATA[Mimetidae]]></field>
+			<field><![CDATA[Minuidae]]></field>
+			<field><![CDATA[Miridae]]></field>
+			<field><![CDATA[Miturgidae]]></field>
+			<field><![CDATA[Mnesarchaeidae]]></field>
+			<field><![CDATA[Mochlozetidae]]></field>
+			<field><![CDATA[Mogoplistidae]]></field>
+			<field><![CDATA[Molannidae]]></field>
+			<field><![CDATA[Momoniidae]]></field>
+			<field><![CDATA[Momphidae]]></field>
+			<field><![CDATA[Mongoliulidae]]></field>
+			<field><![CDATA[Monophlebidae]]></field>
+			<field><![CDATA[Monoscutidae]]></field>
+			<field><![CDATA[Monotomidae]]></field>
+			<field><![CDATA[Morabidae]]></field>
+			<field><![CDATA[Mordellidae]]></field>
+			<field><![CDATA[Mormotomyiidae]]></field>
+			<field><![CDATA[Multoribulidae]]></field>
+			<field><![CDATA[Mummuciidae]]></field>
+			<field><![CDATA[Musapsocidae]]></field>
+			<field><![CDATA[Muscidae]]></field>
+			<field><![CDATA[Mutillidae]]></field>
+			<field><![CDATA[Mycetophagidae]]></field>
+			<field><![CDATA[Mycetophilidae]]></field>
+			<field><![CDATA[Mycobatidae]]></field>
+			<field><![CDATA[Mycteridae]]></field>
+			<field><![CDATA[Mydidae]]></field>
+			<field><![CDATA[Myerslopiidae]]></field>
+			<field><![CDATA[Mymaridae]]></field>
+			<field><![CDATA[Myobiidae]]></field>
+			<field><![CDATA[Myocoptidae]]></field>
+			<field><![CDATA[Myopsocidae]]></field>
+			<field><![CDATA[Myraboliidae]]></field>
+			<field><![CDATA[Myrmecophilidae]]></field>
+			<field><![CDATA[Myrmeleontidae]]></field>
+			<field><![CDATA[Mysmenidae]]></field>
+			<field><![CDATA[Mystacinobiidae]]></field>
+			<field><![CDATA[Nabidae]]></field>
+			<field><![CDATA[Nacunansellidae]]></field>
+			<field><![CDATA[Nanhermanniidae]]></field>
+			<field><![CDATA[Nannochoristidae]]></field>
+			<field><![CDATA[Nannodastiidae]]></field>
+			<field><![CDATA[Nanorchestidae]]></field>
+			<field><![CDATA[Nasobatidae]]></field>
+			<field><![CDATA[Natalimyzidae]]></field>
+			<field><![CDATA[Naucoridae]]></field>
+			<field><![CDATA[Neanuridae]]></field>
+			<field><![CDATA[Nearctodesmidae]]></field>
+			<field><![CDATA[Neelidae]]></field>
+			<field><![CDATA[Nehypochthoniidae]]></field>
+			<field><![CDATA[Nemasomatidae]]></field>
+			<field><![CDATA[Nemastomatidae]]></field>
+			<field><![CDATA[Nemastomoididae]]></field>
+			<field><![CDATA[Nematalycidae]]></field>
+			<field><![CDATA[Nemesiidae]]></field>
+			<field><![CDATA[Nemestrinidae]]></field>
+			<field><![CDATA[Neminidae]]></field>
+			<field><![CDATA[Nemonychidae]]></field>
+			<field><![CDATA[Nemopteridae]]></field>
+			<field><![CDATA[Nemouridae]]></field>
+			<field><![CDATA[Neoacaridae]]></field>
+			<field><![CDATA[Neoatractosomatidae]]></field>
+			<field><![CDATA[Neobisiidae]]></field>
+			<field><![CDATA[Neocambrisomatidae]]></field>
+			<field><![CDATA[Neoephemeridae]]></field>
+			<field><![CDATA[Neogeophilidae]]></field>
+			<field><![CDATA[Neogoveidae]]></field>
+			<field><![CDATA[Neolinognathidae]]></field>
+			<field><![CDATA[Neoliodidae]]></field>
+			<field><![CDATA[Neopetaliidae]]></field>
+			<field><![CDATA[Neopilionidae]]></field>
+			<field><![CDATA[Neopseustidae]]></field>
+			<field><![CDATA[Neotenogyniidae]]></field>
+			<field><![CDATA[Neotheoridae]]></field>
+			<field><![CDATA[Neothrombiidae]]></field>
+			<field><![CDATA[Neothyridae]]></field>
+			<field><![CDATA[Neotrichozetidae]]></field>
+			<field><![CDATA[Neotrombidiidae]]></field>
+			<field><![CDATA[Nepalellidae]]></field>
+			<field><![CDATA[Nephilidae]]></field>
+			<field><![CDATA[Nepidaee]]></field>
+			<field><![CDATA[Nepticulidae]]></field>
+			<field><![CDATA[Neriidae]]></field>
+			<field><![CDATA[Nesameletidae]]></field>
+			<field><![CDATA[Nesozetidae]]></field>
+			<field><![CDATA[Nesticidae]]></field>
+			<field><![CDATA[Neurochaetidae]]></field>
+			<field><![CDATA[Neurorthidae]]></field>
+			<field><![CDATA[Neurostigmatidae]]></field>
+			<field><![CDATA[Nicodamidae]]></field>
+			<field><![CDATA[Nicoletiidae]]></field>
+			<field><![CDATA[Ninidae]]></field>
+			<field><![CDATA[Niphocepheidae]]></field>
+			<field><![CDATA[Niponiosomatidae]]></field>
+			<field><![CDATA[Nippobodidae]]></field>
+			<field><![CDATA[Nipponacaridae]]></field>
+			<field><![CDATA[Nipponopsalididae]]></field>
+			<field><![CDATA[Nitidulidae]]></field>
+			<field><![CDATA[Nocticolidae]]></field>
+			<field><![CDATA[Noctuidae]]></field>
+			<field><![CDATA[Nodocepheidae]]></field>
+			<field><![CDATA[Nogodinidae]]></field>
+			<field><![CDATA[Nolidae]]></field>
+			<field><![CDATA[Nosodendridae]]></field>
+			<field><![CDATA[Nosybeidae]]></field>
+			<field><![CDATA[Nosybelbidae]]></field>
+			<field><![CDATA[Noteridae]]></field>
+			<field><![CDATA[Nothogyniidae]]></field>
+			<field><![CDATA[Nothridae]]></field>
+			<field><![CDATA[Nothybidae]]></field>
+			<field><![CDATA[Notodontidae]]></field>
+			<field><![CDATA[Notoligotomidae]]></field>
+			<field><![CDATA[Notonectidaee]]></field>
+			<field><![CDATA[Notonemouridae]]></field>
+			<field><![CDATA[Nudomideopsidae]]></field>
+			<field><![CDATA[Nuttalliellidae]]></field>
+			<field><![CDATA[Nymphalidae]]></field>
+			<field><![CDATA[Nymphidae]]></field>
+			<field><![CDATA[Nymphomyiidae]]></field>
+			<field><![CDATA[Oborocoleidae]]></field>
+			<field><![CDATA[Obrieniidae]]></field>
+			<field><![CDATA[Ochodaeidae]]></field>
+			<field><![CDATA[Ochrolichidae]]></field>
+			<field><![CDATA[Ochteridae]]></field>
+			<field><![CDATA[Ochyroceratidae]]></field>
+			<field><![CDATA[Oconnoriidae]]></field>
+			<field><![CDATA[Odiniidae]]></field>
+			<field><![CDATA[Odontellidae]]></field>
+			<field><![CDATA[Odontoceridae]]></field>
+			<field><![CDATA[Odontopygidae]]></field>
+			<field><![CDATA[Oecobiidae]]></field>
+			<field><![CDATA[Oeconesidae]]></field>
+			<field><![CDATA[Oecophoridae]]></field>
+			<field><![CDATA[Oedemeridae]]></field>
+			<field><![CDATA[Oehserchestidae]]></field>
+			<field><![CDATA[Oenosandridae]]></field>
+			<field><![CDATA[Oestridae]]></field>
+			<field><![CDATA[Ogoveidae]]></field>
+			<field><![CDATA[Okeanobatidae]]></field>
+			<field><![CDATA[Oligoneuriidae]]></field>
+			<field><![CDATA[Oligotomidae]]></field>
+			<field><![CDATA[Ologamasidae]]></field>
+			<field><![CDATA[Olpiidae]]></field>
+			<field><![CDATA[Omalisidae]]></field>
+			<field><![CDATA[Omaniidae]]></field>
+			<field><![CDATA[Omartacaridae]]></field>
+			<field><![CDATA[Omentolaelapidae]]></field>
+			<field><![CDATA[Omethidae]]></field>
+			<field><![CDATA[Ommatidae]]></field>
+			<field><![CDATA[Ommexechidae]]></field>
+			<field><![CDATA[Oncobryidae]]></field>
+			<field><![CDATA[Oncopodidae]]></field>
+			<field><![CDATA[Oncopoduridae]]></field>
+			<field><![CDATA[Oniscigastridae]]></field>
+			<field><![CDATA[Oniscodesmidae]]></field>
+			<field><![CDATA[Onychiuridae]]></field>
+			<field><![CDATA[Onychobatidae]]></field>
+			<field><![CDATA[Oonopidae]]></field>
+			<field><![CDATA[Opetiidae]]></field>
+			<field><![CDATA[Opilioacaridae]]></field>
+			<field><![CDATA[Opiliones incertae]]></field>
+			<field><![CDATA[Opisotretidae]]></field>
+			<field><![CDATA[Opisthocheiridae]]></field>
+			<field><![CDATA[Oplitidae]]></field>
+			<field><![CDATA[Opomyzidae]]></field>
+			<field><![CDATA[Opostegidae]]></field>
+			<field><![CDATA[Oppiidae]]></field>
+			<field><![CDATA[Oreogetonidae]]></field>
+			<field><![CDATA[Oreoleptidae]]></field>
+			<field><![CDATA[Oribatellidae]]></field>
+			<field><![CDATA[Oribatulidae]]></field>
+			<field><![CDATA[Oribotritiidae]]></field>
+			<field><![CDATA[Origmatogonidae]]></field>
+			<field><![CDATA[Oripodidae]]></field>
+			<field><![CDATA[Ormyridae]]></field>
+			<field><![CDATA[Orsodacnidae]]></field>
+			<field><![CDATA[Orsolobidae]]></field>
+			<field><![CDATA[Ortheziidae]]></field>
+			<field><![CDATA[Orussidae]]></field>
+			<field><![CDATA[Oryidae]]></field>
+			<field><![CDATA[Osmylidae]]></field>
+			<field><![CDATA[Otocepheidae]]></field>
+			<field><![CDATA[Otopheidomenidae]]></field>
+			<field><![CDATA[Oxidae]]></field>
+			<field><![CDATA[Oxyameridae]]></field>
+			<field><![CDATA[Oxycarenidae]]></field>
+			<field><![CDATA[Oxydesmidae]]></field>
+			<field><![CDATA[Oxyopidae]]></field>
+			<field><![CDATA[Oxypeltidae]]></field>
+			<field><![CDATA[Pachybolidae]]></field>
+			<field><![CDATA[Pachygnathidae]]></field>
+			<field><![CDATA[Pachygronthidae]]></field>
+			<field><![CDATA[Pachylaelapidae]]></field>
+			<field><![CDATA[Pachymeridae]]></field>
+			<field><![CDATA[Pachyneuridae]]></field>
+			<field><![CDATA[Pachynomidae]]></field>
+			<field><![CDATA[Pachytroctidae]]></field>
+			<field><![CDATA[Pachytullbergiidae]]></field>
+			<field><![CDATA[Paeromopodidae]]></field>
+			<field><![CDATA[Palaeacaridae]]></field>
+			<field><![CDATA[Palaeosetidae]]></field>
+			<field><![CDATA[Palaephatidae]]></field>
+			<field><![CDATA[Paleotullbergiidae]]></field>
+			<field><![CDATA[Palingeniidae]]></field>
+			<field><![CDATA[Pallichnidae]]></field>
+			<field><![CDATA[Pallopteridae]]></field>
+			<field><![CDATA[Palpimanidae]]></field>
+			<field><![CDATA[Pamphagidae]]></field>
+			<field><![CDATA[Pamphiliidae]]></field>
+			<field><![CDATA[Panorpidae]]></field>
+			<field><![CDATA[Panorpodidae]]></field>
+			<field><![CDATA[Panthophthalmidae]]></field>
+			<field><![CDATA[Papilionidae]]></field>
+			<field><![CDATA[Papillonotidae]]></field>
+			<field><![CDATA[Paracharontidae]]></field>
+			<field><![CDATA[Paracortinidae]]></field>
+			<field><![CDATA[Paradoxosomatidae]]></field>
+			<field><![CDATA[Parahygrobiidae]]></field>
+			<field><![CDATA[Parahyidae]]></field>
+			<field><![CDATA[Parajapygidae]]></field>
+			<field><![CDATA[Parajulidae]]></field>
+			<field><![CDATA[Parakalummidae]]></field>
+			<field><![CDATA[Paramegistidae]]></field>
+			<field><![CDATA[Parandrexidae]]></field>
+			<field><![CDATA[Parantennulidae]]></field>
+			<field><![CDATA[Paraphrynoveliidae]]></field>
+			<field><![CDATA[Pararchaeidae]]></field>
+			<field><![CDATA[Parasitidae]]></field>
+			<field><![CDATA[Parastrachiidae]]></field>
+			<field><![CDATA[Paratropididae]]></field>
+			<field><![CDATA[Paratydeidae]]></field>
+			<field><![CDATA[Parholaspididae]]></field>
+			<field><![CDATA[Parhypochthoniidae]]></field>
+			<field><![CDATA[Paronellidae]]></field>
+			<field><![CDATA[Passalidae]]></field>
+			<field><![CDATA[Passalozetidae]]></field>
+			<field><![CDATA[Passandridae]]></field>
+			<field><![CDATA[Pauropodidae]]></field>
+			<field><![CDATA[Pecaroecidae]]></field>
+			<field><![CDATA[Pedetopodidae]]></field>
+			<field><![CDATA[Pediciidae]]></field>
+			<field><![CDATA[Pedicinidae]]></field>
+			<field><![CDATA[Pediculidae]]></field>
+			<field><![CDATA[Pediculochelidae]]></field>
+			<field><![CDATA[Pedrocortesellidae]]></field>
+			<field><![CDATA[Pelecinidae]]></field>
+			<field><![CDATA[Pelecorhynchidae]]></field>
+			<field><![CDATA[Peleopodidae]]></field>
+			<field><![CDATA[Peloppiidae]]></field>
+			<field><![CDATA[Peltoperlidae]]></field>
+			<field><![CDATA[Penestomidae]]></field>
+			<field><![CDATA[Pentanychidae]]></field>
+			<field><![CDATA[Pentapalpidae]]></field>
+			<field><![CDATA[Pentatomidae]]></field>
+			<field><![CDATA[Penthaleidae]]></field>
+			<field><![CDATA[Penthalodidae]]></field>
+			<field><![CDATA[Pergidae]]></field>
+			<field><![CDATA[Pericambalidae]]></field>
+			<field><![CDATA[Periegopidae]]></field>
+			<field><![CDATA[Perilampidae]]></field>
+			<field><![CDATA[Perilestidae]]></field>
+			<field><![CDATA[Peripsocidae]]></field>
+			<field><![CDATA[Periscelididae]]></field>
+			<field><![CDATA[Perissommatidae]]></field>
+			<field><![CDATA[Perlidae]]></field>
+			<field><![CDATA[Perlodidae]]></field>
+			<field><![CDATA[Perlohmanniidae]]></field>
+			<field><![CDATA[Permocupedidae]]></field>
+			<field><![CDATA[Permosynidae]]></field>
+			<field><![CDATA[Petaluridae]]></field>
+			<field><![CDATA[Peterjohnsiidae]]></field>
+			<field><![CDATA[Petrothrincidae]]></field>
+			<field><![CDATA[Pettalidae]]></field>
+			<field><![CDATA[Pezidae]]></field>
+			<field><![CDATA[Phaeomyiidae]]></field>
+			<field><![CDATA[Phalacridae]]></field>
+			<field><![CDATA[Phalangiidae]]></field>
+			<field><![CDATA[Phalangioidea incertae]]></field>
+			<field><![CDATA[Phalangodidae]]></field>
+			<field><![CDATA[Phasmatidae]]></field>
+			<field><![CDATA[Phasmomimidae]]></field>
+			<field><![CDATA[Phaudidae]]></field>
+			<field><![CDATA[Phenacoleachiidae]]></field>
+			<field><![CDATA[Phengodidae]]></field>
+			<field><![CDATA[Phenopelopidae]]></field>
+			<field><![CDATA[Pheroliodidae]]></field>
+			<field><![CDATA[Phiditiidae]]></field>
+			<field><![CDATA[Philodanidae]]></field>
+			<field><![CDATA[Philodromidae]]></field>
+			<field><![CDATA[Philogangidae]]></field>
+			<field><![CDATA[Philopotamidae]]></field>
+			<field><![CDATA[Philopteridae]]></field>
+			<field><![CDATA[Philorheithridae]]></field>
+			<field><![CDATA[Philotarsidae]]></field>
+			<field><![CDATA[Phlaeothripidae]]></field>
+			<field><![CDATA[Phloeidae]]></field>
+			<field><![CDATA[Phloeostichidae]]></field>
+			<field><![CDATA[Phloiophilidae]]></field>
+			<field><![CDATA[Phoenicococcidae]]></field>
+			<field><![CDATA[Pholcidae]]></field>
+			<field><![CDATA[Phoridae]]></field>
+			<field><![CDATA[Phryganeidae]]></field>
+			<field><![CDATA[Phryganopsychidae]]></field>
+			<field><![CDATA[Phrynichidae]]></field>
+			<field><![CDATA[Phrynidae]]></field>
+			<field><![CDATA[Phthiracaridae]]></field>
+			<field><![CDATA[Phthiridae]]></field>
+			<field><![CDATA[Phycosecidae]]></field>
+			<field><![CDATA[Phylliidae]]></field>
+			<field><![CDATA[Phyllochthoniidae]]></field>
+			<field><![CDATA[Phylloxeridae]]></field>
+			<field><![CDATA[Phymatidae]]></field>
+			<field><![CDATA[Physalozerconidae]]></field>
+			<field><![CDATA[Phytoptidae]]></field>
+			<field><![CDATA[Phytoseiidae]]></field>
+			<field><![CDATA[Phyxelididae]]></field>
+			<field><![CDATA[Pieridae]]></field>
+			<field><![CDATA[Piersigiidae]]></field>
+			<field><![CDATA[Piesmatidae]]></field>
+			<field><![CDATA[Pimoidae]]></field>
+			<field><![CDATA[Pionidae]]></field>
+			<field><![CDATA[Piophilidae]]></field>
+			<field><![CDATA[Pipunculidae]]></field>
+			<field><![CDATA[Pisauridae]]></field>
+			<field><![CDATA[Pisuliidae]]></field>
+			<field><![CDATA[Pityococcidae]]></field>
+			<field><![CDATA[Plasmobatidae]]></field>
+			<field><![CDATA[Plastoceridae]]></field>
+			<field><![CDATA[Plataspidae]]></field>
+			<field><![CDATA[Plateremaeidae]]></field>
+			<field><![CDATA[Platyameridae]]></field>
+			<field><![CDATA[Platycnemididae]]></field>
+			<field><![CDATA[Platydesmidae]]></field>
+			<field><![CDATA[Platygasteridae]]></field>
+			<field><![CDATA[Platypezidae]]></field>
+			<field><![CDATA[Platyrhacidae]]></field>
+			<field><![CDATA[Platystictidae]]></field>
+			<field><![CDATA[Platystomatidae]]></field>
+			<field><![CDATA[Plectreuridae]]></field>
+			<field><![CDATA[Plectrotarsidae]]></field>
+			<field><![CDATA[Pleidae]]></field>
+			<field><![CDATA[Pleocomidae]]></field>
+			<field><![CDATA[Plokiophilidae]]></field>
+			<field><![CDATA[Plumariidae]]></field>
+			<field><![CDATA[Plutellidae]]></field>
+			<field><![CDATA[Pneumocoptidae]]></field>
+			<field><![CDATA[Pneumoridae]]></field>
+			<field><![CDATA[Podabrocephalidae]]></field>
+			<field><![CDATA[Podapolipidae]]></field>
+			<field><![CDATA[Podocinidae]]></field>
+			<field><![CDATA[Podoctidae]]></field>
+			<field><![CDATA[Podopterotegaeidae]]></field>
+			<field><![CDATA[Poduridae]]></field>
+			<field><![CDATA[Poliocheridae]]></field>
+			<field><![CDATA[Polyaspididae]]></field>
+			<field><![CDATA[Polycentropodidae]]></field>
+			<field><![CDATA[Polyctenidae]]></field>
+			<field><![CDATA[Polydesmidae]]></field>
+			<field><![CDATA[Polymitarcyidae]]></field>
+			<field><![CDATA[Polyphagidae]]></field>
+			<field><![CDATA[Polyplacidae]]></field>
+			<field><![CDATA[Polypterozetidae]]></field>
+			<field><![CDATA[Polystoechotidae]]></field>
+			<field><![CDATA[Polythoridae]]></field>
+			<field><![CDATA[Polyxenidae]]></field>
+			<field><![CDATA[Polyzoniidae]]></field>
+			<field><![CDATA[Pomerantziidae]]></field>
+			<field><![CDATA[Pompilidae]]></field>
+			<field><![CDATA[Pontarachnidae]]></field>
+			<field><![CDATA[Potamanthidae]]></field>
+			<field><![CDATA[Potamocoridae]]></field>
+			<field><![CDATA[Praelateriidae]]></field>
+			<field><![CDATA[Praentomobryidae]]></field>
+			<field><![CDATA[Praydidae]]></field>
+			<field><![CDATA[Priasilphidae]]></field>
+			<field><![CDATA[Prionoglarididae]]></field>
+			<field><![CDATA[Procampodeidae]]></field>
+			<field><![CDATA[Proctophyllodidae]]></field>
+			<field><![CDATA[Proctotrupidae]]></field>
+			<field><![CDATA[Prodidactidae]]></field>
+			<field><![CDATA[Prodidomidae]]></field>
+			<field><![CDATA[Prodoxidae]]></field>
+			<field><![CDATA[Projapygidae]]></field>
+			<field><![CDATA[Prokoeneniidae]]></field>
+			<field><![CDATA[Promastacidae?]]></field>
+			<field><![CDATA[Promecheilidae]]></field>
+			<field><![CDATA[Promegistidae]]></field>
+			<field><![CDATA[Propalticidae]]></field>
+			<field><![CDATA[Prophalangopsidae]]></field>
+			<field><![CDATA[Proscopiidae]]></field>
+			<field><![CDATA[Prosopistomatidae]]></field>
+			<field><![CDATA[Prostomidae]]></field>
+			<field><![CDATA[Protentomidae]]></field>
+			<field><![CDATA[Protentomobryidae]]></field>
+			<field><![CDATA[Proteonematalycidae]]></field>
+			<field><![CDATA[Proterorhagiidae]]></field>
+			<field><![CDATA[Protocucujidae]]></field>
+			<field><![CDATA[Protodinychidae]]></field>
+			<field><![CDATA[Protodiplatyidae]]></field>
+			<field><![CDATA[Protoneuridae]]></field>
+			<field><![CDATA[Protoplophoridae]]></field>
+			<field><![CDATA[Protoschizomidae]]></field>
+			<field><![CDATA[Protosolpugidae]]></field>
+			<field><![CDATA[Prototheoridae]]></field>
+			<field><![CDATA[Protroctopsocidae]]></field>
+			<field><![CDATA[Psechridae]]></field>
+			<field><![CDATA[Pselliodidae]]></field>
+			<field><![CDATA[Psephenidae]]></field>
+			<field><![CDATA[Pseudocaeciliidae]]></field>
+			<field><![CDATA[Pseudochactidae]]></field>
+			<field><![CDATA[Pseudocheylidae]]></field>
+			<field><![CDATA[Pseudochiridiidae]]></field>
+			<field><![CDATA[Pseudococcidae]]></field>
+			<field><![CDATA[Pseudogarypidae]]></field>
+			<field><![CDATA[Pseudolestidae]]></field>
+			<field><![CDATA[Pseudolithobiidae]]></field>
+			<field><![CDATA[Pseudonannolenidae]]></field>
+			<field><![CDATA[Pseudonemasomatidae]]></field>
+			<field><![CDATA[Pseudophasmatidae]]></field>
+			<field><![CDATA[Pseudospirobolellidae]]></field>
+			<field><![CDATA[Pseudostigmatidae]]></field>
+			<field><![CDATA[Psilidae]]></field>
+			<field><![CDATA[Psilopsocidae]]></field>
+			<field><![CDATA[Psocidae]]></field>
+			<field><![CDATA[Psoquillidae]]></field>
+			<field><![CDATA[Psorergatidae]]></field>
+			<field><![CDATA[Psoroptidae]]></field>
+			<field><![CDATA[Psoroptoididae]]></field>
+			<field><![CDATA[Psychidae]]></field>
+			<field><![CDATA[Psychodidae]]></field>
+			<field><![CDATA[Psychomyiidae]]></field>
+			<field><![CDATA[Psychopsidae]]></field>
+			<field><![CDATA[Psyllidae]]></field>
+			<field><![CDATA[Psyllipsocidae]]></field>
+			<field><![CDATA[Pterobatidae]]></field>
+			<field><![CDATA[Pterochthoniidae]]></field>
+			<field><![CDATA[Pterogeniidae]]></field>
+			<field><![CDATA[Pterolichidae]]></field>
+			<field><![CDATA[Pterolonchidae]]></field>
+			<field><![CDATA[Pteromalidae]]></field>
+			<field><![CDATA[Pteronarcydae]]></field>
+			<field><![CDATA[Pteronyssidae]]></field>
+			<field><![CDATA[Pterophoridae]]></field>
+			<field><![CDATA[Pterothrincidae]]></field>
+			<field><![CDATA[Pterygosomatidae]]></field>
+			<field><![CDATA[Ptiliidae]]></field>
+			<field><![CDATA[Ptilocolepidae]]></field>
+			<field><![CDATA[Ptilodactylidae]]></field>
+			<field><![CDATA[Ptiloneuridae]]></field>
+			<field><![CDATA[Ptiloxenidae]]></field>
+			<field><![CDATA[Ptinidae]]></field>
+			<field><![CDATA[Ptochacaridae]]></field>
+			<field><![CDATA[Ptychopteridae]]></field>
+			<field><![CDATA[Ptyssalgidae]]></field>
+			<field><![CDATA[Pulicidae]]></field>
+			<field><![CDATA[Pyemotidae]]></field>
+			<field><![CDATA[Pygidicranidae]]></field>
+			<field><![CDATA[Pygiopsyllidae]]></field>
+			<field><![CDATA[Pygmaeosomatidae]]></field>
+			<field><![CDATA[Pygmephoridae]]></field>
+			<field><![CDATA[Pygrodesmidae]]></field>
+			<field><![CDATA[Pyralidae]]></field>
+			<field><![CDATA[Pyramidopidae]]></field>
+			<field><![CDATA[Pyrgacrididae]]></field>
+			<field><![CDATA[Pyrgomorphidae]]></field>
+			<field><![CDATA[Pyrgotidae]]></field>
+			<field><![CDATA[Pyrochroidae]]></field>
+			<field><![CDATA[Pyroglyphidae]]></field>
+			<field><![CDATA[Pyrosejidae]]></field>
+			<field><![CDATA[Pyrrhocoridae]]></field>
+			<field><![CDATA[Pythidae]]></field>
+			<field><![CDATA[Quadroppiidae]]></field>
+			<field><![CDATA[Rallidentidae]]></field>
+			<field><![CDATA[Ramsayellidae]]></field>
+			<field><![CDATA[Rangomaramidae]]></field>
+			<field><![CDATA[Raphidiidae]]></field>
+			<field><![CDATA[Raphignathidae]]></field>
+			<field><![CDATA[Ratemiidae]]></field>
+			<field><![CDATA[Rectijanuidae]]></field>
+			<field><![CDATA[Reduviidae]]></field>
+			<field><![CDATA[Regiatidae]]></field>
+			<field><![CDATA[Resinacaridae]]></field>
+			<field><![CDATA[Rhachiberothidae]]></field>
+			<field><![CDATA[Rhachodesmidae]]></field>
+			<field><![CDATA[Rhagidiidae]]></field>
+			<field><![CDATA[Rhagionidae]]></field>
+			<field><![CDATA[Rhagodidae]]></field>
+			<field><![CDATA[Rhagophthalmidae]]></field>
+			<field><![CDATA[Rhaphidophoridae]]></field>
+			<field><![CDATA[Rhiniidae]]></field>
+			<field><![CDATA[Rhinocricidae]]></field>
+			<field><![CDATA[Rhinonyssidae]]></field>
+			<field><![CDATA[Rhinophoridae]]></field>
+			<field><![CDATA[Rhinorhipidae]]></field>
+			<field><![CDATA[Rhinotermitidae]]></field>
+			<field><![CDATA[Rhipiceridae]]></field>
+			<field><![CDATA[Rhiscosomididae]]></field>
+			<field><![CDATA[Rhodacaridae]]></field>
+			<field><![CDATA[Rhombocoleidae]]></field>
+			<field><![CDATA[Rhopalidae]]></field>
+			<field><![CDATA[Rhopaloiulidae]]></field>
+			<field><![CDATA[Rhopalopsyllidae]]></field>
+			<field><![CDATA[Rhopalosomatidae]]></field>
+			<field><![CDATA[Rhyacophilidae]]></field>
+			<field><![CDATA[Rhynchohydracaridae]]></field>
+			<field><![CDATA[Rhynchoribatidae]]></field>
+			<field><![CDATA[Rhyncoptidae]]></field>
+			<field><![CDATA[Rhyparochromidae]]></field>
+			<field><![CDATA[Ricaniidae]]></field>
+			<field><![CDATA[Richardiidae]]></field>
+			<field><![CDATA[Ricinidae]]></field>
+			<field><![CDATA[Ricinoididae]]></field>
+			<field><![CDATA[Riodinidae]]></field>
+			<field><![CDATA[Ripiphoridae]]></field>
+			<field><![CDATA[Ripipterygidae]]></field>
+			<field><![CDATA[Roeslerstammiidae]]></field>
+			<field><![CDATA[Romaleidae]]></field>
+			<field><![CDATA[Ropalomeridae]]></field>
+			<field><![CDATA[Roproniidae]]></field>
+			<field><![CDATA[Rosensteiniidae]]></field>
+			<field><![CDATA[Rossianidae]]></field>
+			<field><![CDATA[Rotoidae]]></field>
+			<field><![CDATA[Rutripalpidae]]></field>
+			<field><![CDATA[Sabaconidae]]></field>
+			<field><![CDATA[Saldidae]]></field>
+			<field><![CDATA[Salpingidae]]></field>
+			<field><![CDATA[Salticidae]]></field>
+			<field><![CDATA[Saltiseiidae]]></field>
+			<field><![CDATA[Samoidae]]></field>
+			<field><![CDATA[Sapygidae]]></field>
+			<field><![CDATA[Sarcophagidae]]></field>
+			<field><![CDATA[Sarcoptidae]]></field>
+			<field><![CDATA[Saturniidae]]></field>
+			<field><![CDATA[Scarabaeidae]]></field>
+			<field><![CDATA[Scathophagidae]]></field>
+			<field><![CDATA[Scatoglyphidae]]></field>
+			<field><![CDATA[Scatopsidae]]></field>
+			<field><![CDATA[Scelionidae]]></field>
+			<field><![CDATA[Scenopinidae]]></field>
+			<field><![CDATA[Schedotrigonidae]]></field>
+			<field><![CDATA[Scheloribatidae]]></field>
+			<field><![CDATA[Schendylidae]]></field>
+			<field><![CDATA[Schistonoeidae]]></field>
+			<field><![CDATA[Schizocoleidae]]></field>
+			<field><![CDATA[Schizodactylidae]]></field>
+			<field><![CDATA[Schizoglyphidae]]></field>
+			<field><![CDATA[Schizogyniidae]]></field>
+			<field><![CDATA[Schizopetalidae]]></field>
+			<field><![CDATA[Schizophoridae]]></field>
+			<field><![CDATA[Schizopodidae]]></field>
+			<field><![CDATA[Schizopteridae]]></field>
+			<field><![CDATA[Schreckensteiniidae]]></field>
+			<field><![CDATA[Sciaridae]]></field>
+			<field><![CDATA[Sciomyzidae]]></field>
+			<field><![CDATA[Scirtidae]]></field>
+			<field><![CDATA[Sclerogibbidae]]></field>
+			<field><![CDATA[Sclerosomatidae]]></field>
+			<field><![CDATA[Scolebythidae]]></field>
+			<field><![CDATA[Scoliidae]]></field>
+			<field><![CDATA[Scolocryptopidae]]></field>
+			<field><![CDATA[Scolopendrellidae]]></field>
+			<field><![CDATA[Scolopendridae]]></field>
+			<field><![CDATA[Scopuridae]]></field>
+			<field><![CDATA[Scorpionidae]]></field>
+			<field><![CDATA[Scorpiopidae]]></field>
+			<field><![CDATA[Scraptiidae]]></field>
+			<field><![CDATA[Scudderothripidae]]></field>
+			<field><![CDATA[Scutacaridae]]></field>
+			<field><![CDATA[Scutelleridae]]></field>
+			<field><![CDATA[Scutigerellidae]]></field>
+			<field><![CDATA[Scutigeridae]]></field>
+			<field><![CDATA[Scutigerinidae]]></field>
+			<field><![CDATA[Scutoverticidae]]></field>
+			<field><![CDATA[Scythrididae]]></field>
+			<field><![CDATA[Scytodidae]]></field>
+			<field><![CDATA[Segestriidae]]></field>
+			<field><![CDATA[Seiodidae]]></field>
+			<field><![CDATA[Sejidae]]></field>
+			<field><![CDATA[Selenopidae]]></field>
+			<field><![CDATA[Selenoribatidae]]></field>
+			<field><![CDATA[Sellnickiidae]]></field>
+			<field><![CDATA[Sematuridae]]></field>
+			<field><![CDATA[Senoculidae]]></field>
+			<field><![CDATA[Seoliidae]]></field>
+			<field><![CDATA[Sepsidae]]></field>
+			<field><![CDATA[Sericostomatidae]]></field>
+			<field><![CDATA[Serritermitidae]]></field>
+			<field><![CDATA[Sesiidae]]></field>
+			<field><![CDATA[Sialidae]]></field>
+			<field><![CDATA[Sibyllidae]]></field>
+			<field><![CDATA[Sicariidae]]></field>
+			<field><![CDATA[Sierolomorphidae]]></field>
+			<field><![CDATA[Signiphoridae]]></field>
+			<field><![CDATA[Silphidae]]></field>
+			<field><![CDATA[Silvanidae]]></field>
+			<field><![CDATA[Simaethistidae]]></field>
+			<field><![CDATA[Simulidae]]></field>
+			<field><![CDATA[Simuliidae]]></field>
+			<field><![CDATA[Sinentomidae]]></field>
+			<field><![CDATA[Sinisilvanidae]]></field>
+			<field><![CDATA[Sinocallipodidae]]></field>
+			<field><![CDATA[Sinopimoidae]]></field>
+			<field><![CDATA[Siphlaenigmatidae]]></field>
+			<field><![CDATA[Siphlonuridae]]></field>
+			<field><![CDATA[Siphoniulidae]]></field>
+			<field><![CDATA[Siphonocryptidae]]></field>
+			<field><![CDATA[Siphonophoridae]]></field>
+			<field><![CDATA[Siphonorhinidae]]></field>
+			<field><![CDATA[Siphonotidae]]></field>
+			<field><![CDATA[Siricidae]]></field>
+			<field><![CDATA[Sironidae]]></field>
+			<field><![CDATA[Sisyridae]]></field>
+			<field><![CDATA[Siteroptidae]]></field>
+			<field><![CDATA[Smarididae]]></field>
+			<field><![CDATA[Smicripidae]]></field>
+			<field><![CDATA[Sminthuridae]]></field>
+			<field><![CDATA[Sminthurididae]]></field>
+			<field><![CDATA[Sogonidae]]></field>
+			<field><![CDATA[Solpugidae]]></field>
+			<field><![CDATA[Somabrachyidae]]></field>
+			<field><![CDATA[Somatiidae]]></field>
+			<field><![CDATA[Soniphilidae]]></field>
+			<field><![CDATA[Sorellembiidae]]></field>
+			<field><![CDATA[Sparassidae]]></field>
+			<field><![CDATA[Spelaeorhynichidae]]></field>
+			<field><![CDATA[Speophilosomatidae]]></field>
+			<field><![CDATA[Sperchontidae]]></field>
+			<field><![CDATA[Sphaeriodesmidae]]></field>
+			<field><![CDATA[Sphaeritidae]]></field>
+			<field><![CDATA[Sphaeriusidae]]></field>
+			<field><![CDATA[Sphaeroceridae]]></field>
+			<field><![CDATA[Sphaerochthoniidae]]></field>
+			<field><![CDATA[Sphaerolichidae]]></field>
+			<field><![CDATA[Sphaeropsocidae]]></field>
+			<field><![CDATA[Sphaerotheriidae]]></field>
+			<field><![CDATA[Sphecidae]]></field>
+			<field><![CDATA[Sphindidae]]></field>
+			<field><![CDATA[Sphingidae]]></field>
+			<field><![CDATA[Spinothecidae]]></field>
+			<field><![CDATA[Spinozetidae]]></field>
+			<field><![CDATA[Spinturnicidae]]></field>
+			<field><![CDATA[Spirobolellidae]]></field>
+			<field><![CDATA[Spirobolidae]]></field>
+			<field><![CDATA[Spirostreptidae]]></field>
+			<field><![CDATA[Staphylinidae]]></field>
+			<field><![CDATA[Stathmopodidae]]></field>
+			<field><![CDATA[Staurobatidae]]></field>
+			<field><![CDATA[Steingeliidae]]></field>
+			<field><![CDATA[Stelechobatidae]]></field>
+			<field><![CDATA[Stemmiulidae]]></field>
+			<field><![CDATA[Stemmocryptidae]]></field>
+			<field><![CDATA[Stenocephalidae]]></field>
+			<field><![CDATA[Stenochilidae]]></field>
+			<field><![CDATA[Stenopelmatidae]]></field>
+			<field><![CDATA[Stenopsocidae]]></field>
+			<field><![CDATA[Stenopsychidae]]></field>
+			<field><![CDATA[Stenotrachelidae]]></field>
+			<field><![CDATA[Stenotritidae]]></field>
+			<field><![CDATA[Stenurothripidae]]></field>
+			<field><![CDATA[Stephanidae]]></field>
+			<field><![CDATA[Stephanocircidae]]></field>
+			<field><![CDATA[Sternophoridae]]></field>
+			<field><![CDATA[Sternoppiidae]]></field>
+			<field><![CDATA[Stictococcidae]]></field>
+			<field><![CDATA[Stigmacoccidae]]></field>
+			<field><![CDATA[Stigmaeidae]]></field>
+			<field><![CDATA[Stigmocheylidae]]></field>
+			<field><![CDATA[Stiphidiidae]]></field>
+			<field><![CDATA[Stivaliidae]]></field>
+			<field><![CDATA[Strandtmanniidae]]></field>
+			<field><![CDATA[Stratiomyidae]]></field>
+			<field><![CDATA[Striariidae]]></field>
+			<field><![CDATA[Sturmiidae]]></field>
+			<field><![CDATA[Stygnidae]]></field>
+			<field><![CDATA[Stygnommatidae]]></field>
+			<field><![CDATA[Stygnopsidae]]></field>
+			<field><![CDATA[Stygophalangiidae]]></field>
+			<field><![CDATA[Stygothrombidiidae]]></field>
+			<field><![CDATA[Stygotoniidae]]></field>
+			<field><![CDATA[Stylocellidae]]></field>
+			<field><![CDATA[Suctobelbidae]]></field>
+			<field><![CDATA[Suidasiidae]]></field>
+			<field><![CDATA[Superstitioniidae]]></field>
+			<field><![CDATA[Syarinidae]]></field>
+			<field><![CDATA[Symbioribatidae]]></field>
+			<field><![CDATA[Symphytognathidae]]></field>
+			<field><![CDATA[Synaphridae]]></field>
+			<field><![CDATA[Synchroidae]]></field>
+			<field><![CDATA[Synichotritiidae]]></field>
+			<field><![CDATA[Synlestidae]]></field>
+			<field><![CDATA[Synotaxidae]]></field>
+			<field><![CDATA[Synteliidae]]></field>
+			<field><![CDATA[Synthemistidae]]></field>
+			<field><![CDATA[Synxenidae]]></field>
+			<field><![CDATA[Syringobiidae]]></field>
+			<field><![CDATA[Syringogastridae]]></field>
+			<field><![CDATA[Syringopaidae]]></field>
+			<field><![CDATA[Syringophilidae]]></field>
+			<field><![CDATA[Syrphidae]]></field>
+			<field><![CDATA[Tabanidae]]></field>
+			<field><![CDATA[Tachinidae]]></field>
+			<field><![CDATA[Taeniopterygidae]]></field>
+			<field><![CDATA[Taldycupedidae]]></field>
+			<field><![CDATA[Tampiyidae]]></field>
+			<field><![CDATA[Tanaoceridae]]></field>
+			<field><![CDATA[Tanaostigmatidae]]></field>
+			<field><![CDATA[Tanaupodidae]]></field>
+			<field><![CDATA[Tanyderidae]]></field>
+			<field><![CDATA[Tanypezidae]]></field>
+			<field><![CDATA[Tarachodidae]]></field>
+			<field><![CDATA[Tarsocheylidae]]></field>
+			<field><![CDATA[Tarsonemidae]]></field>
+			<field><![CDATA[Tasimiidae]]></field>
+			<field><![CDATA[Tasmosalpingidae]]></field>
+			<field><![CDATA[Tectocepheidae]]></field>
+			<field><![CDATA[Tegeocranellidae]]></field>
+			<field><![CDATA[Tegoribatidae]]></field>
+			<field><![CDATA[Telegeusidae]]></field>
+			<field><![CDATA[Telemidae]]></field>
+			<field><![CDATA[Telsonemasomatidae]]></field>
+			<field><![CDATA[Tenebrionidae]]></field>
+			<field><![CDATA[Teneriffiidae]]></field>
+			<field><![CDATA[Tengellidae]]></field>
+			<field><![CDATA[Tenthredinidae]]></field>
+			<field><![CDATA[Tenuialidae]]></field>
+			<field><![CDATA[Tenuipalpidae]]></field>
+			<field><![CDATA[Tephritidae]]></field>
+			<field><![CDATA[Teranyssidae]]></field>
+			<field><![CDATA[Teratembiidae]]></field>
+			<field><![CDATA[Teratomyzidae]]></field>
+			<field><![CDATA[Teratoppiidae]]></field>
+			<field><![CDATA[Teratothyadidae]]></field>
+			<field><![CDATA[Termitaphidae]]></field>
+			<field><![CDATA[Termitidae]]></field>
+			<field><![CDATA[Termopsidae]]></field>
+			<field><![CDATA[Terpnacaridae]]></field>
+			<field><![CDATA[Tessaratomidae]]></field>
+			<field><![CDATA[Tetrablemmidae]]></field>
+			<field><![CDATA[Tetracampidae]]></field>
+			<field><![CDATA[Tetragnathidae]]></field>
+			<field><![CDATA[Tetranychidae]]></field>
+			<field><![CDATA[Tetratomidae]]></field>
+			<field><![CDATA[Tetrigidae]]></field>
+			<field><![CDATA[Tettigarctidae]]></field>
+			<field><![CDATA[Tettigometridae]]></field>
+			<field><![CDATA[Tettigoniidae]]></field>
+			<field><![CDATA[Teutoniidae]]></field>
+			<field><![CDATA[Thanerocleridae]]></field>
+			<field><![CDATA[Thaumaleidae]]></field>
+			<field><![CDATA[Thaumasteliidae]]></field>
+			<field><![CDATA[Thaumastocoridae]]></field>
+			<field><![CDATA[Thelyphonidae]]></field>
+			<field><![CDATA[Theraphosidae]]></field>
+			<field><![CDATA[Therevidae]]></field>
+			<field><![CDATA[Thericleidae]]></field>
+			<field><![CDATA[Theridiidae]]></field>
+			<field><![CDATA[Theridiosomatidae]]></field>
+			<field><![CDATA[Thermacaridae]]></field>
+			<field><![CDATA[Thespidae]]></field>
+			<field><![CDATA[Thinozerconidae]]></field>
+			<field><![CDATA[Thomisidae]]></field>
+			<field><![CDATA[Thoracosathesidae]]></field>
+			<field><![CDATA[Thripidae]]></field>
+			<field><![CDATA[Throscidae]]></field>
+			<field><![CDATA[Thyrididae]]></field>
+			<field><![CDATA[Thyrisomidae]]></field>
+			<field><![CDATA[Thysanocercidae]]></field>
+			<field><![CDATA[Timematidae]]></field>
+			<field><![CDATA[Tineidae]]></field>
+			<field><![CDATA[Tineodidae]]></field>
+			<field><![CDATA[Tingidae]]></field>
+			<field><![CDATA[Tinguipidae]]></field>
+			<field><![CDATA[Tiphiidae]]></field>
+			<field><![CDATA[Tipulidae]]></field>
+			<field><![CDATA[Tischeriidae]]></field>
+			<field><![CDATA[Titanoecidae]]></field>
+			<field><![CDATA[Tokunocepheidae]]></field>
+			<field><![CDATA[Tomoceridae]]></field>
+			<field><![CDATA[Torrenticolidae]]></field>
+			<field><![CDATA[Torridincolidae]]></field>
+			<field><![CDATA[Tortricidae]]></field>
+			<field><![CDATA[Torymidae]]></field>
+			<field><![CDATA[Toxoderidae]]></field>
+			<field><![CDATA[Trachelostenidae]]></field>
+			<field><![CDATA[Trachygonidae]]></field>
+			<field><![CDATA[Trachypachidae]]></field>
+			<field><![CDATA[Trachysphaeridae]]></field>
+			<field><![CDATA[Trachytidae]]></field>
+			<field><![CDATA[Trachyuropodidae]]></field>
+			<field><![CDATA[Travuniidae]]></field>
+			<field><![CDATA[Trechaleidae]]></field>
+			<field><![CDATA[Trematuridae]]></field>
+			<field><![CDATA[Trhypochthoniidae]]></field>
+			<field><![CDATA[Triadocupedidae]]></field>
+			<field><![CDATA[Triaenonychidae]]></field>
+			<field><![CDATA[Triaplidae]]></field>
+			<field><![CDATA[Triassothripidae]]></field>
+			<field><![CDATA[Trichoblaniulidae]]></field>
+			<field><![CDATA[Trichoceridae]]></field>
+			<field><![CDATA[Trichodectidae]]></field>
+			<field><![CDATA[Trichogrammatidae]]></field>
+			<field><![CDATA[Trichonemasomatidae]]></field>
+			<field><![CDATA[Trichopetalidae]]></field>
+			<field><![CDATA[Trichopolydesmidae]]></field>
+			<field><![CDATA[Trichopsocidae]]></field>
+			<field><![CDATA[Trichthoniidae]]></field>
+			<field><![CDATA[Tricoleidae]]></field>
+			<field><![CDATA[Tricommatidae]]></field>
+			<field><![CDATA[Tricorythidae]]></field>
+			<field><![CDATA[Trictenotomidae]]></field>
+			<field><![CDATA[Tridactylidae]]></field>
+			<field><![CDATA[Tridenchthoniidae]]></field>
+			<field><![CDATA[Tridontomidae]]></field>
+			<field><![CDATA[Trigonalidae]]></field>
+			<field><![CDATA[Trigoniulidae]]></field>
+			<field><![CDATA[Trigonopterygidae]]></field>
+			<field><![CDATA[Trimenoponidae]]></field>
+			<field><![CDATA[Trionyxellidae]]></field>
+			<field><![CDATA[Triophtydeidae]]></field>
+			<field><![CDATA[Triplogyniidae]]></field>
+			<field><![CDATA[Tristiridae]]></field>
+			<field><![CDATA[Tritarsidae]]></field>
+			<field><![CDATA[Trizetidae]]></field>
+			<field><![CDATA[Trochanteriidae]]></field>
+			<field><![CDATA[Trochometridiidae]]></field>
+			<field><![CDATA[Troctopsocidae]]></field>
+			<field><![CDATA[Trogidae]]></field>
+			<field><![CDATA[Trogiidae]]></field>
+			<field><![CDATA[Troglosironidae]]></field>
+			<field><![CDATA[Troglotayosicidae]]></field>
+			<field><![CDATA[Trogossitidae]]></field>
+			<field><![CDATA[Trogulidae]]></field>
+			<field><![CDATA[Trombellidae]]></field>
+			<field><![CDATA[Trombiculidae]]></field>
+			<field><![CDATA[Trombidiidae]]></field>
+			<field><![CDATA[Tropiduchidae]]></field>
+			<field><![CDATA[Trouessartiidae]]></field>
+			<field><![CDATA[Tryonicidae]]></field>
+			<field><![CDATA[Tshekardocoleidae]]></field>
+			<field><![CDATA[Tubulozetidae]]></field>
+			<field><![CDATA[Tuckerellidae]]></field>
+			<field><![CDATA[Tullbergiidae]]></field>
+			<field><![CDATA[Tumerozetidae]]></field>
+			<field><![CDATA[Tuparezetidae]]></field>
+			<field><![CDATA[Tuphellidae]]></field>
+			<field><![CDATA[Turbinoptidae]]></field>
+			<field><![CDATA[Tydeidae]]></field>
+			<field><![CDATA[Tynommatinae]]></field>
+			<field><![CDATA[Typhlobolellidae]]></field>
+			<field><![CDATA[Uenoidae]]></field>
+			<field><![CDATA[Ulidiidae]]></field>
+			<field><![CDATA[Uloboridae]]></field>
+			<field><![CDATA[Ulodidae]]></field>
+			<field><![CDATA[Ulyanidae]]></field>
+			<field><![CDATA[Unduloribatidae]]></field>
+			<field><![CDATA[Unionicolidae]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Uraniidae]]></field>
+			<field><![CDATA[Uroactiniidae]]></field>
+			<field><![CDATA[Urochordeumatidae]]></field>
+			<field><![CDATA[Urodacidae]]></field>
+			<field><![CDATA[Urodidae]]></field>
+			<field><![CDATA[Uropodellidae]]></field>
+			<field><![CDATA[Uropodidae]]></field>
+			<field><![CDATA[Urostylidae]]></field>
+			<field><![CDATA[Uzelothripidae]]></field>
+			<field><![CDATA[Vaejovidae]]></field>
+			<field><![CDATA[Valeseguyidae]]></field>
+			<field><![CDATA[Vandeleumatidae]]></field>
+			<field><![CDATA[Vanhorniidae]]></field>
+			<field><![CDATA[Varroidae]]></field>
+			<field><![CDATA[Veigaiidae]]></field>
+			<field><![CDATA[Veliidae]]></field>
+			<field><![CDATA[Velocipedidae]]></field>
+			<field><![CDATA[Verhoeffiidae]]></field>
+			<field><![CDATA[Vermileonidae]]></field>
+			<field><![CDATA[Vermipsyllidae]]></field>
+			<field><![CDATA[Vesperidae]]></field>
+			<field><![CDATA[Vespidae]]></field>
+			<field><![CDATA[Vexillariidae]]></field>
+			<field><![CDATA[Watobiidae]]></field>
+			<field><![CDATA[Wettinidae]]></field>
+			<field><![CDATA[Whalleyanidae]]></field>
+			<field><![CDATA[Winterschmidtiidae]]></field>
+			<field><![CDATA[Withiidae]]></field>
+			<field><![CDATA[Xenasteiidae]]></field>
+			<field><![CDATA[Xenillidae]]></field>
+			<field><![CDATA[Xenocaligonellididae]]></field>
+			<field><![CDATA[Xiphiopsyllidae]]></field>
+			<field><![CDATA[Xiphocentronidae]]></field>
+			<field><![CDATA[Xiphydriidae]]></field>
+			<field><![CDATA[Xolalgidae]]></field>
+			<field><![CDATA[Xyelidae]]></field>
+			<field><![CDATA[Xylococcidae]]></field>
+			<field><![CDATA[Xylomyidae]]></field>
+			<field><![CDATA[Xylophagidae]]></field>
+			<field><![CDATA[Xyloryctidae]]></field>
+			<field><![CDATA[Xyronotidae]]></field>
+			<field><![CDATA[Xystodesmidae]]></field>
+			<field><![CDATA[Yponomeutidae]]></field>
+			<field><![CDATA[Ypsolophidae]]></field>
+			<field><![CDATA[Zalmoxioidae]]></field>
+			<field><![CDATA[Zalmoxoidea incertae]]></field>
+			<field><![CDATA[Zelandothyadidae]]></field>
+			<field><![CDATA[Zephroniidae]]></field>
+			<field><![CDATA[Zerconidae]]></field>
+			<field><![CDATA[Zetomimidae]]></field>
+			<field><![CDATA[Zetomotrichidae]]></field>
+			<field><![CDATA[Zetorchestidae]]></field>
+			<field><![CDATA[Zodariidae]]></field>
+			<field><![CDATA[Zopheridae]]></field>
+			<field><![CDATA[Zoridae]]></field>
+			<field><![CDATA[Zorocratidae]]></field>
+			<field><![CDATA[Zoropsidae]]></field>
+			<field><![CDATA[Zorotypidae]]></field>
+			<field><![CDATA[Zosteractinidae]]></field>
+			<field><![CDATA[Zygaenidae]]></field>
+		</list>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field><![CDATA[E]]></field>
+			<field><![CDATA[W]]></field>
+		</list>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field><![CDATA[ca.]]></field>
+			<field><![CDATA[greater than]]></field>
+			<field><![CDATA[less than]]></field>
+			<field><![CDATA[±]]></field>
+		</list>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[3 mm]]></field>
+			<field><![CDATA[4 mm]]></field>
+			<field><![CDATA[Ancient Bone]]></field>
+			<field><![CDATA[Anterior]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cartilage]]></field>
+			<field><![CDATA[Caudal]]></field>
+			<field><![CDATA[Clip]]></field>
+			<field><![CDATA[Contents]]></field>
+			<field><![CDATA[Dry]]></field>
+			<field><![CDATA[Entire]]></field>
+			<field><![CDATA[Entire eye]]></field>
+			<field><![CDATA[Extracts]]></field>
+			<field><![CDATA[Fresh Bone]]></field>
+			<field><![CDATA[Front]]></field>
+			<field><![CDATA[Hind]]></field>
+			<field><![CDATA[Lens]]></field>
+			<field><![CDATA[Marine benthic other]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Ova/Ovum]]></field>
+			<field><![CDATA[Part]]></field>
+			<field><![CDATA[Pieces, parts, or chunks]]></field>
+			<field><![CDATA[Rear]]></field>
+			<field><![CDATA[Red]]></field>
+			<field><![CDATA[Reef structure]]></field>
+			<field><![CDATA[Retractor]]></field>
+			<field><![CDATA[Sample]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Single]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Skeletal]]></field>
+			<field><![CDATA[Small - Entire]]></field>
+			<field><![CDATA[Small - Tissue]]></field>
+			<field><![CDATA[Sperm]]></field>
+			<field><![CDATA[Surface scraping]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Tendon]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Thorax]]></field>
+			<field><![CDATA[Tip, entire]]></field>
+			<field><![CDATA[Tip, pieces]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Toe pad]]></field>
+			<field><![CDATA[Trunk]]></field>
+			<field><![CDATA[White]]></field>
+			<field><![CDATA[Whole]]></field>
+			<field><![CDATA[With skin]]></field>
+			<field><![CDATA[Wood]]></field>
+			<field><![CDATA[Yolk]]></field>
+		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
+		</list>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Blood]]></field>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
+		</list>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
+		</list>
+		<list alias='establishmentMeans' caseInsensitive='true'>
+			<field><![CDATA[cultivated]]></field>
+			<field><![CDATA[escaped]]></field>
+			<field><![CDATA[introduced]]></field>
+			<field><![CDATA[invasive]]></field>
+			<field><![CDATA[managed]]></field>
+			<field><![CDATA[native]]></field>
+			<field><![CDATA[naturalised]]></field>
+			<field><![CDATA[uncertain]]></field>
+			<field><![CDATA[waif]]></field>
+			<field><![CDATA[wild]]></field>
+		</list>
+		<list alias='lengthUnits' caseInsensitive='true'>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[m]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[µm]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ft]]></field>
+		</list>
+		<list alias='Sexual Maturity' caseInsensitive='true'>
+			<field><![CDATA[-]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Calf]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[immature (avascular uterus)]]></field>
+			<field><![CDATA[Immature (Ovaries immature)]]></field>
+			<field><![CDATA[immature (uterus immature)]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Lactating]]></field>
+			<field><![CDATA[Lactating? Mature]]></field>
+			<field><![CDATA[Mature]]></field>
+			<field><![CDATA[Mature (dilated)]]></field>
+			<field><![CDATA[Mature (lactating questionable)]]></field>
+			<field><![CDATA[Mature (lactating)]]></field>
+			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
+			<field><![CDATA[Mature (lactating, pregnant)]]></field>
+			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
+			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
+			<field><![CDATA[Mature (pregnant)]]></field>
+			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
+			<field><![CDATA[Mature (pregnant, lactating)]]></field>
+			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididymus]]></field>
+			<field><![CDATA[mature (sperm in epididymuse)]]></field>
+			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
+			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
+			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
+			<field><![CDATA[Mature (uterus dialated)]]></field>
+			<field><![CDATA[Mature (uterus mature)]]></field>
+			<field><![CDATA[Mature (with calf)]]></field>
+			<field><![CDATA[Maturing?]]></field>
+			<field><![CDATA[Need]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Resting]]></field>
+			<field><![CDATA[Stillborn]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown, immature]]></field>
+			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
+		</list>
+		<list alias='collectionCode' caseInsensitive='true'>
+			<field><![CDATA[Botany]]></field>
+			<field><![CDATA[Entomology]]></field>
+			<field><![CDATA[Invertebrate Zoology]]></field>
+			<field><![CDATA[Amphibians & Reptiles]]></field>
+			<field><![CDATA[Birds]]></field>
+			<field><![CDATA[Fishes]]></field>
+			<field><![CDATA[Mammals]]></field>
+			<field><![CDATA[Mineral Sciences]]></field>
+		</list>
+		<list alias='country' caseInsensitive='true'>
+			<field><![CDATA[?]]></field>
+			<field><![CDATA[[multiple localities]]]></field>
+			<field><![CDATA[[Not Stated]]]></field>
+			<field><![CDATA[Abessinia]]></field>
+			<field><![CDATA[Admiralty Islands]]></field>
+			<field><![CDATA[Afghanistan]]></field>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Africa?]]></field>
+			<field><![CDATA[Albania]]></field>
+			<field><![CDATA[Aldabra Atoll]]></field>
+			<field><![CDATA[Algeria]]></field>
+			<field><![CDATA[Ambon Island]]></field>
+			<field><![CDATA[American Samoa]]></field>
+			<field><![CDATA[American Virgin Islands]]></field>
+			<field><![CDATA[Andaman Islands]]></field>
+			<field><![CDATA[Angola]]></field>
+			<field><![CDATA[Anguilla]]></field>
+			<field><![CDATA[Annam]]></field>
+			<field><![CDATA[Antigua]]></field>
+			<field><![CDATA[Antigua and Barbuda]]></field>
+			<field><![CDATA[Argentina]]></field>
+			<field><![CDATA[Aruba]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Assam]]></field>
+			<field><![CDATA[Austral Islands]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Austria]]></field>
+			<field><![CDATA[Bahama Is]]></field>
+			<field><![CDATA[Bahamas]]></field>
+			<field><![CDATA[Bahamas, The]]></field>
+			<field><![CDATA[Bangladesh]]></field>
+			<field><![CDATA[Barbados]]></field>
+			<field><![CDATA[Barbuda]]></field>
+			<field><![CDATA[Belgium]]></field>
+			<field><![CDATA[Belize]]></field>
+			<field><![CDATA[Bengal]]></field>
+			<field><![CDATA[Benin]]></field>
+			<field><![CDATA[Bermuda]]></field>
+			<field><![CDATA[Bermuda Islands]]></field>
+			<field><![CDATA[Bhutan]]></field>
+			<field><![CDATA[Bolivia]]></field>
+			<field><![CDATA[Bolvia]]></field>
+			<field><![CDATA[Bombay]]></field>
+			<field><![CDATA[Bonin Islands]]></field>
+			<field><![CDATA[Borneo]]></field>
+			<field><![CDATA[Bosnia]]></field>
+			<field><![CDATA[Bosnia and Herzegovina]]></field>
+			<field><![CDATA[Botswana]]></field>
+			<field><![CDATA[Brazil]]></field>
+			<field><![CDATA[British E. Africa]]></field>
+			<field><![CDATA[British New Guinea]]></field>
+			<field><![CDATA[British Solomon Islands]]></field>
+			<field><![CDATA[British Somaliland]]></field>
+			<field><![CDATA[British Virgin Islands]]></field>
+			<field><![CDATA[British West Indies]]></field>
+			<field><![CDATA[Brunei]]></field>
+			<field><![CDATA[Brunei Darussalam]]></field>
+			<field><![CDATA[Bulgaria]]></field>
+			<field><![CDATA[Burma]]></field>
+			<field><![CDATA[Burundi]]></field>
+			<field><![CDATA[Cambodia]]></field>
+			<field><![CDATA[Cameroon]]></field>
+			<field><![CDATA[Canada]]></field>
+			<field><![CDATA[Caroline Islands]]></field>
+			<field><![CDATA[Cayman Is.]]></field>
+			<field><![CDATA[Cayman Islands]]></field>
+			<field><![CDATA[Central African Republic]]></field>
+			<field><![CDATA[Central East Borneo]]></field>
+			<field><![CDATA[Central Ethiopia]]></field>
+			<field><![CDATA[Ceylon]]></field>
+			<field><![CDATA[Ceylon?]]></field>
+			<field><![CDATA[Chad]]></field>
+			<field><![CDATA[Chile]]></field>
+			<field><![CDATA[China]]></field>
+			<field><![CDATA[China:Tibet]]></field>
+			<field><![CDATA[Clipperton Island]]></field>
+			<field><![CDATA[Cocos (Keeling) Island]]></field>
+			<field><![CDATA[Colombia]]></field>
+			<field><![CDATA[Colombia Or Peru]]></field>
+			<field><![CDATA[Columbia]]></field>
+			<field><![CDATA[Commonwealth of the Northern Marianas Islands]]></field>
+			<field><![CDATA[Comoros]]></field>
+			<field><![CDATA[Congo]]></field>
+			<field><![CDATA[Cook Islands]]></field>
+			<field><![CDATA[Co-operative Repulic of Guyana]]></field>
+			<field><![CDATA[Costa Rica]]></field>
+			<field><![CDATA[Côte d'Ivoire]]></field>
+			<field><![CDATA[Croatia]]></field>
+			<field><![CDATA[Cuba]]></field>
+			<field><![CDATA[Curacao]]></field>
+			<field><![CDATA[Cyprus]]></field>
+			<field><![CDATA[Czech Republic]]></field>
+			<field><![CDATA[Czechoslovakia]]></field>
+			<field><![CDATA[Democratic Republic of the Congo]]></field>
+			<field><![CDATA[Denmark]]></field>
+			<field><![CDATA[Dominica]]></field>
+			<field><![CDATA[Dominican Republic]]></field>
+			<field><![CDATA[E. China]]></field>
+			<field><![CDATA[E. Siberia]]></field>
+			<field><![CDATA[East Africa]]></field>
+			<field><![CDATA[East Borneo]]></field>
+			<field><![CDATA[East Sumba]]></field>
+			<field><![CDATA[East Timor]]></field>
+			<field><![CDATA[Ecuador]]></field>
+			<field><![CDATA[Ecuador/Bolivia]]></field>
+			<field><![CDATA[Ecuador; Colombia]]></field>
+			<field><![CDATA[Egypt]]></field>
+			<field><![CDATA[El Salvador]]></field>
+			<field><![CDATA[England]]></field>
+			<field><![CDATA[Equatorial Guinea]]></field>
+			<field><![CDATA[Eritrea]]></field>
+			<field><![CDATA[Ethiopia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[Federation of Saint Kitts and Nevis]]></field>
+			<field><![CDATA[Fiji]]></field>
+			<field><![CDATA[Fiji Islands]]></field>
+			<field><![CDATA[Finland]]></field>
+			<field><![CDATA[Formosa]]></field>
+			<field><![CDATA[France]]></field>
+			<field><![CDATA[French Equatorial Africa]]></field>
+			<field><![CDATA[French Guiana]]></field>
+			<field><![CDATA[French Polynesia]]></field>
+			<field><![CDATA[Gabon]]></field>
+			<field><![CDATA[Gambia]]></field>
+			<field><![CDATA[Gambia, The]]></field>
+			<field><![CDATA[German Democratic Republic]]></field>
+			<field><![CDATA[Germany]]></field>
+			<field><![CDATA[Germany or Austria]]></field>
+			<field><![CDATA[Germany, Berlin]]></field>
+			<field><![CDATA[Germany, Federal Republic of]]></field>
+			<field><![CDATA[Ghana]]></field>
+			<field><![CDATA[Gilbert Islands]]></field>
+			<field><![CDATA[Gold Coast]]></field>
+			<field><![CDATA[Grand Canary Islands]]></field>
+			<field><![CDATA[Grand Cayman]]></field>
+			<field><![CDATA[Great Britain]]></field>
+			<field><![CDATA[Greece]]></field>
+			<field><![CDATA[Greenland]]></field>
+			<field><![CDATA[Grenada]]></field>
+			<field><![CDATA[Guadalcanal Island]]></field>
+			<field><![CDATA[Guadeloupe]]></field>
+			<field><![CDATA[Guam]]></field>
+			<field><![CDATA[Guam Island]]></field>
+			<field><![CDATA[Guatemala]]></field>
+			<field><![CDATA[Guinea]]></field>
+			<field><![CDATA[Guinea-Bissau]]></field>
+			<field><![CDATA[Guyana]]></field>
+			<field><![CDATA[Haiti]]></field>
+			<field><![CDATA[Holland]]></field>
+			<field><![CDATA[Honduras]]></field>
+			<field><![CDATA[Hong Kong]]></field>
+			<field><![CDATA[Hungary]]></field>
+			<field><![CDATA[Iceland]]></field>
+			<field><![CDATA[India]]></field>
+			<field><![CDATA[India?]]></field>
+			<field><![CDATA[Indochina]]></field>
+			<field><![CDATA[Indonesia]]></field>
+			<field><![CDATA[Indonesia: Borneo]]></field>
+			<field><![CDATA[Indonesia: E. Sumba]]></field>
+			<field><![CDATA[Indonesia: N. Celebes]]></field>
+			<field><![CDATA[Indonesia: S. Java]]></field>
+			<field><![CDATA[Indonesia: S.E. Borneo]]></field>
+			<field><![CDATA[Indonesia: S.W. Java]]></field>
+			<field><![CDATA[Indonesia: W. Java]]></field>
+			<field><![CDATA[Indonesia: W. Sumba]]></field>
+			<field><![CDATA[Indonesia:C. Sumba]]></field>
+			<field><![CDATA[Indonesia:East Borneo]]></field>
+			<field><![CDATA[Indonesia:Java]]></field>
+			<field><![CDATA[Indonesia:probably Sipura]]></field>
+			<field><![CDATA[Indonesia:S. Sumatra]]></field>
+			<field><![CDATA[Iran]]></field>
+			<field><![CDATA[Iraq]]></field>
+			<field><![CDATA[Ireland]]></field>
+			<field><![CDATA[Israel]]></field>
+			<field><![CDATA[Italy]]></field>
+			<field><![CDATA[Ivory Coast]]></field>
+			<field><![CDATA[Jamaica]]></field>
+			<field><![CDATA[Japan]]></field>
+			<field><![CDATA[Java]]></field>
+			<field><![CDATA[Johnston Atoll]]></field>
+			<field><![CDATA[Jordan]]></field>
+			<field><![CDATA[Kazakhstan]]></field>
+			<field><![CDATA[Kenya]]></field>
+			<field><![CDATA[Kenya-Uganda border]]></field>
+			<field><![CDATA[Kiribati]]></field>
+			<field><![CDATA[Kiribati Republic]]></field>
+			<field><![CDATA[Korea]]></field>
+			<field><![CDATA[Korea, Democratic Peoples Republic]]></field>
+			<field><![CDATA[Korea, Republic of]]></field>
+			<field><![CDATA[Kyrgyzstan]]></field>
+			<field><![CDATA[Laos]]></field>
+			<field><![CDATA[Lebanon]]></field>
+			<field><![CDATA[Lesotho]]></field>
+			<field><![CDATA[Liberia]]></field>
+			<field><![CDATA[Libya]]></field>
+			<field><![CDATA[Lithuania]]></field>
+			<field><![CDATA[Locality unknown]]></field>
+			<field><![CDATA[Loja]]></field>
+			<field><![CDATA[Luxembourg]]></field>
+			<field><![CDATA[Macau]]></field>
+			<field><![CDATA[Macedonia]]></field>
+			<field><![CDATA[Madagascar]]></field>
+			<field><![CDATA[Maderia Islands (Portugal)]]></field>
+			<field><![CDATA[Malagassy Republic]]></field>
+			<field><![CDATA[Malagasy Republic]]></field>
+			<field><![CDATA[Malawi]]></field>
+			<field><![CDATA[Malayia]]></field>
+			<field><![CDATA[Malaysia]]></field>
+			<field><![CDATA[Malaysia Borneo: Sarawak Island]]></field>
+			<field><![CDATA[Malaysia:Indonesia:Sarawak (Island of Borneo)]]></field>
+			<field><![CDATA[Malaysia:Sarawak]]></field>
+			<field><![CDATA[Malaysia:Sarawak (Island of Borneo)]]></field>
+			<field><![CDATA[Mali]]></field>
+			<field><![CDATA[Marianas]]></field>
+			<field><![CDATA[Marianas Islands]]></field>
+			<field><![CDATA[Marquesas Islands]]></field>
+			<field><![CDATA[Marshall Islands]]></field>
+			<field><![CDATA[Martinique]]></field>
+			<field><![CDATA[Mauritius]]></field>
+			<field><![CDATA[Mexico]]></field>
+			<field><![CDATA[Mexico / Costa Rica]]></field>
+			<field><![CDATA[Micronesia, Federated States of]]></field>
+			<field><![CDATA[Micronesia:Caroline Islands:Truk Island]]></field>
+			<field><![CDATA[Micronesia:Ponape]]></field>
+			<field><![CDATA[Middle Congo]]></field>
+			<field><![CDATA[Midway Islands]]></field>
+			<field><![CDATA[Mongolia]]></field>
+			<field><![CDATA[Montserrat]]></field>
+			<field><![CDATA[Morocco]]></field>
+			<field><![CDATA[Mozambique]]></field>
+			<field><![CDATA[Myanmar]]></field>
+			<field><![CDATA[N. Africa]]></field>
+			<field><![CDATA[N. Celebes]]></field>
+			<field><![CDATA[N. New Guinea]]></field>
+			<field><![CDATA[N. Rhodesia]]></field>
+			<field><![CDATA[Namibia]]></field>
+			<field><![CDATA[Napo]]></field>
+			<field><![CDATA[Nauru]]></field>
+			<field><![CDATA[Navassa Island]]></field>
+			<field><![CDATA[Nepal]]></field>
+			<field><![CDATA[Netherlands]]></field>
+			<field><![CDATA[Netherlands Antilles]]></field>
+			<field><![CDATA[Netherlands New Guinea]]></field>
+			<field><![CDATA[Nevis]]></field>
+			<field><![CDATA[New Caledonia]]></field>
+			<field><![CDATA[New Guinea]]></field>
+			<field><![CDATA[New Hebrides]]></field>
+			<field><![CDATA[New Zealand]]></field>
+			<field><![CDATA[Nicaragua]]></field>
+			<field><![CDATA[Nigeria]]></field>
+			<field><![CDATA[no data]]></field>
+			<field><![CDATA[no type locality given]]></field>
+			<field><![CDATA[North Africa]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[North Andaman Island]]></field>
+			<field><![CDATA[North Vietnam]]></field>
+			<field><![CDATA[Northern Ireland]]></field>
+			<field><![CDATA[Northern Mariana Islands]]></field>
+			<field><![CDATA[Norway]]></field>
+			<field><![CDATA[Nyasaland]]></field>
+			<field><![CDATA[Okinawa Island]]></field>
+			<field><![CDATA[Oman]]></field>
+			<field><![CDATA[Pakistan]]></field>
+			<field><![CDATA[Palau]]></field>
+			<field><![CDATA[Palau, Republic of]]></field>
+			<field><![CDATA[Palestine]]></field>
+			<field><![CDATA[Palmyra Atoll]]></field>
+			<field><![CDATA[Panama]]></field>
+			<field><![CDATA[Panama/Colombia]]></field>
+			<field><![CDATA[Papua New Guinea]]></field>
+			<field><![CDATA[Paraguay]]></field>
+			<field><![CDATA[Peru]]></field>
+			<field><![CDATA[Philippine Islands]]></field>
+			<field><![CDATA[Philippines]]></field>
+			<field><![CDATA[Phillipines]]></field>
+			<field><![CDATA[Pitcairn Islands]]></field>
+			<field><![CDATA[Poland]]></field>
+			<field><![CDATA[Ponape]]></field>
+			<field><![CDATA[Portugal]]></field>
+			<field><![CDATA[probably Africa]]></field>
+			<field><![CDATA[Puerto Rico]]></field>
+			<field><![CDATA[Republic of Cameroon]]></field>
+			<field><![CDATA[Republic of Fiji]]></field>
+			<field><![CDATA[Republic of Korea]]></field>
+			<field><![CDATA[Republic of Liberia]]></field>
+			<field><![CDATA[Republic of Mozambique]]></field>
+			<field><![CDATA[Republic of Palau]]></field>
+			<field><![CDATA[Republic of Seychelles]]></field>
+			<field><![CDATA[Republic of Singapore]]></field>
+			<field><![CDATA[Republic of the Congo]]></field>
+			<field><![CDATA[Republic of Trinidad and Tobago]]></field>
+			<field><![CDATA[Reunion]]></field>
+			<field><![CDATA[Rhodesia]]></field>
+			<field><![CDATA[Rhodesia-Mozambique border]]></field>
+			<field><![CDATA[Romania]]></field>
+			<field><![CDATA[Russia]]></field>
+			<field><![CDATA[Rwanda]]></field>
+			<field><![CDATA[S. India]]></field>
+			<field><![CDATA[S. Java]]></field>
+			<field><![CDATA[S. Moluccas]]></field>
+			<field><![CDATA[S.E. Asia]]></field>
+			<field><![CDATA[S.E. Borneo]]></field>
+			<field><![CDATA[S.W. Australia]]></field>
+			<field><![CDATA[S.W. Java]]></field>
+			<field><![CDATA[Sabah]]></field>
+			<field><![CDATA[Saint Helena]]></field>
+			<field><![CDATA[Saint Kitts and Nevis]]></field>
+			<field><![CDATA[Saint Lucia]]></field>
+			<field><![CDATA[Saint Vincent and the Grenadines]]></field>
+			<field><![CDATA[Saipan Island]]></field>
+			<field><![CDATA[Salvador]]></field>
+			<field><![CDATA[Samoa]]></field>
+			<field><![CDATA[Sao Tome and Principe]]></field>
+			<field><![CDATA[Sarawak]]></field>
+			<field><![CDATA[Sarawak (Island of Borneo)]]></field>
+			<field><![CDATA[Saudi Arabia]]></field>
+			<field><![CDATA[Scotland]]></field>
+			<field><![CDATA[Senegal]]></field>
+			<field><![CDATA[Serbia]]></field>
+			<field><![CDATA[Seychelles]]></field>
+			<field><![CDATA[Sierra Leone]]></field>
+			<field><![CDATA[Singapore]]></field>
+			<field><![CDATA[Slovenia]]></field>
+			<field><![CDATA[Society Islands]]></field>
+			<field><![CDATA[Solomon Islands]]></field>
+			<field><![CDATA[Somalia]]></field>
+			<field><![CDATA[South Africa]]></field>
+			<field><![CDATA[South India]]></field>
+			<field><![CDATA[South Korea]]></field>
+			<field><![CDATA[Spain]]></field>
+			<field><![CDATA[Sri Lanka]]></field>
+			<field><![CDATA[St Kitts]]></field>
+			<field><![CDATA[St Lucia]]></field>
+			<field><![CDATA[St Martin]]></field>
+			<field><![CDATA[St Vincent]]></field>
+			<field><![CDATA[St. Helena]]></field>
+			<field><![CDATA[St. Lucia]]></field>
+			<field><![CDATA[St. Vincent]]></field>
+			<field><![CDATA[Sudan]]></field>
+			<field><![CDATA[Sumatra]]></field>
+			<field><![CDATA[Surinam]]></field>
+			<field><![CDATA[Suriname]]></field>
+			<field><![CDATA[Swaziland]]></field>
+			<field><![CDATA[Sweden]]></field>
+			<field><![CDATA[Switzerland]]></field>
+			<field><![CDATA[Syria]]></field>
+			<field><![CDATA[Tadzhkistan]]></field>
+			<field><![CDATA[Tahiti]]></field>
+			<field><![CDATA[Taiwan]]></field>
+			<field><![CDATA[Taiwan Formosa]]></field>
+			<field><![CDATA[Tanganyika]]></field>
+			<field><![CDATA[Tanzania]]></field>
+			<field><![CDATA[Tanzania, United Republic of]]></field>
+			<field><![CDATA[Tasmania]]></field>
+			<field><![CDATA[Thailand]]></field>
+			<field><![CDATA[Thailand [as Lower Siam], Trong, Khow Sai Dow, 1000 ft.]]></field>
+			<field><![CDATA[The Bahamas]]></field>
+			<field><![CDATA[The Philippines]]></field>
+			<field><![CDATA[Tibet]]></field>
+			<field><![CDATA[Tinian Island]]></field>
+			<field><![CDATA[Tobago]]></field>
+			<field><![CDATA[Togo]]></field>
+			<field><![CDATA[Tonga]]></field>
+			<field><![CDATA[Tongo]]></field>
+			<field><![CDATA[Trinidad]]></field>
+			<field><![CDATA[Trinidad and Tobago]]></field>
+			<field><![CDATA[Tunisia]]></field>
+			<field><![CDATA[Turkemenistan]]></field>
+			<field><![CDATA[Turkestan]]></field>
+			<field><![CDATA[Turkey]]></field>
+			<field><![CDATA[Turks and Caicos Islands]]></field>
+			<field><![CDATA[U.S. Virgin Islands]]></field>
+			<field><![CDATA[U.S.S.R.]]></field>
+			<field><![CDATA[Uganda]]></field>
+			<field><![CDATA[Uganda-Kenya border]]></field>
+			<field><![CDATA[Ukraine]]></field>
+			<field><![CDATA[Union of Myanmar]]></field>
+			<field><![CDATA[Union of Soviet Socialist Republics]]></field>
+			<field><![CDATA[United Arab Emirates]]></field>
+			<field><![CDATA[United Kingdom]]></field>
+			<field><![CDATA[United Republic of Tanzania]]></field>
+			<field><![CDATA[United States]]></field>
+			<field><![CDATA[United States / Mexico]]></field>
+			<field><![CDATA[United States or Canada]]></field>
+			<field><![CDATA[United States, Virgin Islands]]></field>
+			<field><![CDATA[United States/Canada]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Urugauy]]></field>
+			<field><![CDATA[Uruguay]]></field>
+			<field><![CDATA[USA]]></field>
+			<field><![CDATA[Vanuatu]]></field>
+			<field><![CDATA[Venezuela]]></field>
+			<field><![CDATA[Venezuela/Guyana]]></field>
+			<field><![CDATA[Viet Nam]]></field>
+			<field><![CDATA[Vietnam]]></field>
+			<field><![CDATA[Virgin Is]]></field>
+			<field><![CDATA[Virgin Islands]]></field>
+			<field><![CDATA[W. Africa]]></field>
+			<field><![CDATA[W. Borneo]]></field>
+			<field><![CDATA[W. Java]]></field>
+			<field><![CDATA[Wake Island]]></field>
+			<field><![CDATA[West Africa]]></field>
+			<field><![CDATA[West Bank]]></field>
+			<field><![CDATA[West Indies]]></field>
+			<field><![CDATA[Western Sahara]]></field>
+			<field><![CDATA[Western Samoa]]></field>
+			<field><![CDATA[Wikiep Atoll]]></field>
+			<field><![CDATA[Wolcai Atoll]]></field>
+			<field><![CDATA[Yap Island]]></field>
+			<field><![CDATA[Yemen]]></field>
+			<field><![CDATA[Yemen (Aden)]]></field>
+			<field><![CDATA[Yemen (Sanaa)]]></field>
+			<field><![CDATA[Yugoslavia]]></field>
+			<field><![CDATA[Zaire]]></field>
+			<field><![CDATA[Zambia]]></field>
+			<field><![CDATA[Zimbabwe]]></field>
+			<field><![CDATA[Zuzuland]]></field>
+		</list>
+		<list alias='Zoology Preparation' caseInsensitive='true'>
+			<field><![CDATA[DNAgard]]></field>
+			<field><![CDATA[Envelope]]></field>
+			<field><![CDATA[Ethanol]]></field>
+			<field><![CDATA[Ethanol drained]]></field>
+			<field><![CDATA[Fossil in Amber]]></field>
+			<field><![CDATA[Glycerine]]></field>
+			<field><![CDATA[Papered]]></field>
+			<field><![CDATA[Pinned]]></field>
+			<field><![CDATA[Riker Mount]]></field>
+			<field><![CDATA[RNAlater]]></field>
+			<field><![CDATA[Slide]]></field>
+			<field><![CDATA[Slide section]]></field>
+			<field><![CDATA[Vial]]></field>
+		</list>
+		<list alias='identificationQualifier' caseInsensitive='true'>
+			<field><![CDATA[aff.]]></field>
+			<field><![CDATA[cf.]]></field>
+			<field><![CDATA[complex]]></field>
+			<field><![CDATA[group]]></field>
+			<field><![CDATA[near]]></field>
+			<field><![CDATA[sp. nov.]]></field>
+			<field><![CDATA[subgroup]]></field>
+			<field><![CDATA[uncertain]]></field>
+			<field><![CDATA[vel aff.]]></field>
+		</list>
+		<list alias='institutionCode' caseInsensitive='true'>
+			<field><![CDATA[US]]></field>
+			<field><![CDATA[USNM]]></field>
+		</list>
+		<list alias='continent' caseInsensitive='true'>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[Oceania]]></field>
+			<field><![CDATA[South America]]></field>
+		</list>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Abdomen]]></field>
+			<field><![CDATA[Aerosol]]></field>
+			<field><![CDATA[Air]]></field>
+			<field><![CDATA[Anterior piece]]></field>
+			<field><![CDATA[Bacteria]]></field>
+			<field><![CDATA[Blood Vessel]]></field>
+			<field><![CDATA[Blubber]]></field>
+			<field><![CDATA[Bone]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Cells]]></field>
+			<field><![CDATA[Cheek Pouch Contents]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Clay]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dried scrapings]]></field>
+			<field><![CDATA[Dust]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Estuarine]]></field>
+			<field><![CDATA[Eye]]></field>
+			<field><![CDATA[Fat]]></field>
+			<field><![CDATA[Feather]]></field>
+			<field><![CDATA[Feces]]></field>
+			<field><![CDATA[Fin-clip]]></field>
+			<field><![CDATA[Foam]]></field>
+			<field><![CDATA[Follicles]]></field>
+			<field><![CDATA[Foot]]></field>
+			<field><![CDATA[Fresh water lentic]]></field>
+			<field><![CDATA[Fresh water lotic]]></field>
+			<field><![CDATA[Fungus mycelium]]></field>
+			<field><![CDATA[Gamete]]></field>
+			<field><![CDATA[Genetalia]]></field>
+			<field><![CDATA[Gill]]></field>
+			<field><![CDATA[Gizzard]]></field>
+			<field><![CDATA[Gonad]]></field>
+			<field><![CDATA[Gut/Viscera]]></field>
+			<field><![CDATA[Hair]]></field>
+			<field><![CDATA[Heart]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Hind piece]]></field>
+			<field><![CDATA[Host-Associated]]></field>
+			<field><![CDATA[Ice]]></field>
+			<field><![CDATA[Intestine]]></field>
+			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Lateral piece]]></field>
+			<field><![CDATA[Leg]]></field>
+			<field><![CDATA[Liver]]></field>
+			<field><![CDATA[Lung]]></field>
+			<field><![CDATA[Lymph]]></field>
+			<field><![CDATA[Marine benthic]]></field>
+			<field><![CDATA[Marine pelagic]]></field>
+			<field><![CDATA[Melon]]></field>
+			<field><![CDATA[Microbial Mat/Biofilm]]></field>
+			<field><![CDATA[Mid-body]]></field>
+			<field><![CDATA[Milk]]></field>
+			<field><![CDATA[Misc/Artificial]]></field>
+			<field><![CDATA[Mixed sample, multiple organisms]]></field>
+			<field><![CDATA[Mixed tissue sample]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Mud]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Oil]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Placenta]]></field>
+			<field><![CDATA[Plant-Associated]]></field>
+			<field><![CDATA[Plasma]]></field>
+			<field><![CDATA[Posterior]]></field>
+			<field><![CDATA[Post-intestine]]></field>
+			<field><![CDATA[Proboscis]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Protoplast]]></field>
+			<field><![CDATA[Red blood cells]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[Rest of body]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Saliva]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Scum]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Serum]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Snow]]></field>
+			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spleen]]></field>
+			<field><![CDATA[Stem cells]]></field>
+			<field><![CDATA[Stomach]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Testes]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Toe]]></field>
+			<field><![CDATA[Unknown blood sample]]></field>
+			<field><![CDATA[Unknown cell sample]]></field>
+			<field><![CDATA[Unknown clone]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown environmental sample]]></field>
+			<field><![CDATA[Unknown excretion/secretion]]></field>
+			<field><![CDATA[Unknown germplasm]]></field>
+			<field><![CDATA[Unknown organ]]></field>
+			<field><![CDATA[Unknown part]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Unknown whole organism]]></field>
+			<field><![CDATA[Ureter]]></field>
+			<field><![CDATA[Urine]]></field>
+			<field><![CDATA[Water]]></field>
+			<field><![CDATA[Whole blood]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
+			<field><![CDATA[Yeast]]></field>
+		</list>
+		<list alias='exudate' caseInsensitive='true'>
+			<field><![CDATA[Clear]]></field>
+			<field><![CDATA[Cream]]></field>
+			<field><![CDATA[Orangish]]></field>
+			<field><![CDATA[Reddish]]></field>
+			<field><![CDATA[White]]></field>
+			<field><![CDATA[Yellow]]></field>
 		</list>
 	</lists>
 </validation>
