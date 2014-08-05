@@ -1,21 +1,19 @@
 package unit_tests;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.After;
+
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import run.configurationFileError;
-import org.junit.runners.Parameterized.Parameters;
+import run.configurationFileTester;
 import tools.siConverter;
 import tools.siProjects;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
