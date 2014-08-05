@@ -4,12 +4,11 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONObject;
 import run.configurationFileError;
-import run.configurationFileTester;
+import unit_tests.configurationFileTester;
 import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.bcidConnector;
-import settings.fimsPrinter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -100,13 +99,16 @@ public class validate {
                     processController
             );
 
-            // Test the configuration file to see that we're good to go... definately stop the process if there is an error
+            // Test the configuration file to see that we're good to go...
             configurationFileTester cFT = new configurationFileTester();
             boolean configurationGood = true;
-            try {
-                cFT.testConfigFile(p.configFile);
-            } catch (configurationFileError configurationFileError) {
-                String message = "<br>CONFIGURATION FILE ERROR...<br>Please talk to your project administrator to fix the following error:<br>\t" + configurationFileError.getMessage();
+
+            cFT.init(p.configFile);
+            //if (!cFT.checkUniqueKeys().toString().equals("")) {}
+
+            if (!cFT.checkUniqueKeys()) {
+                String message = "<br>CONFIGURATION FILE ERROR...<br>Please talk to your project administrator to fix the following error:<br>\t\n";
+                message += cFT.getMessages();
                 processController.setHasErrors(true);
                 processController.setValidated(false);
                 processController.appendStatus(message + "<br>");
@@ -115,6 +117,7 @@ public class validate {
                 retVal.append(processController.getStatusSB().toString());
                 retVal.append("\"}");
             }
+
 
             // Run the process only if the configuration is good.
             if (configurationGood) {
@@ -362,9 +365,9 @@ public class validate {
                 // Copy file to a standard location
                 File inputFile = new File(processController.getInputFilename());
                 String outputFileName = "/opt/jetty_files/" + inputFile.getName();
-                        //"project_" + processController.getProject_id() + "_" +
-                        //"dataset_" + processController.getExpeditionCode() +
-                        //".xls";
+                //"project_" + processController.getProject_id() + "_" +
+                //"dataset_" + processController.getExpeditionCode() +
+                //".xls";
                 File outputFile = new File(outputFileName);
                 try {
                     copyFile(inputFile, outputFile);
