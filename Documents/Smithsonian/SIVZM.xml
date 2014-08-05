@@ -30,7 +30,7 @@ Biocode specimen: 1 = photo in CalPhotos<p><b>Synonyms:</b><p>"associatedMedia" 
 BOLD: A list (concatenated and comma separated) of other specimens associated with the subject specimen at the time of its collection. References to other specimen identifiers should be preceded by the relationship. Examples: "host: PLANT23452, prey: USNM45677" when both prey and host specimens have been captured.<p><b>Synonyms:</b><p>"associatedOccurrences" = DwC,<br />"DarRelatedCatalogItem" = EMuDwC,<br />"Associated Specimens" = Fishes,<br />"Associated Specimens" = LAB Field Collection Spreadsheet,<br />"Associated Specimens" = BOLD,<br />"RelatedCatalogItem" = Biocode Backend.specimen,]]></attribute>
 		<attribute column='Associated Taxa' uri='urn:associatedTaxa' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#associatedTaxa'><![CDATA[DwC: A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence. Example: "host: Quercus alba". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedTaxa
 
-BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,]]></attribute>
+BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,<br />"Host" = Biocode,]]></attribute>
 		<attribute column='Relationship of resource' uri='urn:relationshipOfResource' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#relationshipOfResource'><![CDATA[DwC: The relationship of the resource identified by relatedResourceID to the subject (optionally identified by the resourceID). Recommended best practice is to use a controlled vocabulary. Examples: "duplicate of", "mother of", "endoparasite of", "host to", "sibling of", "valid synonym of", "located within". For discussion see http://code.google.com/p/darwincore/wiki/ResourceRelationship http://rs.tdwg.org/dwc/terms/relationshipOfResource.
 
 ABCDDNA: the Relation between the DNA and the voucher (e.g. "DNA and voucher from same individual").
@@ -64,10 +64,6 @@ ABCDDNA: This is whatever number you used before the specimen was vouchered. Spe
 		<attribute column='Collector 2' uri='urn:recordedBy2' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"collector_2" = Plantbarcodes.individual,<br />"collector2" = Plantbarcodes.plot, <br />"Collector2" = Biocode Backend.collectingevent,<br />"Team2CollectorIRN" = Botany - Acevedo,]]></attribute>
 		<attribute column='Collector 3' uri='urn:recordedBy3' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector3" = Biocode Backend.collectingevent,<br />"Team3CollectorIRN" = Botany - Acevedo,]]></attribute>
 		<attribute column='Collector 4' uri='urn:recordedBy4' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector4" = Biocode Backend.collectingevent,<br />"Team4CollectorIRN" = Botany - Acevedo,]]></attribute>
-		<attribute column='Collector 5' uri='urn:recordedBy5' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector5" = Biocode Backend.collectingevent,<br />"Team5CollectorIRN" = Botany - Acevedo,]]></attribute>
-		<attribute column='Collector 6' uri='urn:recordedBy6' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector6" = Biocode Backend.collectingevent,<br />"Team6CollectorIRN" = Botany - Acevedo,]]></attribute>
-		<attribute column='Collector 7' uri='urn:recordedBy7' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector7" = Biocode Backend.collectingevent,]]></attribute>
-		<attribute column='Collector 8' uri='urn:recordedBy8' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#recordedBy'><![CDATA[<p><b>Synonyms:</b><p>recordedBy = DwC,<br />"Collector_Team" = KressColl DB tblKresFile,<br />"Collector (Team)" = Kress PB Collect'n Spreadsheet,<br />"team_collect" = Plantbarcodes.individual,<br />"Collector8" = Biocode Backend.collectingevent,]]></attribute>
 		<attribute column='Collection method' uri='urn:samplingProtocol' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#samplingProtocol'><![CDATA[DwC: The name of, reference to, or description of the method or protocol used during an Event. Examples: "UV light trap", "mist net", "bottom trawl", "ad hoc observation", "point count", "Penguins from space: faecal stains reveal the location of emperor penguin colonies, http://dx.doi.org/10.1111/j.1466-8238.2009.00467.x", "Takats et al. 20 http://rs.tdwg.org/dwc/terms/samplingProtocol
 
 BOLD: The name of, reference to, or description of the method or protocol used during a collection event. <p><b>Synonyms:</b><p>"samplingProtocol" = DwC,<br />"samplingProtocol" = IndoPacific Template v7,<br />"Sampling Protocol" = BOLD,<br />"Sampling Protocol" = LAB Field Coll'n SS,<br />"Sampling Protocol" = Fishes,<br />"Collection method" = Entomology - Ted Shultz,<br />"Collection_Method" = Biocode.specimen,<br />"Collection_Method" = Biocode.collectingevent,<br />"CollectionMethod" =Bold Batch Upload (Amy's),]]></attribute>
@@ -83,18 +79,16 @@ BOLD: For organisms collected beneath the surface of a water body. Measured in m
 		<attribute column='Elevation From (m)' uri='urn:minimumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#minimumElevationInMeters'><![CDATA[DwC: The lower limit of the range of elevation (altitude, usually above sea level), in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumElevationInMeters.
 
 BOLD: Elevation of sampling site. Measured in meters relative to sea level. Negative values indicate a position below sea level.<p><b>Synonyms:</b><p>"minimumElevationInMeters" = DwC,<br />"DarMinimumElevationInMeters" = EMuDwC,<br />"MinElevationMeters" = Biocode Backend,<br />"MinElevationMeters" = Biocode Batch,<br />"elevation" = Botany - Acevedo,<br />"Elevation" = BOLD,<br />"elevation" = MIxS,<br />"Elevation(m)" - Entomology - Sean Brady,<br />"specimen_ElevationMeters" = Biocode.specimen,<br />"Elevation meters" = Entomology - Ted Schultz,<br />"Elevation meters Calc" = Entomology - Ted Schultz,<br />"ELEV1" = Kress Coll. tblKresFile (if ELEV_UNIT= m),<br />"Gathering/Altitude/LowerValue" = ABCDDNA,<br />"altitude" = MIxS,]]></attribute>
-		<attribute column='Text depth' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
+		<attribute column='Depth Text' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
 		<attribute column='Elevation Text' uri='urn:verbatimElevation' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimElevation'><![CDATA[DwC: The original description of the elevation (altitude, usually above sea level) of the Location. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimElevation<p><b>Synonyms:</b><p>"verbatimElevation" = DwC,<br />"DarVerbatimElevation" = EMuDwC,<br />"Elev Lat Long Label Text" = Entomology - Ted Schultz (in part),]]></attribute>
 		<attribute column='Extraction Date' uri='urn:extractionDate' group='DNA' defined_by='urn:extractionDate'><![CDATA[ABCDDNA: date of DNA extraction
 
 DwC_Ext: Date of DNA extraction (DNA only)<p><b>Synonyms:</b><p>"extractionDate" = DwC_Ext,<br />"ExtractionDate" = ABCDDNA,]]></attribute>
 		<attribute column='Coordinate Radius (m)' uri='urn:coordinateUncertaintyInMeters' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#coordinateUncertaintyInMeters'><![CDATA[DwC: The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (be Example: "30" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), "71" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system). For discus http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters<p><b>Synonyms:</b><p>"coordinateUncertaintyInMeters" = DwC,<br />"coordinateUncertaintyInMeters" = IndoPacific Template v7,<br />"DarCoordinateUncertaintyInMeter" = EMuDwC,<br />"Extent error meters" = Entomology - Ted Schultz,<br />"Extent error meters  Calc" = Entomology - Ted Schultz,<br />"GPS error meters"  = Entomology - Ted Schultz,<br />"GPS error meters Calc"  = Entomology - Ted Schultz,<br />"LatLongAccuracy" = Entomology - Sean Brady,<br />"Coordinate Accuracy" = BOLD, <br />"Coordinate Accuracy" = LAB Field Collection SS,<br />"Coordinate Accuracy" = Fishes,<br />"MaxErrorInMeters" = Biocode]]></attribute>
 		<attribute column='Latitude Decimal' uri='urn:decimalLatitude' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#decimalLatitude'><![CDATA[DwC: The geographic latitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are north of the Equator, negative values are south of it. Legal values lie between -90 and 90, Example: "-41.0983423". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/decimalLatitude<p><b>Synonyms:</b><p>"decimalLatitude" = DwC,<br />"decimalLatitude" = IndoPacific Template v7,<br />"DarDecimalLatitude" = EMuDwC,<br />"plot_latitude_dd" = Plantbarcodes.plot,<br />"DecimalLatitude" = Biocode.collectingevent,<br />"DecLat" = Entomology - Ted Schultz,<br />"Plot Latitude (Decimal)" = UNKNOWN (Kress?),<br />"Latitude" = LAB Field Collection SS,<br />"Latitude" = Entomology - Sean Brady,<br />"Latitude" = Botany - Acevedo,<br />"Latitude" = Fishes,<br />"Gathering/SiteCoordinates/LongitudeDecimal" = ABCDDNA,]]></attribute>
-		<attribute column='Latitude Decimal 2' uri='urn:decimalLatitude2' group='Georeference' defined_by='urn:decimalLatitude2'><![CDATA[<p><b>Synonyms:</b><p>"DecimalLatitude2" = Biocode Backend.collectingevent,]]></attribute>
 		<attribute column='Longitude Decimal' uri='urn:decimalLongitude' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#decimalLongitude'><![CDATA[DwC: The geographic longitude (in decimal degrees, using the spatial reference system given in geodeticDatum) of the geographic center of a Location. Positive values are east of the Greenwich Meridian, negative values are west of it. Legal values lie between - Example: "-121.1761111". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/decimalLongitude
 
 BOLD: Latitude & Longitude in “degrees.decimal degrees” format (e.g. 45.837).<p><b>Synonyms:</b><p>"decimalLongitude" = DwC,<br />"decimalLongitude" = IndoPacific Template v7,<br />"DarDecimalLongitude" = EMuDwC,<br />"DecimalLongitude" = Biocode.collectingevent,<br />"plot_longitude_dd" = Plantbarcodes.plot,<br />"DecimalLongitude (Decimal)" = UNKNOWN,<br />"Longitude" = LAB Field Collection SS,<br />"Longitude" = Entomology - Sean Brady,<br />"Longitude" = Botany - Acevedo,<br />"Longitude" = Fishes,<br />"Gathering/SiteCoordinates/LongitudeDecimal" = ABCDDNA,]]></attribute>
-		<attribute column='Longitude Decimal 2' uri='urn:decimalLongitude2' group='Georeference' defined_by='urn:decimalLongitude2'><![CDATA[<p><b>Synonyms:</b><p>"DecimalLongitude2" = Biocode Backend.collectingevent,]]></attribute>
 		<attribute column='Datum' uri='urn:geodeticDatum' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#geodeticDatum'><![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which the geographic coordinates given in decimalLatitude and decimalLongitude as based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide an SRS, if  Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/geodeticDatum<p><b>Synonyms:</b><p>"geodeticDatum" = DwC,<br />"DarGeodeticDatum" = EMuDwC,<br />"HorizontalDatum" = Biocode backend,<br />"HorizontalDatum" = Biocode batch,]]></attribute>
 		<attribute column='Coordinates Determined By' uri='urn:georeferencedBy' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#georeferencedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the georeference (spatial representation) for the Location. Example: "Kristina Yamamoto (MVZ); Janet Fang (MVZ)", "Brad Millen (ROM)". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/georeferencedBy<p><b>Synonyms:</b><p>"georeferencedBy" = DwC,]]></attribute>
 		<attribute column='Coordinates Determined Date' uri='urn:georeferencedDate' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#georeferencedDate'><![CDATA[DwC: The date on which the Location was georeferenced. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/georeferencedDate<p><b>Synonyms:</b><p>"georeferencedDate" = DwC,]]></attribute>
@@ -112,9 +106,7 @@ BOLD: The source of the latitude and longitude.<p><b>Synonyms:</b><p>"georeferen
 		<attribute column='Longitude Minutes' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'><![CDATA[<p><b>Synonyms:</b><p>"LongM" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Longitude Seconds' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'><![CDATA[<p><b>Synonyms:</b><p>"LongS" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Latitude Verbatim' uri='urn:verbatimLatitude' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimLatitude'><![CDATA[DwC: The verbatim original latitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem. Example: "41 05 54.03S". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimLatitude<p><b>Synonyms:</b><p>"verbatimLatitude" = DwC,<br />"DarVerbatimLatitude" = EMuDwC,<br />"VerbatimLatitude" = Biocode Backend.collectingevent,]]></attribute>
-		<attribute column='Latitude Verbatim 2' uri='urn:verbatimLatitude2' group='Georeference' defined_by='urn:verbatimLatitude2'><![CDATA[<p><b>Synonyms:</b><p>"VerbatimLatitude2" = Biocode Backend.collectingevent,]]></attribute>
 		<attribute column='Longitude Verbatim' uri='urn:verbatimLongitude' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimLongitude'><![CDATA[DwC: The verbatim original longitude of the Location. The coordinate ellipsoid, geodeticDatum, or full Spatial Reference System (SRS) for these coordinates should be stored in verbatimSRS and the coordinate system should be stored in verbatimCoordinateSystem. Example: "121d 10' 34" W". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimLongitude<p><b>Synonyms:</b><p>"verbatimLongitude" = DwC,<br />"DarVerbatimLongitude" = EMuDwC,<br />"VerbatimLongitude" = Biocode Backend.collectingevent]]></attribute>
-		<attribute column='Longitude Verbatim 2' uri='urn:verbatimLongitude2' group='Georeference' defined_by='urn:verbatimLongitude2'><![CDATA[<p><b>Synonyms:</b><p>"VerbatimLongitude2" = Biocode Backend.collectingevent]]></attribute>
 		<attribute column='Verbatim Datum' uri='urn:verbatimSRS' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimSRS'><![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in verbatimLatitude and verbatimLongitude, or verbatimCoordinates are based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimSRS<p><b>Synonyms:</b><p>"verbatimSRS" = DwC,]]></attribute>
 		<attribute column='Date Identified' uri='urn:dateIdentified' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#dateIdentified'><![CDATA[DwC: The date on which the subject was identified as representing the Taxon. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/dateIdentified<p><b>Synonyms:</b><p>"dateIdentified" = DwC,<br />"Date Determined" = Kress Plant Barcodes Collect'n Spreadsheet,<br />"Date Determined" = Kress Coll DB tblKresFile (pre-Plant DNA Barcodes),<br />"determined_date" = Plantbarcodes.individual,]]></attribute>
 		<attribute column='Identification Qualifier' uri='urn:identificationQualifier' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#identificationQualifier'><![CDATA[DwC: A brief phrase or a standard term ("cf.", "aff.") to express the determiner's doubts about the Identification. Examples: 1) For the determination "Quercus aff. agrifolia var. oxyadenia", identificationQualifier would be "aff. agrifolia var. oxyadenia" with accompanying values "Quercus" in genus, "agrifolia" in specificEpithet, "oxyadenia" in infraspecificE http://rs.tdwg.org/dwc/terms/identificationQualifier
@@ -128,7 +120,6 @@ Biocode: "cf." or "aff."<p><b>Synonyms:</b><p>"identificationQualifier" = DwC,<b
 
 BOLD: Full name of primary individual responsible for providing taxonomic identification of the specimen. <p><b>Synonyms:</b><p>"identifiedBy" = DwC,<br />"identifiedBy" = IndoPacific Template v7,<br />"DarIdentifiedBy" = EMuDwC,<br />"Determined by" = Entomology - Ted Schultz,<br />"Idr" = Entomology - Sean Brady,<br />"Identifier" = LAB Field Collection Spreadsheet,<br />"Identifier" = Fishes, <br />"IdentifiedBy" = Biocode.specimen,<br />"Identifier" = BOLD,<br />"taxonomic_determiner" = Plantbarcodes.individual,]]></attribute>
 		<attribute column='Identifier Institution' uri='urn:identifierInstitution' group='Identification' defined_by='urn:identifierInstitution'><![CDATA[BOLD: The full name of the identifier's institutional or organizational affiliation if one exists.<p><b>Synonyms:</b><p>"Identifier Institution" = BOLD,<br />"Identifier Institution" = LAB Field Collection Spreadsheet,<br />"Identifier Institution" = Fishes, <br />"IdentifiedInstitution" = Biocode.specimen,]]></attribute>
-		<attribute column='Common Name' uri='urn:vernacularName' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#vernacularName'><![CDATA[DwC: A common or vernacular name. Example: "Andean Condor", "Condor Andino", "American Eagle", "GΣnsegeier". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/vernacularName<p><b>Synonyms:</b><p>"vernacularName" = DwC,<br />"vernacularName" = IndoPacific Template v7,<br />"Common Name" = Plantbarcodes Coll'n SS,<br />"common_name" = Plantbarcodes.individual,<br />"ColloquialName" = Biocode.specimen,]]></attribute>
 		<attribute column='Project Number' uri='urn:projectCode' group='IDs' defined_by='urn:projectCode'><![CDATA[<p><b>Synonyms:</b><p>"ProjectCode" = Biocode Backend.specimen,]]></attribute>
 		<attribute column='Collection Department/Division' uri='urn:collectionCode' group='Institution' defined_by='http://rs.tdwg.org/dwc/terms/#collectionCode'><![CDATA[DwC_Ext: will be in the associated Occurrence record. (Unit/SourceID) 
 
@@ -167,11 +158,6 @@ Kress Plant Barcodes: plot<p><b>Synonyms:</b><p>"country" = DwC,<br />"country" 
 		<attribute column='District/County/Shire' uri='urn:county' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#county'><![CDATA[DwC: The full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) in which the Location occurs. Examples: "Missoula", "Los Lagos", "Mataró". For discussion see http://code.google.com/p/darwincore/wiki/Location  http://rs.tdwg.org/dwc/terms/county
 
 Schultz: A political or geographic unit (above the level of a specific Locality) such as a county, island, etc.; not used consistently<p><b>Synonyms:</b><p>"county" =  DwC,<br />"County" = All Biocode,<br />"County" = Entomology - Sean Brady,<br />"County" = Botany - Acevedo,<br />"DarCounty" = EMuDwC,<br />"County/District" = Birds, <br />"MinorUnit" = Entomology - Ted Schultz,<br />"DIVISION2(Locality)" = tblKressFile,]]></attribute>
-		<attribute column='Habitat' uri='urn:habitat' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#habitat'><![CDATA[DwC: A category or description of the habitat in which the Event occurred. Example: "oak savanna", "pre-cordilleran steppe". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/habitat
-
-MIxS: Environmental feature level includes geographic environmental features. Examples include: harbor, cliff, or lake. EnvO (v1.53) terms listed under environmental feature can be found from the link: http://bioportal.bioontology.org/visualize/44405/?conceptid=ENVO%3A00002297
-
-IndoPacific: Habitat from which the sample was collected. Please pick from the list.<p><b>Synonyms:</b><p>"habitat" = DwC,<br />"habitat" = IndoPacific Template v7,<br />"habitat" = Plantbarcodes.individual,<br />"Habitat" = Plantbarcodes,<br />"Habitat" = Coll'n SS,<br />"Habitat" = Biocode Backend Tables,<br />"Habitat" = Biocode Batch Upload,<br />"Habitat" = Biocode Search Screen,<br />"specimen_Habitat" = Biocode Backend.specimen,<br />"Habitat" = Kress Coll'n DB,<br />"Habitat" = Botany - Acevedo,<br />"Habitat" = BOLD,<br />"Habitat" = LAB Field Coll'n SS,<br />"Habitat" = Fishes,<br />"Habitat" = Entomology - Sean Brady,<br />"Macrohabitat" = Entomology - Ted Schultz,<br />"feature" = MIxS,]]></attribute>
 		<attribute column='Island Name' uri='urn:island' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#island'><![CDATA[DwC: The name of the island on or near which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Example: "Isla Victoria". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/island<p><b>Synonyms:</b><p>"island" = DwC,<br />"island" = IndoPacific Template v7,<br />"Island" = Biocode backend,<br />"Island" = Biocode Batch Upload,<br />"Island" = Biocode Search Screen,<br />"Island" = Kress Coll'n DB,<br />"Island" = Botany - Acevedo,<br />"DarIsland" = EMuDwC,<br />"Island" = DwC, 1.4,]]></attribute>
 		<attribute column='Island Grouping' uri='urn:islandGroup' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#islandGroup'><![CDATA[DwC: The name of the island group in which the Location occurs. Recommended best practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names. Example: "Alexander Archipelago". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/islandGroup<p><b>Synonyms:</b><p>"islandGroup" = DwC,<br />"islandGroup" = IndoPacific Template v7,<br />"IslandGroup" = Biocode Backend,<br />"IslandGroup" = Biocode Batch Upload,<br />"IslandGroup" = Biocode Search Screen,<br />"IslandGrouping" = Botany - Acevedo,<br />"IslandGroup" = DwC, 1.4,<br />"DarIslandGroup" = EMuDwC,]]></attribute>
 		<attribute column='Precise Locality' uri='urn:locality' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#locality'><![CDATA[DwC: The specific description of the place. Less specific geographic information can be provided in other geographic terms (higherGeography, continent, country, stateProvince, county, municipality, waterBody, island, islandGroup). This term may contain information modified from the original to correct perceived errors or standardize the description. Example: "Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/locality
@@ -182,9 +168,6 @@ BOLD: Exact location of collection site
 
 A Driskell: If you've got a name for the collection site, such as "left of Lucky's Bar, in front of men's restroom." (Hey, I once collected frogs from a toilet tank. I know! Right?)<p><b>Synonyms:</b><p>"locality" = DwC,<br />"locality" = IndoPacific Template v7,<br />"DarLocality" = EMuDwC,<br />"Locality" = Kress DB Collect'n Spreadsheet,<br />"Locality" = Biocode Backend Tables,<br />"Locality" = Biocode Batch Upload,<br />"Locality" = Biocode Search Screen,<br />"Locality" = Kress Coll'n DB,<br />"Locality" = DwC, 1.4,<br />"Locality" = Botany - Acevedo,<br />"LocalityName" = Entomology - Sean Brady,<br />"Locality Label Text" = Entomology - Ted Schultz,<br />"Specific Locality" = Birds,<br />"Exact Site" = BOLD<br />"Exact Site" = LAB Field Collection Spreadsheet,<br />"???" = Fishes,]]></attribute>
 		<attribute column='Locality Remarks' uri='urn:locationRemarks' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#locationRemarks'><![CDATA[DwC: Comments or notes about the Location. Example: "under water since 2005". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/locationRemarks<p><b>Synonyms:</b><p>"locationRemarks" = DwC,<br />"locality_geographic_notes" = Plantbarcodes.individual,<br />"locality_geographic_notes" = Plantbarcodes.plot,<br />"Locality/Geographic Notes" = Kress PB Collect'n Spreadsheet,]]></attribute>
-		<attribute column='City/Town' uri='urn:municipality' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#municipality'><![CDATA[DwC: The full, unabbreviated name of the next smaller administrative region than county (city, municipality, etc.) in which the Location occurs. Do not use this term for a nearby named place that does not contain the actual location. Examples: "Holzminden". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/municipality
-
-Kress PB Database: usda_site<p><b>Synonyms:</b><p>"municipality" = DwC,<br />"BioTownshipLocal" = EMu catalog level read-only,<br />"city" = Kress PB Database Back end,]]></attribute>
 		<attribute column='Ocean' uri='urn:ocean' group='Locality' defined_by='urn:ocean'><![CDATA[<p><b>Synonyms:</b><p>"Country/Continent/Ocean" = Birds,<br />"Country/Ocean" = BOLD,<br />"Country/Ocean" = LAB Collection SS,<br />"Country/Ocean" = Fishes,<br />"ContinentOcean" = Biocode.collectingevent,<br />"DarContinentOcean" = EMuDwC,]]></attribute>
 		<attribute column='Sea/Gulf' uri='urn:seaGulf' group='Locality' defined_by='urn:seaGulf'><![CDATA[<p><b>Synonyms:</b><p>"waterBody" = DwC,]]></attribute>
 		<attribute column='Site/Station Number' uri='urn:siteCode' group='Locality' defined_by='urn:siteCode'><![CDATA[BOLD: The name of the sampling location.
@@ -199,32 +182,54 @@ Schultz: A political unit below "country," e.g., state, province, departamento, 
 Kress PB: usda_site
 
 IndoPacific: The state or province where the sample was found.<p><b>Synonyms:</b><p>"stateProvince" = DwC,<br />"DarStateProvince" = EMuDwC,<br />"stateProvince" = IndoPacific Template v7,<br />"State/Province/Territory" = Entomology - Sean Brady, "StateProvince" = Biocode.collectingevent, <br />"MajorUnit" = Ento.Ted.Schultz,<br />"DIVISION1(Locality)" = tblKressFile,<br />"state_province" = Kress Plantbarcodes DB.plot/subsites,<br />"state" = Kress PB backend,<br />"State" = Acevedo - Botany,<br />"State/Province" = BOLD,<br />"State/Province" = Remaining systems,]]></attribute>
-		<attribute column='Length' uri='urn:length' group='Measurements' defined_by='urn:length'><![CDATA[<p><b>Synonyms:</b><p>"length" = IndoPacific Template v7,<br />"Length" = Biocode,<br />"Length" = BOLD Batch Upload (Amy's),]]></attribute>
-		<attribute column='Length unit' uri='urn:lengthUnit' group='Measurements' defined_by='urn:lengthUnit'><![CDATA[<p><b>Synonyms:</b><p>"LengthUnits" = Biocode,]]></attribute>
 		<attribute column='Measurement 1 of' uri='urn:measurement1Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
 		<attribute column='Measurement 1 Type' uri='urn:measurement1Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
 		<attribute column='Measurement 1 Unit' uri='urn:measurement1Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
 		<attribute column='Measurement 1 Value' uri='urn:measurement1Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
 
 MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 2 of' uri='urn:measurement2Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 2 Type' uri='urn:measurement2Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 2 Unit' uri='urn:measurement2Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 2 Value' uri='urn:measurement2Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 3 of' uri='urn:measurement3Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 3 Type' uri='urn:measurement3Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 3 Unit' uri='urn:measurement3Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 3 Value' uri='urn:measurement3Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 4 of' uri='urn:measurement4Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 4 Type' uri='urn:measurement4Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 4 Unit' uri='urn:measurement4Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 4 Value' uri='urn:measurement4Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 5 of' uri='urn:measurement5Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 5 Type' uri='urn:measurement5Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Unit' uri='urn:measurement5Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Value' uri='urn:measurement5Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
 		<attribute column='Measured by' uri='urn:measurementDeterminedBy' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementDeterminedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the value of the MeasurementOrFact. Example: "Javier de la Torre", "Julie Woodruff; Eileen Lacey". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementDeterminedBy<p><b>Synonyms:</b><p>"measurementDeterminedBy" = DwC,]]></attribute>
 		<attribute column='Measurement Date' uri='urn:measurementDeterminedDate' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementDeterminedDate'><![CDATA[DwC: The date on which the MeasurementOrFact was made. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/measurementDeterminedDate<p><b>Synonyms:</b><p>"measurementDeterminedDate" = DwC,]]></attribute>
 		<attribute column='Measurement Remarks' uri='urn:measurementRemarks' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementRemarks'><![CDATA[DwC: Comments or notes accompanying the MeasurementOrFact. Example: "tip of tail missing". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementRemarks<p><b>Synonyms:</b><p>"measurementRemarks" = DwC,]]></attribute>
-		<attribute column='Weight' uri='urn:weight' group='Measurements' defined_by='urn:weight'><![CDATA[IndoPacific: In Grams. Referring to the weight of the organism from which the sample was derived<p><b>Synonyms:</b><p>"weight" = IndoPacific Template v7,<br />"Weight" = Biocode,]]></attribute>
-		<attribute column='Weight unit' uri='urn:weightUnit' group='Measurements' defined_by='urn:weightUnit'><![CDATA[<p><b>Synonyms:</b><p>"WeightUnits" = Biocode,]]></attribute>
 		<attribute column='Preparation 1' uri='urn:preparation1' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[DwC: A list (concatenated and separated) of preparations and preservation methods for a specimen. Examples: "skin; skull; skeleton", "whole animal (ETOH); tissue (EDTA)", "fossil", "cast", "photograph", "DNA extract". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/preparations
 
 Schultz: Type of object, e.g., "pin," "point," "cryotube," etc.  See value list image.<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
+		<attribute column='preparation 1 Remarks' uri='urn:preparation1Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 2' uri='urn:preparation2' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
+		<attribute column='preparation 2 Remarks' uri='urn:preparation2Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 3' uri='urn:preparation3' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
+		<attribute column='preparation 3 Remarks' uri='urn:preparation3Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
 		<attribute column='Preparation Date' uri='urn:preparationDate' group='Preparation' defined_by='urn:preparationDate'><![CDATA[DwC_Ext: Date of preparation, year-month-day (e.g., 2012-10-26)<p><b>Synonyms:</b><p>"preparationDate" = DwC_Ext,]]></attribute>
-		<attribute column='Preparation Process' uri='urn:preparationProcess' group='Preparation' defined_by='urn:preparationProcess'><![CDATA[DwC_Ext: Process used in preparing the specimen or sample<p><b>Synonyms:</b><p>"preparationProcess" = DwC_Ext,<br />"Method" = Entomology - Sean Brady,]]></attribute>
 		<attribute column='Preparator' uri='urn:preparedBy' group='Preparation' defined_by='urn:preparedBy'><![CDATA[DwC_Ext: Person and/or institution responsible for or effecting the preparation<p><b>Synonyms:</b><p>"preparedBy" = DwC_Ext,<br />"Preparator" = Birds,]]></attribute>
 		<attribute column='Project Name' uri='urn:projectName' group='ResearchWorkflow' defined_by='urn:projectName'><![CDATA[MIxS: Name of the project within which the sequencing was organized<p><b>Synonyms:</b><p>"project_name1" = Plantbarcodes.individual,<br />"project_name2" = Plantbarcodes.individual,]]></attribute>
 		<attribute column='Kind of Object' uri='urn:basisOfRecord' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#basisOfRecord'><![CDATA[DwC: The specific nature of the data record - a subtype of the dcterms:type. Recommended best practice is to use a controlled vocabulary such as the Darwin Core Type Vocabulary (http://rs.tdwg.org/dwc/terms/type-vocabulary/index.htm). Examples: "PreservedSpecimen", "FossilSpecimen", "LivingSpecimen", "HumanObservation", "MachineObservation", "GeneticSample". For discussion see http://code.google.com/p/darwincore/wiki/RecordLevelTerms http://rs.tdwg.org/dwc/terms/basisOfRecordall
 
 ABCDDNA: must be "OtherSpecimen"<p><b>Synonyms:</b><p>"basisOfRecord" = DwC,<br />"DarBasisofRecord" = EMuDwC,<br />"RecordBasis" = ABCDDNA,<br />"ObjectNature" = Botany - Acevedo,]]></attribute>
-		<attribute column='Date created' uri='urn:dateCreated' group='Specimen' defined_by='urn:dateCreated'><![CDATA[Schultz: Date the record was created<p><b>Synonyms:</b><p>"date_added" = Biocode Backend.taxonomy,<br />"DateFirstEntered" = Biocode Backend.specimen,<br />"Creation Date" = Entomology - Ted Schultz,.Locality,<br />"Record Creation Date" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Specimen count' uri='urn:individualCount' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#individualCount'><![CDATA[DwC: The number of individuals represented present at the time of the Occurrence. Examples: "1", "25". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualCount<p><b>Synonyms:</b><p>"individualCount" = DwC,<br />"DarIndividualCount" = EMuDwC,<br />"IndividualCount" = Biocode Backend Tables,<br />"IndividualCount" = Biocode Batch Upload,]]></attribute>
-		<attribute column='Individual ID' uri='urn:individualID' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#individualID'><![CDATA[DwC: An identifier for an individual or named group of individual organisms represented in the Occurrence. Meant to accommodate resampling of the same individual or group for monitoring purposes. May be a global unique identifier or an identifier specific to a Examples: "U.amer. 44", "Smedley", "Orca J 23". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualID<p><b>Synonyms:</b><p>"individualID" = DwC,<br />"indiv_id" = Plantbarcodes.individual,<br />"indiv_id" = biocode.tissue,<br />"indiv_id" = biocode.sample_no,]]></attribute>
 		<attribute column='Life Stage' uri='urn:lifeStage' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#lifeStage'><![CDATA[DwC: The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary. Examples: "egg", "eft", "juvenile", "adult", "2 adults 4 juveniles". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/lifeStage
 
 BOLD: The age class or life stage of the specimen(s) at the time of sampling. The field supports free text but is a controlled vocabulary for validation. Example: "Adult", "Immature", "pupa", etc.<p><b>Synonyms:</b><p>"lifeStage" = DwC,<br />"lifeStage" = IndoPacific Template v7,<br />"DarLifeStage" = EMuDwC,<br />"Life Stage" = BOLD,<br />"LifeStage" = Biocode Backend,<br />"LifeStage" = Biocode Batch Upload,<br />"LifeStage" = Biocode Search Screen,<br />"LifeStage" = LAB Field Collection SS,<br />"LifeStage" = BOLD Batch Upload (Amy's),<br />"LifeStage" = BOLD Batch Upload,<br />"LifeStage" = DwC, 1.4,<br />"LifeStage" = Fishes,<br />"LifeStageSex" = Entomology - Sean Brady (part),]]></attribute>
@@ -234,6 +239,11 @@ BOLD: The age class or life stage of the specimen(s) at the time of sampling. Th
 DwC: Comments or notes about the Occurrence. Example: "found dead on road". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/OccurrenceRemarks
 
 BOLD: General notes regarding the specimen<p><b>Synonyms:</b><p>"occurrenceRemarks" = DwC,<br />"occurrenceRemarks" = IndoPacific Template v7,<br />"DwC,:occurrenceRemarks" = DwC_Ext_ProposedNov,<br />"Notes-Specimen" = BOLD,<br />"Notes" = BOLD,<br />"notes" = Biocode Backend.specimen,<br />"Notes" = Botany - Acevedo,<br />"SpecimenDetails/Notes" = BOLD (Amy's),<br />"SpecimenDetails/Notes" = BOLD (LAB),<br />"Notes-General" = Kress Plant Barcodes Collect'n SS,<br />"Notes-General" = Bold batch,<br />"Notes-General" = Biocode search,<br />]]></attribute>
+		<attribute column='Progeny Count' uri='urn:progenyCount' group='Specimen' defined_by='urn:progenyCount'><![CDATA[]]></attribute>
+		<attribute column='Progeny Part' uri='urn:progenyPart' group='Specimen' defined_by='urn:progenyPart'><![CDATA[]]></attribute>
+		<attribute column='Progeny Crown Rump' uri='urn:progenyCrownRump' group='Specimen' defined_by='urn:progenyCrownRump'><![CDATA[]]></attribute>
+		<attribute column='Progeny Unit' uri='urn:progenyUnit' group='Specimen' defined_by='urn:progenyUnit'><![CDATA[]]></attribute>
+		<attribute column='Progeny Remarks' uri='urn:progenyRemarks' group='Specimen' defined_by='urn:progenyRemarks'><![CDATA[]]></attribute>
 		<attribute column='Record Creator' uri='urn:recordCreator' group='Specimen' defined_by='urn:recordCreator'><![CDATA[IndoPacific Instructions: Firstname Lastname (the person entering the data on the spreadsheet) {based on login and day/time}<p><b>Synonyms:</b><p>"Record_Creator" = Entomology - Ted Schultz,<br />"EnteredBy" = Biocode Backend,<br />"EnteredBy" = Biocode Batch Upload,]]></attribute>
 		<attribute column='Primary Collector Number' uri='urn:recordNumber' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#recordNumber'><![CDATA[DwC: An identifier given to the Occurrence at the time it was recorded. Often serves as a link between field notes and an Occurrence record, such as a specimen collector's number. Example: "OPP 7101". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/recordNumber
 
@@ -242,13 +252,29 @@ BOLD:  Field ID: Field number from the collection event or the specimen identifi
 ABCDDNA.CollectorsFieldNumber: the number the collector gave to the specimen in the field, often used in Botany but
 not in Zoology; map it if you have content (e.g. 765/10)<p><b>Synonyms:</b><p>"recordNumber" = DwC,<br />"DarCollectorNumber" = EMuDwC,<br />"Specimen_Num_Collector" = Biocode Backend.specimen,<br />"Collectors number" = Entomology - Ted Schultz,<br />"CollectorsFieldNumber" = ABCDDNA,<br />"Collector Number" = Kress PB Collect'n Spreadsheet, <br />"KressNo" = Kress Plant Barcodes DB as field separate from "Collector Number" = ,<br />"Coll_Num" = Botany - Acevedo,<br />"Coll_Num_Suffix" = Botany - Acevedo,<br />"KressNo" = Kress BC Backend,<br />"KressNo" = Kress Coll DB tblKresFile as separate field,<br />"collector_no" = Kress Plant Barcodes DB,<br />"Field ID" = BOLD,<br />"Field No#" = Birds,<br />"Field Number" = LAB Field Coll SS,<br />"Field Number" = Fishes,<br />"Field Number" = Birds,<br />"Field Number" = Reptiles & Amphibians,]]></attribute>
 		<attribute column='Sexual Maturity' uri='urn:reproductiveCondition' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#reproductiveCondition'><![CDATA[DwC: The reproductive condition of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples" "non-reproductive", "pregnant", "in bloom", "fruit-bearing". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/reproductiveCondition<p><b>Synonyms:</b><p>"reproductiveCondition" = DwC,<br />"ReproductiveStatus (Reproductive Status)" = BOLD,]]></attribute>
+		<attribute column='Reproductive Part 1' uri='urn:reproductivePart1' group='Specimen' defined_by='urn:reproductivePart1'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 1 Length' uri='urn:reproductivePart1Length' group='Specimen' defined_by='urn:reproductivePart1Length'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 1 Remarks' uri='urn:reproductivePart1Remarks' group='Specimen' defined_by='urn:reproductivePart1Remarks'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 1 Unit' uri='urn:reproductivePart1Unit' group='Specimen' defined_by='urn:reproductivePart1Unit'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 1 Width' uri='urn:reproductivePart1Width' group='Specimen' defined_by='urn:reproductivePart1Width'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 2' uri='urn:reproductivePart2' group='Specimen' defined_by='urn:reproductivePart2'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 2 Length' uri='urn:reproductivePart2Length' group='Specimen' defined_by='urn:reproductivePart2Length'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 2 Remarks' uri='urn:reproductivePart2Remarks' group='Specimen' defined_by='urn:reproductivePart2Remarks'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 2 Unit' uri='urn:reproductivePart2Unit' group='Specimen' defined_by='urn:reproductivePart2Unit'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 2 Width' uri='urn:reproductivePart2Width' group='Specimen' defined_by='urn:reproductivePart2Width'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 3' uri='urn:reproductivePart3' group='Specimen' defined_by='urn:reproductivePart3'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 3 Length' uri='urn:reproductivePart3Length' group='Specimen' defined_by='urn:reproductivePart3Length'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 3 Remarks' uri='urn:reproductivePart3Remarks' group='Specimen' defined_by='urn:reproductivePart3Remarks'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 3 Unit' uri='urn:reproductivePart3Unit' group='Specimen' defined_by='urn:reproductivePart3Unit'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 3 Width' uri='urn:reproductivePart3Width' group='Specimen' defined_by='urn:reproductivePart3Width'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 4' uri='urn:reproductivePart4' group='Specimen' defined_by='urn:reproductivePart4'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 4 Length' uri='urn:reproductivePart4Length' group='Specimen' defined_by='urn:reproductivePart4Length'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 4 Remarks' uri='urn:reproductivePart4Remarks' group='Specimen' defined_by='urn:reproductivePart4Remarks'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 4 Unit' uri='urn:reproductivePart4Unit' group='Specimen' defined_by='urn:reproductivePart4Unit'><![CDATA[]]></attribute>
+		<attribute column='Reproductive Part 4 Width' uri='urn:reproductivePart4Width' group='Specimen' defined_by='urn:reproductivePart4Width'><![CDATA[]]></attribute>
 		<attribute column='Sex' uri='urn:sex' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#sex'><![CDATA[DwC: The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples: "female", "hermaphrodite", "8 males, 4 females". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/sex
 
 BOLD: Male/female/hermaphrodite only.<p><b>Synonyms:</b><p>"sex" = DwC,<br />"sex" = IndoPacific Template v7,<br />"DarSex" = EMuDwC,<br />"SexCaste" = Biocode.specimen,<br />"Sex" = BOLD,<br />"Sex" = Biocode Search,<br />"Sex" = LAB Field Coll'n SS,<br />"Sex" = BOLD Batch Upload (Amy's),<br />"Sex" = BOLD Batch Upload,<br />"Sex" = DwC, 1.4,<br />"Sex" = Fishes,<br />"Sex" = Birds,<br />"LifeStageSex" = Entomology - Sean Brady (part),]]></attribute>
-		<attribute column='Specimen/Lot description' uri='urn:specimenDescription' group='Specimen' defined_by='urn:specimenDescription'><![CDATA[<p><b>Synonyms:</b><p>"plant_description1" = Plantbarcodes.individual,<br />"Plant Description 1" = Plantbarcodes Coll'n SS,<br />"Plant Description1" = Kress Coll'n DB,<br />"plant_description2" = Plantbarcodes.individual,<br />"Plant Description 2" = Plantbarcodes Coll'n SS,<br />"Plant Description2" = Kress Coll'n DB,<br />"description" = Botany - Acevedo,]]></attribute>
-		<attribute column='Class' uri='urn:class' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#class'><![CDATA[DwC: The full scientific name of the class in which the taxon is classified. Example: "Mammalia", "Hepaticopsida". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/class
-
-BOLD: None provided<p><b>Synonyms:</b><p>"class" = DwC,<br />"class" = IndoPacific Template v7,<br />"DarClass" = EMuDwC,<br />"Class" = Biocode.specimen, <br />"class" = Biocode.Taxonomy,<br />"Class" = BOLD,]]></attribute>
 		<attribute column='Family' uri='urn:family' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#family'><![CDATA[DwC: The full scientific name of the family in which the taxon is classified. Example: "Felidae", "Monocleaceae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/family
 
 BOLD: None provided.<p><b>Synonyms:</b><p>"family" = DwC,<br />"family" = IndoPacific Template v7,<br />"DarFamily" = EMuDwC,<br />"Family" = Biocode.spcimen, <br />"family" = Biocode.Taxonomy,<br />"family" = Plantbarcodes.individual,<br />"Family" = Botany - Acevedo,<br />"Family" = BOLD,<br />Others in the series may be title case]]></attribute>
@@ -257,35 +283,13 @@ BOLD: None provided.<p><b>Synonyms:</b><p>"family" = DwC,<br />"family" = IndoPa
 ABCDDNA: no definition provided (e.g. Aaronsohnia)
 
 BOLD: None provided.<p><b>Synonyms:</b><p>"genus" = DwC,<br />"genus" = IndoPacific Template v7,<br />"genus" = Plantbarcodes.individual,<br />"Genus" = BOLD,<br />"Genus" = Kress Coll'n SS,<br />"Genus" = Entomology - Ted Schultz,<br />"Genus" = Biocode Backend.specimen,<br />"genus" = Biocode Backend.Taxonomy,<br />"Genus" = Biocode Batch Upload,<br />"Genus" = Biocode Search Screen,<br />"Genus" = Kress Coll'n DB,<br />"Genus" = LAB Field Coll'n SS,<br />"Genus" = BOLD Batch Upload (Amy's),<br />"Genus" = Fishes,<br />"Genus" = Entomology - Sean Brady,<br />"Genus" = Birds, <br />"Identification/ScientificName/NameAtomised/GenusOrMonomial" = ABCDDNA,<br />"DarGenus" = EMuDwC,]]></attribute>
-		<attribute column='Epithet below subspecies' uri='urn:infraspecificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#infraspecificEpithet'><![CDATA[DwC: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation. Example: "concolor", "oxyadenia", "sayi". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/infraspecificEpithet
-
-ABCDDNA: no definition provided<p><b>Synonyms:</b><p>"infraspecificEpithet" = DwC,<br />"DarInfraspecificEpithet" = EMuDwC,<br />"BelowSpeciesEpithet" = Kress Coll DB tbl KresFile,<br />"Below Species Epithet" = Kress Plant Barcodes Collection SS,<br />"below_species_epithet" = Plantbarcodes.individual,<br />"Identification/ScientificName/NameAtomised/InfraspecificEpithet" = ABCDDNA, ]]></attribute>
-		<attribute column='Kingdom' uri='urn:kingdom' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#kingdom'><![CDATA[DwC: The full scientific name of the kingdom in which the taxon is classified. Example: "Animalia", "Plantae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/kingdom<p><b>Synonyms:</b><p>"DarKingdom" = EMuDwC,<br />"kingdom" = DwC,<br />"Kingdom" = Biocode.specimen, <br />"kingdom" = Biocode.Taxonomy,]]></attribute>
-		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'><![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
-
-BOLD: None provided.<p><b>Synonyms:</b><p>"order" = DwC,<br />"order" = IndoPacific Template v7,<br />"Ordr" = Biocode.specimen, <br />"ordr" = Biocode.Taxonomy,<br />"Order" = Kress PB Collect'n Spreadsheet,<br />"order" = Kress Plantbarcodes DB,<br />"Order" = BOLD,<br />"Order" = Entomology - Ted Schultz,<br />"Order" = Biocode Search Screen,<br />"Order" = LAB Field Coll'n SS,<br />"Order" = BOLD Batch Upload (Amy's),<br />"Order" = BOLD Batch Upload,<br />"Order" = Fishes,<br />"Order" = Entomology - Sean Brady,<br />"Order" = Birds,<br />"DarOrder" = EMuDwC,]]></attribute>
-		<attribute column='Phylum' uri='urn:phylum' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#phylum'><![CDATA[DwC: The full scientific name of the phylum or division in which the taxon is classified. Example: "Chordata" (phylum), "Bryophyta" (division). For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/phylum
-
-BOLD: None provided.<p><b>Synonyms:</b><p>"phylum" = DwC,<br />"phylum" = IndoPacific Template v7,<br />"Phylum" = Biocode. Specimen, <br />"phylum" = Biocode.Taxonomy,<br />"Phylum" = BOLD,<br />"Phylum" = Kress Plantbarcodes,<br />"Phylum" = Biocode Backend,<br />"Phylum" = LAB Field Coll'n SS,<br />"Phylum" = BOLD Batch Upload (Amy's),<br />"Phylum" = BOLD Batch Upload,<br />"Phylum" = DwC 1.4,<br />"Phylum" = Fishes,<br />"DarPhylum" = EMuDwC,]]></attribute>
-		<attribute column='Authors' uri='urn:scientificNameAuthorship' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#scientificNameAuthorship'><![CDATA[DwC: The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode. Example: "(Torr.) J.T. Howell", "(Martinovský) Tzvelev", "(Györfi, 1952)". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/scientificNameAuthorship<p><b>Synonyms:</b><p>"scientificNameAuthorship" = DwC,<br />"ScientificNameAuthor" = Biocode Backend,<br />"DarScientificNameAuthor" = EMuDwC,<br />"author" = Biocode.Taxonomy,<br />"Author" = Kress PB Collect'n Spreadsheet, <br />"author" = Kress Plantbarcodes.individual,]]></attribute>
 		<attribute column='Species' uri='urn:specificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#specificEpithet'><![CDATA[DwC: The name of the first or species epithet of the scientificName. Example: "concolor", "gottschei". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/specificEpithet
 
 ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. factorovskyi). This has to be a "valid" species name. If unknown (i.e. "sp.", leave this field blank). Use the column to the right (H) to record other taxonomic info (e.g. "poss. B. herbertus," "cf. haberdasheri"). Please don't use spaces, dashes, periods, etc. in this column.
 DO NOT PUT "sp." IN THIS COLUMN
 
 BOLD: None provided<p><b>Synonyms:</b><p>"specificEpithet" = DwC,<br />"species" = IndoPacific Template v7,<br />"SpeciesName" = Entomology - Sean Brady,<br />"SpecificEpithet" = Biocode Backend,<br />"Identification/ScientificName/NameAtomised/FirstEpithet" = ABCDDNA, <br />"species" = Biocode.Taxonomy, <br />"species" = Plantbarcodes,<br />"Species" = BOLD,<br />"DarSpecificEpithet" = EMuDwC,<br /><br />Unsure of case on remaining systems]]></attribute>
-		<attribute column='Subclass' uri='urn:subclass' group='Taxonomy' defined_by='urn:subclass'><![CDATA[<p><b>Synonyms:</b><p>"Subclass" = Biocode.specimen, <br />"subclass" = Biocode.Taxonomy,]]></attribute>
-		<attribute column='Subfamily' uri='urn:subfamily' group='Taxonomy' defined_by='urn:subfamily'><![CDATA[BOLD: None provided.<p><b>Synonyms:</b><p>"Subfamily" = Biocode.specimen,<br />"subfamily" = Biocode.Taxonomy,<br />"subfamily" = Plantbarcodes.individual,<br />"Sub-family" = BOLD,]]></attribute>
-		<attribute column='Subgenus' uri='urn:subgenus' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#subgenus'><![CDATA[DwC: The full scientific name of the subgenus in which the taxon is classified. Values should include the genus to avoid homonym confusion. Example: "Strobus (Pinus)", "Puma (Puma)" "Loligo (Amerigo)", "Hieracium subgen. Pilosella". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/subgenus<p><b>Synonyms:</b><p>"subgenus" = DwC,<br />"Subgenus" = Biocode.specimen,<br />"subgenus" = Biocode.Taxonomy,<br />"DarSubgenus" = EMuDwC,]]></attribute>
-		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'><![CDATA[<p><b>Synonyms:</b><p>"Suborder" = Biocode.specimen, <br />"suborder" = Biocode.Taxonomy,]]></attribute>
-		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'><![CDATA[<p><b>Synonyms:</b><p>"Subphylum" = Biocode.specimen, <br />"subphylum" = Biocode.Taxonomy,]]></attribute>
-		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'><![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.<p><b>Synonyms:</b><p>"subspecies" = Biocode.Taxonomy,<br />"subSpecies" = IndoPacific Template v7,]]></attribute>
-		<attribute column='Rank below subspecies' uri='urn:taxonRank' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRank'><![CDATA[DwC: The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary. Examples: "subspecies", "varietas", "forma", "species", "genus". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRank
-
-ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. var.)<p><b>Synonyms:</b><p>"taxonRank" = DwC,<br />"DarInfraspecificRank" = EMuDwC,<br />"Below Species Rank" = Plantbarcodes Coll'n SS,<br />"Below Species Rank" = Kress Coll'n DB,<br />"below_species_rank" = Plantbarcodes.individual,<br />"Identification/ScientificName/NameAtomised/Rank" = ABCDDNA,]]></attribute>
-		<attribute column='Taxon notes' uri='urn:taxonRemarks' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRemarks'><![CDATA[DwC: Comments or notes about the taxon or name. Example: "this name is a misspelling in common use". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRemarks<p><b>Synonyms:</b><p>"taxonRemarks"  = DwC,<br />"taxonRemarks"  = IndoPacific Template v7,<br />"taxonomic_notes" = Plantbarcodes.individual,<br />"TaxonomyNotes" = LAB Field Collection Spreadsheet,<br />"TaxonomyNotes" = Fishes,<br />"TaxonNotes" = Biocode Backend,<br />"TaxonNotes" = Biocode Batch Upload,<br />"Taxonomic Notes/Other Specimen Details" = Bold (Kress collection sheet?),]]></attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'><![CDATA[]]></attribute>
-		<attribute column='BOLD ID' uri='urn:boldID' group='Tissue' defined_by='urn:boldID'><![CDATA[Biocode: BOLD "processID" number (ie, MBFA001-07)<p><b>Synonyms:</b><p>"BOLD ID" = Bold,<br />"molecular_id" = Biocode Backend.Tissues,<br />"molecular_id" = Biocode Backend.Extract,<br />"molecular_id" = Biocode Backend.Sequence,]]></attribute>
 		<attribute column='Genetic Sample Notes' uri='urn:geneticSampleNotes' group='Tissue' defined_by='urn:geneticSampleNotes'><![CDATA[<p><b>Synonyms:</b><p>"notes" = Biocode Backend.Tissues,<br />"notes" = Biocode Backend.Extract,<br />"notes" = Biocode Backend.Primer,<br />"notes" = Biocode Backend.Sequence,<br />"notes" = Biocode Backend.Trace,<br />"Tissue Sample Notes" = Kress,]]></attribute>
 		<attribute column='Genetic Sample Type Primary' uri='urn:geneticSampleTypePrimary' group='Tissue' defined_by='urn:geneticSampleTypePrimary'><![CDATA[DwC_Ext: e.g. “tissue”, “DNA”, “RNA”
 
@@ -313,21 +317,25 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='RequiredColumns' column='RequiredColumns' level='error'>
 			<field>Date Visited (From)</field>
 			<field>Collector 1 (Primary)</field>
-			<field>Collection Department/Division</field>
-			<field>Holding Institution</field>
-			<field>Precise Locality</field>
+			<field>Continent</field>
+			<field>Country</field>
+			<field>Preparation 1</field>
 			<field>Kind of Object</field>
 			<field>Primary Collector Number</field>
+			<field>Sex</field>
+			<field>Genus</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
-			<field>Elevation From (m)</field>
-			<field>Latitude Decimal</field>
-			<field>Longitude Decimal</field>
-			<field>Biorepository ID</field>
+			<field>Genetic Sample Preservation Medium</field>
+			<field>Genetic Sample quality</field>
 		</rule>
 		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 2' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 3' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 4' list='collector' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
@@ -335,9 +343,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
 		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
-		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
-		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
 		<rule type='checkInXMLFields' column='Datum' list='geodeticDatum' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
@@ -352,192 +358,1984 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
-		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Length unit' list='lengthUnit' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
-		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Weight unit' list='weightUnit' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 2 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 2 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 3 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 3 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 4 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 4 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Preparation 2' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Preparation 3' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Kind of Object' list='Object Type' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
+		<rule type='checkInXMLFields' column='Life Stage' list='Zoology Stage' level='warning'></rule>
+		<rule type='isNumber' column='Progeny Count' level='error'></rule>
+		<rule type='isNumber' column='Progeny Crown Rump' level='error'></rule>
+		<rule type='checkInXMLFields' column='Progeny Unit' list='lengthUnits' level='warning'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
+		<rule type='checkInXMLFields' column='Sexual Maturity' list='Sexual Maturity' level='warning'></rule>
+		<rule type='isNumber' column='Reproductive Part 1 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 1 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 2 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 2 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 3 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 3 Width' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 4 Length' level='error'></rule>
+		<rule type='isNumber' column='Reproductive Part 4 Width' level='error'></rule>
 		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
+		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
 	</worksheet>
 	<lists>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field>Yes</field>
-			<field>No</field>
+		<list alias='Zoology Preparation' caseInsensitive='true'>
+			<field><![CDATA[Anatomical]]></field>
+			<field><![CDATA[Antler or Horn]]></field>
+			<field><![CDATA[Baculum/Baubellum]]></field>
+			<field><![CDATA[Baleen]]></field>
+			<field><![CDATA[Cast]]></field>
+			<field><![CDATA[Exchanged or Discarded]]></field>
+			<field><![CDATA[Fluid]]></field>
+			<field><![CDATA[Histological]]></field>
+			<field><![CDATA[Mandible]]></field>
+			<field><![CDATA[Mandibles]]></field>
+			<field><![CDATA[Model]]></field>
+			<field><![CDATA[Mounted Head]]></field>
+			<field><![CDATA[Mounted Skeleton]]></field>
+			<field><![CDATA[Mounted skin]]></field>
+			<field><![CDATA[Other]]></field>
+			<field><![CDATA[Partial Skeleton]]></field>
+			<field><![CDATA[Partial Skin]]></field>
+			<field><![CDATA[Partial Skull]]></field>
+			<field><![CDATA[Petrotympanic]]></field>
+			<field><![CDATA[Photograph]]></field>
+			<field><![CDATA[Postcranial skeleton]]></field>
+			<field><![CDATA[Remainder in Fluid]]></field>
+			<field><![CDATA[Rostrum]]></field>
+			<field><![CDATA[Sclera]]></field>
+			<field><![CDATA[Skeletal Elements]]></field>
+			<field><![CDATA[Skeleton]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Skull]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Tooth or Tusk]]></field>
+			<field><![CDATA[Tympanic]]></field>
+			<field><![CDATA[Unknown]]></field>
 		</list>
-		<list alias='elevDepthModifier' caseInsensitive='true'>
-			<field>ca.</field>
-			<field>greater than</field>
-			<field>less than</field>
-			<field>±</field>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Blood]]></field>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
 		</list>
-		<list alias='latitudeNorthSouth' caseInsensitive='true'>
-			<field>N</field>
-			<field>S</field>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
 		</list>
-		<list alias='longitudeEastWest' caseInsensitive='true'>
-			<field>E</field>
-			<field>W</field>
+		<list alias='genus' caseInsensitive='true'>
+			<field><![CDATA[Abditomys]]></field>
+			<field><![CDATA[Abrawayaomys]]></field>
+			<field><![CDATA[Abrocoma]]></field>
+			<field><![CDATA[Abrothrix]]></field>
+			<field><![CDATA[Acerodon]]></field>
+			<field><![CDATA[Acinonyx]]></field>
+			<field><![CDATA[Acomys]]></field>
+			<field><![CDATA[Aconaemys]]></field>
+			<field><![CDATA[Acratocnus (?)]]></field>
+			<field><![CDATA[Acrobates]]></field>
+			<field><![CDATA[Acrocodia]]></field>
+			<field><![CDATA[Addax]]></field>
+			<field><![CDATA[Adenota]]></field>
+			<field><![CDATA[Aegialomys]]></field>
+			<field><![CDATA[Aepeomys]]></field>
+			<field><![CDATA[Aepyceros]]></field>
+			<field><![CDATA[Aepyprymnus]]></field>
+			<field><![CDATA[Aeretes]]></field>
+			<field><![CDATA[Aeromys]]></field>
+			<field><![CDATA[Aethalops]]></field>
+			<field><![CDATA[Aethomys]]></field>
+			<field><![CDATA[Agaphelus]]></field>
+			<field><![CDATA[Agouti]]></field>
+			<field><![CDATA[Ailuropoda]]></field>
+			<field><![CDATA[Ailurops]]></field>
+			<field><![CDATA[Ailurus]]></field>
+			<field><![CDATA[Akodon]]></field>
+			<field><![CDATA[Alcelaphus]]></field>
+			<field><![CDATA[Alces]]></field>
+			<field><![CDATA[Allactaga]]></field>
+			<field><![CDATA[Allenopithecus]]></field>
+			<field><![CDATA[Allocricetulus]]></field>
+			<field><![CDATA[Alopex]]></field>
+			<field><![CDATA[Alouatta]]></field>
+			<field><![CDATA[Alticola]]></field>
+			<field><![CDATA[Amblonyx]]></field>
+			<field><![CDATA[Amblysomus]]></field>
+			<field><![CDATA[Ametrida]]></field>
+			<field><![CDATA[Ammelaphus]]></field>
+			<field><![CDATA[Ammodorcas]]></field>
+			<field><![CDATA[Ammospermophilus]]></field>
+			<field><![CDATA[Ammotragus]]></field>
+			<field><![CDATA[Amorphochilus]]></field>
+			<field><![CDATA[Amphiptera]]></field>
+			<field><![CDATA[Anarnak]]></field>
+			<field><![CDATA[Ancyclodon]]></field>
+			<field><![CDATA[Andinomys]]></field>
+			<field><![CDATA[Anomalurus]]></field>
+			<field><![CDATA[Anoura]]></field>
+			<field><![CDATA[Anourosorex]]></field>
+			<field><![CDATA[Antechinomys]]></field>
+			<field><![CDATA[Antechinus]]></field>
+			<field><![CDATA[Anthops]]></field>
+			<field><![CDATA[Antidorcas]]></field>
+			<field><![CDATA[Antilocapra]]></field>
+			<field><![CDATA[Antilope]]></field>
+			<field><![CDATA[Antrozous]]></field>
+			<field><![CDATA[Aonyx]]></field>
+			<field><![CDATA[Aotus]]></field>
+			<field><![CDATA[Aphaetreus]]></field>
+			<field><![CDATA[Aplodontia]]></field>
+			<field><![CDATA[Apodemus]]></field>
+			<field><![CDATA[Apomys]]></field>
+			<field><![CDATA[Arborimus]]></field>
+			<field><![CDATA[Archboldomys]]></field>
+			<field><![CDATA[Arctictis]]></field>
+			<field><![CDATA[Arctocebus]]></field>
+			<field><![CDATA[Arctocephalus]]></field>
+			<field><![CDATA[Arctogalidia]]></field>
+			<field><![CDATA[Arctomys]]></field>
+			<field><![CDATA[Arctonyx]]></field>
+			<field><![CDATA[Ardops]]></field>
+			<field><![CDATA[Arielulus]]></field>
+			<field><![CDATA[Ariteus]]></field>
+			<field><![CDATA[Artibeus]]></field>
+			<field><![CDATA[Arvicanthis]]></field>
+			<field><![CDATA[Arvicola]]></field>
+			<field><![CDATA[Aschizomys]]></field>
+			<field><![CDATA[Asellia]]></field>
+			<field><![CDATA[Aselliscus]]></field>
+			<field><![CDATA[Atalapha]]></field>
+			<field><![CDATA[Atelerix]]></field>
+			<field><![CDATA[Ateles]]></field>
+			<field><![CDATA[Atelocynus]]></field>
+			<field><![CDATA[Atherura]]></field>
+			<field><![CDATA[Atherurus]]></field>
+			<field><![CDATA[Atilax]]></field>
+			<field><![CDATA[Atlantoxerus]]></field>
+			<field><![CDATA[Atophyrax]]></field>
+			<field><![CDATA[Auliscomys]]></field>
+			<field><![CDATA[Avahi]]></field>
+			<field><![CDATA[Axis]]></field>
+			<field><![CDATA[B[larina].]]></field>
+			<field><![CDATA[Babyrousa]]></field>
+			<field><![CDATA[Baiomys]]></field>
+			<field><![CDATA[Balaena]]></field>
+			<field><![CDATA[Balaenid]]></field>
+			<field><![CDATA[Balaenoptera]]></field>
+			<field><![CDATA[Balaenopterid]]></field>
+			<field><![CDATA[Balantiopteryx]]></field>
+			<field><![CDATA[Balionycteris]]></field>
+			<field><![CDATA[Bandicota]]></field>
+			<field><![CDATA[Barbastella]]></field>
+			<field><![CDATA[Bassaricyon]]></field>
+			<field><![CDATA[Bassaris]]></field>
+			<field><![CDATA[Bassariscus]]></field>
+			<field><![CDATA[Bassariscyon [sic]]]></field>
+			<field><![CDATA[Bathyergus]]></field>
+			<field><![CDATA[Batomys]]></field>
+			<field><![CDATA[Bauerus]]></field>
+			<field><![CDATA[Bdeogale]]></field>
+			<field><![CDATA[Beamys]]></field>
+			<field><![CDATA[Beatragus]]></field>
+			<field><![CDATA[Belomys]]></field>
+			<field><![CDATA[Beluga]]></field>
+			<field><![CDATA[Benedinia]]></field>
+			<field><![CDATA[Berardius]]></field>
+			<field><![CDATA[Berylmys]]></field>
+			<field><![CDATA[Bettongia]]></field>
+			<field><![CDATA[Bibimys]]></field>
+			<field><![CDATA[Bison]]></field>
+			<field><![CDATA[Blanfordimys]]></field>
+			<field><![CDATA[Blarina]]></field>
+			<field><![CDATA[Blarinella]]></field>
+			<field><![CDATA[Blarinomys]]></field>
+			<field><![CDATA[Blastocerus]]></field>
+			<field><![CDATA[Bolomys]]></field>
+			<field><![CDATA[Boromys]]></field>
+			<field><![CDATA[Bos]]></field>
+			<field><![CDATA[Boselaphus]]></field>
+			<field><![CDATA[Brachiones]]></field>
+			<field><![CDATA[Brachylagus]]></field>
+			<field><![CDATA[Brachyphylla]]></field>
+			<field><![CDATA[Brachytarsomys]]></field>
+			<field><![CDATA[Brachyteles]]></field>
+			<field><![CDATA[Brachyuromys]]></field>
+			<field><![CDATA[Bradypus]]></field>
+			<field><![CDATA[Brotomys (?)]]></field>
+			<field><![CDATA[Bubalis]]></field>
+			<field><![CDATA[Bubalus]]></field>
+			<field><![CDATA[Budorcas]]></field>
+			<field><![CDATA[Bullimus]]></field>
+			<field><![CDATA[Bunomys]]></field>
+			<field><![CDATA[Bunopithecus]]></field>
+			<field><![CDATA[Cabassous]]></field>
+			<field><![CDATA[Cacajao]]></field>
+			<field><![CDATA[Caenolestes]]></field>
+			<field><![CDATA[Calcochloris]]></field>
+			<field><![CDATA[Callicebus]]></field>
+			<field><![CDATA[Callimico]]></field>
+			<field><![CDATA[Callithrix]]></field>
+			<field><![CDATA[Callorhinus]]></field>
+			<field><![CDATA[Callosciurus]]></field>
+			<field><![CDATA[Callospermophilus]]></field>
+			<field><![CDATA[Calomys]]></field>
+			<field><![CDATA[Calomyscus]]></field>
+			<field><![CDATA[Caluromys]]></field>
+			<field><![CDATA[Caluromysiops]]></field>
+			<field><![CDATA[Calyptophractus]]></field>
+			<field><![CDATA[Camelus]]></field>
+			<field><![CDATA[Canid]]></field>
+			<field><![CDATA[Canis]]></field>
+			<field><![CDATA[Cannomys]]></field>
+			<field><![CDATA[Caperea]]></field>
+			<field><![CDATA[Capra]]></field>
+			<field><![CDATA[Capreolus]]></field>
+			<field><![CDATA[Capricornis]]></field>
+			<field><![CDATA[Capromys]]></field>
+			<field><![CDATA[Caracal]]></field>
+			<field><![CDATA[Cardiocranius]]></field>
+			<field><![CDATA[Cardioderma]]></field>
+			<field><![CDATA[Cariacus]]></field>
+			<field><![CDATA[Carlito]]></field>
+			<field><![CDATA[Carollia]]></field>
+			<field><![CDATA[Carpitalpa]]></field>
+			<field><![CDATA[Carpomys]]></field>
+			<field><![CDATA[Caryomys]]></field>
+			<field><![CDATA[Castor]]></field>
+			<field><![CDATA[Catagonus]]></field>
+			<field><![CDATA[Catodon]]></field>
+			<field><![CDATA[Catopuma]]></field>
+			<field><![CDATA[Cavia]]></field>
+			<field><![CDATA[Cebid]]></field>
+			<field><![CDATA[Cebus]]></field>
+			<field><![CDATA[Celaenomys]]></field>
+			<field><![CDATA[Centronycteris]]></field>
+			<field><![CDATA[Centurio]]></field>
+			<field><![CDATA[Cephalopachus]]></field>
+			<field><![CDATA[Cephalophus]]></field>
+			<field><![CDATA[Cephalorhynchus]]></field>
+			<field><![CDATA[Ceratodon]]></field>
+			<field><![CDATA[Ceratotherium]]></field>
+			<field><![CDATA[Cercartetus]]></field>
+			<field><![CDATA[Cercocebus]]></field>
+			<field><![CDATA[Cercopithecus]]></field>
+			<field><![CDATA[Cerdocyon]]></field>
+			<field><![CDATA[Cerradomys]]></field>
+			<field><![CDATA[Cervicapra]]></field>
+			<field><![CDATA[Cervid]]></field>
+			<field><![CDATA[Cervus]]></field>
+			<field><![CDATA[Cetacean]]></field>
+			<field><![CDATA[Ceto-diodon]]></field>
+			<field><![CDATA[Chacodelphys]]></field>
+			<field><![CDATA[Chaerephon]]></field>
+			<field><![CDATA[Chaerophon]]></field>
+			<field><![CDATA[Chaetodipus]]></field>
+			<field><![CDATA[Chaetomys]]></field>
+			<field><![CDATA[Chaetophractus]]></field>
+			<field><![CDATA[Chalinolobus]]></field>
+			<field><![CDATA[Cheirogaleus]]></field>
+			<field><![CDATA[Cheiromeles]]></field>
+			<field><![CDATA[Chelemys]]></field>
+			<field><![CDATA[Chibchanomys]]></field>
+			<field><![CDATA[Chilomys]]></field>
+			<field><![CDATA[Chilonatalus]]></field>
+			<field><![CDATA[Chilonycteris]]></field>
+			<field><![CDATA[Chilophylla]]></field>
+			<field><![CDATA[Chimarrogale]]></field>
+			<field><![CDATA[Chincha]]></field>
+			<field><![CDATA[Chinchilla]]></field>
+			<field><![CDATA[Chinchillula]]></field>
+			<field><![CDATA[Chionomys]]></field>
+			<field><![CDATA[Chiroderma]]></field>
+			<field><![CDATA[Chiromyscus]]></field>
+			<field><![CDATA[Chironax]]></field>
+			<field><![CDATA[Chironectes]]></field>
+			<field><![CDATA[Chiropodomys]]></field>
+			<field><![CDATA[Chiropotes]]></field>
+			<field><![CDATA[Chiropteran]]></field>
+			<field><![CDATA[Chiruromys]]></field>
+			<field><![CDATA[Chlamyphorus]]></field>
+			<field><![CDATA[Chlorocebus]]></field>
+			<field><![CDATA[Chlorotalpa]]></field>
+			<field><![CDATA[Choeroniscus]]></field>
+			<field><![CDATA[Choeronycteris]]></field>
+			<field><![CDATA[Choloepus]]></field>
+			<field><![CDATA[Chraeomys]]></field>
+			<field><![CDATA[Chroeomys]]></field>
+			<field><![CDATA[Chrotomys]]></field>
+			<field><![CDATA[Chrotopterus]]></field>
+			<field><![CDATA[Chrysochloris]]></field>
+			<field><![CDATA[Chrysocyon]]></field>
+			<field><![CDATA[Chrysospalax]]></field>
+			<field><![CDATA[Cistugo]]></field>
+			<field><![CDATA[Citellus]]></field>
+			<field><![CDATA[Civettictis]]></field>
+			<field><![CDATA[Clethrionomys]]></field>
+			<field><![CDATA[Cloeotis]]></field>
+			<field><![CDATA[Clymene]]></field>
+			<field><![CDATA[Clymenia]]></field>
+			<field><![CDATA[Clyomys]]></field>
+			<field><![CDATA[Coccymys]]></field>
+			<field><![CDATA[Codelphinus]]></field>
+			<field><![CDATA[Coelops]]></field>
+			<field><![CDATA[Coendou]]></field>
+			<field><![CDATA[Coleura]]></field>
+			<field><![CDATA[Colobus]]></field>
+			<field><![CDATA[Colomys]]></field>
+			<field><![CDATA[Condylura]]></field>
+			<field><![CDATA[Conepatus]]></field>
+			<field><![CDATA[Conilurus]]></field>
+			<field><![CDATA[Connochaetes]]></field>
+			<field><![CDATA[Cormura]]></field>
+			<field><![CDATA[Corynorhinus]]></field>
+			<field><![CDATA[Cotursiops]]></field>
+			<field><![CDATA[Craseonycteris]]></field>
+			<field><![CDATA[Crateromys]]></field>
+			<field><![CDATA[Cratogeomys]]></field>
+			<field><![CDATA[Cricetomys]]></field>
+			<field><![CDATA[Cricetulus]]></field>
+			<field><![CDATA[Cricetus]]></field>
+			<field><![CDATA[Crocidura]]></field>
+			<field><![CDATA[Crocuta]]></field>
+			<field><![CDATA[Crossarchus]]></field>
+			<field><![CDATA[Crossomys]]></field>
+			<field><![CDATA[Cryptochloris]]></field>
+			<field><![CDATA[Cryptomys]]></field>
+			<field><![CDATA[Cryptonanus]]></field>
+			<field><![CDATA[Cryptoprocta]]></field>
+			<field><![CDATA[Cryptotis]]></field>
+			<field><![CDATA[Ctenodactylus]]></field>
+			<field><![CDATA[Ctenomys]]></field>
+			<field><![CDATA[Cuniculus]]></field>
+			<field><![CDATA[Cuon]]></field>
+			<field><![CDATA[Cyclopes]]></field>
+			<field><![CDATA[Cynictis]]></field>
+			<field><![CDATA[Cynocephalus]]></field>
+			<field><![CDATA[Cynogale]]></field>
+			<field><![CDATA[Cynomolgus]]></field>
+			<field><![CDATA[Cynomops]]></field>
+			<field><![CDATA[Cynomys]]></field>
+			<field><![CDATA[Cynopithecus]]></field>
+			<field><![CDATA[Cynopterus]]></field>
+			<field><![CDATA[Cystophora]]></field>
+			<field><![CDATA[Cyttarops]]></field>
+			<field><![CDATA[Dactylomys]]></field>
+			<field><![CDATA[Dactylopsila]]></field>
+			<field><![CDATA[Dama]]></field>
+			<field><![CDATA[Damaliscus]]></field>
+			<field><![CDATA[Dasycercus]]></field>
+			<field><![CDATA[Dasymys]]></field>
+			<field><![CDATA[Dasyprocta]]></field>
+			<field><![CDATA[Dasypterus]]></field>
+			<field><![CDATA[Dasypus]]></field>
+			<field><![CDATA[Dasyuroides]]></field>
+			<field><![CDATA[Dasyurus]]></field>
+			<field><![CDATA[Daubentonia]]></field>
+			<field><![CDATA[Delomys]]></field>
+			<field><![CDATA[Delphinapterus]]></field>
+			<field><![CDATA[Delphinid]]></field>
+			<field><![CDATA[Delphinorhynchus]]></field>
+			<field><![CDATA[Delphinus]]></field>
+			<field><![CDATA[Dendrogale]]></field>
+			<field><![CDATA[Dendrohyrax]]></field>
+			<field><![CDATA[Dendrolagus]]></field>
+			<field><![CDATA[Dendromus]]></field>
+			<field><![CDATA[Dendromys]]></field>
+			<field><![CDATA[Deomys]]></field>
+			<field><![CDATA[Dephomys]]></field>
+			<field><![CDATA[Dermanura]]></field>
+			<field><![CDATA[Desmalopex]]></field>
+			<field><![CDATA[Desmana]]></field>
+			<field><![CDATA[Desmodilliscus]]></field>
+			<field><![CDATA[Desmodillus]]></field>
+			<field><![CDATA[Desmodus]]></field>
+			<field><![CDATA[Desmomys]]></field>
+			<field><![CDATA[Diaemus]]></field>
+			<field><![CDATA[Dicerorhinus]]></field>
+			<field><![CDATA[Diceros]]></field>
+			<field><![CDATA[Diclidurus]]></field>
+			<field><![CDATA[Dicotyles]]></field>
+			<field><![CDATA[Dicrostonyx]]></field>
+			<field><![CDATA[Didelphis]]></field>
+			<field><![CDATA[Dinomys]]></field>
+			<field><![CDATA[Diomys]]></field>
+			<field><![CDATA[Dioplodon]]></field>
+			<field><![CDATA[Diphylla]]></field>
+			<field><![CDATA[Diplomesodon]]></field>
+			<field><![CDATA[Diplomys]]></field>
+			<field><![CDATA[Dipodillus]]></field>
+			<field><![CDATA[Dipodomys]]></field>
+			<field><![CDATA[Dipodops]]></field>
+			<field><![CDATA[Dipterocetus]]></field>
+			<field><![CDATA[Dipus]]></field>
+			<field><![CDATA[Dobsonia]]></field>
+			<field><![CDATA[Dolichodon]]></field>
+			<field><![CDATA[Dolichotis]]></field>
+			<field><![CDATA[Dorcelaphus]]></field>
+			<field><![CDATA[Dorcopsis]]></field>
+			<field><![CDATA[Dorcopsulus]]></field>
+			<field><![CDATA[Dremomys]]></field>
+			<field><![CDATA[Dromiciops]]></field>
+			<field><![CDATA[Dryomys]]></field>
+			<field><![CDATA[Drysopes]]></field>
+			<field><![CDATA[Dubertus]]></field>
+			<field><![CDATA[Dugong]]></field>
+			<field><![CDATA[Dymecodon]]></field>
+			<field><![CDATA[Echimys]]></field>
+			<field><![CDATA[Echinoprocta]]></field>
+			<field><![CDATA[Echinops]]></field>
+			<field><![CDATA[Echinosorex]]></field>
+			<field><![CDATA[Echiothrix]]></field>
+			<field><![CDATA[Echymipera]]></field>
+			<field><![CDATA[Ectophylla]]></field>
+			<field><![CDATA[Eidolon]]></field>
+			<field><![CDATA[Eira]]></field>
+			<field><![CDATA[Elaphodus]]></field>
+			<field><![CDATA[Elaphurus]]></field>
+			<field><![CDATA[Elasmognathus]]></field>
+			<field><![CDATA[Electra]]></field>
+			<field><![CDATA[Elephantid]]></field>
+			<field><![CDATA[Elephantulus]]></field>
+			<field><![CDATA[Elephas]]></field>
+			<field><![CDATA[Eligmodontia]]></field>
+			<field><![CDATA[Eliomys]]></field>
+			<field><![CDATA[Eliurus]]></field>
+			<field><![CDATA[Ellobius]]></field>
+			<field><![CDATA[Emballonura]]></field>
+			<field><![CDATA[Enchisthenes]]></field>
+			<field><![CDATA[Enhydra]]></field>
+			<field><![CDATA[Eoglaucomys]]></field>
+			<field><![CDATA[Eolagurus]]></field>
+			<field><![CDATA[Eonycteris]]></field>
+			<field><![CDATA[Eospalax]]></field>
+			<field><![CDATA[Eothenomys]]></field>
+			<field><![CDATA[Eozapus]]></field>
+			<field><![CDATA[Epimys]]></field>
+			<field><![CDATA[Epiodon]]></field>
+			<field><![CDATA[Episoriculus]]></field>
+			<field><![CDATA[Epixerus]]></field>
+			<field><![CDATA[Epomophorus]]></field>
+			<field><![CDATA[Epomops]]></field>
+			<field><![CDATA[Eptesicus]]></field>
+			<field><![CDATA[Equus]]></field>
+			<field><![CDATA[Eremitalpa]]></field>
+			<field><![CDATA[Erethizon]]></field>
+			<field><![CDATA[Erignathus]]></field>
+			<field><![CDATA[Erinaceus]]></field>
+			<field><![CDATA[Eropeplus]]></field>
+			<field><![CDATA[Erophylla]]></field>
+			<field><![CDATA[Erythrocebus]]></field>
+			<field><![CDATA[Eschrichtius]]></field>
+			<field><![CDATA[Eubalaena]]></field>
+			<field><![CDATA[Euchoreutes]]></field>
+			<field><![CDATA[Euderma]]></field>
+			<field><![CDATA[Eudorcas]]></field>
+			<field><![CDATA[Eulemur]]></field>
+			<field><![CDATA[Eumetopias]]></field>
+			<field><![CDATA[Eumops]]></field>
+			<field><![CDATA[Euneomys]]></field>
+			<field><![CDATA[Euoticus]]></field>
+			<field><![CDATA[Eupetaurus]]></field>
+			<field><![CDATA[Euphractus]]></field>
+			<field><![CDATA[Euphysetes]]></field>
+			<field><![CDATA[Euprocyon]]></field>
+			<field><![CDATA[Euroscaptor]]></field>
+			<field><![CDATA[Euryoryzomys]]></field>
+			<field><![CDATA[Euryzygomatomys]]></field>
+			<field><![CDATA[Eutamias]]></field>
+			<field><![CDATA[Eutropia]]></field>
+			<field><![CDATA[Evotomys]]></field>
+			<field><![CDATA[Exilisciurus]]></field>
+			<field><![CDATA[Falsistrellus]]></field>
+			<field><![CDATA[Felis]]></field>
+			<field><![CDATA[Felovia]]></field>
+			<field><![CDATA[Feresa]]></field>
+			<field><![CDATA[Fiber]]></field>
+			<field><![CDATA[Fossa]]></field>
+			<field><![CDATA[Funambulus]]></field>
+			<field><![CDATA[Funisciurus]]></field>
+			<field><![CDATA[Furipterus]]></field>
+			<field><![CDATA[Galago]]></field>
+			<field><![CDATA[Galagoides]]></field>
+			<field><![CDATA[Galea]]></field>
+			<field><![CDATA[Galemys]]></field>
+			<field><![CDATA[Galeopithecus]]></field>
+			<field><![CDATA[Galeopterus]]></field>
+			<field><![CDATA[Galerella]]></field>
+			<field><![CDATA[Galictis]]></field>
+			<field><![CDATA[Galidia]]></field>
+			<field><![CDATA[Galidictis]]></field>
+			<field><![CDATA[Gazella]]></field>
+			<field><![CDATA[Genetta]]></field>
+			<field><![CDATA[Geocapromys]]></field>
+			<field><![CDATA[Geogale]]></field>
+			<field><![CDATA[Geomys]]></field>
+			<field><![CDATA[Georychus]]></field>
+			<field><![CDATA[Geoxus]]></field>
+			<field><![CDATA[Gerbilliscus]]></field>
+			<field><![CDATA[Gerbillurus]]></field>
+			<field><![CDATA[Gerbillus]]></field>
+			<field><![CDATA[Giraffa]]></field>
+			<field><![CDATA[Glaucomys]]></field>
+			<field><![CDATA[Glauconycteris]]></field>
+			<field><![CDATA[Glirulus]]></field>
+			<field><![CDATA[Glis]]></field>
+			<field><![CDATA[Glischropus]]></field>
+			<field><![CDATA[Globicephala]]></field>
+			<field><![CDATA[Globicephalus]]></field>
+			<field><![CDATA[Globiocephalus]]></field>
+			<field><![CDATA[Glossophaga]]></field>
+			<field><![CDATA[Glyphonycteris]]></field>
+			<field><![CDATA[Glyphotes]]></field>
+			<field><![CDATA[Golunda]]></field>
+			<field><![CDATA[Gorgon]]></field>
+			<field><![CDATA[Gorilla]]></field>
+			<field><![CDATA[Gracilinanus]]></field>
+			<field><![CDATA[Grammomys]]></field>
+			<field><![CDATA[Grampidelphis]]></field>
+			<field><![CDATA[Grampus]]></field>
+			<field><![CDATA[Graomys]]></field>
+			<field><![CDATA[Graphiurus]]></field>
+			<field><![CDATA[Gulo]]></field>
+			<field><![CDATA[Gymnura]]></field>
+			<field><![CDATA[Gymnuromys]]></field>
+			<field><![CDATA[H[esperomys]]]></field>
+			<field><![CDATA[Habromys]]></field>
+			<field><![CDATA[Halichoerus]]></field>
+			<field><![CDATA[Handleyomys]]></field>
+			<field><![CDATA[Hapalemur]]></field>
+			<field><![CDATA[Hapalomys]]></field>
+			<field><![CDATA[Haplonycteris]]></field>
+			<field><![CDATA[Harpiocephalus]]></field>
+			<field><![CDATA[Harpyionycteris]]></field>
+			<field><![CDATA[Heimyscus]]></field>
+			<field><![CDATA[Helarctos]]></field>
+			<field><![CDATA[Heliophobius]]></field>
+			<field><![CDATA[Heliosciurus]]></field>
+			<field><![CDATA[Heliosorex]]></field>
+			<field><![CDATA[Helogale]]></field>
+			<field><![CDATA[Hemibelideus]]></field>
+			<field><![CDATA[Hemicentetes]]></field>
+			<field><![CDATA[Hemiderma]]></field>
+			<field><![CDATA[Hemiechinus]]></field>
+			<field><![CDATA[Hemigale]]></field>
+			<field><![CDATA[Hemigalus]]></field>
+			<field><![CDATA[Hemitragus]]></field>
+			<field><![CDATA[Herpailurus]]></field>
+			<field><![CDATA[Herperomys]]></field>
+			<field><![CDATA[Herpestes]]></field>
+			<field><![CDATA[Hesp[eromys]]]></field>
+			<field><![CDATA[Hesperomys]]></field>
+			<field><![CDATA[Hesperoptenus]]></field>
+			<field><![CDATA[Heterocephalus]]></field>
+			<field><![CDATA[Heterodon]]></field>
+			<field><![CDATA[Heterogeomys]]></field>
+			<field><![CDATA[Heterohyrax]]></field>
+			<field><![CDATA[Heteromys]]></field>
+			<field><![CDATA[Hexaprotodon]]></field>
+			<field><![CDATA[Hexolobodon]]></field>
+			<field><![CDATA[Hippocamelus]]></field>
+			<field><![CDATA[Hippopotamus]]></field>
+			<field><![CDATA[Hipposideros]]></field>
+			<field><![CDATA[Hippotragus]]></field>
+			<field><![CDATA[Histiotus]]></field>
+			<field><![CDATA[Histriophoca]]></field>
+			<field><![CDATA[Hodomys]]></field>
+			<field><![CDATA[Holochilus]]></field>
+			<field><![CDATA[Hoolock]]></field>
+			<field><![CDATA[Hoplomys]]></field>
+			<field><![CDATA[Hunterius]]></field>
+			<field><![CDATA[Hunterus]]></field>
+			<field><![CDATA[Hyaena]]></field>
+			<field><![CDATA[Hybomys]]></field>
+			<field><![CDATA[Hydrictis]]></field>
+			<field><![CDATA[Hydrochaeris]]></field>
+			<field><![CDATA[Hydrochoerus]]></field>
+			<field><![CDATA[Hydrodamalis]]></field>
+			<field><![CDATA[Hydromys]]></field>
+			<field><![CDATA[Hydropotes]]></field>
+			<field><![CDATA[Hydrurga]]></field>
+			<field><![CDATA[Hyemoschus]]></field>
+			<field><![CDATA[Hylaeamys]]></field>
+			<field><![CDATA[Hylobates]]></field>
+			<field><![CDATA[Hylochoerus]]></field>
+			<field><![CDATA[Hylomys]]></field>
+			<field><![CDATA[Hylomyscus]]></field>
+			<field><![CDATA[Hylonycteris]]></field>
+			<field><![CDATA[Hylopetes]]></field>
+			<field><![CDATA[Hyomys]]></field>
+			<field><![CDATA[Hyperacrius]]></field>
+			<field><![CDATA[Hyperoodon]]></field>
+			<field><![CDATA[Hypsignathus]]></field>
+			<field><![CDATA[Hypsiprymnodon]]></field>
+			<field><![CDATA[Hypsugo]]></field>
+			<field><![CDATA[Hystrix]]></field>
+			<field><![CDATA[Ia]]></field>
+			<field><![CDATA[Ichneumia]]></field>
+			<field><![CDATA[Ichthyomys]]></field>
+			<field><![CDATA[Icticyon]]></field>
+			<field><![CDATA[Ictidomys]]></field>
+			<field><![CDATA[Ictonyx]]></field>
+			<field><![CDATA[Idionycteris]]></field>
+			<field><![CDATA[Idiurus]]></field>
+			<field><![CDATA[Indopacetus]]></field>
+			<field><![CDATA[Indri]]></field>
+			<field><![CDATA[Inia]]></field>
+			<field><![CDATA[Iomys]]></field>
+			<field><![CDATA[Irenomys]]></field>
+			<field><![CDATA[Isolobodon]]></field>
+			<field><![CDATA[Isoodon]]></field>
+			<field><![CDATA[Isothrix]]></field>
+			<field><![CDATA[Isthmomys]]></field>
+			<field><![CDATA[Ithydontia]]></field>
+			<field><![CDATA[Jaculus]]></field>
+			<field><![CDATA[Jentinkia]]></field>
+			<field><![CDATA[Juscelinomys]]></field>
+			<field><![CDATA[Kerivoula]]></field>
+			<field><![CDATA[Kerodon]]></field>
+			<field><![CDATA[Kobus]]></field>
+			<field><![CDATA[Kogia]]></field>
+			<field><![CDATA[Kunsia]]></field>
+			<field><![CDATA[Kyphobalaena]]></field>
+			<field><![CDATA[Laephotis]]></field>
+			<field><![CDATA[Lagenodelphis]]></field>
+			<field><![CDATA[Lagenorhynchus]]></field>
+			<field><![CDATA[Lagidium]]></field>
+			<field><![CDATA[Lagomys]]></field>
+			<field><![CDATA[Lagorchestes]]></field>
+			<field><![CDATA[Lagostomus]]></field>
+			<field><![CDATA[Lagostrophus]]></field>
+			<field><![CDATA[Lagothrix]]></field>
+			<field><![CDATA[Lagurus]]></field>
+			<field><![CDATA[Lama]]></field>
+			<field><![CDATA[Lampronycteris]]></field>
+			<field><![CDATA[Laonastes]]></field>
+			<field><![CDATA[Lariscus]]></field>
+			<field><![CDATA[Lasionycteris]]></field>
+			<field><![CDATA[Lasiopodomys]]></field>
+			<field><![CDATA[Lasiopyga]]></field>
+			<field><![CDATA[Lasiorhinus]]></field>
+			<field><![CDATA[Lasiurus]]></field>
+			<field><![CDATA[Latax]]></field>
+			<field><![CDATA[Lavia]]></field>
+			<field><![CDATA[Leggada]]></field>
+			<field><![CDATA[Leggadina]]></field>
+			<field><![CDATA[Lemmiscus]]></field>
+			<field><![CDATA[Lemmus]]></field>
+			<field><![CDATA[Lemniscomys]]></field>
+			<field><![CDATA[Lemur]]></field>
+			<field><![CDATA[Lenomys]]></field>
+			<field><![CDATA[Lenothrix]]></field>
+			<field><![CDATA[Leo]]></field>
+			<field><![CDATA[Leontopithecus]]></field>
+			<field><![CDATA[Leopardus]]></field>
+			<field><![CDATA[Leopoldamys]]></field>
+			<field><![CDATA[Lepilemur]]></field>
+			<field><![CDATA[Leporid]]></field>
+			<field><![CDATA[Leptailurus]]></field>
+			<field><![CDATA[Leptomys]]></field>
+			<field><![CDATA[Leptonychotes]]></field>
+			<field><![CDATA[Leptonycteris]]></field>
+			<field><![CDATA[Lepus]]></field>
+			<field><![CDATA[Lestoros]]></field>
+			<field><![CDATA[Leucopleurus]]></field>
+			<field><![CDATA[Liberiictis]]></field>
+			<field><![CDATA[Lichonycteris]]></field>
+			<field><![CDATA[Limnogale]]></field>
+			<field><![CDATA[Limnomys]]></field>
+			<field><![CDATA[Liomys]]></field>
+			<field><![CDATA[Lionycteris]]></field>
+			<field><![CDATA[Lipotes]]></field>
+			<field><![CDATA[Lissodelphis]]></field>
+			<field><![CDATA[Lissonycteris]]></field>
+			<field><![CDATA[Litocranius]]></field>
+			<field><![CDATA[Lobodon]]></field>
+			<field><![CDATA[Loncheres]]></field>
+			<field><![CDATA[Lonchophylla]]></field>
+			<field><![CDATA[Lonchorhina]]></field>
+			<field><![CDATA[Lontra]]></field>
+			<field><![CDATA[Lophiomys]]></field>
+			<field><![CDATA[Lophocebus]]></field>
+			<field><![CDATA[Lophostoma]]></field>
+			<field><![CDATA[Lophuromys]]></field>
+			<field><![CDATA[Lorentzimys]]></field>
+			<field><![CDATA[Loris]]></field>
+			<field><![CDATA[Loxodonta]]></field>
+			<field><![CDATA[Loxodontomys]]></field>
+			<field><![CDATA[Lundomys]]></field>
+			<field><![CDATA[Lutra]]></field>
+			<field><![CDATA[Lutreola]]></field>
+			<field><![CDATA[Lutreolina]]></field>
+			<field><![CDATA[Lutrogale]]></field>
+			<field><![CDATA[Lycalopex]]></field>
+			<field><![CDATA[Lycaon]]></field>
+			<field><![CDATA[Lynchailurus]]></field>
+			<field><![CDATA[Lynx]]></field>
+			<field><![CDATA[Macaca]]></field>
+			<field><![CDATA[Macacus]]></field>
+			<field><![CDATA[Macleayius]]></field>
+			<field><![CDATA[Macroderma]]></field>
+			<field><![CDATA[Macrogeomys]]></field>
+			<field><![CDATA[Macroglossus]]></field>
+			<field><![CDATA[Macrophyllum]]></field>
+			<field><![CDATA[Macropus]]></field>
+			<field><![CDATA[Macrorhinus]]></field>
+			<field><![CDATA[Macroscelides]]></field>
+			<field><![CDATA[Macrotarsomys]]></field>
+			<field><![CDATA[Macrotis]]></field>
+			<field><![CDATA[Macrotus]]></field>
+			<field><![CDATA[Macruromys]]></field>
+			<field><![CDATA[Madoqua]]></field>
+			<field><![CDATA[Makalata]]></field>
+			<field><![CDATA[Malacomys]]></field>
+			<field><![CDATA[Malacothrix]]></field>
+			<field><![CDATA[Mallomys]]></field>
+			<field><![CDATA[Mammelomys]]></field>
+			<field><![CDATA[Manatus]]></field>
+			<field><![CDATA[Mandrillus]]></field>
+			<field><![CDATA[Manis]]></field>
+			<field><![CDATA[Margaretamys]]></field>
+			<field><![CDATA[Marmosa]]></field>
+			<field><![CDATA[Marmosops]]></field>
+			<field><![CDATA[Marmota]]></field>
+			<field><![CDATA[Martes]]></field>
+			<field><![CDATA[Massoutiera]]></field>
+			<field><![CDATA[Mastacomys]]></field>
+			<field><![CDATA[Mastomys]]></field>
+			<field><![CDATA[Maxomys]]></field>
+			<field><![CDATA[Mazama]]></field>
+			<field><![CDATA[Megaderma]]></field>
+			<field><![CDATA[Megadontomys]]></field>
+			<field><![CDATA[Megaerops]]></field>
+			<field><![CDATA[Megaloglossus]]></field>
+			<field><![CDATA[Megaptera?]]></field>
+			<field><![CDATA[Megasorex]]></field>
+			<field><![CDATA[Melanomys]]></field>
+			<field><![CDATA[Melasmothrix]]></field>
+			<field><![CDATA[Meles]]></field>
+			<field><![CDATA[Mellivora]]></field>
+			<field><![CDATA[Melogale]]></field>
+			<field><![CDATA[Melomys]]></field>
+			<field><![CDATA[Melonycteris]]></field>
+			<field><![CDATA[Melursus]]></field>
+			<field><![CDATA[Menetes]]></field>
+			<field><![CDATA[Mephitis]]></field>
+			<field><![CDATA[Meriones]]></field>
+			<field><![CDATA[Mesechinus]]></field>
+			<field><![CDATA[Mesembriomys]]></field>
+			<field><![CDATA[Mesocapromys]]></field>
+			<field><![CDATA[Mesocricetus]]></field>
+			<field><![CDATA[Mesomys]]></field>
+			<field><![CDATA[Mesophylla]]></field>
+			<field><![CDATA[Mesoplodon]]></field>
+			<field><![CDATA[Metachirus]]></field>
+			<field><![CDATA[Micaelamys]]></field>
+			<field><![CDATA[Micoureus]]></field>
+			<field><![CDATA[Microcavia]]></field>
+			<field><![CDATA[Microcebus]]></field>
+			<field><![CDATA[Microdipodops]]></field>
+			<field><![CDATA[Microgale]]></field>
+			<field><![CDATA[Micromys]]></field>
+			<field><![CDATA[Micronycteris]]></field>
+			<field><![CDATA[Microperoryctes]]></field>
+			<field><![CDATA[Micropteropus]]></field>
+			<field><![CDATA[Microryzomys]]></field>
+			<field><![CDATA[Microsciurus]]></field>
+			<field><![CDATA[Microsorex]]></field>
+			<field><![CDATA[Microtus]]></field>
+			<field><![CDATA[Microxus]]></field>
+			<field><![CDATA[Mictomys]]></field>
+			<field><![CDATA[Midas]]></field>
+			<field><![CDATA[Millardia]]></field>
+			<field><![CDATA[Mimetillus]]></field>
+			<field><![CDATA[Mimon]]></field>
+			<field><![CDATA[Miniopterus]]></field>
+			<field><![CDATA[Miopithecus]]></field>
+			<field><![CDATA[Mirounga]]></field>
+			<field><![CDATA[Mogera]]></field>
+			<field><![CDATA[Molossid]]></field>
+			<field><![CDATA[Molossops]]></field>
+			<field><![CDATA[Molossus]]></field>
+			<field><![CDATA[Monachus]]></field>
+			<field><![CDATA[Monodelphis]]></field>
+			<field><![CDATA[Monodon]]></field>
+			<field><![CDATA[Monophyllus]]></field>
+			<field><![CDATA[Mops]]></field>
+			<field><![CDATA[Mormoops]]></field>
+			<field><![CDATA[Mormopterus]]></field>
+			<field><![CDATA[Moschiola]]></field>
+			<field><![CDATA[Moschus]]></field>
+			<field><![CDATA[Mosia]]></field>
+			<field><![CDATA[Mungos]]></field>
+			<field><![CDATA[Muntiacus]]></field>
+			<field><![CDATA[Murexechinus]]></field>
+			<field><![CDATA[Murexia]]></field>
+			<field><![CDATA[Murid]]></field>
+			<field><![CDATA[Murina]]></field>
+			<field><![CDATA[Murine]]></field>
+			<field><![CDATA[Mus]]></field>
+			<field><![CDATA[Muscardinus]]></field>
+			<field><![CDATA[Musonycteris]]></field>
+			<field><![CDATA[Mustela]]></field>
+			<field><![CDATA[Mydaus]]></field>
+			<field><![CDATA[Mylomys]]></field>
+			<field><![CDATA[Myocastor]]></field>
+			<field><![CDATA[Myodes]]></field>
+			<field><![CDATA[Myoictis]]></field>
+			<field><![CDATA[Myomimus]]></field>
+			<field><![CDATA[Myomys]]></field>
+			<field><![CDATA[Myomyscus]]></field>
+			<field><![CDATA[Myonax]]></field>
+			<field><![CDATA[Myonycteris]]></field>
+			<field><![CDATA[Myoprocta]]></field>
+			<field><![CDATA[Myopterus]]></field>
+			<field><![CDATA[Myopus]]></field>
+			<field><![CDATA[Myosciurus]]></field>
+			<field><![CDATA[Myosorex]]></field>
+			<field><![CDATA[Myospalax]]></field>
+			<field><![CDATA[Myotalpa]]></field>
+			<field><![CDATA[Myotis]]></field>
+			<field><![CDATA[Myotomys]]></field>
+			<field><![CDATA[Myoxus]]></field>
+			<field><![CDATA[Myrmecobius]]></field>
+			<field><![CDATA[Myrmecophaga]]></field>
+			<field><![CDATA[Mysateles]]></field>
+			<field><![CDATA[Mystacina]]></field>
+			<field><![CDATA[Mysticete]]></field>
+			<field><![CDATA[Mystromys]]></field>
+			<field><![CDATA[Myzopoda]]></field>
+			<field><![CDATA[Naemorhedus]]></field>
+			<field><![CDATA[Nandinia]]></field>
+			<field><![CDATA[Nanger]]></field>
+			<field><![CDATA[Nannosciurus]]></field>
+			<field><![CDATA[Nannospalax]]></field>
+			<field><![CDATA[Nanonycteris]]></field>
+			<field><![CDATA[Napaeozapus]]></field>
+			<field><![CDATA[Narwalus]]></field>
+			<field><![CDATA[Nasalis]]></field>
+			<field><![CDATA[Nasua]]></field>
+			<field><![CDATA[Nasuella]]></field>
+			<field><![CDATA[Natalus]]></field>
+			<field><![CDATA[Neacomys]]></field>
+			<field><![CDATA[Neamblysomus]]></field>
+			<field><![CDATA[Necromys]]></field>
+			<field><![CDATA[Nectogale]]></field>
+			<field><![CDATA[Nectomys]]></field>
+			<field><![CDATA[Nelsonia]]></field>
+			<field><![CDATA[Nemorhoedus]]></field>
+			<field><![CDATA[Neodelphinus]]></field>
+			<field><![CDATA[Neodon]]></field>
+			<field><![CDATA[Neofelis]]></field>
+			<field><![CDATA[Neofiber]]></field>
+			<field><![CDATA[Neomeris]]></field>
+			<field><![CDATA[Neomys]]></field>
+			<field><![CDATA[Neophoca]]></field>
+			<field><![CDATA[Neophocaena]]></field>
+			<field><![CDATA[Neophyseter]]></field>
+			<field><![CDATA[Neoromicia]]></field>
+			<field><![CDATA[Neosorex]]></field>
+			<field><![CDATA[Neotetracus]]></field>
+			<field><![CDATA[Neotoma]]></field>
+			<field><![CDATA[Neotomodon]]></field>
+			<field><![CDATA[Neotomys]]></field>
+			<field><![CDATA[Neotragus]]></field>
+			<field><![CDATA[Neovison]]></field>
+			<field><![CDATA[Nephelomys]]></field>
+			<field><![CDATA[Nesokia]]></field>
+			<field><![CDATA[Nesomys]]></field>
+			<field><![CDATA[Nesophontes]]></field>
+			<field><![CDATA[Nesoryzomys]]></field>
+			<field><![CDATA[Nesotragus]]></field>
+			<field><![CDATA[Neurotrichus]]></field>
+			<field><![CDATA[Neusticomys]]></field>
+			<field><![CDATA[Niadias [sic]]]></field>
+			<field><![CDATA[Niadius]]></field>
+			<field><![CDATA[Nilgiritragus]]></field>
+			<field><![CDATA[Niumbaha]]></field>
+			<field><![CDATA[Niviventer]]></field>
+			<field><![CDATA[Noctilio]]></field>
+			<field><![CDATA[Nomascus]]></field>
+			<field><![CDATA[Notiomys]]></field>
+			<field><![CDATA[Notiosorex]]></field>
+			<field><![CDATA[Notocitellus]]></field>
+			<field><![CDATA[Notomys]]></field>
+			<field><![CDATA[Notopteris]]></field>
+			<field><![CDATA[Notoryctes]]></field>
+			<field><![CDATA[Nyct[icea]]]></field>
+			<field><![CDATA[Nyctalus]]></field>
+			<field><![CDATA[Nyctereutes]]></field>
+			<field><![CDATA[Nycteris]]></field>
+			<field><![CDATA[Nycticea]]></field>
+			<field><![CDATA[Nycticebus]]></field>
+			<field><![CDATA[Nycticeinops]]></field>
+			<field><![CDATA[Nycticeius]]></field>
+			<field><![CDATA[Nyctiellus]]></field>
+			<field><![CDATA[Nyctimene]]></field>
+			<field><![CDATA[Nyctinomops]]></field>
+			<field><![CDATA[Nyctinomus]]></field>
+			<field><![CDATA[Nyctomys]]></field>
+			<field><![CDATA[Nyctophilus]]></field>
+			<field><![CDATA[O[tognosis]]]></field>
+			<field><![CDATA[Ochotona]]></field>
+			<field><![CDATA[Ochrotomys]]></field>
+			<field><![CDATA[Octodon]]></field>
+			<field><![CDATA[Octodontomys]]></field>
+			<field><![CDATA[Octopus]]></field>
+			<field><![CDATA[Odobenus]]></field>
+			<field><![CDATA[Odocoileus]]></field>
+			<field><![CDATA[Odontocete]]></field>
+			<field><![CDATA[Oecomys]]></field>
+			<field><![CDATA[Oenomys]]></field>
+			<field><![CDATA[Okapia]]></field>
+			<field><![CDATA[Olallamys]]></field>
+			<field><![CDATA[Oligoryzomys]]></field>
+			<field><![CDATA[Ommatophoca]]></field>
+			<field><![CDATA[Oncifelis]]></field>
+			<field><![CDATA[Ondatra]]></field>
+			<field><![CDATA[Onychogalea]]></field>
+			<field><![CDATA[Onychomys]]></field>
+			<field><![CDATA[Ophysia]]></field>
+			<field><![CDATA[Orca]]></field>
+			<field><![CDATA[Orcaella]]></field>
+			<field><![CDATA[Orcinus]]></field>
+			<field><![CDATA[Oreamnos]]></field>
+			<field><![CDATA[Oreoryzomys]]></field>
+			<field><![CDATA[Oreotragus]]></field>
+			<field><![CDATA[Ornithorhynchus]]></field>
+			<field><![CDATA[Orolestes]]></field>
+			<field><![CDATA[Orthogeomys]]></field>
+			<field><![CDATA[Orycteropus]]></field>
+			<field><![CDATA[Oryctolagus]]></field>
+			<field><![CDATA[Oryx]]></field>
+			<field><![CDATA[Oryzomys]]></field>
+			<field><![CDATA[Oryzorictes]]></field>
+			<field><![CDATA[Osgoodomys]]></field>
+			<field><![CDATA[Otaria]]></field>
+			<field><![CDATA[Otariid]]></field>
+			<field><![CDATA[Otocolobus]]></field>
+			<field><![CDATA[Otocyon]]></field>
+			<field><![CDATA[Otolemur]]></field>
+			<field><![CDATA[Otomops]]></field>
+			<field><![CDATA[Otomys]]></field>
+			<field><![CDATA[Otonycteris]]></field>
+			<field><![CDATA[Otonyctomys]]></field>
+			<field><![CDATA[Otopteropus]]></field>
+			<field><![CDATA[Otospermophilus]]></field>
+			<field><![CDATA[Ototylomys]]></field>
+			<field><![CDATA[Ourebia]]></field>
+			<field><![CDATA[Ovibos]]></field>
+			<field><![CDATA[Ovis]]></field>
+			<field><![CDATA[Oxymycterus]]></field>
+			<field><![CDATA[Oxypterus]]></field>
+			<field><![CDATA[Ozanna]]></field>
+			<field><![CDATA[Ozotoceros]]></field>
+			<field><![CDATA[Pachyura]]></field>
+			<field><![CDATA[Pachyuromys]]></field>
+			<field><![CDATA[Pagophilus]]></field>
+			<field><![CDATA[Paguma]]></field>
+			<field><![CDATA[Palawanomys]]></field>
+			<field><![CDATA[Pan]]></field>
+			<field><![CDATA[Panthera]]></field>
+			<field><![CDATA[Pantholops]]></field>
+			<field><![CDATA[Papio]]></field>
+			<field><![CDATA[Pappogeomys]]></field>
+			<field><![CDATA[Parabalaenoptera]]></field>
+			<field><![CDATA[Paracrocidura]]></field>
+			<field><![CDATA[Paracynictis]]></field>
+			<field><![CDATA[Paradipus]]></field>
+			<field><![CDATA[Paradoxurus]]></field>
+			<field><![CDATA[Paraechinus]]></field>
+			<field><![CDATA[Parahyaena]]></field>
+			<field><![CDATA[Paralomys]]></field>
+			<field><![CDATA[Paramelomys]]></field>
+			<field><![CDATA[Parantechinus]]></field>
+			<field><![CDATA[Paranyctimene]]></field>
+			<field><![CDATA[Paraphocoena]]></field>
+			<field><![CDATA[Parascalops]]></field>
+			<field><![CDATA[Parastrellus]]></field>
+			<field><![CDATA[Paraxerus]]></field>
+			<field><![CDATA[Pardofelis]]></field>
+			<field><![CDATA[Parocnus]]></field>
+			<field><![CDATA[Parotomys]]></field>
+			<field><![CDATA[Paruromys]]></field>
+			<field><![CDATA[Pattonomys]]></field>
+			<field><![CDATA[Pecari]]></field>
+			<field><![CDATA[Pedetes]]></field>
+			<field><![CDATA[Pelea]]></field>
+			<field><![CDATA[Pelomys]]></field>
+			<field><![CDATA[Pentalagus]]></field>
+			<field><![CDATA[Penthetor]]></field>
+			<field><![CDATA[Peponocephala]]></field>
+			<field><![CDATA[Perameles]]></field>
+			<field><![CDATA[Peramys]]></field>
+			<field><![CDATA[Perimyotis]]></field>
+			<field><![CDATA[Perodicticus]]></field>
+			<field><![CDATA[Perodipus]]></field>
+			<field><![CDATA[Perognathus]]></field>
+			<field><![CDATA[Perognatus [sic]]]></field>
+			<field><![CDATA[Peromyscus]]></field>
+			<field><![CDATA[Peropteryx]]></field>
+			<field><![CDATA[Peroryctes]]></field>
+			<field><![CDATA[Petaurillus]]></field>
+			<field><![CDATA[Petaurista]]></field>
+			<field><![CDATA[Petauroides]]></field>
+			<field><![CDATA[Petaurus]]></field>
+			<field><![CDATA[Petinomys]]></field>
+			<field><![CDATA[Petrodromus]]></field>
+			<field><![CDATA[Petrogale]]></field>
+			<field><![CDATA[Petromus]]></field>
+			<field><![CDATA[Petromyscus]]></field>
+			<field><![CDATA[Petropseudes]]></field>
+			<field><![CDATA[Petrorhynchus]]></field>
+			<field><![CDATA[Phacochoerus]]></field>
+			<field><![CDATA[Phaiomys]]></field>
+			<field><![CDATA[Phalanger]]></field>
+			<field><![CDATA[Phascogale]]></field>
+			<field><![CDATA[Phascolarctos]]></field>
+			<field><![CDATA[Phascolosorex]]></field>
+			<field><![CDATA[Phaulomys]]></field>
+			<field><![CDATA[Phenacomys]]></field>
+			<field><![CDATA[Philander]]></field>
+			<field><![CDATA[Philantomba]]></field>
+			<field><![CDATA[Philetor]]></field>
+			<field><![CDATA[Phloeomys]]></field>
+			<field><![CDATA[Phoca]]></field>
+			<field><![CDATA[Phocaena]]></field>
+			<field><![CDATA[Phocarctos]]></field>
+			<field><![CDATA[Phocena]]></field>
+			<field><![CDATA[Phocid]]></field>
+			<field><![CDATA[Phocoena]]></field>
+			<field><![CDATA[Phocoenid]]></field>
+			<field><![CDATA[Phocoenoides]]></field>
+			<field><![CDATA[Phodopus]]></field>
+			<field><![CDATA[Phoniscus]]></field>
+			<field><![CDATA[Phylloderma]]></field>
+			<field><![CDATA[Phyllomys]]></field>
+			<field><![CDATA[Phyllonycteris]]></field>
+			<field><![CDATA[Phyllops]]></field>
+			<field><![CDATA[Phyllostomus]]></field>
+			<field><![CDATA[Phyllotis]]></field>
+			<field><![CDATA[Physalis]]></field>
+			<field><![CDATA[Physalis [sic]]]></field>
+			<field><![CDATA[Physalus]]></field>
+			<field><![CDATA[Physeter]]></field>
+			<field><![CDATA[Piliocolobus]]></field>
+			<field><![CDATA[Pipistrellus]]></field>
+			<field><![CDATA[Pithecheir]]></field>
+			<field><![CDATA[Pithecheirops]]></field>
+			<field><![CDATA[Pithecia]]></field>
+			<field><![CDATA[Pithecus]]></field>
+			<field><![CDATA[Pitymys]]></field>
+			<field><![CDATA[Plagiodontia]]></field>
+			<field><![CDATA[Planigale]]></field>
+			<field><![CDATA[Platacanthomys]]></field>
+			<field><![CDATA[Platalina]]></field>
+			<field><![CDATA[Platanista]]></field>
+			<field><![CDATA[Platygeomys]]></field>
+			<field><![CDATA[Platymops]]></field>
+			<field><![CDATA[Platyrrhinus]]></field>
+			<field><![CDATA[Plecotus]]></field>
+			<field><![CDATA[Podogymnura]]></field>
+			<field><![CDATA[Podomys]]></field>
+			<field><![CDATA[Poecilogale]]></field>
+			<field><![CDATA[Poelagus]]></field>
+			<field><![CDATA[Pogonomys]]></field>
+			<field><![CDATA[Poikilotherm]]></field>
+			<field><![CDATA[Poliocitellus]]></field>
+			<field><![CDATA[Pongo]]></field>
+			<field><![CDATA[Pontoporia]]></field>
+			<field><![CDATA[Potamochoerus]]></field>
+			<field><![CDATA[Potamogale]]></field>
+			<field><![CDATA[Potorous]]></field>
+			<field><![CDATA[Potos]]></field>
+			<field><![CDATA[Praomys]]></field>
+			<field><![CDATA[Presbytes]]></field>
+			<field><![CDATA[Presbytis]]></field>
+			<field><![CDATA[Priodontes]]></field>
+			<field><![CDATA[Prionailurus]]></field>
+			<field><![CDATA[Prionodon]]></field>
+			<field><![CDATA[Procapra]]></field>
+			<field><![CDATA[Procavia]]></field>
+			<field><![CDATA[Procolobus]]></field>
+			<field><![CDATA[Procyon]]></field>
+			<field><![CDATA[Prodelphinus]]></field>
+			<field><![CDATA[Proechimys]]></field>
+			<field><![CDATA[Profelis]]></field>
+			<field><![CDATA[Prometheomys]]></field>
+			<field><![CDATA[Promops]]></field>
+			<field><![CDATA[Pronolagus]]></field>
+			<field><![CDATA[Propithecus]]></field>
+			<field><![CDATA[Prosciurillus]]></field>
+			<field><![CDATA[Proteles]]></field>
+			<field><![CDATA[Protoxerus]]></field>
+			<field><![CDATA[Psammomys]]></field>
+			<field><![CDATA[Pseudantechinus]]></field>
+			<field><![CDATA[Pseudocheirus]]></field>
+			<field><![CDATA[Pseudochirops]]></field>
+			<field><![CDATA[Pseudochirulus]]></field>
+			<field><![CDATA[Pseudohydromys]]></field>
+			<field><![CDATA[Pseudois]]></field>
+			<field><![CDATA[Pseudomys]]></field>
+			<field><![CDATA[Pseudorca]]></field>
+			<field><![CDATA[Pseudoryzomys]]></field>
+			<field><![CDATA[Pseudostoma]]></field>
+			<field><![CDATA[Ptenochirus]]></field>
+			<field><![CDATA[Pteralopex]]></field>
+			<field><![CDATA[Pterobalaena]]></field>
+			<field><![CDATA[Pteromys]]></field>
+			<field><![CDATA[Pteromyscus]]></field>
+			<field><![CDATA[Pteronotus]]></field>
+			<field><![CDATA[Pteronura]]></field>
+			<field><![CDATA[Pteropus]]></field>
+			<field><![CDATA[Ptilocercus]]></field>
+			<field><![CDATA[Pudu]]></field>
+			<field><![CDATA[Puma]]></field>
+			<field><![CDATA[Pusa]]></field>
+			<field><![CDATA[Putorius]]></field>
+			<field><![CDATA[Pygathrix]]></field>
+			<field><![CDATA[Pygeretmus]]></field>
+			<field><![CDATA[Pygoderma]]></field>
+			<field><![CDATA[Quemisia]]></field>
+			<field><![CDATA[Rangifer]]></field>
+			<field><![CDATA[Raphicerus]]></field>
+			<field><![CDATA[Rattus]]></field>
+			<field><![CDATA[Ratufa]]></field>
+			<field><![CDATA[Redunca]]></field>
+			<field><![CDATA[Reithrodon]]></field>
+			<field><![CDATA[Reithrodontomys]]></field>
+			<field><![CDATA[Reithronycteris]]></field>
+			<field><![CDATA[Rhabdomys]]></field>
+			<field><![CDATA[Rhamphocetus]]></field>
+			<field><![CDATA[Rheithrosciurus]]></field>
+			<field><![CDATA[Rheomys]]></field>
+			<field><![CDATA[Rhinoceros]]></field>
+			<field><![CDATA[Rhinolophus]]></field>
+			<field><![CDATA[Rhinonicteris]]></field>
+			<field><![CDATA[Rhinophylla]]></field>
+			<field><![CDATA[Rhinopithecus]]></field>
+			<field><![CDATA[Rhinopoma]]></field>
+			<field><![CDATA[Rhinosciurus]]></field>
+			<field><![CDATA[Rhipidomys]]></field>
+			<field><![CDATA[Rhizomys]]></field>
+			<field><![CDATA[Rhogeessa]]></field>
+			<field><![CDATA[Rhombomys]]></field>
+			<field><![CDATA[Rhynchocyon]]></field>
+			<field><![CDATA[Rhynchogale]]></field>
+			<field><![CDATA[Rhynchomys]]></field>
+			<field><![CDATA[Rhynchonycteris]]></field>
+			<field><![CDATA[Rhynchotragus]]></field>
+			<field><![CDATA[Rodent]]></field>
+			<field><![CDATA[Romerolagus]]></field>
+			<field><![CDATA[Rorqualus]]></field>
+			<field><![CDATA[Rousettus]]></field>
+			<field><![CDATA[Rubrisciurus]]></field>
+			<field><![CDATA[Rucervus]]></field>
+			<field><![CDATA[Rupicapra]]></field>
+			<field><![CDATA[Rusa]]></field>
+			<field><![CDATA[Saccolaimus]]></field>
+			<field><![CDATA[Saccopteryx]]></field>
+			<field><![CDATA[Saccostomus]]></field>
+			<field><![CDATA[Sagmatius]]></field>
+			<field><![CDATA[Saguinus]]></field>
+			<field><![CDATA[Saiga]]></field>
+			<field><![CDATA[Saimiri]]></field>
+			<field><![CDATA[Salpingotus]]></field>
+			<field><![CDATA[Sarcophilus]]></field>
+			<field><![CDATA[Sauromys]]></field>
+			<field><![CDATA[Scalops]]></field>
+			<field><![CDATA[Scalopus]]></field>
+			<field><![CDATA[Scapanulus]]></field>
+			<field><![CDATA[Scapanus]]></field>
+			<field><![CDATA[Scapteromys]]></field>
+			<field><![CDATA[Scaptochirus]]></field>
+			<field><![CDATA[Scaptonyx]]></field>
+			<field><![CDATA[Sciurillus]]></field>
+			<field><![CDATA[Sciuropterus]]></field>
+			<field><![CDATA[Sciuropturus]]></field>
+			<field><![CDATA[Sciurotamias]]></field>
+			<field><![CDATA[Sciurus]]></field>
+			<field><![CDATA[Scleronycteris]]></field>
+			<field><![CDATA[Scolomys]]></field>
+			<field><![CDATA[Scotinomys]]></field>
+			<field><![CDATA[Scotoecus]]></field>
+			<field><![CDATA[Scotomanes]]></field>
+			<field><![CDATA[Scotonycteris]]></field>
+			<field><![CDATA[Scotophilus]]></field>
+			<field><![CDATA[Scotorepens]]></field>
+			<field><![CDATA[Scotozous]]></field>
+			<field><![CDATA[Scutisorex]]></field>
+			<field><![CDATA[Sekeetamys]]></field>
+			<field><![CDATA[Selenarctos]]></field>
+			<field><![CDATA[Semnopithecus]]></field>
+			<field><![CDATA[Setifer]]></field>
+			<field><![CDATA[Setonix]]></field>
+			<field><![CDATA[Sibbaldius]]></field>
+			<field><![CDATA[Sicista]]></field>
+			<field><![CDATA[Sigmoceros]]></field>
+			<field><![CDATA[Sigmodon]]></field>
+			<field><![CDATA[Sigmodontomys]]></field>
+			<field><![CDATA[Simias]]></field>
+			<field><![CDATA[Sitomys]]></field>
+			<field><![CDATA[Sminthopsis]]></field>
+			<field><![CDATA[Sminthus]]></field>
+			<field><![CDATA[Solenodon]]></field>
+			<field><![CDATA[Solisorex]]></field>
+			<field><![CDATA[Sooretamys]]></field>
+			<field><![CDATA[Sorex]]></field>
+			<field><![CDATA[Soriculus]]></field>
+			<field><![CDATA[Sotalia]]></field>
+			<field><![CDATA[Sotallia [sic]]]></field>
+			<field><![CDATA[Sousa]]></field>
+			<field><![CDATA[Spalacopus]]></field>
+			<field><![CDATA[Spalax]]></field>
+			<field><![CDATA[Speothos]]></field>
+			<field><![CDATA[Spermophilopsis]]></field>
+			<field><![CDATA[Spermophilus]]></field>
+			<field><![CDATA[Sphaerias]]></field>
+			<field><![CDATA[Sphaeronycteris]]></field>
+			<field><![CDATA[Sphiggure]]></field>
+			<field><![CDATA[Sphiggurus]]></field>
+			<field><![CDATA[Spilocuscus]]></field>
+			<field><![CDATA[Spilogale]]></field>
+			<field><![CDATA[Srilankamys]]></field>
+			<field><![CDATA[Steatomys]]></field>
+			<field><![CDATA[Stenella]]></field>
+			<field><![CDATA[Steno]]></field>
+			<field><![CDATA[Stenobalaena]]></field>
+			<field><![CDATA[Stenocephalemys]]></field>
+			<field><![CDATA[Stenodelphis]]></field>
+			<field><![CDATA[Stenoderma]]></field>
+			<field><![CDATA[Stenomys]]></field>
+			<field><![CDATA[Stenopontistes]]></field>
+			<field><![CDATA[Stochomys]]></field>
+			<field><![CDATA[Strepsiceros]]></field>
+			<field><![CDATA[Strigocuscus]]></field>
+			<field><![CDATA[Sturnira]]></field>
+			<field><![CDATA[Sturnirops]]></field>
+			<field><![CDATA[Styloctenium]]></field>
+			<field><![CDATA[Stylodipus]]></field>
+			<field><![CDATA[Suncus]]></field>
+			<field><![CDATA[Sundamys]]></field>
+			<field><![CDATA[Sundasciurus]]></field>
+			<field><![CDATA[Surdisorex]]></field>
+			<field><![CDATA[Suricata]]></field>
+			<field><![CDATA[Sus]]></field>
+			<field><![CDATA[Susu]]></field>
+			<field><![CDATA[Syconycteris]]></field>
+			<field><![CDATA[Sylvicapra]]></field>
+			<field><![CDATA[Sylvilagus]]></field>
+			<field><![CDATA[Sylvisorex]]></field>
+			<field><![CDATA[Symphalangus]]></field>
+			<field><![CDATA[Synaptomys]]></field>
+			<field><![CDATA[Syncerus]]></field>
+			<field><![CDATA[Syndelphinus]]></field>
+			<field><![CDATA[Synocnus]]></field>
+			<field><![CDATA[Syntheosciurus]]></field>
+			<field><![CDATA[Tachyglossus]]></field>
+			<field><![CDATA[Tachynices]]></field>
+			<field><![CDATA[Tachyoryctes]]></field>
+			<field><![CDATA[Tadarida]]></field>
+			<field><![CDATA[Taeromys]]></field>
+			<field><![CDATA[Talpa]]></field>
+			<field><![CDATA[Tamandua]]></field>
+			<field><![CDATA[Tamias]]></field>
+			<field><![CDATA[Tamiasciurus]]></field>
+			<field><![CDATA[Tamiops]]></field>
+			<field><![CDATA[Tana]]></field>
+			<field><![CDATA[Taphonycteris]]></field>
+			<field><![CDATA[Taphozous]]></field>
+			<field><![CDATA[Tapirella]]></field>
+			<field><![CDATA[Tapirus]]></field>
+			<field><![CDATA[Tarsiid]]></field>
+			<field><![CDATA[Tarsipes]]></field>
+			<field><![CDATA[Tarsius]]></field>
+			<field><![CDATA[Tarsomys]]></field>
+			<field><![CDATA[Tasmacetus]]></field>
+			<field><![CDATA[Tatera]]></field>
+			<field><![CDATA[Taterillus]]></field>
+			<field><![CDATA[Tatoua]]></field>
+			<field><![CDATA[Tatu]]></field>
+			<field><![CDATA[Taurotragus]]></field>
+			<field><![CDATA[Taxidea]]></field>
+			<field><![CDATA[Tayassu]]></field>
+			<field><![CDATA[Teanopus]]></field>
+			<field><![CDATA[Tenrec]]></field>
+			<field><![CDATA[Tetracerus]]></field>
+			<field><![CDATA[Thallomys]]></field>
+			<field><![CDATA[Thamnomys]]></field>
+			<field><![CDATA[Thaptomys]]></field>
+			<field><![CDATA[Thecurus]]></field>
+			<field><![CDATA[Theropithecus]]></field>
+			<field><![CDATA[Thomasomys]]></field>
+			<field><![CDATA[Thomomys]]></field>
+			<field><![CDATA[Thoopterus]]></field>
+			<field><![CDATA[Thos]]></field>
+			<field><![CDATA[Thrichomys]]></field>
+			<field><![CDATA[Thryonomys]]></field>
+			<field><![CDATA[Thylacinus]]></field>
+			<field><![CDATA[Thylamys]]></field>
+			<field><![CDATA[Thylogale]]></field>
+			<field><![CDATA[Thyroptera]]></field>
+			<field><![CDATA[Tlacuatzin]]></field>
+			<field><![CDATA[Tokudaia]]></field>
+			<field><![CDATA[Tokudamys]]></field>
+			<field><![CDATA[Tolypeutes]]></field>
+			<field><![CDATA[Tomopeas]]></field>
+			<field><![CDATA[Tonatia]]></field>
+			<field><![CDATA[Trachops]]></field>
+			<field><![CDATA[Trachypithecus]]></field>
+			<field><![CDATA[Tragelaphus]]></field>
+			<field><![CDATA[Tragulus]]></field>
+			<field><![CDATA[Transandinomys]]></field>
+			<field><![CDATA[Tremarctos]]></field>
+			<field><![CDATA[Triaenops]]></field>
+			<field><![CDATA[Trichechus]]></field>
+			<field><![CDATA[Trichosurus]]></field>
+			<field><![CDATA[Trichys]]></field>
+			<field><![CDATA[Trinomys]]></field>
+			<field><![CDATA[Trinycteris]]></field>
+			<field><![CDATA[Trogopterus]]></field>
+			<field><![CDATA[Tryphomys]]></field>
+			<field><![CDATA[Tscherskia]]></field>
+			<field><![CDATA[Tupaia]]></field>
+			<field><![CDATA[Tursio]]></field>
+			<field><![CDATA[Tursiops]]></field>
+			<field><![CDATA[Tylomys]]></field>
+			<field><![CDATA[Tylonycteris]]></field>
+			<field><![CDATA[Typhlomys]]></field>
+			<field><![CDATA[Uncia]]></field>
+			<field><![CDATA[Uranomys]]></field>
+			<field><![CDATA[Urocitellus]]></field>
+			<field><![CDATA[Urocyon]]></field>
+			<field><![CDATA[Uroderma]]></field>
+			<field><![CDATA[Urogale]]></field>
+			<field><![CDATA[Uromys]]></field>
+			<field><![CDATA[Uropsilus]]></field>
+			<field><![CDATA[Urotrichus]]></field>
+			<field><![CDATA[Ursus]]></field>
+			<field><![CDATA[V[espertilio]]]></field>
+			<field><![CDATA[Vampyressa]]></field>
+			<field><![CDATA[Vampyrodes]]></field>
+			<field><![CDATA[Vampyrops]]></field>
+			<field><![CDATA[Vampyrum]]></field>
+			<field><![CDATA[Vampyrus]]></field>
+			<field><![CDATA[Vandeleuria]]></field>
+			<field><![CDATA[Varecia]]></field>
+			<field><![CDATA[Verpertilio]]></field>
+			<field><![CDATA[Vespadelus]]></field>
+			<field><![CDATA[Vespertilio]]></field>
+			<field><![CDATA[Vespertilionid]]></field>
+			<field><![CDATA[Vesperugo]]></field>
+			<field><![CDATA[Vetularctos]]></field>
+			<field><![CDATA[Vicugna]]></field>
+			<field><![CDATA[Viverra]]></field>
+			<field><![CDATA[Viverricula]]></field>
+			<field><![CDATA[Volemys]]></field>
+			<field><![CDATA[Vombatus]]></field>
+			<field><![CDATA[Vormela]]></field>
+			<field><![CDATA[Vulpes]]></field>
+			<field><![CDATA[Vupes]]></field>
+			<field><![CDATA[Wallabia]]></field>
+			<field><![CDATA[Wiedomys]]></field>
+			<field><![CDATA[Xenomys]]></field>
+			<field><![CDATA[Xerospermophilus]]></field>
+			<field><![CDATA[Xerus]]></field>
+			<field><![CDATA[Zaedyus]]></field>
+			<field><![CDATA[Zaglossus]]></field>
+			<field><![CDATA[Zalophus]]></field>
+			<field><![CDATA[Zapus]]></field>
+			<field><![CDATA[Zelotomys]]></field>
+			<field><![CDATA[Ziphiid]]></field>
+			<field><![CDATA[Ziphiorhynchus]]></field>
+			<field><![CDATA[Ziphius]]></field>
+			<field><![CDATA[Zygodontomys]]></field>
+			<field><![CDATA[Zygogeomys]]></field>
+			<field><![CDATA[Zyzomys]]></field>
 		</list>
-		<list alias='identificationQualifier' caseInsensitive='true'>
-			<field>aff.</field>
-			<field>cf.</field>
-			<field>complex</field>
-			<field>group</field>
-			<field>near</field>
-			<field>sp. nov.</field>
-			<field>subgroup</field>
-			<field>uncertain</field>
-			<field>vel aff.</field>
+		<list alias='Sexual Maturity' caseInsensitive='true'>
+			<field><![CDATA[-]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Calf]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[immature (avascular uterus)]]></field>
+			<field><![CDATA[Immature (Ovaries immature)]]></field>
+			<field><![CDATA[immature (uterus immature)]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Lactating]]></field>
+			<field><![CDATA[Lactating? Mature]]></field>
+			<field><![CDATA[Mature]]></field>
+			<field><![CDATA[Mature (dilated)]]></field>
+			<field><![CDATA[Mature (lactating questionable)]]></field>
+			<field><![CDATA[Mature (lactating)]]></field>
+			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
+			<field><![CDATA[Mature (lactating, pregnant)]]></field>
+			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
+			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
+			<field><![CDATA[Mature (pregnant)]]></field>
+			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
+			<field><![CDATA[Mature (pregnant, lactating)]]></field>
+			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididymus]]></field>
+			<field><![CDATA[mature (sperm in epididymuse)]]></field>
+			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
+			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
+			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
+			<field><![CDATA[Mature (uterus dialated)]]></field>
+			<field><![CDATA[Mature (uterus mature)]]></field>
+			<field><![CDATA[Mature (with calf)]]></field>
+			<field><![CDATA[Maturing?]]></field>
+			<field><![CDATA[Need]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Resting]]></field>
+			<field><![CDATA[Stillborn]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown, immature]]></field>
+			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
 		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field>Botany</field>
-			<field>Entomology</field>
-			<field>Invertebrate Zoology</field>
-			<field>Amphibians and Reptiles</field>
-			<field>Birds</field>
-			<field>Fishes</field>
-			<field>Mammals</field>
-			<field>Mineral Sciences</field>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Abdomen]]></field>
+			<field><![CDATA[Aerosol]]></field>
+			<field><![CDATA[Air]]></field>
+			<field><![CDATA[Anterior piece]]></field>
+			<field><![CDATA[Bacteria]]></field>
+			<field><![CDATA[Blood Vessel]]></field>
+			<field><![CDATA[Blubber]]></field>
+			<field><![CDATA[Bone]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Cells]]></field>
+			<field><![CDATA[Cheek Pouch Contents]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Clay]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dried scrapings]]></field>
+			<field><![CDATA[Dust]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Estuarine]]></field>
+			<field><![CDATA[Eye]]></field>
+			<field><![CDATA[Fat]]></field>
+			<field><![CDATA[Feather]]></field>
+			<field><![CDATA[Feces]]></field>
+			<field><![CDATA[Fin-clip]]></field>
+			<field><![CDATA[Foam]]></field>
+			<field><![CDATA[Follicles]]></field>
+			<field><![CDATA[Foot]]></field>
+			<field><![CDATA[Fresh water lentic]]></field>
+			<field><![CDATA[Fresh water lotic]]></field>
+			<field><![CDATA[Fungus mycelium]]></field>
+			<field><![CDATA[Gamete]]></field>
+			<field><![CDATA[Genetalia]]></field>
+			<field><![CDATA[Gill]]></field>
+			<field><![CDATA[Gizzard]]></field>
+			<field><![CDATA[Gonad]]></field>
+			<field><![CDATA[Gut/Viscera]]></field>
+			<field><![CDATA[Hair]]></field>
+			<field><![CDATA[Heart]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Hind piece]]></field>
+			<field><![CDATA[Host-Associated]]></field>
+			<field><![CDATA[Ice]]></field>
+			<field><![CDATA[Intestine]]></field>
+			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Lateral piece]]></field>
+			<field><![CDATA[Leg]]></field>
+			<field><![CDATA[Liver]]></field>
+			<field><![CDATA[Lung]]></field>
+			<field><![CDATA[Lymph]]></field>
+			<field><![CDATA[Marine benthic]]></field>
+			<field><![CDATA[Marine pelagic]]></field>
+			<field><![CDATA[Melon]]></field>
+			<field><![CDATA[Microbial Mat/Biofilm]]></field>
+			<field><![CDATA[Mid-body]]></field>
+			<field><![CDATA[Milk]]></field>
+			<field><![CDATA[Misc/Artificial]]></field>
+			<field><![CDATA[Mixed sample, multiple organisms]]></field>
+			<field><![CDATA[Mixed tissue sample]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Mud]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Oil]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Placenta]]></field>
+			<field><![CDATA[Plant-Associated]]></field>
+			<field><![CDATA[Plasma]]></field>
+			<field><![CDATA[Posterior]]></field>
+			<field><![CDATA[Post-intestine]]></field>
+			<field><![CDATA[Proboscis]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Protoplast]]></field>
+			<field><![CDATA[Red blood cells]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[Rest of body]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Saliva]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Scum]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Serum]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Snow]]></field>
+			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spleen]]></field>
+			<field><![CDATA[Stem cells]]></field>
+			<field><![CDATA[Stomach]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Testes]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Toe]]></field>
+			<field><![CDATA[Unknown blood sample]]></field>
+			<field><![CDATA[Unknown cell sample]]></field>
+			<field><![CDATA[Unknown clone]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown environmental sample]]></field>
+			<field><![CDATA[Unknown excretion/secretion]]></field>
+			<field><![CDATA[Unknown germplasm]]></field>
+			<field><![CDATA[Unknown organ]]></field>
+			<field><![CDATA[Unknown part]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Unknown whole organism]]></field>
+			<field><![CDATA[Ureter]]></field>
+			<field><![CDATA[Urine]]></field>
+			<field><![CDATA[Water]]></field>
+			<field><![CDATA[Whole blood]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
+			<field><![CDATA[Yeast]]></field>
 		</list>
-		<list alias='institutionCode' caseInsensitive='true'>
-			<field>US</field>
-			<field>USNM</field>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[3 mm]]></field>
+			<field><![CDATA[4 mm]]></field>
+			<field><![CDATA[Ancient Bone]]></field>
+			<field><![CDATA[Anterior]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cartilage]]></field>
+			<field><![CDATA[Caudal]]></field>
+			<field><![CDATA[Clip]]></field>
+			<field><![CDATA[Contents]]></field>
+			<field><![CDATA[Dry]]></field>
+			<field><![CDATA[Entire]]></field>
+			<field><![CDATA[Entire eye]]></field>
+			<field><![CDATA[Extracts]]></field>
+			<field><![CDATA[Fresh Bone]]></field>
+			<field><![CDATA[Front]]></field>
+			<field><![CDATA[Hind]]></field>
+			<field><![CDATA[Lens]]></field>
+			<field><![CDATA[Marine benthic other]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Ova/Ovum]]></field>
+			<field><![CDATA[Part]]></field>
+			<field><![CDATA[Pieces, parts, or chunks]]></field>
+			<field><![CDATA[Rear]]></field>
+			<field><![CDATA[Red]]></field>
+			<field><![CDATA[Reef structure]]></field>
+			<field><![CDATA[Retractor]]></field>
+			<field><![CDATA[Sample]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Single]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Skeletal]]></field>
+			<field><![CDATA[Small - Entire]]></field>
+			<field><![CDATA[Small - Tissue]]></field>
+			<field><![CDATA[Sperm]]></field>
+			<field><![CDATA[Surface scraping]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Tendon]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Thorax]]></field>
+			<field><![CDATA[Tip, entire]]></field>
+			<field><![CDATA[Tip, pieces]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Toe pad]]></field>
+			<field><![CDATA[Trunk]]></field>
+			<field><![CDATA[White]]></field>
+			<field><![CDATA[Whole]]></field>
+			<field><![CDATA[With skin]]></field>
+			<field><![CDATA[Wood]]></field>
+			<field><![CDATA[Yolk]]></field>
 		</list>
-		<list alias='continent' caseInsensitive='true'>
-			<field>Africa</field>
-			<field>Antarctica</field>
-			<field>Asia</field>
-			<field>Australia</field>
-			<field>Europe</field>
-			<field>North America</field>
-			<field>Oceania</field>
-			<field>South America</field>
+		<list alias='Zoology Stage' caseInsensitive='true'>
+			<field><![CDATA[Adolescent]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Adult/fetus]]></field>
+			<field><![CDATA[Adult/old]]></field>
+			<field><![CDATA[Adult/subadult]]></field>
+			<field><![CDATA[Adult/young]]></field>
+			<field><![CDATA[Age Class II]]></field>
+			<field><![CDATA[Aged]]></field>
+			<field><![CDATA[Calf]]></field>
+			<field><![CDATA[Colt]]></field>
+			<field><![CDATA[Cub]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Embryo/fetus]]></field>
+			<field><![CDATA[Embryo/neonate]]></field>
+			<field><![CDATA[Embryos]]></field>
+			<field><![CDATA[Embryos/neonate]]></field>
+			<field><![CDATA[Embryos/nestlings]]></field>
+			<field><![CDATA[Fawn]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Fetus/neonate]]></field>
+			<field><![CDATA[Fetuses]]></field>
+			<field><![CDATA[First year]]></field>
+			<field><![CDATA[Gray pup]]></field>
+			<field><![CDATA[Half-grown]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[Immature/adult ?]]></field>
+			<field><![CDATA[Infant]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Juvenile/subadult]]></field>
+			<field><![CDATA[Juveniles]]></field>
+			<field><![CDATA[Kitten]]></field>
+			<field><![CDATA[Lactating]]></field>
+			<field><![CDATA[Late juvenile]]></field>
+			<field><![CDATA[Mammae]]></field>
+			<field><![CDATA[Mature]]></field>
+			<field><![CDATA[Maturing]]></field>
+			<field><![CDATA[Nearly Adult]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Neonate/young]]></field>
+			<field><![CDATA[Neonates]]></field>
+			<field><![CDATA[Nestling]]></field>
+			<field><![CDATA[Nestlings]]></field>
+			<field><![CDATA[Nestlings/juveniles]]></field>
+			<field><![CDATA[Nurseling]]></field>
+			<field><![CDATA[Old adult]]></field>
+			<field><![CDATA[Perinatal]]></field>
+			<field><![CDATA[Pouch young]]></field>
+			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Premature]]></field>
+			<field><![CDATA[Pup]]></field>
+			<field><![CDATA[Puppy]]></field>
+			<field><![CDATA[Stillborn]]></field>
+			<field><![CDATA[Stillborn twin]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Suckling]]></field>
+			<field><![CDATA[Yearling]]></field>
+			<field><![CDATA[Young]]></field>
+			<field><![CDATA[Young adult]]></field>
+			<field><![CDATA[Young juvenile]]></field>
+			<field><![CDATA[Young of the year]]></field>
 		</list>
-		<list alias='ocean' caseInsensitive='true'>
-			<field>Antarctic Ocean</field>
-			<field>Arctic Ocean</field>
-			<field>Indian Ocean</field>
-			<field>North Atlantic Ocean</field>
-			<field>North Pacific Ocean</field>
-			<field>South Atlantic Ocean</field>
-			<field>South Pacific Ocean</field>
-		</list>
-		<list alias='lengthUnits' caseInsensitive='true'>
-			<field>cm</field>
-			<field>m</field>
-			<field>mm</field>
-			<field>µm</field>
-			<field>in</field>
-			<field>ft</field>
-		</list>
-		<list alias='measurementUnit' caseInsensitive='true'>
-			<field>cm</field>
-			<field>ft</field>
-			<field>g</field>
-			<field>in</field>
-			<field>ins</field>
-			<field>kg</field>
-			<field>lb</field>
-			<field>lbs</field>
-			<field>mm</field>
-			<field>oz</field>
-			<field>ct</field>
-		</list>
-		<list alias='basisOfRecord' caseInsensitive='true'>
-			<field>Bulky Specimen</field>
-			<field>Genetic Sample</field>
-			<field>Liquid Preserved</field>
-			<field>Lot</field>
-			<field>Packet</field>
-			<field>Seed</field>
-			<field>Specimen</field>
-			<field>Specimen/Lot</field>
-			<field>Rhizome</field>
-			<field>Unmounted material</field>
-			<field>Wood specimen</field>
-		</list>
-		<list alias='establishmentMeans' caseInsensitive='true'>
-			<field>cultivated</field>
-			<field>escaped</field>
-			<field>introduced</field>
-			<field>invasive</field>
-			<field>managed</field>
-			<field>native</field>
-			<field>naturalised</field>
-			<field>uncertain</field>
-			<field>waif</field>
-			<field>wild</field>
-		</list>
-		<list alias='exudate' caseInsensitive='true'>
-			<field>(NULL)</field>
-			<field>Clear</field>
-			<field>Cream</field>
-			<field>Orangish</field>
-			<field>Reddish</field>
-			<field>White</field>
-			<field>Yellow</field>
-		</list>
-		<list alias='habit' caseInsensitive='true'>
-			<field>Aquatic herb</field>
-			<field>Cespitose herb</field>
-			<field>Decumbent herb</field>
-			<field>Epilithic</field>
-			<field>Epiphyte</field>
-			<field>Erect herb</field>
-			<field>Floating herb</field>
-			<field>Hemiparasite</field>
-			<field>Herbaceous vine</field>
-			<field>Liana</field>
-			<field>Palm</field>
-			<field>Palm-like fern</field>
-			<field>Parasite</field>
-			<field>Scandent shrub</field>
-			<field>Shrub</field>
-			<field>Trailing herb</field>
-			<field>Trailing vine</field>
-			<field>Tree</field>
-			<field>Treelet</field>
-		</list>
-		<list alias='hybridRank' caseInsensitive='true'>
-			<field>Genus</field>
-			<field>Species</field>
-		</list>
-		<list alias='taxonRank' caseInsensitive='true'>
-			<field>aberration</field>
-			<field>forma</field>
-			<field>morpha</field>
-			<field>race</field>
-			<field>subforma</field>
-			<field>subvariety</field>
-			<field>variety</field>
-		</list>
-		<list alias='sampleQuality' caseInsensitive='true'>
-			<field>High</field>
-			<field>Medium</field>
-			<field>Low</field>
-		</list>
-		<list alias='sex' caseInsensitive='true'>
-			<field>Male</field>
-			<field>Female</field>
-			<field>Unknown</field>
-			<field>Worker</field>
-		</list>
-		<list alias='geodeticDatum' caseInsensitive='true'>
-			<field>NAD27</field>
-			<field>NAD83</field>
-			<field>WGS84</field>
+		<list alias='country' caseInsensitive='true'>
+			<field><![CDATA[*]]></field>
+			<field><![CDATA[Afghanistan]]></field>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Albania]]></field>
+			<field><![CDATA[Algeria]]></field>
+			<field><![CDATA[American Samoa]]></field>
+			<field><![CDATA[Andaman and Nicobar Is]]></field>
+			<field><![CDATA[Angola]]></field>
+			<field><![CDATA[Anguilla]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Antigua and Barbuda]]></field>
+			<field><![CDATA[Argentina]]></field>
+			<field><![CDATA[Argentina / Uruguay]]></field>
+			<field><![CDATA[Ascension Island]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Australia ?]]></field>
+			<field><![CDATA[Austria]]></field>
+			<field><![CDATA[Azerbaijan]]></field>
+			<field><![CDATA[Azores]]></field>
+			<field><![CDATA[Bahamas]]></field>
+			<field><![CDATA[Bahrain]]></field>
+			<field><![CDATA[Baker Island]]></field>
+			<field><![CDATA[Baltic Sea Coast]]></field>
+			<field><![CDATA[Bangladesh]]></field>
+			<field><![CDATA[Barbados]]></field>
+			<field><![CDATA[Belarus]]></field>
+			<field><![CDATA[Belau]]></field>
+			<field><![CDATA[Belgium]]></field>
+			<field><![CDATA[Belize]]></field>
+			<field><![CDATA[Benin]]></field>
+			<field><![CDATA[Bermuda]]></field>
+			<field><![CDATA[Bhutan]]></field>
+			<field><![CDATA[Bolivia]]></field>
+			<field><![CDATA[Borneo]]></field>
+			<field><![CDATA[Bosnia and Herzegovina]]></field>
+			<field><![CDATA[Botswana]]></field>
+			<field><![CDATA[Brazil]]></field>
+			<field><![CDATA[British Virgin Islands]]></field>
+			<field><![CDATA[Brunei]]></field>
+			<field><![CDATA[Burkina Faso]]></field>
+			<field><![CDATA[Burundi]]></field>
+			<field><![CDATA[Cambodia]]></field>
+			<field><![CDATA[Cameroon]]></field>
+			<field><![CDATA[Canada]]></field>
+			<field><![CDATA[Canary Islands]]></field>
+			<field><![CDATA[Cape Verde]]></field>
+			<field><![CDATA[Caroline Islands]]></field>
+			<field><![CDATA[Cayman Islands]]></field>
+			<field><![CDATA[Central African Republic]]></field>
+			<field><![CDATA[Central America]]></field>
+			<field><![CDATA[Chad]]></field>
+			<field><![CDATA[Chagos Archipelago]]></field>
+			<field><![CDATA[Chile]]></field>
+			<field><![CDATA[China]]></field>
+			<field><![CDATA[Christmas Island]]></field>
+			<field><![CDATA[Clipperton Island]]></field>
+			<field><![CDATA[Cocos Island]]></field>
+			<field><![CDATA[Colombia]]></field>
+			<field><![CDATA[Comoros]]></field>
+			<field><![CDATA[Congo]]></field>
+			<field><![CDATA[Congo, Democratic Rep. Of]]></field>
+			<field><![CDATA[Cook Islands]]></field>
+			<field><![CDATA[Costa Rica]]></field>
+			<field><![CDATA[Cote d'Ivoire]]></field>
+			<field><![CDATA[Croatia]]></field>
+			<field><![CDATA[Crozet Islands]]></field>
+			<field><![CDATA[Cuba]]></field>
+			<field><![CDATA[Cyprus]]></field>
+			<field><![CDATA[Czech Republic]]></field>
+			<field><![CDATA[Denmark]]></field>
+			<field><![CDATA[Djibouti]]></field>
+			<field><![CDATA[Dominica]]></field>
+			<field><![CDATA[Dominican Republic]]></field>
+			<field><![CDATA[East Africa]]></field>
+			<field><![CDATA[Easter Island]]></field>
+			<field><![CDATA[Ecuador]]></field>
+			<field><![CDATA[Egypt]]></field>
+			<field><![CDATA[El Salvador]]></field>
+			<field><![CDATA[Equatorial Guinea]]></field>
+			<field><![CDATA[Eritrea]]></field>
+			<field><![CDATA[Ethiopia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[Falkland Islands]]></field>
+			<field><![CDATA[Faroe Islands]]></field>
+			<field><![CDATA[Fiji]]></field>
+			<field><![CDATA[Finland]]></field>
+			<field><![CDATA[France]]></field>
+			<field><![CDATA[France / Spain]]></field>
+			<field><![CDATA[French Guiana]]></field>
+			<field><![CDATA[French Polynesia]]></field>
+			<field><![CDATA[French West Indies]]></field>
+			<field><![CDATA[Gabon]]></field>
+			<field><![CDATA[Galapagos Islands]]></field>
+			<field><![CDATA[Gambia]]></field>
+			<field><![CDATA[Georgia]]></field>
+			<field><![CDATA[Germany]]></field>
+			<field><![CDATA[Ghana]]></field>
+			<field><![CDATA[Gibraltar]]></field>
+			<field><![CDATA[Gilbert Islands]]></field>
+			<field><![CDATA[Glorioso Island]]></field>
+			<field><![CDATA[Greece]]></field>
+			<field><![CDATA[Greenland]]></field>
+			<field><![CDATA[Grenada]]></field>
+			<field><![CDATA[Guadeloupe]]></field>
+			<field><![CDATA[Guam]]></field>
+			<field><![CDATA[Guatemala]]></field>
+			<field><![CDATA[Guinea]]></field>
+			<field><![CDATA[Guinea-Bissau]]></field>
+			<field><![CDATA[Guyana]]></field>
+			<field><![CDATA[Haiti]]></field>
+			<field><![CDATA[Hawaiian Islands]]></field>
+			<field><![CDATA[Heard Island]]></field>
+			<field><![CDATA[Honduras]]></field>
+			<field><![CDATA[Hong Kong]]></field>
+			<field><![CDATA[Howland Island]]></field>
+			<field><![CDATA[Hungary]]></field>
+			<field><![CDATA[Iceland]]></field>
+			<field><![CDATA[India]]></field>
+			<field><![CDATA[India ?]]></field>
+			<field><![CDATA[Indonesia]]></field>
+			<field><![CDATA[Iran]]></field>
+			<field><![CDATA[Iraq]]></field>
+			<field><![CDATA[Ireland]]></field>
+			<field><![CDATA[Israel]]></field>
+			<field><![CDATA[Italy]]></field>
+			<field><![CDATA[Jamaica]]></field>
+			<field><![CDATA[Jan Mayen]]></field>
+			<field><![CDATA[Japan]]></field>
+			<field><![CDATA[Jarvis Island]]></field>
+			<field><![CDATA[Johnston Atoll]]></field>
+			<field><![CDATA[Jordan]]></field>
+			<field><![CDATA[Juan Fernandez Islands]]></field>
+			<field><![CDATA[Kazakhstan]]></field>
+			<field><![CDATA[Kenya]]></field>
+			<field><![CDATA[Kerguelen Islands]]></field>
+			<field><![CDATA[Korea]]></field>
+			<field><![CDATA[Kuwait]]></field>
+			<field><![CDATA[Kyrgyzstan]]></field>
+			<field><![CDATA[Laos]]></field>
+			<field><![CDATA[Lapland]]></field>
+			<field><![CDATA[Latvia]]></field>
+			<field><![CDATA[Lebanon]]></field>
+			<field><![CDATA[Lesotho]]></field>
+			<field><![CDATA[Lesser Antilles]]></field>
+			<field><![CDATA[Liberia]]></field>
+			<field><![CDATA[Libya]]></field>
+			<field><![CDATA[Line Islands]]></field>
+			<field><![CDATA[Lithuania]]></field>
+			<field><![CDATA[Locality Unknown]]></field>
+			<field><![CDATA[Macedonia]]></field>
+			<field><![CDATA[Macquarie Island]]></field>
+			<field><![CDATA[Madagascar]]></field>
+			<field><![CDATA[Madeira]]></field>
+			<field><![CDATA[Malawi]]></field>
+			<field><![CDATA[Malaysia]]></field>
+			<field><![CDATA[Maldives]]></field>
+			<field><![CDATA[Mali]]></field>
+			<field><![CDATA[Malta]]></field>
+			<field><![CDATA[Mariana Islands]]></field>
+			<field><![CDATA[Marquesas Islands]]></field>
+			<field><![CDATA[Marshall Islands]]></field>
+			<field><![CDATA[Martinique]]></field>
+			<field><![CDATA[Mauritania]]></field>
+			<field><![CDATA[Mauritius]]></field>
+			<field><![CDATA[Mexican Boundary Line]]></field>
+			<field><![CDATA[Mexico]]></field>
+			<field><![CDATA[Midway Islands]]></field>
+			<field><![CDATA[Monaco]]></field>
+			<field><![CDATA[Mongolia]]></field>
+			<field><![CDATA[Montserrat]]></field>
+			<field><![CDATA[Morocco]]></field>
+			<field><![CDATA[Mozambique]]></field>
+			<field><![CDATA[Myanmar]]></field>
+			<field><![CDATA[Namibia]]></field>
+			<field><![CDATA[Nepal]]></field>
+			<field><![CDATA[Netherlands]]></field>
+			<field><![CDATA[Netherlands Antilles]]></field>
+			<field><![CDATA[New Caledonia]]></field>
+			<field><![CDATA[New Guinea]]></field>
+			<field><![CDATA[New Zealand]]></field>
+			<field><![CDATA[New Zealand ?]]></field>
+			<field><![CDATA[Nicaragua]]></field>
+			<field><![CDATA[Niger]]></field>
+			<field><![CDATA[Nigeria]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[Norway]]></field>
+			<field><![CDATA[Oman]]></field>
+			<field><![CDATA[Pakistan]]></field>
+			<field><![CDATA[Palestine]]></field>
+			<field><![CDATA[Panama]]></field>
+			<field><![CDATA[Papua New Guinea]]></field>
+			<field><![CDATA[Paraguay]]></field>
+			<field><![CDATA[Peru]]></field>
+			<field><![CDATA[Philippines]]></field>
+			<field><![CDATA[Phoenix Islands]]></field>
+			<field><![CDATA[Poland]]></field>
+			<field><![CDATA[Poland ?]]></field>
+			<field><![CDATA[Portugal]]></field>
+			<field><![CDATA[Puerto Rico]]></field>
+			<field><![CDATA[Qatar]]></field>
+			<field><![CDATA[Republic of Vanuatu]]></field>
+			<field><![CDATA[Revillagigedo Islands]]></field>
+			<field><![CDATA[Romania]]></field>
+			<field><![CDATA[Russia]]></field>
+			<field><![CDATA[Russia ?]]></field>
+			<field><![CDATA[Rwanda]]></field>
+			<field><![CDATA[Saint Barthelemy]]></field>
+			<field><![CDATA[Saint Helena]]></field>
+			<field><![CDATA[Saint Kitts and Nevis]]></field>
+			<field><![CDATA[Saint Lucia]]></field>
+			<field><![CDATA[Saint Pierre and Miquelon]]></field>
+			<field><![CDATA[Saint Vincent and the Grenadines]]></field>
+			<field><![CDATA[Samoa Islands]]></field>
+			<field><![CDATA[Sao Tome and Principe]]></field>
+			<field><![CDATA[Saudi Arabia]]></field>
+			<field><![CDATA[Senegal]]></field>
+			<field><![CDATA[Senegambia]]></field>
+			<field><![CDATA[Seychelles]]></field>
+			<field><![CDATA[Sierra Leone]]></field>
+			<field><![CDATA[Singapore]]></field>
+			<field><![CDATA[Slovakia]]></field>
+			<field><![CDATA[Slovenia]]></field>
+			<field><![CDATA[Society Islands]]></field>
+			<field><![CDATA[Solomon Islands]]></field>
+			<field><![CDATA[Somalia]]></field>
+			<field><![CDATA[South Africa]]></field>
+			<field><![CDATA[South America]]></field>
+			<field><![CDATA[South Georgia]]></field>
+			<field><![CDATA[South Georgia Island]]></field>
+			<field><![CDATA[South Orkney Islands]]></field>
+			<field><![CDATA[South Sandwich Islands]]></field>
+			<field><![CDATA[South Shetland Islands]]></field>
+			<field><![CDATA[South Sudan]]></field>
+			<field><![CDATA[Spain]]></field>
+			<field><![CDATA[Sri Lanka]]></field>
+			<field><![CDATA[Sudan]]></field>
+			<field><![CDATA[Suriname]]></field>
+			<field><![CDATA[Svalbard]]></field>
+			<field><![CDATA[Swan Islands]]></field>
+			<field><![CDATA[Sweden]]></field>
+			<field><![CDATA[Switzerland]]></field>
+			<field><![CDATA[Syria]]></field>
+			<field><![CDATA[Taiwan]]></field>
+			<field><![CDATA[Tanzania]]></field>
+			<field><![CDATA[Tanzania / Kenya]]></field>
+			<field><![CDATA[Thailand]]></field>
+			<field><![CDATA[Togo]]></field>
+			<field><![CDATA[Tokelau]]></field>
+			<field><![CDATA[Tonga]]></field>
+			<field><![CDATA[Trinidad and Tobago]]></field>
+			<field><![CDATA[Tristan da Cunha]]></field>
+			<field><![CDATA[Tuamotu Archipelago]]></field>
+			<field><![CDATA[Tunisia]]></field>
+			<field><![CDATA[Turkey]]></field>
+			<field><![CDATA[Turkmenistan]]></field>
+			<field><![CDATA[Turks and Caicos Islands]]></field>
+			<field><![CDATA[Uganda]]></field>
+			<field><![CDATA[Ukraine]]></field>
+			<field><![CDATA[United Arab Emirates]]></field>
+			<field><![CDATA[United Kingdom]]></field>
+			<field><![CDATA[United States]]></field>
+			<field><![CDATA[unknown]]></field>
+			<field><![CDATA[Uruguay]]></field>
+			<field><![CDATA[USA]]></field>
+			<field><![CDATA[USSR]]></field>
+			<field><![CDATA[Uzbekistan]]></field>
+			<field><![CDATA[Vanuatu]]></field>
+			<field><![CDATA[Venezuela]]></field>
+			<field><![CDATA[Vietnam]]></field>
+			<field><![CDATA[Virgin Islands]]></field>
+			<field><![CDATA[Virgin Islands (U.S.)]]></field>
+			<field><![CDATA[Wake Islands]]></field>
+			<field><![CDATA[West Africa]]></field>
+			<field><![CDATA[West Indies]]></field>
+			<field><![CDATA[Western Sahara]]></field>
+			<field><![CDATA[Western Samoa]]></field>
+			<field><![CDATA[Yemen]]></field>
+			<field><![CDATA[Yugoslavia]]></field>
+			<field><![CDATA[Yugoslavia ?]]></field>
+			<field><![CDATA[Zambia]]></field>
+			<field><![CDATA[Zambia ?]]></field>
+			<field><![CDATA[Zimbabwe]]></field>
 		</list>
 	</lists>
 </validation>

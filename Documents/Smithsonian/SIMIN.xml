@@ -30,7 +30,7 @@ Biocode specimen: 1 = photo in CalPhotos<p><b>Synonyms:</b><p>"associatedMedia" 
 BOLD: A list (concatenated and comma separated) of other specimens associated with the subject specimen at the time of its collection. References to other specimen identifiers should be preceded by the relationship. Examples: "host: PLANT23452, prey: USNM45677" when both prey and host specimens have been captured.<p><b>Synonyms:</b><p>"associatedOccurrences" = DwC,<br />"DarRelatedCatalogItem" = EMuDwC,<br />"Associated Specimens" = Fishes,<br />"Associated Specimens" = LAB Field Collection Spreadsheet,<br />"Associated Specimens" = BOLD,<br />"RelatedCatalogItem" = Biocode Backend.specimen,]]></attribute>
 		<attribute column='Associated Taxa' uri='urn:associatedTaxa' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#associatedTaxa'><![CDATA[DwC: A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence. Example: "host: Quercus alba". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/associatedTaxa
 
-BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,]]></attribute>
+BOLD: A list (concatenated and comma separated) of other specimens associated with the taxon at the time of its collection. References to other taxa should be preceded by the relationship. Use of this field implies knowledge of an associated specimen where the identification is an inference. Use of the associated Specimen (below) field is preferred when the associated specimen is databased. Examples: "host: Quercus alba", "prey: caterpillar"<p><b>Synonyms:</b><p>"associatedTaxa" = DwC,<br />"associatedTaxa" = IndoPacific Template v7,<br />"Associated Taxa" =  LAB Field Collection Spreadsheet, <br />"Associated Taxa" = Fishes,<br />"Associated_Taxon" = Biocode.specimen,<br />"Associated Taxa" = BOLD,<br />"Host" = Biocode,]]></attribute>
 		<attribute column='Relationship of resource' uri='urn:relationshipOfResource' group='Associations' defined_by='http://rs.tdwg.org/dwc/terms/#relationshipOfResource'><![CDATA[DwC: The relationship of the resource identified by relatedResourceID to the subject (optionally identified by the resourceID). Recommended best practice is to use a controlled vocabulary. Examples: "duplicate of", "mother of", "endoparasite of", "host to", "sibling of", "valid synonym of", "located within". For discussion see http://code.google.com/p/darwincore/wiki/ResourceRelationship http://rs.tdwg.org/dwc/terms/relationshipOfResource.
 
 ABCDDNA: the Relation between the DNA and the voucher (e.g. "DNA and voucher from same individual").
@@ -83,7 +83,7 @@ BOLD: For organisms collected beneath the surface of a water body. Measured in m
 		<attribute column='Elevation From (m)' uri='urn:minimumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#minimumElevationInMeters'><![CDATA[DwC: The lower limit of the range of elevation (altitude, usually above sea level), in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumElevationInMeters.
 
 BOLD: Elevation of sampling site. Measured in meters relative to sea level. Negative values indicate a position below sea level.<p><b>Synonyms:</b><p>"minimumElevationInMeters" = DwC,<br />"DarMinimumElevationInMeters" = EMuDwC,<br />"MinElevationMeters" = Biocode Backend,<br />"MinElevationMeters" = Biocode Batch,<br />"elevation" = Botany - Acevedo,<br />"Elevation" = BOLD,<br />"elevation" = MIxS,<br />"Elevation(m)" - Entomology - Sean Brady,<br />"specimen_ElevationMeters" = Biocode.specimen,<br />"Elevation meters" = Entomology - Ted Schultz,<br />"Elevation meters Calc" = Entomology - Ted Schultz,<br />"ELEV1" = Kress Coll. tblKresFile (if ELEV_UNIT= m),<br />"Gathering/Altitude/LowerValue" = ABCDDNA,<br />"altitude" = MIxS,]]></attribute>
-		<attribute column='Text depth' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
+		<attribute column='Depth Text' uri='urn:verbatimDepth' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimDepth'><![CDATA[DwC: The original description of the depth below the local surface. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimDepth<p><b>Synonyms:</b><p>"verbatimDepth" = DwC,<br />"DarVerbatimDepth" = EMuDwC,]]></attribute>
 		<attribute column='Elevation Text' uri='urn:verbatimElevation' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimElevation'><![CDATA[DwC: The original description of the elevation (altitude, usually above sea level) of the Location. Example: "100-200 m". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimElevation<p><b>Synonyms:</b><p>"verbatimElevation" = DwC,<br />"DarVerbatimElevation" = EMuDwC,<br />"Elev Lat Long Label Text" = Entomology - Ted Schultz (in part),]]></attribute>
 		<attribute column='Extraction Date' uri='urn:extractionDate' group='DNA' defined_by='urn:extractionDate'><![CDATA[ABCDDNA: date of DNA extraction
 
@@ -219,6 +219,12 @@ IndoPacific: The state or province where the sample was found.<p><b>Synonyms:</b
 		<attribute column='Measurement 1 Value' uri='urn:measurement1Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
 
 MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
+		<attribute column='Measurement 5 of' uri='urn:measurement5Of' group='Measurements' defined_by='urn: measurementOf'><![CDATA[]]></attribute>
+		<attribute column='Measurement 5 Type' uri='urn:measurement5Type' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementType'><![CDATA[DwC: The nature of the measurement, fact, characteristic, or assertion. Recommended best practice is to use a controlled vocabulary. Examples: "tail length", "temperature", "trap line length", "survey area", "trap type". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementTypehttp://rs.tdwg.org/dwc/terms/MeasurementOrFact<p><b>Synonyms:</b><p>"measurementType" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Unit' uri='urn:measurement5Unit' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementUnit'><![CDATA[DwC: The units associated with the measurementValue. Recommended best practice is to use the International System of Units (SI). Examples: "mm", "C", "km", "ha". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementUnit<p><b>Synonyms:</b><p>"measurementUnit" = DwC,]]></attribute>
+		<attribute column='Measurement 5 Value' uri='urn:measurement5Value' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementValue'><![CDATA[DwC: The value of the measurement, fact, characteristic, or assertion. Examples: "45", "20", "1", "14.5", "UV-light". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementValue
+
+MIxS: any other measurement performed or parameter collected, that is not listed here.should be given in the form of measurement name/parameter name=value and unit; can include multiple measurements or parameters<p><b>Synonyms:</b><p>"measurementValue" = DwC,<br />"miscellaneous parameter" = MIxS,]]></attribute>
 		<attribute column='Measured by' uri='urn:measurementDeterminedBy' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementDeterminedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who determined the value of the MeasurementOrFact. Example: "Javier de la Torre", "Julie Woodruff; Eileen Lacey". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementDeterminedBy<p><b>Synonyms:</b><p>"measurementDeterminedBy" = DwC,]]></attribute>
 		<attribute column='Measurement Date' uri='urn:measurementDeterminedDate' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementDeterminedDate'><![CDATA[DwC: The date on which the MeasurementOrFact was made. Recommended best practice is to use an encoding scheme, such as ISO 8601:2004(E). Examples: "1963-03-08T14:07-0600" is 8 Mar 1963 2:07pm in the time zone six hours earlier than UTC, "2009-02-20T08:40Z" is 20 Feb 2009 8:40am UTC, "1809-02-12" is 12 Feb 1809, "1906-06" is Jun 1906, "1971" is just that year, "2007-03-01T13:00:00Z/ http://rs.tdwg.org/dwc/terms/measurementDeterminedDate<p><b>Synonyms:</b><p>"measurementDeterminedDate" = DwC,]]></attribute>
 		<attribute column='Measurement Remarks' uri='urn:measurementRemarks' group='Measurements' defined_by='http://rs.tdwg.org/dwc/terms/#measurementRemarks'><![CDATA[DwC: Comments or notes accompanying the MeasurementOrFact. Example: "tip of tail missing". For discussion see http://code.google.com/p/darwincore/wiki/MeasurementOrFact http://rs.tdwg.org/dwc/terms/measurementRemarks<p><b>Synonyms:</b><p>"measurementRemarks" = DwC,]]></attribute>
@@ -323,6 +329,14 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Biorepository ID</field>
 		</rule>
 		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 2' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 3' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 4' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 5' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 6' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 7' list='collector' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
@@ -347,6 +361,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Mean annual rainfall mm' level='error' value='%3E%3D0'></rule>
 		<rule type='isNumber' column='Mean annual temperature celsius' level='error'></rule>
 		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
 		<rule type='validateNumeric' column='Alkalinity' level='error' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Ammonium' level='error' value='%3E%3D0'></rule>
@@ -363,6 +378,8 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Dissolved organic nitrogen' level='error' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Dissolved oxygen' level='error' value='%3E%3D0'></rule>
 		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='checkInXMLFields' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
 		<rule type='validateNumeric' column='Nitrate' level='error' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Nitrite' level='error' value='%3E%3D0'></rule>
@@ -387,182 +404,599 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Water content soil' level='error' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
 		<rule type='checkInXMLFields' column='Weight unit' list='weightUnit' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='preparation[DepartmentName]' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='basisOfRecord' level='error'></rule>
+		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='checkInXMLFields' column='Kind of Object' list='Object Type' level='error'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
-		<rule type='uniqueValue' column='biorepository ID' level='error'></rule>
+		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
 	</worksheet>
 	<lists>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field>Yes</field>
-			<field>No</field>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Blood]]></field>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
 		</list>
-		<list alias='elevDepthModifier' caseInsensitive='true'>
-			<field>ca.</field>
-			<field>greater than</field>
-			<field>less than</field>
-			<field>±</field>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
 		</list>
-		<list alias='latitudeNorthSouth' caseInsensitive='true'>
-			<field>N</field>
-			<field>S</field>
+		<list alias='Sexual Maturity' caseInsensitive='true'>
+			<field><![CDATA[-]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Calf]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[immature (avascular uterus)]]></field>
+			<field><![CDATA[Immature (Ovaries immature)]]></field>
+			<field><![CDATA[immature (uterus immature)]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Lactating]]></field>
+			<field><![CDATA[Lactating? Mature]]></field>
+			<field><![CDATA[Mature]]></field>
+			<field><![CDATA[Mature (dilated)]]></field>
+			<field><![CDATA[Mature (lactating questionable)]]></field>
+			<field><![CDATA[Mature (lactating)]]></field>
+			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
+			<field><![CDATA[Mature (lactating, pregnant)]]></field>
+			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
+			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
+			<field><![CDATA[Mature (pregnant)]]></field>
+			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
+			<field><![CDATA[Mature (pregnant, lactating)]]></field>
+			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epididymus]]></field>
+			<field><![CDATA[mature (sperm in epididymuse)]]></field>
+			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
+			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
+			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
+			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
+			<field><![CDATA[Mature (uterus dialated)]]></field>
+			<field><![CDATA[Mature (uterus mature)]]></field>
+			<field><![CDATA[Mature (with calf)]]></field>
+			<field><![CDATA[Maturing?]]></field>
+			<field><![CDATA[Need]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Resting]]></field>
+			<field><![CDATA[Stillborn]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown, immature]]></field>
+			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
 		</list>
-		<list alias='longitudeEastWest' caseInsensitive='true'>
-			<field>E</field>
-			<field>W</field>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Abdomen]]></field>
+			<field><![CDATA[Aerosol]]></field>
+			<field><![CDATA[Air]]></field>
+			<field><![CDATA[Anterior piece]]></field>
+			<field><![CDATA[Bacteria]]></field>
+			<field><![CDATA[Blood Vessel]]></field>
+			<field><![CDATA[Blubber]]></field>
+			<field><![CDATA[Bone]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Cells]]></field>
+			<field><![CDATA[Cheek Pouch Contents]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Clay]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dried scrapings]]></field>
+			<field><![CDATA[Dust]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Estuarine]]></field>
+			<field><![CDATA[Eye]]></field>
+			<field><![CDATA[Fat]]></field>
+			<field><![CDATA[Feather]]></field>
+			<field><![CDATA[Feces]]></field>
+			<field><![CDATA[Fin-clip]]></field>
+			<field><![CDATA[Foam]]></field>
+			<field><![CDATA[Follicles]]></field>
+			<field><![CDATA[Foot]]></field>
+			<field><![CDATA[Fresh water lentic]]></field>
+			<field><![CDATA[Fresh water lotic]]></field>
+			<field><![CDATA[Fungus mycelium]]></field>
+			<field><![CDATA[Gamete]]></field>
+			<field><![CDATA[Genetalia]]></field>
+			<field><![CDATA[Gill]]></field>
+			<field><![CDATA[Gizzard]]></field>
+			<field><![CDATA[Gonad]]></field>
+			<field><![CDATA[Gut/Viscera]]></field>
+			<field><![CDATA[Hair]]></field>
+			<field><![CDATA[Heart]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Hind piece]]></field>
+			<field><![CDATA[Host-Associated]]></field>
+			<field><![CDATA[Ice]]></field>
+			<field><![CDATA[Intestine]]></field>
+			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Lateral piece]]></field>
+			<field><![CDATA[Leg]]></field>
+			<field><![CDATA[Liver]]></field>
+			<field><![CDATA[Lung]]></field>
+			<field><![CDATA[Lymph]]></field>
+			<field><![CDATA[Marine benthic]]></field>
+			<field><![CDATA[Marine pelagic]]></field>
+			<field><![CDATA[Melon]]></field>
+			<field><![CDATA[Microbial Mat/Biofilm]]></field>
+			<field><![CDATA[Mid-body]]></field>
+			<field><![CDATA[Milk]]></field>
+			<field><![CDATA[Misc/Artificial]]></field>
+			<field><![CDATA[Mixed sample, multiple organisms]]></field>
+			<field><![CDATA[Mixed tissue sample]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Mud]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Oil]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Placenta]]></field>
+			<field><![CDATA[Plant-Associated]]></field>
+			<field><![CDATA[Plasma]]></field>
+			<field><![CDATA[Posterior]]></field>
+			<field><![CDATA[Post-intestine]]></field>
+			<field><![CDATA[Proboscis]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Protoplast]]></field>
+			<field><![CDATA[Red blood cells]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[Rest of body]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Saliva]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Scum]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Serum]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Snow]]></field>
+			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spleen]]></field>
+			<field><![CDATA[Stem cells]]></field>
+			<field><![CDATA[Stomach]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Testes]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Toe]]></field>
+			<field><![CDATA[Unknown blood sample]]></field>
+			<field><![CDATA[Unknown cell sample]]></field>
+			<field><![CDATA[Unknown clone]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown environmental sample]]></field>
+			<field><![CDATA[Unknown excretion/secretion]]></field>
+			<field><![CDATA[Unknown germplasm]]></field>
+			<field><![CDATA[Unknown organ]]></field>
+			<field><![CDATA[Unknown part]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Unknown whole organism]]></field>
+			<field><![CDATA[Ureter]]></field>
+			<field><![CDATA[Urine]]></field>
+			<field><![CDATA[Water]]></field>
+			<field><![CDATA[Whole blood]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
+			<field><![CDATA[Yeast]]></field>
 		</list>
-		<list alias='identificationQualifier' caseInsensitive='true'>
-			<field>aff.</field>
-			<field>cf.</field>
-			<field>complex</field>
-			<field>group</field>
-			<field>near</field>
-			<field>sp. nov.</field>
-			<field>subgroup</field>
-			<field>uncertain</field>
-			<field>vel aff.</field>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[3 mm]]></field>
+			<field><![CDATA[4 mm]]></field>
+			<field><![CDATA[Ancient Bone]]></field>
+			<field><![CDATA[Anterior]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cartilage]]></field>
+			<field><![CDATA[Caudal]]></field>
+			<field><![CDATA[Clip]]></field>
+			<field><![CDATA[Contents]]></field>
+			<field><![CDATA[Dry]]></field>
+			<field><![CDATA[Entire]]></field>
+			<field><![CDATA[Entire eye]]></field>
+			<field><![CDATA[Extracts]]></field>
+			<field><![CDATA[Fresh Bone]]></field>
+			<field><![CDATA[Front]]></field>
+			<field><![CDATA[Hind]]></field>
+			<field><![CDATA[Lens]]></field>
+			<field><![CDATA[Marine benthic other]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Ova/Ovum]]></field>
+			<field><![CDATA[Part]]></field>
+			<field><![CDATA[Pieces, parts, or chunks]]></field>
+			<field><![CDATA[Rear]]></field>
+			<field><![CDATA[Red]]></field>
+			<field><![CDATA[Reef structure]]></field>
+			<field><![CDATA[Retractor]]></field>
+			<field><![CDATA[Sample]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Single]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Skeletal]]></field>
+			<field><![CDATA[Small - Entire]]></field>
+			<field><![CDATA[Small - Tissue]]></field>
+			<field><![CDATA[Sperm]]></field>
+			<field><![CDATA[Surface scraping]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Tendon]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Thorax]]></field>
+			<field><![CDATA[Tip, entire]]></field>
+			<field><![CDATA[Tip, pieces]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Toe pad]]></field>
+			<field><![CDATA[Trunk]]></field>
+			<field><![CDATA[White]]></field>
+			<field><![CDATA[Whole]]></field>
+			<field><![CDATA[With skin]]></field>
+			<field><![CDATA[Wood]]></field>
+			<field><![CDATA[Yolk]]></field>
 		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field>Botany</field>
-			<field>Entomology</field>
-			<field>Invertebrate Zoology</field>
-			<field>Amphibians and Reptiles</field>
-			<field>Birds</field>
-			<field>Fishes</field>
-			<field>Mammals</field>
-			<field>Mineral Sciences</field>
-		</list>
-		<list alias='institutionCode' caseInsensitive='true'>
-			<field>US</field>
-			<field>USNM</field>
-		</list>
-		<list alias='continent' caseInsensitive='true'>
-			<field>Africa</field>
-			<field>Antarctica</field>
-			<field>Asia</field>
-			<field>Australia</field>
-			<field>Europe</field>
-			<field>North America</field>
-			<field>Oceania</field>
-			<field>South America</field>
-		</list>
-		<list alias='ocean' caseInsensitive='true'>
-			<field>Antarctic Ocean</field>
-			<field>Arctic Ocean</field>
-			<field>Indian Ocean</field>
-			<field>North Atlantic Ocean</field>
-			<field>North Pacific Ocean</field>
-			<field>South Atlantic Ocean</field>
-			<field>South Pacific Ocean</field>
-		</list>
-		<list alias='lengthUnits' caseInsensitive='true'>
-			<field>cm</field>
-			<field>m</field>
-			<field>mm</field>
-			<field>µm</field>
-			<field>in</field>
-			<field>ft</field>
-		</list>
-		<list alias='measurementUnit' caseInsensitive='true'>
-			<field>cm</field>
-			<field>ft</field>
-			<field>g</field>
-			<field>in</field>
-			<field>ins</field>
-			<field>kg</field>
-			<field>lb</field>
-			<field>lbs</field>
-			<field>mm</field>
-			<field>oz</field>
-			<field>ct</field>
-		</list>
-		<list alias='basisOfRecord' caseInsensitive='true'>
-			<field>Bulky Specimen</field>
-			<field>Genetic Sample</field>
-			<field>Liquid Preserved</field>
-			<field>Lot</field>
-			<field>Packet</field>
-			<field>Seed</field>
-			<field>Specimen</field>
-			<field>Specimen/Lot</field>
-			<field>Rhizome</field>
-			<field>Unmounted material</field>
-			<field>Wood specimen</field>
-		</list>
-		<list alias='establishmentMeans' caseInsensitive='true'>
-			<field>cultivated</field>
-			<field>escaped</field>
-			<field>introduced</field>
-			<field>invasive</field>
-			<field>managed</field>
-			<field>native</field>
-			<field>naturalised</field>
-			<field>uncertain</field>
-			<field>waif</field>
-			<field>wild</field>
-		</list>
-		<list alias='exudate' caseInsensitive='true'>
-			<field>(NULL)</field>
-			<field>Clear</field>
-			<field>Cream</field>
-			<field>Orangish</field>
-			<field>Reddish</field>
-			<field>White</field>
-			<field>Yellow</field>
-		</list>
-		<list alias='habit' caseInsensitive='true'>
-			<field>Aquatic herb</field>
-			<field>Cespitose herb</field>
-			<field>Decumbent herb</field>
-			<field>Epilithic</field>
-			<field>Epiphyte</field>
-			<field>Erect herb</field>
-			<field>Floating herb</field>
-			<field>Hemiparasite</field>
-			<field>Herbaceous vine</field>
-			<field>Liana</field>
-			<field>Palm</field>
-			<field>Palm-like fern</field>
-			<field>Parasite</field>
-			<field>Scandent shrub</field>
-			<field>Shrub</field>
-			<field>Trailing herb</field>
-			<field>Trailing vine</field>
-			<field>Tree</field>
-			<field>Treelet</field>
-		</list>
-		<list alias='hybridRank' caseInsensitive='true'>
-			<field>Genus</field>
-			<field>Species</field>
-		</list>
-		<list alias='taxonRank' caseInsensitive='true'>
-			<field>aberration</field>
-			<field>forma</field>
-			<field>morpha</field>
-			<field>race</field>
-			<field>subforma</field>
-			<field>subvariety</field>
-			<field>variety</field>
-		</list>
-		<list alias='sampleQuality' caseInsensitive='true'>
-			<field>High</field>
-			<field>Medium</field>
-			<field>Low</field>
-		</list>
-		<list alias='sex' caseInsensitive='true'>
-			<field>Male</field>
-			<field>Female</field>
-			<field>Unknown</field>
-			<field>Worker</field>
-		</list>
-		<list alias='geodeticDatum' caseInsensitive='true'>
-			<field>NAD27</field>
-			<field>NAD83</field>
-			<field>WGS84</field>
+		<list alias='country' caseInsensitive='true'>
+			<field><![CDATA[Afghanistan]]></field>
+			<field><![CDATA[Afghsanistan]]></field>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Albania]]></field>
+			<field><![CDATA[Algeria]]></field>
+			<field><![CDATA[Algeria Ca.]]></field>
+			<field><![CDATA[Angola]]></field>
+			<field><![CDATA[Angola Ca.]]></field>
+			<field><![CDATA[Anguilla]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Antigua And Barbuda]]></field>
+			<field><![CDATA[Arabian Peninsula]]></field>
+			<field><![CDATA[Arctic]]></field>
+			<field><![CDATA[Argentina]]></field>
+			<field><![CDATA[Argentina Ca.]]></field>
+			<field><![CDATA[Armenia]]></field>
+			<field><![CDATA[Aruba]]></field>
+			<field><![CDATA[Ascension Island]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Australia Ca.]]></field>
+			<field><![CDATA[Austria]]></field>
+			<field><![CDATA[Austria Ca.]]></field>
+			<field><![CDATA[Austria, South]]></field>
+			<field><![CDATA[Azerbaijan]]></field>
+			<field><![CDATA[Azores]]></field>
+			<field><![CDATA[Bahamas]]></field>
+			<field><![CDATA[Baltic Sea]]></field>
+			<field><![CDATA[Bangladesh]]></field>
+			<field><![CDATA[Barbados]]></field>
+			<field><![CDATA[Belarus]]></field>
+			<field><![CDATA[Belgium]]></field>
+			<field><![CDATA[Belize]]></field>
+			<field><![CDATA[Bermuda]]></field>
+			<field><![CDATA[Bhutan]]></field>
+			<field><![CDATA[Bohemia]]></field>
+			<field><![CDATA[Bolivia]]></field>
+			<field><![CDATA[Bolivia Ca.]]></field>
+			<field><![CDATA[Bosnia]]></field>
+			<field><![CDATA[Bosnia And Herzegovina]]></field>
+			<field><![CDATA[Bosnia And Herzegovina Ca.]]></field>
+			<field><![CDATA[Botswana]]></field>
+			<field><![CDATA[Brazil]]></field>
+			<field><![CDATA[Brazil Ca.]]></field>
+			<field><![CDATA[British West Indies]]></field>
+			<field><![CDATA[Bulgaria]]></field>
+			<field><![CDATA[Burkina Faso]]></field>
+			<field><![CDATA[Burma]]></field>
+			<field><![CDATA[Burma Ca.]]></field>
+			<field><![CDATA[Burma/Myanmar]]></field>
+			<field><![CDATA[Burundi]]></field>
+			<field><![CDATA[Ca.]]></field>
+			<field><![CDATA[California]]></field>
+			<field><![CDATA[Cambodia]]></field>
+			<field><![CDATA[Cameroon]]></field>
+			<field><![CDATA[Canada]]></field>
+			<field><![CDATA[Canada Ca.]]></field>
+			<field><![CDATA[Cape Verde]]></field>
+			<field><![CDATA[Caucasus]]></field>
+			<field><![CDATA[Cayman Islands]]></field>
+			<field><![CDATA[Central African Republic]]></field>
+			<field><![CDATA[Ceylon]]></field>
+			<field><![CDATA[Chad]]></field>
+			<field><![CDATA[Chad Ca.]]></field>
+			<field><![CDATA[Chile]]></field>
+			<field><![CDATA[Chile Ca.]]></field>
+			<field><![CDATA[China]]></field>
+			<field><![CDATA[China (Western)]]></field>
+			<field><![CDATA[China Ca.]]></field>
+			<field><![CDATA[Colombia]]></field>
+			<field><![CDATA[Colombia Ca.]]></field>
+			<field><![CDATA[Colorade]]></field>
+			<field><![CDATA[Columbia]]></field>
+			<field><![CDATA[Comoros]]></field>
+			<field><![CDATA[Comoros Is]]></field>
+			<field><![CDATA[Congo]]></field>
+			<field><![CDATA[Congo (Brazzaville)]]></field>
+			<field><![CDATA[Congo (Kinshasa)]]></field>
+			<field><![CDATA[Congo (Kinshasa) Ca.]]></field>
+			<field><![CDATA[Congo/Zaire]]></field>
+			<field><![CDATA[Costa Rica]]></field>
+			<field><![CDATA[Croatia]]></field>
+			<field><![CDATA[Cuba]]></field>
+			<field><![CDATA[Curacao]]></field>
+			<field><![CDATA[Cyprus]]></field>
+			<field><![CDATA[Czech Republic]]></field>
+			<field><![CDATA[Czech Republic Ca.]]></field>
+			<field><![CDATA[Czechoslovakia]]></field>
+			<field><![CDATA[Democratic Republic of Congo]]></field>
+			<field><![CDATA[Democratic Republic Of The Congo]]></field>
+			<field><![CDATA[Denmark]]></field>
+			<field><![CDATA[Dominica]]></field>
+			<field><![CDATA[Dominican Republic]]></field>
+			<field><![CDATA[Dutch Guiana]]></field>
+			<field><![CDATA[East Greenland]]></field>
+			<field><![CDATA[East Indies]]></field>
+			<field><![CDATA[Ecuador]]></field>
+			<field><![CDATA[Egypt]]></field>
+			<field><![CDATA[Egypt Ca.]]></field>
+			<field><![CDATA[El Salvador]]></field>
+			<field><![CDATA[England]]></field>
+			<field><![CDATA[England Ca.]]></field>
+			<field><![CDATA[Eritrea]]></field>
+			<field><![CDATA[Estonia]]></field>
+			<field><![CDATA[Ethiopia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[Faeroe Islands]]></field>
+			<field><![CDATA[Federated States of Micronesia]]></field>
+			<field><![CDATA[Fiji]]></field>
+			<field><![CDATA[Finland]]></field>
+			<field><![CDATA[Finland Ca.]]></field>
+			<field><![CDATA[France]]></field>
+			<field><![CDATA[France - Spain]]></field>
+			<field><![CDATA[France Ca.]]></field>
+			<field><![CDATA[French Guiana]]></field>
+			<field><![CDATA[French Polynesia]]></field>
+			<field><![CDATA[Gabon]]></field>
+			<field><![CDATA[Gabon Ca.]]></field>
+			<field><![CDATA[Georgia]]></field>
+			<field><![CDATA[German Southwest Africa]]></field>
+			<field><![CDATA[Germany]]></field>
+			<field><![CDATA[Germany Ca.]]></field>
+			<field><![CDATA[Germany, East]]></field>
+			<field><![CDATA[Germany, West]]></field>
+			<field><![CDATA[Germany/Czech Republic]]></field>
+			<field><![CDATA[Ghana]]></field>
+			<field><![CDATA[Ghana Ca.]]></field>
+			<field><![CDATA[Gibraltar]]></field>
+			<field><![CDATA[Greece]]></field>
+			<field><![CDATA[Greenland]]></field>
+			<field><![CDATA[Greenland Ca.]]></field>
+			<field><![CDATA[Greenland, Southwest]]></field>
+			<field><![CDATA[Grenada]]></field>
+			<field><![CDATA[Guam]]></field>
+			<field><![CDATA[Guatamala]]></field>
+			<field><![CDATA[Guatemala]]></field>
+			<field><![CDATA[Guinea]]></field>
+			<field><![CDATA[Guinea (West Africa)]]></field>
+			<field><![CDATA[Guyana]]></field>
+			<field><![CDATA[Haiti]]></field>
+			<field><![CDATA[Holland]]></field>
+			<field><![CDATA[Honduras]]></field>
+			<field><![CDATA[Hungary]]></field>
+			<field><![CDATA[Hungary Ca.]]></field>
+			<field><![CDATA[Iceland]]></field>
+			<field><![CDATA[Iceland Ca.]]></field>
+			<field><![CDATA[Idaho]]></field>
+			<field><![CDATA[India]]></field>
+			<field><![CDATA[India Ca.]]></field>
+			<field><![CDATA[Indochina]]></field>
+			<field><![CDATA[Indonesia]]></field>
+			<field><![CDATA[Iran]]></field>
+			<field><![CDATA[Iran (Turquoise)]]></field>
+			<field><![CDATA[Iraq]]></field>
+			<field><![CDATA[Ireland]]></field>
+			<field><![CDATA[Ireland Ca.]]></field>
+			<field><![CDATA[Ireland, Northern]]></field>
+			<field><![CDATA[Isle Of Man]]></field>
+			<field><![CDATA[Isle Of Wight]]></field>
+			<field><![CDATA[Israel]]></field>
+			<field><![CDATA[Italy]]></field>
+			<field><![CDATA[Italy Ca.]]></field>
+			<field><![CDATA[Ivory Coast]]></field>
+			<field><![CDATA[Jamaica]]></field>
+			<field><![CDATA[Japan]]></field>
+			<field><![CDATA[Japan Ca.]]></field>
+			<field><![CDATA[Jarvis Island]]></field>
+			<field><![CDATA[Jordan]]></field>
+			<field><![CDATA[Kazakhstan]]></field>
+			<field><![CDATA[Kazakhstan Ca.]]></field>
+			<field><![CDATA[Kazakstan]]></field>
+			<field><![CDATA[Kenya]]></field>
+			<field><![CDATA[Kenya/Tanzania]]></field>
+			<field><![CDATA[Kirghistan]]></field>
+			<field><![CDATA[Kirgizia]]></field>
+			<field><![CDATA[Kiribati]]></field>
+			<field><![CDATA[Korea]]></field>
+			<field><![CDATA[Korea, South]]></field>
+			<field><![CDATA[Kuwait]]></field>
+			<field><![CDATA[Kyrgyzstan]]></field>
+			<field><![CDATA[Laos]]></field>
+			<field><![CDATA[Latvia]]></field>
+			<field><![CDATA[Leeward Islands, West Indies]]></field>
+			<field><![CDATA[Lesotho]]></field>
+			<field><![CDATA[Letters And Manuscripts]]></field>
+			<field><![CDATA[Liberia]]></field>
+			<field><![CDATA[Libya]]></field>
+			<field><![CDATA[Lithuania]]></field>
+			<field><![CDATA[Macedonia]]></field>
+			<field><![CDATA[Madagascar]]></field>
+			<field><![CDATA[Madagascar Ca.]]></field>
+			<field><![CDATA[Madeira Island]]></field>
+			<field><![CDATA[Malagasy Republic]]></field>
+			<field><![CDATA[Malawi]]></field>
+			<field><![CDATA[Malawi Ca.]]></field>
+			<field><![CDATA[Malaysia]]></field>
+			<field><![CDATA[Mali]]></field>
+			<field><![CDATA[Man Made]]></field>
+			<field><![CDATA[Martinique]]></field>
+			<field><![CDATA[Mauritania]]></field>
+			<field><![CDATA[Mauritius]]></field>
+			<field><![CDATA[Mediterranean]]></field>
+			<field><![CDATA[Mexico]]></field>
+			<field><![CDATA[Mexico Ca.]]></field>
+			<field><![CDATA[Moldova]]></field>
+			<field><![CDATA[Moldova Ca.]]></field>
+			<field><![CDATA[Mona Island]]></field>
+			<field><![CDATA[Mongolia]]></field>
+			<field><![CDATA[Montserrat]]></field>
+			<field><![CDATA[Morocco]]></field>
+			<field><![CDATA[Mozambique]]></field>
+			<field><![CDATA[Myanmar]]></field>
+			<field><![CDATA[Myanmar (Burma)]]></field>
+			<field><![CDATA[Namibia]]></field>
+			<field><![CDATA[Namibia (Southwest Africa)]]></field>
+			<field><![CDATA[Namibia Ca.]]></field>
+			<field><![CDATA[Navassa Island]]></field>
+			<field><![CDATA[Nepal]]></field>
+			<field><![CDATA[Netherlands]]></field>
+			<field><![CDATA[Netherlands Antilles]]></field>
+			<field><![CDATA[New Caledonia]]></field>
+			<field><![CDATA[New Guinea]]></field>
+			<field><![CDATA[New Jersey]]></field>
+			<field><![CDATA[New Zealand]]></field>
+			<field><![CDATA[Nicaragua]]></field>
+			<field><![CDATA[Niger]]></field>
+			<field><![CDATA[Nigeria]]></field>
+			<field><![CDATA[No Record]]></field>
+			<field><![CDATA[None]]></field>
+			<field><![CDATA[Northern Ireland]]></field>
+			<field><![CDATA[Norway]]></field>
+			<field><![CDATA[Norway Ca.]]></field>
+			<field><![CDATA[Ocean]]></field>
+			<field><![CDATA[Oman]]></field>
+			<field><![CDATA[Pakistan]]></field>
+			<field><![CDATA[Pakistan Ca.]]></field>
+			<field><![CDATA[Palau]]></field>
+			<field><![CDATA[Panama]]></field>
+			<field><![CDATA[Panama Canal Zone]]></field>
+			<field><![CDATA[Papua New Guinea]]></field>
+			<field><![CDATA[Paraguay]]></field>
+			<field><![CDATA[People's Republic of China]]></field>
+			<field><![CDATA[Persia Ca.]]></field>
+			<field><![CDATA[Peru]]></field>
+			<field><![CDATA[Peru Ca.]]></field>
+			<field><![CDATA[Philippines]]></field>
+			<field><![CDATA[Poland]]></field>
+			<field><![CDATA[Poland - Ussr]]></field>
+			<field><![CDATA[Poland Ca.]]></field>
+			<field><![CDATA[Portugal]]></field>
+			<field><![CDATA[Puerto Rico]]></field>
+			<field><![CDATA[Republic of the Congo]]></field>
+			<field><![CDATA[Rhodesia]]></field>
+			<field><![CDATA[Romania]]></field>
+			<field><![CDATA[Romania Ca.]]></field>
+			<field><![CDATA[Russia]]></field>
+			<field><![CDATA[Russia Ca.]]></field>
+			<field><![CDATA[Russia, Southeast]]></field>
+			<field><![CDATA[Russian Federation]]></field>
+			<field><![CDATA[Rwanda]]></field>
+			<field><![CDATA[Saint Barthelemy]]></field>
+			<field><![CDATA[Samoa]]></field>
+			<field><![CDATA[Santo Domingo]]></field>
+			<field><![CDATA[Sao Tome and Principe]]></field>
+			<field><![CDATA[Saudi Arabia]]></field>
+			<field><![CDATA[Scandinavia]]></field>
+			<field><![CDATA[Scotland]]></field>
+			<field><![CDATA[Senegal]]></field>
+			<field><![CDATA[Senegal Ca.]]></field>
+			<field><![CDATA[Serbia]]></field>
+			<field><![CDATA[Sierra Leone]]></field>
+			<field><![CDATA[Singapore]]></field>
+			<field><![CDATA[Slovakia]]></field>
+			<field><![CDATA[Slovenia]]></field>
+			<field><![CDATA[Soloman Islands]]></field>
+			<field><![CDATA[Solomon Is]]></field>
+			<field><![CDATA[Somalia]]></field>
+			<field><![CDATA[South Africa]]></field>
+			<field><![CDATA[South Africa (Namibia) Ca.]]></field>
+			<field><![CDATA[South Africa Ca.]]></field>
+			<field><![CDATA[South America]]></field>
+			<field><![CDATA[South Korea]]></field>
+			<field><![CDATA[Southwest Africa]]></field>
+			<field><![CDATA[South-West Africa]]></field>
+			<field><![CDATA[Southwest Africa (Namibia) Ca.]]></field>
+			<field><![CDATA[Spain]]></field>
+			<field><![CDATA[Spain Ca.]]></field>
+			<field><![CDATA[Sri Lanka]]></field>
+			<field><![CDATA[Sri Lanka Ca.]]></field>
+			<field><![CDATA[St Kitts And Nevis]]></field>
+			<field><![CDATA[St Lucia]]></field>
+			<field><![CDATA[St Vincent And The Grenadines]]></field>
+			<field><![CDATA[Sudan]]></field>
+			<field><![CDATA[Surinam]]></field>
+			<field><![CDATA[Suriname]]></field>
+			<field><![CDATA[Swaziland]]></field>
+			<field><![CDATA[Sweden]]></field>
+			<field><![CDATA[Sweden Ca.]]></field>
+			<field><![CDATA[Switzerland]]></field>
+			<field><![CDATA[Switzerland Ca.]]></field>
+			<field><![CDATA[Synthetic]]></field>
+			<field><![CDATA[Syria]]></field>
+			<field><![CDATA[Syria Ca.]]></field>
+			<field><![CDATA[Tahiti]]></field>
+			<field><![CDATA[Taiwan]]></field>
+			<field><![CDATA[Tajikistan]]></field>
+			<field><![CDATA[Tanzania]]></field>
+			<field><![CDATA[Tanzania Ca.]]></field>
+			<field><![CDATA[Tasmania]]></field>
+			<field><![CDATA[Thailand]]></field>
+			<field><![CDATA[Tibet]]></field>
+			<field><![CDATA[Tonga]]></field>
+			<field><![CDATA[Trinidad]]></field>
+			<field><![CDATA[Trinidad And Tobago]]></field>
+			<field><![CDATA[Tunisia]]></field>
+			<field><![CDATA[Turkestan]]></field>
+			<field><![CDATA[Turkestan Ca.]]></field>
+			<field><![CDATA[Turkey]]></field>
+			<field><![CDATA[Turkey Ca.]]></field>
+			<field><![CDATA[Turkish Armenia]]></field>
+			<field><![CDATA[Turkmenistan]]></field>
+			<field><![CDATA[Uganda]]></field>
+			<field><![CDATA[Ukraine]]></field>
+			<field><![CDATA[United Arab Emerates]]></field>
+			<field><![CDATA[United Kingdom]]></field>
+			<field><![CDATA[United States]]></field>
+			<field><![CDATA[United States Ca.]]></field>
+			<field><![CDATA[United States of America]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Unknown Ca.]]></field>
+			<field><![CDATA[Unknown Locality]]></field>
+			<field><![CDATA[Upper Burma]]></field>
+			<field><![CDATA[Uruguay]]></field>
+			<field><![CDATA[USA]]></field>
+			<field><![CDATA[Ussr]]></field>
+			<field><![CDATA[Ussr Ca.]]></field>
+			<field><![CDATA[Uzbekistan]]></field>
+			<field><![CDATA[Vanuatu]]></field>
+			<field><![CDATA[Venezuela]]></field>
+			<field><![CDATA[Viet Nam]]></field>
+			<field><![CDATA[Vietnam]]></field>
+			<field><![CDATA[Virgin Islands, Uk]]></field>
+			<field><![CDATA[Virgin Islands, Us]]></field>
+			<field><![CDATA[Wales]]></field>
+			<field><![CDATA[West Indies]]></field>
+			<field><![CDATA[Windward Islands, French Polynesia]]></field>
+			<field><![CDATA[Yemen]]></field>
+			<field><![CDATA[Yugoslavia]]></field>
+			<field><![CDATA[Yugoslavia Ca.]]></field>
+			<field><![CDATA[Zaire]]></field>
+			<field><![CDATA[Zaire (Democratic Republic of Congo)]]></field>
+			<field><![CDATA[Zambia]]></field>
+			<field><![CDATA[Zambia Ca.]]></field>
+			<field><![CDATA[Zimbabwe]]></field>
 		</list>
 	</lists>
 </validation>

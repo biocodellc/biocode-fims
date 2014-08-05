@@ -15,8 +15,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Test Components of the
- * The publicly accessible tests typically return a stringBuilder, containing any errorMessages
+ * The publicly accessible tests return or true or false, with true indicating success and false indicating that
+ * the test was failed.  All messages are managed by the configurationFileErrorMessager class and can be
+ * retrieved at any point to display any explanatory information regarding why a particular test failed.   If all
+ * tests pass then no messages are written to the configurationFileErrorMessager
  */
 public class configurationFileTester {
     DocumentBuilder builder = null;
