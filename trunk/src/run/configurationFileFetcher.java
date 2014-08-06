@@ -180,7 +180,7 @@ public class configurationFileFetcher {
             conn.addRequestProperty("Referer", "google.com");
 
         }
-        conn.connect();
+        //conn.connect();
         InputStream inputStream = conn.getInputStream();
 
         // Write configuration file to output directory
