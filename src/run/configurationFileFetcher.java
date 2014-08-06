@@ -11,6 +11,7 @@ import org.xml.sax.*;
 import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
+import sun.misc.IOUtils;
 import utils.SettingsManager;
 import utils.urlFreshener;
 
@@ -195,6 +196,10 @@ public class configurationFileFetcher {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 os.write(buffer, 0, bytesRead);
             }
+
+// for debugging only
+System.out.println(convertStreamToString(inputStream));
+
             inputStream.close();
 
             // Debugging where file output is stored
@@ -214,7 +219,10 @@ public class configurationFileFetcher {
         }
 
     }
-
+       static String convertStreamToString(java.io.InputStream is) {
+    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";
+}
 
     /**
      * Readfile method -- used as a convenience in this class for testing.
