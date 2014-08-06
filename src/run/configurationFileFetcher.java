@@ -137,7 +137,7 @@ public class configurationFileFetcher {
         urlFreshener freshener = new urlFreshener();
         url = freshener.forceLatestURL(url);
 
-        System.out.println("URL we're using for connection: " + url.toString());
+        //System.out.println("URL we're using for connection: " + url.toString());
 
         HttpURLConnection.setFollowRedirects(true);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -163,7 +163,7 @@ public class configurationFileFetcher {
 
             // get redirect url from "location" header field
             String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
-            System.out.println("Redirected URL we're using for connection: " + url.toString());
+            //System.out.println("Redirected URL we're using for connection: " + url.toString());
 
             // open the  connnection
 
@@ -203,9 +203,16 @@ public class configurationFileFetcher {
             //flush OutputStream to write any buffered data to file
             os.flush();
             os.close();
+            // Close the connection input stream
+            conn.getInputStream().close();
+
         } catch (IOException e) {
             throw new Exception("Unable to get configuration file, server down or network error ", e);
+        } finally {
+            // Disconnect at the end
+             conn.disconnect();
         }
+
     }
 
 
