@@ -137,10 +137,11 @@ public class configurationFileFetcher {
 
         //System.out.println("URL we're using for connection: " + url.toString());
 
-	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("8.8.8.8", 80));
+	//Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("8.8.8.8", 80));
 
         HttpURLConnection.setFollowRedirects(true);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setUseCaches(false);
         conn.setDefaultUseCaches(false);
 
@@ -164,7 +165,7 @@ public class configurationFileFetcher {
 
             // get redirect url from "location" header field
             String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
-System.out.println("Redirected URL we're using for connection: " + url.toString());
+        //System.out.println("Redirected URL we're using for connection: " + url.toString());
 
             // open the  connnection
 
@@ -179,6 +180,7 @@ System.out.println("Redirected URL we're using for connection: " + url.toString(
             conn.addRequestProperty("Referer", "google.com");
 
         }
+        conn.connect();
         InputStream inputStream = conn.getInputStream();
 
         // Write configuration file to output directory
