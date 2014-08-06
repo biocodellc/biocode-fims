@@ -147,6 +147,8 @@ public class configurationFileFetcher {
         conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
         conn.addRequestProperty("User-Agent", "Mozilla");
         conn.addRequestProperty("Referer", "google.com");
+        conn.addRequestProperty("Cache-Control", "no-cache");
+
 
         // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
         int status = conn.getResponseCode();
@@ -173,11 +175,10 @@ public class configurationFileFetcher {
             conn.addRequestProperty("User-Agent", "Mozilla");
             conn.addRequestProperty("Referer", "google.com");
         }
-System.out.println("connecting");
+
         conn.connect();
-System.out.println("connecting");
         InputStream inputStream = conn.getInputStream();
-System.out.println("fetched is");
+
 
         // Write configuration file to output directory
         try {
