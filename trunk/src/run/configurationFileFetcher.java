@@ -140,11 +140,14 @@ public class configurationFileFetcher {
 
         //System.out.println("URL we're using for connection: " + url.toString());
 
+	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("8.8.8.8", 80));
+
         HttpURLConnection.setFollowRedirects(true);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+        conn.setUseCaches(false);
+        conn.setDefaultUseCaches(false);
 
         conn.setReadTimeout(5000);
-        conn.setUseCaches(false);
         conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
         conn.addRequestProperty("User-Agent", "Mozilla");
         conn.addRequestProperty("Referer", "google.com");
@@ -164,13 +167,13 @@ public class configurationFileFetcher {
 
             // get redirect url from "location" header field
             String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
-            //System.out.println("Redirected URL we're using for connection: " + url.toString());
+System.out.println("Redirected URL we're using for connection: " + url.toString());
 
             // open the  connnection
 
-            conn = (HttpURLConnection) new URL(newUrl).openConnection();
             conn.setUseCaches(false);
             conn.setDefaultUseCaches(false);
+            conn = (HttpURLConnection) new URL(newUrl).openConnection();
             conn.addRequestProperty("Cache-Control", "no-cache");
 
             // connection.setRequestProperty("Cookie", cookies);
@@ -197,8 +200,6 @@ public class configurationFileFetcher {
                 os.write(buffer, 0, bytesRead);
             }
 
-// for debugging only
-System.out.println(convertStreamToString(inputStream));
 
             inputStream.close();
 
