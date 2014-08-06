@@ -12,6 +12,7 @@ import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
 import utils.SettingsManager;
+import utils.urlFreshener;
 
 import javax.xml.parsers.*;
 import java.io.*;
@@ -84,15 +85,15 @@ public class configurationFileFetcher {
         // to the appropriate keystore location on the server... The keystore stores the
         // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
         // connection this can be safely ignored
-     /*   System.setProperty("javax.net.ssl.trustStore", sm.retrieveValue("trust_store"));
-        System.setProperty("javax.net.ssl.trustStorePassword", sm.retrieveValue("trust_store_password"));
+        /*   System.setProperty("javax.net.ssl.trustStore", sm.retrieveValue("trust_store"));
+          System.setProperty("javax.net.ssl.trustStorePassword", sm.retrieveValue("trust_store_password"));
 
-        System.setProperty("javax.net.ssl.keyStoreType", "pkcs12");
-        System.setProperty("javax.net.ssl.keyStore", sm.retrieveValue("key_store"));
-        System.setProperty("javax.net.ssl.keyStorePassword", sm.retrieveValue("key_store_password"));
+          System.setProperty("javax.net.ssl.keyStoreType", "pkcs12");
+          System.setProperty("javax.net.ssl.keyStore", sm.retrieveValue("key_store"));
+          System.setProperty("javax.net.ssl.keyStorePassword", sm.retrieveValue("key_store_password"));
 
-       System.out.println("trust store located at: " + System.getProperty("javax.net.ssl.trustStore"));
-      */
+         System.out.println("trust store located at: " + System.getProperty("javax.net.ssl.trustStore"));
+        */
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it
@@ -132,17 +133,19 @@ public class configurationFileFetcher {
     private void init(URL url, String defaultOutputDirectory) throws Exception {
         boolean redirect = false;
 
+        // Always ensure we have the freshest copy of a particular URL
+        urlFreshener freshener = new urlFreshener();
+        url = freshener.forceLatestURL(url);
+
         HttpURLConnection.setFollowRedirects(true);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        
+
         conn.setReadTimeout(5000);
         conn.setUseCaches(false);
         conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
         conn.addRequestProperty("User-Agent", "Mozilla");
         conn.addRequestProperty("Referer", "google.com");
 
-//conn.setDoOutput(true);
-//conn.setDoInput(true);
         // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
         int status = conn.getResponseCode();
         if (status != HttpURLConnection.HTTP_OK) {
@@ -160,7 +163,8 @@ public class configurationFileFetcher {
             String newUrl = conn.getHeaderField("Location");
 
             // open the  connnection
-            conn = (HttpURLConnection) new URL(newUrl).openConnection();
+
+            conn = (HttpURLConnection) new URL(freshener.forceLatestURL(newUrl)).openConnection();
             conn.setUseCaches(false);
             conn.setDefaultUseCaches(false);
             conn.addRequestProperty("Cache-Control", "no-cache");
