@@ -211,6 +211,10 @@ public class Rule {
        return column;
     }
 
+    public String getOtherColumnWorksheetName() {
+        return otherColumn;
+    }
+
     public void setColumn(String column) {
         this.column = column;
     }
@@ -682,9 +686,13 @@ public class Rule {
             statement = connection.createStatement();
             // Do the select on values based on other column values
             String sql = "SELECT " + getColumn() + "," + getOtherColumn() + " FROM " + digesterWorksheet.getSheetname();
-            sql += " WHERE ifnull(" + getColumn()  + ",'') != '' AND ifnull("+getOtherColumn() +",'') = ''";
+            sql += " WHERE ifnull(" + getColumn()  + ",'') != '' ";
 
-            if (!lookupSB.toString().equals("")) {
+            // if null lookup look that we just have SOME value
+            if (lookupSB.toString().equals("")) {
+                sql += " AND ifnull("+getOtherColumn() +",'') = ''";
+            // else we look in the lookup list
+            }   else {
                 sql += " AND " + getOtherColumn();
                 sql += " NOT IN (" + lookupSB.toString() + ")";
             }
@@ -697,10 +705,10 @@ public class Rule {
                 if (!column.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
-                    msg = "\"" + resultSet.getString(getColumn()) + "\" specifed as \"" + getColumnWorksheetName() + "\"";
-                    msg += " without an appropriate value in another "+ getOtherColumn() + ".";
+                    msg = "\"" + getColumnWorksheetName() + "\" is specified ";
+                    msg += " without an approved value in \""+ getOtherColumnWorksheetName() + "\"";
                     if (!lookupSB.toString().equals("")) {
-                        msg += " (" + lookupSB.toString() + ")";
+                        msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + lookupSB.toString() + "})";
                     }
                     addMessage(msg, null, null);
                 }
