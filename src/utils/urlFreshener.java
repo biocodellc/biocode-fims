@@ -27,7 +27,7 @@ public class urlFreshener {
      */
     public String forceLatestURL(String url) {
         //return url + queryDelimiter(url) + "v=" +System.currentTimeMillis() / 1000L;
-        return url + queryDelimiter(url) + "#" +System.currentTimeMillis() / 1000L;
+        return url + "#" +System.currentTimeMillis() / 1000L;
     }
 
     /**
