@@ -288,9 +288,6 @@ BOLD: None provided<p><b>Synonyms:</b><p>"specificEpithet" = DwC,<br />"species"
 		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'><![CDATA[<p><b>Synonyms:</b><p>"Suborder" = Biocode.specimen, <br />"suborder" = Biocode.Taxonomy,]]></attribute>
 		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'><![CDATA[<p><b>Synonyms:</b><p>"Subphylum" = Biocode.specimen, <br />"subphylum" = Biocode.Taxonomy,]]></attribute>
 		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'><![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.<p><b>Synonyms:</b><p>"subspecies" = Biocode.Taxonomy,<br />"subSpecies" = IndoPacific Template v7,]]></attribute>
-		<attribute column='Rank below subspecies' uri='urn:taxonRank' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRank'><![CDATA[DwC: The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary. Examples: "subspecies", "varietas", "forma", "species", "genus". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRank
-
-ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. var.)<p><b>Synonyms:</b><p>"taxonRank" = DwC,<br />"DarInfraspecificRank" = EMuDwC,<br />"Below Species Rank" = Plantbarcodes Coll'n SS,<br />"Below Species Rank" = Kress Coll'n DB,<br />"below_species_rank" = Plantbarcodes.individual,<br />"Identification/ScientificName/NameAtomised/Rank" = ABCDDNA,]]></attribute>
 		<attribute column='Taxon notes' uri='urn:taxonRemarks' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRemarks'><![CDATA[DwC: Comments or notes about the taxon or name. Example: "this name is a misspelling in common use". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRemarks<p><b>Synonyms:</b><p>"taxonRemarks"  = DwC,<br />"taxonRemarks"  = IndoPacific Template v7,<br />"taxonomic_notes" = Plantbarcodes.individual,<br />"TaxonomyNotes" = LAB Field Collection Spreadsheet,<br />"TaxonomyNotes" = Fishes,<br />"TaxonNotes" = Biocode Backend,<br />"TaxonNotes" = Biocode Batch Upload,<br />"Taxonomic Notes/Other Specimen Details" = Bold (Kress collection sheet?),]]></attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'><![CDATA[]]></attribute>
 		<attribute column='BOLD ID' uri='urn:boldID' group='Tissue' defined_by='urn:boldID'><![CDATA[Biocode: BOLD "processID" number (ie, MBFA001-07)<p><b>Synonyms:</b><p>"BOLD ID" = Bold,<br />"molecular_id" = Biocode Backend.Tissues,<br />"molecular_id" = Biocode Backend.Extract,<br />"molecular_id" = Biocode Backend.Sequence,]]></attribute>
@@ -366,7 +363,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
@@ -400,8 +397,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Epithet below subspecies' level='warning' otherColumn=''></rule>
 		<rule type='checkInXMLFields' column='Phylum' list='phylum' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Rank below subspecies' level='warning' otherColumn='Epithet below subspecies'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -453,51 +448,50 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		</rule>
 	</worksheet>
 	<lists>
-		<list alias='Zoology Preparation' caseInsensitive='true'>
-			<field><![CDATA[95 % ETOH]]></field>
-			<field><![CDATA[Alcohol]]></field>
-			<field><![CDATA[Casts]]></field>
-			<field><![CDATA[Digital photograph on file]]></field>
-			<field><![CDATA[Dried]]></field>
-			<field><![CDATA[Dry Osteological Specimen]]></field>
-			<field><![CDATA[ETOH FIXED]]></field>
-			<field><![CDATA[Field Notes]]></field>
-			<field><![CDATA[Glycerin with Bone and Cartilage Stain]]></field>
-			<field><![CDATA[Glycerine, Triple stained]]></field>
-			<field><![CDATA[Glycerine With Bone Stain]]></field>
-			<field><![CDATA[Glycerine With Cartilage Stain]]></field>
-			<field><![CDATA[Glycerine With Nerve Stain]]></field>
-			<field><![CDATA[Hardcopy photograph on file]]></field>
-			<field><![CDATA[Histological Slide]]></field>
-			<field><![CDATA[Illustration]]></field>
-			<field><![CDATA[Jar Label]]></field>
-			<field><![CDATA[Larvae]]></field>
-			<field><![CDATA[Ledger Image]]></field>
-			<field><![CDATA[Model]]></field>
-			<field><![CDATA[Otolith]]></field>
-			<field><![CDATA[Photograph]]></field>
-			<field><![CDATA[Print]]></field>
-			<field><![CDATA[Radiograph]]></field>
-			<field><![CDATA[Scanning Electron Microphotograph]]></field>
-			<field><![CDATA[Skin]]></field>
-			<field><![CDATA[Specimen Notes]]></field>
-			<field><![CDATA[Tissue sample]]></field>
-			<field><![CDATA[Transmission Electron Microphotograph]]></field>
-			<field><![CDATA[Transparency]]></field>
-			<field><![CDATA[Transparency sleeve]]></field>
+		<list alias='sex' caseInsensitive='true'>
+			<field><![CDATA[Female]]></field>
+			<field><![CDATA[Male]]></field>
 			<field><![CDATA[Unknown]]></field>
-			<field><![CDATA[Wet Osteological Specimen]]></field>
 		</list>
-		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
-			<field><![CDATA[Blood]]></field>
-			<field><![CDATA[Cell]]></field>
-			<field><![CDATA[Clone]]></field>
-			<field><![CDATA[DNA, RNA, Proteins]]></field>
-			<field><![CDATA[Environmental Sample]]></field>
-			<field><![CDATA[Excretion/Secretion]]></field>
-			<field><![CDATA[Germplasm]]></field>
-			<field><![CDATA[Tissue & Parts]]></field>
-			<field><![CDATA[Whole Organism]]></field>
+		<list alias='measurementUnit' caseInsensitive='true'>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[ft]]></field>
+			<field><![CDATA[g]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ins]]></field>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[lbs]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ct]]></field>
+		</list>
+		<list alias='sampleQuality' caseInsensitive='true'>
+			<field><![CDATA[High]]></field>
+			<field><![CDATA[Medium]]></field>
+			<field><![CDATA[Low]]></field>
+		</list>
+		<list alias='ocean' caseInsensitive='true'>
+			<field><![CDATA[Antarctic Ocean]]></field>
+			<field><![CDATA[Arctic Ocean]]></field>
+			<field><![CDATA[Indian Ocean]]></field>
+			<field><![CDATA[North Atlantic Ocean]]></field>
+			<field><![CDATA[North Pacific Ocean]]></field>
+			<field><![CDATA[South Atlantic Ocean]]></field>
+			<field><![CDATA[South Pacific Ocean]]></field>
+		</list>
+		<list alias='hybridRank' caseInsensitive='true'>
+			<field><![CDATA[Genus]]></field>
+			<field><![CDATA[Species]]></field>
+		</list>
+		<list alias='geodeticDatum' caseInsensitive='true'>
+			<field><![CDATA[NAD27]]></field>
+			<field><![CDATA[NAD83]]></field>
+			<field><![CDATA[WGS84]]></field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field><![CDATA[N]]></field>
+			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='order' caseInsensitive='true'>
 			<field><![CDATA[Acipenseriformes]]></field>
@@ -568,169 +562,15 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Torpediniformes]]></field>
 			<field><![CDATA[Zeiformes]]></field>
 		</list>
-		<list alias='Object Type' caseInsensitive='true'>
-			<field><![CDATA[Genetic Sample]]></field>
-			<field><![CDATA[Specimen/Lot]]></field>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field><![CDATA[E]]></field>
+			<field><![CDATA[W]]></field>
 		</list>
-		<list alias='Sexual Maturity' caseInsensitive='true'>
-			<field><![CDATA[-]]></field>
-			<field><![CDATA[Adult]]></field>
-			<field><![CDATA[Calf]]></field>
-			<field><![CDATA[Fetus]]></field>
-			<field><![CDATA[Immature]]></field>
-			<field><![CDATA[immature (avascular uterus)]]></field>
-			<field><![CDATA[Immature (Ovaries immature)]]></field>
-			<field><![CDATA[immature (uterus immature)]]></field>
-			<field><![CDATA[Juvenile]]></field>
-			<field><![CDATA[Lactating]]></field>
-			<field><![CDATA[Lactating? Mature]]></field>
-			<field><![CDATA[Mature]]></field>
-			<field><![CDATA[Mature (dilated)]]></field>
-			<field><![CDATA[Mature (lactating questionable)]]></field>
-			<field><![CDATA[Mature (lactating)]]></field>
-			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
-			<field><![CDATA[Mature (lactating, pregnant)]]></field>
-			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
-			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
-			<field><![CDATA[Mature (pregnant)]]></field>
-			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
-			<field><![CDATA[Mature (pregnant, lactating)]]></field>
-			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
-			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
-			<field><![CDATA[Mature (sperm in epididymus]]></field>
-			<field><![CDATA[mature (sperm in epididymuse)]]></field>
-			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
-			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
-			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
-			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
-			<field><![CDATA[Mature (uterus dialated)]]></field>
-			<field><![CDATA[Mature (uterus mature)]]></field>
-			<field><![CDATA[Mature (with calf)]]></field>
-			<field><![CDATA[Maturing?]]></field>
-			<field><![CDATA[Need]]></field>
-			<field><![CDATA[Neonate]]></field>
-			<field><![CDATA[Pregnant]]></field>
-			<field><![CDATA[Resting]]></field>
-			<field><![CDATA[Stillborn]]></field>
-			<field><![CDATA[Subadult]]></field>
-			<field><![CDATA[Unknown]]></field>
-			<field><![CDATA[Unknown, immature]]></field>
-			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
-		</list>
-		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
-			<field><![CDATA[Abdomen]]></field>
-			<field><![CDATA[Aerosol]]></field>
-			<field><![CDATA[Air]]></field>
-			<field><![CDATA[Anterior piece]]></field>
-			<field><![CDATA[Bacteria]]></field>
-			<field><![CDATA[Blood Vessel]]></field>
-			<field><![CDATA[Blubber]]></field>
-			<field><![CDATA[Bone]]></field>
-			<field><![CDATA[Brain]]></field>
-			<field><![CDATA[Cell suspension]]></field>
-			<field><![CDATA[Cells]]></field>
-			<field><![CDATA[Cheek Pouch Contents]]></field>
-			<field><![CDATA[Chloroplast]]></field>
-			<field><![CDATA[Clay]]></field>
-			<field><![CDATA[Connective tissue]]></field>
-			<field><![CDATA[Dried scrapings]]></field>
-			<field><![CDATA[Dust]]></field>
-			<field><![CDATA[Egg]]></field>
-			<field><![CDATA[Embryo]]></field>
-			<field><![CDATA[Emulsion]]></field>
-			<field><![CDATA[Estuarine]]></field>
-			<field><![CDATA[Eye]]></field>
-			<field><![CDATA[Fat]]></field>
-			<field><![CDATA[Feather]]></field>
-			<field><![CDATA[Feces]]></field>
-			<field><![CDATA[Fin-clip]]></field>
-			<field><![CDATA[Foam]]></field>
-			<field><![CDATA[Follicles]]></field>
-			<field><![CDATA[Foot]]></field>
-			<field><![CDATA[Fresh water lentic]]></field>
-			<field><![CDATA[Fresh water lotic]]></field>
-			<field><![CDATA[Fungus mycelium]]></field>
-			<field><![CDATA[Gamete]]></field>
-			<field><![CDATA[Genetalia]]></field>
-			<field><![CDATA[Gill]]></field>
-			<field><![CDATA[Gizzard]]></field>
-			<field><![CDATA[Gonad]]></field>
-			<field><![CDATA[Gut/Viscera]]></field>
-			<field><![CDATA[Hair]]></field>
-			<field><![CDATA[Heart]]></field>
-			<field><![CDATA[High molecular weight]]></field>
-			<field><![CDATA[Hind piece]]></field>
-			<field><![CDATA[Host-Associated]]></field>
-			<field><![CDATA[Ice]]></field>
-			<field><![CDATA[Intestine]]></field>
-			<field><![CDATA[Kidney]]></field>
-			<field><![CDATA[Lateral piece]]></field>
-			<field><![CDATA[Leg]]></field>
-			<field><![CDATA[Liver]]></field>
-			<field><![CDATA[Lung]]></field>
-			<field><![CDATA[Lymph]]></field>
-			<field><![CDATA[Marine benthic]]></field>
-			<field><![CDATA[Marine pelagic]]></field>
-			<field><![CDATA[Melon]]></field>
-			<field><![CDATA[Microbial Mat/Biofilm]]></field>
-			<field><![CDATA[Mid-body]]></field>
-			<field><![CDATA[Milk]]></field>
-			<field><![CDATA[Misc/Artificial]]></field>
-			<field><![CDATA[Mixed sample, multiple organisms]]></field>
-			<field><![CDATA[Mixed tissue sample]]></field>
-			<field><![CDATA[mtDNA]]></field>
-			<field><![CDATA[Mud]]></field>
-			<field><![CDATA[Multiple individuals, same organism]]></field>
-			<field><![CDATA[Muscle]]></field>
-			<field><![CDATA[nDNA]]></field>
-			<field><![CDATA[Oil]]></field>
-			<field><![CDATA[Ovaries]]></field>
-			<field><![CDATA[PCR amplicon]]></field>
-			<field><![CDATA[Placenta]]></field>
-			<field><![CDATA[Plant-Associated]]></field>
-			<field><![CDATA[Plasma]]></field>
-			<field><![CDATA[Posterior]]></field>
-			<field><![CDATA[Post-intestine]]></field>
-			<field><![CDATA[Proboscis]]></field>
-			<field><![CDATA[Protein]]></field>
-			<field><![CDATA[Protoplast]]></field>
-			<field><![CDATA[Red blood cells]]></field>
-			<field><![CDATA[Reproductive tract]]></field>
-			<field><![CDATA[Rest of body]]></field>
-			<field><![CDATA[RNA]]></field>
-			<field><![CDATA[Saliva]]></field>
-			<field><![CDATA[Scale]]></field>
-			<field><![CDATA[Scum]]></field>
-			<field><![CDATA[Sediment]]></field>
-			<field><![CDATA[Serum]]></field>
-			<field><![CDATA[Skin]]></field>
-			<field><![CDATA[Snow]]></field>
-			<field><![CDATA[Soil]]></field>
-			<field><![CDATA[Spleen]]></field>
-			<field><![CDATA[Stem cells]]></field>
-			<field><![CDATA[Stomach]]></field>
-			<field><![CDATA[Tail]]></field>
-			<field><![CDATA[Testes]]></field>
-			<field><![CDATA[Thigh]]></field>
-			<field><![CDATA[Toe]]></field>
-			<field><![CDATA[Unknown blood sample]]></field>
-			<field><![CDATA[Unknown cell sample]]></field>
-			<field><![CDATA[Unknown clone]]></field>
-			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
-			<field><![CDATA[Unknown environmental sample]]></field>
-			<field><![CDATA[Unknown excretion/secretion]]></field>
-			<field><![CDATA[Unknown germplasm]]></field>
-			<field><![CDATA[Unknown organ]]></field>
-			<field><![CDATA[Unknown part]]></field>
-			<field><![CDATA[Unknown tissue sample]]></field>
-			<field><![CDATA[Unknown whole organism]]></field>
-			<field><![CDATA[Ureter]]></field>
-			<field><![CDATA[Urine]]></field>
-			<field><![CDATA[Water]]></field>
-			<field><![CDATA[Whole blood]]></field>
-			<field><![CDATA[Whole genomic DNA]]></field>
-			<field><![CDATA[Whole individual organism]]></field>
-			<field><![CDATA[Yeast]]></field>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field><![CDATA[ca.]]></field>
+			<field><![CDATA[greater than]]></field>
+			<field><![CDATA[less than]]></field>
+			<field><![CDATA[±]]></field>
 		</list>
 		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
 			<field><![CDATA[3 mm]]></field>
@@ -783,6 +623,51 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[With skin]]></field>
 			<field><![CDATA[Wood]]></field>
 			<field><![CDATA[Yolk]]></field>
+		</list>
+		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[Genus]]></field>
+			<field><![CDATA[not specified]]></field>
+			<field><![CDATA[Species]]></field>
+			<field><![CDATA[Subspecies]]></field>
+		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
+		</list>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Blood]]></field>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='weightUnit' caseInsensitive='true'>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[mg]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ton]]></field>
+			<field><![CDATA[g]]></field>
+		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
+		</list>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
+		</list>
+		<list alias='collectionCode' caseInsensitive='true'>
+			<field><![CDATA[Fishes]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>
@@ -1048,6 +933,193 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zanzibar]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
+		</list>
+		<list alias='Zoology Preparation' caseInsensitive='true'>
+			<field><![CDATA[95 % ETOH]]></field>
+			<field><![CDATA[Alcohol]]></field>
+			<field><![CDATA[Casts]]></field>
+			<field><![CDATA[Digital photograph on file]]></field>
+			<field><![CDATA[Dried]]></field>
+			<field><![CDATA[Dry Osteological Specimen]]></field>
+			<field><![CDATA[ETOH FIXED]]></field>
+			<field><![CDATA[Field Notes]]></field>
+			<field><![CDATA[Glycerin with Bone and Cartilage Stain]]></field>
+			<field><![CDATA[Glycerine, Triple stained]]></field>
+			<field><![CDATA[Glycerine With Bone Stain]]></field>
+			<field><![CDATA[Glycerine With Cartilage Stain]]></field>
+			<field><![CDATA[Glycerine With Nerve Stain]]></field>
+			<field><![CDATA[Hardcopy photograph on file]]></field>
+			<field><![CDATA[Histological Slide]]></field>
+			<field><![CDATA[Illustration]]></field>
+			<field><![CDATA[Jar Label]]></field>
+			<field><![CDATA[Larvae]]></field>
+			<field><![CDATA[Ledger Image]]></field>
+			<field><![CDATA[Model]]></field>
+			<field><![CDATA[Otolith]]></field>
+			<field><![CDATA[Photograph]]></field>
+			<field><![CDATA[Print]]></field>
+			<field><![CDATA[Radiograph]]></field>
+			<field><![CDATA[Scanning Electron Microphotograph]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Specimen Notes]]></field>
+			<field><![CDATA[Tissue sample]]></field>
+			<field><![CDATA[Transmission Electron Microphotograph]]></field>
+			<field><![CDATA[Transparency]]></field>
+			<field><![CDATA[Transparency sleeve]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Wet Osteological Specimen]]></field>
+		</list>
+		<list alias='identificationQualifier' caseInsensitive='true'>
+			<field><![CDATA[aff.]]></field>
+			<field><![CDATA[cf.]]></field>
+			<field><![CDATA[complex]]></field>
+			<field><![CDATA[group]]></field>
+			<field><![CDATA[near]]></field>
+			<field><![CDATA[sp. nov.]]></field>
+			<field><![CDATA[subgroup]]></field>
+			<field><![CDATA[uncertain]]></field>
+			<field><![CDATA[vel aff.]]></field>
+		</list>
+		<list alias='institutionCode' caseInsensitive='true'>
+			<field><![CDATA[USNM]]></field>
+		</list>
+		<list alias='continent' caseInsensitive='true'>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[Oceania]]></field>
+			<field><![CDATA[South America]]></field>
+		</list>
+		<list alias='lengthUnit' caseInsensitive='true'>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[m]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[µm]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ft]]></field>
+		</list>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Abdomen]]></field>
+			<field><![CDATA[Aerosol]]></field>
+			<field><![CDATA[Air]]></field>
+			<field><![CDATA[Anterior piece]]></field>
+			<field><![CDATA[Bacteria]]></field>
+			<field><![CDATA[Blood Vessel]]></field>
+			<field><![CDATA[Blubber]]></field>
+			<field><![CDATA[Bone]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Cells]]></field>
+			<field><![CDATA[Cheek Pouch Contents]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Clay]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dried scrapings]]></field>
+			<field><![CDATA[Dust]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Estuarine]]></field>
+			<field><![CDATA[Eye]]></field>
+			<field><![CDATA[Fat]]></field>
+			<field><![CDATA[Feather]]></field>
+			<field><![CDATA[Feces]]></field>
+			<field><![CDATA[Fin-clip]]></field>
+			<field><![CDATA[Foam]]></field>
+			<field><![CDATA[Follicles]]></field>
+			<field><![CDATA[Foot]]></field>
+			<field><![CDATA[Fresh water lentic]]></field>
+			<field><![CDATA[Fresh water lotic]]></field>
+			<field><![CDATA[Fungus mycelium]]></field>
+			<field><![CDATA[Gamete]]></field>
+			<field><![CDATA[Genetalia]]></field>
+			<field><![CDATA[Gill]]></field>
+			<field><![CDATA[Gizzard]]></field>
+			<field><![CDATA[Gonad]]></field>
+			<field><![CDATA[Gut/Viscera]]></field>
+			<field><![CDATA[Hair]]></field>
+			<field><![CDATA[Heart]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Hind piece]]></field>
+			<field><![CDATA[Host-Associated]]></field>
+			<field><![CDATA[Ice]]></field>
+			<field><![CDATA[Intestine]]></field>
+			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Lateral piece]]></field>
+			<field><![CDATA[Leg]]></field>
+			<field><![CDATA[Liver]]></field>
+			<field><![CDATA[Lung]]></field>
+			<field><![CDATA[Lymph]]></field>
+			<field><![CDATA[Marine benthic]]></field>
+			<field><![CDATA[Marine pelagic]]></field>
+			<field><![CDATA[Melon]]></field>
+			<field><![CDATA[Microbial Mat/Biofilm]]></field>
+			<field><![CDATA[Mid-body]]></field>
+			<field><![CDATA[Milk]]></field>
+			<field><![CDATA[Misc/Artificial]]></field>
+			<field><![CDATA[Mixed sample, multiple organisms]]></field>
+			<field><![CDATA[Mixed tissue sample]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Mud]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Oil]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Placenta]]></field>
+			<field><![CDATA[Plant-Associated]]></field>
+			<field><![CDATA[Plasma]]></field>
+			<field><![CDATA[Posterior]]></field>
+			<field><![CDATA[Post-intestine]]></field>
+			<field><![CDATA[Proboscis]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Protoplast]]></field>
+			<field><![CDATA[Red blood cells]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[Rest of body]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Saliva]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Scum]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Serum]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Snow]]></field>
+			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spleen]]></field>
+			<field><![CDATA[Stem cells]]></field>
+			<field><![CDATA[Stomach]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Testes]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Toe]]></field>
+			<field><![CDATA[Unknown blood sample]]></field>
+			<field><![CDATA[Unknown cell sample]]></field>
+			<field><![CDATA[Unknown clone]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown environmental sample]]></field>
+			<field><![CDATA[Unknown excretion/secretion]]></field>
+			<field><![CDATA[Unknown germplasm]]></field>
+			<field><![CDATA[Unknown organ]]></field>
+			<field><![CDATA[Unknown part]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Unknown whole organism]]></field>
+			<field><![CDATA[Ureter]]></field>
+			<field><![CDATA[Urine]]></field>
+			<field><![CDATA[Water]]></field>
+			<field><![CDATA[Whole blood]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
+			<field><![CDATA[Yeast]]></field>
+		</list>
+		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[variety]]></field>
+			<field><![CDATA[subvariety]]></field>
 		</list>
 	</lists>
 </validation>
