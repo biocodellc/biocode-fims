@@ -355,21 +355,32 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
 		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Unit' level='warning' otherColumn='Measurement 1 Value'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Value' level='warning' otherColumn='Measurement 1 Unit'></rule>
 		<rule type='checkInXMLFields' column='Measurement 2 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 2 Unit' level='warning' otherColumn='Measurement 2 Value'></rule>
 		<rule type='isNumber' column='Measurement 2 Value' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 2 Value' level='warning' otherColumn='Measurement 2 Unit'></rule>
 		<rule type='checkInXMLFields' column='Measurement 3 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 3 Unit' level='warning' otherColumn='Measurement 3 Value'></rule>
 		<rule type='isNumber' column='Measurement 3 Value' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 3 Value' level='warning' otherColumn='Measurement 3 Unit'></rule>
 		<rule type='checkInXMLFields' column='Measurement 4 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 4 Unit' level='warning' otherColumn='Measurement 4 Value'></rule>
 		<rule type='isNumber' column='Measurement 4 Value' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 4 Value' level='warning' otherColumn='Measurement 4 Unit'></rule>
 		<rule type='checkInXMLFields' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 5 Unit' level='warning' otherColumn='Measurement 1 Value'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Value' level='warning' otherColumn='Measurement 1 Unit'></rule>
 		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
 		<rule type='checkInXMLFields' column='Preparation 2' list='Zoology Preparation' level='Warning'></rule>
 		<rule type='checkInXMLFields' column='Preparation 3' list='Zoology Preparation' level='Warning'></rule>
@@ -392,12 +403,55 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Notes' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Material Sample ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Medium' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Temperature' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample quality' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Storage Conditions' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Well' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 	</worksheet>
 	<lists>
 		<list alias='Zoology Preparation' caseInsensitive='true'>

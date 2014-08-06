@@ -36,6 +36,7 @@ public class Rule {
     private String column;
     private String list;
     private String value;
+    private String otherColumn;
 
     // A reference to the validation object this rule belongs to
     //private Validation validation;
@@ -188,6 +189,19 @@ public class Rule {
             //return column.replace(" ", "_");
         }
     }
+     /**
+     * Returns the name of the column as it appears to SQLLite
+     * @return
+     */
+    public String getOtherColumn() {
+        // replace spaces with underscores....
+        if (otherColumn == null) {
+            return null;
+        } else {
+            return new sqlLiteNameCleaner().fixNames(otherColumn);
+            //return column.replace(" ", "_");
+        }
+    }
 
     /**
      * Returns the name of the columnn as it appears to the worksheet
@@ -199,6 +213,10 @@ public class Rule {
 
     public void setColumn(String column) {
         this.column = column;
+    }
+
+    public void setOtherColumn(String otherColumn) {
+        this.otherColumn = otherColumn;
     }
 
     public void addField(String field) {
@@ -602,6 +620,102 @@ public class Rule {
                 }
 
             }
+        }
+    }
+
+    /**
+     * If a user enters data in a particular column, it is required to:
+     * 1.  have a value in second column
+     * 2.  if there is a list of values specified under the rule, it needs to match one of those values
+     * @throws Exception
+     */
+    public void requiredValueFromOtherColumn() throws Exception {
+       StringBuilder lookupSB = new StringBuilder();
+        java.util.List<String> listFields;
+        String msg;
+        ResultSet resultSet = null;
+        Statement statement = null;
+
+        Boolean caseInsensitiveSearch = false;
+        try {
+            if (digesterWorksheet.getValidation().findList(getList()).getCaseInsensitive().equalsIgnoreCase("true")) {
+                caseInsensitiveSearch = true;
+            }
+        } catch (NullPointerException e) {
+            // do nothing, just make it not caseInsensitive
+        }
+
+        // First check that this column exists before running this rule
+        Boolean columnExists = checkColumnExists(getColumn());
+        if (!columnExists) {
+            // No need to return a message here if column does not exist
+            //messages.addLast(new RowMessage("Column name " + getColumn() + " does not exist", RowMessage.WARNING));
+            return;
+        }
+
+        // Convert XML Field values to a Stringified list
+        try {
+            listFields = getListElements();
+        } catch (Exception e) {
+            listFields = getFields();
+        }
+        // Loop the fields and put in a StringBuilder
+        int count = 0;
+        for (int k = 0; k < listFields.size(); k++) {
+            try {
+                if (count > 0)
+                    lookupSB.append(",");
+                // NOTE: the following escapes single quotes using another single quote
+                // (two single quotes in a row allows us to query one single quote in SQLlite)
+                if (caseInsensitiveSearch)
+                    lookupSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
+                else
+                    lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                count++;
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+
+        // Query the SQLlite instance to see if these values are contained in a particular row
+        try {
+            statement = connection.createStatement();
+            // Do the select on values based on other column values
+            String sql = "SELECT " + getColumn() + "," + getOtherColumn() + " FROM " + digesterWorksheet.getSheetname();
+            sql += " WHERE ifnull(" + getColumn()  + ",'') != '' AND ifnull("+getOtherColumn() +",'') = ''";
+
+            if (!lookupSB.toString().equals("")) {
+                sql += " AND " + getOtherColumn();
+                sql += " NOT IN (" + lookupSB.toString() + ")";
+            }
+
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String column = resultSet.getString(getColumn()).trim();
+                String otherColumn = resultSet.getString(getOtherColumn()).trim();
+                // Only display messages for items that exist, that is empty cell contents are an approved value
+                if (!column.equals("")) {
+                    //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
+
+                    msg = "\"" + resultSet.getString(getColumn()) + "\" specifed as \"" + getColumnWorksheetName() + "\"";
+                    msg += " without an appropriate value in another "+ getOtherColumn() + ".";
+                    if (!lookupSB.toString().equals("")) {
+                        msg += " (" + lookupSB.toString() + ")";
+                    }
+                    addMessage(msg, null, null);
+                }
+            }
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            throw new Exception("SQL exception processing requiredValueFromOtherColumn rule " + e.getMessage(), e);
+        } catch (Exception e) {
+            //e.printStackTrace();
+            throw new Exception("Unhandled exception processing requiredValueFromOtherColumn for " + getColumn(), e);
+        } finally {
+            statement.close();
+            if (resultSet != null)
+                resultSet.close();
         }
     }
 

@@ -31,7 +31,7 @@ public class siRuleProcessor {
 
     public siRuleProcessor(String jsonInput, String column, TreeMap treeMap) throws Exception {
         ruleTypes.add("controlledVocabulary");
-        //ruleTypes.add("requiredValueFromOtherColumn");
+        ruleTypes.add("requiredValueFromOtherColumn");
         ruleTypes.add("minimumMaximumNumberCheck");
         ruleTypes.add("uniqueValue");
         ruleTypes.add("isNumber");
@@ -63,6 +63,7 @@ public class siRuleProcessor {
                     Map json = (Map) it.next();
                     try {
                         individualRuleProcessor(json);
+                        resetVals();
                     } catch (Exception e) {
                         //e.printStackTrace();
                         System.err.println(e.getMessage());
@@ -72,11 +73,23 @@ public class siRuleProcessor {
             } else {
                 Map json = (Map) obj;
                 individualRuleProcessor(json);
+                resetVals();
             }
 
         } catch (ParseException pe) {
             throw new Exception("unabled to parse JSON" + jsonInput);
         }
+    }
+
+    /**
+     * Reset some global vars
+     */
+    private void resetVals() {
+        this.list = null;
+        this.level = "warning"; // reseting to default of warning
+        this.otherColumn = null;
+        this.value = null;
+        this.values = null;
     }
 
     /**
@@ -114,6 +127,8 @@ public class siRuleProcessor {
             } else if (key.equalsIgnoreCase("values")) {
                 this.values = (LinkedList) entry.getValue();
             }
+
+
         }
         if (type == null || type.equalsIgnoreCase("null") || type.equalsIgnoreCase("")) {
             throw new Exception("No rule type specified");
@@ -146,8 +161,8 @@ public class siRuleProcessor {
         }
         if (level != null)
             sbOutput.append(" level='" + level + "'");
-         if (value != null)
-             // Must encode the value field since it probably contains special characters
+        if (value != null)
+            // Must encode the value field since it probably contains special characters
             sbOutput.append(" value='" + URLEncoder.encode(value, "utf-8") + "'");
         if (otherColumn != null)
             sbOutput.append(" otherColumn='" + columnMapper(otherColumn) + "'");
@@ -187,7 +202,6 @@ public class siRuleProcessor {
         else
             return value;
     }
-
 
 
     /**
