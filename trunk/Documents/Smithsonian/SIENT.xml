@@ -277,6 +277,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='checkInXMLFields' column='Datum' list='geodeticDatum' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
@@ -290,10 +291,35 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Notes' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Medium' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Temperature' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 	</worksheet>
 	<lists>

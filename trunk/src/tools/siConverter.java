@@ -111,8 +111,14 @@ public class siConverter {
 
             try {
                 Cell globalValidationCell = row.getCell(globalValidationRuleIndex);
-                globalValidationValue = globalValidationCell.getStringCellValue();
+                if (globalValidationCell != null) {
+                    globalValidationValue = globalValidationCell.getStringCellValue();
+                } else {
+                    globalValidationValue = "";
+                }
+
             } catch (Exception e) {
+                e.printStackTrace();
                 System.err.println("Unable to process globalValidationRule on line " + row.getRowNum());
             }
 
@@ -251,65 +257,6 @@ public class siConverter {
     private static String lists(String abbreviation) throws IOException {
         siListProcessor listProcessor = new siListProcessor();
         return listProcessor.printList(listProcessor.loopDepartment(abbreviation)).toString();
-    }
-
-    /**
-     * Generate the elements for the Lists worksheet
-     *
-     * @return
-     */
-    private static String listsOld() {
-        //ListsSheet.
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("\t<lists>\n");
-
-        // Build the column references
-        List<String> columns = new ArrayList<String>();
-        Boolean lastColumn = false;
-        int columnNum = 0;
-        Row header = ListsSheet.getRow(0);
-        while (!lastColumn) {
-            Cell c = header.getCell(columnNum++);
-            if (c != null) {
-                columns.add(c.getStringCellValue());
-            } else {
-                lastColumn = true;
-            }
-        }
-
-        // Now get all the elements in this column
-        Iterator columnIt = columns.iterator();
-        int columnCounter = 0;
-        while (columnIt.hasNext()) {
-            String columnName = columnIt.next().toString();
-            if (!columnName.equals("")) {
-                sb.append("\t\t<list alias='" + columnName + "' caseInsensitive='true'>\n");
-
-                // Loop through each fow for this column
-                for (Row row : ListsSheet) {
-                    Cell c = row.getCell(columnCounter);
-                    String value = null;
-                    if (row.getRowNum() > 0) {
-                        // Grab value if Cell !=null
-                        if (c != null) {
-                            value = c.getStringCellValue().toString();
-                        }
-                        // populate field if value !=null
-                        if (value != null && !value.trim().equals("")) {
-                            sb.append("\t\t\t<field>" + value + "</field>\n");
-                        }
-                    }
-                }
-                sb.append("\t\t</list>\n");
-            }
-            columnCounter++;
-
-        }
-
-        sb.append("\t</lists>\n");
-
-        return sb.toString();
     }
 
     public static String footer() {
