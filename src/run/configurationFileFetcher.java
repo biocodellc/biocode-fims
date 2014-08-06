@@ -137,6 +137,8 @@ public class configurationFileFetcher {
         urlFreshener freshener = new urlFreshener();
         url = freshener.forceLatestURL(url);
 
+        System.out.println("URL we're using for connection: " + url.toString());
+
         HttpURLConnection.setFollowRedirects(true);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -160,11 +162,12 @@ public class configurationFileFetcher {
         if (redirect) {
 
             // get redirect url from "location" header field
-            String newUrl = conn.getHeaderField("Location");
+            String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
+            System.out.println("Redirected URL we're using for connection: " + url.toString());
 
             // open the  connnection
 
-            conn = (HttpURLConnection) new URL(freshener.forceLatestURL(newUrl)).openConnection();
+            conn = (HttpURLConnection) new URL(newUrl).openConnection();
             conn.setUseCaches(false);
             conn.setDefaultUseCaches(false);
             conn.addRequestProperty("Cache-Control", "no-cache");
