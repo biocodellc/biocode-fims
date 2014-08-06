@@ -158,7 +158,8 @@ public class utils {
         digester.List results = (digester.List) validation.findList(list_name);
         // NO results mean no list has been defined!
         if (results == null) {
-            return Response.ok("No list has been defined for " + column_name + " but there is a rule saying it exists.  Please talk to Informatics to fix this").build();
+            return Response.ok("No list has been defined for \"" + column_name + "\" but there is a rule saying it exists.  " +
+                    "Please talk to your FIMS project manager to fix this").build();
         }
         Iterator it = results.getFields().iterator();
         StringBuilder sb = new StringBuilder();

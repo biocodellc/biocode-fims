@@ -189,6 +189,10 @@ public class configurationFileFetcher {
                 os.write(buffer, 0, bytesRead);
             }
             inputStream.close();
+
+            // Debugging where file output is stored
+            System.out.println("writing " + url + " to " + outputFile.getAbsolutePath());
+
             //flush OutputStream to write any buffered data to file
             os.flush();
             os.close();
