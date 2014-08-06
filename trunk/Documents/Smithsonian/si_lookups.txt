@@ -1,113 +1,3 @@
-Biogeography Region|Botany|12 - Southwestern Europe / 13 - Southeastern Europe
-Biogeography Region|Botany|13 - Southeastern Europe
-Biogeography Region|Botany|13 - Southeastern Europe / 11 - Middle Europe
-Biogeography Region|Botany|14 - Eastern Europe
-Biogeography Region|Botany|2 - Africa
-Biogeography Region|Botany|20 - Northern Africa
-Biogeography Region|Botany|20 - Northern Africa / 24 - Northeast Tropical Africa
-Biogeography Region|Botany|21 - Macaronesia
-Biogeography Region|Botany|22 - West Tropical Africa
-Biogeography Region|Botany|22 - West Tropical Africa / 27 - Southern Africa
-Biogeography Region|Botany|23 - West-Central Tropical Africa
-Biogeography Region|Botany|23 - West-Central Tropical Africa / 22 - West Tropical Africa
-Biogeography Region|Botany|24 - Northeast Tropical Africa
-Biogeography Region|Botany|25 - East Tropical Africa
-Biogeography Region|Botany|25 - Northeast Tropical Africa
-Biogeography Region|Botany|26 - South Tropical Africa
-Biogeography Region|Botany|26 - South Tropical Africa / 23 - West Central Tropical Africa
-Biogeography Region|Botany|26 - South Tropical Africa / 27 - Southern Africa
-Biogeography Region|Botany|27 - Southern Africa
-Biogeography Region|Botany|28 - Middle Atlantic Ocean
-Biogeography Region|Botany|29 - West Indian Ocean
-Biogeography Region|Botany|29 - Western Indian Ocean
-Biogeography Region|Botany|3 - Asia-Temperate
-Biogeography Region|Botany|30 - Siberia
-Biogeography Region|Botany|30 - Siberia / 31 - Russian Far East
-Biogeography Region|Botany|31 - Russian Far East
-Biogeography Region|Botany|32 - Middle Asia
-Biogeography Region|Botany|32 - Middle Asia / 14 - Eastern Europe
-Biogeography Region|Botany|33 - Caucasus
-Biogeography Region|Botany|34 - Western Asia
-Biogeography Region|Botany|34 - Western Asia / 35 - Arabian Peninsula
-Biogeography Region|Botany|34 - Western Asia / 40 - Indian Subcontinent
-Biogeography Region|Botany|35 - Arabian Peninsula
-Biogeography Region|Botany|36 - China
-Biogeography Region|Botany|36 - China / 38 - Eastern Asia
-Biogeography Region|Botany|36 - China / 41 - Indo-China
-Biogeography Region|Botany|36 - China Hainan
-Biogeography Region|Botany|36 - China North-Central
-Biogeography Region|Botany|36 - China South-Central
-Biogeography Region|Botany|36 - China South-Central / 36 - Tibet-Qinghai
-Biogeography Region|Botany|36 - China South-Central South-Central
-Biogeography Region|Botany|36 - China Southeast
-Biogeography Region|Botany|36 - Hainan
-Biogeography Region|Botany|36 - Inner Mongolia
-Biogeography Region|Botany|36 - Manchuria
-Biogeography Region|Botany|36 - Qinghai
-Biogeography Region|Botany|36 - Tibet
-Biogeography Region|Botany|36 - Tibet / 36 - China South-Central
-Biogeography Region|Botany|36 - Xinjiang
-Biogeography Region|Botany|37 - Mongolia
-Biogeography Region|Botany|38 - Eastern Asia
-Biogeography Region|Botany|4 - Asia-Tropical
-Biogeography Region|Botany|40 - Indian Subcontinent
-Biogeography Region|Botany|40 - Indian Subcontinent / 41 - Indo-China
-Biogeography Region|Botany|40 - Indian Subcontinent / 42 - Malesia
-Biogeography Region|Botany|41 - Indo-China
-Biogeography Region|Botany|41 - Indo-China / 42 - Malesia
-Biogeography Region|Botany|42 - Malesia
-Biogeography Region|Botany|42 - Malesia / 41 - Indo-China
-Biogeography Region|Botany|43 - Papuasia
-Biogeography Region|Botany|50 - Australasia
-Biogeography Region|Botany|50 - Australia
-Biogeography Region|Botany|51 - New Zealand
-Biogeography Region|Botany|6 - Pacific Islands
-Biogeography Region|Botany|60 - Southwestern Pacific
-Biogeography Region|Botany|61 - South-Central Pacific
-Biogeography Region|Botany|62 - Northwestern Pacfic
-Biogeography Region|Botany|62 - Northwestern Pacific
-Biogeography Region|Botany|62 - South-Central Pacific
-Biogeography Region|Botany|63 - North-Central Pacific
-Biogeography Region|Botany|63 - Northwestern Pacific
-Biogeography Region|Botany|70 - Subarctic America
-Biogeography Region|Botany|71 - Western Canada
-Biogeography Region|Botany|71 - Western Canada / 72 - Eastern Canada
-Biogeography Region|Botany|72 - Eastern Canada
-Biogeography Region|Botany|73 - Northwestern U.S.A.
-Biogeography Region|Botany|74 - North-Central U.S.A.
-Biogeography Region|Botany|75 - Northeastern U.S.A.
-Biogeography Region|Botany|75 - Northeastern U.S.A. / 78 - Southeastern U.S.A.
-Biogeography Region|Botany|76 - Southwestern U.S.A.
-Biogeography Region|Botany|76 - Southwestern U.S.A. / 73 - Northwestern U.S.A.
-Biogeography Region|Botany|76 - Southwestern U.S.A. / 77 - South-Central U.S.A.
-Biogeography Region|Botany|77 - South-Central U.S.A.
-Biogeography Region|Botany|78 - Southeastern U.S.A.
-Biogeography Region|Botany|78 - Southeastern U.S.A./ 75 - Northeastern U.S.A.
-Biogeography Region|Botany|78 - Southwestern U.S.A.
-Biogeography Region|Botany|79 - Mexican Pacific Islands
-Biogeography Region|Botany|79 - Mexico
-Biogeography Region|Botany|79 - Mexico Central
-Biogeography Region|Botany|79 - Mexico Gulf
-Biogeography Region|Botany|79 - Mexico Northeast
-Biogeography Region|Botany|79 - Mexico Northwest
-Biogeography Region|Botany|79 - Mexico Northwest / 76 - Southwestern U.S.A.
-Biogeography Region|Botany|79 - Mexico Southeast
-Biogeography Region|Botany|79 - Mexico Southeast / 79 - Mexico Southwest
-Biogeography Region|Botany|79 - Mexico Southwest
-Biogeography Region|Botany|8 - South America
-Biogeography Region|Botany|80 - Central America
-Biogeography Region|Botany|80 - Central America / 79 - Mexico
-Biogeography Region|Botany|80 - Central America / 83 - Western South America
-Biogeography Region|Botany|81 - Caribbean
-Biogeography Region|Botany|82 - Northern South America
-Biogeography Region|Botany|82 - Northern South America / 84 - Brazil
-Biogeography Region|Botany|83 - Western South America
-Biogeography Region|Botany|83 - Western South America / 80 - Central America
-Biogeography Region|Botany|83 - Western South America / 82 - Northern South America
-Biogeography Region|Botany|84 - Brazil
-Biogeography Region|Botany|84 - Brazil North
-Biogeography Region|Botany|84 - Brazil North / 82 - Northern South America
-Biogeography Region|Botany|84 - Brazil North / 83 - Western South America
 Zoology Preparation|Botany|Bulky fruit
 Zoology Preparation|Botany|Living material
 Zoology Preparation|Botany|Microslide
@@ -246,16 +136,16 @@ Zoology Preparation|Entomology|RNAlater
 Zoology Preparation|Entomology|Slide
 Zoology Preparation|Entomology|Slide section
 Zoology Preparation|Entomology|Vial
-yesNo|Entomology|Yes
-yesNo|Entomology|No
-elevDepthModifier|Entomology|ca.
-elevDepthModifier|Entomology|greater than
-elevDepthModifier|Entomology|less than
-elevDepthModifier|Entomology|±
-latitudeNorthSouth|Entomology|N
-latitudeNorthSouth|Entomology|S
-longitudeEastWest|Entomology|E
-longitudeEastWest|Entomology|W
+yesNo||Yes
+yesNo||No
+elevDepthModifier||ca.
+elevDepthModifier||greater than
+elevDepthModifier||less than
+elevDepthModifier||±
+latitudeNorthSouth||N
+latitudeNorthSouth||S
+longitudeEastWest||E
+longitudeEastWest||W
 identificationQualifier|Entomology|aff.
 identificationQualifier|Entomology|cf.
 identificationQualifier|Entomology|complex
@@ -265,102 +155,102 @@ identificationQualifier|Entomology|sp. nov.
 identificationQualifier|Entomology|subgroup
 identificationQualifier|Entomology|uncertain
 identificationQualifier|Entomology|vel aff.
-collectionCode|Entomology|Botany
+collectionCode|Botany|Botany
 collectionCode|Entomology|Entomology
-collectionCode|Entomology|Invertebrate Zoology
-collectionCode|Entomology|Amphibians & Reptiles
-collectionCode|Entomology|Birds
-collectionCode|Entomology|Fishes
-collectionCode|Entomology|Mammals
-collectionCode|Entomology|Mineral Sciences
-institutionCode|Entomology|US
+collectionCode|Invertebrate Zoology|Invertebrate Zoology
+collectionCode|Amphibians & Reptiles|Amphibians & Reptiles
+collectionCode|Birds|Birds
+collectionCode|Fishes|Fishes
+collectionCode|Mammals|Mammals
+collectionCode|Mineral Sciences|Mineral Sciences
+institutionCode|Botany|US
 institutionCode|Entomology|USNM
-continent|Entomology|Africa
-continent|Entomology|Antarctica
-continent|Entomology|Asia
-continent|Entomology|Australia
-continent|Entomology|Europe
-continent|Entomology|North America
-continent|Entomology|Oceania
-continent|Entomology|South America
-ocean|Entomology|Antarctic Ocean
-ocean|Entomology|Arctic Ocean
-ocean|Entomology|Indian Ocean
-ocean|Entomology|North Atlantic Ocean
-ocean|Entomology|North Pacific Ocean
-ocean|Entomology|South Atlantic Ocean
-ocean|Entomology|South Pacific Ocean
-lengthUnits|Entomology|cm
-lengthUnits|Entomology|m
-lengthUnits|Entomology|mm
-lengthUnits|Entomology|µm
-lengthUnits|Entomology|in
-lengthUnits|Entomology|ft
-measurementUnit|Entomology|cm
-measurementUnit|Entomology|ft
-measurementUnit|Entomology|g
-measurementUnit|Entomology|in
-measurementUnit|Entomology|ins
-measurementUnit|Entomology|kg
-measurementUnit|Entomology|lb
-measurementUnit|Entomology|lbs
-measurementUnit|Entomology|mm
-measurementUnit|Entomology|oz
-measurementUnit|Entomology|ct
-establishmentMeans|Entomology|cultivated
-establishmentMeans|Entomology|escaped
-establishmentMeans|Entomology|introduced
-establishmentMeans|Entomology|invasive
-establishmentMeans|Entomology|managed
-establishmentMeans|Entomology|native
-establishmentMeans|Entomology|naturalised
-establishmentMeans|Entomology|uncertain
-establishmentMeans|Entomology|waif
-establishmentMeans|Entomology|wild
-exudate|Entomology|Clear
-exudate|Entomology|Cream
-exudate|Entomology|Orangish
-exudate|Entomology|Reddish
-exudate|Entomology|White
-exudate|Entomology|Yellow
-habit|Entomology|Aquatic herb
-habit|Entomology|Cespitose herb
-habit|Entomology|Decumbent herb
-habit|Entomology|Epilithic
-habit|Entomology|Epiphyte
-habit|Entomology|Erect herb
-habit|Entomology|Floating herb
-habit|Entomology|Hemiparasite
-habit|Entomology|Herbaceous vine
-habit|Entomology|Liana
-habit|Entomology|Palm
-habit|Entomology|Palm-like fern
-habit|Entomology|Parasite
-habit|Entomology|Scandent shrub
-habit|Entomology|Shrub
-habit|Entomology|Trailing herb
-habit|Entomology|Trailing vine
-habit|Entomology|Tree
-habit|Entomology|Treelet
+continent||Africa
+continent||Antarctica
+continent||Asia
+continent||Australia
+continent||Europe
+continent||North America
+continent||Oceania
+continent||South America
+ocean||Antarctic Ocean
+ocean||Arctic Ocean
+ocean||Indian Ocean
+ocean||North Atlantic Ocean
+ocean||North Pacific Ocean
+ocean||South Atlantic Ocean
+ocean||South Pacific Ocean
+lengthUnit||cm
+lengthUnit||m
+lengthUnit||mm
+lengthUnit||µm
+lengthUnit||in
+lengthUnit||ft
+measurementUnit||cm
+measurementUnit||ft
+measurementUnit||g
+measurementUnit||in
+measurementUnit||ins
+measurementUnit||kg
+measurementUnit||lb
+measurementUnit||lbs
+measurementUnit||mm
+measurementUnit||oz
+measurementUnit||ct
+establishmentMeans|Botany|cultivated
+establishmentMeans|Botany|escaped
+establishmentMeans|Botany|introduced
+establishmentMeans|Botany|invasive
+establishmentMeans|Botany|managed
+establishmentMeans|Botany|native
+establishmentMeans|Botany|naturalised
+establishmentMeans|Botany|uncertain
+establishmentMeans|Botany|waif
+establishmentMeans|Botany|wild
+exudate|Botany|Clear
+exudate|Botany|Cream
+exudate|Botany|Orangish
+exudate|Botany|Reddish
+exudate|Botany|White
+exudate|Botany|Yellow
+habit|Botany|Aquatic herb
+habit|Botany|Cespitose herb
+habit|Botany|Decumbent herb
+habit|Botany|Epilithic
+habit|Botany|Epiphyte
+habit|Botany|Erect herb
+habit|Botany|Floating herb
+habit|Botany|Hemiparasite
+habit|Botany|Herbaceous vine
+habit|Botany|Liana
+habit|Botany|Palm
+habit|Botany|Palm-like fern
+habit|Botany|Parasite
+habit|Botany|Scandent shrub
+habit|Botany|Shrub
+habit|Botany|Trailing herb
+habit|Botany|Trailing vine
+habit|Botany|Tree
+habit|Botany|Treelet
 hybridRank|Entomology|Genus
 hybridRank|Entomology|Species
-taxonRank|Entomology|aberration
-taxonRank|Entomology|forma
-taxonRank|Entomology|morpha
-taxonRank|Entomology|race
-taxonRank|Entomology|subforma
-taxonRank|Entomology|subvariety
-taxonRank|Entomology|variety
+taxonRank||aberration
+taxonRank||forma
+taxonRank||morpha
+taxonRank||race
+taxonRank||subforma
+taxonRank||subvariety
+taxonRank||variety
 sex|Entomology|Male
 sex|Entomology|Female
 sex|Entomology|Unknown
 sex|Entomology|Worker
-geodeticDatum|Entomology|NAD27
-geodeticDatum|Entomology|NAD83
-geodeticDatum|Entomology|WGS84
-sampleQuality|Entomology|High
-sampleQuality|Entomology|Medium
-sampleQuality|Entomology|Low
+geodeticDatum||NAD27
+geodeticDatum||NAD83
+geodeticDatum||WGS84
+sampleQuality||High
+sampleQuality||Medium
+sampleQuality||Low
 Object Type|Botany|Bulky Specimen
 Object Type|Botany|Genetic Sample
 Object Type|Botany|Liquid Preserved
@@ -384,6 +274,93 @@ Object Type|Fishes|Specimen/Lot
 Object Type|Mammals|Specimen/Lot
 Object Type|Entomology|Specimen/Lot
 Object Type|Mineral Sciences|Specimen/Lot
+hybridRank|Amphibians & Reptiles|Genus
+hybridRank|Amphibians & Reptiles|Species
+hybridRank|Birds|Genus
+hybridRank|Birds|Species
+hybridRank|Botany|Genus
+hybridRank|Botany|Species
+hybridRank|Fishes|Genus
+hybridRank|Fishes|Species
+hybridRank|Invertebrate Zoology|Genus
+hybridRank|Invertebrate Zoology|Species
+hybridRank|Mammals|Genus
+hybridRank|Mammals|Species
+identificationQualifier|Amphibians & Reptiles|aff.
+identificationQualifier|Amphibians & Reptiles|cf.
+identificationQualifier|Amphibians & Reptiles|complex
+identificationQualifier|Amphibians & Reptiles|group
+identificationQualifier|Amphibians & Reptiles|near
+identificationQualifier|Amphibians & Reptiles|sp. nov.
+identificationQualifier|Amphibians & Reptiles|subgroup
+identificationQualifier|Amphibians & Reptiles|uncertain
+identificationQualifier|Amphibians & Reptiles|vel aff.
+identificationQualifier|Birds|aff.
+identificationQualifier|Birds|cf.
+identificationQualifier|Birds|complex
+identificationQualifier|Birds|group
+identificationQualifier|Birds|near
+identificationQualifier|Birds|sp. nov.
+identificationQualifier|Birds|subgroup
+identificationQualifier|Birds|uncertain
+identificationQualifier|Birds|vel aff.
+identificationQualifier|Botany|aff.
+identificationQualifier|Botany|cf.
+identificationQualifier|Botany|complex
+identificationQualifier|Botany|group
+identificationQualifier|Botany|near
+identificationQualifier|Botany|sp. nov.
+identificationQualifier|Botany|subgroup
+identificationQualifier|Botany|uncertain
+identificationQualifier|Botany|vel aff.
+identificationQualifier|Fishes|aff.
+identificationQualifier|Fishes|cf.
+identificationQualifier|Fishes|complex
+identificationQualifier|Fishes|group
+identificationQualifier|Fishes|near
+identificationQualifier|Fishes|sp. nov.
+identificationQualifier|Fishes|subgroup
+identificationQualifier|Fishes|uncertain
+identificationQualifier|Fishes|vel aff.
+identificationQualifier|Invertebrate Zoology|aff.
+identificationQualifier|Invertebrate Zoology|cf.
+identificationQualifier|Invertebrate Zoology|complex
+identificationQualifier|Invertebrate Zoology|group
+identificationQualifier|Invertebrate Zoology|near
+identificationQualifier|Invertebrate Zoology|sp. nov.
+identificationQualifier|Invertebrate Zoology|subgroup
+identificationQualifier|Invertebrate Zoology|uncertain
+identificationQualifier|Invertebrate Zoology|vel aff.
+identificationQualifier|Mammals|aff.
+identificationQualifier|Mammals|cf.
+identificationQualifier|Mammals|complex
+identificationQualifier|Mammals|group
+identificationQualifier|Mammals|near
+identificationQualifier|Mammals|sp. nov.
+identificationQualifier|Mammals|subgroup
+identificationQualifier|Mammals|uncertain
+identificationQualifier|Mammals|vel aff.
+institutionCode|Amphibians & Reptiles|USNM
+institutionCode|Birds|USNM
+institutionCode|Fishes|USNM
+institutionCode|Invertebrate Zoology|USNM
+institutionCode|Mammals|USNM
+institutionCode|Mineral Sciences|USNM
+sex|Amphibians & Reptiles|Female
+sex|Amphibians & Reptiles|Male
+sex|Amphibians & Reptiles|Unknown
+sex|Birds|Female
+sex|Birds|Male
+sex|Birds|Unknown
+sex|Fishes|Female
+sex|Fishes|Male
+sex|Fishes|Unknown
+sex|Invertebrate Zoology|Female
+sex|Invertebrate Zoology|Male
+sex|Invertebrate Zoology|Unknown
+sex|Mammals|Female
+sex|Mammals|Male
+sex|Mammals|Unknown
 Biogeography Region|Botany|??
 Biogeography Region|Botany|1 - Europe
 Biogeography Region|Botany|10 - Northern Europe
@@ -392,6 +369,116 @@ Biogeography Region|Botany|11 - Middle Europe
 Biogeography Region|Botany|11 - Middle Europe / 13 - Southeastern Europe
 Biogeography Region|Botany|12 - Southwestern Europe
 Biogeography Region|Botany|12 - Southwestern Europe / 11 - Middle Europe
+Biogeography Region|Botany|12 - Southwestern Europe / 13 - Southeastern Europe
+Biogeography Region|Botany|13 - Southeastern Europe
+Biogeography Region|Botany|13 - Southeastern Europe / 11 - Middle Europe
+Biogeography Region|Botany|14 - Eastern Europe
+Biogeography Region|Botany|2 - Africa
+Biogeography Region|Botany|20 - Northern Africa
+Biogeography Region|Botany|20 - Northern Africa / 24 - Northeast Tropical Africa
+Biogeography Region|Botany|21 - Macaronesia
+Biogeography Region|Botany|22 - West Tropical Africa
+Biogeography Region|Botany|22 - West Tropical Africa / 27 - Southern Africa
+Biogeography Region|Botany|23 - West-Central Tropical Africa
+Biogeography Region|Botany|23 - West-Central Tropical Africa / 22 - West Tropical Africa
+Biogeography Region|Botany|24 - Northeast Tropical Africa
+Biogeography Region|Botany|25 - East Tropical Africa
+Biogeography Region|Botany|25 - Northeast Tropical Africa
+Biogeography Region|Botany|26 - South Tropical Africa
+Biogeography Region|Botany|26 - South Tropical Africa / 23 - West Central Tropical Africa
+Biogeography Region|Botany|26 - South Tropical Africa / 27 - Southern Africa
+Biogeography Region|Botany|27 - Southern Africa
+Biogeography Region|Botany|28 - Middle Atlantic Ocean
+Biogeography Region|Botany|29 - West Indian Ocean
+Biogeography Region|Botany|29 - Western Indian Ocean
+Biogeography Region|Botany|3 - Asia-Temperate
+Biogeography Region|Botany|30 - Siberia
+Biogeography Region|Botany|30 - Siberia / 31 - Russian Far East
+Biogeography Region|Botany|31 - Russian Far East
+Biogeography Region|Botany|32 - Middle Asia
+Biogeography Region|Botany|32 - Middle Asia / 14 - Eastern Europe
+Biogeography Region|Botany|33 - Caucasus
+Biogeography Region|Botany|34 - Western Asia
+Biogeography Region|Botany|34 - Western Asia / 35 - Arabian Peninsula
+Biogeography Region|Botany|34 - Western Asia / 40 - Indian Subcontinent
+Biogeography Region|Botany|35 - Arabian Peninsula
+Biogeography Region|Botany|36 - China
+Biogeography Region|Botany|36 - China / 38 - Eastern Asia
+Biogeography Region|Botany|36 - China / 41 - Indo-China
+Biogeography Region|Botany|36 - China Hainan
+Biogeography Region|Botany|36 - China North-Central
+Biogeography Region|Botany|36 - China South-Central
+Biogeography Region|Botany|36 - China South-Central / 36 - Tibet-Qinghai
+Biogeography Region|Botany|36 - China South-Central South-Central
+Biogeography Region|Botany|36 - China Southeast
+Biogeography Region|Botany|36 - Hainan
+Biogeography Region|Botany|36 - Inner Mongolia
+Biogeography Region|Botany|36 - Manchuria
+Biogeography Region|Botany|36 - Qinghai
+Biogeography Region|Botany|36 - Tibet
+Biogeography Region|Botany|36 - Tibet / 36 - China South-Central
+Biogeography Region|Botany|36 - Xinjiang
+Biogeography Region|Botany|37 - Mongolia
+Biogeography Region|Botany|38 - Eastern Asia
+Biogeography Region|Botany|4 - Asia-Tropical
+Biogeography Region|Botany|40 - Indian Subcontinent
+Biogeography Region|Botany|40 - Indian Subcontinent / 41 - Indo-China
+Biogeography Region|Botany|40 - Indian Subcontinent / 42 - Malesia
+Biogeography Region|Botany|41 - Indo-China
+Biogeography Region|Botany|41 - Indo-China / 42 - Malesia
+Biogeography Region|Botany|42 - Malesia
+Biogeography Region|Botany|42 - Malesia / 41 - Indo-China
+Biogeography Region|Botany|43 - Papuasia
+Biogeography Region|Botany|50 - Australasia
+Biogeography Region|Botany|50 - Australia
+Biogeography Region|Botany|51 - New Zealand
+Biogeography Region|Botany|6 - Pacific Islands
+Biogeography Region|Botany|60 - Southwestern Pacific
+Biogeography Region|Botany|61 - South-Central Pacific
+Biogeography Region|Botany|62 - Northwestern Pacfic
+Biogeography Region|Botany|62 - Northwestern Pacific
+Biogeography Region|Botany|62 - South-Central Pacific
+Biogeography Region|Botany|63 - North-Central Pacific
+Biogeography Region|Botany|63 - Northwestern Pacific
+Biogeography Region|Botany|70 - Subarctic America
+Biogeography Region|Botany|71 - Western Canada
+Biogeography Region|Botany|71 - Western Canada / 72 - Eastern Canada
+Biogeography Region|Botany|72 - Eastern Canada
+Biogeography Region|Botany|73 - Northwestern U.S.A.
+Biogeography Region|Botany|74 - North-Central U.S.A.
+Biogeography Region|Botany|75 - Northeastern U.S.A.
+Biogeography Region|Botany|75 - Northeastern U.S.A. / 78 - Southeastern U.S.A.
+Biogeography Region|Botany|76 - Southwestern U.S.A.
+Biogeography Region|Botany|76 - Southwestern U.S.A. / 73 - Northwestern U.S.A.
+Biogeography Region|Botany|76 - Southwestern U.S.A. / 77 - South-Central U.S.A.
+Biogeography Region|Botany|77 - South-Central U.S.A.
+Biogeography Region|Botany|78 - Southeastern U.S.A.
+Biogeography Region|Botany|78 - Southeastern U.S.A./ 75 - Northeastern U.S.A.
+Biogeography Region|Botany|78 - Southwestern U.S.A.
+Biogeography Region|Botany|79 - Mexican Pacific Islands
+Biogeography Region|Botany|79 - Mexico
+Biogeography Region|Botany|79 - Mexico Central
+Biogeography Region|Botany|79 - Mexico Gulf
+Biogeography Region|Botany|79 - Mexico Northeast
+Biogeography Region|Botany|79 - Mexico Northwest
+Biogeography Region|Botany|79 - Mexico Northwest / 76 - Southwestern U.S.A.
+Biogeography Region|Botany|79 - Mexico Southeast
+Biogeography Region|Botany|79 - Mexico Southeast / 79 - Mexico Southwest
+Biogeography Region|Botany|79 - Mexico Southwest
+Biogeography Region|Botany|8 - South America
+Biogeography Region|Botany|80 - Central America
+Biogeography Region|Botany|80 - Central America / 79 - Mexico
+Biogeography Region|Botany|80 - Central America / 83 - Western South America
+Biogeography Region|Botany|81 - Caribbean
+Biogeography Region|Botany|82 - Northern South America
+Biogeography Region|Botany|82 - Northern South America / 84 - Brazil
+Biogeography Region|Botany|83 - Western South America
+Biogeography Region|Botany|83 - Western South America / 80 - Central America
+Biogeography Region|Botany|83 - Western South America / 82 - Northern South America
+Biogeography Region|Botany|84 - Brazil
+Biogeography Region|Botany|84 - Brazil North
+Biogeography Region|Botany|84 - Brazil North / 82 - Northern South America
+Biogeography Region|Botany|84 - Brazil North / 83 - Western South America
 Biogeography Region|Botany|84 - Brazil North / 84 - Brazil West Central
 Biogeography Region|Botany|84 - Brazil Northeast
 Biogeography Region|Botany|84 - Brazil Northeast / 84 - Brazil Southeast
@@ -4571,49 +4658,49 @@ Genetic Sample Type Tertiary|Mineral Sciences|Whole
 Genetic Sample Type Tertiary|Mineral Sciences|With skin
 Genetic Sample Type Tertiary|Mineral Sciences|Wood
 Genetic Sample Type Tertiary|Mineral Sciences|Yolk
-Sexual Maturity||-
-Sexual Maturity||Adult
-Sexual Maturity||Calf
-Sexual Maturity||Fetus
-Sexual Maturity||Immature
-Sexual Maturity||immature (avascular uterus)
-Sexual Maturity||Immature (Ovaries immature)
-Sexual Maturity||immature (uterus immature)
-Sexual Maturity||Juvenile
-Sexual Maturity||Lactating
-Sexual Maturity||Lactating? Mature
-Sexual Maturity||Mature
-Sexual Maturity||Mature (dilated)
-Sexual Maturity||Mature (lactating questionable)
-Sexual Maturity||Mature (lactating)
-Sexual Maturity||Mature (lactating, dialated uterus)
-Sexual Maturity||Mature (lactating, pregnant)
-Sexual Maturity||mature (lactating, uterus contracted)
-Sexual Maturity||Mature (mammeries distended, fetus probably aborted)
-Sexual Maturity||Mature (pregnant)
-Sexual Maturity||Mature (pregnant, lactaing)
-Sexual Maturity||Mature (pregnant, lactating)
-Sexual Maturity||Mature (seminal fluid in epididymus)
-Sexual Maturity||Mature (sperm in epididiymus)
-Sexual Maturity||Mature (sperm in epididymus
-Sexual Maturity||mature (sperm in epididymuse)
-Sexual Maturity||Mature (sperm in epidiymus)
-Sexual Maturity||Mature (sperm in epidydimus)
-Sexual Maturity||Mature (sperrm in epididymus)
-Sexual Maturity||Mature (Uterus contracted, lactating)
-Sexual Maturity||Mature (uterus dialated)
-Sexual Maturity||Mature (uterus mature)
-Sexual Maturity||Mature (with calf)
-Sexual Maturity||Maturing?
-Sexual Maturity||Need
-Sexual Maturity||Neonate
-Sexual Maturity||Pregnant
-Sexual Maturity||Resting
-Sexual Maturity||Stillborn
-Sexual Maturity||Subadult
-Sexual Maturity||Unknown
-Sexual Maturity||Unknown, immature
-Sexual Maturity||Unknown, Sperm in epididymus
+Sexual Maturity|Mammals|-
+Sexual Maturity|Mammals|Adult
+Sexual Maturity|Mammals|Calf
+Sexual Maturity|Mammals|Fetus
+Sexual Maturity|Mammals|Immature
+Sexual Maturity|Mammals|immature (avascular uterus)
+Sexual Maturity|Mammals|Immature (Ovaries immature)
+Sexual Maturity|Mammals|immature (uterus immature)
+Sexual Maturity|Mammals|Juvenile
+Sexual Maturity|Mammals|Lactating
+Sexual Maturity|Mammals|Lactating? Mature
+Sexual Maturity|Mammals|Mature
+Sexual Maturity|Mammals|Mature (dilated)
+Sexual Maturity|Mammals|Mature (lactating questionable)
+Sexual Maturity|Mammals|Mature (lactating)
+Sexual Maturity|Mammals|Mature (lactating, dialated uterus)
+Sexual Maturity|Mammals|Mature (lactating, pregnant)
+Sexual Maturity|Mammals|mature (lactating, uterus contracted)
+Sexual Maturity|Mammals|Mature (mammeries distended, fetus probably aborted)
+Sexual Maturity|Mammals|Mature (pregnant)
+Sexual Maturity|Mammals|Mature (pregnant, lactaing)
+Sexual Maturity|Mammals|Mature (pregnant, lactating)
+Sexual Maturity|Mammals|Mature (seminal fluid in epididymus)
+Sexual Maturity|Mammals|Mature (sperm in epididiymus)
+Sexual Maturity|Mammals|Mature (sperm in epididymus
+Sexual Maturity|Mammals|mature (sperm in epididymuse)
+Sexual Maturity|Mammals|Mature (sperm in epidiymus)
+Sexual Maturity|Mammals|Mature (sperm in epidydimus)
+Sexual Maturity|Mammals|Mature (sperrm in epididymus)
+Sexual Maturity|Mammals|Mature (Uterus contracted, lactating)
+Sexual Maturity|Mammals|Mature (uterus dialated)
+Sexual Maturity|Mammals|Mature (uterus mature)
+Sexual Maturity|Mammals|Mature (with calf)
+Sexual Maturity|Mammals|Maturing?
+Sexual Maturity|Mammals|Need
+Sexual Maturity|Mammals|Neonate
+Sexual Maturity|Mammals|Pregnant
+Sexual Maturity|Mammals|Resting
+Sexual Maturity|Mammals|Stillborn
+Sexual Maturity|Mammals|Subadult
+Sexual Maturity|Mammals|Unknown
+Sexual Maturity|Mammals|Unknown, immature
+Sexual Maturity|Mammals|Unknown, Sperm in epididymus
 Zoology Stage|Amphibians & Reptiles|1 adult, 1 larva
 Zoology Stage|Amphibians & Reptiles|2 year old juvenile
 Zoology Stage|Amphibians & Reptiles|Adolescent
@@ -13629,3 +13716,45 @@ phylum|Invertebrate Zoology|Tardigrada
 phylum|Invertebrate Zoology|Vertebrata
 phylum|Invertebrate Zoology|Vestimentifera
 phylum|Invertebrate Zoology|Xenophyophora
+Identification Qualifier Rank|Amphibians & Reptiles|Genus
+Identification Qualifier Rank|Amphibians & Reptiles|Species
+Identification Qualifier Rank|Amphibians & Reptiles|Subspecies
+Identification Qualifier Rank|Birds|Genus
+Identification Qualifier Rank|Birds|Species
+Identification Qualifier Rank|Birds|Subspecies
+Identification Qualifier Rank|Botany|forma
+Identification Qualifier Rank|Botany|Genus
+Identification Qualifier Rank|Botany|not specified
+Identification Qualifier Rank|Botany|Species
+Identification Qualifier Rank|Botany|subforma
+Identification Qualifier Rank|Botany|Subspecies
+Identification Qualifier Rank|Botany|subvariety
+Identification Qualifier Rank|Botany|variety
+Identification Qualifier Rank|Entomology|family
+Identification Qualifier Rank|Entomology|genus
+Identification Qualifier Rank|Entomology|section
+Identification Qualifier Rank|Entomology|species
+Identification Qualifier Rank|Entomology|subgenus
+Identification Qualifier Rank|Fishes|Genus
+Identification Qualifier Rank|Fishes|not specified
+Identification Qualifier Rank|Fishes|Species
+Identification Qualifier Rank|Fishes|Subspecies
+Identification Qualifier Rank|Invertebrate Zoology|Family
+Identification Qualifier Rank|Invertebrate Zoology|Genus
+Identification Qualifier Rank|Invertebrate Zoology|not specified
+Identification Qualifier Rank|Invertebrate Zoology|Species
+Identification Qualifier Rank|Invertebrate Zoology|Subfamily
+Identification Qualifier Rank|Invertebrate Zoology|Subgenus
+Identification Qualifier Rank|Invertebrate Zoology|Subspecies
+Identification Qualifier Rank|Mammals|Genus
+Identification Qualifier Rank|Mammals|Species
+Identification Qualifier Rank|Mammals|Subspecies
+Taxonomy Other Rank||forma
+Taxonomy Other Rank||variety
+Taxonomy Other Rank||subvariety
+weightUnit||kg
+weightUnit||lb
+weightUnit||mg
+weightUnit||oz
+weightUnit||ton
+weightUnit||g

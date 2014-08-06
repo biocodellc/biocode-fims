@@ -285,9 +285,6 @@ BOLD: None provided<p><b>Synonyms:</b><p>"specificEpithet" = DwC,<br />"species"
 		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'><![CDATA[<p><b>Synonyms:</b><p>"Suborder" = Biocode.specimen, <br />"suborder" = Biocode.Taxonomy,]]></attribute>
 		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'><![CDATA[<p><b>Synonyms:</b><p>"Subphylum" = Biocode.specimen, <br />"subphylum" = Biocode.Taxonomy,]]></attribute>
 		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'><![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.<p><b>Synonyms:</b><p>"subspecies" = Biocode.Taxonomy,<br />"subSpecies" = IndoPacific Template v7,]]></attribute>
-		<attribute column='Rank below subspecies' uri='urn:taxonRank' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRank'><![CDATA[DwC: The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary. Examples: "subspecies", "varietas", "forma", "species", "genus". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRank
-
-ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends on your samples which one to choose (Botanical or Zoology etc.) (e.g. var.)<p><b>Synonyms:</b><p>"taxonRank" = DwC,<br />"DarInfraspecificRank" = EMuDwC,<br />"Below Species Rank" = Plantbarcodes Coll'n SS,<br />"Below Species Rank" = Kress Coll'n DB,<br />"below_species_rank" = Plantbarcodes.individual,<br />"Identification/ScientificName/NameAtomised/Rank" = ABCDDNA,]]></attribute>
 		<attribute column='Taxon notes' uri='urn:taxonRemarks' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRemarks'><![CDATA[DwC: Comments or notes about the taxon or name. Example: "this name is a misspelling in common use". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRemarks<p><b>Synonyms:</b><p>"taxonRemarks"  = DwC,<br />"taxonRemarks"  = IndoPacific Template v7,<br />"taxonomic_notes" = Plantbarcodes.individual,<br />"TaxonomyNotes" = LAB Field Collection Spreadsheet,<br />"TaxonomyNotes" = Fishes,<br />"TaxonNotes" = Biocode Backend,<br />"TaxonNotes" = Biocode Batch Upload,<br />"Taxonomic Notes/Other Specimen Details" = Bold (Kress collection sheet?),]]></attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'><![CDATA[]]></attribute>
 		<attribute column='BOLD ID' uri='urn:boldID' group='Tissue' defined_by='urn:boldID'><![CDATA[Biocode: BOLD "processID" number (ie, MBFA001-07)<p><b>Synonyms:</b><p>"BOLD ID" = Bold,<br />"molecular_id" = Biocode Backend.Tissues,<br />"molecular_id" = Biocode Backend.Extract,<br />"molecular_id" = Biocode Backend.Sequence,]]></attribute>
@@ -362,7 +359,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='identificationQualifierRank' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
 		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
@@ -396,8 +393,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Epithet below subspecies' level='warning' otherColumn=''></rule>
 		<rule type='checkInXMLFields' column='Phylum' list='phylum' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Rank below subspecies' list='infraspecificRank' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Rank below subspecies' level='warning' otherColumn='Epithet below subspecies'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -449,21 +444,318 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		</rule>
 	</worksheet>
 	<lists>
-		<list alias='Zoology Preparation' caseInsensitive='true'>
-			<field><![CDATA[Cleared and Stained]]></field>
-			<field><![CDATA[Dry]]></field>
-			<field><![CDATA[Ethanol]]></field>
-			<field><![CDATA[Formalin]]></field>
-			<field><![CDATA[Glycerine]]></field>
-			<field><![CDATA[Histological Material]]></field>
-			<field><![CDATA[Photograph]]></field>
-			<field><![CDATA[SEM]]></field>
+		<list alias='sex' caseInsensitive='true'>
+			<field><![CDATA[Female]]></field>
+			<field><![CDATA[Male]]></field>
+			<field><![CDATA[Unknown]]></field>
+		</list>
+		<list alias='measurementUnit' caseInsensitive='true'>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[ft]]></field>
+			<field><![CDATA[g]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ins]]></field>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[lbs]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ct]]></field>
+		</list>
+		<list alias='sampleQuality' caseInsensitive='true'>
+			<field><![CDATA[High]]></field>
+			<field><![CDATA[Medium]]></field>
+			<field><![CDATA[Low]]></field>
+		</list>
+		<list alias='ocean' caseInsensitive='true'>
+			<field><![CDATA[Antarctic Ocean]]></field>
+			<field><![CDATA[Arctic Ocean]]></field>
+			<field><![CDATA[Indian Ocean]]></field>
+			<field><![CDATA[North Atlantic Ocean]]></field>
+			<field><![CDATA[North Pacific Ocean]]></field>
+			<field><![CDATA[South Atlantic Ocean]]></field>
+			<field><![CDATA[South Pacific Ocean]]></field>
+		</list>
+		<list alias='hybridRank' caseInsensitive='true'>
+			<field><![CDATA[Genus]]></field>
+			<field><![CDATA[Species]]></field>
+		</list>
+		<list alias='Zoology Stage' caseInsensitive='true'>
+			<field><![CDATA[1 adult, 1 larva]]></field>
+			<field><![CDATA[2 year old juvenile]]></field>
+			<field><![CDATA[Adolescent]]></field>
+			<field><![CDATA[Adolesence]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Adult (with eggs)]]></field>
+			<field><![CDATA[Adult and 2 eggs]]></field>
+			<field><![CDATA[Adult and larva]]></field>
+			<field><![CDATA[Adult and larvae]]></field>
+			<field><![CDATA[Adult or subadult]]></field>
+			<field><![CDATA[Adult with 2 eggs]]></field>
+			<field><![CDATA[Adult with embryos]]></field>
+			<field><![CDATA[Adult, juvs(2), larvae(6)]]></field>
+			<field><![CDATA[Adult; eggs]]></field>
+			<field><![CDATA[Adult; juveniles]]></field>
+			<field><![CDATA[Branchiate adult]]></field>
+			<field><![CDATA[Breeding adult]]></field>
+			<field><![CDATA[Brooding adult]]></field>
+			<field><![CDATA[Clutch (hatching embryos)]]></field>
+			<field><![CDATA[Clutch eggs]]></field>
+			<field><![CDATA[Clutch of eggs]]></field>
+			<field><![CDATA[Developing embryos]]></field>
+			<field><![CDATA[Eft]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Egg (broken)]]></field>
+			<field><![CDATA[Egg and hatchlings]]></field>
+			<field><![CDATA[Egg cases (empty)]]></field>
+			<field><![CDATA[Egg clutch]]></field>
+			<field><![CDATA[Egg clutchs]]></field>
+			<field><![CDATA[Egg fragments]]></field>
+			<field><![CDATA[Egg mass]]></field>
+			<field><![CDATA[Egg mass and larvae]]></field>
+			<field><![CDATA[Egg masses]]></field>
+			<field><![CDATA[Egg shell and embryo]]></field>
+			<field><![CDATA[Egg shells]]></field>
+			<field><![CDATA[Egg shells (fragmented)]]></field>
+			<field><![CDATA[Eggs]]></field>
+			<field><![CDATA[Eggs (many broken)]]></field>
+			<field><![CDATA[Eggs and eggshells]]></field>
+			<field><![CDATA[Eggs and embryo]]></field>
+			<field><![CDATA[Eggs and embryoes]]></field>
+			<field><![CDATA[Eggs and embryos]]></field>
+			<field><![CDATA[Eggs and hatchling]]></field>
+			<field><![CDATA[Eggs and hatchlings]]></field>
+			<field><![CDATA[Eggs and juvenile]]></field>
+			<field><![CDATA[Eggs and larva]]></field>
+			<field><![CDATA[Eggs and larvae]]></field>
+			<field><![CDATA[Eggs and young]]></field>
+			<field><![CDATA[Eggs with late embryos]]></field>
+			<field><![CDATA[Eggshell]]></field>
+			<field><![CDATA[Eggshells]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Embryo (full-term)]]></field>
+			<field><![CDATA[Embryo (mid-term)]]></field>
+			<field><![CDATA[Embryo (near full-term)]]></field>
+			<field><![CDATA[Embryo and egg shell]]></field>
+			<field><![CDATA[Embryo and eggs]]></field>
+			<field><![CDATA[Embryo and eggshell]]></field>
+			<field><![CDATA[Embryo and larvae]]></field>
+			<field><![CDATA[Embryo and yolk]]></field>
+			<field><![CDATA[Embryo in oviduct]]></field>
+			<field><![CDATA[Embryo in shell]]></field>
+			<field><![CDATA[Embryo with egg shell]]></field>
+			<field><![CDATA[Embryo with eggshell]]></field>
+			<field><![CDATA[Embryos]]></field>
+			<field><![CDATA[Embryos (full-term)]]></field>
+			<field><![CDATA[Embryos and hatchling]]></field>
+			<field><![CDATA[Embryos and larvae]]></field>
+			<field><![CDATA[Embryos with egg shells]]></field>
+			<field><![CDATA[embryos with jelly]]></field>
+			<field><![CDATA[Fetus]]></field>
+			<field><![CDATA[Fullterm embryo]]></field>
+			<field><![CDATA[Gravid adult]]></field>
+			<field><![CDATA[Gravid adult (6 eggs)]]></field>
+			<field><![CDATA[Gravid adult (large yolked eggs)]]></field>
+			<field><![CDATA[Gravid adult with embryos]]></field>
+			<field><![CDATA[Half grown]]></field>
+			<field><![CDATA[Hatchling]]></field>
+			<field><![CDATA[Hatchling (abnormal)]]></field>
+			<field><![CDATA[Hatchling (died)]]></field>
+			<field><![CDATA[Hatchling and egg]]></field>
+			<field><![CDATA[Hatchling and egg shell]]></field>
+			<field><![CDATA[Hatchling with egg]]></field>
+			<field><![CDATA[Hatchling with egg shell]]></field>
+			<field><![CDATA[Hatchling, embryos]]></field>
+			<field><![CDATA[Hatchling, unhatched egg]]></field>
+			<field><![CDATA[Hatchling; eggshell]]></field>
+			<field><![CDATA[Hatchlings]]></field>
+			<field><![CDATA[Hatchlings and egg]]></field>
+			<field><![CDATA[Hatchlings, part egg gel]]></field>
+			<field><![CDATA[Hemipenes everted]]></field>
+			<field><![CDATA[Hgr]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Juvenile (2 months old)]]></field>
+			<field><![CDATA[Juvenile (eft)]]></field>
+			<field><![CDATA[Juvenile and egg]]></field>
+			<field><![CDATA[Juvenile and eggs]]></field>
+			<field><![CDATA[Juvenile or metamorph]]></field>
+			<field><![CDATA[Juvenile, egg]]></field>
+			<field><![CDATA[Juvenile/subadult]]></field>
+			<field><![CDATA[Juvenile; egg shell]]></field>
+			<field><![CDATA[Juvenile-adult]]></field>
+			<field><![CDATA[Juveniles]]></field>
+			<field><![CDATA[Juveniles and eggs]]></field>
+			<field><![CDATA[Juveniles and metamorphs]]></field>
+			<field><![CDATA[Large adult]]></field>
+			<field><![CDATA[Larva]]></field>
+			<field><![CDATA[Larva and juvenile]]></field>
+			<field><![CDATA[Larva and metamorph]]></field>
+			<field><![CDATA[Larva and metamorphs]]></field>
+			<field><![CDATA[Larva and premetamorph]]></field>
+			<field><![CDATA[Larva and premetamorphs]]></field>
+			<field><![CDATA[Larva, metamorph]]></field>
+			<field><![CDATA[Larva; premetamorph]]></field>
+			<field><![CDATA[Larvae]]></field>
+			<field><![CDATA[Larvae and 1 metamorph]]></field>
+			<field><![CDATA[Larvae and eggs]]></field>
+			<field><![CDATA[Larvae and juvenile]]></field>
+			<field><![CDATA[Larvae and juveniles]]></field>
+			<field><![CDATA[Larvae and metamorph]]></field>
+			<field><![CDATA[Larvae and metamorphics]]></field>
+			<field><![CDATA[Larvae and metamorphs]]></field>
+			<field><![CDATA[Larvae and premetamorph]]></field>
+			<field><![CDATA[Larvae and premetamorphs]]></field>
+			<field><![CDATA[Larvae through metamorphs]]></field>
+			<field><![CDATA[Larvae, premetamorph]]></field>
+			<field><![CDATA[Larvae, premetamorphs]]></field>
+			<field><![CDATA[Larvae; hatchlings]]></field>
+			<field><![CDATA[Larvae; metamorph]]></field>
+			<field><![CDATA[Larvae; metamorphs]]></field>
+			<field><![CDATA[Larvae; postmetamorphs]]></field>
+			<field><![CDATA[Larvae; premetamorph (1)]]></field>
+			<field><![CDATA[Larvae+metamorphs+juvenil]]></field>
+			<field><![CDATA[Late eft]]></field>
+			<field><![CDATA[Late metamorphic]]></field>
+			<field><![CDATA[Late metamorphics]]></field>
+			<field><![CDATA[Late stage embryo]]></field>
+			<field><![CDATA[Late stage embryos]]></field>
+			<field><![CDATA[Metamorph]]></field>
+			<field><![CDATA[Metamorph (early)]]></field>
+			<field><![CDATA[Metamorph (late)]]></field>
+			<field><![CDATA[Metamorph (mid)]]></field>
+			<field><![CDATA[Metamorph and tadpole]]></field>
+			<field><![CDATA[metamorph with tail]]></field>
+			<field><![CDATA[Metamorph, larvae]]></field>
+			<field><![CDATA[Metamorphic]]></field>
+			<field><![CDATA[Metamorphics]]></field>
+			<field><![CDATA[Metamorphs]]></field>
+			<field><![CDATA[Metamorphs (early)]]></field>
+			<field><![CDATA[Metamorphs (late)]]></field>
+			<field><![CDATA[Metamorphs (mid)]]></field>
+			<field><![CDATA[Metamorphs and juveniles]]></field>
+			<field><![CDATA[Metamorphs with tail]]></field>
+			<field><![CDATA[Near term embryo]]></field>
+			<field><![CDATA[Neonate]]></field>
+			<field><![CDATA[Neonate with egg shell]]></field>
+			<field><![CDATA[Neonates]]></field>
+			<field><![CDATA[Neotenic]]></field>
+			<field><![CDATA[Neotenic adult]]></field>
+			<field><![CDATA[Newborn]]></field>
+			<field><![CDATA[Ovarian eggs]]></field>
+			<field><![CDATA[Ovum only]]></field>
+			<field><![CDATA[Postembryo]]></field>
+			<field><![CDATA[Postmetamorph]]></field>
+			<field><![CDATA[Postmetamorph larva]]></field>
+			<field><![CDATA[Postmetamorphic]]></field>
+			<field><![CDATA[Post-metamorphic]]></field>
+			<field><![CDATA[Postmetamorphs]]></field>
+			<field><![CDATA[Pre- and postmetamorphs]]></field>
+			<field><![CDATA[Prehatchling]]></field>
+			<field><![CDATA[Premetamorph]]></field>
+			<field><![CDATA[Premetamorph (stage 40)]]></field>
+			<field><![CDATA[Premetamorph;stage 38(39)]]></field>
+			<field><![CDATA[Premetamorphs]]></field>
+			<field><![CDATA[Premetamorphs - juveniles]]></field>
+			<field><![CDATA[Premetamorphs and larvae]]></field>
+			<field><![CDATA[Premetamorphs, juvenile]]></field>
+			<field><![CDATA[Premetamorphs, metamorphs]]></field>
+			<field><![CDATA[Recent metamorph]]></field>
+			<field><![CDATA[Spermatophores]]></field>
+			<field><![CDATA[Stage 23 (dead)]]></field>
+			<field><![CDATA[Stage 24]]></field>
+			<field><![CDATA[Stage 24 (dead)]]></field>
+			<field><![CDATA[Stage 25]]></field>
+			<field><![CDATA[Stage 25 (dead)]]></field>
+			<field><![CDATA[Stuffed]]></field>
+			<field><![CDATA[Subadult]]></field>
+			<field><![CDATA[Sub-adult]]></field>
+			<field><![CDATA[Tadpole]]></field>
+			<field><![CDATA[Tadpoles]]></field>
+			<field><![CDATA[Transforming]]></field>
+			<field><![CDATA[Unhatched eggs]]></field>
+			<field><![CDATA[Yolked + non-yolked eggs]]></field>
+			<field><![CDATA[Young]]></field>
+			<field><![CDATA[Young adult]]></field>
+		</list>
+		<list alias='geodeticDatum' caseInsensitive='true'>
+			<field><![CDATA[NAD27]]></field>
+			<field><![CDATA[NAD83]]></field>
+			<field><![CDATA[WGS84]]></field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field><![CDATA[N]]></field>
+			<field><![CDATA[S]]></field>
+		</list>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field><![CDATA[E]]></field>
+			<field><![CDATA[W]]></field>
+		</list>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field><![CDATA[ca.]]></field>
+			<field><![CDATA[greater than]]></field>
+			<field><![CDATA[less than]]></field>
+			<field><![CDATA[±]]></field>
+		</list>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[Caudal]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dry skin]]></field>
+			<field><![CDATA[Entire]]></field>
+			<field><![CDATA[Entire eye]]></field>
+			<field><![CDATA[Front]]></field>
+			<field><![CDATA[Larva]]></field>
+			<field><![CDATA[Larvae]]></field>
+			<field><![CDATA[Lens]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Multiple eggs]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[Piece(s)]]></field>
+			<field><![CDATA[Rear]]></field>
+			<field><![CDATA[Retractor]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Shed skin]]></field>
+			<field><![CDATA[Single egg]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Tadpole]]></field>
+			<field><![CDATA[Tadpoles]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Tip]]></field>
+			<field><![CDATA[Trunk]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+		</list>
+		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[Genus]]></field>
+			<field><![CDATA[Species]]></field>
+			<field><![CDATA[Subspecies]]></field>
+		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
 			<field><![CDATA[Blood]]></field>
 			<field><![CDATA[DNA, RNA, Proteins]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='weightUnit' caseInsensitive='true'>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[mg]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ton]]></field>
+			<field><![CDATA[g]]></field>
+		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
 		</list>
 		<list alias='Object Type' caseInsensitive='true'>
 			<field><![CDATA[Lot]]></field>
@@ -2061,324 +2353,8 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Zonosaurus]]></field>
 			<field><![CDATA[Zygaspis]]></field>
 		</list>
-		<list alias='Sexual Maturity' caseInsensitive='true'>
-			<field><![CDATA[-]]></field>
-			<field><![CDATA[Adult]]></field>
-			<field><![CDATA[Calf]]></field>
-			<field><![CDATA[Fetus]]></field>
-			<field><![CDATA[Immature]]></field>
-			<field><![CDATA[immature (avascular uterus)]]></field>
-			<field><![CDATA[Immature (Ovaries immature)]]></field>
-			<field><![CDATA[immature (uterus immature)]]></field>
-			<field><![CDATA[Juvenile]]></field>
-			<field><![CDATA[Lactating]]></field>
-			<field><![CDATA[Lactating? Mature]]></field>
-			<field><![CDATA[Mature]]></field>
-			<field><![CDATA[Mature (dilated)]]></field>
-			<field><![CDATA[Mature (lactating questionable)]]></field>
-			<field><![CDATA[Mature (lactating)]]></field>
-			<field><![CDATA[Mature (lactating, dialated uterus)]]></field>
-			<field><![CDATA[Mature (lactating, pregnant)]]></field>
-			<field><![CDATA[mature (lactating, uterus contracted)]]></field>
-			<field><![CDATA[Mature (mammeries distended, fetus probably aborted)]]></field>
-			<field><![CDATA[Mature (pregnant)]]></field>
-			<field><![CDATA[Mature (pregnant, lactaing)]]></field>
-			<field><![CDATA[Mature (pregnant, lactating)]]></field>
-			<field><![CDATA[Mature (seminal fluid in epididymus)]]></field>
-			<field><![CDATA[Mature (sperm in epididiymus)]]></field>
-			<field><![CDATA[Mature (sperm in epididymus]]></field>
-			<field><![CDATA[mature (sperm in epididymuse)]]></field>
-			<field><![CDATA[Mature (sperm in epidiymus)]]></field>
-			<field><![CDATA[Mature (sperm in epidydimus)]]></field>
-			<field><![CDATA[Mature (sperrm in epididymus)]]></field>
-			<field><![CDATA[Mature (Uterus contracted, lactating)]]></field>
-			<field><![CDATA[Mature (uterus dialated)]]></field>
-			<field><![CDATA[Mature (uterus mature)]]></field>
-			<field><![CDATA[Mature (with calf)]]></field>
-			<field><![CDATA[Maturing?]]></field>
-			<field><![CDATA[Need]]></field>
-			<field><![CDATA[Neonate]]></field>
-			<field><![CDATA[Pregnant]]></field>
-			<field><![CDATA[Resting]]></field>
-			<field><![CDATA[Stillborn]]></field>
-			<field><![CDATA[Subadult]]></field>
-			<field><![CDATA[Unknown]]></field>
-			<field><![CDATA[Unknown, immature]]></field>
-			<field><![CDATA[Unknown, Sperm in epididymus]]></field>
-		</list>
-		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
-			<field><![CDATA[Blood cells]]></field>
-			<field><![CDATA[Body piece]]></field>
-			<field><![CDATA[Bone]]></field>
-			<field><![CDATA[Brain]]></field>
-			<field><![CDATA[Cell suspension]]></field>
-			<field><![CDATA[Centrifuge pellet]]></field>
-			<field><![CDATA[Chloroplast]]></field>
-			<field><![CDATA[Connective tissue]]></field>
-			<field><![CDATA[Dried tissue]]></field>
-			<field><![CDATA[Egg]]></field>
-			<field><![CDATA[Eye]]></field>
-			<field><![CDATA[Foot]]></field>
-			<field><![CDATA[Gonad]]></field>
-			<field><![CDATA[Gut]]></field>
-			<field><![CDATA[Heart]]></field>
-			<field><![CDATA[High molecular weight]]></field>
-			<field><![CDATA[Intestine]]></field>
-			<field><![CDATA[Kidney]]></field>
-			<field><![CDATA[Leg]]></field>
-			<field><![CDATA[Liver]]></field>
-			<field><![CDATA[Lung]]></field>
-			<field><![CDATA[mtDNA]]></field>
-			<field><![CDATA[Multiple individuals, same organism]]></field>
-			<field><![CDATA[Muscle]]></field>
-			<field><![CDATA[nDNA]]></field>
-			<field><![CDATA[Ovaries]]></field>
-			<field><![CDATA[PCR amplicon]]></field>
-			<field><![CDATA[Plasma]]></field>
-			<field><![CDATA[Protein]]></field>
-			<field><![CDATA[Reproductive tract]]></field>
-			<field><![CDATA[RNA]]></field>
-			<field><![CDATA[Scale]]></field>
-			<field><![CDATA[Serum]]></field>
-			<field><![CDATA[Skin]]></field>
-			<field><![CDATA[Spleen]]></field>
-			<field><![CDATA[Stomach]]></field>
-			<field><![CDATA[Supernatant]]></field>
-			<field><![CDATA[Tail]]></field>
-			<field><![CDATA[Testes]]></field>
-			<field><![CDATA[Toe]]></field>
-			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
-			<field><![CDATA[Unknown tissue sample]]></field>
-			<field><![CDATA[Viscera]]></field>
-			<field><![CDATA[Whole blood]]></field>
-			<field><![CDATA[Whole genomic DNA]]></field>
-			<field><![CDATA[Whole individual organism]]></field>
-		</list>
-		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
-			<field><![CDATA[Caudal]]></field>
-			<field><![CDATA[Connective tissue]]></field>
-			<field><![CDATA[Dry skin]]></field>
-			<field><![CDATA[Entire]]></field>
-			<field><![CDATA[Entire eye]]></field>
-			<field><![CDATA[Front]]></field>
-			<field><![CDATA[Larva]]></field>
-			<field><![CDATA[Larvae]]></field>
-			<field><![CDATA[Lens]]></field>
-			<field><![CDATA[Multiple]]></field>
-			<field><![CDATA[Multiple eggs]]></field>
-			<field><![CDATA[Muscle]]></field>
-			<field><![CDATA[Piece(s)]]></field>
-			<field><![CDATA[Rear]]></field>
-			<field><![CDATA[Retractor]]></field>
-			<field><![CDATA[Scale clip]]></field>
-			<field><![CDATA[Shed skin]]></field>
-			<field><![CDATA[Single egg]]></field>
-			<field><![CDATA[Single entire]]></field>
-			<field><![CDATA[Tadpole]]></field>
-			<field><![CDATA[Tadpoles]]></field>
-			<field><![CDATA[Tail]]></field>
-			<field><![CDATA[Thigh]]></field>
-			<field><![CDATA[Tip]]></field>
-			<field><![CDATA[Trunk]]></field>
-			<field><![CDATA[Unknown tissue sample]]></field>
-		</list>
-		<list alias='Zoology Stage' caseInsensitive='true'>
-			<field><![CDATA[1 adult, 1 larva]]></field>
-			<field><![CDATA[2 year old juvenile]]></field>
-			<field><![CDATA[Adolescent]]></field>
-			<field><![CDATA[Adolesence]]></field>
-			<field><![CDATA[Adult]]></field>
-			<field><![CDATA[Adult (with eggs)]]></field>
-			<field><![CDATA[Adult and 2 eggs]]></field>
-			<field><![CDATA[Adult and larva]]></field>
-			<field><![CDATA[Adult and larvae]]></field>
-			<field><![CDATA[Adult or subadult]]></field>
-			<field><![CDATA[Adult with 2 eggs]]></field>
-			<field><![CDATA[Adult with embryos]]></field>
-			<field><![CDATA[Adult, juvs(2), larvae(6)]]></field>
-			<field><![CDATA[Adult; eggs]]></field>
-			<field><![CDATA[Adult; juveniles]]></field>
-			<field><![CDATA[Branchiate adult]]></field>
-			<field><![CDATA[Breeding adult]]></field>
-			<field><![CDATA[Brooding adult]]></field>
-			<field><![CDATA[Clutch (hatching embryos)]]></field>
-			<field><![CDATA[Clutch eggs]]></field>
-			<field><![CDATA[Clutch of eggs]]></field>
-			<field><![CDATA[Developing embryos]]></field>
-			<field><![CDATA[Eft]]></field>
-			<field><![CDATA[Egg]]></field>
-			<field><![CDATA[Egg (broken)]]></field>
-			<field><![CDATA[Egg and hatchlings]]></field>
-			<field><![CDATA[Egg cases (empty)]]></field>
-			<field><![CDATA[Egg clutch]]></field>
-			<field><![CDATA[Egg clutchs]]></field>
-			<field><![CDATA[Egg fragments]]></field>
-			<field><![CDATA[Egg mass]]></field>
-			<field><![CDATA[Egg mass and larvae]]></field>
-			<field><![CDATA[Egg masses]]></field>
-			<field><![CDATA[Egg shell and embryo]]></field>
-			<field><![CDATA[Egg shells]]></field>
-			<field><![CDATA[Egg shells (fragmented)]]></field>
-			<field><![CDATA[Eggs]]></field>
-			<field><![CDATA[Eggs (many broken)]]></field>
-			<field><![CDATA[Eggs and eggshells]]></field>
-			<field><![CDATA[Eggs and embryo]]></field>
-			<field><![CDATA[Eggs and embryoes]]></field>
-			<field><![CDATA[Eggs and embryos]]></field>
-			<field><![CDATA[Eggs and hatchling]]></field>
-			<field><![CDATA[Eggs and hatchlings]]></field>
-			<field><![CDATA[Eggs and juvenile]]></field>
-			<field><![CDATA[Eggs and larva]]></field>
-			<field><![CDATA[Eggs and larvae]]></field>
-			<field><![CDATA[Eggs and young]]></field>
-			<field><![CDATA[Eggs with late embryos]]></field>
-			<field><![CDATA[Eggshell]]></field>
-			<field><![CDATA[Eggshells]]></field>
-			<field><![CDATA[Embryo]]></field>
-			<field><![CDATA[Embryo (full-term)]]></field>
-			<field><![CDATA[Embryo (mid-term)]]></field>
-			<field><![CDATA[Embryo (near full-term)]]></field>
-			<field><![CDATA[Embryo and egg shell]]></field>
-			<field><![CDATA[Embryo and eggs]]></field>
-			<field><![CDATA[Embryo and eggshell]]></field>
-			<field><![CDATA[Embryo and larvae]]></field>
-			<field><![CDATA[Embryo and yolk]]></field>
-			<field><![CDATA[Embryo in oviduct]]></field>
-			<field><![CDATA[Embryo in shell]]></field>
-			<field><![CDATA[Embryo with egg shell]]></field>
-			<field><![CDATA[Embryo with eggshell]]></field>
-			<field><![CDATA[Embryos]]></field>
-			<field><![CDATA[Embryos (full-term)]]></field>
-			<field><![CDATA[Embryos and hatchling]]></field>
-			<field><![CDATA[Embryos and larvae]]></field>
-			<field><![CDATA[Embryos with egg shells]]></field>
-			<field><![CDATA[embryos with jelly]]></field>
-			<field><![CDATA[Fetus]]></field>
-			<field><![CDATA[Fullterm embryo]]></field>
-			<field><![CDATA[Gravid adult]]></field>
-			<field><![CDATA[Gravid adult (6 eggs)]]></field>
-			<field><![CDATA[Gravid adult (large yolked eggs)]]></field>
-			<field><![CDATA[Gravid adult with embryos]]></field>
-			<field><![CDATA[Half grown]]></field>
-			<field><![CDATA[Hatchling]]></field>
-			<field><![CDATA[Hatchling (abnormal)]]></field>
-			<field><![CDATA[Hatchling (died)]]></field>
-			<field><![CDATA[Hatchling and egg]]></field>
-			<field><![CDATA[Hatchling and egg shell]]></field>
-			<field><![CDATA[Hatchling with egg]]></field>
-			<field><![CDATA[Hatchling with egg shell]]></field>
-			<field><![CDATA[Hatchling, embryos]]></field>
-			<field><![CDATA[Hatchling, unhatched egg]]></field>
-			<field><![CDATA[Hatchling; eggshell]]></field>
-			<field><![CDATA[Hatchlings]]></field>
-			<field><![CDATA[Hatchlings and egg]]></field>
-			<field><![CDATA[Hatchlings, part egg gel]]></field>
-			<field><![CDATA[Hemipenes everted]]></field>
-			<field><![CDATA[Hgr]]></field>
-			<field><![CDATA[Immature]]></field>
-			<field><![CDATA[Juvenile]]></field>
-			<field><![CDATA[Juvenile (2 months old)]]></field>
-			<field><![CDATA[Juvenile (eft)]]></field>
-			<field><![CDATA[Juvenile and egg]]></field>
-			<field><![CDATA[Juvenile and eggs]]></field>
-			<field><![CDATA[Juvenile or metamorph]]></field>
-			<field><![CDATA[Juvenile, egg]]></field>
-			<field><![CDATA[Juvenile/subadult]]></field>
-			<field><![CDATA[Juvenile; egg shell]]></field>
-			<field><![CDATA[Juvenile-adult]]></field>
-			<field><![CDATA[Juveniles]]></field>
-			<field><![CDATA[Juveniles and eggs]]></field>
-			<field><![CDATA[Juveniles and metamorphs]]></field>
-			<field><![CDATA[Large adult]]></field>
-			<field><![CDATA[Larva]]></field>
-			<field><![CDATA[Larva and juvenile]]></field>
-			<field><![CDATA[Larva and metamorph]]></field>
-			<field><![CDATA[Larva and metamorphs]]></field>
-			<field><![CDATA[Larva and premetamorph]]></field>
-			<field><![CDATA[Larva and premetamorphs]]></field>
-			<field><![CDATA[Larva, metamorph]]></field>
-			<field><![CDATA[Larva; premetamorph]]></field>
-			<field><![CDATA[Larvae]]></field>
-			<field><![CDATA[Larvae and 1 metamorph]]></field>
-			<field><![CDATA[Larvae and eggs]]></field>
-			<field><![CDATA[Larvae and juvenile]]></field>
-			<field><![CDATA[Larvae and juveniles]]></field>
-			<field><![CDATA[Larvae and metamorph]]></field>
-			<field><![CDATA[Larvae and metamorphics]]></field>
-			<field><![CDATA[Larvae and metamorphs]]></field>
-			<field><![CDATA[Larvae and premetamorph]]></field>
-			<field><![CDATA[Larvae and premetamorphs]]></field>
-			<field><![CDATA[Larvae through metamorphs]]></field>
-			<field><![CDATA[Larvae, premetamorph]]></field>
-			<field><![CDATA[Larvae, premetamorphs]]></field>
-			<field><![CDATA[Larvae; hatchlings]]></field>
-			<field><![CDATA[Larvae; metamorph]]></field>
-			<field><![CDATA[Larvae; metamorphs]]></field>
-			<field><![CDATA[Larvae; postmetamorphs]]></field>
-			<field><![CDATA[Larvae; premetamorph (1)]]></field>
-			<field><![CDATA[Larvae+metamorphs+juvenil]]></field>
-			<field><![CDATA[Late eft]]></field>
-			<field><![CDATA[Late metamorphic]]></field>
-			<field><![CDATA[Late metamorphics]]></field>
-			<field><![CDATA[Late stage embryo]]></field>
-			<field><![CDATA[Late stage embryos]]></field>
-			<field><![CDATA[Metamorph]]></field>
-			<field><![CDATA[Metamorph (early)]]></field>
-			<field><![CDATA[Metamorph (late)]]></field>
-			<field><![CDATA[Metamorph (mid)]]></field>
-			<field><![CDATA[Metamorph and tadpole]]></field>
-			<field><![CDATA[metamorph with tail]]></field>
-			<field><![CDATA[Metamorph, larvae]]></field>
-			<field><![CDATA[Metamorphic]]></field>
-			<field><![CDATA[Metamorphics]]></field>
-			<field><![CDATA[Metamorphs]]></field>
-			<field><![CDATA[Metamorphs (early)]]></field>
-			<field><![CDATA[Metamorphs (late)]]></field>
-			<field><![CDATA[Metamorphs (mid)]]></field>
-			<field><![CDATA[Metamorphs and juveniles]]></field>
-			<field><![CDATA[Metamorphs with tail]]></field>
-			<field><![CDATA[Near term embryo]]></field>
-			<field><![CDATA[Neonate]]></field>
-			<field><![CDATA[Neonate with egg shell]]></field>
-			<field><![CDATA[Neonates]]></field>
-			<field><![CDATA[Neotenic]]></field>
-			<field><![CDATA[Neotenic adult]]></field>
-			<field><![CDATA[Newborn]]></field>
-			<field><![CDATA[Ovarian eggs]]></field>
-			<field><![CDATA[Ovum only]]></field>
-			<field><![CDATA[Postembryo]]></field>
-			<field><![CDATA[Postmetamorph]]></field>
-			<field><![CDATA[Postmetamorph larva]]></field>
-			<field><![CDATA[Postmetamorphic]]></field>
-			<field><![CDATA[Post-metamorphic]]></field>
-			<field><![CDATA[Postmetamorphs]]></field>
-			<field><![CDATA[Pre- and postmetamorphs]]></field>
-			<field><![CDATA[Prehatchling]]></field>
-			<field><![CDATA[Premetamorph]]></field>
-			<field><![CDATA[Premetamorph (stage 40)]]></field>
-			<field><![CDATA[Premetamorph;stage 38(39)]]></field>
-			<field><![CDATA[Premetamorphs]]></field>
-			<field><![CDATA[Premetamorphs - juveniles]]></field>
-			<field><![CDATA[Premetamorphs and larvae]]></field>
-			<field><![CDATA[Premetamorphs, juvenile]]></field>
-			<field><![CDATA[Premetamorphs, metamorphs]]></field>
-			<field><![CDATA[Recent metamorph]]></field>
-			<field><![CDATA[Spermatophores]]></field>
-			<field><![CDATA[Stage 23 (dead)]]></field>
-			<field><![CDATA[Stage 24]]></field>
-			<field><![CDATA[Stage 24 (dead)]]></field>
-			<field><![CDATA[Stage 25]]></field>
-			<field><![CDATA[Stage 25 (dead)]]></field>
-			<field><![CDATA[Stuffed]]></field>
-			<field><![CDATA[Subadult]]></field>
-			<field><![CDATA[Sub-adult]]></field>
-			<field><![CDATA[Tadpole]]></field>
-			<field><![CDATA[Tadpoles]]></field>
-			<field><![CDATA[Transforming]]></field>
-			<field><![CDATA[Unhatched eggs]]></field>
-			<field><![CDATA[Yolked + non-yolked eggs]]></field>
-			<field><![CDATA[Young]]></field>
-			<field><![CDATA[Young adult]]></field>
+		<list alias='collectionCode' caseInsensitive='true'>
+			<field><![CDATA[Amphibians & Reptiles]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>
@@ -2606,6 +2582,101 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zambia - Zimbabwe]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
+		</list>
+		<list alias='Zoology Preparation' caseInsensitive='true'>
+			<field><![CDATA[Cleared and Stained]]></field>
+			<field><![CDATA[Dry]]></field>
+			<field><![CDATA[Ethanol]]></field>
+			<field><![CDATA[Formalin]]></field>
+			<field><![CDATA[Glycerine]]></field>
+			<field><![CDATA[Histological Material]]></field>
+			<field><![CDATA[Photograph]]></field>
+			<field><![CDATA[SEM]]></field>
+		</list>
+		<list alias='identificationQualifier' caseInsensitive='true'>
+			<field><![CDATA[aff.]]></field>
+			<field><![CDATA[cf.]]></field>
+			<field><![CDATA[complex]]></field>
+			<field><![CDATA[group]]></field>
+			<field><![CDATA[near]]></field>
+			<field><![CDATA[sp. nov.]]></field>
+			<field><![CDATA[subgroup]]></field>
+			<field><![CDATA[uncertain]]></field>
+			<field><![CDATA[vel aff.]]></field>
+		</list>
+		<list alias='institutionCode' caseInsensitive='true'>
+			<field><![CDATA[USNM]]></field>
+		</list>
+		<list alias='continent' caseInsensitive='true'>
+			<field><![CDATA[Africa]]></field>
+			<field><![CDATA[Antarctica]]></field>
+			<field><![CDATA[Asia]]></field>
+			<field><![CDATA[Australia]]></field>
+			<field><![CDATA[Europe]]></field>
+			<field><![CDATA[North America]]></field>
+			<field><![CDATA[Oceania]]></field>
+			<field><![CDATA[South America]]></field>
+		</list>
+		<list alias='lengthUnit' caseInsensitive='true'>
+			<field><![CDATA[cm]]></field>
+			<field><![CDATA[m]]></field>
+			<field><![CDATA[mm]]></field>
+			<field><![CDATA[µm]]></field>
+			<field><![CDATA[in]]></field>
+			<field><![CDATA[ft]]></field>
+		</list>
+		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[variety]]></field>
+			<field><![CDATA[subvariety]]></field>
+		</list>
+		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
+			<field><![CDATA[Blood cells]]></field>
+			<field><![CDATA[Body piece]]></field>
+			<field><![CDATA[Bone]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cell suspension]]></field>
+			<field><![CDATA[Centrifuge pellet]]></field>
+			<field><![CDATA[Chloroplast]]></field>
+			<field><![CDATA[Connective tissue]]></field>
+			<field><![CDATA[Dried tissue]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Eye]]></field>
+			<field><![CDATA[Foot]]></field>
+			<field><![CDATA[Gonad]]></field>
+			<field><![CDATA[Gut]]></field>
+			<field><![CDATA[Heart]]></field>
+			<field><![CDATA[High molecular weight]]></field>
+			<field><![CDATA[Intestine]]></field>
+			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Leg]]></field>
+			<field><![CDATA[Liver]]></field>
+			<field><![CDATA[Lung]]></field>
+			<field><![CDATA[mtDNA]]></field>
+			<field><![CDATA[Multiple individuals, same organism]]></field>
+			<field><![CDATA[Muscle]]></field>
+			<field><![CDATA[nDNA]]></field>
+			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[PCR amplicon]]></field>
+			<field><![CDATA[Plasma]]></field>
+			<field><![CDATA[Protein]]></field>
+			<field><![CDATA[Reproductive tract]]></field>
+			<field><![CDATA[RNA]]></field>
+			<field><![CDATA[Scale]]></field>
+			<field><![CDATA[Serum]]></field>
+			<field><![CDATA[Skin]]></field>
+			<field><![CDATA[Spleen]]></field>
+			<field><![CDATA[Stomach]]></field>
+			<field><![CDATA[Supernatant]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Testes]]></field>
+			<field><![CDATA[Toe]]></field>
+			<field><![CDATA[Unknown DNA, RNA, or Protein]]></field>
+			<field><![CDATA[Unknown tissue sample]]></field>
+			<field><![CDATA[Viscera]]></field>
+			<field><![CDATA[Whole blood]]></field>
+			<field><![CDATA[Whole genomic DNA]]></field>
+			<field><![CDATA[Whole individual organism]]></field>
 		</list>
 	</lists>
 </validation>
