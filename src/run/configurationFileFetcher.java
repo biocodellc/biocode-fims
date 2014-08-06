@@ -11,15 +11,12 @@ import org.xml.sax.*;
 import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
-import sun.misc.IOUtils;
 import utils.SettingsManager;
 import utils.urlFreshener;
 
 import javax.xml.parsers.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Date;
 
