@@ -173,8 +173,11 @@ public class configurationFileFetcher {
             conn.addRequestProperty("User-Agent", "Mozilla");
             conn.addRequestProperty("Referer", "google.com");
         }
-        //conn.connect();
+System.out.println("connecting");
+        conn.connect();
+System.out.println("connecting");
         InputStream inputStream = conn.getInputStream();
+System.out.println("fetched is");
 
         // Write configuration file to output directory
         try {
