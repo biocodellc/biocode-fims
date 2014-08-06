@@ -135,16 +135,14 @@ public class configurationFileFetcher {
         urlFreshener freshener = new urlFreshener();
         url = freshener.forceLatestURL(url);
 
-        //System.out.println("URL we're using for connection: " + url.toString());
-
-	//Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("8.8.8.8", 80));
-
         HttpURLConnection.setFollowRedirects(true);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setUseCaches(false);
         conn.setDefaultUseCaches(false);
-
+          conn.setRequestMethod("GET");
+          conn.setDoOutput(true);
+        conn.setDoInput(true);
         conn.setReadTimeout(5000);
         conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
         conn.addRequestProperty("User-Agent", "Mozilla");
@@ -159,14 +157,10 @@ public class configurationFileFetcher {
                 redirect = true;
         }
 
-
         // Handle redirects
         if (redirect) {
-
             // get redirect url from "location" header field
             String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
-        //System.out.println("Redirected URL we're using for connection: " + url.toString());
-
             // open the  connnection
 
             conn.setUseCaches(false);
@@ -178,7 +172,6 @@ public class configurationFileFetcher {
             conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
             conn.addRequestProperty("User-Agent", "Mozilla");
             conn.addRequestProperty("Referer", "google.com");
-
         }
         //conn.connect();
         InputStream inputStream = conn.getInputStream();
@@ -198,7 +191,6 @@ public class configurationFileFetcher {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 os.write(buffer, 0, bytesRead);
             }
-
 
             inputStream.close();
 
