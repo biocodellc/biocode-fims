@@ -330,17 +330,17 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Longitude Decimal</field>
 			<field>Biorepository ID</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 4' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 5' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 6' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 7' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Collector 8' list='collector' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 5' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
@@ -352,49 +352,49 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal 2' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Longitude Decimal 2' level='warning' otherColumn='Longitude Decimal'></rule>
-		<rule type='checkInXMLFields' column='Datum' list='geodeticDatum' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Datum' list='geodeticDatum' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Degrees' level='error' value='%3E%3D0+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Latitude Minutes' level='error' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Latitude Direction' list='latitudeNorthSouth' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Latitude Direction' list='latitudeNorthSouth' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Seconds' level='error' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Degrees' level='error' value='%3E%3D0+and+%3C%3D180'></rule>
-		<rule type='checkInXMLFields' column='Longitude Direction' list='longitudeEastWest' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Longitude Direction' list='longitudeEastWest' level='warning'></rule>
 		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
-		<rule type='checkInXMLFields' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Museum Acronym' list='institutionCode' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Continent' list='continent' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Country' list='country' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Ocean' list='ocean' level='error'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Museum Acronym' list='institutionCode' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Continent' list='continent' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Ocean' list='ocean' level='error'></rule>
 		<rule type='validateNumeric' column='Length' level='error' value='%3E0'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Length' level='warning' otherColumn='lengthUnits'></rule>
-		<rule type='checkInXMLFields' column='Length unit' list='lengthUnit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Length unit' list='lengthUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Length unit' level='warning' otherColumn='Length'></rule>
-		<rule type='checkInXMLFields' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Unit' level='warning' otherColumn='Measurement 1 Value'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Value' level='warning' otherColumn='Measurement 1 Unit'></rule>
-		<rule type='checkInXMLFields' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Measurement 5 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Measurement 5 Unit' level='warning' otherColumn='Measurement 1 Value'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Value' level='warning' otherColumn='Measurement 1 Unit'></rule>
 		<rule type='validateNumeric' column='Weight' level='error' value='%3E0'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight' level='warning' otherColumn='weightUnits'></rule>
-		<rule type='checkInXMLFields' column='Weight unit' list='weightUnit' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Weight unit' list='weightUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight unit' level='warning' otherColumn='Weight'></rule>
-		<rule type='checkInXMLFields' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='checkInXMLFields' column='Kind of Object' list='Object Type' level='error'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Object Type' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
-		<rule type='checkInXMLFields' column='Life Stage' list='Zoology Stage' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Life Stage' list='Zoology Stage' level='warning'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
-		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
-		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Epithet below subspecies' level='warning' otherColumn=''></rule>
-		<rule type='checkInXMLFields' column='Phylum' list='phylum' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Phylum' list='phylum' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -405,16 +405,16 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -434,7 +434,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Genetic Sample quality' list='sampleQuality' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample quality' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
