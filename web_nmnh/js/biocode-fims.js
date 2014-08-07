@@ -4,7 +4,7 @@ var naan = 99999
 function list(url) {
     $.ajax({
         type: "GET",
-        url: url + getProjectID(),
+        url: url,
         dataType: "html",
         success: function(data) {
             showMessage(data);
@@ -238,30 +238,6 @@ $('#alerts').append(
         '<div class="alert">' +
             '<button type="button" class="close" data-dismiss="alert">' +
             '&times;</button>' + message + '</div>');
-/*
-      jNotify(
-        message,
-        {
-          autoHide : false, // added in v2.0
-          clickOverlay : false, // added in v2.0
-          MinWidth : 250,
-          TimeShown : 3000,
-          ShowTimeEffect : 200,
-          HideTimeEffect : 200,
-          LongTrip :20,
-          HorizontalPosition : 'center',
-          VerticalPosition : 'top',
-          ShowOverlay : true,
-          ColorOverlay : '#000',
-          OpacityOverlay : 0.3,
-          onClosed : function(){ // added in v2.0
-
-          },
-          onCompleted : function(){ // added in v2.0
-
-          }
-        });
-*/
 }
 
 
