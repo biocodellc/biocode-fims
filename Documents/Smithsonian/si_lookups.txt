@@ -361,6 +361,25 @@ sex|Invertebrate Zoology|Unknown
 sex|Mammals|Female
 sex|Mammals|Male
 sex|Mammals|Unknown
+weightUnit||g
+weightUnit||kg
+weightUnit||lb
+weightUnit||mg
+weightUnit||oz
+weightUnit||ton
+Zoology Preparation|Mineral Sciences|
+establishmentMeans|Invertebrate Zoology|
+identificationQualifier|Mineral Sciences|
+Biogeography Region|Amphibians & Reptiles|
+Biogeography Region|Amphibians & Reptiles|Asia Minor
+Biogeography Region|Amphibians & Reptiles|Indoaustralia
+Biogeography Region|Amphibians & Reptiles|Middle America
+Biogeography Region|Amphibians & Reptiles|North Africa
+Biogeography Region|Amphibians & Reptiles|Oceania
+Biogeography Region|Amphibians & Reptiles|West Africa
+Biogeography Region|Amphibians & Reptiles|West Indies
+Biogeography Region|Birds|
+Biogeography Region|Botany|
 Biogeography Region|Botany|??
 Biogeography Region|Botany|1 - Europe
 Biogeography Region|Botany|10 - Northern Europe
@@ -552,12 +571,25 @@ Biogeography Region|Botany|Tropical West Atlantic
 Biogeography Region|Botany|Unknown
 Biogeography Region|Botany|West Atlantic Boreale
 Biogeography Region|Botany|West Indies Terrestrial
+Biogeography Region|Entomology|
 Biogeography Region|Entomology|Afrotropical
 Biogeography Region|Entomology|Australasian
 Biogeography Region|Entomology|Nearctic
 Biogeography Region|Entomology|Neotropical
 Biogeography Region|Entomology|Oriental
 Biogeography Region|Entomology|Palaearctic
+Biogeography Region|Fishes|
+Biogeography Region|Fishes|Antarctic
+Biogeography Region|Fishes|Arctic
+Biogeography Region|Fishes|Caribbean
+Biogeography Region|Fishes|Central America
+Biogeography Region|Fishes|Mediterranean
+Biogeography Region|Invertebrate Zoology|
+Biogeography Region|Invertebrate Zoology|Gulf of Mexico
+Biogeography Region|Mammals|
+Biogeography Region|Mineral Sciences|
+collector|Amphibians & Reptiles|
+collector|Birds|
 collector|Botany|Bell, D. A.
 collector|Botany|Brooks, B. L.
 collector|Botany|Knight, J.
@@ -616,9 +648,10 @@ collector|Entomology|Thompson, F. C.
 collector|Entomology|Vandenberg, N. J.
 collector|Entomology|Wilkerson, R. C.
 collector|Entomology|Woodley, N. E.
-collector|Paleobiology|Brett-Surman, M. K.
-collector|Paleobiology|Jabo, S. J.
-collector|Paleobiology|Lyles, V.
+collector|Fishes|
+collector|Invertebrate Zoology|
+collector|Mammals|
+collector|Mineral Sciences|
 country|Amphibians & Reptiles|Afghanistan
 country|Amphibians & Reptiles|Africa
 country|Amphibians & Reptiles|Aldabra Islands
@@ -4658,6 +4691,47 @@ Genetic Sample Type Tertiary|Mineral Sciences|Whole
 Genetic Sample Type Tertiary|Mineral Sciences|With skin
 Genetic Sample Type Tertiary|Mineral Sciences|Wood
 Genetic Sample Type Tertiary|Mineral Sciences|Yolk
+Identification Qualifier Rank|Amphibians & Reptiles|
+Identification Qualifier Rank|Amphibians & Reptiles|Genus
+Identification Qualifier Rank|Amphibians & Reptiles|Species
+Identification Qualifier Rank|Amphibians & Reptiles|Subspecies
+Identification Qualifier Rank|Birds|
+Identification Qualifier Rank|Birds|Genus
+Identification Qualifier Rank|Birds|Species
+Identification Qualifier Rank|Birds|Subspecies
+Identification Qualifier Rank|Botany|
+Identification Qualifier Rank|Botany|forma
+Identification Qualifier Rank|Botany|Genus
+Identification Qualifier Rank|Botany|not specified
+Identification Qualifier Rank|Botany|Species
+Identification Qualifier Rank|Botany|subforma
+Identification Qualifier Rank|Botany|Subspecies
+Identification Qualifier Rank|Botany|subvariety
+Identification Qualifier Rank|Botany|variety
+Identification Qualifier Rank|Entomology|
+Identification Qualifier Rank|Entomology|family
+Identification Qualifier Rank|Entomology|genus
+Identification Qualifier Rank|Entomology|section
+Identification Qualifier Rank|Entomology|species
+Identification Qualifier Rank|Entomology|subgenus
+Identification Qualifier Rank|Fishes|
+Identification Qualifier Rank|Fishes|Genus
+Identification Qualifier Rank|Fishes|not specified
+Identification Qualifier Rank|Fishes|Species
+Identification Qualifier Rank|Fishes|Subspecies
+Identification Qualifier Rank|Invertebrate Zoology|
+Identification Qualifier Rank|Invertebrate Zoology|Family
+Identification Qualifier Rank|Invertebrate Zoology|Genus
+Identification Qualifier Rank|Invertebrate Zoology|not specified
+Identification Qualifier Rank|Invertebrate Zoology|Species
+Identification Qualifier Rank|Invertebrate Zoology|Subfamily
+Identification Qualifier Rank|Invertebrate Zoology|Subgenus
+Identification Qualifier Rank|Invertebrate Zoology|Subspecies
+Identification Qualifier Rank|Mammals|
+Identification Qualifier Rank|Mammals|Genus
+Identification Qualifier Rank|Mammals|Species
+Identification Qualifier Rank|Mammals|Subspecies
+Identification Qualifier Rank|Mineral Sciences|
 Sexual Maturity|Mammals|-
 Sexual Maturity|Mammals|Adult
 Sexual Maturity|Mammals|Calf
@@ -4701,6 +4775,7 @@ Sexual Maturity|Mammals|Subadult
 Sexual Maturity|Mammals|Unknown
 Sexual Maturity|Mammals|Unknown, immature
 Sexual Maturity|Mammals|Unknown, Sperm in epididymus
+Zoology Stage|Amphibians & Reptiles|
 Zoology Stage|Amphibians & Reptiles|1 adult, 1 larva
 Zoology Stage|Amphibians & Reptiles|2 year old juvenile
 Zoology Stage|Amphibians & Reptiles|Adolescent
@@ -4897,19 +4972,14 @@ Zoology Stage|Amphibians & Reptiles|Unhatched eggs
 Zoology Stage|Amphibians & Reptiles|Yolked + non-yolked eggs
 Zoology Stage|Amphibians & Reptiles|Young
 Zoology Stage|Amphibians & Reptiles|Young adult
+Zoology Stage|Birds|
 Zoology Stage|Birds|Adult
 Zoology Stage|Birds|Chick
 Zoology Stage|Birds|Embryo
 Zoology Stage|Birds|Immature
 Zoology Stage|Birds|Juvenile
 Zoology Stage|Birds|Subadult
-Zoology Stage|Education & Outreach|Adolescent
-Zoology Stage|Education & Outreach|Adult
-Zoology Stage|Education & Outreach|Immature
-Zoology Stage|Education & Outreach|Juvenile
-Zoology Stage|Education & Outreach|Larva
-Zoology Stage|Education & Outreach|Larval
-Zoology Stage|Education & Outreach|Leptocephalis
+Zoology Stage|Entomology|
 Zoology Stage|Entomology|Adult
 Zoology Stage|Entomology|bottom
 Zoology Stage|Entomology|dault
@@ -4936,6 +5006,8 @@ Zoology Stage|Entomology|Wings Aptera
 Zoology Stage|Entomology|Wings Apterous
 Zoology Stage|Entomology|Wings Brachypterous
 Zoology Stage|Entomology|Wings Unknown
+Zoology Stage|Fishes|
+Zoology Stage|Invertebrate Zoology|
 Zoology Stage|Invertebrate Zoology|A-1
 Zoology Stage|Invertebrate Zoology|A-2
 Zoology Stage|Invertebrate Zoology|A-3
@@ -5059,6 +5131,7 @@ Zoology Stage|Invertebrate Zoology|zoea VII
 Zoology Stage|Invertebrate Zoology|zoea VIII
 Zoology Stage|Invertebrate Zoology|zoeae 1
 Zoology Stage|Invertebrate Zoology|zoeae 2
+Zoology Stage|Mammals|
 Zoology Stage|Mammals|Adolescent
 Zoology Stage|Mammals|Adult
 Zoology Stage|Mammals|Adult/fetus
@@ -5119,1028 +5192,6 @@ Zoology Stage|Mammals|Young
 Zoology Stage|Mammals|Young adult
 Zoology Stage|Mammals|Young juvenile
 Zoology Stage|Mammals|Young of the year
-family|Botany|Acanthaceae
-family|Botany|Acarosporaceae
-family|Botany|Aceraceae
-family|Botany|Achariaceae
-family|Botany|Acinetosporaceae
-family|Botany|Acrobolbaceae
-family|Botany|Acrochaetiaceae
-family|Botany|Acrotrichaceae
-family|Botany|Acrotylaceae
-family|Botany|Adelococcaceae
-family|Botany|Adelotheciaceae
-family|Botany|Adiantaceae
-family|Botany|Adoxaceae
-family|Botany|Agaricaceae
-family|Botany|Agaricales
-family|Botany|Agaricomycetidae
-family|Botany|Agyriaceae
-family|Botany|Aizoaceae
-family|Botany|Akaniaceae
-family|Botany|Alangiaceae
-family|Botany|Alariaceae
-family|Botany|Alga
-family|Botany|Alismataceae
-family|Botany|Allisoniaceae
-family|Botany|Alseousmiaceae
-family|Botany|Alseuosmiaceae
-family|Botany|Amanitaceae
-family|Botany|Amaranthaceae
-family|Botany|Amaryllidaceae
-family|Botany|Amblystegiaceae
-family|Botany|Amborellaceae
-family|Botany|Amygdalaceae
-family|Botany|Anacardiaceae
-family|Botany|Anadyomenaceae
-family|Botany|Anamorphic
-family|Botany|Anamylopsoraceae
-family|Botany|Anarthriaceae
-family|Botany|Ancistrocladaceae
-family|Botany|Andreaeaceae
-family|Botany|Andreaeceae
-family|Botany|Aneuraceae
-family|Botany|Angiopteridaceae
-family|Botany|Anisophylleaceae
-family|Botany|Annonaceae
-family|Botany|Anthericaceae
-family|Botany|Anthocerophyte
-family|Botany|Anthocerotaceae
-family|Botany|Antoniaceae
-family|Botany|Aphanopsidaceae
-family|Botany|Aphyllophorales
-family|Botany|Apiaceae
-family|Botany|Apocynaceae
-family|Botany|Aponogetonaceae
-family|Botany|Aquifoliaceae
-family|Botany|Araceae
-family|Botany|Araliaceae
-family|Botany|Archidiaceae
-family|Botany|Arecaceae
-family|Botany|Areschougiaceae
-family|Botany|Aristolochiaceae
-family|Botany|Arnelliaceae
-family|Botany|Arnoldiellaceae
-family|Botany|Arthoniaceae
-family|Botany|Arthoniales
-family|Botany|Arthopyreniaceae
-family|Botany|Arthrocladiaceae
-family|Botany|Arthrorhaphidaceae
-family|Botany|Asclepiadacae
-family|Botany|Asclepiadaceae
-family|Botany|Ascocarpaceae
-family|Botany|Ascomycete
-family|Botany|Ascomycota
-family|Botany|Ascoseiraceae
-family|Botany|Asparagaceae
-family|Botany|Aspidiaceae
-family|Botany|Aspidotheliaceae
-family|Botany|Aspleniaceae
-family|Botany|Asteliaceae
-family|Botany|Asteraceae
-family|Botany|Asteropeiaceae
-family|Botany|Asterothyriaceae
-family|Botany|Athyriaceae
-family|Botany|Aulacomniaceae
-family|Botany|Auriculariaceae
-family|Botany|Averrhoaceae
-family|Botany|Aytoniaceae
-family|Botany|Azollaceae
-family|Botany|Bacidiaceae
-family|Botany|Baeomycetaceae
-family|Botany|Balanophoraceae
-family|Botany|Balanopsidaceae
-family|Botany|Balantiopsaceae
-family|Botany|Balbianiaceae
-family|Botany|Balsaminaceae
-family|Botany|Bangiaceae
-family|Botany|Bartramiaceae
-family|Botany|Basellaceae
-family|Botany|Basidiomycete
-family|Botany|Batidaceae
-family|Botany|Batrachospermaceae
-family|Botany|Begoniaceae
-family|Botany|Berberidaceae
-family|Botany|Betulaceae
-family|Botany|Biatorellaceae
-family|Botany|Bignoniaceae
-family|Botany|Bixaceae
-family|Botany|Blechnaceae
-family|Botany|Blinksiaceae
-family|Botany|Boldiaceae
-family|Botany|Boletaceae
-family|Botany|Bombacaceae
-family|Botany|Bonnemaisoniaceae
-family|Botany|Bonnetaceae
-family|Botany|Bonnetiaceae
-family|Botany|Boodleaceae
-family|Botany|Boraginaceae
-family|Botany|Borzinemataceae
-family|Botany|Botrydiaceae
-family|Botany|Botryochloridaceae
-family|Botany|Botryococcaceae
-family|Botany|Brachytheciaceae
-family|Botany|Brassicaceae
-family|Botany|Brigantiaceae
-family|Botany|Brigantiaeaceae
-family|Botany|Bromeliaceae
-family|Botany|Brunelliaceae
-family|Botany|Bruniaceae
-family|Botany|Bryaceae
-family|Botany|Bryopsidaceae
-family|Botany|Buddlejaceae
-family|Botany|Burmanniaceae
-family|Botany|Burseraceae
-family|Botany|Butomaceae
-family|Botany|Buxaceae
-family|Botany|Buxbaumiaceae
-family|Botany|Byssolomataceae
-family|Botany|Cactaceae
-family|Botany|Caesalpiniaceae
-family|Botany|Calciodinellaceae
-family|Botany|Caliciaceae
-family|Botany|Callicostaceae
-family|Botany|Callitrichaceae
-family|Botany|Calosiphoniaceae
-family|Botany|Calycanthaceae
-family|Botany|Calyceraceae
-family|Botany|Calycidiaceae
-family|Botany|Calymperaceae
-family|Botany|Calypogeiaceae
-family|Botany|Campanulaceae
-family|Botany|Candelariaceae
-family|Botany|Canellaceae
-family|Botany|Cannaceae
-family|Botany|Cantharellaceae
-family|Botany|Capnodiaceae
-family|Botany|Capparaceae
-family|Botany|Capparidaceae
-family|Botany|Caprifoliaceae
-family|Botany|Capsosiraceae
-family|Botany|Caricaceae
-family|Botany|Caryocaraceae
-family|Botany|Caryophyllaceae
-family|Botany|Casuarinaceae
-family|Botany|Catillariaceae
-family|Botany|Catoscopiaceae
-family|Botany|Caulacanthaceae
-family|Botany|Caulerpaceae
-family|Botany|Cecropiaceae
-family|Botany|Celastraceae
-family|Botany|Celotheliaceae
-family|Botany|Centrolepidaceae
-family|Botany|Cephalotaceae
-family|Botany|Cephaloziaceae
-family|Botany|Cephaloziellaceae
-family|Botany|Ceramiaceae
-family|Botany|Ceratiaceae
-family|Botany|Ceratiomyxaceae
-family|Botany|Ceratophyllaceae
-family|Botany|Chaenothecopsis
-family|Botany|Chaetangiaceae
-family|Botany|Chaetocerotaceae
-family|Botany|Chaetophoraceae
-family|Botany|Chaetosiphoniaceae
-family|Botany|Chaetosphaeridiaceae
-family|Botany|Chamaesiphonaceae
-family|Botany|Champiaceae
-family|Botany|Characeae
-family|Botany|Characiaceae
-family|Botany|Characiopsidaceae
-family|Botany|Characiosiphonaceae
-family|Botany|Chattonellaceae
-family|Botany|Cheiropleuriaceae
-family|Botany|Chenopodiaceae
-family|Botany|Chlaenaceae
-family|Botany|Chlamydomonadaceae
-family|Botany|Chlorangiaceae
-family|Botany|Chloranthaceae
-family|Botany|Chlorellaceae
-family|Botany|Chlorobotrydaceae
-family|Botany|Chlorococcaceae
-family|Botany|Chlorophyceae
-family|Botany|Chlorosaccaceae
-family|Botany|Chlorosarcinaceae
-family|Botany|Chnoosporaceae
-family|Botany|Chordaceae
-family|Botany|Chordariaceae
-family|Botany|Chordariopsidaceae
-family|Botany|Choreocolacaceae
-family|Botany|Choristocarpaceae
-family|Botany|Chroococcaceae
-family|Botany|Chroococcidiaceae
-family|Botany|Chroolepidaceae
-family|Botany|Chrysobalanaceae
-family|Botany|Chrysosaccaceae
-family|Botany|Chrysothricaceae
-family|Botany|Chrysothrichaceae
-family|Botany|Cistaceae
-family|Botany|Cladoniaceae
-family|Botany|Cladophoraceae
-family|Botany|Cladostephaceae
-family|Botany|Clastidiaceae
-family|Botany|Clavariaceae
-family|Botany|Clavicipitaceae
-family|Botany|Clavulinaceae
-family|Botany|Clethraceae
-family|Botany|Cleveaceae
-family|Botany|Climaciaceae
-family|Botany|Clusiaceae
-family|Botany|Cneoraceae
-family|Botany|Coccocarpiaceae
-family|Botany|Coccomyxaceae
-family|Botany|Coccotremataceae
-family|Botany|Cochlospermaceae
-family|Botany|Codiaceae
-family|Botany|Coelastraceae
-family|Botany|Coenogoniaceae
-family|Botany|Colaconemataceae
-family|Botany|Coleochaetaceae
-family|Botany|Collemataceae
-family|Botany|Coltrichiaceae
-family|Botany|Columelliaceae
-family|Botany|Combretaceae
-family|Botany|Commelinaceae
-family|Botany|Compsopogonaceae
-family|Botany|Confervaceae
-family|Botany|Coniocybaceae
-family|Botany|Coniophoraceae
-family|Botany|Connaraceae
-family|Botany|Conocephalaceae
-family|Botany|Convolvulaceae
-family|Botany|Coprinaceae
-family|Botany|Corallinaceae
-family|Botany|Coriariaceae
-family|Botany|Cornaceae
-family|Botany|Corticiaceae
-family|Botany|Cortinariaceae
-family|Botany|Corynocarpaceae
-family|Botany|Corynophlaeaceae
-family|Botany|Costaceae
-family|Botany|Crassulaceae
-family|Botany|Crocyniaceae
-family|Botany|Crossosomataceae
-family|Botany|Cruoriaceae
-family|Botany|Cryphaeaceae
-family|Botany|Crypheaceae
-family|Botany|Crypteroniaceae
-family|Botany|Cryptomonadaceae
-family|Botany|Cryptonemiaceae
-family|Botany|Ctenolophonaceae
-family|Botany|Cubiculosporaceae
-family|Botany|Cucurbitaceae
-family|Botany|Cunoniaceae
-family|Botany|Cuscutaceae
-family|Botany|Cutleriaceae
-family|Botany|Cyanastraceae
-family|Botany|Cyatheaceae
-family|Botany|Cycadaceae
-family|Botany|Cyclanthaceae
-family|Botany|Cylindrocapsaceae
-family|Botany|Cynomoriaceae
-family|Botany|Cyperaceae
-family|Botany|Cyphellaceae
-family|Botany|Cyrillaceae
-family|Botany|Cyrtopodaceae
-family|Botany|Cystoseiraceae
-family|Botany|Dacampiaceae
-family|Botany|Dacrymycetaceae
-family|Botany|Dactylosporaceae
-family|Botany|Daltoniaceae
-family|Botany|Dasyaceae
-family|Botany|Dasycladaceae
-family|Botany|Datiscaceae
-family|Botany|Davalliaceae
-family|Botany|Dawsoniaceae
-family|Botany|Degeneriaceae
-family|Botany|Delesseriaceae
-family|Botany|Dennstaedtiaceae
-family|Botany|Derbesiaceae
-family|Botany|Dermateaceae
-family|Botany|Dermocorynidaceae
-family|Botany|Desmarestiaceae
-family|Botany|Desmidiaceae
-family|Botany|Deuteromycete
-family|Botany|Diapensiaceae
-family|Botany|Dichapetalaceae
-family|Botany|Dichotomosiphonaceae
-family|Botany|Dicksoniaceae
-family|Botany|Dicranaceae
-family|Botany|Dicranemataceae
-family|Botany|Dictyosiphonaceae
-family|Botany|Dictyosphaeriaceae
-family|Botany|Dictyotaceae
-family|Botany|Didiereaceae
-family|Botany|Didymelaceae
-family|Botany|Dilleniaceae
-family|Botany|Dinobryaceae
-family|Botany|Dinophysaceae
-family|Botany|Dioncophyllaceae
-family|Botany|Dioscoreaceae
-family|Botany|Diphysciaceae
-family|Botany|Diplopsaliaceae
-family|Botany|Dipsacaceae
-family|Botany|Dipteridaceae
-family|Botany|Dipterocarpaceae
-family|Botany|Discomycetaceae
-family|Botany|Discomycete
-family|Botany|Ditrichaceae
-family|Botany|Dothideomycetes
-family|Botany|Droseraceae
-family|Botany|Dryopteridaceae
-family|Botany|Dumontiaceae
-family|Botany|Durvillaeaceae
-family|Botany|Ebenaceae
-family|Botany|Echinostelliales
-family|Botany|Ectocarpaceae
-family|Botany|Ectolechiaceae
-family|Botany|Elachistaceae
-family|Botany|Elaeagnaceae
-family|Botany|Elaeocarpaceae
-family|Botany|Elaphomycetaceae
-family|Botany|Elatinaceae
-family|Botany|Eleaocarpaceae
-family|Botany|Elixiaceae
-family|Botany|Empetraceae
-family|Botany|Encalyptaceae
-family|Botany|Endocladiaceae
-family|Botany|Endosphaeraceae
-family|Botany|Entodontaceae
-family|Botany|Entolomataceae
-family|Botany|Entophysalidaceae
-family|Botany|Epacridaceae
-family|Botany|Ephedraceae
-family|Botany|Ephemeraceae
-family|Botany|Equisetaceae
-family|Botany|Ericaceae
-family|Botany|Eriocaulaceae
-family|Botany|Erpodiaceae
-family|Botany|Erythropeltidaceae
-family|Botany|Erythroxylaceae
-family|Botany|Escalloniaceae
-family|Botany|Eucryphiaceae
-family|Botany|Euglenaceae
-family|Botany|Euphorbiaceae
-family|Botany|Fabaceae
-family|Botany|Fabroniaceae
-family|Botany|Fagaceae
-family|Botany|Faucheaceae
-family|Botany|Fissidentaceae
-family|Botany|Flacouritiaceae
-family|Botany|Flacourtiaceae
-family|Botany|Flagellariaceae
-family|Botany|Foetidiaceae
-family|Botany|Fontinalaceae
-family|Botany|Fossombroniaceae
-family|Botany|Fouquieriaceae
-family|Botany|Frankeniaceae
-family|Botany|Frullanaceae
-family|Botany|Fucaceae
-family|Botany|Funariaceae
-family|Botany|Furcellariaceae
-family|Botany|Fuscideaceae
-family|Botany|Futolomataceae
-family|Botany|Galaxauraceae
-family|Botany|Ganodermataceae
-family|Botany|Gastromycete
-family|Botany|Gayraliaceae
-family|Botany|Geastraceae
-family|Botany|Geissolomataceae
-family|Botany|Gelidiaceae
-family|Botany|Gelidiellaceae
-family|Botany|Gentianaceae
-family|Botany|Geocalycaceae
-family|Botany|Geraniaceae
-family|Botany|Gesneriaceae
-family|Botany|Gigartinaceae
-family|Botany|Ginkgoaceae
-family|Botany|Giraudiaceae
-family|Botany|Gleicheniaceae
-family|Botany|Glenodiniaceae
-family|Botany|Globulariaceae
-family|Botany|Gloeodiniaceae
-family|Botany|Gloeoheppiaceae
-family|Botany|Gloiosiphoniaceae
-family|Botany|Gnetaceae
-family|Botany|Gomontiaceae
-family|Botany|Gomontiellaceae
-family|Botany|Gomortegaceae
-family|Botany|Gomphillaceae
-family|Botany|Gomphyllaceae
-family|Botany|Goniodomataceae
-family|Botany|Goniotrichaceae
-family|Botany|Gonyaulacaceae
-family|Botany|Gonystylaceae
-family|Botany|Goodeniaceae
-family|Botany|Gracilariaceae
-family|Botany|Graminae
-family|Botany|Grammitidaceae
-family|Botany|Graphidaceae
-family|Botany|Graphidiaceae
-family|Botany|Grimmiaceae
-family|Botany|Grubbiaceae
-family|Botany|Gyalectaceae
-family|Botany|Gymnodiniaceae
-family|Botany|Gymnomitriaceae
-family|Botany|Gymnophlaeaceae
-family|Botany|Gypsoplacaceae
-family|Botany|Gyrothyraceae
-family|Botany|Haematococcaceae
-family|Botany|Haematommataceae
-family|Botany|Haemodoraceae
-family|Botany|Halimedaceae
-family|Botany|Haloragidaceae
-family|Botany|Halymeniaceae
-family|Botany|Hamamelidaceae
-family|Botany|Hanguanaceae
-family|Botany|Hapalidiaceae
-family|Botany|Haplomitraceae
-family|Botany|Hedwigiaceae
-family|Botany|Heliconiaceae
-family|Botany|Helicophyllaceae
-family|Botany|Helminthocladiaceae
-family|Botany|Helotiaceae
-family|Botany|Hemerocallidaceae
-family|Botany|Hemidiscaceae
-family|Botany|Heppiaceae
-family|Botany|Herbertaceae
-family|Botany|Hericiaceae
-family|Botany|Hernandiaceae
-family|Botany|Heterococcaceae
-family|Botany|Heterotrichaceae
-family|Botany|Hildenbrandiaceae
-family|Botany|Himanthaliaceae
-family|Botany|Himantothallaceae
-family|Botany|Hippocastanaceae
-family|Botany|Hippocrateaceae
-family|Botany|Hippuridaceae
-family|Botany|Hookeriaceae
-family|Botany|Hormosiraceae
-family|Botany|Humiriaceae
-family|Botany|Hydnaceae
-family|Botany|Hydnodontaceae
-family|Botany|Hydnoraceae
-family|Botany|Hydrocharitaceae
-family|Botany|Hydrococcaceae
-family|Botany|Hydrodictyaceae
-family|Botany|Hydrophyllaceae
-family|Botany|Hydropogonaceae
-family|Botany|Hydrostachyaceae
-family|Botany|Hydruraceae
-family|Botany|Hygrophoraceae
-family|Botany|Hylocomiaceae
-family|Botany|Hymeneliaceae
-family|Botany|Hymenochaetaceae
-family|Botany|Hymenophyllaceae
-family|Botany|Hymenophyllopsidaceae
-family|Botany|Hypericaceae
-family|Botany|Hypnaceae
-family|Botany|Hypneaceae
-family|Botany|Hypnodendraceae
-family|Botany|Hypocreaceae
-family|Botany|Hypopterygiaceae
-family|Botany|Hypoxidaceae
-family|Botany|Hysterangiaceae
-family|Botany|Icacinaceae
-family|Botany|Icmadophilaceae
-family|Botany|Indet.
-family|Botany|Inkyuleeaceae
-family|Botany|Iridaceae
-family|Botany|Ishigeaceae
-family|Botany|Isoδtaceae
-family|Botany|Ixonanthaceae
-family|Botany|Joinvilleaceae
-family|Botany|Juglandaceae
-family|Botany|Juncaceae
-family|Botany|Juncaginaceae
-family|Botany|Jungermanniaceae
-family|Botany|Kallymeniaceae
-family|Botany|Kareniaceae
-family|Botany|Koeberliniaceae
-family|Botany|Kornmanniaceae
-family|Botany|Lacistemaceae
-family|Botany|Lacistemataceae
-family|Botany|Lactoridaceae
-family|Botany|Lamiaceae
-family|Botany|Laminariaceae
-family|Botany|Lardizabalaceae
-family|Botany|Lauraceae
-family|Botany|Leathesiaceae
-family|Botany|Lecanoraceae
-family|Botany|Lecanorales
-family|Botany|Lecideaceae
-family|Botany|Lecythidaceae
-family|Botany|Leguminosae
-family|Botany|Leitneriaceae
-family|Botany|Lejeuneaceae
-family|Botany|Lemaneaceae
-family|Botany|Lembophyllaceae
-family|Botany|Lemnaceae
-family|Botany|Lennoaceae
-family|Botany|Lentibulariaceae
-family|Botany|Leotiales
-family|Botany|Leotiomycetes
-family|Botany|Lepicoleaceae
-family|Botany|Lepidobotryaceae
-family|Botany|Lepidolaenaceae
-family|Botany|Lepidoziaceae
-family|Botany|Lepiotaceae
-family|Botany|Leptostomataceae
-family|Botany|Lepyrodontaceae
-family|Botany|Leskeaceae
-family|Botany|Lessoniaceae
-family|Botany|Letrouitiaceae
-family|Botany|Leucobryaceae
-family|Botany|Leucodontaceae
-family|Botany|Leucomiaceae
-family|Botany|Leucorbryaceae
-family|Botany|Liagoraceae
-family|Botany|Liceales
-family|Botany|Lichen
-family|Botany|Lichinaceae
-family|Botany|Liliaceae
-family|Botany|Limnanthaceae
-family|Botany|Linaceae
-family|Botany|Lindsaeaceae
-family|Botany|Liverwort
-family|Botany|Loasaceae
-family|Botany|Lobariaceae
-family|Botany|Lobeliaceae
-family|Botany|Loganiaceae
-family|Botany|Lomariopsidaceae
-family|Botany|Lomentariaceae
-family|Botany|Lophosoriaceae
-family|Botany|Loranthaceae
-family|Botany|Loriellaceae
-family|Botany|Lowiaceae
-family|Botany|Loxsomataceae
-family|Botany|Lycoperdaceae
-family|Botany|Lycopodiaceae
-family|Botany|Lythraceae
-family|Botany|Macromitriaceae
-family|Botany|Magnoliaceae
-family|Botany|Malesherbiaceae
-family|Botany|Malpighiaceae
-family|Botany|Malvaceae
-family|Botany|Marantaceae
-family|Botany|Marasmiaceae
-family|Botany|Marattiaceae
-family|Botany|Marcgraviaceae
-family|Botany|Marchantiaceae
-family|Botany|Marsileaceae
-family|Botany|Martyniaceae
-family|Botany|Massalongiaceae
-family|Botany|Mastigocladaceae
-family|Botany|Mastixiaceae
-family|Botany|Mastodiaceae
-family|Botany|Matoniaceae
-family|Botany|Mayacaceae
-family|Botany|Medusandraceae
-family|Botany|Meesiaceae
-family|Botany|Megalariaceae
-family|Botany|Megalosporaceae
-family|Botany|Megasporaceae
-family|Botany|Melaspileaceae
-family|Botany|Melastomaceae
-family|Botany|Melastomataceae
-family|Botany|Meliaceae
-family|Botany|Meliaceae/sabiaceae
-family|Botany|Melianthaceae
-family|Botany|Menispermaceae
-family|Botany|Menyanthaceae
-family|Botany|Mesotaeniaceae
-family|Botany|Messiaceae
-family|Botany|Metaxyaceae
-family|Botany|Meteoriaceae
-family|Botany|Metzgeriaceae
-family|Botany|Micareaceae
-family|Botany|Micractiniaceae
-family|Botany|Microcaliciaceae
-family|Botany|Microchaetaceae
-family|Botany|Microsporaceae
-family|Botany|Microthyriaceae
-family|Botany|Mimosaceae
-family|Botany|Mniaceae
-family|Botany|Molluginaceae
-family|Botany|Monimiaceae
-family|Botany|Monoblastiaceae
-family|Botany|Monocleaceae
-family|Botany|Monostromataceae
-family|Botany|Montiaceae
-family|Botany|Moraceae
-family|Botany|Moringaceae
-family|Botany|Muntingiaceae
-family|Botany|Musaceae
-family|Botany|Mycenaceae
-family|Botany|Mychodeaceae
-family|Botany|Mycoblastaceae
-family|Botany|Mycocalicaceae
-family|Botany|Mycocaliciaceae
-family|Botany|Mycoporaceae
-family|Botany|Mycosphaerellaceae
-family|Botany|Myoporaceae
-family|Botany|Myricaceae
-family|Botany|Myriniaceae
-family|Botany|Myrionemataceae
-family|Botany|Myriotrichiaceae
-family|Botany|Myristicaceae
-family|Botany|Myrothamnaceae
-family|Botany|Myrsinaceae
-family|Botany|Myrtaceae
-family|Botany|Myxomycete
-family|Botany|Myzodendraceae
-family|Botany|Naccariaceae
-family|Botany|Naegeliellaceae
-family|Botany|Najadaceae
-family|Botany|Neckeraceae
-family|Botany|Nelumbonaceae
-family|Botany|Nemaliaceae
-family|Botany|Nemastomataceae
-family|Botany|Nepenthaceae
-family|Botany|Nephrolepidaceae
-family|Botany|Nephromataceae
-family|Botany|Nidulariaceae
-family|Botany|Nidulariales
-family|Botany|Nolanaceae
-family|Botany|Nostocaceae
-family|Botany|Nostochopsidaceae
-family|Botany|Notheiaceae
-family|Botany|Notothyladaceae
-family|Botany|Nyctaginaceae
-family|Botany|Nymphaeaceae
-family|Botany|Nyssaceae
-family|Botany|Ochnaceae
-family|Botany|Ochrolechiaceae
-family|Botany|Odontotremataceae
-family|Botany|Oedogoniaceae
-family|Botany|Olacaceae
-family|Botany|Oleaceae
-family|Botany|Oliniaceae
-family|Botany|Onagraceae
-family|Botany|Oocystaceae
-family|Botany|Ophioglossaceae
-family|Botany|Ophioparmaceae
-family|Botany|Opiliaceae
-family|Botany|Orchidaceae
-family|Botany|Orobanchaceae
-family|Botany|Orthotrichaceae
-family|Botany|Oscillatoriaceae
-family|Botany|Osmundaceae
-family|Botany|Ostreopsidaceae
-family|Botany|Ostropales
-family|Botany|Oxalidaceae
-family|Botany|Pallaviciniaceae
-family|Botany|Palmellaceae
-family|Botany|Palmellopsidaceae
-family|Botany|Pandaceae
-family|Botany|Pandanaceae
-family|Botany|Pannariaceae
-family|Botany|Papaveraceae
-family|Botany|Papilionaceae
-family|Botany|Parkeriaceae
-family|Botany|Parmeliaceae
-family|Botany|Passifloraceae
-family|Botany|Paxillaceae
-family|Botany|Pedaliaceae
-family|Botany|Pelliaceae
-family|Botany|Peltigeraceae
-family|Botany|Peltigerales
-family|Botany|Peltulaceae
-family|Botany|Penaeaceae
-family|Botany|Pennariaceae
-family|Botany|Pentadiplandraceae
-family|Botany|Pentaphragmataceae
-family|Botany|Pentaphylacaceae
-family|Botany|Pentaphylaceae
-family|Botany|Peridiniaceae
-family|Botany|Periplocaceae
-family|Botany|Pertusariaceae
-family|Botany|Peyssonneliaceae
-family|Botany|Pezizaceae
-family|Botany|Pezizales
-family|Botany|Pezizomycotina
-family|Botany|Pfisteriaceae
-family|Botany|Phacelocarpaceae
-family|Botany|Phacotaceae
-family|Botany|Phaeodermatiaceae
-family|Botany|Phaeophilaceae
-family|Botany|Phaeosacciaceae
-family|Botany|Phaeothamniaceae
-family|Botany|Phallaceae
-family|Botany|Philydraceae
-family|Botany|Phlyctidaceae
-family|Botany|Phragmonemataceae
-family|Botany|Phrymaceae
-family|Botany|Phycolepidoziaceae
-family|Botany|Phyllanthaceae
-family|Botany|Phyllocladaceae
-family|Botany|Phyllodrepaniaceae
-family|Botany|Phyllogoniaceae
-family|Botany|Phyllophoraceae
-family|Botany|Phyllosiphonaceae
-family|Botany|Physalacriaceae
-family|Botany|Physarales
-family|Botany|Physciaceae
-family|Botany|Phytolaccaceae
-family|Botany|Picrmniaceae
-family|Botany|Pilocarpaceae
-family|Botany|Pilotrichaceae
-family|Botany|Pinaceae
-family|Botany|Pinguiochrysidaceae
-family|Botany|Piperaceae
-family|Botany|Pittosporaceae
-family|Botany|Placynthiaceae
-family|Botany|Plagiochilaceae
-family|Botany|Plagiogyriaceae
-family|Botany|Plagioiaceae
-family|Botany|Plagiotheciaceae
-family|Botany|Plantaginaceae
-family|Botany|Platanaceae
-family|Botany|Pleomassariaceae
-family|Botany|Pleurochloridaceae
-family|Botany|Pleurotaceae
-family|Botany|Pleuroziaceae
-family|Botany|Plocamiaceae
-family|Botany|Plumbaginaceae
-family|Botany|Pluteaceae
-family|Botany|Poaceae
-family|Botany|Podocarpaceae
-family|Botany|Podolampadaceae
-family|Botany|Podoscyphaceae
-family|Botany|Podostemaceae
-family|Botany|Podostemonaceae
-family|Botany|Polemoniaceae
-family|Botany|Polyblepharidaceae
-family|Botany|Polygalaceae
-family|Botany|Polygonaceae
-family|Botany|Polyphysaceae
-family|Botany|Polypodiaceae
-family|Botany|Polyporaceae
-family|Botany|Polyporales
-family|Botany|Polytrichaceae
-family|Botany|Pontederiaceae
-family|Botany|Porellaceae
-family|Botany|Porinaceae
-family|Botany|Porphyridiaceae
-family|Botany|Porpidiaceae
-family|Botany|Portulacaceae
-family|Botany|Potaliaceae
-family|Botany|Potamogetonaceae
-family|Botany|Pottiaceae
-family|Botany|Prasiolaceae
-family|Botany|Primulaceae
-family|Botany|Prionodantaceae
-family|Botany|Prionodontaceae
-family|Botany|Prorocentraceae
-family|Botany|Proteaceae
-family|Botany|Protoceratiaceae
-family|Botany|Protoperidiniaceae
-family|Botany|Protosiphonaceae
-family|Botany|Psathyrellaceae
-family|Botany|Pseudanabenaceae
-family|Botany|Pseudoanemoniaceae
-family|Botany|Pseudolepicoleaceae
-family|Botany|Psilotaceae
-family|Botany|Psoraceae
-family|Botany|Ptaeroxylaceae
-family|Botany|Pteridaceae
-family|Botany|Pterigynandraceae
-family|Botany|Pterobryaceae
-family|Botany|Pterulaceae
-family|Botany|Ptilidiaceae
-family|Botany|Ptychomitriaceae
-family|Botany|Pulvinulariaceae
-family|Botany|Punctariaceae
-family|Botany|Punicaceae
-family|Botany|Pylaiellaceae
-family|Botany|Pyrenomycete
-family|Botany|Pyrenulaceae
-family|Botany|Pyrolaceae
-family|Botany|Pyronemataceae
-family|Botany|Quiinaceae
-family|Botany|Racopilaceae
-family|Botany|Radulaceae
-family|Botany|Rafflesiaceae
-family|Botany|Ralfsiaceae
-family|Botany|Ramalinaceae
-family|Botany|Ranunculaceae
-family|Botany|Rapateaceae
-family|Botany|Resedaceae
-family|Botany|Restionaceae
-family|Botany|Revouleaceae
-family|Botany|Rhabdodendraceae
-family|Botany|Rhabdoniaceae
-family|Botany|Rhacocarpaceae
-family|Botany|Rhacopilaceae
-family|Botany|Rhamnaceae
-family|Botany|Rhizocarpaceae
-family|Botany|Rhizogoniaceae
-family|Botany|Rhizophoraceae
-family|Botany|Rhizophyllidaceae
-family|Botany|Rhodochaetaceae
-family|Botany|Rhodogorgonaceae
-family|Botany|Rhodomelaceae
-family|Botany|Rhodophyllidaceae
-family|Botany|Rhodymeniaceae
-family|Botany|Rhysciaceae
-family|Botany|Rhytidiaceae
-family|Botany|Ricciaceae
-family|Botany|Riellaceae
-family|Botany|Rissoellaceae
-family|Botany|Rivulariaceae
-family|Botany|Roccellaceae
-family|Botany|Rocellaceae
-family|Botany|Ropalosporaceae
-family|Botany|Rosaceae
-family|Botany|Rubiaceae
-family|Botany|Russulaceae
-family|Botany|Rutaceae
-family|Botany|Sabiaceae
-family|Botany|Salicaceae
-family|Botany|Salvadoraceae
-family|Botany|Salviniaceae
-family|Botany|Santalaceae
-family|Botany|Sapindaceae
-family|Botany|Sapotaceae
-family|Botany|Sarcodiaceae
-family|Botany|Sargassaceae
-family|Botany|Sarraceniaceae
-family|Botany|Sarrameanaceae
-family|Botany|Saururaceae
-family|Botany|Saxifragaceae
-family|Botany|Scapaniaceae
-family|Botany|Scenedesmaceae
-family|Botany|Schaereriaceae
-family|Botany|Schistochilaceae
-family|Botany|Schizaeaceae
-family|Botany|Schizomeridaceae
-family|Botany|Schizymeniaceae
-family|Botany|Schlegeliaceae
-family|Botany|Sciadiaceae
-family|Botany|Sclerodermataceae
-family|Botany|Sclerotiniaceae
-family|Botany|Scrophulariaceae
-family|Botany|Scytonemataceae
-family|Botany|Scytopetalaceae
-family|Botany|Scytosiphonaceae
-family|Botany|Scytothamnaceae
-family|Botany|Sebacinaceae
-family|Botany|Sebdeniaceae
-family|Botany|Selaginellaceae
-family|Botany|Seligeriaceae
-family|Botany|Sematophyllaceae
-family|Botany|Simaroubaceae
-family|Botany|Sinopteridaceae
-family|Botany|Siparunaceae
-family|Botany|Siphonocladaceae
-family|Botany|Siphulaceae
-family|Botany|Smilacaceae
-family|Botany|Solanaceae
-family|Botany|Solieriaceae
-family|Botany|Sonneratiaceae
-family|Botany|Sparganiaceae
-family|Botany|Spermatochnaceae
-family|Botany|Sphacelariaceae
-family|Botany|Sphaerocarpaceae
-family|Botany|Sphaerococcaceae
-family|Botany|Sphaerophoaceae
-family|Botany|Sphaerophoraceae
-family|Botany|Sphaeropleaceae
-family|Botany|Sphaerosepalaceae
-family|Botany|Sphagnaceae
-family|Botany|Sphinctrinaceae
-family|Botany|Splachnaceae
-family|Botany|Splachnidiaceae
-family|Botany|Spondylomoraceae
-family|Botany|Sporochnaceae
-family|Botany|Stachyuraceae
-family|Botany|Stackhousiaceae
-family|Botany|Staphyeaceae
-family|Botany|Staphyleaceae
-family|Botany|Stemonaceae
-family|Botany|Stemonitales
-family|Botany|Stemonuraceae
-family|Botany|Sterculiaceae
-family|Botany|Stereaceae
-family|Botany|Stereocaulaceae
-family|Botany|Stereophyllaceae
-family|Botany|Stictidaceae
-family|Botany|Stigonemataceae
-family|Botany|Streblonemataceae
-family|Botany|Strelitziaceae
-family|Botany|Striariaceae
-family|Botany|Strigulaceae
-family|Botany|Strophariaceae
-family|Botany|Stylidiaceae
-family|Botany|Stylococcaceae
-family|Botany|Stylonemataceae
-family|Botany|Stypocaulaceae
-family|Botany|Styracaceae
-family|Botany|Surirellaceae
-family|Botany|Symphyodontaceae
-family|Botany|Symplocaceae
-family|Botany|Synuraceae
-family|Botany|Taccaceae
-family|Botany|Takakiaceae
-family|Botany|Tamaricaceae
-family|Botany|Taphrinaceae
-family|Botany|Tapisciaceae
-family|Botany|Targioniaceae
-family|Botany|Taxaceae
-family|Botany|Tectariaceae
-family|Botany|Teloschistaceae
-family|Botany|Tepromelataceae
-family|Botany|Tetrameristaceae
-family|Botany|Tetraphidaceae
-family|Botany|Tetrasporaceae
-family|Botany|Thamnobryaceae
-family|Botany|Theaceae
-family|Botany|Thecadiniaceae
-family|Botany|Thelenellaceae
-family|Botany|Thelephoraceae
-family|Botany|Theliaceae
-family|Botany|Theligonaceae
-family|Botany|Thelocarpaceae
-family|Botany|Thelotremataceae
-family|Botany|Thelypteridaceae
-family|Botany|Theophrastaceae
-family|Botany|Thoreaceae
-family|Botany|Thuidiaceae
-family|Botany|Thymelaeaceae
-family|Botany|Thymeleaceae
-family|Botany|Thyrsopteridaceae
-family|Botany|Tichocarpaceae
-family|Botany|Tileaceae
-family|Botany|Tiliaceae
-family|Botany|Tilopteridaceae
-family|Botany|Timmiaceae
-family|Botany|Tmesipteridaceae
-family|Botany|Tovariaceae
-family|Botany|Trachypodaceae
-family|Botany|Trapaceae
-family|Botany|Trapeliaceae
-family|Botany|Trebouxiaceae
-family|Botany|Tremellaceae
-family|Botany|Tremellales
-family|Botany|Trentepohliaceae
-family|Botany|Tribonemataceae
-family|Botany|Trichiales
-family|Botany|Trichocoleaceae
-family|Botany|Tricholomataceae
-family|Botany|Trichotheliaceae
-family|Botany|Trigoniaceae
-family|Botany|Trilliaceae
-family|Botany|Trimeniaceae
-family|Botany|Triplochitonaceae
-family|Botany|Triuridaceae
-family|Botany|Trochodendraceae
-family|Botany|Tropaeolaceae
-family|Botany|Trypetheliaceae
-family|Botany|Tubiellaceae
-family|Botany|Turneraceae
-family|Botany|Typhaceae
-family|Botany|Udoteaceae
-family|Botany|Ulmaceae
-family|Botany|Ulotrichaceae
-family|Botany|Ulvaceae
-family|Botany|Ulvellaceae
-family|Botany|Umbicariaceae
-family|Botany|Umbilicariaceae
-family|Botany|Uredinales
-family|Botany|Urediniomycete
-family|Botany|Urticaceae
-family|Botany|Usneaceae
-family|Botany|Vacciniaceae
-family|Botany|Vacuolariaceae
-family|Botany|Valarianaceae
-family|Botany|Valerianaceae
-family|Botany|Valoniaceae
-family|Botany|Vaucheriaceae
-family|Botany|Velloziaceae
-family|Botany|Verbenaceae
-family|Botany|Verrucariaceae
-family|Botany|Verrucariales
-family|Botany|Vezdaeaceae
-family|Botany|Viciaceae
-family|Botany|Violaceae
-family|Botany|Viscaceae
-family|Botany|Vitaceae
-family|Botany|Vitidaceae
-family|Botany|Vittariaceae
-family|Botany|Vochysiaceae
-family|Botany|Volvocaceae
-family|Botany|Wittrockiellaceae
-family|Botany|Woodsiaceae
-family|Botany|Wrangeliaceae
-family|Botany|Wurdemanniaceae
-family|Botany|Xanthophyllaceae
-family|Botany|Xanthopyreniaceae
-family|Botany|Xylariaceae
-family|Botany|Xylariales
-family|Botany|Xyridaceae
-family|Botany|Zingiberaceae
-family|Botany|Zygnemataceae
-family|Botany|Zygophyllaceae
 family|Entomology|Abacionidae
 family|Entomology|Acalyptonotidae
 family|Entomology|Acanaloniidae
@@ -12264,6 +11315,10 @@ genus|Birds|Zonotrichia
 genus|Birds|Zoonavena
 genus|Birds|Zoothera
 genus|Birds|Zosterops
+genus|Botany|
+genus|Entomology|
+genus|Fishes|
+genus|Invertebrate Zoology|
 genus|Mammals|Abditomys
 genus|Mammals|Abrawayaomys
 genus|Mammals|Abrocoma
@@ -13591,6 +12646,10 @@ genus|Mammals|Ziphius
 genus|Mammals|Zygodontomys
 genus|Mammals|Zygogeomys
 genus|Mammals|Zyzomys
+order|Amphibians & Reptiles|
+order|Birds|
+order|Botany|
+order|Entomology|
 order|Fishes|Acipenseriformes
 order|Fishes|Albuliformes
 order|Fishes|Amiiformes
@@ -13658,6 +12717,13 @@ order|Fishes|Syngnathiformes
 order|Fishes|Tetraodontiformes
 order|Fishes|Torpediniformes
 order|Fishes|Zeiformes
+order|Invertebrate Zoology|
+order|Mammals|
+phylum|Amphibians & Reptiles|
+phylum|Birds|
+phylum|Botany|
+phylum|Entomology|
+phylum|Fishes|
 phylum|Invertebrate Zoology|Acanthocephala
 phylum|Invertebrate Zoology|Amoebozoa
 phylum|Invertebrate Zoology|Animalia
@@ -13716,45 +12782,4 @@ phylum|Invertebrate Zoology|Tardigrada
 phylum|Invertebrate Zoology|Vertebrata
 phylum|Invertebrate Zoology|Vestimentifera
 phylum|Invertebrate Zoology|Xenophyophora
-Identification Qualifier Rank|Amphibians & Reptiles|Genus
-Identification Qualifier Rank|Amphibians & Reptiles|Species
-Identification Qualifier Rank|Amphibians & Reptiles|Subspecies
-Identification Qualifier Rank|Birds|Genus
-Identification Qualifier Rank|Birds|Species
-Identification Qualifier Rank|Birds|Subspecies
-Identification Qualifier Rank|Botany|forma
-Identification Qualifier Rank|Botany|Genus
-Identification Qualifier Rank|Botany|not specified
-Identification Qualifier Rank|Botany|Species
-Identification Qualifier Rank|Botany|subforma
-Identification Qualifier Rank|Botany|Subspecies
-Identification Qualifier Rank|Botany|subvariety
-Identification Qualifier Rank|Botany|variety
-Identification Qualifier Rank|Entomology|family
-Identification Qualifier Rank|Entomology|genus
-Identification Qualifier Rank|Entomology|section
-Identification Qualifier Rank|Entomology|species
-Identification Qualifier Rank|Entomology|subgenus
-Identification Qualifier Rank|Fishes|Genus
-Identification Qualifier Rank|Fishes|not specified
-Identification Qualifier Rank|Fishes|Species
-Identification Qualifier Rank|Fishes|Subspecies
-Identification Qualifier Rank|Invertebrate Zoology|Family
-Identification Qualifier Rank|Invertebrate Zoology|Genus
-Identification Qualifier Rank|Invertebrate Zoology|not specified
-Identification Qualifier Rank|Invertebrate Zoology|Species
-Identification Qualifier Rank|Invertebrate Zoology|Subfamily
-Identification Qualifier Rank|Invertebrate Zoology|Subgenus
-Identification Qualifier Rank|Invertebrate Zoology|Subspecies
-Identification Qualifier Rank|Mammals|Genus
-Identification Qualifier Rank|Mammals|Species
-Identification Qualifier Rank|Mammals|Subspecies
-Taxonomy Other Rank||forma
-Taxonomy Other Rank||variety
-Taxonomy Other Rank||subvariety
-weightUnit||kg
-weightUnit||lb
-weightUnit||mg
-weightUnit||oz
-weightUnit||ton
-weightUnit||g
+phylum|Mammals|

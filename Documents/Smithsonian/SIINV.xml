@@ -261,7 +261,6 @@ BOLD:  Field ID: Field number from the collection event or the specimen identifi
 
 ABCDDNA.CollectorsFieldNumber: the number the collector gave to the specimen in the field, often used in Botany but
 not in Zoology; map it if you have content (e.g. 765/10)<p><b>Synonyms:</b><p>"recordNumber" = DwC,<br />"DarCollectorNumber" = EMuDwC,<br />"Specimen_Num_Collector" = Biocode Backend.specimen,<br />"Collectors number" = Entomology - Ted Schultz,<br />"CollectorsFieldNumber" = ABCDDNA,<br />"Collector Number" = Kress PB Collect'n Spreadsheet, <br />"KressNo" = Kress Plant Barcodes DB as field separate from "Collector Number" = ,<br />"Coll_Num" = Botany - Acevedo,<br />"Coll_Num_Suffix" = Botany - Acevedo,<br />"KressNo" = Kress BC Backend,<br />"KressNo" = Kress Coll DB tblKresFile as separate field,<br />"collector_no" = Kress Plant Barcodes DB,<br />"Field ID" = BOLD,<br />"Field No#" = Birds,<br />"Field Number" = LAB Field Coll SS,<br />"Field Number" = Fishes,<br />"Field Number" = Birds,<br />"Field Number" = Reptiles & Amphibians,]]></attribute>
-		<attribute column='Sexual Maturity' uri='urn:reproductiveCondition' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#reproductiveCondition'><![CDATA[DwC: The reproductive condition of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples" "non-reproductive", "pregnant", "in bloom", "fruit-bearing". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/reproductiveCondition<p><b>Synonyms:</b><p>"reproductiveCondition" = DwC,<br />"ReproductiveStatus (Reproductive Status)" = BOLD,]]></attribute>
 		<attribute column='Sex' uri='urn:sex' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#sex'><![CDATA[DwC: The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples: "female", "hermaphrodite", "8 males, 4 females". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/sex
 
 BOLD: Male/female/hermaphrodite only.<p><b>Synonyms:</b><p>"sex" = DwC,<br />"sex" = IndoPacific Template v7,<br />"DarSex" = EMuDwC,<br />"SexCaste" = Biocode.specimen,<br />"Sex" = BOLD,<br />"Sex" = Biocode Search,<br />"Sex" = LAB Field Coll'n SS,<br />"Sex" = BOLD Batch Upload (Amy's),<br />"Sex" = BOLD Batch Upload,<br />"Sex" = DwC, 1.4,<br />"Sex" = Fishes,<br />"Sex" = Birds,<br />"LifeStageSex" = Entomology - Sean Brady (part),]]></attribute>
@@ -417,7 +416,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
 		<rule type='checkInXMLFields' column='Life Stage' list='Zoology Stage' level='warning'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
-		<rule type='checkInXMLFields' column='Sexual Maturity' list='Sexual Maturity' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Sex' list='sex' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Family' list='family' level='warning'></rule>
 		<rule type='checkInXMLFields' column='Genus' list='genus' level='warning'></rule>
@@ -433,16 +431,16 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='geneticSampleTypeTertiary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -520,6 +518,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Species]]></field>
 		</list>
 		<list alias='Zoology Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[A-1]]></field>
 			<field><![CDATA[A-2]]></field>
 			<field><![CDATA[A-3]]></field>
@@ -704,6 +703,12 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Vestimentifera]]></field>
 			<field><![CDATA[Xenophyophora]]></field>
 		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='order' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
 			<field><![CDATA[NAD27]]></field>
 			<field><![CDATA[NAD83]]></field>
@@ -712,6 +717,10 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
+		</list>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+			<field><![CDATA[Gulf of Mexico]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -770,6 +779,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Family]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
@@ -798,21 +808,27 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
 		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
+		</list>
 		<list alias='weightUnit' caseInsensitive='true'>
+			<field><![CDATA[g]]></field>
 			<field><![CDATA[kg]]></field>
 			<field><![CDATA[lb]]></field>
 			<field><![CDATA[mg]]></field>
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
-			<field><![CDATA[g]]></field>
-		</list>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field><![CDATA[Yes]]></field>
-			<field><![CDATA[No]]></field>
 		</list>
 		<list alias='Object Type' caseInsensitive='true'>
 			<field><![CDATA[Genetic Sample]]></field>
 			<field><![CDATA[Specimen/Lot]]></field>
+		</list>
+		<list alias='establishmentMeans' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='genus' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='collectionCode' caseInsensitive='true'>
 			<field><![CDATA[Invertebrate Zoology]]></field>
@@ -1178,11 +1194,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[µm]]></field>
 			<field><![CDATA[in]]></field>
 			<field><![CDATA[ft]]></field>
-		</list>
-		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
-			<field><![CDATA[forma]]></field>
-			<field><![CDATA[variety]]></field>
-			<field><![CDATA[subvariety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Abdomen]]></field>

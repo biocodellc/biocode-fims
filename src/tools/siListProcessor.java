@@ -48,8 +48,12 @@ public class siListProcessor {
         BufferedReader br = new BufferedReader(new FileReader(listsFile));
         while ((line = br.readLine()) != null) {
             // Create a list element holding each of the values
-            listElement elem = new listElement(line);
-            department.add(elem.getDepartment());
+            try {
+                listElement elem = new listElement(line);
+                department.add(elem.getDepartment());
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
         br.close();
         return department.iterator();
@@ -93,12 +97,17 @@ public class siListProcessor {
         BufferedReader br = new BufferedReader(new FileReader(listsFile));
         while ((line = br.readLine()) != null) {
             // Create a list element holding each of the values
-            listElement elem = new listElement(line);
-            // Search for our department or the default ALL departments
-            if (elem.getDepartment().equals(department) ||
-                    elem.getDepartment().equals("")) {
-                departmentMap.put(elem.getListName(), elem.getValue());
+            try {
+                listElement elem = new listElement(line);
+                // Search for our department or the default ALL departments
+                if (elem.getDepartment().equals(department) ||
+                        elem.getDepartment().equals("")) {
+                    departmentMap.put(elem.getListName(), elem.getValue());
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
+
         }
         br.close();
 
@@ -155,12 +164,21 @@ public class siListProcessor {
          *
          * @param line
          */
-        public listElement(String line) {
+        public listElement(String line) throws Exception {
             String[] elements = line.split(delimiter);
-            this.listName = elements[0];
-            this.department = elements[1];
-            this.value = elements[2];
-
+            try {
+                this.listName = elements[0];
+                this.department = elements[1];
+                // 3rd element often empty, just call it an empty value
+                try {
+                    this.value = elements[2];
+                }   catch (Exception e2) {
+                    this.value = "";
+                    System.out.println(line);
+                }
+            } catch (Exception e) {
+                throw new Exception("bad line: " + line, e);
+            }
         }
 
         public String getListName() {
