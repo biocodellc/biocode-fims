@@ -468,29 +468,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		</rule>
 	</worksheet>
 	<lists>
-		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
-			<field><![CDATA[Blood]]></field>
-			<field><![CDATA[Cell]]></field>
-			<field><![CDATA[Clone]]></field>
-			<field><![CDATA[DNA, RNA, Proteins]]></field>
-			<field><![CDATA[Environmental Sample]]></field>
-			<field><![CDATA[Excretion/Secretion]]></field>
-			<field><![CDATA[Germplasm]]></field>
-			<field><![CDATA[Tissue & Parts]]></field>
-			<field><![CDATA[Whole Organism]]></field>
-		</list>
-		<list alias='weightUnit' caseInsensitive='true'>
-			<field><![CDATA[g]]></field>
-			<field><![CDATA[kg]]></field>
-			<field><![CDATA[lb]]></field>
-			<field><![CDATA[mg]]></field>
-			<field><![CDATA[oz]]></field>
-			<field><![CDATA[ton]]></field>
-		</list>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field><![CDATA[Yes]]></field>
-			<field><![CDATA[No]]></field>
-		</list>
 		<list alias='measurementUnit' caseInsensitive='true'>
 			<field><![CDATA[cm]]></field>
 			<field><![CDATA[ft]]></field>
@@ -503,10 +480,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[mm]]></field>
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ct]]></field>
-		</list>
-		<list alias='Object Type' caseInsensitive='true'>
-			<field><![CDATA[Genetic Sample]]></field>
-			<field><![CDATA[Specimen/Lot]]></field>
 		</list>
 		<list alias='sampleQuality' caseInsensitive='true'>
 			<field><![CDATA[High]]></field>
@@ -521,6 +494,116 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[North Pacific Ocean]]></field>
 			<field><![CDATA[South Atlantic Ocean]]></field>
 			<field><![CDATA[South Pacific Ocean]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='geodeticDatum' caseInsensitive='true'>
+			<field><![CDATA[NAD27]]></field>
+			<field><![CDATA[NAD83]]></field>
+			<field><![CDATA[WGS84]]></field>
+		</list>
+		<list alias='latitudeNorthSouth' caseInsensitive='true'>
+			<field><![CDATA[N]]></field>
+			<field><![CDATA[S]]></field>
+		</list>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='longitudeEastWest' caseInsensitive='true'>
+			<field><![CDATA[E]]></field>
+			<field><![CDATA[W]]></field>
+		</list>
+		<list alias='elevDepthModifier' caseInsensitive='true'>
+			<field><![CDATA[ca.]]></field>
+			<field><![CDATA[greater than]]></field>
+			<field><![CDATA[less than]]></field>
+			<field><![CDATA[±]]></field>
+		</list>
+		<list alias='family' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
+			<field><![CDATA[3 mm]]></field>
+			<field><![CDATA[4 mm]]></field>
+			<field><![CDATA[Ancient Bone]]></field>
+			<field><![CDATA[Anterior]]></field>
+			<field><![CDATA[Brain]]></field>
+			<field><![CDATA[Cartilage]]></field>
+			<field><![CDATA[Caudal]]></field>
+			<field><![CDATA[Clip]]></field>
+			<field><![CDATA[Contents]]></field>
+			<field><![CDATA[Dry]]></field>
+			<field><![CDATA[Entire]]></field>
+			<field><![CDATA[Entire eye]]></field>
+			<field><![CDATA[Extracts]]></field>
+			<field><![CDATA[Fresh Bone]]></field>
+			<field><![CDATA[Front]]></field>
+			<field><![CDATA[Hind]]></field>
+			<field><![CDATA[Lens]]></field>
+			<field><![CDATA[Marine benthic other]]></field>
+			<field><![CDATA[Multiple]]></field>
+			<field><![CDATA[Ova/Ovum]]></field>
+			<field><![CDATA[Part]]></field>
+			<field><![CDATA[Pieces, parts, or chunks]]></field>
+			<field><![CDATA[Rear]]></field>
+			<field><![CDATA[Red]]></field>
+			<field><![CDATA[Reef structure]]></field>
+			<field><![CDATA[Retractor]]></field>
+			<field><![CDATA[Sample]]></field>
+			<field><![CDATA[Scale clip]]></field>
+			<field><![CDATA[Sediment]]></field>
+			<field><![CDATA[Single]]></field>
+			<field><![CDATA[Single entire]]></field>
+			<field><![CDATA[Skeletal]]></field>
+			<field><![CDATA[Small - Entire]]></field>
+			<field><![CDATA[Small - Tissue]]></field>
+			<field><![CDATA[Sperm]]></field>
+			<field><![CDATA[Surface scraping]]></field>
+			<field><![CDATA[Tail]]></field>
+			<field><![CDATA[Tendon]]></field>
+			<field><![CDATA[Thigh]]></field>
+			<field><![CDATA[Thorax]]></field>
+			<field><![CDATA[Tip, entire]]></field>
+			<field><![CDATA[Tip, pieces]]></field>
+			<field><![CDATA[Tissue]]></field>
+			<field><![CDATA[Toe pad]]></field>
+			<field><![CDATA[Trunk]]></field>
+			<field><![CDATA[White]]></field>
+			<field><![CDATA[Whole]]></field>
+			<field><![CDATA[With skin]]></field>
+			<field><![CDATA[Wood]]></field>
+			<field><![CDATA[Yolk]]></field>
+		</list>
+		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
+			<field><![CDATA[Blood]]></field>
+			<field><![CDATA[Cell]]></field>
+			<field><![CDATA[Clone]]></field>
+			<field><![CDATA[DNA, RNA, Proteins]]></field>
+			<field><![CDATA[Environmental Sample]]></field>
+			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Germplasm]]></field>
+			<field><![CDATA[Tissue & Parts]]></field>
+			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
+		</list>
+		<list alias='weightUnit' caseInsensitive='true'>
+			<field><![CDATA[g]]></field>
+			<field><![CDATA[kg]]></field>
+			<field><![CDATA[lb]]></field>
+			<field><![CDATA[mg]]></field>
+			<field><![CDATA[oz]]></field>
+			<field><![CDATA[ton]]></field>
+		</list>
+		<list alias='Object Type' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
 		</list>
 		<list alias='collectionCode' caseInsensitive='true'>
 			<field><![CDATA[Mineral Sciences]]></field>
@@ -884,36 +967,11 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<list alias='Zoology Preparation' caseInsensitive='true'>
 			<field><![CDATA[]]></field>
 		</list>
-		<list alias='collector' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[]]></field>
 		</list>
 		<list alias='institutionCode' caseInsensitive='true'>
 			<field><![CDATA[USNM]]></field>
-		</list>
-		<list alias='latitudeNorthSouth' caseInsensitive='true'>
-			<field><![CDATA[N]]></field>
-			<field><![CDATA[S]]></field>
-		</list>
-		<list alias='geodeticDatum' caseInsensitive='true'>
-			<field><![CDATA[NAD27]]></field>
-			<field><![CDATA[NAD83]]></field>
-			<field><![CDATA[WGS84]]></field>
-		</list>
-		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='elevDepthModifier' caseInsensitive='true'>
-			<field><![CDATA[ca.]]></field>
-			<field><![CDATA[greater than]]></field>
-			<field><![CDATA[less than]]></field>
-			<field><![CDATA[±]]></field>
-		</list>
-		<list alias='longitudeEastWest' caseInsensitive='true'>
-			<field><![CDATA[E]]></field>
-			<field><![CDATA[W]]></field>
 		</list>
 		<list alias='continent' caseInsensitive='true'>
 			<field><![CDATA[Africa]]></field>
@@ -932,6 +990,15 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[µm]]></field>
 			<field><![CDATA[in]]></field>
 			<field><![CDATA[ft]]></field>
+		</list>
+		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Abdomen]]></field>
@@ -1047,70 +1114,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Whole genomic DNA]]></field>
 			<field><![CDATA[Whole individual organism]]></field>
 			<field><![CDATA[Yeast]]></field>
-		</list>
-		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
-			<field><![CDATA[3 mm]]></field>
-			<field><![CDATA[4 mm]]></field>
-			<field><![CDATA[Ancient Bone]]></field>
-			<field><![CDATA[Anterior]]></field>
-			<field><![CDATA[Brain]]></field>
-			<field><![CDATA[Cartilage]]></field>
-			<field><![CDATA[Caudal]]></field>
-			<field><![CDATA[Clip]]></field>
-			<field><![CDATA[Contents]]></field>
-			<field><![CDATA[Dry]]></field>
-			<field><![CDATA[Entire]]></field>
-			<field><![CDATA[Entire eye]]></field>
-			<field><![CDATA[Extracts]]></field>
-			<field><![CDATA[Fresh Bone]]></field>
-			<field><![CDATA[Front]]></field>
-			<field><![CDATA[Hind]]></field>
-			<field><![CDATA[Lens]]></field>
-			<field><![CDATA[Marine benthic other]]></field>
-			<field><![CDATA[Multiple]]></field>
-			<field><![CDATA[Ova/Ovum]]></field>
-			<field><![CDATA[Part]]></field>
-			<field><![CDATA[Pieces, parts, or chunks]]></field>
-			<field><![CDATA[Rear]]></field>
-			<field><![CDATA[Red]]></field>
-			<field><![CDATA[Reef structure]]></field>
-			<field><![CDATA[Retractor]]></field>
-			<field><![CDATA[Sample]]></field>
-			<field><![CDATA[Scale clip]]></field>
-			<field><![CDATA[Sediment]]></field>
-			<field><![CDATA[Single]]></field>
-			<field><![CDATA[Single entire]]></field>
-			<field><![CDATA[Skeletal]]></field>
-			<field><![CDATA[Small - Entire]]></field>
-			<field><![CDATA[Small - Tissue]]></field>
-			<field><![CDATA[Sperm]]></field>
-			<field><![CDATA[Surface scraping]]></field>
-			<field><![CDATA[Tail]]></field>
-			<field><![CDATA[Tendon]]></field>
-			<field><![CDATA[Thigh]]></field>
-			<field><![CDATA[Thorax]]></field>
-			<field><![CDATA[Tip, entire]]></field>
-			<field><![CDATA[Tip, pieces]]></field>
-			<field><![CDATA[Tissue]]></field>
-			<field><![CDATA[Toe pad]]></field>
-			<field><![CDATA[Trunk]]></field>
-			<field><![CDATA[White]]></field>
-			<field><![CDATA[Whole]]></field>
-			<field><![CDATA[With skin]]></field>
-			<field><![CDATA[Wood]]></field>
-			<field><![CDATA[Yolk]]></field>
-		</list>
-		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='taxonRank' caseInsensitive='true'>
-			<field><![CDATA[aberration]]></field>
-			<field><![CDATA[forma]]></field>
-			<field><![CDATA[morpha]]></field>
-			<field><![CDATA[race]]></field>
-			<field><![CDATA[subforma]]></field>
-			<field><![CDATA[subvariety]]></field>
-			<field><![CDATA[variety]]></field>
 		</list>
 	</lists>
 </validation>
