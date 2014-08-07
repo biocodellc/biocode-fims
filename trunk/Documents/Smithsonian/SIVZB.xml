@@ -350,11 +350,11 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='geneticSampleTypePrimary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='geneticSampleTypeSecondary' level='warning'></rule>
+		<rule type='checkInXMLFields' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -401,12 +401,22 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Species]]></field>
 		</list>
 		<list alias='Zoology Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Adult]]></field>
 			<field><![CDATA[Chick]]></field>
 			<field><![CDATA[Embryo]]></field>
 			<field><![CDATA[Immature]]></field>
 			<field><![CDATA[Juvenile]]></field>
 			<field><![CDATA[Subadult]]></field>
+		</list>
+		<list alias='phylum' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='order' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
 			<field><![CDATA[NAD27]]></field>
@@ -416,6 +426,9 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
+		</list>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -463,6 +476,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 			<field><![CDATA[Subspecies]]></field>
@@ -487,17 +501,17 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
 		</list>
+		<list alias='yesNo' caseInsensitive='true'>
+			<field><![CDATA[Yes]]></field>
+			<field><![CDATA[No]]></field>
+		</list>
 		<list alias='weightUnit' caseInsensitive='true'>
+			<field><![CDATA[g]]></field>
 			<field><![CDATA[kg]]></field>
 			<field><![CDATA[lb]]></field>
 			<field><![CDATA[mg]]></field>
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
-			<field><![CDATA[g]]></field>
-		</list>
-		<list alias='yesNo' caseInsensitive='true'>
-			<field><![CDATA[Yes]]></field>
-			<field><![CDATA[No]]></field>
 		</list>
 		<list alias='Object Type' caseInsensitive='true'>
 			<field><![CDATA[Genetic Sample]]></field>
@@ -3327,11 +3341,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[µm]]></field>
 			<field><![CDATA[in]]></field>
 			<field><![CDATA[ft]]></field>
-		</list>
-		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
-			<field><![CDATA[forma]]></field>
-			<field><![CDATA[variety]]></field>
-			<field><![CDATA[subvariety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Aerosol]]></field>
