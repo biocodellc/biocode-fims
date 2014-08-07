@@ -1,6 +1,17 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 99999
 
+function list(url) {
+    $.ajax({
+        type: "GET",
+        url: url + project_id,
+        dataType: "html",
+        success: function(data) {
+            showMessage(data);
+        }
+   });
+}
+
 // for template generator, get the definitions when the user clicks on DEF
 function populateDefinitions(column) {
  var e = document.getElementById('projects');
