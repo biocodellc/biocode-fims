@@ -10,6 +10,8 @@
   position: relative;
   z-index: 999999;
   width: 400px;
+  height: 400px;
+  overflow:auto;
   left: 0;
   right: 0;
   margin-left: auto;
