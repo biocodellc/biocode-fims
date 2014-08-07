@@ -1,6 +1,18 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 21547
 
+// Function to display a simple list in a message
+function list(url) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "html",
+        success: function(data) {
+            showMessage(data);
+        }
+   });
+}
+
 // for template generator, get the definitions when the user clicks on DEF
 function populateDefinitions(column) {
  var e = document.getElementById('projects');
