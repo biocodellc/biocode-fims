@@ -178,6 +178,7 @@ public class Rule {
 
     /**
      * Returns the name of the column as it appears to SQLLite
+     *
      * @return
      */
     public String getColumn() {
@@ -189,8 +190,10 @@ public class Rule {
             //return column.replace(" ", "_");
         }
     }
-     /**
+
+    /**
      * Returns the name of the column as it appears to SQLLite
+     *
      * @return
      */
     public String getOtherColumn() {
@@ -205,10 +208,11 @@ public class Rule {
 
     /**
      * Returns the name of the columnn as it appears to the worksheet
+     *
      * @return
      */
     public String getColumnWorksheetName() {
-       return column;
+        return column;
     }
 
     public String getOtherColumnWorksheetName() {
@@ -631,10 +635,12 @@ public class Rule {
      * If a user enters data in a particular column, it is required to:
      * 1.  have a value in second column
      * 2.  if there is a list of values specified under the rule, it needs to match one of those values
+     *
      * @throws Exception
      */
     public void requiredValueFromOtherColumn() throws Exception {
-       StringBuilder lookupSB = new StringBuilder();
+        StringBuilder fieldListSB = new StringBuilder();
+        ArrayList<String> fieldListArrayList = new ArrayList<String>();
         java.util.List<String> listFields;
         String msg;
         ResultSet resultSet = null;
@@ -667,14 +673,17 @@ public class Rule {
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
             try {
-                if (count > 0)
-                    lookupSB.append(",");
+               // if (count > 0)
+               //     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
-                if (caseInsensitiveSearch)
-                    lookupSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
-                else
-                    lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                if (caseInsensitiveSearch) {
+                    fieldListSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
+                } else {
+                    fieldListSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                }
+                fieldListArrayList.add(listFields.get(k).toString());
+
                 count++;
             } catch (Exception e) {
                 // do nothing
@@ -686,15 +695,15 @@ public class Rule {
             statement = connection.createStatement();
             // Do the select on values based on other column values
             String sql = "SELECT " + getColumn() + "," + getOtherColumn() + " FROM " + digesterWorksheet.getSheetname();
-            sql += " WHERE ifnull(" + getColumn()  + ",'') != '' ";
+            sql += " WHERE ifnull(" + getColumn() + ",'') != '' ";
 
             // if null lookup look that we just have SOME value
-            if (lookupSB.toString().equals("")) {
-                sql += " AND ifnull("+getOtherColumn() +",'') = ''";
-            // else we look in the lookup list
-            }   else {
+            if (fieldListSB.toString().equals("")) {
+                sql += " AND ifnull(" + getOtherColumn() + ",'') = ''";
+                // else we look in the lookup list
+            } else {
                 sql += " AND " + getOtherColumn();
-                sql += " NOT IN (" + lookupSB.toString() + ")";
+                sql += " NOT IN (" + fieldListSB.toString() + ")";
             }
 
             resultSet = statement.executeQuery(sql);
@@ -705,11 +714,11 @@ public class Rule {
                 if (!column.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
-                    msg = "\"" + getColumnWorksheetName() + "\" is specified ";
-                    msg += " without an approved value in \""+ getOtherColumnWorksheetName() + "\"";
-                    if (!lookupSB.toString().equals("")) {
-                        msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + lookupSB.toString() + "})";
-                    }
+                    msg = "\"" + getColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
+                   /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
+                    if (!fieldListSB.toString().equals("")) {
+                        msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + fieldListSB.toString() + "})";
+                    }*/
                     addMessage(msg, null, null);
                 }
             }
@@ -942,7 +951,7 @@ public class Rule {
                     thisColumn + " != \"\";";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                msg = "non-numeric value " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\"";
+                msg = "Non-numeric value " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\"";
                 addMessage(msg);
                 validNumber = false;
             }
@@ -1038,6 +1047,13 @@ public class Rule {
         }
     }
 
+    /**
+     * Duplicate of checkInXMLFields
+     * @throws Exception
+     */
+     public void controlledVocabulary() throws Exception {
+         checkInXMLFields();
+     }
 
     /**
      * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
@@ -1132,9 +1148,11 @@ public class Rule {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
                     msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved \"" + getColumnWorksheetName() + "\"";
-                    msg += " <a target='_blank' href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
-                            "column_name="+ URLEncoder.encode(column,"utf-8") + "&" +
-                            "project_id='>see approved</a>";
+                    //msg += " <a  href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
+                    msg += " <a  href=\"#\" onclick=\"list('" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
+                            "column_name=" + URLEncoder.encode(column, "utf-8") + "&" +
+                            "project_id=');\">see approved</a>";
+                    //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&project_id=1');">link</a>
 
                     addMessage(msg, null, null);
                 }
@@ -1183,7 +1201,8 @@ public class Rule {
             levelValue = "suggested";
         }
 
-        String strNotFound = "", fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
+        String fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
+        ArrayList<String> notFoundArray = new ArrayList<String>();
         sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
         boolean booFound = false;
         // Create a hashset of column names for easy lookup
@@ -1205,7 +1224,7 @@ public class Rule {
 
             // Error message if column not found
             if (!booFound) {
-                strNotFound += fieldNameWorksheet + " ";
+                notFoundArray.add(fieldNameWorksheet);
                 // Examine column contents -- required columns need some content
             } else {
                 String sql = "";
@@ -1214,19 +1233,17 @@ public class Rule {
                     sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + fieldNameSQLLite + "`='' or `" + fieldNameSQLLite + "` is null";
                     rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
-                        //System.out.println(sql);
-                        addMessage(levelValue + " column \"" + fieldNameWorksheet + "\" has a missing cell value");
+                        addMessage("\"" + fieldNameWorksheet + "\" has a missing cell value");
                     }
                 } catch (SQLException e) {
                     System.out.println(sql);
                     e.printStackTrace();
                 }
-
             }
         }
 
-        if (!strNotFound.equals("")) {
-            msg = "Did not find " + levelValue + " columns: " + strNotFound + " (make sure there are no spaces at end of column name)";
+        if (notFoundArray.size() > 0) {
+            msg = "Did not find " + levelValue + " columns: " + listToString(notFoundArray);
             addMessage(msg);
         }
         try {
@@ -1234,6 +1251,26 @@ public class Rule {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Convert an ArrayList to a string
+     * @param list
+     * @return
+     */
+    private static String listToString(java.util.List<?> list) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (i ==0)
+                result.append("[");
+            result.append("\"" + list.get(i) + "\"");
+            if (i < list.size() - 1)
+                result.append(", ");
+            if (i == list.size()-1)
+                result.append("]");
+        }
+        return result.toString();
     }
 
     /**
@@ -1328,7 +1365,9 @@ public class Rule {
 
     /**
      * Print ruleMetadata
-     * @param sList  We pass in a List of fields we want to associate with this rule
+     *
+     * @param sList We pass in a List of fields we want to associate with this rule
+     *
      * @return
      */
     public String printRuleMetadata(List sList) {
@@ -1346,7 +1385,7 @@ public class Rule {
         // Display values
         if (value != null) {
             try {
-                output.append("\t<li>value: " + URLDecoder.decode(this.value,"utf-8") + "</li>\n");
+                output.append("\t<li>value: " + URLDecoder.decode(this.value, "utf-8") + "</li>\n");
             } catch (UnsupportedEncodingException e) {
                 output.append("\t<li>value: " + this.value + "</li>\n");
                 e.printStackTrace();
