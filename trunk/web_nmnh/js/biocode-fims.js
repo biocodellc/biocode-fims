@@ -4,7 +4,7 @@ var naan = 99999
 function list(url) {
     $.ajax({
         type: "GET",
-        url: url + project_id,
+        url: url + getProjectID(),
         dataType: "html",
         success: function(data) {
             showMessage(data);
