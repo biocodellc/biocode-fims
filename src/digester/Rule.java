@@ -11,6 +11,7 @@ import utils.sqlLiteNameCleaner;
 import javax.xml.transform.Result;
 import java.io.UnsupportedEncodingException;
 import java.lang.String;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.ResultSet;
@@ -1148,8 +1149,11 @@ public class Rule {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
                     msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved \"" + getColumnWorksheetName() + "\"";
+
+                    URL url = new URL(serviceRoot);
+                    String urlPath = url.getPath();
                     //msg += " <a  href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
-                    msg += " <a  href=\"#\" onclick=\"list('" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
+                    msg += " <a  href=\"#\" onclick=\"list('" + urlPath + "utils/getListFields/" + getList() + "/?" +
                             "column_name=" + URLEncoder.encode(column, "utf-8") + "&" +
                             "project_id=');\">see approved</a>";
                     //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&project_id=1');">link</a>
