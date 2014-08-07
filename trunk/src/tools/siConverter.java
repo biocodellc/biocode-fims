@@ -14,7 +14,7 @@ public class siConverter {
     static public ArrayList<siProjects> projects = new ArrayList<siProjects>();
     static File inputFile;
     static File listsFile;
-   public static File output_directory;
+    public static File output_directory;
     static Sheet MatrixSheet;
     static Sheet ListsSheet;
     static Sheet PreparationsSheet;
@@ -252,6 +252,7 @@ public class siConverter {
 
     /**
      * Loop through the list file using the siListProcessor Class
+     *
      * @return
      */
     private static String lists(String abbreviation) throws IOException {
@@ -311,14 +312,14 @@ public class siConverter {
 
         System.out.println("Reading " + inputFile.getAbsoluteFile());
 
-        projects.add(new siProjects(14, "SIBOT", "Botany", "Primary Collector Number"));
-        projects.add(new siProjects(15, "SIENT", "Entomology", "Primary Collector Number"));
-        projects.add(new siProjects(16, "SIINV", "Invertebrate Zoology", "Primary Collector Number"));
-        projects.add(new siProjects(17, "SIVZA", "VZ-Amphibians and Reptiles", "Primary Collector Number"));
-        projects.add(new siProjects(18, "SIVZB", "VZ-Birds", "Preparator number"));
-        projects.add(new siProjects(19, "SIVZF", "VZ-Fishes", "Primary Collector Number"));
-        projects.add(new siProjects(20, "SIVZM", "VZ-Mammals", "Primary Collector Number"));
-        projects.add(new siProjects(21, "SIMIN", "Mineral Sciences", "Primary Collector Number"));
+        projects.add(new siProjects("SIBOT", "Botany", "Primary Collector Number"));
+        projects.add(new siProjects("SIENT", "Entomology", "Barcode"));
+        projects.add(new siProjects("SIINV", "Invertebrate Zoology", "Primary Collector Number"));
+        projects.add(new siProjects("SIVZA", "VZ-Amphibians and Reptiles", "Primary Collector Number"));
+        projects.add(new siProjects("SIVZB", "VZ-Birds", "Preparator number"));
+        projects.add(new siProjects("SIVZF", "VZ-Fishes", "Primary Collector Number"));
+        projects.add(new siProjects("SIVZM", "VZ-Mammals", "Primary Collector Number"));
+        projects.add(new siProjects("SIMIN", "Mineral Sciences", "Primary Collector Number"));
 
         InputStream inp = new FileInputStream(inputFile);
         Workbook workbook = WorkbookFactory.create(inp);
@@ -379,7 +380,6 @@ public class siConverter {
             requiredColumns.clear();
             desiredColumns.clear();
             //System.out.println(sb.toString());
-
 
 
         }

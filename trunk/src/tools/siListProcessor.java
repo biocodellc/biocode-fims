@@ -174,7 +174,7 @@ public class siListProcessor {
                     this.value = elements[2];
                 }   catch (Exception e2) {
                     this.value = "";
-                    System.out.println(line);
+                    //System.out.println(line);
                 }
             } catch (Exception e) {
                 throw new Exception("bad line: " + line, e);
