@@ -165,9 +165,9 @@ public class utils {
         StringBuilder sb = new StringBuilder();
 
         if (column_name != null && !column_name.trim().equals("")) {
-            sb.append("Acceptable values for " + URLDecoder.decode(column_name,"utf-8") + "<br>\n");
+            sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name,"utf-8") + "</b><br>\n");
         } else {
-            sb.append("Acceptable values for " + list_name + "<br>\n");
+            sb.append("<b>Acceptable values for " + list_name + "</b><br>\n");
         }
 
         while (it.hasNext()) {
