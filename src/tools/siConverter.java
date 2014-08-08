@@ -15,6 +15,8 @@ public class siConverter {
     static File inputFile;
     static File listsFile;
     public static File output_directory;
+    public static File input_directory;
+
     static Sheet MatrixSheet;
     static Sheet ListsSheet;
     static Sheet PreparationsSheet;
@@ -303,11 +305,15 @@ public class siConverter {
      * @throws InvalidFormatException
      */
     public static void init() throws IOException, InvalidFormatException {
-        output_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
+        input_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
                 "Documents" + System.getProperty("file.separator") +
                 "Smithsonian" + System.getProperty("file.separator"));
 
-        inputFile = new File(output_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_master.xlsx");
+        output_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
+                        "web_nmnh" + System.getProperty("file.separator") +
+                        "docs" + System.getProperty("file.separator"));
+
+        inputFile = new File(input_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_master.xlsx");
         listsFile = new File(output_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_lookups.txt");
 
         System.out.println("Reading " + inputFile.getAbsoluteFile());
