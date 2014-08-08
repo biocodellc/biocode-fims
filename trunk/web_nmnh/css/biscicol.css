@@ -41,6 +41,7 @@ table {
  **/
 #container {
     min-height: 100%;
+    height: 100%;
     margin-bottom: -54px;
     position: relative;
 }
@@ -70,10 +71,6 @@ table {
     color: gray;
 }
 
-#clearfooter {
-    height: 60px;
-    clear: both;
-}
 
 #header a.help {
     font-size: 90%;
