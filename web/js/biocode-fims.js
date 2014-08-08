@@ -79,28 +79,11 @@ function populateAbstract(targetDivId) {
     });
 }
 
-// Get the available projects
-function populateProjects_old() {
-    // We assume that BCID is on the same server... not always safe
-    // TODO: read properties to figure out location
-    theUrl = "/id/projectService/list";
-    var jqxhr = $.getJSON( theUrl, function(data) {
-	    // Call distal to load the projects data
-        distal(projects,data);
-	    // Set to the first value in the list which should be "select one..."
-	    $("#projects").val($("#projects option:first").val());
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
-	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
-        } else {
-	    showMessage ("Error completing request!");
-        }
-    });
-}
 function populateProjects() {
     theUrl = "/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
         var listItems = "";
+        listItems+= "<option value='0'>Select a project ...</option>";
         $.each(data.projects,function(index,project) {
             listItems+= "<option value='" + project.project_id + "'>" + project.project_title + "</option>";
         });
@@ -116,31 +99,6 @@ function populateProjects() {
     });
 }
 
-// Get the graphs for a given project_id
-function populateGraphs_old(project_id) {
-    $("#resultsContainer").hide();
-    // Don't let this progress if this is the first option, then reset graphs message
-    if ($("#projects").val() == 0)  {
-	    graphsMessage('Choose a project to see loaded spreadsheets');
-	    return;
-    }
-    theUrl = "/id/projectService/graphs/" + project_id;
-    var jqxhr = $.getJSON( theUrl, function(data) {
-    // Check for empty object in response
-    if (typeof data['data'][0] === "undefined") {
-	graphsMessage('No datasets found for this project');
-    } else {
-	// Call distal to load the graphs data
-        distal(graphs,data);
-    }
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
-	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
-        } else {
-	    showMessage ("Error completing request!");
-        }
-    });
-}
 // Get the graphs for a given project_id
 function populateGraphs(project_id) {
     $("#resultsContainer").hide();
