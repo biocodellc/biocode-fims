@@ -16,10 +16,7 @@
                 <c:if test="${user == null}">
                     <select width=20 id=projects onChange="alert('Must login before generating template');">
                 </c:if>
-                        <option qdup=1 value=0>Select a project ...</option>
-                        <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
-                            Loading Projects ...
-                        </option>
+                        <option value=0>Select a project ...</option>
                 </select>
 
                 </td>

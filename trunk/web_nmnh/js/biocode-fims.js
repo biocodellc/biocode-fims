@@ -7,9 +7,15 @@ function list(url) {
         url: url,
         dataType: "html",
         success: function(data) {
-            showMessage(data);
+           // alter height of alert boxes to be higher
+           $(".alert").css("height","400px");
+           showMessage(data);
+           // set it back
+           $(".alert").css("height","100px");
+
         }
    });
+
 }
 
 // for template generator, get the definitions when the user clicks on DEF
