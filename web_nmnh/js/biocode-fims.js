@@ -7,12 +7,11 @@ function list(url) {
         url: url,
         dataType: "html",
         success: function(data) {
-           // alter height of alert boxes to be higher
-           $(".alert").css("height","400px");
-           showMessage(data);
-           // set it back
-           $(".alert").css("height","100px");
-
+                if (data.split("\n").length > 2) {
+                        showBigMessage(data);
+                } else {
+                        showMessage(data);
+                }
         }
    });
 
@@ -241,8 +240,7 @@ function getGraphsKeyValue() {
     return "graphs=" + str;
 }
 
-// Uses jNotify to display messages
-// To re-configure this boxes behaviour and style, goto http://demos.myjqueryplugins.com/jnotify/
+// A short message
 function showMessage(message) {
 $('#alerts').append(
         '<div class="alert">' +
@@ -250,6 +248,13 @@ $('#alerts').append(
             '&times;</button>' + message + '</div>');
 }
 
+// A big message
+function showBigMessage(message) {
+$('#alerts').append(
+        '<div class="alert" style="height:400px">' +
+            '<button type="button" class="close" data-dismiss="alert">' +
+            '&times;</button>' + message + '</div>');
+}
 
 // handle displaying messages/results in the graphs(spreadsheets) select list
 function graphsMessage(message) {
