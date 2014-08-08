@@ -11,10 +11,7 @@
                 <td align=right>&nbsp;&nbsp;Choose Project&nbsp;&nbsp;</td>
                 <td align=left>
                 <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
-                        <option qdup=1 value=0>Select a project ...</option>
-                        <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
-                            Loading Projects ...
-                        </option>
+                        <option value=0>Loading projects ...</option>
                 </select>
 
                 </td>

@@ -16,7 +16,7 @@
                 <c:if test="${user == null}">
                     <select width=20 id=projects onChange="alert('Must login before generating template');">
                 </c:if>
-                        <option value=0>Select a project ...</option>
+                        <option value=0>Loading projects ...</option>
                 </select>
 
                 </td>

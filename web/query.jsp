@@ -10,10 +10,7 @@
             <tr>
                 <td align=right>&nbsp;&nbsp;Choose Project&nbsp;&nbsp;</td>
                 <td><select width=20 id=projects style="display:inline-block;width:400px;text-align:left;">
-                    <option qdup=1 value=0>Select a project ...</option>
-                    <option data-qrepeat="e projects" data-qattr="value e.project_id; text e.project_title">
-                        Loading Projects ...
-                    </option>
+                    <option value=0>Loading projects ...</option>
                 </select></td>
             </tr>
 

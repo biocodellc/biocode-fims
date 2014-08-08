@@ -28,7 +28,7 @@
                     <td align="right">Project&nbsp;&nbsp;</td>
                     <td>
                         <select width=20 name="project_id" id="projects">
-                            <option value=0>Select a project ...</option>
+                            <option value=0>Loading projects ...</option>
                         </select>
                     </td>
                 </tr>
