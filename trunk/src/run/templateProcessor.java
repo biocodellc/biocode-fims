@@ -826,7 +826,7 @@ public class templateProcessor {
         // Write the excel file
         String filename = "output";
         if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals(""))
-            filename = getFims().getMetadata().getShortname();
+            filename = getFims().getMetadata().getShortname().replace(" ","_");
         String outputName = filename + ".xls";
 
         // Create the file
