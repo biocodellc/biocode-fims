@@ -20,13 +20,6 @@
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 
-    <script src="/fims/js/distal.js"></script>
-    <script>
-        jQuery.fn.distal = function (json) {
-            return this.each( function () { distal(this, json) } )
-        };
-    </script>
-
     <script type="text/javascript" src="/fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/fims/js/bootstrap.min.js"></script>
 

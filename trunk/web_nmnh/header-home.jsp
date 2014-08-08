@@ -17,13 +17,6 @@
     <script type="text/javascript" src="/fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/fims/js/dropit.js"></script>
 
-    <script src="/fims/js/distal.js"></script>
-    <script>
-        jQuery.fn.distal = function (json) {
-            return this.each( function () { distal(this, json) } )
-        };
-    </script>
-
     <script type="text/javascript" src="/fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/fims/js/bootstrap.min.js"></script>
 

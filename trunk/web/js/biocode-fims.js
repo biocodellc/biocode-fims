@@ -134,9 +134,10 @@ function queryJSON(params) {
     var jqxhr = $.post("/biocode-fims/rest/query/json/", $.param(params, true))
         .done(function(data) {
             $("#resultsContainer").show();
-           alert('debugging queries now, will fix soon!');
-           alert(data);
-           // distal(results,data);
+           //alert('debugging queries now, will fix soon!');
+           //alert(data);
+            // TODO: remove distal from this spot
+           distal(results,data);
         }).fail(function(jqXHR,textStatus) {
             if (textStatus == "timeout") {
              showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");

@@ -78,21 +78,22 @@ function populateAbstract(targetDivId) {
     });
 }
 
-// Get the available projects
 function populateProjects() {
-    // We assume that BCID is on the same server... not always safe
-    // TODO: read properties to figure out location
     theUrl = "/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
-	    // Call distal to load the projects data
-        distal(projects,data);
-	    // Set to the first value in the list which should be "select one..."
-	    $("#projects").val($("#projects option:first").val());
+        var listItems = "";
+        listItems+= "<option value='0'>Select a project ...</option>";
+        $.each(data.projects,function(index,project) {
+            listItems+= "<option value='" + project.project_id + "'>" + project.project_title + "</option>";
+        });
+        $("#projects").html(listItems);
+        // Set to the first value in the list which should be "select one..."
+        $("#projects").val($("#projects option:first").val());
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
-	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+	        showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
         } else {
-	    showMessage ("Error completing request!");
+	        showMessage ("Error completing request!");
         }
     });
 }
@@ -107,18 +108,21 @@ function populateGraphs(project_id) {
     }
     theUrl = "/id/projectService/graphs/" + project_id;
     var jqxhr = $.getJSON( theUrl, function(data) {
-    // Check for empty object in response
-    if (typeof data['data'][0] === "undefined") {
-	graphsMessage('No datasets found for this project');
-    } else {
-	// Call distal to load the graphs data
-        distal(graphs,data);
-    }
+        // Check for empty object in response
+        if (typeof data['data'][0] === "undefined") {
+	        graphsMessage('No datasets found for this project');
+        } else {
+	        var listItems = "";
+             $.each(data.data,function(index,graph) {
+                listItems+= "<option value='" + graph.graph + "'>" + graph.expedition_title + "</option>";
+            });
+            $("#graphs").html(listItems);
+        }
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
-	     showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+	        showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
         } else {
-	    showMessage ("Error completing request!");
+	        showMessage ("Error completing request!");
         }
     });
 }
