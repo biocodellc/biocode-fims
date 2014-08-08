@@ -8,7 +8,7 @@ function list(url) {
         url: url,
         dataType: "html",
         success: function(data) {
-                if (data.split("\n").length > 2) {
+                if (data.split("\n").length > 5) {
                         showBigMessage(data);
                 } else {
                         showMessage(data);
