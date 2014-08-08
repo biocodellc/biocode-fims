@@ -20,12 +20,12 @@
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 
-    <script src="/biocode-fims/js/distal.js"></script>
+   <!-- <script src="/biocode-fims/js/distal.jsFOO"></script>
     <script>
-        jQuery.fn.distal = function (json) {
-            return this.each( function () { distal(this, json) } )
-        };
-    </script>
+        //jQuery.fn.distal = function (json) {
+        //    return this.each( function () { distal(this, json) } )
+        //};
+    </script>-->
 
     <script type="text/javascript" src="/biocode-fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/bootstrap.min.js"></script>

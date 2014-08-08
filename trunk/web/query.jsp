@@ -57,7 +57,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        graphsMessage('Choose an project to see loaded spreadsheets');
+        graphsMessage('Choose a project to see loaded spreadsheets');
         populateProjects();
 
         $("#projects").change(function() {
