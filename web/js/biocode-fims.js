@@ -117,7 +117,7 @@ function populateGraphs(project_id) {
              $.each(data.data,function(index,graph) {
                 listItems+= "<option value='" + graph.graph + "'>" + graph.expedition_title + "</option>";
             });
-            $("#projects").html(listItems);
+            $("#graphs").html(listItems);
         }
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
