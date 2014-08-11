@@ -18,62 +18,14 @@ import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.nio.channels.FileChannel;
 
-import utils.stringGenerator;
-
-
 /**
  * Created by rjewing on 4/18/14.
  */
 @Path("validate")
 public class validate {
 
-    private static String tempDir = System.getProperty("java.io.tmpdir");
-
     @Context
     static ServletContext context;
-
-    @POST
-    @Path("/load")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String loader(@FormDataParam("dataset") InputStream is,
-                         @FormDataParam("dataset") FormDataContentDisposition fileData,
-                         @Context HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-        String input_file = "";
-        try {
-            // Save the uploaded file
-            String splitArray[] = fileData.getFileName().split("\\.");
-            String ext;
-            if (splitArray.length == 0) {
-                // if no extension is found, then guess
-                ext = "xls";
-            } else {
-                ext = splitArray[splitArray.length - 1];
-            }
-            input_file = saveTempFile(is, ext).getName();
-            // if input_file null, then there was an error saving the file
-            if (input_file == null) {
-                throw new FIMSException("Server error saving file.");
-            }
-        } catch (FIMSException e) {
-            e.printStackTrace();
-            // Delete the input file if an exception was thrown
-            try {
-                new File(tempDir + File.pathSeparatorChar + input_file).delete();
-            } catch (Exception e2) {
-                return "{\"done\": \"Server Error: " + e.getMessage() + ";" + e2.getMessage() + "\"}";
-            }
-            return "{\"done\": \"Server Error: " + e.getMessage() + "\"}";
-        }
-        // TODO: code actual interpretation of spreadsheet here
-        return "{  \"projects\": [{" +
-                "\"spreadsheet_naan\": \"21547\"," +
-                "\"project_id\": \"1\", " +
-                "\"dataset_code\": \"DEMO\"" +
-                "\"}]";
-    }
 
     /**
      * service to validate a dataset against a project's rules
@@ -93,14 +45,13 @@ public class validate {
     public String validate(@FormDataParam("project_id") Integer project_id,
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
-                           @FormDataParam("input_file") String input_file,
                            @FormDataParam("dataset") InputStream is,
                            @FormDataParam("dataset") FormDataContentDisposition fileData,
                            @Context HttpServletRequest request) {
         StringBuilder retVal = new StringBuilder();
         Boolean removeController = true;
         Boolean deleteInputFile = true;
-        //String input_file = null;
+        String input_file = null;
 
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
@@ -118,34 +69,22 @@ public class validate {
 
             // update the status
             processController.appendStatus("Initializing...<br>");
+            processController.appendStatus("inputFilename = " + processController.stringToHTMLJSON(
+                    fileData.getFileName()) + "<br>");
 
-
-            File f = null;
-            // Get File that Already exists on server
-            if (input_file != null && !input_file.equals("")) {
-                f = new File(tempDir + File.pathSeparatorChar + input_file);
-                processController.appendStatus("inputFilename = " + processController.stringToHTMLJSON(
-                        input_file) + "<br>");
-                // Loading new file
+            // Save the uploaded file
+            String splitArray[] = fileData.getFileName().split("\\.");
+            String ext;
+            if (splitArray.length == 0) {
+                // if no extension is found, then guess
+                ext = "xls";
             } else {
-
-                processController.appendStatus("inputFilename = " + processController.stringToHTMLJSON(
-                        fileData.getFileName()) + "<br>");
-
-                // Save the uploaded file
-                String splitArray[] = fileData.getFileName().split("\\.");
-                String ext;
-                if (splitArray.length == 0) {
-                    // if no extension is found, then guess
-                    ext = "xls";
-                } else {
-                    ext = splitArray[splitArray.length - 1];
-                }
-                f = saveTempFile(is, ext);
-                // if input_file null, then there was an error saving the file
-                if (input_file == null) {
-                    throw new FIMSException("Server error saving file.");
-                }
+                ext = splitArray[splitArray.length - 1];
+            }
+            input_file = processController.saveTempFile(is, ext);
+            // if input_file null, then there was an error saving the file
+            if (input_file == null) {
+                throw new FIMSException("Server error saving file.");
             }
 
             bcidConnector connector = new bcidConnector(accessToken, refreshToken);
@@ -153,7 +92,7 @@ public class validate {
             // Create the process object --- this is done each time to orient the application
             process p = null;
             p = new process(
-                    f.getAbsolutePath(),
+                    input_file,
                     uploadpath(),
                     connector,
                     processController
@@ -224,11 +163,7 @@ public class validate {
                     retVal.append("\"}");
                 }
             }
-        } catch (
-                FIMSException e
-                )
-
-        {
+        } catch (FIMSException e) {
             e.printStackTrace();
             // Delete the input file if an exception was thrown
             try {
@@ -239,15 +174,10 @@ public class validate {
             return "{\"done\": \"Server Error: " + e.getMessage() + "\"}";
         }
 
-        if (deleteInputFile && input_file != null)
-
-        {
+        if (deleteInputFile && input_file != null) {
             new File(input_file).delete();
         }
-
-        if (removeController)
-
-        {
+        if (removeController) {
             session.removeAttribute("processController");
         }
 
@@ -547,31 +477,6 @@ public class validate {
 
     }
 
-    /**
-     * take an InputStream and extension and write it to a file in the operating systems temp dir.
-     *
-     * @param is
-     * @param ext
-     *
-     * @return
-     */
-    public static File saveTempFile(InputStream is, String ext) {
-        File f = new File(tempDir, new stringGenerator().generateString(20) + '.' + ext);
-
-        try {
-            OutputStream os = new FileOutputStream(f);
-            try {
-                byte[] buffer = new byte[4096];
-                for (int n; (n = is.read(buffer)) != -1; )
-                    os.write(buffer, 0, n);
-            } finally {
-                os.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return f;
-    }
-
 }
+
+
