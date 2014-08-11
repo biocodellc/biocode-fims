@@ -493,7 +493,7 @@ function validationResults(data) {
         writeResults(data.done);
 //        dialog(data.done, title, buttons);
     } else {
-        if (data.continue.message == null) {
+        if (data.continue_message.message == null) {
             continueUpload(false);
         } else {
             // ask user if want to proceed
@@ -502,11 +502,11 @@ function validationResults(data) {
                       continueUpload(false);
                 },
                 "Cancel": function() {
-                    writeResults(data.continue.message);
+                    writeResults(data.continue_message.message);
                     $(this).dialog("close");
                 }
             }
-            dialog(data.continue.message, title, buttons);
+            dialog(data.continue_message.message, title, buttons);
         }
     }
 }
@@ -545,7 +545,7 @@ function uploadResults(data) {
                 $(this).dialog("close");
             }
         }
-        dialog(data.continue, title, buttons);
+        dialog(data.continue_message, title, buttons);
     }
 }
 
