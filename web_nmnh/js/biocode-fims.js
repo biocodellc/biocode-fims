@@ -549,7 +549,12 @@ function uploadResults(data) {
 
 // function to extract the project_id from a dataset to be uploaded
 function extractNAAN() {
-    var f = new FileReader();
+    var f;
+    try {
+        f = new FileReader();
+    } catch(err) {
+        return -1;
+    }
     // older browsers don't have a FileReader
     if (f != null) {
         var deferred = new $.Deferred();
@@ -576,15 +581,20 @@ function extractNAAN() {
         f.readAsText(file);
         return deferred.promise();
     } else {
-        // can't find the project_id, so return -1
+        // can't find the naan, so return -1
         return -1;
     }
 }
 
 // function to extract the project_id from a dataset to be uploaded
 function extractProjectId() {
-    var f = new FileReader();
-    // older browsers don't have a FileReader
+    var f;
+    try {
+        f = new FileReader();
+    } catch(err) {
+        return -1;
+    }
+        // older browsers don't have a FileReader
     if (f != null) {
         var deferred = new $.Deferred();
         var file = $('#dataset')[0].files[0];
@@ -617,8 +627,12 @@ function extractProjectId() {
 
 // function to extract the dataset_code from a dataset to be uploaded
 function extractDatasetCode() {
-    var f = new FileReader();
-    // older browsers don't have a FileReader
+    var f;
+    try {
+        f = new FileReader();
+    } catch(err) {
+        return null;
+    }    // older browsers don't have a FileReader
     if (f != null) {
         var deferred = new $.Deferred();
         var file = $('#dataset')[0].files[0];
