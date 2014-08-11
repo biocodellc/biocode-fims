@@ -25,8 +25,6 @@
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 
 
-
-
 </head>
 
 <body>

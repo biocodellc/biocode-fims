@@ -32,4 +32,13 @@ window.onload = function checkForFailMessageInURL(){
 };
 </script>
 
+<script>
+    $(document).ready(function() {
+       if (BrowserDetect.browser = "Explorer" &&
+            BrowserDetect.version <=9) {
+         $('#warning').html("<b>NOTE:</b>Your browser may not support the validation component in this FIMS installation");
+       }
+    });
+</script>
+
 <%@ include file="footer.jsp" %>
