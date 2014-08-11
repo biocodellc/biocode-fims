@@ -1,6 +1,11 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 99999
 
+var fims.spreadsheet_naan;
+var fims.project_id;
+var fims.dataset_code;
+var fims.input_file;
+
 function list(url) {
     $.ajax({
         type: "GET",
@@ -661,6 +666,56 @@ function extractDatasetCode() {
         // can't find the dataset_code, so return null
         return null;
     }
+}
+
+// Add this to biocode-fims
+function extractCodes() {
+    submitForm().done(function(data) {
+          // TODO: parse the Naan, project_id, dataset_code from returned javascript if applicable
+          alert(data);
+    }).fail(function(jqxhr) {
+            failError(jqxhr);
+    });
+    //alert('send file to server and extract codes');
+}
+
+// Submitting file at beginning to read data
+function submitFile(){
+    var de = new $.Deferred();
+    var promise = de.promise();
+    var options = {
+        url: "/fims/rest/validate/load",
+        type: "POST",
+        contentType: "multipart/form-data",
+        beforeSerialize: function(form, options) {
+            $('#projects').prop('disabled', false);
+        },
+        beforeSubmit: function(form, options) {
+            $('#projects').prop('disabled', true);
+            dialog("Reading File ...", "File Reader", null);
+            // For browsers that don't support the upload progress listener
+            var xhr = $.ajaxSettings.xhr();
+            if (!xhr.upload) {
+                loopStatus(promise)
+            }
+        },
+        error: function(jqxhr) {
+            de.reject();
+        },
+        success: function(data) {
+            de.resolve(data);
+        },
+        fail: function(jqxhr) {
+            de.reject(jqxhr);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            // For browsers that do support the upload progress listener
+            if (percentComplete == 100) {
+            loopStatus(promise)
+            }
+        }
+    }
+    return promise;
 }
 
 // function to toggle the project_id and expedition_code inputs of the validation form
