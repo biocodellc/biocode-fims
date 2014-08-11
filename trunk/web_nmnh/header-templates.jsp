@@ -17,6 +17,8 @@
     <script type="text/javascript" src="/fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/fims/js/dropit.js"></script>
     <script type="text/javascript" src="/fims/js/templates.js"></script>
+        <script type="text/javascript" src="/fims/js/BrowserDetect.js"></script>
+
 
     <script>$(document).ready(function() {$('.menu').dropit();});</script>
 

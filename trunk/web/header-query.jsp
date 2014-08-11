@@ -16,6 +16,8 @@
     <script type="text/javascript" src="/biocode-fims/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/dropit.js"></script>
+        <script type="text/javascript" src="/fims/js/BrowserDetect.js"></script>
+
 
     <script src="/biocode-fims/js/distal.js"></script>
     <script>
