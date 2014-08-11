@@ -160,32 +160,7 @@ public class processController {
             return false;
     }
 
-    /**
-     * take an InputStream and extension and write it to a file in the operating systems temp dir.
-     *
-     * @param is
-     * @param ext
-     * @return
-     */
-    public String saveTempFile(InputStream is, String ext) {
-        String tempDir = System.getProperty("java.io.tmpdir");
-        File f = new File(tempDir, new stringGenerator().generateString(20) + '.' + ext);
 
-        try {
-            OutputStream os = new FileOutputStream(f);
-            try {
-                byte[] buffer = new byte[4096];
-                for (int n; (n = is.read(buffer)) != -1; )
-                    os.write(buffer, 0, n);
-            } finally {
-                os.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return f.getAbsolutePath();
-    }
 
     /**
      * return a string that is to be used in html and is json safe

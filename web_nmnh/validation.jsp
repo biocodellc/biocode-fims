@@ -67,7 +67,8 @@
 
 <script>
     $(document).ready(function() {
-        validationFormToggle();
+        extractCodes();
+        //validationFormToggle();
         populateProjects();
         // call validatorSubmit if the enter key was pressed in an input
         $("input").keydown( function(event) {
