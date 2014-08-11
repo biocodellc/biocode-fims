@@ -1,11 +1,6 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 99999
 
-var fims.spreadsheet_naan;
-var fims.project_id;
-var fims.dataset_code;
-var fims.input_file;
-
 function list(url) {
     $.ajax({
         type: "GET",
