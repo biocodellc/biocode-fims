@@ -1,6 +1,8 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="validation" class="section">
+    <div id="warning"></div>
+
     <div style="margin: 0 auto;width: 100%;">
 
         <p style='margin-bottom: 2cm;'></p>
@@ -63,6 +65,10 @@ window.onload = function checkForFailMessageInURL(){
         }
     }
 };
+
+$(document).ready(function() {
+       fimsBrowserCheck($('#warning'));
+});
 </script>
 
 <%@ include file="footer.jsp" %>

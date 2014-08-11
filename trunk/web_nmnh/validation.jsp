@@ -1,6 +1,8 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="validation" class="section">
+    <div id="warning"></div>
+
     <div class="sectioncontent">
 
         <h2>Validation</h2>
@@ -67,6 +69,7 @@
 
 <script>
     $(document).ready(function() {
+        fimsBrowserCheck($('#warning'));
         validationFormToggle();
         populateProjects();
         // call validatorSubmit if the enter key was pressed in an input
