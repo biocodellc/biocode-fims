@@ -1,6 +1,8 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="validation" class="section">
+    <div id="warning"></div>
+
     <div class="sectioncontent">
 
         <h2>Validation</h2>
@@ -79,6 +81,15 @@
         $("input[type=button]").click(function() {
             validatorSubmit();
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+       if (BrowserDetect.browser = "Explorer" &&
+            BrowserDetect.version <=9) {
+         $('#warning').html("<b>NOTE:</b>Your browser may not support the validation component in this FIMS installation");
+         alert("Your browser may not support the validation component in this FIMS installation");
+       }
     });
 </script>
 
