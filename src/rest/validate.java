@@ -133,13 +133,13 @@ public class validate {
                 } else if (upload != null && upload.equals("on")) {
                     // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
                     if (!processController.isValidated() && processController.getHasWarnings()) {
-                        retVal.append("{\"continue\": {\"message\": \"");
+                        retVal.append("{\"continue_message\": {\"message\": \"");
                         retVal.append(processController.getStatusSB().toString());
                         retVal.append("\"}}");
 
                         // there were no validation warnings and the user would like to upload, so continue
                     } else {
-                        retVal.append("{\"continue\": {}}");
+                        retVal.append("{\"continue_message\": {}}");
                     }
 
                     // don't delete the inputFile because we'll need it for uploading
@@ -251,7 +251,7 @@ public class validate {
                         session.setAttribute("refresh_token", connector.getRefreshToken());
                     }
                     // ask the user if they want to create this expedition
-                    return "{\"continue\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                    return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                             "\\\" does not exist.  " +
                             "Do you wish to create it now?<br><br>" +
                             "If you choose to continue, your data will be associated with this new dataset code.\"}";
@@ -355,7 +355,7 @@ public class validate {
                         session.setAttribute("refresh_token", connector.getRefreshToken());
                     }
                     // Ask the user if they want to create this expedition
-                    return "{\"continue\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                    return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                             "\\\" does not exist.  " +
                             "Do you wish to create it now?<br><br>" +
                             "If you choose to continue, your data will be associated with this new dataset code.\"}";
