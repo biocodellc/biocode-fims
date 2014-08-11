@@ -69,6 +69,7 @@
 
 <script>
     $(document).ready(function() {
+        fimsBrowserCheck($('#warning'));
         validationFormToggle();
         populateProjects();
         // call validatorSubmit if the enter key was pressed in an input
@@ -81,15 +82,6 @@
         $("input[type=button]").click(function() {
             validatorSubmit();
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-       if (BrowserDetect.browser = "Explorer" &&
-            BrowserDetect.version <=9) {
-         $('#warning').html("<b>NOTE:</b>Your browser may not support the validation component in this FIMS installation");
-         alert("Your browser may not support the validation component in this FIMS installation");
-       }
     });
 </script>
 
