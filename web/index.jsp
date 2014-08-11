@@ -1,6 +1,7 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="validation" class="section">
+    <div id="warning"></div>
     <div class="sectioncontent">
 
         A Field Information Management System (FIMS) enables data collection at the source (in the field) by
@@ -11,7 +12,7 @@
                 <a href="http://biscicol.org/bcid" target="_blank">BCIDs</a>, which extends <a href="http://ezid.cdlib.org/">EZIDs</a>.
                 <p>-->
 
-<p><img id='workflowImage' src='docs/Workflow.jpeg'>
+        <p><img id='workflowImage' src='docs/Workflow.jpeg'>
         <!--<img id='workflowImage' src='docs/Workflow_simple.jpeg'>
         <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
     </div>
