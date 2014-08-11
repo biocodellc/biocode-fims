@@ -43,6 +43,7 @@ BrowserDetect.init();
 function fimsBrowserCheck(a) {
   if (BrowserDetect.browser = "Explorer" &&
             BrowserDetect.version <=9) {
-         a.html("<b style='color: red;'>NOTE: Your browser only supports the Template Generator and not the Validation Component. </b>Use IE 11, or a recent version of Chrome, Firefox, or Safari to run data validation. ");
+         a.html("<b style='color: red;'>NOTE: Your browser only supports the Template Generator and not the Validation Component. </b>" +
+         "<br>Use IE 11, or a recent version of Chrome, Firefox, or Safari to run data validation. ");
   }
 }
