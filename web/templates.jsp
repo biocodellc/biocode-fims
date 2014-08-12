@@ -1,4 +1,4 @@
-:w<%@ include file="header-templates.jsp" %>
+<%@ include file="header-templates.jsp" %>
 
 <div id="template" class="section">
 <div class="sectioncontent">
