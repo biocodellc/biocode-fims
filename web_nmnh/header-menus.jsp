@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/biocode-fims/index.jsp">NMNH Field Information Management System (FIMS)</a>
+                <a class="navbar-brand" href="/fims/index.jsp">NMNH Field Information Management System (FIMS)</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -38,7 +38,7 @@
                     </c:if>
                     <c:if test="${user != null}">
                         <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
-                        <li><a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a></li>
+                        <li><a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a></li>
                     </c:if>
                     <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
                 </ul>

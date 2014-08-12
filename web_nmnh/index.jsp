@@ -38,24 +38,78 @@
                 <td>
                         <img src="docs/images/Workflow_simple_08.jpg" width="171" height="15" alt="" border="0" ></td>
         </tr>
-	<tr>
-                <td colspan="5">
-    The image above describes the workflow for working with the FIMS.  Blue boxes are clickable.
-    Begin with generating a spreadsheet template. You will then need to fill out your data in the provided spreadsheet.
-    Once you have completed filling out your spreadsheet, you can validate your spreadsheet data.  When validation is
-    passed you will be given the option to upload your file for ingestion into RCIS.
-	</td>
 
-	</tr>
         </tbody>
 </table>
+
+<div class="span4 collapse-group">
+
+    <p>
+Welcome to the Smithsonian National Museum of Natural History Field Information Management System (FIMS). The FIMS is
+designed for NMNH researchers to digitally capture  data while on field expeditions, automatically check and correct
+these data against controlled lists and accepted values, and then upload these data to NMNH storage where it can later be
+imported into the Museum’s collection information system (EMu). The above image outlines the workflow steps
+<b><a id="details" href="#">More &raquo;</a></b>
+    </p>
+
+    <div class="collapse">
+
+<h2>Pre-Registration</h2>
+
+Pre-registration in EMu is a requirement for the field collecting event and will insure that the
+project will have an acquisition transaction record in EMu for later referencing and appending
+and scientists can populate their field templates with these acquisition numbers before going
+into the field.
+Pre-registration involves the creation of a new In Process Acquisition transaction in EMu.
+Subtype of this Acquisition should be Collected for Museum with Primary Sponsor or Collector
+recorded as the Primary Transactor. Other collectors or collaborating institutions can be
+included as secondary transactors. General information about where and what will be
+collected should be included in the material description field of the transaction. Any permits or
+agreements received prior to the trip should be scanned and referenced via Rights records and
+linked to the transaction. Item level information will not be flushed out until after return from the
+trip. The data spreadsheet itself should be loaded in as a multimedia asset associated with the
+transaction upon return and final validation.
+
+<h2>Generator Template</h2>
+
+Users can generate a unit-specific Excel template spreadsheet to be used as the primary
+method of recording field collection information in the field.
+To create the Excel template, a user will select from a robust set of standardized metadata
+fields, with the core set EMu, Darwin Core, MIxS, and the ABCDDNA/DwC DNA and Tissue
+extension for GGBN. Each unit has designated mandatory, desirable, and optional fields,
+based on specific unit collection requirements. Field definitions, synonymies, mappings to
+EMu, crosswalks between terms, and validation rules are available to the user while selecting
+metadata fields, so that the user can select the best fields for his or her collecting trip.
+
+<h2>Enter Data in Spreadsheet</h2>
+
+Once in the field, researchers can use the pre-generated spreadsheet to record data.
+
+<h2>Validation</h2>
+
+Researchers can validate recorded data against quality assurance validation scripts. These
+scripts will show errors (where incorrect values or used) or warnings when data might need
+modification. Users will use errors and warnings to edit spreadsheet data until it passes
+validation (an iterative process of checking and correcting).
+
+<h2>Upload</h2>
+
+Once spreadsheet has passed validation, it can be uploaded to NMNH storage where it can
+later be imported into the Museum’s collection information system (EMu).
+</div>
+
+
+</div>
+
+
+
+
 <!-- End Save for Web Slices -->
     </div>
 </div>
 
 <script>
-// function to show incoming failure Messages, its only used on HOME page since it is the only place
-// that accepts redirects with error messages
+// function to show incoming failure Messages, only used on HOME page
 window.onload = function checkForFailMessageInURL(){
     var match = RegExp('[?&]error=([^&]*)').exec(window.location.search);
     if (match !=null) {
@@ -64,10 +118,22 @@ window.onload = function checkForFailMessageInURL(){
             alert(results);
         }
     }
+
+
 };
 
 $(document).ready(function() {
-       fimsBrowserCheck($('#warning'));
+    // Run our Browser Check
+    fimsBrowserCheck($('#warning'));
+
+      // View Details Function
+    $('#details').on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $collapse = $this.closest('.collapse-group').find('.collapse');
+        $collapse.collapse('toggle');
+    });
+
 });
 </script>
 
