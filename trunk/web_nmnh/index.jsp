@@ -23,12 +23,12 @@
                                 onmouseout="window.status='';  return true;">
                                 <img src="docs/images/GenerateTemplate.jpg" width="171" height="92" border="0" alt="Generate Spreadsheet Template"></a></td>
                 <td rowspan="2">
-                        <img src="docs/images/Workflow_simple_04.jpg" width="337" height="107" alt=""></td>
+                        <img src="docs/images/Workflow_simple_04.jpg" width="337" height="107" alt="" border=0></td>
                 <td>
                         <a href="/fims/validation.jsp"
                                 onmouseover="window.status='Run Validation';  return true;"
                                 onmouseout="window.status='';  return true;">
-                                <img src="docs/images/Validation.jpg" width="171" height="92" border="0" alt="Run Validation"></a></td>
+                                <img src="docs/images/Validation.jpg" width="171" height="92" border="0" alt="Run Validation" border=0></a></td>
                 <td rowspan="2">
                         <img src="docs/images/Workflow_simple_06.jpg" width="246" height="107" alt="" border="0" ></td>
         </tr>
