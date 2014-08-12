@@ -1,46 +1,48 @@
-
 <div id="container">
+    <nav id="myNavbar" class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/biocode-fims/index.jsp">NMNH Field Information Management System (FIMS)</a>
+            </div>
 
-    <div id="header">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tools<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <c:if test="${user != null}">
+                            <ul>
+                                <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                                <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
+                            </ul>
+                        </c:if>
 
-        <div style='float:left'><h2 style="margin:0px;">NMNH Field Information Management System (FIMS)</h2></div>
-
-        <div style='float:right' id="loginLink">
-            <c:if test="${user == null}">
-                <a id="login" href="rest/authenticationService/login">Login</a>
-            </c:if>
-            <c:if test="${user != null}">
-                <a href="/bcid/secure/profile.jsp">${user}</a> | <a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a>
-            </c:if>
-            | <a href="https://code.google.com/p/biocode-fims/">Help</a>
-        </div>
-
-        <div style="clear: both;"></div>
-
-        <div style="overflow: auto;width: 100%;">
-            <div class="link"><a href='/fims/index.jsp'>Home</a></div>
-
-            <div class="separator">|</div>
-
-            <ul id="menu2" class="menu">
-                <li><a href="#" class="btn">Tools</a>
-
-                    <c:if test="${user != null}">
-                        <ul>
-                            <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                            <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
+                        <c:if test="${user == null}">
+                            <ul>
+                                <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                                <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
+                            </ul>
+                            </c:if>
                         </ul>
-                    </c:if>
-
+                    </li>
                     <c:if test="${user == null}">
-                        <ul>
-                            <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                            <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
-                         </ul>
+                        <li><a id="login" href="rest/authenticationService/login">Login</a></li>
                     </c:if>
-                </li>
-            </ul>
+                    <c:if test="${user != null}">
+                        <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
+                        <li><a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a></li>
+                    </c:if>
+                    <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
         </div>
-    </div>
-
+    </nav>
 <div class="alert-container"><div id="alerts"></div></div>
