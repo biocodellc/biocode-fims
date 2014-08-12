@@ -8,8 +8,8 @@
         <p style='margin-bottom: 2cm;'></p>
 
 <!-- Save for Web Slices (Workflow_simple.jpeg) -->
-<table id="Table_01" width="935" height="129" border="0" cellpadding="0" cellspacing="0">
-<tbody style='border:none'>
+<table id="Table_01" width="935" height="129" border="0" cellpadding="0" cellspacing="0" border=0>
+<tbody style='border:none' border=0>
         <tr>
                 <td colspan="5">
                         <img src="docs/images/Workflow_simple_01.jpg" width="935" height="22" alt="" border="0" ></td>
