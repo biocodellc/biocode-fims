@@ -9,12 +9,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/biocode-fims/index.jsp">Biocode FIMS</a>
+                <a class="navbar-brand" href="/biocode-fims/index.jsp">Biocode Field Information Management System</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tools<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -42,7 +42,6 @@
                         </c:if>
                         <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
                 </ul>
-
             </div><!-- /.navbar-collapse -->
         </div>
     </nav>
