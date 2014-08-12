@@ -428,7 +428,7 @@ public class validate {
      */
     @GET
     @Path("/status")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
     public String status(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
 
