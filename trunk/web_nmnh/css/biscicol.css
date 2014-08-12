@@ -18,9 +18,9 @@ a:hover {
     text-decoration: underline;
 }
 
-h1, h2, h3, h4 {
-    margin: 0;
-}
+#h1, h2, h3, h4 {
+#    margin: 0;
+#}
 
 h1 {
     font-size: 180%;
@@ -28,9 +28,9 @@ h1 {
     margin: 0;
 }
 
-h2 {
-    font-size: 130%;
-}
+#h2 {
+#    font-size: 130%;
+#}
 
 table {
     border-spacing: 7px 3px;
