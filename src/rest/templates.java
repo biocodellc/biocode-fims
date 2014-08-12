@@ -149,7 +149,7 @@ public class templates {
                 }
             }
         }
-
+    System.out.println("here");
         templateProcessor t;
         // Create the template processor which handles all functions related to the template, reading, generation
         if (accessionNumber != null) {
@@ -167,7 +167,7 @@ public class templates {
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();
 
-
+System.out.println("defaultSheetname = " + defaultSheetname);
         File file = null;
         try {
             file = t.createExcelFile(defaultSheetname, uploadPath(), fields);
@@ -180,6 +180,7 @@ public class templates {
         if (file == null)
             return Response.status(204).build();
 
+System.out.println("file: " + file.getAbsolutePath());
         // Return response
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
