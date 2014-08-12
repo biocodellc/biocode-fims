@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/biscicol.css"/>
 
     <script type="text/javascript" src="/biocode-fims/js/jquery.js"></script>
-    <script type="text/javascript" src="/biocode-fims/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/templates.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/BrowserDetect.js"></script>
 
