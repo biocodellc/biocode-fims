@@ -98,7 +98,7 @@ public class templates {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-
+   System.out.println("at beginning ");
         if (accessionNumber != null || datasetCode != null) {
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
@@ -123,7 +123,7 @@ public class templates {
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-
+ System.out.println("before process");
         process p = new process(
                 null,
                 uploadPath(),
