@@ -41,7 +41,7 @@ public class validate {
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String validate(@FormDataParam("project_id") Integer project_id,
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
@@ -194,7 +194,7 @@ public class validate {
      */
     @GET
     @Path("/continue")
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -298,7 +298,7 @@ public class validate {
      */
     @GET
     @Path("/continue_spreadsheet")
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -428,7 +428,7 @@ public class validate {
      */
     @GET
     @Path("/status")
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String status(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
 
