@@ -491,7 +491,8 @@ function validationResults(data) {
         writeResults(data.done);
 //        dialog(data.done, title, buttons);
     } else {
-        if (data.continue_message.message == null) {
+
+        if (typeof data.continue_message.message === "undefined") {
             continueUpload(false);
         } else {
             // ask user if want to proceed
