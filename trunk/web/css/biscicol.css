@@ -306,3 +306,9 @@ li {
 .pw-strong .label {
     color: #188B00;
 }
+
+.navbar-default {
+    background-color:  #ECB1AB;
+    /* remove the gradient */
+    background-image: none;
+}

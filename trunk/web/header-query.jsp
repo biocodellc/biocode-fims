@@ -7,9 +7,9 @@
     <head>
     <title>Biocode FIMS Query</title>
 
-    <link rel="stylesheet" type="text/css" href="/biocode-fims/css/biscicol.css"/>
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/biocode-fims/css/alerts.css"/>
+    <link rel="stylesheet" type="text/css" href="/biocode-fims/css/biscicol.css"/>
 
     <script type="text/javascript" src="/biocode-fims/js/jquery.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/jquery-ui.min.js"></script>
