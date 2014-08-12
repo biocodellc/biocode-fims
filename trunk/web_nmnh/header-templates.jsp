@@ -7,6 +7,7 @@
     <head>
     <title>Biocode FIMS Template Generator</title>
 
+    <link rel="stylesheet" type="text/css" href="/fims/css/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="/fims/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/fims/css/alerts.css"/>
     <link rel="stylesheet" type="text/css" href="/fims/css/biscicol.css"/>
