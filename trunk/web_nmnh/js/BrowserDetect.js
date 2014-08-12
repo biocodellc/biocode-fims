@@ -38,11 +38,13 @@ var BrowserDetect =
 
 };
 BrowserDetect.init();
-
+var oldBrowser = false;
 // Perform a custom browser check for FIMS
 function fimsBrowserCheck(a) {
   if (BrowserDetect.browser = "Explorer" &&
             BrowserDetect.version <=9) {
+            oldBrowser = true;
          a.html("<b style='color: red;'>NOTE: Your browser only supports the Template Generator and not the Validation Component. </b>Use IE 11, or a recent version of Chrome, Firefox, or Safari to run data validation. ");
+
   }
 }
