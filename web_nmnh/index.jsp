@@ -49,7 +49,7 @@ Welcome to the Smithsonian Institution’s National Museum of Natural History Fi
 Management System (FIMS). The FIMS is designed for NMNH researchers to digitally capture
 data while on field expeditions, automatically check and correct these data against controlled
 lists and accepted values, and then upload these data to NMNH storage where it can later be
-imported into the Museum’s collection information system (EMu). The above image outlines the
+imported into the Museum's collection information system (EMu). The above image outlines the
 workflow steps
 <b><a id="details" href="#">More &raquo;</a></b>
     </p>
