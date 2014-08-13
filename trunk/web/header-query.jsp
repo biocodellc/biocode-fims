@@ -27,6 +27,8 @@
     <script type="text/javascript" src="/biocode-fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/bootstrap.min.js"></script>
 
+    <link rel="short icon" href="/biocode-fims/docs/fimsicon.png" />
+
 
 </head>
 
