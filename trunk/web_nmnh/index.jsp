@@ -45,10 +45,12 @@
 <div class="span4 collapse-group">
 
     <p>
-Welcome to the Smithsonian National Museum of Natural History Field Information Management System (FIMS). The FIMS is
-designed for NMNH researchers to digitally capture  data while on field expeditions, automatically check and correct
-these data against controlled lists and accepted values, and then upload these data to NMNH storage where it can later be
-imported into the Museum’s collection information system (EMu). The above image outlines the workflow steps
+Welcome to the Smithsonian Institution’s National Museum of Natural History Field Information
+Management System (FIMS). The FIMS is designed for NMNH researchers to digitally capture
+data while on field expeditions, automatically check and correct these data against controlled
+lists and accepted values, and then upload these data to NMNH storage where it can later be
+imported into the Museum’s collection information system (EMu). The above image outlines the
+workflow steps
 <b><a id="details" href="#">More &raquo;</a></b>
     </p>
 
@@ -61,7 +63,7 @@ project will have an acquisition transaction record in EMu for later referencing
 and scientists can populate their field templates with these acquisition numbers before going
 into the field.
 Pre-registration involves the creation of a new In Process Acquisition transaction in EMu.
-Subtype of this Acquisition should be Collected for Museum with Primary Sponsor or Collector
+Subtype of this acquisition should be Collected for Museum with Primary Sponsor or Collector
 recorded as the Primary Transactor. Other collectors or collaborating institutions can be
 included as secondary transactors. General information about where and what will be
 collected should be included in the material description field of the transaction. Any permits or
@@ -94,13 +96,14 @@ validation (an iterative process of checking and correcting).
 
 <h2>Upload</h2>
 
-Once spreadsheet has passed validation, it can be uploaded to NMNH storage where it can
+Once a spreadsheet has passed validation, it can be uploaded to NMNH storage where it can
 later be imported into the Museum’s collection information system (EMu).
+
+<!--End collapse-->
 </div>
 
-
+<!--End collapse-group-->
 </div>
-
 
 
 
