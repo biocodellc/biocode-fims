@@ -45,7 +45,7 @@
 <div class="span4 collapse-group">
 
     <p>
-Welcome to the Smithsonian Institution’s National Museum of Natural History Field Information
+Welcome to the Smithsonian Institution's National Museum of Natural History Field Information
 Management System (FIMS). The FIMS is designed for NMNH researchers to digitally capture
 data while on field expeditions, automatically check and correct these data against controlled
 lists and accepted values, and then upload these data to NMNH storage where it can later be
