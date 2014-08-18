@@ -37,10 +37,10 @@
 
     <error-page>
         <error-code>500</error-code>
-        <location>/fims/error.jsp</location>
+        <location>/error.jsp</location>
     </error-page>
      <error-page>
         <error-code>404</error-code>
-        <location>/fims/notfound.jsp</location>
+        <location>/notfound.jsp</location>
     </error-page>
 </web-app>
