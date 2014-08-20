@@ -1,6 +1,7 @@
 package settings;
 
 import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
 
 /**
  * Handle data about availableProjects coming from BCID
