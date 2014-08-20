@@ -72,11 +72,11 @@ public class authenticationService {
 
         // Prevent requests from forgery attacks by setting a state string
         stringGenerator sg = new stringGenerator();
-        String state = sg.generateString(20);
+       // String state = sg.generateString(20);
 
         // Set the oauthState
-        HttpSession session = request.getSession(true);
-        session.setAttribute("oauth_state", state);
+      //  HttpSession session = request.getSession(true);
+      //  session.setAttribute("oauth_state", state);
 
         // Debugging
         //System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
@@ -84,8 +84,8 @@ public class authenticationService {
         // Redirect to BCID Login Service
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
-                "&redirect_uri=" + sm.retrieveValue("redirect_uri") +
-                "&state=" + URLEncoder.encode(state, "utf-8")
+                "&redirect_uri=" + sm.retrieveValue("redirect_uri")
+                //"&state=" + URLEncoder.encode(state, "utf-8")
         );
 
         return;
@@ -137,7 +137,7 @@ public class authenticationService {
 
         bcidConnector bcidConnector = new bcidConnector();
         String oauthState = null;
-        try {
+     /*   try {
             oauthState = session.getAttribute("oauth_state").toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,33 +146,40 @@ public class authenticationService {
             return;
         }
 
+
         //
         if (oauthState == null) {
             System.out.println("Authentication Error, oauth state is null");
             response.sendRedirect(homepage +"?error=oauth state is null, there is an issue with the session.");
             return;
         }
-
-        if (code == null || state == null || !state.equals(oauthState)) {
-            System.out.println("Authentication Error, code or state is null");
-            response.sendRedirect(homepage +"?error=Code or state is null.");
+        */
+        //if (code == null || state == null || !state.equals(oauthState)) {
+        if (code == null ) {
+            //System.out.println("Authentication Error, code or state is null");
+            System.out.println("Authentication Error, code is null");
+            response.sendRedirect(homepage +"?error=Code is null.");
             return;
         }
 
         String postParams = "client_id=" + sm.retrieveValue("client_id") + "&client_secret=" + sm.retrieveValue("client_secret") +
                 "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
 
+
         JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 
-        if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
+        //if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
+        if (tokenJSON.containsKey("error")) {
             System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
             if (tokenJSON.containsKey("error")) {
                 response.sendRedirect(homepage +"?error=" + tokenJSON.get("error"));
                 return;
             } else {
-                response.sendRedirect(homepage +"?error=Returned state variable was not the same. Was the request/response hacked?");
+                //response.sendRedirect(homepage +"?error=Returned state variable was not the same. Was the request/response hacked?");
+                response.sendRedirect(homepage +"?error=A problem with the returned response from the server");
             }
         }
+
 
         String access_token = tokenJSON.get("access_token").toString();
 
