@@ -87,7 +87,7 @@ function populateProjects() {
     theUrl = "/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
         var listItems = "";
-        listItems+= "<option value='0'>Select a project ...</option>";
+        listItems+= "<option value='0'>Select a department ...</option>";
         $.each(data.projects,function(index,project) {
             listItems+= "<option value='" + project.project_id + "'>" + project.project_title + "</option>";
         });
