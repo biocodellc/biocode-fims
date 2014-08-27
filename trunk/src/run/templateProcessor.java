@@ -2,14 +2,17 @@ package run;
 
 import digester.*;
 import org.apache.commons.digester3.Digester;
-import org.apache.poi.hssf.usermodel.*;
+//import org.apache.poi.hssf.usermodel.*;
+//import org.apache.poi.hssf.usermodel.DVConstraint;
+import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
+import org.apache.poi.xssf.usermodel.*;
 import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
-import utils.SettingsManager;
+//import utils.SettingsManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,15 +38,16 @@ public class templateProcessor {
 
     private String ark;
 
-    HSSFSheet defaultSheet;
-    HSSFWorkbook workbook;
+    XSSFSheet defaultSheet;
+    XSSFWorkbook workbook;
 
-    HSSFCellStyle headingStyle, regularStyle, requiredStyle, wrapStyle;
+    XSSFCellStyle headingStyle, regularStyle, requiredStyle, wrapStyle;
 
     final int NAME = 0;
-    final int ENTITY = 1;
-    final int URI = 2;
-    final int DEFINITION = 3;
+    //    final int ENTITY = 1;
+//    final int URI = 2;
+    final int DEFINITION = 1;
+    final int CONTROLLED_VOCABULARY = 2;
 
 
     String instructionsSheetName = "Instructions";
@@ -57,9 +61,11 @@ public class templateProcessor {
      * Instantiate tempalateProcessor using a pre-defined configurationFile (don't fetch using projectID)
      * This is a private constructor as it is ONLY used for local testing.  Do not use on the Web or in production
      * since we MUST know the project_id first
+     *
      * @param file
      * @param outputFolder
      * @param useCache
+     *
      * @throws Exception
      */
     private void instantiateTemplateProcessor(File file, String outputFolder, Boolean useCache) throws Exception {
@@ -81,20 +87,20 @@ public class templateProcessor {
         p.addValidationRules(new Digester(), validation);
 
         // Create the workbook
-        workbook = new HSSFWorkbook();
+        workbook = new XSSFWorkbook();
 
         // Set the default heading style
         headingStyle = workbook.createCellStyle();
-        HSSFFont bold = workbook.createFont();
+        XSSFFont bold = workbook.createFont();
         bold.setFontHeightInPoints((short) 14);
-        bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        bold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
         headingStyle.setFont(bold);
 
         requiredStyle = workbook.createCellStyle();
-        HSSFFont redBold = workbook.createFont();
-        redBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        XSSFFont redBold = workbook.createFont();
+        redBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
         redBold.setFontHeightInPoints((short) 14);
-        redBold.setColor(HSSFFont.COLOR_RED);
+        redBold.setColor(XSSFFont.COLOR_RED);
         requiredStyle.setFont(redBold);
 
         wrapStyle = workbook.createCellStyle();
@@ -106,9 +112,11 @@ public class templateProcessor {
 
     /**
      * Instantiate templateProcessor using a project ID (lookup configuration File from server)
+     *
      * @param project_id
      * @param outputFolder
      * @param useCache
+     *
      * @throws Exception
      */
     public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
@@ -141,7 +149,7 @@ public class templateProcessor {
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
     }
 
-        /**
+    /**
      * constructor for NMNH projects
      *
      * @param file
@@ -418,7 +426,7 @@ public class templateProcessor {
         // Integer for holding column index value
         int column;
         // Create a sheet to hold the lists
-        HSSFSheet listsSheet = workbook.createSheet(listsSheetName);
+        XSSFSheet listsSheet = workbook.createSheet(listsSheetName);
 
         // An iterator of the possible lists
         Iterator listsIt = validation.getLists().iterator();
@@ -450,16 +458,16 @@ public class templateProcessor {
                 int counterForRows = 0;
                 for (int i = 0, length = validationFields.length; i < length; i++) {
                     String value;
-                    HSSFCellStyle style;
+                    XSSFCellStyle style;
                     // Write header
                     if (i == 0) {
                         value = list.getAlias();
                         style = headingStyle;
-                        HSSFRow row = listsSheet.getRow(i);
+                        XSSFRow row = listsSheet.getRow(i);
                         if (row == null)
                             row = listsSheet.createRow(i);
 
-                        HSSFCell cell = row.createCell(listColumnNumber);
+                        XSSFCell cell = row.createCell(listColumnNumber);
                         cell.setCellValue(value);
                         cell.setCellStyle(style);
                     }
@@ -469,11 +477,11 @@ public class templateProcessor {
 
                     // Set the row counter to +1 because of the header issues
                     counterForRows = i + 1;
-                    HSSFRow row = listsSheet.getRow(counterForRows);
+                    XSSFRow row = listsSheet.getRow(counterForRows);
                     if (row == null)
                         row = listsSheet.createRow(counterForRows);
 
-                    HSSFCell cell = row.createCell(listColumnNumber);
+                    XSSFCell cell = row.createCell(listColumnNumber);
                     cell.setCellValue(value);
                     cell.setCellStyle(style);
 
@@ -503,27 +511,42 @@ public class templateProcessor {
                 while (columnNamesIt.hasNext()) {
                     String thisColumnName = (String) columnNamesIt.next();
                     column = fields.indexOf(thisColumnName.replace("_", " "));
-                    // This defines an address range for this particular list
-                    CellRangeAddressList addressList = new CellRangeAddressList(1, 10000, column, column);
-                    ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
+                    if (column >= 0) {
+                        ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
 
-                    // Set the Constraint to a particular column on the lists sheet
-                    // The following syntax works well and shows popup boxes: Lists!S:S
-                    // replacing the previous syntax which does not show popup boxes ListsS
-                    // Assumes that header is in column #1
-                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + endRowNum;
-                    DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
+                        // Set the Constraint to a particular column on the lists sheet
+                        // The following syntax works well and shows popup boxes: Lists!S:S
+                        // replacing the previous syntax which does not show popup boxes ListsS
+                        // Assumes that header is in column #1
+                        String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + endRowNum;
 
-                    // Create the data validation object
-                    DataValidation dataValidation = new HSSFDataValidation(addressList, dvConstraint);
+                        /*       XSSFName name = workbook.createName();
+                            name.setNameName(thisColumnName);
+                            name.setRefersToFormula(constraintSyntax);
+                        */
 
-                    // Data validation styling
-                    dataValidation.setSuppressDropDownArrow(false);
-                    dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
-                    // System.out.println(defaultSheet.getSheetName());
+                        XSSFDataValidationHelper dvHelper =
+                                new XSSFDataValidationHelper(listsSheet);
 
-                    // Add the validation to the defaultsheet
-                    defaultSheet.addValidationData(dataValidation);
+                        XSSFDataValidationConstraint dvConstraint =
+                                (XSSFDataValidationConstraint) dvHelper.createFormulaListConstraint(constraintSyntax);
+
+                        // This defines an address range for this particular list
+                        CellRangeAddressList addressList = new CellRangeAddressList();
+                        addressList.addCellRangeAddress(1, column, 50000, column);
+
+                        XSSFDataValidation dataValidation =
+                                (XSSFDataValidation) dvHelper.createValidation(dvConstraint, addressList);
+
+                        // Data validation styling
+                        dataValidation.setSuppressDropDownArrow(true);
+                        dataValidation.setShowErrorBox(true);
+                        //dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
+                        // System.out.println(defaultSheet.getSheetName());
+
+                        // Add the validation to the defaultsheet
+                        defaultSheet.addValidationData(dataValidation);
+                    }
                 }
                 listColumnNumber++;
             }
@@ -560,17 +583,18 @@ public class templateProcessor {
     /**
      * Create the DataFields sheet
      */
-    private void createDataFields() {
+    private void createDataFields(List<String> fields) {
 
         // Create the Instructions Sheet, which is always first
-        HSSFSheet dataFieldsSheet = workbook.createSheet(dataFieldsSheetName);
+        XSSFSheet dataFieldsSheet = workbook.createSheet(dataFieldsSheetName);
 
         // First find all the required columns so we can look them up
         LinkedList<String> requiredColumns = getRequiredColumns("error");
 
 
         // Loop through all fields in schema and provide names, uris, and definitions
-        Iterator entitiesIt = getMapping().getEntities().iterator();
+        //Iterator entitiesIt = getMapping().getEntities().iterator();
+        Iterator fieldsIt = fields.iterator();
         int rowNum = 0;
         Row row = dataFieldsSheet.createRow(rowNum++);
 
@@ -579,50 +603,80 @@ public class templateProcessor {
         cell.setCellStyle(headingStyle);
         cell.setCellValue("ColumnName");
 
-        cell = row.createCell(ENTITY);
+/*        cell = row.createCell(ENTITY);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Entity");
 
         cell = row.createCell(URI);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("URI");
-
+*/
         cell = row.createCell(DEFINITION);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Definition");
 
+        cell = row.createCell(CONTROLLED_VOCABULARY);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue("Controlled Vocabulary (see Lists)");
 
         // Must loop entities first
-        while (entitiesIt.hasNext()) {
-            digester.Entity e = (digester.Entity) entitiesIt.next();
-            // Loop attributes
-            Iterator attributesIt = ((LinkedList<Attribute>) e.getAttributes()).iterator();
+        while (fieldsIt.hasNext()) {
+            String columnName = fieldsIt.next().toString().replace("_", " ");
+            LinkedList<Entity> entities = mapping.getEntities();
+            Iterator entitiesIt = entities.iterator();
+            while (entitiesIt.hasNext()) {
+                digester.Entity e = (digester.Entity) entitiesIt.next();
 
-            // Then loop attributes
-            while (attributesIt.hasNext()) {
-                Attribute a = (Attribute) attributesIt.next();
-                row = dataFieldsSheet.createRow(rowNum++);
+                // Loop attributes
+                Iterator attributesIt = ((LinkedList<Attribute>) e.getAttributes()).iterator();
 
-                // Column Name
-                Cell nameCell = row.createCell(NAME);
-                nameCell.setCellValue(a.getColumn());
-                if (requiredColumns != null && requiredColumns.contains(a.getColumn()))
-                    nameCell.setCellStyle(requiredStyle);
+                // Then loop attributes
+                while (attributesIt.hasNext()) {
 
-                row.createCell(ENTITY).setCellValue(e.getConceptAlias());
-                row.createCell(URI).setCellValue(a.getUri());
+                    Attribute a = (Attribute) attributesIt.next();
+                    if (a.getColumn().equals(columnName)) {
+                        row = dataFieldsSheet.createRow(rowNum++);
 
-                // Definition Cell
-                Cell defCell = row.createCell(DEFINITION);
-                defCell.setCellValue(a.getDefinition());
-                defCell.setCellStyle(wrapStyle);
+                        // Column Name
+                        Cell nameCell = row.createCell(NAME);
+                        nameCell.setCellValue(a.getColumn());
+                        if (requiredColumns != null && requiredColumns.contains(a.getColumn()))
+                            nameCell.setCellStyle(requiredStyle);
+                        else
+                            nameCell.setCellStyle(this.headingStyle);
+
+                        //                       row.createCell(ENTITY).setCellValue(e.getConceptAlias());
+//                        row.createCell(URI).setCellValue(a.getUri());
+
+                        // Definition Cell
+                        Cell defCell = row.createCell(DEFINITION);
+                        defCell.setCellValue(a.getDefinition());
+                        defCell.setCellStyle(wrapStyle);
+
+                        // Find any related controlled Vocabulary lists to display
+                        Worksheet sheet = this.validation.getWorksheets().get(0);
+                        Iterator rulesIt = sheet.getRules().iterator();
+                        while (rulesIt.hasNext()) {
+                            digester.Rule r = (digester.Rule) rulesIt.next();
+                            if (r.getColumn() != null &&
+                                    r.getList() != null &&
+                                    r.getColumn().replace("_", " ").equals(columnName) &&
+                                    (r.getType().equals("controlledVocabulary") || r.getType().equals("checkInXMLFields"))) {
+                                row.createCell(CONTROLLED_VOCABULARY).setCellValue(r.getList());
+                            }
+                        }
+
+                    }
+                }
             }
         }
         // Set column width
         dataFieldsSheet.autoSizeColumn(NAME);
-        dataFieldsSheet.autoSizeColumn(ENTITY);
-        dataFieldsSheet.autoSizeColumn(URI);
+        //       dataFieldsSheet.autoSizeColumn(ENTITY);
+        //       dataFieldsSheet.autoSizeColumn(URI);
         dataFieldsSheet.setColumnWidth(DEFINITION, 80 * 256);
+        dataFieldsSheet.autoSizeColumn(CONTROLLED_VOCABULARY);
+
     }
 
     /**
@@ -636,7 +690,7 @@ public class templateProcessor {
         defaultSheet = workbook.createSheet(defaultSheetname);
 
         //Create the header row
-        HSSFRow row = defaultSheet.createRow(0);
+        XSSFRow row = defaultSheet.createRow(0);
 
         // First find all the required columns so we can look them up
         LinkedList<String> requiredColumns = getRequiredColumns("error");
@@ -671,17 +725,17 @@ public class templateProcessor {
      */
     private void createInstructions(String defaultSheetName) {
         // Create the Instructions Sheet, which is always first
-        HSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
+        XSSFSheet instructionsSheet = workbook.createSheet(instructionsSheetName);
         Row row;
         Cell cell;
         Integer rowIndex = 0;
 
         // Center align & bold for title
-        HSSFCellStyle titleStyle = workbook.createCellStyle();
-        HSSFFont bold = workbook.createFont();
+        XSSFCellStyle titleStyle = workbook.createCellStyle();
+        XSSFFont bold = workbook.createFont();
         bold.setFontHeightInPoints((short) 14);
 
-        bold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+        bold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
         titleStyle.setFont(bold);
         titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
 
@@ -861,14 +915,14 @@ public class templateProcessor {
         // Create each of the sheets
         createInstructions(defaultSheetname);
         createDefaultSheet(defaultSheetname, fields);
-        createDataFields();
+        createDataFields(fields);
         createListsSheetAndValidations(fields);
 
         // Write the excel file
         String filename = "output";
         if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals(""))
             filename = getFims().getMetadata().getShortname().replace(" ", "_");
-        String outputName = filename + ".xls";
+        String outputName = filename + ".xlsx";
 
         // Create the file
         File file = null;
@@ -897,13 +951,13 @@ public class templateProcessor {
      *
      * @return
      */
-    private HSSFRichTextString formatKeyValueString(String key, String value) {
-        HSSFFont font = workbook.createFont();
+    private XSSFRichTextString formatKeyValueString(String key, String value) {
+        XSSFFont font = workbook.createFont();
         font.setColor(IndexedColors.RED.getIndex());
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
         font.setFontHeightInPoints((short) 14);
         //String prefix = "Accession Number: ";
-        HSSFRichTextString totalRichTextString = new HSSFRichTextString(key + value);
+        XSSFRichTextString totalRichTextString = new XSSFRichTextString(key + value);
         Integer start = key.toString().length();
         Integer end = totalRichTextString.toString().length();
         // Only make the value portion of string RED
@@ -939,6 +993,7 @@ public class templateProcessor {
         a.add("Kind of Object");
         a.add("Genetic Sample Type Primary");
         a.add("Measurement 1 Unit");
+        a.add("Associated Multimedia");
 
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
