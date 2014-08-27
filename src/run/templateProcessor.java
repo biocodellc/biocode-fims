@@ -53,17 +53,22 @@ public class templateProcessor {
     static File configFile = null;
     Integer project_id;
 
-    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
-         bcidConnector bcidConnector = new bcidConnector();
-         naan = bcidConnector.getNAAN();
+    /**
+     * Instantiate tempalateProcessor using a pre-defined configurationFile (don't fetch using projectID)
+     * This is a private constructor as it is ONLY used for local testing.  Do not use on the Web or in production
+     * since we MUST know the project_id first
+     * @param file
+     * @param outputFolder
+     * @param useCache
+     * @throws Exception
+     */
+    private void instantiateTemplateProcessor(File file, String outputFolder, Boolean useCache) throws Exception {
+        configFile = file;
+
+        bcidConnector bcidConnector = new bcidConnector();
+        naan = bcidConnector.getNAAN();
 
         // Instantiate the project output Folder
-        if (configFile == null) {
-            configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
-            configFile = fetcher.getOutputFile();
-        }
-
-        this.project_id = project_id;
         this.p = new process(outputFolder, configFile);
 
         mapping = new Mapping();
@@ -88,7 +93,7 @@ public class templateProcessor {
         requiredStyle = workbook.createCellStyle();
         HSSFFont redBold = workbook.createFont();
         redBold.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-        redBold.setFontHeightInPoints((short)14);
+        redBold.setFontHeightInPoints((short) 14);
         redBold.setColor(HSSFFont.COLOR_RED);
         requiredStyle.setFont(redBold);
 
@@ -97,6 +102,19 @@ public class templateProcessor {
 
         // Set the style for all other cells
         regularStyle = workbook.createCellStyle();
+    }
+
+    /**
+     * Instantiate templateProcessor using a project ID (lookup configuration File from server)
+     * @param project_id
+     * @param outputFolder
+     * @param useCache
+     * @throws Exception
+     */
+    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+        this.project_id = project_id;
+        configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
+        instantiateTemplateProcessor(fetcher.getOutputFile(), outputFolder, useCache);
     }
 
 
@@ -121,6 +139,29 @@ public class templateProcessor {
         this.datasetCode = datasetCode;
         this.ark = ark;
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
+    }
+
+        /**
+     * constructor for NMNH projects
+     *
+     * @param file
+     * @param outputFolder
+     * @param useCache
+     * @param accessionNumber
+     * @param datasetCode
+     *
+     * @throws Exception
+     */
+    public templateProcessor(File file, String outputFolder, Boolean useCache,
+                             Integer accessionNumber, String datasetCode, String ark) throws Exception {
+        // we can't have a null value for accessionNumber or datasetCode if using this constructor
+        if (accessionNumber == null || datasetCode == null) {
+            throw new FIMSException("dataset code and accession number are required");
+        }
+        this.accessionNumber = accessionNumber;
+        this.datasetCode = datasetCode;
+        this.ark = ark;
+        instantiateTemplateProcessor(file, outputFolder, useCache);
     }
 
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
@@ -461,7 +502,7 @@ public class templateProcessor {
                 // Loop all of the columnNames
                 while (columnNamesIt.hasNext()) {
                     String thisColumnName = (String) columnNamesIt.next();
-                    column = fields.indexOf(thisColumnName.replace("_"," "));
+                    column = fields.indexOf(thisColumnName.replace("_", " "));
                     // This defines an address range for this particular list
                     CellRangeAddressList addressList = new CellRangeAddressList(1, 10000, column, column);
                     ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
@@ -470,7 +511,7 @@ public class templateProcessor {
                     // The following syntax works well and shows popup boxes: Lists!S:S
                     // replacing the previous syntax which does not show popup boxes ListsS
                     // Assumes that header is in column #1
-                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter+"$"+endRowNum;
+                    String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + endRowNum;
                     DVConstraint dvConstraint = DVConstraint.createFormulaListConstraint(constraintSyntax);
 
                     // Create the data validation object
@@ -826,7 +867,7 @@ public class templateProcessor {
         // Write the excel file
         String filename = "output";
         if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals(""))
-            filename = getFims().getMetadata().getShortname().replace(" ","_");
+            filename = getFims().getMetadata().getShortname().replace(" ", "_");
         String outputName = filename + ".xls";
 
         // Create the file
@@ -879,8 +920,8 @@ public class templateProcessor {
      */
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
-        configFile = new File ("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/config.1.xml");
-        templateProcessor t = new templateProcessor(1, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/config.1.xml");
+        templateProcessor t = new templateProcessor(file, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
 
         //System.out.println(t.definition("materialSampleID"));
 
@@ -898,7 +939,6 @@ public class templateProcessor {
         a.add("Kind of Object");
         a.add("Genetic Sample Type Primary");
         a.add("Measurement 1 Unit");
-
 
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
