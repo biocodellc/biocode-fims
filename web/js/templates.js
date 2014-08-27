@@ -113,7 +113,7 @@
                                 dialog("Warning: Dataset Code '" + $("#dataset_code").val() + "' already exists." +
                                "<br>The Dataset Code designates a globally unique key for this dataset. " +
                                 "<br>Select CONTINUE only if you wish to update column names for a spreadsheet you recently downloaded, otherwise " +
-                                "<br>select CANCEL to type in a new Dataset Code" +
+                                "<br>select CANCEL to generate a new dataset code" +
                                 "<input type=hidden id='accession_number' value='"+$("#accession_number").val()+"' />" +
                                 "<input type=hidden id='dataset_code' value='"+$("#dataset_code").val()+"' />"
                                 , "Dataset Code", buttons);
