@@ -47,7 +47,6 @@ public class process {
     public process(
             String inputFilename,
             String outputFolder,
-
             bcidConnector connector,
             processController processController) throws FIMSException {
 
