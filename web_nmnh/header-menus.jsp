@@ -27,8 +27,8 @@
 
                         <c:if test="${user == null}">
                             <ul>
-                                <li><a href='#' class='disabled'>Generate Template</a></li>
-                                <li><a href='#' class='disabled'>Validation</a></li>
+                                <li><div class='disabled'>Generate Template</div></li>
+                                <li><div class='disabled'>Validation</div></li>
                             </ul>
                             </c:if>
                         </ul>
