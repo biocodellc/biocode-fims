@@ -43,7 +43,6 @@
         <filter-name>secureFilter</filter-name>
         <url-pattern>/fims/secure/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <error-page>
