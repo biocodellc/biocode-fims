@@ -18,17 +18,27 @@
                 <td rowspan="2">
                         <img src="docs/images/Workflow_simple_02.jpg" width="218" height="90" alt=""></td>
                 <td>
-                        <a href="/fims/templates.jsp"
+                        <c:if test="${user == null}">
+                                <img src="docs/images/GenerateTemplate.jpg" width="143" height="77" border="0" alt="Generate Spreadsheet Template"></td>
+                        </c:if>
+                        <c:if test="${user != null}">
+                            <a href="/fims/templates.jsp"
                                 onmouseover="window.status='Generate Spreadsheet Template';  return true;"
                                 onmouseout="window.status='';  return true;">
                                 <img src="docs/images/GenerateTemplate.jpg" width="143" height="77" border="0" alt="Generate Spreadsheet Template"></a></td>
+                        </c:if>
                 <td rowspan="2">
                         <img src="docs/images/Workflow_simple_04.jpg" width="281" height="90" alt=""></td>
                 <td>
+                    <c:if test="${user == null}">
+                        <img src="docs/images/Validation.jpg" width="142" height="77" border="0" alt="Run Validation"></td>
+                    </c:if>
+                    <c:if test="${user != null}">
                         <a href="/fims/validation.jsp"
                                 onmouseover="window.status='Run Validation';  return true;"
                                 onmouseout="window.status='';  return true;">
                                 <img src="docs/images/Validation.jpg" width="142" height="77" border="0" alt="Run Validation"></a></td>
+                    </c:if>
                 <td rowspan="2">
                         <img src="docs/images/Workflow_simple_06.jpg" width="416" height="90" alt=""></td>
         </tr>

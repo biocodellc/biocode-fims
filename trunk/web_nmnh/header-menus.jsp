@@ -27,8 +27,8 @@
 
                         <c:if test="${user == null}">
                             <ul>
-                                <li><a href='/fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                                <li><a href='/fims/validation.jsp' class='enabled'>Validation</a></li>
+                                <li><a href='#' class='disabled'>Generate Template</a></li>
+                                <li><a href='#' class='disabled'>Validation</a></li>
                             </ul>
                             </c:if>
                         </ul>
