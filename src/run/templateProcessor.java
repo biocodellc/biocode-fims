@@ -50,7 +50,7 @@ public class templateProcessor {
     String dataFieldsSheetName = "Data Fields";
     String listsSheetName = "Lists";
 
-    File configFile;
+    static File configFile = null;
     Integer project_id;
 
     public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
@@ -58,8 +58,10 @@ public class templateProcessor {
          naan = bcidConnector.getNAAN();
 
         // Instantiate the project output Folder
-        configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
-        configFile = fetcher.getOutputFile();
+        if (configFile == null) {
+            configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
+            configFile = fetcher.getOutputFile();
+        }
 
         this.project_id = project_id;
         this.p = new process(outputFolder, configFile);
@@ -119,8 +121,6 @@ public class templateProcessor {
         this.datasetCode = datasetCode;
         this.ark = ark;
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
-
-
     }
 
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
@@ -461,7 +461,7 @@ public class templateProcessor {
                 // Loop all of the columnNames
                 while (columnNamesIt.hasNext()) {
                     String thisColumnName = (String) columnNamesIt.next();
-                    column = fields.indexOf(thisColumnName);
+                    column = fields.indexOf(thisColumnName.replace("_"," "));
                     // This defines an address range for this particular list
                     CellRangeAddressList addressList = new CellRangeAddressList(1, 10000, column, column);
                     ///   CellRangeAddressList addressList = new CellRangeAddressList(1, 100000, 2, 2);
@@ -879,8 +879,8 @@ public class templateProcessor {
      */
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
-
-        templateProcessor t = new templateProcessor(14, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
+        configFile = new File ("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/config.1.xml");
+        templateProcessor t = new templateProcessor(1, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
 
         //System.out.println(t.definition("materialSampleID"));
 
@@ -894,6 +894,11 @@ public class templateProcessor {
         a.add("Cultivated");
         a.add("Continent");
         a.add("Habit");
+        a.add("Family");
+        a.add("Kind of Object");
+        a.add("Genetic Sample Type Primary");
+        a.add("Measurement 1 Unit");
+
 
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
