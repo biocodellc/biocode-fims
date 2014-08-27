@@ -40,7 +40,11 @@
     </filter>
     <filter-mapping>
         <filter-name>secureFilter</filter-name>
-        <url-pattern>/fims/secure/*</url-pattern>
+        <url-pattern>/fims/templates.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>secureFilter</filter-name>
+        <url-pattern>/fims/validation.jsp</url-pattern>
     </filter-mapping>
 
     <error-page>
