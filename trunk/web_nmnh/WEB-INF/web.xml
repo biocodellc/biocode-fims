@@ -39,7 +39,7 @@
         <filter-class>settings.secureFilter</filter-class>
     </filter>
 
-    ]<filter-mapping>
+    <filter-mapping>
         <filter-name>secureFilter</filter-name>
         <url-pattern>/fims/secure/*</url-pattern>
     </filter-mapping>
