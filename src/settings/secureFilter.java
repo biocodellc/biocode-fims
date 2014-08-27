@@ -25,7 +25,7 @@ public class secureFilter implements Filter {
                           ServletResponse res,
                           FilterChain filterchain)
         throws IOException, ServletException {
-
+                         System.out.println("START FILTER");
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
