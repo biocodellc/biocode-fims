@@ -34,7 +34,7 @@
                         </ul>
                     </li>
                     <c:if test="${user == null}">
-                        <li><a id="login" href="rest/authenticationService/login">Login</a></li>
+                        <li><a id="login" href="/fims/rest/authenticationService/login">Login</a></li>
                     </c:if>
                     <c:if test="${user != null}">
                         <li><a href="#">${user}</a></li>
