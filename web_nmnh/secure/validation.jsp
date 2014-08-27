@@ -1,4 +1,4 @@
-<%@ include file="header-home.jsp" %>
+<%@ include file="../header-home.jsp" %>
 
 <div id="validation" class="section">
     <div id="warning"></div>
@@ -85,4 +85,4 @@
     });
 </script>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="../footer.jsp" %>
