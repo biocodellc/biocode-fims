@@ -83,6 +83,50 @@ public class process {
     }
 
     /**
+     * Setup class variables for processing FIMS data.
+     *
+     * @param inputFilename The data to run.process, usually an Excel spreadsheet
+     * @param outputFolder  Where to store output files
+     */
+    public process(
+            String inputFilename,
+            String outputFolder,
+            bcidConnector connector,
+            processController processController,
+            File file) throws FIMSException {
+
+        // Setup logging
+        org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
+
+        // Update the processController Settings
+        this.processController = processController;
+
+        processController.setInputFilename(inputFilename);
+        this.outputFolder = outputFolder;
+
+        // Control the file outputPrefix... set them here to expedition codes.
+        this.outputPrefix = processController.getExpeditionCode() + "_output";
+        this.connector = connector;
+
+        // Read the Configuration File
+        try {
+            configFile = file;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FIMSException("Unable to load configuration file");
+        }
+
+
+        // Parse the Mapping object (this object is used extensively in downstream functions!)
+        try {
+            mapping = new Mapping();
+            addMappingRules(new Digester(), mapping);
+        } catch (Exception e) {
+            throw new FIMSException("Problem reading mapping in configuration file", e);
+        }
+    }
+
+    /**
      * Always use this method to fetch the process Controller from the process class as it has the current status
      *
      * @return
@@ -175,8 +219,8 @@ public class process {
      */
     public void runExpeditionCreate() throws FIMSException {
         try {
-            if (connector.checkExpedition(processController))  {
-                System.out.println("Creating expedition " + processController.getExpeditionCode()  + "...");
+            if (connector.checkExpedition(processController)) {
+                System.out.println("Creating expedition " + processController.getExpeditionCode() + "...");
                 connector.createExpedition(processController, mapping);
             }
             processController.setExpeditionCreateRequired(false);
@@ -464,6 +508,7 @@ public class process {
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
         options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
+        options.addOption("configFile", true, "Use a local config file instead of getting from server");
 
         options.addOption("t", "triplify", false, "Triplify only (upload process triplifies)");
         options.addOption("u", "upload", false, "Upload");
@@ -609,12 +654,24 @@ public class process {
 
                 // Now run the process
                 if (connector != null) {
-                    process p = new process(
-                            input_file,
-                            output_directory,
-                            connector,
-                            new processController(project_id, dataset_code)
-                    );
+                    process p;
+                    // use local configFile if specified
+                    if (cl.hasOption("configFile")) {
+                        System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
+                        p = new process(
+                                input_file,
+                                output_directory,
+                                connector,
+                                new processController(project_id, dataset_code),
+                                new File(cl.getOptionValue("configFile")));
+                    } else {
+                        p = new process(
+                                input_file,
+                                output_directory,
+                                connector,
+                                new processController(project_id, dataset_code)
+                        );
+                    }
 
                     fimsPrinter.out.println("Initializing ...");
                     fimsPrinter.out.println("\tinputFilename = " + input_file);

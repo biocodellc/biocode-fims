@@ -1200,9 +1200,9 @@ public class Rule {
         }
 
         // Set text for this warning values
-        String levelValue = "required";
+        String levelValue = "mandatory";
         if (getMessageLevel() == RowMessage.WARNING) {
-            levelValue = "suggested";
+            levelValue = "desirable";
         }
 
         String fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
