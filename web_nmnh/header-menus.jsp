@@ -37,7 +37,7 @@
                         <li><a id="login" href="rest/authenticationService/login">Login</a></li>
                     </c:if>
                     <c:if test="${user != null}">
-                        <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
+                        <li><i>${user}</i></li>
                         <li><a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a></li>
                     </c:if>
                     <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
