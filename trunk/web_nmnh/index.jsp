@@ -22,7 +22,7 @@
                                 <img src="docs/images/GenerateTemplate.jpg" width="143" height="77" border="0" alt="Generate Spreadsheet Template"></td>
                         </c:if>
                         <c:if test="${user != null}">
-                            <a href="/fims/templates.jsp"
+                            <a href="/fims/secure/templates.jsp"
                                 onmouseover="window.status='Generate Spreadsheet Template';  return true;"
                                 onmouseout="window.status='';  return true;">
                                 <img src="docs/images/GenerateTemplate.jpg" width="143" height="77" border="0" alt="Generate Spreadsheet Template"></a></td>
@@ -34,7 +34,7 @@
                         <img src="docs/images/Validation.jpg" width="142" height="77" border="0" alt="Run Validation"></td>
                     </c:if>
                     <c:if test="${user != null}">
-                        <a href="/fims/validation.jsp"
+                        <a href="/fims/secure/validation.jsp"
                                 onmouseover="window.status='Run Validation';  return true;"
                                 onmouseout="window.status='';  return true;">
                                 <img src="docs/images/Validation.jpg" width="142" height="77" border="0" alt="Run Validation"></a></td>
