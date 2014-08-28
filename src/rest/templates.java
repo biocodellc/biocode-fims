@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.ws.rs.core.Context;
@@ -152,7 +153,7 @@ public class templates {
         if (accessionNumber != null) {
             // Get the ARK associated with this dataset code
             // TODO: Resource may change in future... better to figure this out programatically at some point
-            String ark = bcidConnector.getArkFromDataset(project_id,datasetCode,"Resource");
+            String ark = bcidConnector.getArkFromDataset(project_id, URLEncoder.encode(datasetCode,"utf-8"),"Resource");
 
             // Construct the new templateProcessor
             t = new templateProcessor(project_id, uploadPath(), true,
