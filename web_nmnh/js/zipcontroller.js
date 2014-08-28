@@ -37,12 +37,9 @@ function parseSpreadsheet(regExpression) {
                 var fileContents = f.result;
                 try {
                     var results = fileContents.match(regExpression)[0];
-
-                    if (results != null) {
+                    if (!!results) {
                         var myResult = results.split('=')[1].slice(0, -1);
-                        if (project_id > 0) {
-                            deferred.resolve(myResult);
-                        }
+                        deferred.resolve(myResult);
                     } else {
                         deferred.resolve(-1);
                     }
