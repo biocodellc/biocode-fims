@@ -1,141 +1,141 @@
-Zoology Preparation|Botany|Bulky fruit
-Zoology Preparation|Botany|Living material
-Zoology Preparation|Botany|Microslide
-Zoology Preparation|Botany|Seed
-Zoology Preparation|Botany|Wet Lot
-Zoology Preparation|Botany|Wood
-Zoology Preparation|Invertebrate Zoology|Alcohol (Ethanol)
-Zoology Preparation|Invertebrate Zoology|DMSO
-Zoology Preparation|Invertebrate Zoology|Dry
-Zoology Preparation|Invertebrate Zoology|Ethanol - 80%
-Zoology Preparation|Invertebrate Zoology|Ethanol - 85%
-Zoology Preparation|Invertebrate Zoology|Ethanol - 90%
-Zoology Preparation|Invertebrate Zoology|Ethanol - 95%
-Zoology Preparation|Invertebrate Zoology|Ethanol - 100%
-Zoology Preparation|Invertebrate Zoology|Formalin
-Zoology Preparation|Invertebrate Zoology|Frozen
-Zoology Preparation|Invertebrate Zoology|Gluteraldehyde
-Zoology Preparation|Invertebrate Zoology|Glycerine
-Zoology Preparation|Invertebrate Zoology|Illustration
-Zoology Preparation|Invertebrate Zoology|Image only
-Zoology Preparation|Invertebrate Zoology|Isopropyl Alcohol
-Zoology Preparation|Invertebrate Zoology|M2 extraction buffer
-Zoology Preparation|Invertebrate Zoology|Oil
-Zoology Preparation|Invertebrate Zoology|Other
-Zoology Preparation|Invertebrate Zoology|Paraffin Block
-Zoology Preparation|Invertebrate Zoology|Photographic Image
-Zoology Preparation|Invertebrate Zoology|Plastic Block
-Zoology Preparation|Invertebrate Zoology|RNALater
-Zoology Preparation|Invertebrate Zoology|Sampled for Analysis
-Zoology Preparation|Invertebrate Zoology|SEM Stub
-Zoology Preparation|Invertebrate Zoology|Slide
-Zoology Preparation|Invertebrate Zoology|Sorting Solution
-Zoology Preparation|Invertebrate Zoology|TEM Slide
-Zoology Preparation|Invertebrate Zoology|Tissue
-Zoology Preparation|Invertebrate Zoology|Tissue for DNA Analysis
-Zoology Preparation|Amphibians & Reptiles|Cleared and Stained
-Zoology Preparation|Amphibians & Reptiles|Dry
-Zoology Preparation|Amphibians & Reptiles|Ethanol
-Zoology Preparation|Amphibians & Reptiles|Formalin
-Zoology Preparation|Amphibians & Reptiles|Glycerine
-Zoology Preparation|Amphibians & Reptiles|Histological Material
-Zoology Preparation|Amphibians & Reptiles|Photograph
-Zoology Preparation|Amphibians & Reptiles|SEM
-Zoology Preparation|Birds|Alcoholic: Partial
-Zoology Preparation|Birds|Alcoholic: Whole
-Zoology Preparation|Birds|Cleared and Stained: Partial
-Zoology Preparation|Birds|Cleared and Stained: Whole
-Zoology Preparation|Birds|Egg(s)
-Zoology Preparation|Birds|Egg(s): Cast
-Zoology Preparation|Birds|Egg(s): Mixed Clutch
-Zoology Preparation|Birds|Egg(s): Multiple Clutch
-Zoology Preparation|Birds|Midden
-Zoology Preparation|Birds|Nest(s)
-Zoology Preparation|Birds|Skeleton: Cast
-Zoology Preparation|Birds|Skeleton: Mounted
-Zoology Preparation|Birds|Skeleton: Partial
-Zoology Preparation|Birds|Skeleton: Whole
-Zoology Preparation|Birds|Skin: Mounted
-Zoology Preparation|Birds|Skin: Partial
-Zoology Preparation|Birds|Skin: Whole
-Zoology Preparation|Fishes|95 % ETOH
-Zoology Preparation|Fishes|Alcohol
-Zoology Preparation|Fishes|Casts
-Zoology Preparation|Fishes|Digital photograph on file
-Zoology Preparation|Fishes|Dried
-Zoology Preparation|Fishes|Dry Osteological Specimen
-Zoology Preparation|Fishes|ETOH FIXED
-Zoology Preparation|Fishes|Field Notes
-Zoology Preparation|Fishes|Glycerin with Bone and Cartilage Stain
-Zoology Preparation|Fishes|Glycerine, Triple stained
-Zoology Preparation|Fishes|Glycerine With Bone Stain
-Zoology Preparation|Fishes|Glycerine With Cartilage Stain
-Zoology Preparation|Fishes|Glycerine With Nerve Stain
-Zoology Preparation|Fishes|Hardcopy photograph on file
-Zoology Preparation|Fishes|Histological Slide
-Zoology Preparation|Fishes|Illustration
-Zoology Preparation|Fishes|Jar Label
-Zoology Preparation|Fishes|Larvae
-Zoology Preparation|Fishes|Ledger Image
-Zoology Preparation|Fishes|Model
-Zoology Preparation|Fishes|Otolith
-Zoology Preparation|Fishes|Photograph
-Zoology Preparation|Fishes|Print
-Zoology Preparation|Fishes|Radiograph
-Zoology Preparation|Fishes|Scanning Electron Microphotograph
-Zoology Preparation|Fishes|Skin
-Zoology Preparation|Fishes|Specimen Notes
-Zoology Preparation|Fishes|Tissue sample
-Zoology Preparation|Fishes|Transmission Electron Microphotograph
-Zoology Preparation|Fishes|Transparency
-Zoology Preparation|Fishes|Transparency sleeve
-Zoology Preparation|Fishes|Unknown
-Zoology Preparation|Fishes|Wet Osteological Specimen
-Zoology Preparation|Mammals|Anatomical
-Zoology Preparation|Mammals|Antler or Horn
-Zoology Preparation|Mammals|Baculum/Baubellum
-Zoology Preparation|Mammals|Baleen
-Zoology Preparation|Mammals|Cast
-Zoology Preparation|Mammals|Exchanged or Discarded
-Zoology Preparation|Mammals|Fluid
-Zoology Preparation|Mammals|Histological
-Zoology Preparation|Mammals|Mandible
-Zoology Preparation|Mammals|Mandibles
-Zoology Preparation|Mammals|Model
-Zoology Preparation|Mammals|Mounted Head
-Zoology Preparation|Mammals|Mounted Skeleton
-Zoology Preparation|Mammals|Mounted skin
-Zoology Preparation|Mammals|Other
-Zoology Preparation|Mammals|Partial Skeleton
-Zoology Preparation|Mammals|Partial Skin
-Zoology Preparation|Mammals|Partial Skull
-Zoology Preparation|Mammals|Petrotympanic
-Zoology Preparation|Mammals|Photograph
-Zoology Preparation|Mammals|Postcranial skeleton
-Zoology Preparation|Mammals|Remainder in Fluid
-Zoology Preparation|Mammals|Rostrum
-Zoology Preparation|Mammals|Sclera
-Zoology Preparation|Mammals|Skeletal Elements
-Zoology Preparation|Mammals|Skeleton
-Zoology Preparation|Mammals|Skin
-Zoology Preparation|Mammals|Skull
-Zoology Preparation|Mammals|Tissue
-Zoology Preparation|Mammals|Tooth or Tusk
-Zoology Preparation|Mammals|Tympanic
-Zoology Preparation|Mammals|Unknown
-Zoology Preparation|Entomology|DNAgard
-Zoology Preparation|Entomology|Envelope
-Zoology Preparation|Entomology|Ethanol
-Zoology Preparation|Entomology|Ethanol drained
-Zoology Preparation|Entomology|Fossil in Amber
-Zoology Preparation|Entomology|Glycerine
-Zoology Preparation|Entomology|Papered
-Zoology Preparation|Entomology|Pinned
-Zoology Preparation|Entomology|Riker Mount
-Zoology Preparation|Entomology|RNAlater
-Zoology Preparation|Entomology|Slide
-Zoology Preparation|Entomology|Slide section
-Zoology Preparation|Entomology|Vial
+preparation|Botany|Bulky fruit
+preparation|Botany|Living material
+preparation|Botany|Microslide
+preparation|Botany|Seed
+preparation|Botany|Wet Lot
+preparation|Botany|Wood
+preparation|Invertebrate Zoology|Alcohol (Ethanol)
+preparation|Invertebrate Zoology|DMSO
+preparation|Invertebrate Zoology|Dry
+preparation|Invertebrate Zoology|Ethanol - 80%
+preparation|Invertebrate Zoology|Ethanol - 85%
+preparation|Invertebrate Zoology|Ethanol - 90%
+preparation|Invertebrate Zoology|Ethanol - 95%
+preparation|Invertebrate Zoology|Ethanol - 100%
+preparation|Invertebrate Zoology|Formalin
+preparation|Invertebrate Zoology|Frozen
+preparation|Invertebrate Zoology|Gluteraldehyde
+preparation|Invertebrate Zoology|Glycerine
+preparation|Invertebrate Zoology|Illustration
+preparation|Invertebrate Zoology|Image only
+preparation|Invertebrate Zoology|Isopropyl Alcohol
+preparation|Invertebrate Zoology|M2 extraction buffer
+preparation|Invertebrate Zoology|Oil
+preparation|Invertebrate Zoology|Other
+preparation|Invertebrate Zoology|Paraffin Block
+preparation|Invertebrate Zoology|Photographic Image
+preparation|Invertebrate Zoology|Plastic Block
+preparation|Invertebrate Zoology|RNALater
+preparation|Invertebrate Zoology|Sampled for Analysis
+preparation|Invertebrate Zoology|SEM Stub
+preparation|Invertebrate Zoology|Slide
+preparation|Invertebrate Zoology|Sorting Solution
+preparation|Invertebrate Zoology|TEM Slide
+preparation|Invertebrate Zoology|Tissue
+preparation|Invertebrate Zoology|Tissue for DNA Analysis
+preparation|Amphibians & Reptiles|Cleared and Stained
+preparation|Amphibians & Reptiles|Dry
+preparation|Amphibians & Reptiles|Ethanol
+preparation|Amphibians & Reptiles|Formalin
+preparation|Amphibians & Reptiles|Glycerine
+preparation|Amphibians & Reptiles|Histological Material
+preparation|Amphibians & Reptiles|Photograph
+preparation|Amphibians & Reptiles|SEM
+preparation|Birds|Alcoholic: Partial
+preparation|Birds|Alcoholic: Whole
+preparation|Birds|Cleared and Stained: Partial
+preparation|Birds|Cleared and Stained: Whole
+preparation|Birds|Egg(s)
+preparation|Birds|Egg(s): Cast
+preparation|Birds|Egg(s): Mixed Clutch
+preparation|Birds|Egg(s): Multiple Clutch
+preparation|Birds|Midden
+preparation|Birds|Nest(s)
+preparation|Birds|Skeleton: Cast
+preparation|Birds|Skeleton: Mounted
+preparation|Birds|Skeleton: Partial
+preparation|Birds|Skeleton: Whole
+preparation|Birds|Skin: Mounted
+preparation|Birds|Skin: Partial
+preparation|Birds|Skin: Whole
+preparation|Fishes|95 % ETOH
+preparation|Fishes|Alcohol
+preparation|Fishes|Casts
+preparation|Fishes|Digital photograph on file
+preparation|Fishes|Dried
+preparation|Fishes|Dry Osteological Specimen
+preparation|Fishes|ETOH FIXED
+preparation|Fishes|Field Notes
+preparation|Fishes|Glycerin with Bone and Cartilage Stain
+preparation|Fishes|Glycerine, Triple stained
+preparation|Fishes|Glycerine With Bone Stain
+preparation|Fishes|Glycerine With Cartilage Stain
+preparation|Fishes|Glycerine With Nerve Stain
+preparation|Fishes|Hardcopy photograph on file
+preparation|Fishes|Histological Slide
+preparation|Fishes|Illustration
+preparation|Fishes|Jar Label
+preparation|Fishes|Larvae
+preparation|Fishes|Ledger Image
+preparation|Fishes|Model
+preparation|Fishes|Otolith
+preparation|Fishes|Photograph
+preparation|Fishes|Print
+preparation|Fishes|Radiograph
+preparation|Fishes|Scanning Electron Microphotograph
+preparation|Fishes|Skin
+preparation|Fishes|Specimen Notes
+preparation|Fishes|Tissue sample
+preparation|Fishes|Transmission Electron Microphotograph
+preparation|Fishes|Transparency
+preparation|Fishes|Transparency sleeve
+preparation|Fishes|Unknown
+preparation|Fishes|Wet Osteological Specimen
+preparation|Mammals|Anatomical
+preparation|Mammals|Antler or Horn
+preparation|Mammals|Baculum/Baubellum
+preparation|Mammals|Baleen
+preparation|Mammals|Cast
+preparation|Mammals|Exchanged or Discarded
+preparation|Mammals|Fluid
+preparation|Mammals|Histological
+preparation|Mammals|Mandible
+preparation|Mammals|Mandibles
+preparation|Mammals|Model
+preparation|Mammals|Mounted Head
+preparation|Mammals|Mounted Skeleton
+preparation|Mammals|Mounted skin
+preparation|Mammals|Other
+preparation|Mammals|Partial Skeleton
+preparation|Mammals|Partial Skin
+preparation|Mammals|Partial Skull
+preparation|Mammals|Petrotympanic
+preparation|Mammals|Photograph
+preparation|Mammals|Postcranial skeleton
+preparation|Mammals|Remainder in Fluid
+preparation|Mammals|Rostrum
+preparation|Mammals|Sclera
+preparation|Mammals|Skeletal Elements
+preparation|Mammals|Skeleton
+preparation|Mammals|Skin
+preparation|Mammals|Skull
+preparation|Mammals|Tissue
+preparation|Mammals|Tooth or Tusk
+preparation|Mammals|Tympanic
+preparation|Mammals|Unknown
+preparation|Entomology|DNAgard
+preparation|Entomology|Envelope
+preparation|Entomology|Ethanol
+preparation|Entomology|Ethanol drained
+preparation|Entomology|Fossil in Amber
+preparation|Entomology|Glycerine
+preparation|Entomology|Papered
+preparation|Entomology|Pinned
+preparation|Entomology|Riker Mount
+preparation|Entomology|RNAlater
+preparation|Entomology|Slide
+preparation|Entomology|Slide section
+preparation|Entomology|Vial
 yesNo||Yes
 yesNo||No
 elevDepthModifier||ca.
@@ -155,14 +155,14 @@ identificationQualifier|Entomology|sp. nov.
 identificationQualifier|Entomology|subgroup
 identificationQualifier|Entomology|uncertain
 identificationQualifier|Entomology|vel aff.
-collectionCode|Botany|Botany
-collectionCode|Entomology|Entomology
-collectionCode|Invertebrate Zoology|Invertebrate Zoology
-collectionCode|Amphibians & Reptiles|Amphibians & Reptiles
-collectionCode|Birds|Birds
-collectionCode|Fishes|Fishes
-collectionCode|Mammals|Mammals
-collectionCode|Mineral Sciences|Mineral Sciences
+Collection Department|Botany|Botany
+Collection Department|Entomology|Entomology
+Collection Department|Invertebrate Zoology|Invertebrate Zoology
+Collection Department|Amphibians & Reptiles|Amphibians & Reptiles
+Collection Department|Birds|Birds
+Collection Department|Fishes|Fishes
+Collection Department|Mammals|Mammals
+Collection Department|Mineral Sciences|Mineral Sciences
 institutionCode|Botany|US
 institutionCode|Entomology|USNM
 continent||Africa
@@ -234,13 +234,13 @@ habit|Botany|Tree
 habit|Botany|Treelet
 hybridRank|Entomology|Genus
 hybridRank|Entomology|Species
-Taxonomy Other Rank||aberration
-Taxonomy Other Rank||forma
-Taxonomy Other Rank||morpha
-Taxonomy Other Rank||race
-Taxonomy Other Rank||subforma
-Taxonomy Other Rank||subvariety
-Taxonomy Other Rank||variety
+taxonRank||aberration
+taxonRank||forma
+taxonRank||morpha
+taxonRank||race
+taxonRank||subforma
+taxonRank||subvariety
+taxonRank||variety
 sex|Entomology|Male
 sex|Entomology|Female
 sex|Entomology|Unknown
@@ -251,29 +251,29 @@ geodeticDatum||WGS84
 sampleQuality||High
 sampleQuality||Medium
 sampleQuality||Low
-Object Type|Botany|Bulky Specimen
-Object Type|Botany|Genetic Sample
-Object Type|Botany|Liquid Preserved
-Object Type|Amphibians & Reptiles|Lot
-Object Type|Botany|Packet
-Object Type|Botany|Seed
-Object Type|Amphibians & Reptiles|Specimen
-Object Type|Botany|Rhizome
-Object Type|Botany|Unmounted material
-Object Type|Botany|Wood specimen
-Object Type|Amphibians & Reptiles|Genetic Sample
-Object Type|Invertebrate Zoology|Genetic Sample
-Object Type|Birds|Genetic Sample
-Object Type|Fishes|Genetic Sample
-Object Type|Mammals|Genetic Sample
-Object Type|Entomology|Genetic Sample
-Object Type|Mineral Sciences|Genetic Sample
-Object Type|Invertebrate Zoology|Specimen/Lot
-Object Type|Birds|Specimen/Lot
-Object Type|Fishes|Specimen/Lot
-Object Type|Mammals|Specimen/Lot
-Object Type|Entomology|Specimen/Lot
-Object Type|Mineral Sciences|Specimen/Lot
+Kind of Object|Botany|Bulky Specimen
+Kind of Object|Botany|Genetic Sample
+Kind of Object|Botany|Liquid Preserved
+Kind of Object|Amphibians & Reptiles|Lot
+Kind of Object|Botany|Packet
+Kind of Object|Botany|Seed
+Kind of Object|Amphibians & Reptiles|Specimen
+Kind of Object|Botany|Rhizome
+Kind of Object|Botany|Unmounted material
+Kind of Object|Botany|Wood specimen
+Kind of Object|Amphibians & Reptiles|Genetic Sample
+Kind of Object|Invertebrate Zoology|Genetic Sample
+Kind of Object|Birds|Genetic Sample
+Kind of Object|Fishes|Genetic Sample
+Kind of Object|Mammals|Genetic Sample
+Kind of Object|Entomology|Genetic Sample
+Kind of Object|Mineral Sciences|Genetic Sample
+Kind of Object|Invertebrate Zoology|Specimen/Lot
+Kind of Object|Birds|Specimen/Lot
+Kind of Object|Fishes|Specimen/Lot
+Kind of Object|Mammals|Specimen/Lot
+Kind of Object|Entomology|Specimen/Lot
+Kind of Object|Mineral Sciences|Specimen/Lot
 hybridRank|Amphibians & Reptiles|Genus
 hybridRank|Amphibians & Reptiles|Species
 hybridRank|Birds|Genus
@@ -367,7 +367,7 @@ weightUnit||lb
 weightUnit||mg
 weightUnit||oz
 weightUnit||ton
-Zoology Preparation|Mineral Sciences|
+preparation|Mineral Sciences|
 establishmentMeans|Invertebrate Zoology|
 identificationQualifier|Mineral Sciences|
 Biogeography Region|Amphibians & Reptiles|
@@ -590,10 +590,7 @@ Biogeography Region|Mammals|
 Biogeography Region|Mineral Sciences|
 collector|Amphibians & Reptiles|
 collector|Birds|
-collector|Botany|Bell, D. A.
-collector|Botany|Brooks, B. L.
-collector|Botany|Knight, J.
-collector|Botany|Rankin, K.
+collector|Botany|
 collector|Entomology|Adamski, D.
 collector|Entomology|Beati, L.
 collector|Entomology|Brady, S. G.
@@ -661,7 +658,6 @@ country|Amphibians & Reptiles|Angola
 country|Amphibians & Reptiles|Anguilla
 country|Amphibians & Reptiles|Antigua and Barbuda
 country|Amphibians & Reptiles|Argentina
-country|Amphibians & Reptiles|Argentina - Chile
 country|Amphibians & Reptiles|Armenia
 country|Amphibians & Reptiles|Ascension Island
 country|Amphibians & Reptiles|Asia Minor
@@ -679,13 +675,8 @@ country|Amphibians & Reptiles|Bermuda
 country|Amphibians & Reptiles|Bhutan
 country|Amphibians & Reptiles|Bolivia
 country|Amphibians & Reptiles|Borneo
-country|Amphibians & Reptiles|Borneo - Indonesia
-country|Amphibians & Reptiles|Borneo - Indonesia - Malaysia
-country|Amphibians & Reptiles|Borneo - Malaysia
 country|Amphibians & Reptiles|Botswana
 country|Amphibians & Reptiles|Brazil
-country|Amphibians & Reptiles|Brazil - Colombia
-country|Amphibians & Reptiles|Brazil - Venezuela
 country|Amphibians & Reptiles|Brunei
 country|Amphibians & Reptiles|Bulgaria
 country|Amphibians & Reptiles|Burma
@@ -695,7 +686,6 @@ country|Amphibians & Reptiles|Caicos Islands
 country|Amphibians & Reptiles|Cambodia
 country|Amphibians & Reptiles|Cameroon
 country|Amphibians & Reptiles|Canada
-country|Amphibians & Reptiles|Canada - United States
 country|Amphibians & Reptiles|Canary Islands
 country|Amphibians & Reptiles|Cape Verde Islands
 country|Amphibians & Reptiles|Cayman Islands
@@ -704,7 +694,6 @@ country|Amphibians & Reptiles|Chad
 country|Amphibians & Reptiles|Chagos Archipelago
 country|Amphibians & Reptiles|Chile
 country|Amphibians & Reptiles|China
-country|Amphibians & Reptiles|China - Mongolia
 country|Amphibians & Reptiles|Colombia
 country|Amphibians & Reptiles|Comoro Islands
 country|Amphibians & Reptiles|Congo
@@ -725,7 +714,6 @@ country|Amphibians & Reptiles|El Salvador
 country|Amphibians & Reptiles|England
 country|Amphibians & Reptiles|Eritrea
 country|Amphibians & Reptiles|Ethiopia
-country|Amphibians & Reptiles|Ethiopia - Kenya
 country|Amphibians & Reptiles|Europe
 country|Amphibians & Reptiles|Federation of St. Kitts and Nevis
 country|Amphibians & Reptiles|France
@@ -733,7 +721,6 @@ country|Amphibians & Reptiles|French Guiana
 country|Amphibians & Reptiles|Gabon
 country|Amphibians & Reptiles|Galapagos Islands
 country|Amphibians & Reptiles|Gambia
-country|Amphibians & Reptiles|Gambia - Senegal
 country|Amphibians & Reptiles|Georgia
 country|Amphibians & Reptiles|Germany
 country|Amphibians & Reptiles|Ghana
@@ -745,7 +732,6 @@ country|Amphibians & Reptiles|Guadeloupe
 country|Amphibians & Reptiles|Guatemala
 country|Amphibians & Reptiles|Guinea
 country|Amphibians & Reptiles|Guyana
-country|Amphibians & Reptiles|Guyana - Venezuela
 country|Amphibians & Reptiles|Haiti
 country|Amphibians & Reptiles|Hispaniola
 country|Amphibians & Reptiles|Honduras
@@ -784,7 +770,6 @@ country|Amphibians & Reptiles|Mascarene Islands
 country|Amphibians & Reptiles|Mauritania
 country|Amphibians & Reptiles|Mauritius
 country|Amphibians & Reptiles|Mexico
-country|Amphibians & Reptiles|Mexico - United States
 country|Amphibians & Reptiles|Micronesia, Federated States of
 country|Amphibians & Reptiles|Montserrat
 country|Amphibians & Reptiles|Morocco
@@ -797,7 +782,6 @@ country|Amphibians & Reptiles|Nepal
 country|Amphibians & Reptiles|Netherlands
 country|Amphibians & Reptiles|Netherlands Antilles
 country|Amphibians & Reptiles|New Guinea
-country|Amphibians & Reptiles|New Guinea - Indonesia
 country|Amphibians & Reptiles|New Zealand
 country|Amphibians & Reptiles|Nicaragua
 country|Amphibians & Reptiles|Nicobar Islands
@@ -840,7 +824,6 @@ country|Amphibians & Reptiles|Southern Asia
 country|Amphibians & Reptiles|Spain
 country|Amphibians & Reptiles|Sri Lanka
 country|Amphibians & Reptiles|St. Barthelemy
-country|Amphibians & Reptiles|St. Barthelemy OR St. Martin
 country|Amphibians & Reptiles|St. Christopher
 country|Amphibians & Reptiles|St. Eustatius
 country|Amphibians & Reptiles|St. Helena Island
@@ -856,7 +839,6 @@ country|Amphibians & Reptiles|Syria
 country|Amphibians & Reptiles|Taiwan
 country|Amphibians & Reptiles|Tanzania
 country|Amphibians & Reptiles|Thailand
-country|Amphibians & Reptiles|Timor-Leste
 country|Amphibians & Reptiles|Tobago
 country|Amphibians & Reptiles|Togo
 country|Amphibians & Reptiles|Trinidad
@@ -875,10 +857,8 @@ country|Amphibians & Reptiles|West Indies
 country|Amphibians & Reptiles|Yugoslavia
 country|Amphibians & Reptiles|Zaire
 country|Amphibians & Reptiles|Zambia
-country|Amphibians & Reptiles|Zambia - Zimbabwe
 country|Amphibians & Reptiles|Zimbabwe
 country|Birds|Afghanistan
-country|Birds|Afghanistan ?
 country|Birds|Africa
 country|Birds|Albania
 country|Birds|Algeria
@@ -900,7 +880,6 @@ country|Birds|Australia
 country|Birds|Austria
 country|Birds|Aves Island
 country|Birds|Azerbaijan
-country|Birds|Azerbaijan ?
 country|Birds|Azores
 country|Birds|Bahamas
 country|Birds|Bahrain
@@ -913,14 +892,12 @@ country|Birds|Bengal
 country|Birds|Bermuda
 country|Birds|Bhutan
 country|Birds|Bolivia
-country|Birds|Bolivia / Peru
 country|Birds|Bonin Islands
 country|Birds|Borneo
 country|Birds|Bosnia and Herzegovina
 country|Birds|Botswana
 country|Birds|Brazil
 country|Birds|British Virgin Islands
-country|Birds|Brunei ?
 country|Birds|Bulgaria
 country|Birds|Burkina Faso
 country|Birds|Burundi
@@ -935,16 +912,11 @@ country|Birds|Central America
 country|Birds|Chad
 country|Birds|Chagos Archipelago
 country|Birds|Chile
-country|Birds|Chile ?
 country|Birds|China
-country|Birds|Christmas Island (Indian Ocean)
 country|Birds|Clipperton Island
-country|Birds|Cocos Island (Costa Rica)
 country|Birds|Colombia
 country|Birds|Comoro Islands
 country|Birds|Congo
-country|Birds|Congo / Congo, Dem. Rep. of the
-country|Birds|Congo ?
 country|Birds|Congo, Dem. Rep. of the
 country|Birds|Cook Islands
 country|Birds|Costa Rica
@@ -959,7 +931,6 @@ country|Birds|Dominica
 country|Birds|Dominican Republic
 country|Birds|East Africa
 country|Birds|East Indies
-country|Birds|East Indies ?
 country|Birds|Easter Island
 country|Birds|Ecuador
 country|Birds|Egypt
@@ -967,7 +938,6 @@ country|Birds|El Salvador
 country|Birds|Equatorial Guinea
 country|Birds|Eritrea
 country|Birds|Ethiopia
-country|Birds|Ethiopia ?
 country|Birds|Europe
 country|Birds|Falkland Islands
 country|Birds|Faroe Islands
@@ -977,7 +947,6 @@ country|Birds|Finland
 country|Birds|France
 country|Birds|French Equatorial Africa
 country|Birds|French Guiana
-country|Birds|French Guiana ?
 country|Birds|French Indochina
 country|Birds|French Polynesia
 country|Birds|French West Africa
@@ -986,7 +955,6 @@ country|Birds|Galapagos Islands
 country|Birds|Gambia
 country|Birds|Georgia
 country|Birds|Germany
-country|Birds|Germany ?
 country|Birds|Ghana
 country|Birds|Gilbert Islands
 country|Birds|Glorioso Islands
@@ -996,25 +964,20 @@ country|Birds|Grenada
 country|Birds|Guadeloupe
 country|Birds|Guatemala
 country|Birds|Guinea
-country|Birds|Guinea-Bissau
 country|Birds|Guyana
 country|Birds|Haiti
 country|Birds|Heard and Mcdonald Islands
 country|Birds|Honduras
-country|Birds|Honduras / Nicaragua
 country|Birds|Howland Island
 country|Birds|Hungary
 country|Birds|Iceland
 country|Birds|India
-country|Birds|India ?
 country|Birds|Indonesia
-country|Birds|Indonesia ?
 country|Birds|Iran
 country|Birds|Iraq
 country|Birds|Ireland
 country|Birds|Israel
 country|Birds|Italy
-country|Birds|Italy ?
 country|Birds|Izu Islands
 country|Birds|Jamaica
 country|Birds|Jan Mayen
@@ -1024,22 +987,17 @@ country|Birds|Jordan
 country|Birds|Juan Fernandez Islands
 country|Birds|Kazakhstan
 country|Birds|Kenya
-country|Birds|Kenya / Uganda
 country|Birds|Kerguelen Islands
 country|Birds|Kermadec Islands
 country|Birds|Korea
-country|Birds|Kuwait ?
 country|Birds|Kyrgyzstan
-country|Birds|Kyrgyzstan ?
 country|Birds|Laos
 country|Birds|Lapland
-country|Birds|Latvia ?
 country|Birds|Lebanon
 country|Birds|Liberia
 country|Birds|Libya
 country|Birds|Liechtenstein
 country|Birds|Line Islands
-country|Birds|Locality Unknown
 country|Birds|Lord Howe Island
 country|Birds|Luxembourg
 country|Birds|Macedonia
@@ -1049,17 +1007,14 @@ country|Birds|Madeira Islands
 country|Birds|Main Hawaiian Islands
 country|Birds|Malawi
 country|Birds|Malaysia
-country|Birds|Malaysia ?
 country|Birds|Maldives
 country|Birds|Malta
 country|Birds|Mariana Islands
 country|Birds|Marquesas Islands
 country|Birds|Marshall Islands
 country|Birds|Martinique
-country|Birds|Martinique / St. Lucia
 country|Birds|Mauritius
 country|Birds|Mexico
-country|Birds|Mexico ?
 country|Birds|Moldova
 country|Birds|Mongolia
 country|Birds|Montenegro
@@ -1083,7 +1038,6 @@ country|Birds|Norfolk Island
 country|Birds|North America
 country|Birds|Northern Mariana Islands
 country|Birds|Northwestern Hawaiian Islands
-country|Birds|Northwestern Hawaiian Islands ?
 country|Birds|Norway
 country|Birds|Oman
 country|Birds|Pakistan
@@ -1097,7 +1051,6 @@ country|Birds|Philippines
 country|Birds|Phoenix Islands
 country|Birds|Pitcairn Islands
 country|Birds|Poland
-country|Birds|Poland ?
 country|Birds|Portugal
 country|Birds|Puerto Rico
 country|Birds|Reunion
@@ -1105,9 +1058,7 @@ country|Birds|Revillagigedo Islands
 country|Birds|Rhodesia
 country|Birds|Romania
 country|Birds|Russia
-country|Birds|Russia ?
 country|Birds|Ryukyu Islands
-country|Birds|Ryukyu Islands ?
 country|Birds|Saba
 country|Birds|Saint Helena
 country|Birds|Samoa Islands
@@ -1117,20 +1068,16 @@ country|Birds|San Felix Island
 country|Birds|Sao Tome and Principe
 country|Birds|Saudi Arabia
 country|Birds|Senegal
-country|Birds|Senegal ?
 country|Birds|Serbia and Montenegro
 country|Birds|Seychelles
 country|Birds|Sierra Leone
 country|Birds|Singapore
 country|Birds|Slovakia
-country|Birds|Slovakia ?
-country|Birds|Slovenia ?
 country|Birds|Society Islands
 country|Birds|Socotra
 country|Birds|Solomon Islands
 country|Birds|Somalia
 country|Birds|South Africa
-country|Birds|South Africa ?
 country|Birds|South America
 country|Birds|South Georgia Island
 country|Birds|South Orkney Islands
@@ -1141,10 +1088,8 @@ country|Birds|St. Barthelemy
 country|Birds|St. Eustatius
 country|Birds|St. Helena
 country|Birds|St. Kitts and Nevis
-country|Birds|St. Kitts and Nevis ?
 country|Birds|St. Lucia
 country|Birds|St. Martin
-country|Birds|St. Paul Island (Indian Ocean)
 country|Birds|St. Peter and St. Paul Rocks
 country|Birds|St. Pierre and Miquelon
 country|Birds|St. Vincent and the Grenadines
@@ -1159,7 +1104,6 @@ country|Birds|Syria
 country|Birds|Taiwan
 country|Birds|Tajikistan
 country|Birds|Tanzania
-country|Birds|Tanzania/ Kenya
 country|Birds|Thailand
 country|Birds|Togo
 country|Birds|Tokelau
@@ -1172,26 +1116,19 @@ country|Birds|Tunisia
 country|Birds|Turkestan
 country|Birds|Turkey
 country|Birds|Turkmenistan
-country|Birds|Turkmenistan ?
 country|Birds|Turks and Caicos Islands
-country|Birds|Turks and Caicos Islands ?
 country|Birds|Tuvalu
 country|Birds|Uganda
 country|Birds|Ukraine
 country|Birds|United Arab Emirates
 country|Birds|United Kingdom
-country|Birds|United Kingdom ?
 country|Birds|United States
-country|Birds|United States / Canada
-country|Birds|United States / Mexico
 country|Birds|Uruguay
 country|Birds|USSR
 country|Birds|Uzbekistan
-country|Birds|Uzbekistan ?
 country|Birds|Vanuatu
 country|Birds|Venezuela
 country|Birds|Vietnam
-country|Birds|Virgin Islands (U.S.)
 country|Birds|Volcano Islands
 country|Birds|Wake Island
 country|Birds|West Africa
@@ -1200,7 +1137,6 @@ country|Birds|Western Samoa
 country|Birds|Yemen
 country|Birds|Yugoslavia
 country|Birds|Zambia
-country|Birds|Zambia / Zimbabwe
 country|Birds|Zimbabwe
 country|Botany|"America Australis"
 country|Botany|"America Boreal"
@@ -1223,7 +1159,6 @@ country|Botany|"Old World"
 country|Botany|"Pacific Islands"
 country|Botany|"Rhodesia"
 country|Botany|"Scandinavia"
-country|Botany|"South Africa"/ "East Indies"
 country|Botany|"South America"
 country|Botany|"Transcaucasia"
 country|Botany|"Tropical America"
@@ -1235,92 +1170,44 @@ country|Botany|Albania
 country|Botany|Aldabra Islands
 country|Botany|Algeria
 country|Botany|American Samoa
-country|Botany|American Samoa / Western Samoa
 country|Botany|Andaman
 country|Botany|Andaman and Nicobar Islands
 country|Botany|Angola
-country|Botany|Angola / Congo / Congo, Democratic Rep. of  [Zaire]
-country|Botany|Angola / Congo / Zaire
-country|Botany|Angola / Congo, Democratic Rep. of  [Zaire]
-country|Botany|Angola / Zaire
 country|Botany|Anguilla
 country|Botany|Antarctica
 country|Botany|Antigua
-country|Botany|Antigua / Costa Rica
 country|Botany|Antigua and Barbuda
-country|Botany|Antigua-Barbuda
 country|Botany|Antilles
 country|Botany|Argenitina
 country|Botany|Argentina
-country|Botany|Argentina / Bolivia
-country|Botany|Argentina / Brazil
-country|Botany|Argentina / Brazil / Paraguay
-country|Botany|Argentina / Chile
-country|Botany|Argentina / Paraguay
-country|Botany|Argentina / Uruguay
-country|Botany|Argentina/Chile
 country|Botany|Armenia
-country|Botany|Armenia / Azerbaijan
-country|Botany|Armenia / Azerbaijan / Georgia / Russian Federation
 country|Botany|Armeniya
-country|Botany|Armeniya / Azerbaijan
-country|Botany|Armeniya / Azerbaijan / Georgia / Russian Federation
 country|Botany|Aruba
 country|Botany|Astove Island
 country|Botany|Auckland
 country|Botany|Australia
-country|Botany|Australia / Indonesia
 country|Botany|Austria
-country|Botany|Austria / Germany
-country|Botany|Austria / Germany / Italy
-country|Botany|Austria / Hungary
-country|Botany|Austria / Italy
-country|Botany|Austria/Germany
-country|Botany|Austria/Spain
 country|Botany|Azerbaijan
-country|Botany|Azerbaijan / Iran / Russian Federation
 country|Botany|Azores
 country|Botany|Bahamas
 country|Botany|Bahrain
 country|Botany|Bangladesh
-country|Botany|Bangladesh / India
-country|Botany|Bangladesh / Pakistan
 country|Botany|Barbados
 country|Botany|Belarus
 country|Botany|Belau
-country|Botany|Belau [Palau]
-country|Botany|Belau [Palau] Islands
 country|Botany|Belgium
-country|Botany|Belgium / France
-country|Botany|Belgium / Germany
 country|Botany|Belize
-country|Botany|Belize (as British Honduras)
-country|Botany|Belize [British Honduras]
 country|Botany|Benin
-country|Botany|Benin / Nigeria
 country|Botany|Bermuda
 country|Botany|Bhutan
 country|Botany|Bolivia
-country|Botany|Bolivia / Paraguay
-country|Botany|Bolivia / Peru
 country|Botany|Borneo
-country|Botany|Borneo / Philippines
 country|Botany|Bosnia and Herzegovina
 country|Botany|Botswana
 country|Botany|Boyaca
 country|Botany|Brazil
-country|Botany|Brazil / Colombia
-country|Botany|Brazil / French Guiana / Suriname
-country|Botany|Brazil / Guyana
-country|Botany|Brazil / Paraguay
-country|Botany|Brazil / Peru
-country|Botany|Brazil / Uruguay
-country|Botany|Brazil / Venezuela
-country|Botany|Brazil?
 country|Botany|British
 country|Botany|British Antarctic Territory
-country|Botany|British Antarctic Territory / Argentina
-country|Botany|British Antarctic Territory / Argentina / Chile
 country|Botany|British Atlantic Islands
 country|Botany|British Crown Dependencies
 country|Botany|British Guiana
@@ -1328,32 +1215,22 @@ country|Botany|British Honduras
 country|Botany|British Indian Ocean Territory
 country|Botany|British Isles
 country|Botany|British Overseas Territory
-country|Botany|British Unknown (N. Amer.)
 country|Botany|British Virgin Islands
 country|Botany|British West Indies
 country|Botany|Brtitish Guiana
 country|Botany|Brunei
-country|Botany|Brunei / Indonesia / Malaysia
 country|Botany|Bruneo
 country|Botany|Bulgaria
-country|Botany|Bulgaria / Yugoslavia
 country|Botany|Burkina
 country|Botany|Burkina Faso
 country|Botany|Burma
 country|Botany|Burundi
-country|Botany|Burundi/Rwanda/Tanzania
 country|Botany|Cambodia
-country|Botany|Cambodia / Laos
-country|Botany|Cambodia / Vietnam
 country|Botany|Cameroon
-country|Botany|Cameroon / Nigeria
 country|Botany|Camerooon
 country|Botany|Camoro Islands
 country|Botany|Canada
-country|Botany|Canada / Greenland
-country|Botany|Canada / United States
 country|Botany|Canary Islands
-country|Botany|Canary Islands / Madiera
 country|Botany|Cape Verde
 country|Botany|Cape Verde Islands
 country|Botany|Caribbean
@@ -1363,92 +1240,44 @@ country|Botany|Carribbean Archipelago
 country|Botany|Carribean
 country|Botany|Cayman Islands
 country|Botany|Central African Republic
-country|Botany|Central African Republic / Congo
 country|Botany|Central Am. Pac. Islands
 country|Botany|Central American Pacific Islands
 country|Botany|Ceylon
 country|Botany|Chad
 country|Botany|Chagos Archipelago
 country|Botany|Chile
-country|Botany|Chile / Peru
 country|Botany|China
-country|Botany|China (Taiwan)
-country|Botany|China / India
-country|Botany|China / India / Nepal / Burm
-country|Botany|China / India / Nepal / Myanmar
-country|Botany|China / Japan
-country|Botany|China / Korea / Russia
-country|Botany|China / Myanmar
-country|Botany|China / Russia
-country|Botany|China / Russian Federation
-country|Botany|China / Taiwan
-country|Botany|China / Thailand
-country|Botany|China / Thailand / Vietnam
-country|Botany|China / Tibet
-country|Botany|China / Vietnam
-country|Botany|China / Vietnam / Myanmar
 country|Botany|Clipperton Island
-country|Botany|Clipperton Island  (France)
 country|Botany|Colombia
-country|Botany|Colombia / Ecuador
-country|Botany|Colombia / Ecuador / Peru
-country|Botany|Colombia / Panama
-country|Botany|Colombia / Peru
-country|Botany|Colombia / Trinidad and Tobago
-country|Botany|Colombia / Venezuela
-country|Botany|Colombia ?
 country|Botany|Columbia
 country|Botany|Comoro Islands
 country|Botany|Comoros
 country|Botany|Congo
-country|Botany|Congo / Congo, Democratic Rep. of  [Zaire]
-country|Botany|Congo / Rwanda
-country|Botany|Congo / Zaire
 country|Botany|Congo Belge
-country|Botany|Congo, Democratic Rep. of  [Zaire]
 country|Botany|Congo, Democratic Republic of the
 country|Botany|Congo, Republic of
 country|Botany|Cook Islands
 country|Botany|Corse
 country|Botany|Corsica
 country|Botany|Costa Rica
-country|Botany|Costa Rica / Antigua
-country|Botany|Costa Rica / Panama
-country|Botany|Costa Rica / Peru
-country|Botany|Costa Rica or Panama
-country|Botany|Costa Rica/Panama
 country|Botany|Costa Ricato Amazon
-country|Botany|Country unknown
 country|Botany|Croatia
-country|Botany|Croatia / Bosnia and Herzegovina [Yugoslavia]
-country|Botany|Croatia / Bosnia and Herzegovinia [Yugoslavia]
-country|Botany|Croatia / Montenegro
-country|Botany|Croatia [Yugoslavia]
 country|Botany|Cuba
-country|Botany|Cuba / Mexico
 country|Botany|Curacao
 country|Botany|Curaçao
 country|Botany|Cyprus
 country|Botany|Czech Republic
-country|Botany|Czech Republic / Germany
-country|Botany|Czech Republic / Slovakia
 country|Botany|Czechoslovakia
-country|Botany|Czechoslovakia / Poland
 country|Botany|Democratic Republic of the Congo
 country|Botany|Denmark
-country|Botany|Denmark / Norway / Sweden
-country|Botany|Denmark / Sweden
 country|Botany|Djibouti
 country|Botany|Dominica
 country|Botany|Dominican Rep.
 country|Botany|Dominican Republic
-country|Botany|Dominican Republic / Haiti
 country|Botany|East Timor
 country|Botany|Easter Island
 country|Botany|Ecuador
-country|Botany|Ecuador / Peru
 country|Botany|Egypt
-country|Botany|Egypt / Sudan
 country|Botany|El Salvador
 country|Botany|England
 country|Botany|Equatceorial Guinea
@@ -1457,39 +1286,20 @@ country|Botany|Equatorial Guineal
 country|Botany|Eritrea
 country|Botany|Estonia
 country|Botany|Ethiopia
-country|Botany|Ethiopia / Sudan
-country|Botany|ex hort.
-country|Botany|ex hort., Brazil
-country|Botany|ex hort., China
-country|Botany|ex hort., Costa Rica
-country|Botany|ex hort., Great Britain
-country|Botany|ex hort., Panama
-country|Botany|ex hort., Scotland
-country|Botany|ex hort., U.S.A.
-country|Botany|ex hort., United States
 country|Botany|Faeroe Islands
 country|Botany|Falkland Islands
 country|Botany|Falklands
 country|Botany|Fiji
-country|Botany|Fiji / French Polynesia
-country|Botany|Fiji / Samoa
-country|Botany|Fiji / Tonga
 country|Botany|Finland
-country|Botany|Finland / Sweden
 country|Botany|Flores
 country|Botany|Florida
 country|Botany|Formosa
 country|Botany|France
-country|Botany|France / Germany
-country|Botany|France / Italy
-country|Botany|France / Italy/Sweden
-country|Botany|France / Spain
 country|Botany|France and Germany
 country|Botany|French
 country|Botany|French Antilles
 country|Botany|French Equatorial Africa
 country|Botany|French Guiana
-country|Botany|French Guiana / Guyana
 country|Botany|French Overseas Territory
 country|Botany|French Polynesia
 country|Botany|French Southern and Antarctic Lands
@@ -1497,109 +1307,53 @@ country|Botany|Gabon
 country|Botany|Gambia
 country|Botany|Gapalagos Islands
 country|Botany|Georgia
-country|Botany|Georgia / Russia
-country|Botany|Georgia / Russian Federation
-country|Botany|Georgia [Gruziya]
 country|Botany|Germany
-country|Botany|Germany / Poland
-country|Botany|Germany or Norway
-country|Botany|Germany/Austria
-country|Botany|Germany/Czech Republic
 country|Botany|Ghana
 country|Botany|Gibraltar
 country|Botany|Great Britain
-country|Botany|Great Britain / Spain
-country|Botany|Great Britain or Italy
 country|Botany|Great Britian
 country|Botany|Greece
-country|Botany|Greece / Italy
-country|Botany|Greece / Turkey
 country|Botany|Greenland
 country|Botany|Grenada
 country|Botany|Grenadines
 country|Botany|Greneda
 country|Botany|Gruziya
 country|Botany|Guadeloupe
-country|Botany|Guadeloupe / Martinique
 country|Botany|Guam
 country|Botany|Guatemala
-country|Botany|Guatemala / Honduras
-country|Botany|Guatemala / Mexico
 country|Botany|Guiana
 country|Botany|Guinea
-country|Botany|Guinea-Bissau
-country|Botany|Guinea-Conakry
 country|Botany|Guyana
-country|Botany|Guyana (as British Guiana)
-country|Botany|Guyana / Suriname
-country|Botany|Guyana / Venezuela
-country|Botany|Guyana [British Guiana]
 country|Botany|Guyane
 country|Botany|Haiti
-country|Botany|Haiti / Dominican Republic
 country|Botany|Hawaiian Islands
 country|Botany|Herzegovinia
 country|Botany|Himalaya and China
 country|Botany|Hispaniola
 country|Botany|Honduras
-country|Botany|Honduras ?
 country|Botany|Hong Kong
 country|Botany|Hungary
-country|Botany|Hungary / Romania
 country|Botany|Iceland
 country|Botany|Illegible
-country|Botany|Illegible (Russia?)
-country|Botany|Illegible (Russian Federation?)
 country|Botany|India
-country|Botany|India / China
-country|Botany|India / China / South Asia
-country|Botany|India / India
-country|Botany|India / Myanmar
-country|Botany|India / Nepal
-country|Botany|India / Nepal / Pakistan
-country|Botany|India / Pakistan
-country|Botany|India / Sikkim
-country|Botany|India / Singapore
-country|Botany|India or Nepal
 country|Botany|Indochina
 country|Botany|Indonesia
-country|Botany|Indonesia / Malaysia
-country|Botany|Indonesia / Papua New Guinea
 country|Botany|Iran
-country|Botany|Iran / Pakistan
-country|Botany|Iran / Turkey
 country|Botany|Iraq
-country|Botany|Iraq / Saudi Arabia
-country|Botany|Iraq/Turkey
-country|Botany|Iraq/TurkeyValle Teng.
 country|Botany|Ireland
 country|Botany|Israel
-country|Botany|Israel / Jordan
-country|Botany|Israel [Palestine]
 country|Botany|Italy
-country|Botany|Italy / Switzerland
-country|Botany|Italy ?
 country|Botany|Ivory Coast
-country|Botany|Ivory Coast / South Africa
 country|Botany|Jamaica
 country|Botany|Japan
-country|Botany|Japan / Korea
-country|Botany|Japan / South Korea
 country|Botany|Java
 country|Botany|Jawa
 country|Botany|Johnston Island
 country|Botany|Jordan
-country|Botany|Jordan [Palestine]
 country|Botany|Kashmir
 country|Botany|Kazakhstan
-country|Botany|Kazakhstan / Kyrgyzstan
-country|Botany|Kazakhstan / Russia
-country|Botany|Kazakhstan / Russian Federation
-country|Botany|Kazakhstan / Ukraine
 country|Botany|Kedah
 country|Botany|Kenya
-country|Botany|Kenya / Tanzania
-country|Botany|Kenya / Tanzania / Uganda
 country|Botany|Kerguelen
 country|Botany|Kerguelen Islands
 country|Botany|Kirgizistan
@@ -1609,10 +1363,8 @@ country|Botany|Korea
 country|Botany|Kurdistan
 country|Botany|Kuwait
 country|Botany|Kyrgyzstan
-country|Botany|Kyrgyzstan / Tajikistan
 country|Botany|La Désirade
 country|Botany|Laos
-country|Botany|Laos / Vietnam
 country|Botany|Latvia
 country|Botany|Lebanon
 country|Botany|Lesotho
@@ -1626,30 +1378,22 @@ country|Botany|Luxembourg
 country|Botany|Luzon
 country|Botany|Macao
 country|Botany|Macedonia
-country|Botany|Macedonia [Yugoslavia]
 country|Botany|Madagascar
 country|Botany|Madeira
 country|Botany|Madeira Islands
 country|Botany|Malasia
 country|Botany|Malawi
-country|Botany|Malawi / Mozambique
 country|Botany|Malaya
-country|Botany|Malaya?
 country|Botany|Malayasia
 country|Botany|Malaysia
-country|Botany|Malaysia / Myanmar
-country|Botany|Malaysia / Philippines
-country|Botany|Malaysia / Thailand
 country|Botany|Malaysiasia
 country|Botany|Maldive Islands
 country|Botany|Maldives
 country|Botany|Mali
-country|Botany|Mali / Senegal
 country|Botany|Malta
 country|Botany|Marianas
 country|Botany|Marianas Islands
 country|Botany|Marie Galante
-country|Botany|Marie-Galante
 country|Botany|Marquesas Islands
 country|Botany|Marshall Islands
 country|Botany|Martinique
@@ -1658,9 +1402,6 @@ country|Botany|Mauritius
 country|Botany|Mayenezuela
 country|Botany|Mexico
 country|Botany|México
-country|Botany|Mexico / Guatemala
-country|Botany|Mexico / United States
-country|Botany|Mexico/Central America
 country|Botany|Micronesa, Federated States of
 country|Botany|Micronesia
 country|Botany|Micronesia, Federated States
@@ -1671,19 +1412,13 @@ country|Botany|Monaco
 country|Botany|Mongolia
 country|Botany|Monserrat
 country|Botany|Montenegro
-country|Botany|Montenegro [Yugoslavia]
 country|Botany|Montserrat
 country|Botany|Morocco
 country|Botany|Morroco
 country|Botany|Moule
 country|Botany|Mozambique
-country|Botany|Mozambique / South Africa
-country|Botany|Mozambique / Zambia
 country|Botany|Myanmar
-country|Botany|Myanmar / India
-country|Botany|Myanmar [Burma]
 country|Botany|Nairobi
-country|Botany|Nairobi/Kenya
 country|Botany|Namibia
 country|Botany|Natal
 country|Botany|Nauru
@@ -1706,14 +1441,11 @@ country|Botany|Nigeria
 country|Botany|Niue
 country|Botany|North America
 country|Botany|North Korea
-country|Botany|North Korea / South Korea
-country|Botany|North North Korea / South Korea
 country|Botany|North Vietnam
 country|Botany|Northern Ireland
 country|Botany|Northern Mariana Islands
 country|Botany|Northern Marianas Islands
 country|Botany|Norway
-country|Botany|Norway / Sweden
 country|Botany|Nyassaland
 country|Botany|Okinawa
 country|Botany|Oman
@@ -1721,13 +1453,9 @@ country|Botany|Pakistan
 country|Botany|Palau
 country|Botany|Palestine
 country|Botany|Panama
-country|Botany|Panama / United States
 country|Botany|Papua New Guinea
 country|Botany|Paraguay
-country|Botany|Paraguay / Uruguay
 country|Botany|Peru
-country|Botany|Peru / Colombia
-country|Botany|Peru/Chile
 country|Botany|Petite Terre
 country|Botany|Philippine Islands
 country|Botany|Philippines
@@ -1736,11 +1464,8 @@ country|Botany|Pitcairn Island
 country|Botany|Pitcairn Islands
 country|Botany|Pitcarn Islands
 country|Botany|Poland
-country|Botany|Poland ?
 country|Botany|Portugal
-country|Botany|Portugal / Spain
 country|Botany|Puerto Rico
-country|Botany|Puerto Rico or Dominican Republic
 country|Botany|Qatar
 country|Botany|Redonda
 country|Botany|Republic of Equatorial Guinea
@@ -1750,15 +1475,9 @@ country|Botany|Republic of Palau
 country|Botany|Republic of Zimbabwe Rhodesia
 country|Botany|Réunion
 country|Botany|Romania
-country|Botany|Romania / Yugoslavia
 country|Botany|Russia
 country|Botany|Russian Federation
-country|Botany|Russian Federation / Turkey?
-country|Botany|Russian Federation / United States
 country|Botany|Rwanda
-country|Botany|Rwanda / Burundi
-country|Botany|Rwanda / Congo, Democratic Rep. of  [Zaire]
-country|Botany|Rwanda / Zaire
 country|Botany|S. Africa
 country|Botany|Sabah
 country|Botany|Saint Barthelemy
@@ -1790,23 +1509,17 @@ country|Botany|Solomon Islands
 country|Botany|Somalia
 country|Botany|South Africa
 country|Botany|South Korea
-country|Botany|South Korea / North Korea
-country|Botany|South North Korea / South Korea
 country|Botany|South Sudan
 country|Botany|Southern Yemen
 country|Botany|Spain
 country|Botany|Spratly Island Area
 country|Botany|Sri Lanka
-country|Botany|Sri Lanka [Ceylon]
 country|Botany|St. Barthélemy
-country|Botany|St. Barthélemy / Sint Maarten
-country|Botany|St. Christopher-Nevis
 country|Botany|St. Claude
 country|Botany|St. Helena
 country|Botany|St. Helena Islands
 country|Botany|St. Kitts and Nevis
 country|Botany|St. Kitts, W. I.
-country|Botany|St. Kitts-Nevis
 country|Botany|St. Lucia
 country|Botany|St. Marteen
 country|Botany|St. Martens
@@ -1815,11 +1528,8 @@ country|Botany|St. Mary's I.
 country|Botany|St. Pierre And Miquelon
 country|Botany|St. Thomas
 country|Botany|St. Vincent
-country|Botany|St. Vincent - Grenadines
 country|Botany|St. Vincent and the Grenadines
-country|Botany|St-Pierre-Miquelon
 country|Botany|Sudan
-country|Botany|Sudan/Egypt
 country|Botany|Sumatra
 country|Botany|Sunda Islands
 country|Botany|Surinam
@@ -1827,26 +1537,18 @@ country|Botany|Suriname
 country|Botany|Swaziland
 country|Botany|Swedan
 country|Botany|Sweden
-country|Botany|Sweden / Finland
-country|Botany|Sweden or Findland
-country|Botany|Sweden or Finland
 country|Botany|Switzerland
 country|Botany|Syria
 country|Botany|Tadzhikistan
 country|Botany|Tahiti
 country|Botany|Taiwan
-country|Botany|Taiwan or Japan
-country|Botany|Taiwan(?)
 country|Botany|Tajikistan
 country|Botany|Tanganyika
 country|Botany|Tanganyika Territory
 country|Botany|Tanzania
-country|Botany|Tanzania  [Tanzania  [Tanganyika]]
-country|Botany|Tanzania / Uganda
 country|Botany|Tanzania, Tanganyika
 country|Botany|Texas
 country|Botany|Thailand
-country|Botany|Thailand or Vietnam
 country|Botany|Tiawan
 country|Botany|Tobago
 country|Botany|Togo
@@ -1857,7 +1559,6 @@ country|Botany|Trinidad
 country|Botany|Trinidad and Tobago
 country|Botany|Tunisia
 country|Botany|Turkey
-country|Botany|Turkey / USSR
 country|Botany|Turkistan
 country|Botany|Turkmenistan
 country|Botany|Turks and Caicos Islands
@@ -1871,29 +1572,7 @@ country|Botany|United Arab Emirates
 country|Botany|United Kingdom
 country|Botany|United S2007812s
 country|Botany|United States
-country|Botany|United States / Canada
-country|Botany|United States / Mexico
 country|Botany|United States Minor Outlying Islands
-country|Botany|Unknown
-country|Botany|Unknown (Africa)
-country|Botany|Unknown (Arabia)
-country|Botany|Unknown (Asia)
-country|Botany|Unknown (Asia-Temperate)
-country|Botany|Unknown (asia-tropical)
-country|Botany|Unknown (Australasia?)
-country|Botany|Unknown (Cent. Amer.)
-country|Botany|Unknown (Europe)
-country|Botany|Unknown (Mexico)
-country|Botany|Unknown (N. Amer.)
-country|Botany|Unknown (Pac. Is.)
-country|Botany|Unknown (Pacific)
-country|Botany|Unknown (S. Amer.)
-country|Botany|Unknown (S. America)
-country|Botany|Unknown (South America)
-country|Botany|Unknown (Unknown (N. Amer.))
-country|Botany|Unknown (Virgin Islands)
-country|Botany|Unknown (West Africa)
-country|Botany|Unknown (West Indies)
 country|Botany|Urubamba
 country|Botany|Uruguay
 country|Botany|USA
@@ -1901,7 +1580,6 @@ country|Botany|USSR
 country|Botany|Uzbekistan
 country|Botany|Vanuatu
 country|Botany|Venezuela
-country|Botany|Venezuela / Brazil
 country|Botany|Viet Nam
 country|Botany|Vietnam
 country|Botany|Virgin Gorda
@@ -1914,24 +1592,16 @@ country|Botany|Western Europe
 country|Botany|Western Samoa
 country|Botany|Yemen
 country|Botany|Yemen Arab Republic
-country|Botany|Yemen Arab Republic / Yemen, Republic of
 country|Botany|Yemen, Republic of
 country|Botany|Yemen, Republic of Arab Republic
 country|Botany|Yugoslavia
 country|Botany|Zaire
 country|Botany|Zambia
-country|Botany|Zambia / Zimbabwe
 country|Botany|Zimbabwe
-country|Botany|Zimbabwe [Rhodesia]
-country|Botany|Zimbabwe [Zimbabwe [Rhodesia]]
-country|Entomology|?
-country|Entomology|[multiple localities]
-country|Entomology|[Not Stated]
 country|Entomology|Abessinia
 country|Entomology|Admiralty Islands
 country|Entomology|Afghanistan
 country|Entomology|Africa
-country|Entomology|Africa?
 country|Entomology|Albania
 country|Entomology|Aldabra Atoll
 country|Entomology|Algeria
@@ -1994,21 +1664,17 @@ country|Entomology|Central African Republic
 country|Entomology|Central East Borneo
 country|Entomology|Central Ethiopia
 country|Entomology|Ceylon
-country|Entomology|Ceylon?
 country|Entomology|Chad
 country|Entomology|Chile
 country|Entomology|China
 country|Entomology|China:Tibet
 country|Entomology|Clipperton Island
-country|Entomology|Cocos (Keeling) Island
 country|Entomology|Colombia
-country|Entomology|Colombia Or Peru
 country|Entomology|Columbia
 country|Entomology|Commonwealth of the Northern Marianas Islands
 country|Entomology|Comoros
 country|Entomology|Congo
 country|Entomology|Cook Islands
-country|Entomology|Co-operative Repulic of Guyana
 country|Entomology|Costa Rica
 country|Entomology|Côte d'Ivoire
 country|Entomology|Croatia
@@ -2028,7 +1694,6 @@ country|Entomology|East Borneo
 country|Entomology|East Sumba
 country|Entomology|East Timor
 country|Entomology|Ecuador
-country|Entomology|Ecuador/Bolivia
 country|Entomology|Ecuador; Colombia
 country|Entomology|Egypt
 country|Entomology|El Salvador
@@ -2051,7 +1716,6 @@ country|Entomology|Gambia
 country|Entomology|Gambia, The
 country|Entomology|German Democratic Republic
 country|Entomology|Germany
-country|Entomology|Germany or Austria
 country|Entomology|Germany, Berlin
 country|Entomology|Germany, Federal Republic of
 country|Entomology|Ghana
@@ -2069,7 +1733,6 @@ country|Entomology|Guam
 country|Entomology|Guam Island
 country|Entomology|Guatemala
 country|Entomology|Guinea
-country|Entomology|Guinea-Bissau
 country|Entomology|Guyana
 country|Entomology|Haiti
 country|Entomology|Holland
@@ -2078,7 +1741,6 @@ country|Entomology|Hong Kong
 country|Entomology|Hungary
 country|Entomology|Iceland
 country|Entomology|India
-country|Entomology|India?
 country|Entomology|Indochina
 country|Entomology|Indonesia
 country|Entomology|Indonesia: Borneo
@@ -2107,7 +1769,6 @@ country|Entomology|Johnston Atoll
 country|Entomology|Jordan
 country|Entomology|Kazakhstan
 country|Entomology|Kenya
-country|Entomology|Kenya-Uganda border
 country|Entomology|Kiribati
 country|Entomology|Kiribati Republic
 country|Entomology|Korea
@@ -2120,22 +1781,18 @@ country|Entomology|Lesotho
 country|Entomology|Liberia
 country|Entomology|Libya
 country|Entomology|Lithuania
-country|Entomology|Locality unknown
 country|Entomology|Loja
 country|Entomology|Luxembourg
 country|Entomology|Macau
 country|Entomology|Macedonia
 country|Entomology|Madagascar
-country|Entomology|Maderia Islands (Portugal)
 country|Entomology|Malagassy Republic
 country|Entomology|Malagasy Republic
 country|Entomology|Malawi
 country|Entomology|Malayia
 country|Entomology|Malaysia
 country|Entomology|Malaysia Borneo: Sarawak Island
-country|Entomology|Malaysia:Indonesia:Sarawak (Island of Borneo)
 country|Entomology|Malaysia:Sarawak
-country|Entomology|Malaysia:Sarawak (Island of Borneo)
 country|Entomology|Mali
 country|Entomology|Marianas
 country|Entomology|Marianas Islands
@@ -2144,7 +1801,6 @@ country|Entomology|Marshall Islands
 country|Entomology|Martinique
 country|Entomology|Mauritius
 country|Entomology|Mexico
-country|Entomology|Mexico / Costa Rica
 country|Entomology|Micronesia, Federated States of
 country|Entomology|Micronesia:Caroline Islands:Truk Island
 country|Entomology|Micronesia:Ponape
@@ -2192,7 +1848,6 @@ country|Entomology|Palau, Republic of
 country|Entomology|Palestine
 country|Entomology|Palmyra Atoll
 country|Entomology|Panama
-country|Entomology|Panama/Colombia
 country|Entomology|Papua New Guinea
 country|Entomology|Paraguay
 country|Entomology|Peru
@@ -2217,7 +1872,6 @@ country|Entomology|Republic of the Congo
 country|Entomology|Republic of Trinidad and Tobago
 country|Entomology|Reunion
 country|Entomology|Rhodesia
-country|Entomology|Rhodesia-Mozambique border
 country|Entomology|Romania
 country|Entomology|Russia
 country|Entomology|Rwanda
@@ -2238,7 +1892,6 @@ country|Entomology|Salvador
 country|Entomology|Samoa
 country|Entomology|Sao Tome and Principe
 country|Entomology|Sarawak
-country|Entomology|Sarawak (Island of Borneo)
 country|Entomology|Saudi Arabia
 country|Entomology|Scotland
 country|Entomology|Senegal
@@ -2279,7 +1932,6 @@ country|Entomology|Tanzania
 country|Entomology|Tanzania, United Republic of
 country|Entomology|Tasmania
 country|Entomology|Thailand
-country|Entomology|Thailand [as Lower Siam], Trong, Khow Sai Dow, 1000 ft.
 country|Entomology|The Bahamas
 country|Entomology|The Philippines
 country|Entomology|Tibet
@@ -2298,7 +1950,6 @@ country|Entomology|Turks and Caicos Islands
 country|Entomology|U.S. Virgin Islands
 country|Entomology|U.S.S.R.
 country|Entomology|Uganda
-country|Entomology|Uganda-Kenya border
 country|Entomology|Ukraine
 country|Entomology|Union of Myanmar
 country|Entomology|Union of Soviet Socialist Republics
@@ -2306,17 +1957,12 @@ country|Entomology|United Arab Emirates
 country|Entomology|United Kingdom
 country|Entomology|United Republic of Tanzania
 country|Entomology|United States
-country|Entomology|United States / Mexico
-country|Entomology|United States or Canada
 country|Entomology|United States, Virgin Islands
-country|Entomology|United States/Canada
-country|Entomology|Unknown
 country|Entomology|Urugauy
 country|Entomology|Uruguay
 country|Entomology|USA
 country|Entomology|Vanuatu
 country|Entomology|Venezuela
-country|Entomology|Venezuela/Guyana
 country|Entomology|Viet Nam
 country|Entomology|Vietnam
 country|Entomology|Virgin Is
@@ -2334,8 +1980,6 @@ country|Entomology|Wikiep Atoll
 country|Entomology|Wolcai Atoll
 country|Entomology|Yap Island
 country|Entomology|Yemen
-country|Entomology|Yemen (Aden)
-country|Entomology|Yemen (Sanaa)
 country|Entomology|Yugoslavia
 country|Entomology|Zaire
 country|Entomology|Zambia
@@ -2344,7 +1988,6 @@ country|Entomology|Zuzuland
 country|Fishes|Afghanistan
 country|Fishes|Algeria
 country|Fishes|American Samoa
-country|Fishes|American Samoa or Samoa
 country|Fishes|Angola
 country|Fishes|Anguilla
 country|Fishes|Antarctica
@@ -2390,7 +2033,6 @@ country|Fishes|Chile
 country|Fishes|China
 country|Fishes|Christmas Island
 country|Fishes|Clipperton Island
-country|Fishes|Cocos (Keeling) Islands
 country|Fishes|Colombia
 country|Fishes|Comoros
 country|Fishes|Congo
@@ -2407,7 +2049,6 @@ country|Fishes|Denmark
 country|Fishes|Djibouti
 country|Fishes|Dominica
 country|Fishes|Dominican Republic
-country|Fishes|Dominican Republic or Haiti
 country|Fishes|East Timor
 country|Fishes|Easter Island
 country|Fishes|Ecuador
@@ -2439,7 +2080,6 @@ country|Fishes|Guam
 country|Fishes|Guatemala
 country|Fishes|Guinea
 country|Fishes|Guinea Bissau
-country|Fishes|Guinea-Bissau
 country|Fishes|Guyana
 country|Fishes|Haiti
 country|Fishes|Hispaniola
@@ -2447,10 +2087,7 @@ country|Fishes|Honduras
 country|Fishes|Howland Island
 country|Fishes|Iceland
 country|Fishes|India
-country|Fishes|India or Sri Lanka
 country|Fishes|Indonesia
-country|Fishes|Indonesia or Malaysia
-country|Fishes|Indonesia or Papua New Guinea
 country|Fishes|Iran
 country|Fishes|Iraq
 country|Fishes|Ireland
@@ -2458,7 +2095,6 @@ country|Fishes|Israel
 country|Fishes|Italy
 country|Fishes|Jamaica
 country|Fishes|Japan
-country|Fishes|Japan or China
 country|Fishes|Jarvis Island
 country|Fishes|Johnston Atoll
 country|Fishes|Jordan
@@ -2479,7 +2115,6 @@ country|Fishes|Madagascar
 country|Fishes|Madeira Islands
 country|Fishes|Malawi
 country|Fishes|Malaysia
-country|Fishes|Malaysia/Indonesia
 country|Fishes|Maldives
 country|Fishes|Mali
 country|Fishes|Marcus Island
@@ -2491,7 +2126,6 @@ country|Fishes|Mauritius
 country|Fishes|Mayotte
 country|Fishes|Mexico
 country|Fishes|Micronesia
-country|Fishes|Micronesia or Palau
 country|Fishes|Midway Island
 country|Fishes|Monaco
 country|Fishes|Mongolia
@@ -2525,7 +2159,6 @@ country|Fishes|Panama
 country|Fishes|Papua New Guinea
 country|Fishes|Paraguay
 country|Fishes|Peru
-country|Fishes|Peru or Chile
 country|Fishes|Philippines
 country|Fishes|Pitcairn Islands
 country|Fishes|Poland
@@ -2543,7 +2176,6 @@ country|Fishes|Saint Martin
 country|Fishes|Saint Vincent and the Grenadines
 country|Fishes|Sala y Gomez Island
 country|Fishes|Samoa
-country|Fishes|Samoa or Kiribati
 country|Fishes|Sao Tome and Principe
 country|Fishes|Saudi Arabia
 country|Fishes|Saudia Arabia
@@ -2552,7 +2184,6 @@ country|Fishes|Seychelles
 country|Fishes|Sierra Leone
 country|Fishes|Singapore
 country|Fishes|Solomon Islands
-country|Fishes|Solomon Islands or Vanuatu or New Caledonia
 country|Fishes|Somalia
 country|Fishes|South Africa
 country|Fishes|South Georgia and the South Sandwich Islands
@@ -2573,14 +2204,12 @@ country|Fishes|Tajikistan
 country|Fishes|Tanzania
 country|Fishes|Thailand
 country|Fishes|Togo
-country|Fishes|Togo or Ghana
 country|Fishes|Tokelau
 country|Fishes|Tonga
 country|Fishes|Trinidad and Tobago
 country|Fishes|Tristan Da Cunha
 country|Fishes|Tunisia
 country|Fishes|Turkey
-country|Fishes|Turkmenistan or Uzbekistan
 country|Fishes|Turks and Caicos Islands
 country|Fishes|Tuvalu
 country|Fishes|Uganda
@@ -2593,9 +2222,6 @@ country|Fishes|Uruguay
 country|Fishes|Vanuatu
 country|Fishes|Venezuela
 country|Fishes|Vietnam
-country|Fishes|Virgin Islands (U.K. or U.S.)
-country|Fishes|Virgin Islands (U.K.)
-country|Fishes|Virgin Islands (U.S.)
 country|Fishes|Wake Island
 country|Fishes|Wallis and Futuna
 country|Fishes|Western Sahara
@@ -2609,34 +2235,27 @@ country|Invertebrate Zoology|Afghanistan
 country|Invertebrate Zoology|Albania
 country|Invertebrate Zoology|Algeria
 country|Invertebrate Zoology|American Samoa
-country|Invertebrate Zoology|American Samoa or Western Samoa
 country|Invertebrate Zoology|Angola
 country|Invertebrate Zoology|Anguilla
 country|Invertebrate Zoology|Antarctica
 country|Invertebrate Zoology|Antigua
 country|Invertebrate Zoology|Antigua and Barbuda
 country|Invertebrate Zoology|Argentina
-country|Invertebrate Zoology|Argentina or Bolivia or Brazil or Paraguay
-country|Invertebrate Zoology|Argentina or Chile
 country|Invertebrate Zoology|Argentinia
 country|Invertebrate Zoology|Armenia
 country|Invertebrate Zoology|Aruba
 country|Invertebrate Zoology|Australia
 country|Invertebrate Zoology|Austria
-country|Invertebrate Zoology|Austria or Italy
 country|Invertebrate Zoology|Azerbaijan
 country|Invertebrate Zoology|Azores
 country|Invertebrate Zoology|Bahamas
-country|Invertebrate Zoology|Bahamas or Cuba or United States
 country|Invertebrate Zoology|Bahrain
 country|Invertebrate Zoology|Bangladesh
 country|Invertebrate Zoology|Barbados
-country|Invertebrate Zoology|Barbados or Guadeloupe
 country|Invertebrate Zoology|Belgium
 country|Invertebrate Zoology|Belize
 country|Invertebrate Zoology|Benin
 country|Invertebrate Zoology|Bermuda
-country|Invertebrate Zoology|Bermuda or Cuba
 country|Invertebrate Zoology|Bhutan
 country|Invertebrate Zoology|Bolivia
 country|Invertebrate Zoology|Bosnia and Herzegovina
@@ -2655,34 +2274,26 @@ country|Invertebrate Zoology|Cambodia
 country|Invertebrate Zoology|Cameroon
 country|Invertebrate Zoology|Canada
 country|Invertebrate Zoology|Canada and United States
-country|Invertebrate Zoology|Canada or Greenland
-country|Invertebrate Zoology|Canada or United States
 country|Invertebrate Zoology|Cape Verde
 country|Invertebrate Zoology|Cayman Islands
 country|Invertebrate Zoology|Central African Republic
 country|Invertebrate Zoology|Chile
 country|Invertebrate Zoology|China
-country|Invertebrate Zoology|China or Japan
 country|Invertebrate Zoology|Colombia
-country|Invertebrate Zoology|Colombia or Ecuador
 country|Invertebrate Zoology|Comoros
 country|Invertebrate Zoology|Congo
-country|Invertebrate Zoology|Congo or Gabon
 country|Invertebrate Zoology|Cook Islands
 country|Invertebrate Zoology|Costa Rica
 country|Invertebrate Zoology|Croatia
 country|Invertebrate Zoology|Cuba
-country|Invertebrate Zoology|Cuba or Haiti
 country|Invertebrate Zoology|Curacao
 country|Invertebrate Zoology|Cyprus
 country|Invertebrate Zoology|Czech Republic
 country|Invertebrate Zoology|Czechoslovakia
 country|Invertebrate Zoology|Democratic Republic of the Congo
 country|Invertebrate Zoology|Denmark
-country|Invertebrate Zoology|Denmark or Norway
 country|Invertebrate Zoology|Djibouti
 country|Invertebrate Zoology|Dominica
-country|Invertebrate Zoology|Dominica?
 country|Invertebrate Zoology|Dominican Republic
 country|Invertebrate Zoology|Ecuador
 country|Invertebrate Zoology|Egypt
@@ -2697,14 +2308,10 @@ country|Invertebrate Zoology|Falkland Islands
 country|Invertebrate Zoology|Faroe Islands
 country|Invertebrate Zoology|Federation of Saint Kitts and Nevis
 country|Invertebrate Zoology|Fiji
-country|Invertebrate Zoology|Fiji or New Zealand
-country|Invertebrate Zoology|Fiji or Samoa
 country|Invertebrate Zoology|Fiji, Suva
 country|Invertebrate Zoology|Finland
 country|Invertebrate Zoology|Florence Court.
 country|Invertebrate Zoology|France
-country|Invertebrate Zoology|France or Spain
-country|Invertebrate Zoology|France or United Kingdom
 country|Invertebrate Zoology|French Guiana
 country|Invertebrate Zoology|French Polynesia
 country|Invertebrate Zoology|French Somaliland
@@ -2714,9 +2321,7 @@ country|Invertebrate Zoology|Gabon
 country|Invertebrate Zoology|Gambia
 country|Invertebrate Zoology|Georgia
 country|Invertebrate Zoology|Germany
-country|Invertebrate Zoology|Germany or Poland
 country|Invertebrate Zoology|Ghana
-country|Invertebrate Zoology|Ghana or Ivory Coast
 country|Invertebrate Zoology|Greece
 country|Invertebrate Zoology|Greenland
 country|Invertebrate Zoology|Grenada
@@ -2725,7 +2330,6 @@ country|Invertebrate Zoology|Guam
 country|Invertebrate Zoology|Guatemala
 country|Invertebrate Zoology|Guiana
 country|Invertebrate Zoology|Guinea
-country|Invertebrate Zoology|Guinea-Bissau
 country|Invertebrate Zoology|Guyana
 country|Invertebrate Zoology|Haiti
 country|Invertebrate Zoology|Holland
@@ -2755,10 +2359,8 @@ country|Invertebrate Zoology|Latvia
 country|Invertebrate Zoology|Lebanon
 country|Invertebrate Zoology|Lesotho
 country|Invertebrate Zoology|Liberia
-country|Invertebrate Zoology|Liberia or Sierra Leone
 country|Invertebrate Zoology|Libya
 country|Invertebrate Zoology|Lithuania
-country|Invertebrate Zoology|Locality Unknown
 country|Invertebrate Zoology|Luxembourg
 country|Invertebrate Zoology|Macedonia
 country|Invertebrate Zoology|Madagascar
@@ -2767,7 +2369,6 @@ country|Invertebrate Zoology|Malawi
 country|Invertebrate Zoology|Malaysia
 country|Invertebrate Zoology|Maldives
 country|Invertebrate Zoology|Malta
-country|Invertebrate Zoology|Malta or Italy
 country|Invertebrate Zoology|Malta, Italy
 country|Invertebrate Zoology|Marshall Islands
 country|Invertebrate Zoology|Martinique
@@ -2780,7 +2381,6 @@ country|Invertebrate Zoology|Mongolia
 country|Invertebrate Zoology|Montenegro
 country|Invertebrate Zoology|Montserrat
 country|Invertebrate Zoology|Morocco
-country|Invertebrate Zoology|Morocco or Spain
 country|Invertebrate Zoology|Morroco
 country|Invertebrate Zoology|Mozambique
 country|Invertebrate Zoology|Namibia
@@ -2813,8 +2413,6 @@ country|Invertebrate Zoology|Philippines
 country|Invertebrate Zoology|Pitcairn Islands
 country|Invertebrate Zoology|Poland
 country|Invertebrate Zoology|Portugal
-country|Invertebrate Zoology|Portugal or Morocco
-country|Invertebrate Zoology|Portugal or Spain
 country|Invertebrate Zoology|Puerto Rico
 country|Invertebrate Zoology|Qatar
 country|Invertebrate Zoology|Republic of Chad
@@ -2858,7 +2456,6 @@ country|Invertebrate Zoology|Tahiti
 country|Invertebrate Zoology|Taiwan
 country|Invertebrate Zoology|Tajikistan
 country|Invertebrate Zoology|Tanzania
-country|Invertebrate Zoology|Tanzania or Mozambique
 country|Invertebrate Zoology|Thailand
 country|Invertebrate Zoology|The Netherlands
 country|Invertebrate Zoology|Tibet
@@ -2866,7 +2463,6 @@ country|Invertebrate Zoology|Togo
 country|Invertebrate Zoology|Tokelau
 country|Invertebrate Zoology|Tonga
 country|Invertebrate Zoology|Tonga Islands
-country|Invertebrate Zoology|Trans-Caucasia.
 country|Invertebrate Zoology|Trinidad And Tobago
 country|Invertebrate Zoology|Tristan Da Cunha Islands
 country|Invertebrate Zoology|Tunisia
@@ -2901,7 +2497,6 @@ country|Invertebrate Zoology|Yugoslavia
 country|Invertebrate Zoology|Zaire
 country|Invertebrate Zoology|Zambia
 country|Invertebrate Zoology|Zimbabwe
-country|Mammals|*
 country|Mammals|Afghanistan
 country|Mammals|Africa
 country|Mammals|Albania
@@ -2913,11 +2508,9 @@ country|Mammals|Anguilla
 country|Mammals|Antarctica
 country|Mammals|Antigua and Barbuda
 country|Mammals|Argentina
-country|Mammals|Argentina / Uruguay
 country|Mammals|Ascension Island
 country|Mammals|Asia
 country|Mammals|Australia
-country|Mammals|Australia ?
 country|Mammals|Austria
 country|Mammals|Azerbaijan
 country|Mammals|Azores
@@ -2989,7 +2582,6 @@ country|Mammals|Faroe Islands
 country|Mammals|Fiji
 country|Mammals|Finland
 country|Mammals|France
-country|Mammals|France / Spain
 country|Mammals|French Guiana
 country|Mammals|French Polynesia
 country|Mammals|French West Indies
@@ -3009,7 +2601,6 @@ country|Mammals|Guadeloupe
 country|Mammals|Guam
 country|Mammals|Guatemala
 country|Mammals|Guinea
-country|Mammals|Guinea-Bissau
 country|Mammals|Guyana
 country|Mammals|Haiti
 country|Mammals|Hawaiian Islands
@@ -3020,7 +2611,6 @@ country|Mammals|Howland Island
 country|Mammals|Hungary
 country|Mammals|Iceland
 country|Mammals|India
-country|Mammals|India ?
 country|Mammals|Indonesia
 country|Mammals|Iran
 country|Mammals|Iraq
@@ -3050,7 +2640,6 @@ country|Mammals|Liberia
 country|Mammals|Libya
 country|Mammals|Line Islands
 country|Mammals|Lithuania
-country|Mammals|Locality Unknown
 country|Mammals|Macedonia
 country|Mammals|Macquarie Island
 country|Mammals|Madagascar
@@ -3082,7 +2671,6 @@ country|Mammals|Netherlands Antilles
 country|Mammals|New Caledonia
 country|Mammals|New Guinea
 country|Mammals|New Zealand
-country|Mammals|New Zealand ?
 country|Mammals|Nicaragua
 country|Mammals|Niger
 country|Mammals|Nigeria
@@ -3098,7 +2686,6 @@ country|Mammals|Peru
 country|Mammals|Philippines
 country|Mammals|Phoenix Islands
 country|Mammals|Poland
-country|Mammals|Poland ?
 country|Mammals|Portugal
 country|Mammals|Puerto Rico
 country|Mammals|Qatar
@@ -3106,7 +2693,6 @@ country|Mammals|Republic of Vanuatu
 country|Mammals|Revillagigedo Islands
 country|Mammals|Romania
 country|Mammals|Russia
-country|Mammals|Russia ?
 country|Mammals|Rwanda
 country|Mammals|Saint Barthelemy
 country|Mammals|Saint Helena
@@ -3146,7 +2732,6 @@ country|Mammals|Switzerland
 country|Mammals|Syria
 country|Mammals|Taiwan
 country|Mammals|Tanzania
-country|Mammals|Tanzania / Kenya
 country|Mammals|Thailand
 country|Mammals|Togo
 country|Mammals|Tokelau
@@ -3163,7 +2748,6 @@ country|Mammals|Ukraine
 country|Mammals|United Arab Emirates
 country|Mammals|United Kingdom
 country|Mammals|United States
-country|Mammals|unknown
 country|Mammals|Uruguay
 country|Mammals|USA
 country|Mammals|USSR
@@ -3172,7 +2756,6 @@ country|Mammals|Vanuatu
 country|Mammals|Venezuela
 country|Mammals|Vietnam
 country|Mammals|Virgin Islands
-country|Mammals|Virgin Islands (U.S.)
 country|Mammals|Wake Islands
 country|Mammals|West Africa
 country|Mammals|West Indies
@@ -3180,33 +2763,26 @@ country|Mammals|Western Sahara
 country|Mammals|Western Samoa
 country|Mammals|Yemen
 country|Mammals|Yugoslavia
-country|Mammals|Yugoslavia ?
 country|Mammals|Zambia
-country|Mammals|Zambia ?
 country|Mammals|Zimbabwe
 country|Mineral Sciences|Afghanistan
 country|Mineral Sciences|Afghsanistan
 country|Mineral Sciences|Africa
 country|Mineral Sciences|Albania
 country|Mineral Sciences|Algeria
-country|Mineral Sciences|Algeria Ca.
 country|Mineral Sciences|Angola
-country|Mineral Sciences|Angola Ca.
 country|Mineral Sciences|Anguilla
 country|Mineral Sciences|Antarctica
 country|Mineral Sciences|Antigua And Barbuda
 country|Mineral Sciences|Arabian Peninsula
 country|Mineral Sciences|Arctic
 country|Mineral Sciences|Argentina
-country|Mineral Sciences|Argentina Ca.
 country|Mineral Sciences|Armenia
 country|Mineral Sciences|Aruba
 country|Mineral Sciences|Ascension Island
 country|Mineral Sciences|Asia
 country|Mineral Sciences|Australia
-country|Mineral Sciences|Australia Ca.
 country|Mineral Sciences|Austria
-country|Mineral Sciences|Austria Ca.
 country|Mineral Sciences|Austria, South
 country|Mineral Sciences|Azerbaijan
 country|Mineral Sciences|Azores
@@ -3221,56 +2797,39 @@ country|Mineral Sciences|Bermuda
 country|Mineral Sciences|Bhutan
 country|Mineral Sciences|Bohemia
 country|Mineral Sciences|Bolivia
-country|Mineral Sciences|Bolivia Ca.
 country|Mineral Sciences|Bosnia
 country|Mineral Sciences|Bosnia And Herzegovina
-country|Mineral Sciences|Bosnia And Herzegovina Ca.
 country|Mineral Sciences|Botswana
 country|Mineral Sciences|Brazil
-country|Mineral Sciences|Brazil Ca.
 country|Mineral Sciences|British West Indies
 country|Mineral Sciences|Bulgaria
 country|Mineral Sciences|Burkina Faso
 country|Mineral Sciences|Burma
-country|Mineral Sciences|Burma Ca.
-country|Mineral Sciences|Burma/Myanmar
 country|Mineral Sciences|Burundi
-country|Mineral Sciences|Ca.
 country|Mineral Sciences|California
 country|Mineral Sciences|Cambodia
 country|Mineral Sciences|Cameroon
 country|Mineral Sciences|Canada
-country|Mineral Sciences|Canada Ca.
 country|Mineral Sciences|Cape Verde
 country|Mineral Sciences|Caucasus
 country|Mineral Sciences|Cayman Islands
 country|Mineral Sciences|Central African Republic
 country|Mineral Sciences|Ceylon
 country|Mineral Sciences|Chad
-country|Mineral Sciences|Chad Ca.
 country|Mineral Sciences|Chile
-country|Mineral Sciences|Chile Ca.
 country|Mineral Sciences|China
-country|Mineral Sciences|China (Western)
-country|Mineral Sciences|China Ca.
 country|Mineral Sciences|Colombia
-country|Mineral Sciences|Colombia Ca.
 country|Mineral Sciences|Colorade
 country|Mineral Sciences|Columbia
 country|Mineral Sciences|Comoros
 country|Mineral Sciences|Comoros Is
 country|Mineral Sciences|Congo
-country|Mineral Sciences|Congo (Brazzaville)
-country|Mineral Sciences|Congo (Kinshasa)
-country|Mineral Sciences|Congo (Kinshasa) Ca.
-country|Mineral Sciences|Congo/Zaire
 country|Mineral Sciences|Costa Rica
 country|Mineral Sciences|Croatia
 country|Mineral Sciences|Cuba
 country|Mineral Sciences|Curacao
 country|Mineral Sciences|Cyprus
 country|Mineral Sciences|Czech Republic
-country|Mineral Sciences|Czech Republic Ca.
 country|Mineral Sciences|Czechoslovakia
 country|Mineral Sciences|Democratic Republic of Congo
 country|Mineral Sciences|Democratic Republic Of The Congo
@@ -3282,10 +2841,8 @@ country|Mineral Sciences|East Greenland
 country|Mineral Sciences|East Indies
 country|Mineral Sciences|Ecuador
 country|Mineral Sciences|Egypt
-country|Mineral Sciences|Egypt Ca.
 country|Mineral Sciences|El Salvador
 country|Mineral Sciences|England
-country|Mineral Sciences|England Ca.
 country|Mineral Sciences|Eritrea
 country|Mineral Sciences|Estonia
 country|Mineral Sciences|Ethiopia
@@ -3294,69 +2851,51 @@ country|Mineral Sciences|Faeroe Islands
 country|Mineral Sciences|Federated States of Micronesia
 country|Mineral Sciences|Fiji
 country|Mineral Sciences|Finland
-country|Mineral Sciences|Finland Ca.
 country|Mineral Sciences|France
-country|Mineral Sciences|France - Spain
-country|Mineral Sciences|France Ca.
 country|Mineral Sciences|French Guiana
 country|Mineral Sciences|French Polynesia
 country|Mineral Sciences|Gabon
-country|Mineral Sciences|Gabon Ca.
 country|Mineral Sciences|Georgia
 country|Mineral Sciences|German Southwest Africa
 country|Mineral Sciences|Germany
-country|Mineral Sciences|Germany Ca.
 country|Mineral Sciences|Germany, East
 country|Mineral Sciences|Germany, West
-country|Mineral Sciences|Germany/Czech Republic
 country|Mineral Sciences|Ghana
-country|Mineral Sciences|Ghana Ca.
 country|Mineral Sciences|Gibraltar
 country|Mineral Sciences|Greece
 country|Mineral Sciences|Greenland
-country|Mineral Sciences|Greenland Ca.
 country|Mineral Sciences|Greenland, Southwest
 country|Mineral Sciences|Grenada
 country|Mineral Sciences|Guam
 country|Mineral Sciences|Guatamala
 country|Mineral Sciences|Guatemala
 country|Mineral Sciences|Guinea
-country|Mineral Sciences|Guinea (West Africa)
 country|Mineral Sciences|Guyana
 country|Mineral Sciences|Haiti
 country|Mineral Sciences|Holland
 country|Mineral Sciences|Honduras
 country|Mineral Sciences|Hungary
-country|Mineral Sciences|Hungary Ca.
 country|Mineral Sciences|Iceland
-country|Mineral Sciences|Iceland Ca.
 country|Mineral Sciences|Idaho
 country|Mineral Sciences|India
-country|Mineral Sciences|India Ca.
 country|Mineral Sciences|Indochina
 country|Mineral Sciences|Indonesia
 country|Mineral Sciences|Iran
-country|Mineral Sciences|Iran (Turquoise)
 country|Mineral Sciences|Iraq
 country|Mineral Sciences|Ireland
-country|Mineral Sciences|Ireland Ca.
 country|Mineral Sciences|Ireland, Northern
 country|Mineral Sciences|Isle Of Man
 country|Mineral Sciences|Isle Of Wight
 country|Mineral Sciences|Israel
 country|Mineral Sciences|Italy
-country|Mineral Sciences|Italy Ca.
 country|Mineral Sciences|Ivory Coast
 country|Mineral Sciences|Jamaica
 country|Mineral Sciences|Japan
-country|Mineral Sciences|Japan Ca.
 country|Mineral Sciences|Jarvis Island
 country|Mineral Sciences|Jordan
 country|Mineral Sciences|Kazakhstan
-country|Mineral Sciences|Kazakhstan Ca.
 country|Mineral Sciences|Kazakstan
 country|Mineral Sciences|Kenya
-country|Mineral Sciences|Kenya/Tanzania
 country|Mineral Sciences|Kirghistan
 country|Mineral Sciences|Kirgizia
 country|Mineral Sciences|Kiribati
@@ -3374,11 +2913,9 @@ country|Mineral Sciences|Libya
 country|Mineral Sciences|Lithuania
 country|Mineral Sciences|Macedonia
 country|Mineral Sciences|Madagascar
-country|Mineral Sciences|Madagascar Ca.
 country|Mineral Sciences|Madeira Island
 country|Mineral Sciences|Malagasy Republic
 country|Mineral Sciences|Malawi
-country|Mineral Sciences|Malawi Ca.
 country|Mineral Sciences|Malaysia
 country|Mineral Sciences|Mali
 country|Mineral Sciences|Man Made
@@ -3387,19 +2924,14 @@ country|Mineral Sciences|Mauritania
 country|Mineral Sciences|Mauritius
 country|Mineral Sciences|Mediterranean
 country|Mineral Sciences|Mexico
-country|Mineral Sciences|Mexico Ca.
 country|Mineral Sciences|Moldova
-country|Mineral Sciences|Moldova Ca.
 country|Mineral Sciences|Mona Island
 country|Mineral Sciences|Mongolia
 country|Mineral Sciences|Montserrat
 country|Mineral Sciences|Morocco
 country|Mineral Sciences|Mozambique
 country|Mineral Sciences|Myanmar
-country|Mineral Sciences|Myanmar (Burma)
 country|Mineral Sciences|Namibia
-country|Mineral Sciences|Namibia (Southwest Africa)
-country|Mineral Sciences|Namibia Ca.
 country|Mineral Sciences|Navassa Island
 country|Mineral Sciences|Nepal
 country|Mineral Sciences|Netherlands
@@ -3415,32 +2947,24 @@ country|Mineral Sciences|No Record
 country|Mineral Sciences|None
 country|Mineral Sciences|Northern Ireland
 country|Mineral Sciences|Norway
-country|Mineral Sciences|Norway Ca.
 country|Mineral Sciences|Ocean
 country|Mineral Sciences|Oman
 country|Mineral Sciences|Pakistan
-country|Mineral Sciences|Pakistan Ca.
 country|Mineral Sciences|Palau
 country|Mineral Sciences|Panama
 country|Mineral Sciences|Panama Canal Zone
 country|Mineral Sciences|Papua New Guinea
 country|Mineral Sciences|Paraguay
 country|Mineral Sciences|People's Republic of China
-country|Mineral Sciences|Persia Ca.
 country|Mineral Sciences|Peru
-country|Mineral Sciences|Peru Ca.
 country|Mineral Sciences|Philippines
 country|Mineral Sciences|Poland
-country|Mineral Sciences|Poland - Ussr
-country|Mineral Sciences|Poland Ca.
 country|Mineral Sciences|Portugal
 country|Mineral Sciences|Puerto Rico
 country|Mineral Sciences|Republic of the Congo
 country|Mineral Sciences|Rhodesia
 country|Mineral Sciences|Romania
-country|Mineral Sciences|Romania Ca.
 country|Mineral Sciences|Russia
-country|Mineral Sciences|Russia Ca.
 country|Mineral Sciences|Russia, Southeast
 country|Mineral Sciences|Russian Federation
 country|Mineral Sciences|Rwanda
@@ -3452,7 +2976,6 @@ country|Mineral Sciences|Saudi Arabia
 country|Mineral Sciences|Scandinavia
 country|Mineral Sciences|Scotland
 country|Mineral Sciences|Senegal
-country|Mineral Sciences|Senegal Ca.
 country|Mineral Sciences|Serbia
 country|Mineral Sciences|Sierra Leone
 country|Mineral Sciences|Singapore
@@ -3462,17 +2985,11 @@ country|Mineral Sciences|Soloman Islands
 country|Mineral Sciences|Solomon Is
 country|Mineral Sciences|Somalia
 country|Mineral Sciences|South Africa
-country|Mineral Sciences|South Africa (Namibia) Ca.
-country|Mineral Sciences|South Africa Ca.
 country|Mineral Sciences|South America
 country|Mineral Sciences|South Korea
 country|Mineral Sciences|Southwest Africa
-country|Mineral Sciences|South-West Africa
-country|Mineral Sciences|Southwest Africa (Namibia) Ca.
 country|Mineral Sciences|Spain
-country|Mineral Sciences|Spain Ca.
 country|Mineral Sciences|Sri Lanka
-country|Mineral Sciences|Sri Lanka Ca.
 country|Mineral Sciences|St Kitts And Nevis
 country|Mineral Sciences|St Lucia
 country|Mineral Sciences|St Vincent And The Grenadines
@@ -3481,17 +2998,13 @@ country|Mineral Sciences|Surinam
 country|Mineral Sciences|Suriname
 country|Mineral Sciences|Swaziland
 country|Mineral Sciences|Sweden
-country|Mineral Sciences|Sweden Ca.
 country|Mineral Sciences|Switzerland
-country|Mineral Sciences|Switzerland Ca.
 country|Mineral Sciences|Synthetic
 country|Mineral Sciences|Syria
-country|Mineral Sciences|Syria Ca.
 country|Mineral Sciences|Tahiti
 country|Mineral Sciences|Taiwan
 country|Mineral Sciences|Tajikistan
 country|Mineral Sciences|Tanzania
-country|Mineral Sciences|Tanzania Ca.
 country|Mineral Sciences|Tasmania
 country|Mineral Sciences|Thailand
 country|Mineral Sciences|Tibet
@@ -3500,9 +3013,7 @@ country|Mineral Sciences|Trinidad
 country|Mineral Sciences|Trinidad And Tobago
 country|Mineral Sciences|Tunisia
 country|Mineral Sciences|Turkestan
-country|Mineral Sciences|Turkestan Ca.
 country|Mineral Sciences|Turkey
-country|Mineral Sciences|Turkey Ca.
 country|Mineral Sciences|Turkish Armenia
 country|Mineral Sciences|Turkmenistan
 country|Mineral Sciences|Uganda
@@ -3510,16 +3021,11 @@ country|Mineral Sciences|Ukraine
 country|Mineral Sciences|United Arab Emerates
 country|Mineral Sciences|United Kingdom
 country|Mineral Sciences|United States
-country|Mineral Sciences|United States Ca.
 country|Mineral Sciences|United States of America
-country|Mineral Sciences|Unknown
-country|Mineral Sciences|Unknown Ca.
-country|Mineral Sciences|Unknown Locality
 country|Mineral Sciences|Upper Burma
 country|Mineral Sciences|Uruguay
 country|Mineral Sciences|USA
 country|Mineral Sciences|Ussr
-country|Mineral Sciences|Ussr Ca.
 country|Mineral Sciences|Uzbekistan
 country|Mineral Sciences|Vanuatu
 country|Mineral Sciences|Venezuela
@@ -3532,11 +3038,8 @@ country|Mineral Sciences|West Indies
 country|Mineral Sciences|Windward Islands, French Polynesia
 country|Mineral Sciences|Yemen
 country|Mineral Sciences|Yugoslavia
-country|Mineral Sciences|Yugoslavia Ca.
 country|Mineral Sciences|Zaire
-country|Mineral Sciences|Zaire (Democratic Republic of Congo)
 country|Mineral Sciences|Zambia
-country|Mineral Sciences|Zambia Ca.
 country|Mineral Sciences|Zimbabwe
 Genetic Sample Type Primary|Amphibians & Reptiles|Blood
 Genetic Sample Type Primary|Amphibians & Reptiles|DNA, RNA, Proteins
@@ -4775,423 +4278,423 @@ Sexual Maturity|Mammals|Subadult
 Sexual Maturity|Mammals|Unknown
 Sexual Maturity|Mammals|Unknown, immature
 Sexual Maturity|Mammals|Unknown, Sperm in epididymus
-Zoology Stage|Amphibians & Reptiles|
-Zoology Stage|Amphibians & Reptiles|1 adult, 1 larva
-Zoology Stage|Amphibians & Reptiles|2 year old juvenile
-Zoology Stage|Amphibians & Reptiles|Adolescent
-Zoology Stage|Amphibians & Reptiles|Adolesence
-Zoology Stage|Amphibians & Reptiles|Adult
-Zoology Stage|Amphibians & Reptiles|Adult (with eggs)
-Zoology Stage|Amphibians & Reptiles|Adult and 2 eggs
-Zoology Stage|Amphibians & Reptiles|Adult and larva
-Zoology Stage|Amphibians & Reptiles|Adult and larvae
-Zoology Stage|Amphibians & Reptiles|Adult or subadult
-Zoology Stage|Amphibians & Reptiles|Adult with 2 eggs
-Zoology Stage|Amphibians & Reptiles|Adult with embryos
-Zoology Stage|Amphibians & Reptiles|Adult, juvs(2), larvae(6)
-Zoology Stage|Amphibians & Reptiles|Adult; eggs
-Zoology Stage|Amphibians & Reptiles|Adult; juveniles
-Zoology Stage|Amphibians & Reptiles|Branchiate adult
-Zoology Stage|Amphibians & Reptiles|Breeding adult
-Zoology Stage|Amphibians & Reptiles|Brooding adult
-Zoology Stage|Amphibians & Reptiles|Clutch (hatching embryos)
-Zoology Stage|Amphibians & Reptiles|Clutch eggs
-Zoology Stage|Amphibians & Reptiles|Clutch of eggs
-Zoology Stage|Amphibians & Reptiles|Developing embryos
-Zoology Stage|Amphibians & Reptiles|Eft
-Zoology Stage|Amphibians & Reptiles|Egg
-Zoology Stage|Amphibians & Reptiles|Egg (broken)
-Zoology Stage|Amphibians & Reptiles|Egg and hatchlings
-Zoology Stage|Amphibians & Reptiles|Egg cases (empty)
-Zoology Stage|Amphibians & Reptiles|Egg clutch
-Zoology Stage|Amphibians & Reptiles|Egg clutchs
-Zoology Stage|Amphibians & Reptiles|Egg fragments
-Zoology Stage|Amphibians & Reptiles|Egg mass
-Zoology Stage|Amphibians & Reptiles|Egg mass and larvae
-Zoology Stage|Amphibians & Reptiles|Egg masses
-Zoology Stage|Amphibians & Reptiles|Egg shell and embryo
-Zoology Stage|Amphibians & Reptiles|Egg shells
-Zoology Stage|Amphibians & Reptiles|Egg shells (fragmented)
-Zoology Stage|Amphibians & Reptiles|Eggs
-Zoology Stage|Amphibians & Reptiles|Eggs (many broken)
-Zoology Stage|Amphibians & Reptiles|Eggs and eggshells
-Zoology Stage|Amphibians & Reptiles|Eggs and embryo
-Zoology Stage|Amphibians & Reptiles|Eggs and embryoes
-Zoology Stage|Amphibians & Reptiles|Eggs and embryos
-Zoology Stage|Amphibians & Reptiles|Eggs and hatchling
-Zoology Stage|Amphibians & Reptiles|Eggs and hatchlings
-Zoology Stage|Amphibians & Reptiles|Eggs and juvenile
-Zoology Stage|Amphibians & Reptiles|Eggs and larva
-Zoology Stage|Amphibians & Reptiles|Eggs and larvae
-Zoology Stage|Amphibians & Reptiles|Eggs and young
-Zoology Stage|Amphibians & Reptiles|Eggs with late embryos
-Zoology Stage|Amphibians & Reptiles|Eggshell
-Zoology Stage|Amphibians & Reptiles|Eggshells
-Zoology Stage|Amphibians & Reptiles|Embryo
-Zoology Stage|Amphibians & Reptiles|Embryo (full-term)
-Zoology Stage|Amphibians & Reptiles|Embryo (mid-term)
-Zoology Stage|Amphibians & Reptiles|Embryo (near full-term)
-Zoology Stage|Amphibians & Reptiles|Embryo and egg shell
-Zoology Stage|Amphibians & Reptiles|Embryo and eggs
-Zoology Stage|Amphibians & Reptiles|Embryo and eggshell
-Zoology Stage|Amphibians & Reptiles|Embryo and larvae
-Zoology Stage|Amphibians & Reptiles|Embryo and yolk
-Zoology Stage|Amphibians & Reptiles|Embryo in oviduct
-Zoology Stage|Amphibians & Reptiles|Embryo in shell
-Zoology Stage|Amphibians & Reptiles|Embryo with egg shell
-Zoology Stage|Amphibians & Reptiles|Embryo with eggshell
-Zoology Stage|Amphibians & Reptiles|Embryos
-Zoology Stage|Amphibians & Reptiles|Embryos (full-term)
-Zoology Stage|Amphibians & Reptiles|Embryos and hatchling
-Zoology Stage|Amphibians & Reptiles|Embryos and larvae
-Zoology Stage|Amphibians & Reptiles|Embryos with egg shells
-Zoology Stage|Amphibians & Reptiles|embryos with jelly
-Zoology Stage|Amphibians & Reptiles|Fetus
-Zoology Stage|Amphibians & Reptiles|Fullterm embryo
-Zoology Stage|Amphibians & Reptiles|Gravid adult
-Zoology Stage|Amphibians & Reptiles|Gravid adult (6 eggs)
-Zoology Stage|Amphibians & Reptiles|Gravid adult (large yolked eggs)
-Zoology Stage|Amphibians & Reptiles|Gravid adult with embryos
-Zoology Stage|Amphibians & Reptiles|Half grown
-Zoology Stage|Amphibians & Reptiles|Hatchling
-Zoology Stage|Amphibians & Reptiles|Hatchling (abnormal)
-Zoology Stage|Amphibians & Reptiles|Hatchling (died)
-Zoology Stage|Amphibians & Reptiles|Hatchling and egg
-Zoology Stage|Amphibians & Reptiles|Hatchling and egg shell
-Zoology Stage|Amphibians & Reptiles|Hatchling with egg
-Zoology Stage|Amphibians & Reptiles|Hatchling with egg shell
-Zoology Stage|Amphibians & Reptiles|Hatchling, embryos
-Zoology Stage|Amphibians & Reptiles|Hatchling, unhatched egg
-Zoology Stage|Amphibians & Reptiles|Hatchling; eggshell
-Zoology Stage|Amphibians & Reptiles|Hatchlings
-Zoology Stage|Amphibians & Reptiles|Hatchlings and egg
-Zoology Stage|Amphibians & Reptiles|Hatchlings, part egg gel
-Zoology Stage|Amphibians & Reptiles|Hemipenes everted
-Zoology Stage|Amphibians & Reptiles|Hgr
-Zoology Stage|Amphibians & Reptiles|Immature
-Zoology Stage|Amphibians & Reptiles|Juvenile
-Zoology Stage|Amphibians & Reptiles|Juvenile (2 months old)
-Zoology Stage|Amphibians & Reptiles|Juvenile (eft)
-Zoology Stage|Amphibians & Reptiles|Juvenile and egg
-Zoology Stage|Amphibians & Reptiles|Juvenile and eggs
-Zoology Stage|Amphibians & Reptiles|Juvenile or metamorph
-Zoology Stage|Amphibians & Reptiles|Juvenile, egg
-Zoology Stage|Amphibians & Reptiles|Juvenile/subadult
-Zoology Stage|Amphibians & Reptiles|Juvenile; egg shell
-Zoology Stage|Amphibians & Reptiles|Juvenile-adult
-Zoology Stage|Amphibians & Reptiles|Juveniles
-Zoology Stage|Amphibians & Reptiles|Juveniles and eggs
-Zoology Stage|Amphibians & Reptiles|Juveniles and metamorphs
-Zoology Stage|Amphibians & Reptiles|Large adult
-Zoology Stage|Amphibians & Reptiles|Larva
-Zoology Stage|Amphibians & Reptiles|Larva and juvenile
-Zoology Stage|Amphibians & Reptiles|Larva and metamorph
-Zoology Stage|Amphibians & Reptiles|Larva and metamorphs
-Zoology Stage|Amphibians & Reptiles|Larva and premetamorph
-Zoology Stage|Amphibians & Reptiles|Larva and premetamorphs
-Zoology Stage|Amphibians & Reptiles|Larva, metamorph
-Zoology Stage|Amphibians & Reptiles|Larva; premetamorph
-Zoology Stage|Amphibians & Reptiles|Larvae
-Zoology Stage|Amphibians & Reptiles|Larvae and 1 metamorph
-Zoology Stage|Amphibians & Reptiles|Larvae and eggs
-Zoology Stage|Amphibians & Reptiles|Larvae and juvenile
-Zoology Stage|Amphibians & Reptiles|Larvae and juveniles
-Zoology Stage|Amphibians & Reptiles|Larvae and metamorph
-Zoology Stage|Amphibians & Reptiles|Larvae and metamorphics
-Zoology Stage|Amphibians & Reptiles|Larvae and metamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae and premetamorph
-Zoology Stage|Amphibians & Reptiles|Larvae and premetamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae through metamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae, premetamorph
-Zoology Stage|Amphibians & Reptiles|Larvae, premetamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae; hatchlings
-Zoology Stage|Amphibians & Reptiles|Larvae; metamorph
-Zoology Stage|Amphibians & Reptiles|Larvae; metamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae; postmetamorphs
-Zoology Stage|Amphibians & Reptiles|Larvae; premetamorph (1)
-Zoology Stage|Amphibians & Reptiles|Larvae+metamorphs+juvenil
-Zoology Stage|Amphibians & Reptiles|Late eft
-Zoology Stage|Amphibians & Reptiles|Late metamorphic
-Zoology Stage|Amphibians & Reptiles|Late metamorphics
-Zoology Stage|Amphibians & Reptiles|Late stage embryo
-Zoology Stage|Amphibians & Reptiles|Late stage embryos
-Zoology Stage|Amphibians & Reptiles|Metamorph
-Zoology Stage|Amphibians & Reptiles|Metamorph (early)
-Zoology Stage|Amphibians & Reptiles|Metamorph (late)
-Zoology Stage|Amphibians & Reptiles|Metamorph (mid)
-Zoology Stage|Amphibians & Reptiles|Metamorph and tadpole
-Zoology Stage|Amphibians & Reptiles|metamorph with tail
-Zoology Stage|Amphibians & Reptiles|Metamorph, larvae
-Zoology Stage|Amphibians & Reptiles|Metamorphic
-Zoology Stage|Amphibians & Reptiles|Metamorphics
-Zoology Stage|Amphibians & Reptiles|Metamorphs
-Zoology Stage|Amphibians & Reptiles|Metamorphs (early)
-Zoology Stage|Amphibians & Reptiles|Metamorphs (late)
-Zoology Stage|Amphibians & Reptiles|Metamorphs (mid)
-Zoology Stage|Amphibians & Reptiles|Metamorphs and juveniles
-Zoology Stage|Amphibians & Reptiles|Metamorphs with tail
-Zoology Stage|Amphibians & Reptiles|Near term embryo
-Zoology Stage|Amphibians & Reptiles|Neonate
-Zoology Stage|Amphibians & Reptiles|Neonate with egg shell
-Zoology Stage|Amphibians & Reptiles|Neonates
-Zoology Stage|Amphibians & Reptiles|Neotenic
-Zoology Stage|Amphibians & Reptiles|Neotenic adult
-Zoology Stage|Amphibians & Reptiles|Newborn
-Zoology Stage|Amphibians & Reptiles|Ovarian eggs
-Zoology Stage|Amphibians & Reptiles|Ovum only
-Zoology Stage|Amphibians & Reptiles|Postembryo
-Zoology Stage|Amphibians & Reptiles|Postmetamorph
-Zoology Stage|Amphibians & Reptiles|Postmetamorph larva
-Zoology Stage|Amphibians & Reptiles|Postmetamorphic
-Zoology Stage|Amphibians & Reptiles|Post-metamorphic
-Zoology Stage|Amphibians & Reptiles|Postmetamorphs
-Zoology Stage|Amphibians & Reptiles|Pre- and postmetamorphs
-Zoology Stage|Amphibians & Reptiles|Prehatchling
-Zoology Stage|Amphibians & Reptiles|Premetamorph
-Zoology Stage|Amphibians & Reptiles|Premetamorph (stage 40)
-Zoology Stage|Amphibians & Reptiles|Premetamorph;stage 38(39)
-Zoology Stage|Amphibians & Reptiles|Premetamorphs
-Zoology Stage|Amphibians & Reptiles|Premetamorphs - juveniles
-Zoology Stage|Amphibians & Reptiles|Premetamorphs and larvae
-Zoology Stage|Amphibians & Reptiles|Premetamorphs, juvenile
-Zoology Stage|Amphibians & Reptiles|Premetamorphs, metamorphs
-Zoology Stage|Amphibians & Reptiles|Recent metamorph
-Zoology Stage|Amphibians & Reptiles|Spermatophores
-Zoology Stage|Amphibians & Reptiles|Stage 23 (dead)
-Zoology Stage|Amphibians & Reptiles|Stage 24
-Zoology Stage|Amphibians & Reptiles|Stage 24 (dead)
-Zoology Stage|Amphibians & Reptiles|Stage 25
-Zoology Stage|Amphibians & Reptiles|Stage 25 (dead)
-Zoology Stage|Amphibians & Reptiles|Stuffed
-Zoology Stage|Amphibians & Reptiles|Subadult
-Zoology Stage|Amphibians & Reptiles|Sub-adult
-Zoology Stage|Amphibians & Reptiles|Tadpole
-Zoology Stage|Amphibians & Reptiles|Tadpoles
-Zoology Stage|Amphibians & Reptiles|Transforming
-Zoology Stage|Amphibians & Reptiles|Unhatched eggs
-Zoology Stage|Amphibians & Reptiles|Yolked + non-yolked eggs
-Zoology Stage|Amphibians & Reptiles|Young
-Zoology Stage|Amphibians & Reptiles|Young adult
-Zoology Stage|Birds|
-Zoology Stage|Birds|Adult
-Zoology Stage|Birds|Chick
-Zoology Stage|Birds|Embryo
-Zoology Stage|Birds|Immature
-Zoology Stage|Birds|Juvenile
-Zoology Stage|Birds|Subadult
-Zoology Stage|Entomology|
-Zoology Stage|Entomology|Adult
-Zoology Stage|Entomology|bottom
-Zoology Stage|Entomology|dault
-Zoology Stage|Entomology|Egg
-Zoology Stage|Entomology|Eggs
-Zoology Stage|Entomology|exuviae
-Zoology Stage|Entomology|First instar
-Zoology Stage|Entomology|Immature
-Zoology Stage|Entomology|larva
-Zoology Stage|Entomology|morphotype
-Zoology Stage|Entomology|Nymph
-Zoology Stage|Entomology|Penultimate instar
-Zoology Stage|Entomology|Pupa
-Zoology Stage|Entomology|pupal exuvia
-Zoology Stage|Entomology|research
-Zoology Stage|Entomology|S
-Zoology Stage|Entomology|Second instar
-Zoology Stage|Entomology|top
-Zoology Stage|Entomology|Ultimate instar
-Zoology Stage|Entomology|Unknown
-Zoology Stage|Entomology|Wings Alate
-Zoology Stage|Entomology|Wings Alatoid
-Zoology Stage|Entomology|Wings Aptera
-Zoology Stage|Entomology|Wings Apterous
-Zoology Stage|Entomology|Wings Brachypterous
-Zoology Stage|Entomology|Wings Unknown
-Zoology Stage|Fishes|
-Zoology Stage|Invertebrate Zoology|
-Zoology Stage|Invertebrate Zoology|A-1
-Zoology Stage|Invertebrate Zoology|A-2
-Zoology Stage|Invertebrate Zoology|A-3
-Zoology Stage|Invertebrate Zoology|A-4
-Zoology Stage|Invertebrate Zoology|A-5
-Zoology Stage|Invertebrate Zoology|A-6?
-Zoology Stage|Invertebrate Zoology|adult
-Zoology Stage|Invertebrate Zoology|adults & juveniles
-Zoology Stage|Invertebrate Zoology|amplexus
-Zoology Stage|Invertebrate Zoology|breeding
-Zoology Stage|Invertebrate Zoology|copepodid
-Zoology Stage|Invertebrate Zoology|copepodid & nauplii
-Zoology Stage|Invertebrate Zoology|Copepodid I
-Zoology Stage|Invertebrate Zoology|Copepodid II
-Zoology Stage|Invertebrate Zoology|Copepodid III
-Zoology Stage|Invertebrate Zoology|Copepodid IV
-Zoology Stage|Invertebrate Zoology|copepodid V
-Zoology Stage|Invertebrate Zoology|crab 1
-Zoology Stage|Invertebrate Zoology|crab 2
-Zoology Stage|Invertebrate Zoology|cypris larvae
-Zoology Stage|Invertebrate Zoology|egg
-Zoology Stage|Invertebrate Zoology|egg brood
-Zoology Stage|Invertebrate Zoology|egg case
-Zoology Stage|Invertebrate Zoology|egg masses
-Zoology Stage|Invertebrate Zoology|eggs
-Zoology Stage|Invertebrate Zoology|embryo
-Zoology Stage|Invertebrate Zoology|erichthus larvae
-Zoology Stage|Invertebrate Zoology|glaucothoe
-Zoology Stage|Invertebrate Zoology|glaucothoes
-Zoology Stage|Invertebrate Zoology|hatchling
-Zoology Stage|Invertebrate Zoology|hatchlings
-Zoology Stage|Invertebrate Zoology|I
-Zoology Stage|Invertebrate Zoology|II
-Zoology Stage|Invertebrate Zoology|III
-Zoology Stage|Invertebrate Zoology|immature
-Zoology Stage|Invertebrate Zoology|Instar I
-Zoology Stage|Invertebrate Zoology|Instar II
-Zoology Stage|Invertebrate Zoology|Instar III
-Zoology Stage|Invertebrate Zoology|Instar IV
-Zoology Stage|Invertebrate Zoology|Instar V
-Zoology Stage|Invertebrate Zoology|IV
-Zoology Stage|Invertebrate Zoology|j-1
-Zoology Stage|Invertebrate Zoology|j-2
-Zoology Stage|Invertebrate Zoology|j-3
-Zoology Stage|Invertebrate Zoology|j-4
-Zoology Stage|Invertebrate Zoology|j-5
-Zoology Stage|Invertebrate Zoology|juvenile
-Zoology Stage|Invertebrate Zoology|juvenile A-1
-Zoology Stage|Invertebrate Zoology|juvenile A-2
-Zoology Stage|Invertebrate Zoology|juvenile A-3
-Zoology Stage|Invertebrate Zoology|juvenile A-4
-Zoology Stage|Invertebrate Zoology|juvenile A-5
-Zoology Stage|Invertebrate Zoology|juvenile I
-Zoology Stage|Invertebrate Zoology|juvenile II
-Zoology Stage|Invertebrate Zoology|juvenile III
-Zoology Stage|Invertebrate Zoology|juvenile instar I
-Zoology Stage|Invertebrate Zoology|juvenile IV
-Zoology Stage|Invertebrate Zoology|juvenile V
-Zoology Stage|Invertebrate Zoology|juvenile VI
-Zoology Stage|Invertebrate Zoology|juveniles
-Zoology Stage|Invertebrate Zoology|larva
-Zoology Stage|Invertebrate Zoology|larvae
-Zoology Stage|Invertebrate Zoology|larvae I
-Zoology Stage|Invertebrate Zoology|larvae II
-Zoology Stage|Invertebrate Zoology|larvae III
-Zoology Stage|Invertebrate Zoology|larvae IV
-Zoology Stage|Invertebrate Zoology|larvae V
-Zoology Stage|Invertebrate Zoology|manca
-Zoology Stage|Invertebrate Zoology|mature
-Zoology Stage|Invertebrate Zoology|medium
-Zoology Stage|Invertebrate Zoology|megalopa
-Zoology Stage|Invertebrate Zoology|nauplius
-Zoology Stage|Invertebrate Zoology|nauplius I
-Zoology Stage|Invertebrate Zoology|nauplius I, III, V
-Zoology Stage|Invertebrate Zoology|nauplius II
-Zoology Stage|Invertebrate Zoology|nauplius II, IV, VI
-Zoology Stage|Invertebrate Zoology|nauplius III
-Zoology Stage|Invertebrate Zoology|nauplius IV
-Zoology Stage|Invertebrate Zoology|nauplius V
-Zoology Stage|Invertebrate Zoology|nauplius VI
-Zoology Stage|Invertebrate Zoology|neuter
-Zoology Stage|Invertebrate Zoology|non-breeding
-Zoology Stage|Invertebrate Zoology|non-ovigerous
-Zoology Stage|Invertebrate Zoology|ootheca
-Zoology Stage|Invertebrate Zoology|ovigerous
-Zoology Stage|Invertebrate Zoology|phyllosoma
-Zoology Stage|Invertebrate Zoology|phyllosoma I
-Zoology Stage|Invertebrate Zoology|phyllosoma II
-Zoology Stage|Invertebrate Zoology|phyllosoma III
-Zoology Stage|Invertebrate Zoology|phyllosoma IV
-Zoology Stage|Invertebrate Zoology|phyllosoma IX
-Zoology Stage|Invertebrate Zoology|Phyllosoma V
-Zoology Stage|Invertebrate Zoology|phyllosoma VI
-Zoology Stage|Invertebrate Zoology|phyllosoma VII
-Zoology Stage|Invertebrate Zoology|phyllosoma VIII
-Zoology Stage|Invertebrate Zoology|phyllosoma X
-Zoology Stage|Invertebrate Zoology|phyllosoma XI
-Zoology Stage|Invertebrate Zoology|postlarva
-Zoology Stage|Invertebrate Zoology|postlarvae
-Zoology Stage|Invertebrate Zoology|praniza
-Zoology Stage|Invertebrate Zoology|pranizae
-Zoology Stage|Invertebrate Zoology|premature
-Zoology Stage|Invertebrate Zoology|preterminal
-Zoology Stage|Invertebrate Zoology|subadult
-Zoology Stage|Invertebrate Zoology|subterminal
-Zoology Stage|Invertebrate Zoology|terminal
-Zoology Stage|Invertebrate Zoology|Tomite
-Zoology Stage|Invertebrate Zoology|Tomont
-Zoology Stage|Invertebrate Zoology|Trophont
-Zoology Stage|Invertebrate Zoology|V
-Zoology Stage|Invertebrate Zoology|VI
-Zoology Stage|Invertebrate Zoology|young
-Zoology Stage|Invertebrate Zoology|zoea
-Zoology Stage|Invertebrate Zoology|zoea I
-Zoology Stage|Invertebrate Zoology|zoea II
-Zoology Stage|Invertebrate Zoology|zoea III
-Zoology Stage|Invertebrate Zoology|zoea IV
-Zoology Stage|Invertebrate Zoology|zoea V
-Zoology Stage|Invertebrate Zoology|zoea VI
-Zoology Stage|Invertebrate Zoology|zoea VII
-Zoology Stage|Invertebrate Zoology|zoea VIII
-Zoology Stage|Invertebrate Zoology|zoeae 1
-Zoology Stage|Invertebrate Zoology|zoeae 2
-Zoology Stage|Mammals|
-Zoology Stage|Mammals|Adolescent
-Zoology Stage|Mammals|Adult
-Zoology Stage|Mammals|Adult/fetus
-Zoology Stage|Mammals|Adult/old
-Zoology Stage|Mammals|Adult/subadult
-Zoology Stage|Mammals|Adult/young
-Zoology Stage|Mammals|Age Class II
-Zoology Stage|Mammals|Aged
-Zoology Stage|Mammals|Calf
-Zoology Stage|Mammals|Colt
-Zoology Stage|Mammals|Cub
-Zoology Stage|Mammals|Embryo
-Zoology Stage|Mammals|Embryo/fetus
-Zoology Stage|Mammals|Embryo/neonate
-Zoology Stage|Mammals|Embryos
-Zoology Stage|Mammals|Embryos/neonate
-Zoology Stage|Mammals|Embryos/nestlings
-Zoology Stage|Mammals|Fawn
-Zoology Stage|Mammals|Fetus
-Zoology Stage|Mammals|Fetus/neonate
-Zoology Stage|Mammals|Fetuses
-Zoology Stage|Mammals|First year
-Zoology Stage|Mammals|Gray pup
-Zoology Stage|Mammals|Half-grown
-Zoology Stage|Mammals|Immature
-Zoology Stage|Mammals|Immature/adult ?
-Zoology Stage|Mammals|Infant
-Zoology Stage|Mammals|Juvenile
-Zoology Stage|Mammals|Juvenile/subadult
-Zoology Stage|Mammals|Juveniles
-Zoology Stage|Mammals|Kitten
-Zoology Stage|Mammals|Lactating
-Zoology Stage|Mammals|Late juvenile
-Zoology Stage|Mammals|Mammae
-Zoology Stage|Mammals|Mature
-Zoology Stage|Mammals|Maturing
-Zoology Stage|Mammals|Nearly Adult
-Zoology Stage|Mammals|Neonate
-Zoology Stage|Mammals|Neonate/young
-Zoology Stage|Mammals|Neonates
-Zoology Stage|Mammals|Nestling
-Zoology Stage|Mammals|Nestlings
-Zoology Stage|Mammals|Nestlings/juveniles
-Zoology Stage|Mammals|Nurseling
-Zoology Stage|Mammals|Old adult
-Zoology Stage|Mammals|Perinatal
-Zoology Stage|Mammals|Pouch young
-Zoology Stage|Mammals|Pregnant
-Zoology Stage|Mammals|Premature
-Zoology Stage|Mammals|Pup
-Zoology Stage|Mammals|Puppy
-Zoology Stage|Mammals|Stillborn
-Zoology Stage|Mammals|Stillborn twin
-Zoology Stage|Mammals|Subadult
-Zoology Stage|Mammals|Suckling
-Zoology Stage|Mammals|Yearling
-Zoology Stage|Mammals|Young
-Zoology Stage|Mammals|Young adult
-Zoology Stage|Mammals|Young juvenile
-Zoology Stage|Mammals|Young of the year
+Life Stage|Amphibians & Reptiles|
+Life Stage|Amphibians & Reptiles|1 adult, 1 larva
+Life Stage|Amphibians & Reptiles|2 year old juvenile
+Life Stage|Amphibians & Reptiles|Adolescent
+Life Stage|Amphibians & Reptiles|Adolesence
+Life Stage|Amphibians & Reptiles|Adult
+Life Stage|Amphibians & Reptiles|Adult (with eggs)
+Life Stage|Amphibians & Reptiles|Adult and 2 eggs
+Life Stage|Amphibians & Reptiles|Adult and larva
+Life Stage|Amphibians & Reptiles|Adult and larvae
+Life Stage|Amphibians & Reptiles|Adult or subadult
+Life Stage|Amphibians & Reptiles|Adult with 2 eggs
+Life Stage|Amphibians & Reptiles|Adult with embryos
+Life Stage|Amphibians & Reptiles|Adult, juvs(2), larvae(6)
+Life Stage|Amphibians & Reptiles|Adult; eggs
+Life Stage|Amphibians & Reptiles|Adult; juveniles
+Life Stage|Amphibians & Reptiles|Branchiate adult
+Life Stage|Amphibians & Reptiles|Breeding adult
+Life Stage|Amphibians & Reptiles|Brooding adult
+Life Stage|Amphibians & Reptiles|Clutch (hatching embryos)
+Life Stage|Amphibians & Reptiles|Clutch eggs
+Life Stage|Amphibians & Reptiles|Clutch of eggs
+Life Stage|Amphibians & Reptiles|Developing embryos
+Life Stage|Amphibians & Reptiles|Eft
+Life Stage|Amphibians & Reptiles|Egg
+Life Stage|Amphibians & Reptiles|Egg (broken)
+Life Stage|Amphibians & Reptiles|Egg and hatchlings
+Life Stage|Amphibians & Reptiles|Egg cases (empty)
+Life Stage|Amphibians & Reptiles|Egg clutch
+Life Stage|Amphibians & Reptiles|Egg clutchs
+Life Stage|Amphibians & Reptiles|Egg fragments
+Life Stage|Amphibians & Reptiles|Egg mass
+Life Stage|Amphibians & Reptiles|Egg mass and larvae
+Life Stage|Amphibians & Reptiles|Egg masses
+Life Stage|Amphibians & Reptiles|Egg shell and embryo
+Life Stage|Amphibians & Reptiles|Egg shells
+Life Stage|Amphibians & Reptiles|Egg shells (fragmented)
+Life Stage|Amphibians & Reptiles|Eggs
+Life Stage|Amphibians & Reptiles|Eggs (many broken)
+Life Stage|Amphibians & Reptiles|Eggs and eggshells
+Life Stage|Amphibians & Reptiles|Eggs and embryo
+Life Stage|Amphibians & Reptiles|Eggs and embryoes
+Life Stage|Amphibians & Reptiles|Eggs and embryos
+Life Stage|Amphibians & Reptiles|Eggs and hatchling
+Life Stage|Amphibians & Reptiles|Eggs and hatchlings
+Life Stage|Amphibians & Reptiles|Eggs and juvenile
+Life Stage|Amphibians & Reptiles|Eggs and larva
+Life Stage|Amphibians & Reptiles|Eggs and larvae
+Life Stage|Amphibians & Reptiles|Eggs and young
+Life Stage|Amphibians & Reptiles|Eggs with late embryos
+Life Stage|Amphibians & Reptiles|Eggshell
+Life Stage|Amphibians & Reptiles|Eggshells
+Life Stage|Amphibians & Reptiles|Embryo
+Life Stage|Amphibians & Reptiles|Embryo (full-term)
+Life Stage|Amphibians & Reptiles|Embryo (mid-term)
+Life Stage|Amphibians & Reptiles|Embryo (near full-term)
+Life Stage|Amphibians & Reptiles|Embryo and egg shell
+Life Stage|Amphibians & Reptiles|Embryo and eggs
+Life Stage|Amphibians & Reptiles|Embryo and eggshell
+Life Stage|Amphibians & Reptiles|Embryo and larvae
+Life Stage|Amphibians & Reptiles|Embryo and yolk
+Life Stage|Amphibians & Reptiles|Embryo in oviduct
+Life Stage|Amphibians & Reptiles|Embryo in shell
+Life Stage|Amphibians & Reptiles|Embryo with egg shell
+Life Stage|Amphibians & Reptiles|Embryo with eggshell
+Life Stage|Amphibians & Reptiles|Embryos
+Life Stage|Amphibians & Reptiles|Embryos (full-term)
+Life Stage|Amphibians & Reptiles|Embryos and hatchling
+Life Stage|Amphibians & Reptiles|Embryos and larvae
+Life Stage|Amphibians & Reptiles|Embryos with egg shells
+Life Stage|Amphibians & Reptiles|embryos with jelly
+Life Stage|Amphibians & Reptiles|Fetus
+Life Stage|Amphibians & Reptiles|Fullterm embryo
+Life Stage|Amphibians & Reptiles|Gravid adult
+Life Stage|Amphibians & Reptiles|Gravid adult (6 eggs)
+Life Stage|Amphibians & Reptiles|Gravid adult (large yolked eggs)
+Life Stage|Amphibians & Reptiles|Gravid adult with embryos
+Life Stage|Amphibians & Reptiles|Half grown
+Life Stage|Amphibians & Reptiles|Hatchling
+Life Stage|Amphibians & Reptiles|Hatchling (abnormal)
+Life Stage|Amphibians & Reptiles|Hatchling (died)
+Life Stage|Amphibians & Reptiles|Hatchling and egg
+Life Stage|Amphibians & Reptiles|Hatchling and egg shell
+Life Stage|Amphibians & Reptiles|Hatchling with egg
+Life Stage|Amphibians & Reptiles|Hatchling with egg shell
+Life Stage|Amphibians & Reptiles|Hatchling, embryos
+Life Stage|Amphibians & Reptiles|Hatchling, unhatched egg
+Life Stage|Amphibians & Reptiles|Hatchling; eggshell
+Life Stage|Amphibians & Reptiles|Hatchlings
+Life Stage|Amphibians & Reptiles|Hatchlings and egg
+Life Stage|Amphibians & Reptiles|Hatchlings, part egg gel
+Life Stage|Amphibians & Reptiles|Hemipenes everted
+Life Stage|Amphibians & Reptiles|Hgr
+Life Stage|Amphibians & Reptiles|Immature
+Life Stage|Amphibians & Reptiles|Juvenile
+Life Stage|Amphibians & Reptiles|Juvenile (2 months old)
+Life Stage|Amphibians & Reptiles|Juvenile (eft)
+Life Stage|Amphibians & Reptiles|Juvenile and egg
+Life Stage|Amphibians & Reptiles|Juvenile and eggs
+Life Stage|Amphibians & Reptiles|Juvenile or metamorph
+Life Stage|Amphibians & Reptiles|Juvenile, egg
+Life Stage|Amphibians & Reptiles|Juvenile/subadult
+Life Stage|Amphibians & Reptiles|Juvenile; egg shell
+Life Stage|Amphibians & Reptiles|Juvenile-adult
+Life Stage|Amphibians & Reptiles|Juveniles
+Life Stage|Amphibians & Reptiles|Juveniles and eggs
+Life Stage|Amphibians & Reptiles|Juveniles and metamorphs
+Life Stage|Amphibians & Reptiles|Large adult
+Life Stage|Amphibians & Reptiles|Larva
+Life Stage|Amphibians & Reptiles|Larva and juvenile
+Life Stage|Amphibians & Reptiles|Larva and metamorph
+Life Stage|Amphibians & Reptiles|Larva and metamorphs
+Life Stage|Amphibians & Reptiles|Larva and premetamorph
+Life Stage|Amphibians & Reptiles|Larva and premetamorphs
+Life Stage|Amphibians & Reptiles|Larva, metamorph
+Life Stage|Amphibians & Reptiles|Larva; premetamorph
+Life Stage|Amphibians & Reptiles|Larvae
+Life Stage|Amphibians & Reptiles|Larvae and 1 metamorph
+Life Stage|Amphibians & Reptiles|Larvae and eggs
+Life Stage|Amphibians & Reptiles|Larvae and juvenile
+Life Stage|Amphibians & Reptiles|Larvae and juveniles
+Life Stage|Amphibians & Reptiles|Larvae and metamorph
+Life Stage|Amphibians & Reptiles|Larvae and metamorphics
+Life Stage|Amphibians & Reptiles|Larvae and metamorphs
+Life Stage|Amphibians & Reptiles|Larvae and premetamorph
+Life Stage|Amphibians & Reptiles|Larvae and premetamorphs
+Life Stage|Amphibians & Reptiles|Larvae through metamorphs
+Life Stage|Amphibians & Reptiles|Larvae, premetamorph
+Life Stage|Amphibians & Reptiles|Larvae, premetamorphs
+Life Stage|Amphibians & Reptiles|Larvae; hatchlings
+Life Stage|Amphibians & Reptiles|Larvae; metamorph
+Life Stage|Amphibians & Reptiles|Larvae; metamorphs
+Life Stage|Amphibians & Reptiles|Larvae; postmetamorphs
+Life Stage|Amphibians & Reptiles|Larvae; premetamorph (1)
+Life Stage|Amphibians & Reptiles|Larvae+metamorphs+juvenil
+Life Stage|Amphibians & Reptiles|Late eft
+Life Stage|Amphibians & Reptiles|Late metamorphic
+Life Stage|Amphibians & Reptiles|Late metamorphics
+Life Stage|Amphibians & Reptiles|Late stage embryo
+Life Stage|Amphibians & Reptiles|Late stage embryos
+Life Stage|Amphibians & Reptiles|Metamorph
+Life Stage|Amphibians & Reptiles|Metamorph (early)
+Life Stage|Amphibians & Reptiles|Metamorph (late)
+Life Stage|Amphibians & Reptiles|Metamorph (mid)
+Life Stage|Amphibians & Reptiles|Metamorph and tadpole
+Life Stage|Amphibians & Reptiles|metamorph with tail
+Life Stage|Amphibians & Reptiles|Metamorph, larvae
+Life Stage|Amphibians & Reptiles|Metamorphic
+Life Stage|Amphibians & Reptiles|Metamorphics
+Life Stage|Amphibians & Reptiles|Metamorphs
+Life Stage|Amphibians & Reptiles|Metamorphs (early)
+Life Stage|Amphibians & Reptiles|Metamorphs (late)
+Life Stage|Amphibians & Reptiles|Metamorphs (mid)
+Life Stage|Amphibians & Reptiles|Metamorphs and juveniles
+Life Stage|Amphibians & Reptiles|Metamorphs with tail
+Life Stage|Amphibians & Reptiles|Near term embryo
+Life Stage|Amphibians & Reptiles|Neonate
+Life Stage|Amphibians & Reptiles|Neonate with egg shell
+Life Stage|Amphibians & Reptiles|Neonates
+Life Stage|Amphibians & Reptiles|Neotenic
+Life Stage|Amphibians & Reptiles|Neotenic adult
+Life Stage|Amphibians & Reptiles|Newborn
+Life Stage|Amphibians & Reptiles|Ovarian eggs
+Life Stage|Amphibians & Reptiles|Ovum only
+Life Stage|Amphibians & Reptiles|Postembryo
+Life Stage|Amphibians & Reptiles|Postmetamorph
+Life Stage|Amphibians & Reptiles|Postmetamorph larva
+Life Stage|Amphibians & Reptiles|Postmetamorphic
+Life Stage|Amphibians & Reptiles|Post-metamorphic
+Life Stage|Amphibians & Reptiles|Postmetamorphs
+Life Stage|Amphibians & Reptiles|Pre- and postmetamorphs
+Life Stage|Amphibians & Reptiles|Prehatchling
+Life Stage|Amphibians & Reptiles|Premetamorph
+Life Stage|Amphibians & Reptiles|Premetamorph (stage 40)
+Life Stage|Amphibians & Reptiles|Premetamorph;stage 38(39)
+Life Stage|Amphibians & Reptiles|Premetamorphs
+Life Stage|Amphibians & Reptiles|Premetamorphs - juveniles
+Life Stage|Amphibians & Reptiles|Premetamorphs and larvae
+Life Stage|Amphibians & Reptiles|Premetamorphs, juvenile
+Life Stage|Amphibians & Reptiles|Premetamorphs, metamorphs
+Life Stage|Amphibians & Reptiles|Recent metamorph
+Life Stage|Amphibians & Reptiles|Spermatophores
+Life Stage|Amphibians & Reptiles|Stage 23 (dead)
+Life Stage|Amphibians & Reptiles|Stage 24
+Life Stage|Amphibians & Reptiles|Stage 24 (dead)
+Life Stage|Amphibians & Reptiles|Stage 25
+Life Stage|Amphibians & Reptiles|Stage 25 (dead)
+Life Stage|Amphibians & Reptiles|Stuffed
+Life Stage|Amphibians & Reptiles|Subadult
+Life Stage|Amphibians & Reptiles|Sub-adult
+Life Stage|Amphibians & Reptiles|Tadpole
+Life Stage|Amphibians & Reptiles|Tadpoles
+Life Stage|Amphibians & Reptiles|Transforming
+Life Stage|Amphibians & Reptiles|Unhatched eggs
+Life Stage|Amphibians & Reptiles|Yolked + non-yolked eggs
+Life Stage|Amphibians & Reptiles|Young
+Life Stage|Amphibians & Reptiles|Young adult
+Life Stage|Birds|
+Life Stage|Birds|Adult
+Life Stage|Birds|Chick
+Life Stage|Birds|Embryo
+Life Stage|Birds|Immature
+Life Stage|Birds|Juvenile
+Life Stage|Birds|Subadult
+Life Stage|Entomology|
+Life Stage|Entomology|Adult
+Life Stage|Entomology|bottom
+Life Stage|Entomology|dault
+Life Stage|Entomology|Egg
+Life Stage|Entomology|Eggs
+Life Stage|Entomology|exuviae
+Life Stage|Entomology|First instar
+Life Stage|Entomology|Immature
+Life Stage|Entomology|larva
+Life Stage|Entomology|morphotype
+Life Stage|Entomology|Nymph
+Life Stage|Entomology|Penultimate instar
+Life Stage|Entomology|Pupa
+Life Stage|Entomology|pupal exuvia
+Life Stage|Entomology|research
+Life Stage|Entomology|S
+Life Stage|Entomology|Second instar
+Life Stage|Entomology|top
+Life Stage|Entomology|Ultimate instar
+Life Stage|Entomology|Unknown
+Life Stage|Entomology|Wings Alate
+Life Stage|Entomology|Wings Alatoid
+Life Stage|Entomology|Wings Aptera
+Life Stage|Entomology|Wings Apterous
+Life Stage|Entomology|Wings Brachypterous
+Life Stage|Entomology|Wings Unknown
+Life Stage|Fishes|
+Life Stage|Invertebrate Zoology|
+Life Stage|Invertebrate Zoology|A-1
+Life Stage|Invertebrate Zoology|A-2
+Life Stage|Invertebrate Zoology|A-3
+Life Stage|Invertebrate Zoology|A-4
+Life Stage|Invertebrate Zoology|A-5
+Life Stage|Invertebrate Zoology|A-6?
+Life Stage|Invertebrate Zoology|adult
+Life Stage|Invertebrate Zoology|adults & juveniles
+Life Stage|Invertebrate Zoology|amplexus
+Life Stage|Invertebrate Zoology|breeding
+Life Stage|Invertebrate Zoology|copepodid
+Life Stage|Invertebrate Zoology|copepodid & nauplii
+Life Stage|Invertebrate Zoology|Copepodid I
+Life Stage|Invertebrate Zoology|Copepodid II
+Life Stage|Invertebrate Zoology|Copepodid III
+Life Stage|Invertebrate Zoology|Copepodid IV
+Life Stage|Invertebrate Zoology|copepodid V
+Life Stage|Invertebrate Zoology|crab 1
+Life Stage|Invertebrate Zoology|crab 2
+Life Stage|Invertebrate Zoology|cypris larvae
+Life Stage|Invertebrate Zoology|egg
+Life Stage|Invertebrate Zoology|egg brood
+Life Stage|Invertebrate Zoology|egg case
+Life Stage|Invertebrate Zoology|egg masses
+Life Stage|Invertebrate Zoology|eggs
+Life Stage|Invertebrate Zoology|embryo
+Life Stage|Invertebrate Zoology|erichthus larvae
+Life Stage|Invertebrate Zoology|glaucothoe
+Life Stage|Invertebrate Zoology|glaucothoes
+Life Stage|Invertebrate Zoology|hatchling
+Life Stage|Invertebrate Zoology|hatchlings
+Life Stage|Invertebrate Zoology|I
+Life Stage|Invertebrate Zoology|II
+Life Stage|Invertebrate Zoology|III
+Life Stage|Invertebrate Zoology|immature
+Life Stage|Invertebrate Zoology|Instar I
+Life Stage|Invertebrate Zoology|Instar II
+Life Stage|Invertebrate Zoology|Instar III
+Life Stage|Invertebrate Zoology|Instar IV
+Life Stage|Invertebrate Zoology|Instar V
+Life Stage|Invertebrate Zoology|IV
+Life Stage|Invertebrate Zoology|j-1
+Life Stage|Invertebrate Zoology|j-2
+Life Stage|Invertebrate Zoology|j-3
+Life Stage|Invertebrate Zoology|j-4
+Life Stage|Invertebrate Zoology|j-5
+Life Stage|Invertebrate Zoology|juvenile
+Life Stage|Invertebrate Zoology|juvenile A-1
+Life Stage|Invertebrate Zoology|juvenile A-2
+Life Stage|Invertebrate Zoology|juvenile A-3
+Life Stage|Invertebrate Zoology|juvenile A-4
+Life Stage|Invertebrate Zoology|juvenile A-5
+Life Stage|Invertebrate Zoology|juvenile I
+Life Stage|Invertebrate Zoology|juvenile II
+Life Stage|Invertebrate Zoology|juvenile III
+Life Stage|Invertebrate Zoology|juvenile instar I
+Life Stage|Invertebrate Zoology|juvenile IV
+Life Stage|Invertebrate Zoology|juvenile V
+Life Stage|Invertebrate Zoology|juvenile VI
+Life Stage|Invertebrate Zoology|juveniles
+Life Stage|Invertebrate Zoology|larva
+Life Stage|Invertebrate Zoology|larvae
+Life Stage|Invertebrate Zoology|larvae I
+Life Stage|Invertebrate Zoology|larvae II
+Life Stage|Invertebrate Zoology|larvae III
+Life Stage|Invertebrate Zoology|larvae IV
+Life Stage|Invertebrate Zoology|larvae V
+Life Stage|Invertebrate Zoology|manca
+Life Stage|Invertebrate Zoology|mature
+Life Stage|Invertebrate Zoology|medium
+Life Stage|Invertebrate Zoology|megalopa
+Life Stage|Invertebrate Zoology|nauplius
+Life Stage|Invertebrate Zoology|nauplius I
+Life Stage|Invertebrate Zoology|nauplius I, III, V
+Life Stage|Invertebrate Zoology|nauplius II
+Life Stage|Invertebrate Zoology|nauplius II, IV, VI
+Life Stage|Invertebrate Zoology|nauplius III
+Life Stage|Invertebrate Zoology|nauplius IV
+Life Stage|Invertebrate Zoology|nauplius V
+Life Stage|Invertebrate Zoology|nauplius VI
+Life Stage|Invertebrate Zoology|neuter
+Life Stage|Invertebrate Zoology|non-breeding
+Life Stage|Invertebrate Zoology|non-ovigerous
+Life Stage|Invertebrate Zoology|ootheca
+Life Stage|Invertebrate Zoology|ovigerous
+Life Stage|Invertebrate Zoology|phyllosoma
+Life Stage|Invertebrate Zoology|phyllosoma I
+Life Stage|Invertebrate Zoology|phyllosoma II
+Life Stage|Invertebrate Zoology|phyllosoma III
+Life Stage|Invertebrate Zoology|phyllosoma IV
+Life Stage|Invertebrate Zoology|phyllosoma IX
+Life Stage|Invertebrate Zoology|Phyllosoma V
+Life Stage|Invertebrate Zoology|phyllosoma VI
+Life Stage|Invertebrate Zoology|phyllosoma VII
+Life Stage|Invertebrate Zoology|phyllosoma VIII
+Life Stage|Invertebrate Zoology|phyllosoma X
+Life Stage|Invertebrate Zoology|phyllosoma XI
+Life Stage|Invertebrate Zoology|postlarva
+Life Stage|Invertebrate Zoology|postlarvae
+Life Stage|Invertebrate Zoology|praniza
+Life Stage|Invertebrate Zoology|pranizae
+Life Stage|Invertebrate Zoology|premature
+Life Stage|Invertebrate Zoology|preterminal
+Life Stage|Invertebrate Zoology|subadult
+Life Stage|Invertebrate Zoology|subterminal
+Life Stage|Invertebrate Zoology|terminal
+Life Stage|Invertebrate Zoology|Tomite
+Life Stage|Invertebrate Zoology|Tomont
+Life Stage|Invertebrate Zoology|Trophont
+Life Stage|Invertebrate Zoology|V
+Life Stage|Invertebrate Zoology|VI
+Life Stage|Invertebrate Zoology|young
+Life Stage|Invertebrate Zoology|zoea
+Life Stage|Invertebrate Zoology|zoea I
+Life Stage|Invertebrate Zoology|zoea II
+Life Stage|Invertebrate Zoology|zoea III
+Life Stage|Invertebrate Zoology|zoea IV
+Life Stage|Invertebrate Zoology|zoea V
+Life Stage|Invertebrate Zoology|zoea VI
+Life Stage|Invertebrate Zoology|zoea VII
+Life Stage|Invertebrate Zoology|zoea VIII
+Life Stage|Invertebrate Zoology|zoeae 1
+Life Stage|Invertebrate Zoology|zoeae 2
+Life Stage|Mammals|
+Life Stage|Mammals|Adolescent
+Life Stage|Mammals|Adult
+Life Stage|Mammals|Adult/fetus
+Life Stage|Mammals|Adult/old
+Life Stage|Mammals|Adult/subadult
+Life Stage|Mammals|Adult/young
+Life Stage|Mammals|Age Class II
+Life Stage|Mammals|Aged
+Life Stage|Mammals|Calf
+Life Stage|Mammals|Colt
+Life Stage|Mammals|Cub
+Life Stage|Mammals|Embryo
+Life Stage|Mammals|Embryo/fetus
+Life Stage|Mammals|Embryo/neonate
+Life Stage|Mammals|Embryos
+Life Stage|Mammals|Embryos/neonate
+Life Stage|Mammals|Embryos/nestlings
+Life Stage|Mammals|Fawn
+Life Stage|Mammals|Fetus
+Life Stage|Mammals|Fetus/neonate
+Life Stage|Mammals|Fetuses
+Life Stage|Mammals|First year
+Life Stage|Mammals|Gray pup
+Life Stage|Mammals|Half-grown
+Life Stage|Mammals|Immature
+Life Stage|Mammals|Immature/adult ?
+Life Stage|Mammals|Infant
+Life Stage|Mammals|Juvenile
+Life Stage|Mammals|Juvenile/subadult
+Life Stage|Mammals|Juveniles
+Life Stage|Mammals|Kitten
+Life Stage|Mammals|Lactating
+Life Stage|Mammals|Late juvenile
+Life Stage|Mammals|Mammae
+Life Stage|Mammals|Mature
+Life Stage|Mammals|Maturing
+Life Stage|Mammals|Nearly Adult
+Life Stage|Mammals|Neonate
+Life Stage|Mammals|Neonate/young
+Life Stage|Mammals|Neonates
+Life Stage|Mammals|Nestling
+Life Stage|Mammals|Nestlings
+Life Stage|Mammals|Nestlings/juveniles
+Life Stage|Mammals|Nurseling
+Life Stage|Mammals|Old adult
+Life Stage|Mammals|Perinatal
+Life Stage|Mammals|Pouch young
+Life Stage|Mammals|Pregnant
+Life Stage|Mammals|Premature
+Life Stage|Mammals|Pup
+Life Stage|Mammals|Puppy
+Life Stage|Mammals|Stillborn
+Life Stage|Mammals|Stillborn twin
+Life Stage|Mammals|Subadult
+Life Stage|Mammals|Suckling
+Life Stage|Mammals|Yearling
+Life Stage|Mammals|Young
+Life Stage|Mammals|Young adult
+Life Stage|Mammals|Young juvenile
+Life Stage|Mammals|Young of the year
 family|Amphibians & Reptiles|
 family|Birds|
 family|Botany|?

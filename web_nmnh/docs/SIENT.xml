@@ -241,14 +241,14 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Record Creator</field>
 			<field>Class</field>
 			<field>Order</field>
-			<field>Genetic Sample Type Primary</field>
-			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
 			<field>Elevation To (m)</field>
 			<field>Coordinate Determination Method</field>
 			<field>Date Identified</field>
 			<field>Biorepository ID</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
 			<field>Genetic Sample Preservation Date</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Prepared By</field>
@@ -273,15 +273,15 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
-		<rule type='controlledVocabulary' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Museum Acronym' list='institutionCode' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Biogeographic Region' list='Biogeography Region' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 2' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Kind of Object' list='Object Type' level='error'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen count' level='warning' value='%3E0'></rule>
-		<rule type='controlledVocabulary' column='Life Stage' list='Zoology Stage' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
@@ -317,6 +317,10 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 	</worksheet>
 	<lists>
+		<list alias='Kind of Object' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
+		</list>
 		<list alias='sex' caseInsensitive='true'>
 			<field><![CDATA[Male]]></field>
 			<field><![CDATA[Female]]></field>
@@ -353,35 +357,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<list alias='hybridRank' caseInsensitive='true'>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
-		</list>
-		<list alias='Zoology Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-			<field><![CDATA[Adult]]></field>
-			<field><![CDATA[bottom]]></field>
-			<field><![CDATA[dault]]></field>
-			<field><![CDATA[Egg]]></field>
-			<field><![CDATA[Eggs]]></field>
-			<field><![CDATA[exuviae]]></field>
-			<field><![CDATA[First instar]]></field>
-			<field><![CDATA[Immature]]></field>
-			<field><![CDATA[larva]]></field>
-			<field><![CDATA[morphotype]]></field>
-			<field><![CDATA[Nymph]]></field>
-			<field><![CDATA[Penultimate instar]]></field>
-			<field><![CDATA[Pupa]]></field>
-			<field><![CDATA[pupal exuvia]]></field>
-			<field><![CDATA[research]]></field>
-			<field><![CDATA[S]]></field>
-			<field><![CDATA[Second instar]]></field>
-			<field><![CDATA[top]]></field>
-			<field><![CDATA[Ultimate instar]]></field>
-			<field><![CDATA[Unknown]]></field>
-			<field><![CDATA[Wings Alate]]></field>
-			<field><![CDATA[Wings Alatoid]]></field>
-			<field><![CDATA[Wings Aptera]]></field>
-			<field><![CDATA[Wings Apterous]]></field>
-			<field><![CDATA[Wings Brachypterous]]></field>
-			<field><![CDATA[Wings Unknown]]></field>
 		</list>
 		<list alias='phylum' caseInsensitive='true'>
 			<field><![CDATA[]]></field>
@@ -2567,6 +2542,9 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[less than]]></field>
 			<field><![CDATA[±]]></field>
 		</list>
+		<list alias='Collection Department' caseInsensitive='true'>
+			<field><![CDATA[Entomology]]></field>
+		</list>
 		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
 			<field><![CDATA[3 mm]]></field>
 			<field><![CDATA[4 mm]]></field>
@@ -2627,6 +2605,15 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[species]]></field>
 			<field><![CDATA[subgenus]]></field>
 		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
+		</list>
 		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
 			<field><![CDATA[Blood]]></field>
 			<field><![CDATA[Cell]]></field>
@@ -2637,6 +2624,21 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Germplasm]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='preparation' caseInsensitive='true'>
+			<field><![CDATA[DNAgard]]></field>
+			<field><![CDATA[Envelope]]></field>
+			<field><![CDATA[Ethanol]]></field>
+			<field><![CDATA[Ethanol drained]]></field>
+			<field><![CDATA[Fossil in Amber]]></field>
+			<field><![CDATA[Glycerine]]></field>
+			<field><![CDATA[Papered]]></field>
+			<field><![CDATA[Pinned]]></field>
+			<field><![CDATA[Riker Mount]]></field>
+			<field><![CDATA[RNAlater]]></field>
+			<field><![CDATA[Slide]]></field>
+			<field><![CDATA[Slide section]]></field>
+			<field><![CDATA[Vial]]></field>
 		</list>
 		<list alias='yesNo' caseInsensitive='true'>
 			<field><![CDATA[Yes]]></field>
@@ -2650,25 +2652,43 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
 		</list>
-		<list alias='Object Type' caseInsensitive='true'>
-			<field><![CDATA[Genetic Sample]]></field>
-			<field><![CDATA[Specimen/Lot]]></field>
+		<list alias='Life Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[bottom]]></field>
+			<field><![CDATA[dault]]></field>
+			<field><![CDATA[Egg]]></field>
+			<field><![CDATA[Eggs]]></field>
+			<field><![CDATA[exuviae]]></field>
+			<field><![CDATA[First instar]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[larva]]></field>
+			<field><![CDATA[morphotype]]></field>
+			<field><![CDATA[Nymph]]></field>
+			<field><![CDATA[Penultimate instar]]></field>
+			<field><![CDATA[Pupa]]></field>
+			<field><![CDATA[pupal exuvia]]></field>
+			<field><![CDATA[research]]></field>
+			<field><![CDATA[S]]></field>
+			<field><![CDATA[Second instar]]></field>
+			<field><![CDATA[top]]></field>
+			<field><![CDATA[Ultimate instar]]></field>
+			<field><![CDATA[Unknown]]></field>
+			<field><![CDATA[Wings Alate]]></field>
+			<field><![CDATA[Wings Alatoid]]></field>
+			<field><![CDATA[Wings Aptera]]></field>
+			<field><![CDATA[Wings Apterous]]></field>
+			<field><![CDATA[Wings Brachypterous]]></field>
+			<field><![CDATA[Wings Unknown]]></field>
 		</list>
 		<list alias='genus' caseInsensitive='true'>
 			<field><![CDATA[]]></field>
 		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field><![CDATA[Entomology]]></field>
-		</list>
 		<list alias='country' caseInsensitive='true'>
-			<field><![CDATA[?]]></field>
-			<field><![CDATA[[multiple localities]]]></field>
-			<field><![CDATA[[Not Stated]]]></field>
 			<field><![CDATA[Abessinia]]></field>
 			<field><![CDATA[Admiralty Islands]]></field>
 			<field><![CDATA[Afghanistan]]></field>
 			<field><![CDATA[Africa]]></field>
-			<field><![CDATA[Africa?]]></field>
 			<field><![CDATA[Albania]]></field>
 			<field><![CDATA[Aldabra Atoll]]></field>
 			<field><![CDATA[Algeria]]></field>
@@ -2731,21 +2751,17 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Central East Borneo]]></field>
 			<field><![CDATA[Central Ethiopia]]></field>
 			<field><![CDATA[Ceylon]]></field>
-			<field><![CDATA[Ceylon?]]></field>
 			<field><![CDATA[Chad]]></field>
 			<field><![CDATA[Chile]]></field>
 			<field><![CDATA[China]]></field>
 			<field><![CDATA[China:Tibet]]></field>
 			<field><![CDATA[Clipperton Island]]></field>
-			<field><![CDATA[Cocos (Keeling) Island]]></field>
 			<field><![CDATA[Colombia]]></field>
-			<field><![CDATA[Colombia Or Peru]]></field>
 			<field><![CDATA[Columbia]]></field>
 			<field><![CDATA[Commonwealth of the Northern Marianas Islands]]></field>
 			<field><![CDATA[Comoros]]></field>
 			<field><![CDATA[Congo]]></field>
 			<field><![CDATA[Cook Islands]]></field>
-			<field><![CDATA[Co-operative Repulic of Guyana]]></field>
 			<field><![CDATA[Costa Rica]]></field>
 			<field><![CDATA[Côte d'Ivoire]]></field>
 			<field><![CDATA[Croatia]]></field>
@@ -2765,7 +2781,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[East Sumba]]></field>
 			<field><![CDATA[East Timor]]></field>
 			<field><![CDATA[Ecuador]]></field>
-			<field><![CDATA[Ecuador/Bolivia]]></field>
 			<field><![CDATA[Ecuador; Colombia]]></field>
 			<field><![CDATA[Egypt]]></field>
 			<field><![CDATA[El Salvador]]></field>
@@ -2788,7 +2803,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Gambia, The]]></field>
 			<field><![CDATA[German Democratic Republic]]></field>
 			<field><![CDATA[Germany]]></field>
-			<field><![CDATA[Germany or Austria]]></field>
 			<field><![CDATA[Germany, Berlin]]></field>
 			<field><![CDATA[Germany, Federal Republic of]]></field>
 			<field><![CDATA[Ghana]]></field>
@@ -2806,7 +2820,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Guam Island]]></field>
 			<field><![CDATA[Guatemala]]></field>
 			<field><![CDATA[Guinea]]></field>
-			<field><![CDATA[Guinea-Bissau]]></field>
 			<field><![CDATA[Guyana]]></field>
 			<field><![CDATA[Haiti]]></field>
 			<field><![CDATA[Holland]]></field>
@@ -2815,7 +2828,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Hungary]]></field>
 			<field><![CDATA[Iceland]]></field>
 			<field><![CDATA[India]]></field>
-			<field><![CDATA[India?]]></field>
 			<field><![CDATA[Indochina]]></field>
 			<field><![CDATA[Indonesia]]></field>
 			<field><![CDATA[Indonesia: Borneo]]></field>
@@ -2844,7 +2856,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Jordan]]></field>
 			<field><![CDATA[Kazakhstan]]></field>
 			<field><![CDATA[Kenya]]></field>
-			<field><![CDATA[Kenya-Uganda border]]></field>
 			<field><![CDATA[Kiribati]]></field>
 			<field><![CDATA[Kiribati Republic]]></field>
 			<field><![CDATA[Korea]]></field>
@@ -2857,22 +2868,18 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Liberia]]></field>
 			<field><![CDATA[Libya]]></field>
 			<field><![CDATA[Lithuania]]></field>
-			<field><![CDATA[Locality unknown]]></field>
 			<field><![CDATA[Loja]]></field>
 			<field><![CDATA[Luxembourg]]></field>
 			<field><![CDATA[Macau]]></field>
 			<field><![CDATA[Macedonia]]></field>
 			<field><![CDATA[Madagascar]]></field>
-			<field><![CDATA[Maderia Islands (Portugal)]]></field>
 			<field><![CDATA[Malagassy Republic]]></field>
 			<field><![CDATA[Malagasy Republic]]></field>
 			<field><![CDATA[Malawi]]></field>
 			<field><![CDATA[Malayia]]></field>
 			<field><![CDATA[Malaysia]]></field>
 			<field><![CDATA[Malaysia Borneo: Sarawak Island]]></field>
-			<field><![CDATA[Malaysia:Indonesia:Sarawak (Island of Borneo)]]></field>
 			<field><![CDATA[Malaysia:Sarawak]]></field>
-			<field><![CDATA[Malaysia:Sarawak (Island of Borneo)]]></field>
 			<field><![CDATA[Mali]]></field>
 			<field><![CDATA[Marianas]]></field>
 			<field><![CDATA[Marianas Islands]]></field>
@@ -2881,7 +2888,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Martinique]]></field>
 			<field><![CDATA[Mauritius]]></field>
 			<field><![CDATA[Mexico]]></field>
-			<field><![CDATA[Mexico / Costa Rica]]></field>
 			<field><![CDATA[Micronesia, Federated States of]]></field>
 			<field><![CDATA[Micronesia:Caroline Islands:Truk Island]]></field>
 			<field><![CDATA[Micronesia:Ponape]]></field>
@@ -2929,7 +2935,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Palestine]]></field>
 			<field><![CDATA[Palmyra Atoll]]></field>
 			<field><![CDATA[Panama]]></field>
-			<field><![CDATA[Panama/Colombia]]></field>
 			<field><![CDATA[Papua New Guinea]]></field>
 			<field><![CDATA[Paraguay]]></field>
 			<field><![CDATA[Peru]]></field>
@@ -2954,7 +2959,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Republic of Trinidad and Tobago]]></field>
 			<field><![CDATA[Reunion]]></field>
 			<field><![CDATA[Rhodesia]]></field>
-			<field><![CDATA[Rhodesia-Mozambique border]]></field>
 			<field><![CDATA[Romania]]></field>
 			<field><![CDATA[Russia]]></field>
 			<field><![CDATA[Rwanda]]></field>
@@ -2975,7 +2979,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Samoa]]></field>
 			<field><![CDATA[Sao Tome and Principe]]></field>
 			<field><![CDATA[Sarawak]]></field>
-			<field><![CDATA[Sarawak (Island of Borneo)]]></field>
 			<field><![CDATA[Saudi Arabia]]></field>
 			<field><![CDATA[Scotland]]></field>
 			<field><![CDATA[Senegal]]></field>
@@ -3016,7 +3019,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Tanzania, United Republic of]]></field>
 			<field><![CDATA[Tasmania]]></field>
 			<field><![CDATA[Thailand]]></field>
-			<field><![CDATA[Thailand [as Lower Siam], Trong, Khow Sai Dow, 1000 ft.]]></field>
 			<field><![CDATA[The Bahamas]]></field>
 			<field><![CDATA[The Philippines]]></field>
 			<field><![CDATA[Tibet]]></field>
@@ -3035,7 +3037,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[U.S. Virgin Islands]]></field>
 			<field><![CDATA[U.S.S.R.]]></field>
 			<field><![CDATA[Uganda]]></field>
-			<field><![CDATA[Uganda-Kenya border]]></field>
 			<field><![CDATA[Ukraine]]></field>
 			<field><![CDATA[Union of Myanmar]]></field>
 			<field><![CDATA[Union of Soviet Socialist Republics]]></field>
@@ -3043,17 +3044,12 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[United Kingdom]]></field>
 			<field><![CDATA[United Republic of Tanzania]]></field>
 			<field><![CDATA[United States]]></field>
-			<field><![CDATA[United States / Mexico]]></field>
-			<field><![CDATA[United States or Canada]]></field>
 			<field><![CDATA[United States, Virgin Islands]]></field>
-			<field><![CDATA[United States/Canada]]></field>
-			<field><![CDATA[Unknown]]></field>
 			<field><![CDATA[Urugauy]]></field>
 			<field><![CDATA[Uruguay]]></field>
 			<field><![CDATA[USA]]></field>
 			<field><![CDATA[Vanuatu]]></field>
 			<field><![CDATA[Venezuela]]></field>
-			<field><![CDATA[Venezuela/Guyana]]></field>
 			<field><![CDATA[Viet Nam]]></field>
 			<field><![CDATA[Vietnam]]></field>
 			<field><![CDATA[Virgin Is]]></field>
@@ -3071,28 +3067,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Wolcai Atoll]]></field>
 			<field><![CDATA[Yap Island]]></field>
 			<field><![CDATA[Yemen]]></field>
-			<field><![CDATA[Yemen (Aden)]]></field>
-			<field><![CDATA[Yemen (Sanaa)]]></field>
 			<field><![CDATA[Yugoslavia]]></field>
 			<field><![CDATA[Zaire]]></field>
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
 			<field><![CDATA[Zuzuland]]></field>
-		</list>
-		<list alias='Zoology Preparation' caseInsensitive='true'>
-			<field><![CDATA[DNAgard]]></field>
-			<field><![CDATA[Envelope]]></field>
-			<field><![CDATA[Ethanol]]></field>
-			<field><![CDATA[Ethanol drained]]></field>
-			<field><![CDATA[Fossil in Amber]]></field>
-			<field><![CDATA[Glycerine]]></field>
-			<field><![CDATA[Papered]]></field>
-			<field><![CDATA[Pinned]]></field>
-			<field><![CDATA[Riker Mount]]></field>
-			<field><![CDATA[RNAlater]]></field>
-			<field><![CDATA[Slide]]></field>
-			<field><![CDATA[Slide section]]></field>
-			<field><![CDATA[Vial]]></field>
 		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[aff.]]></field>
@@ -3125,15 +3104,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[µm]]></field>
 			<field><![CDATA[in]]></field>
 			<field><![CDATA[ft]]></field>
-		</list>
-		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
-			<field><![CDATA[aberration]]></field>
-			<field><![CDATA[forma]]></field>
-			<field><![CDATA[morpha]]></field>
-			<field><![CDATA[race]]></field>
-			<field><![CDATA[subforma]]></field>
-			<field><![CDATA[subvariety]]></field>
-			<field><![CDATA[variety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Abdomen]]></field>

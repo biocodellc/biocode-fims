@@ -42,15 +42,6 @@ BOLD: The source of the latitude and longitude.<p><b>Synonyms:</b><p>"georeferen
 		<attribute column='Longitude Direction' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'><![CDATA[<p><b>Synonyms:</b><p>"LongEW" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Longitude Minutes' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'><![CDATA[<p><b>Synonyms:</b><p>"LongM" = Entomology - Ted Schultz,]]></attribute>
 		<attribute column='Longitude Seconds' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'><![CDATA[<p><b>Synonyms:</b><p>"LongS" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='Identification Qualifier' uri='urn:identificationQualifier' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#identificationQualifier'><![CDATA[DwC: A brief phrase or a standard term ("cf.", "aff.") to express the determiner's doubts about the Identification. Examples: 1) For the determination "Quercus aff. agrifolia var. oxyadenia", identificationQualifier would be "aff. agrifolia var. oxyadenia" with accompanying values "Quercus" in genus, "agrifolia" in specificEpithet, "oxyadenia" in infraspecificE http://rs.tdwg.org/dwc/terms/identificationQualifier
-
-Amy Driskell: Use this field to add notes on taxonomy. e.g. buprestus, c.f. ignoramis, glaucans group B, sp. nov. This data will be moved to the BOLD "Taxonomy Notes" field, but it's handier here.
-
-Biocode: "cf." or "aff."<p><b>Synonyms:</b><p>"identificationQualifier" = DwC,<br />"DarIdentificationQualifier" = EMuDwC,<br />"Taxonomy Notes" = BOLD,<br />"cf., sp. nov., aff., etc." = LAB Field Collection SS, <br />"cf., sp. nov., aff., etc." = Fishes,<br />"Taxon_Certainty" = Biocode.specimen,<br />"TaxonCertainty" = Biocode Batch,]]></attribute>
-		<attribute column='Identification Qualifier Rank' uri='urn:identificationQualifierRank' group='Identification' defined_by='urn:identificationQualifierRank'><![CDATA[]]></attribute>
-		<attribute column='Identified By' uri='urn:identifiedBy' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#identifiedBy'><![CDATA[DwC: A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject. Example: "James L. Patton", "Theodore Pappenfuss; Robert Macey". For discussion see http://code.google.com/p/darwincore/wiki/Identification http://rs.tdwg.org/dwc/terms/identifiedBy
-
-BOLD: Full name of primary individual responsible for providing taxonomic identification of the specimen. <p><b>Synonyms:</b><p>"identifiedBy" = DwC,<br />"identifiedBy" = IndoPacific Template v7,<br />"DarIdentifiedBy" = EMuDwC,<br />"Determined by" = Entomology - Ted Schultz,<br />"Idr" = Entomology - Sean Brady,<br />"Identifier" = LAB Field Collection Spreadsheet,<br />"Identifier" = Fishes, <br />"IdentifiedBy" = Biocode.specimen,<br />"Identifier" = BOLD,<br />"taxonomic_determiner" = Plantbarcodes.individual,]]></attribute>
 		<attribute column='Common Name' uri='urn:vernacularName' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#vernacularName'><![CDATA[DwC: A common or vernacular name. Example: "Andean Condor", "Condor Andino", "American Eagle", "GΣnsegeier". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/vernacularName<p><b>Synonyms:</b><p>"vernacularName" = DwC,<br />"vernacularName" = IndoPacific Template v7,<br />"Common Name" = Plantbarcodes Coll'n SS,<br />"common_name" = Plantbarcodes.individual,<br />"ColloquialName" = Biocode.specimen,]]></attribute>
 		<attribute column='Collection Department/Division' uri='urn:collectionCode' group='Institution' defined_by='http://rs.tdwg.org/dwc/terms/#collectionCode'><![CDATA[DwC_Ext: will be in the associated Occurrence record. (Unit/SourceID) 
 
@@ -131,13 +122,13 @@ MIxS: any other measurement performed or parameter collected, that is not listed
 		<attribute column='Preparation 1' uri='urn:preparation1' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[DwC: A list (concatenated and separated) of preparations and preservation methods for a specimen. Examples: "skin; skull; skeleton", "whole animal (ETOH); tissue (EDTA)", "fossil", "cast", "photograph", "DNA extract". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/preparations
 
 Schultz: Type of object, e.g., "pin," "point," "cryotube," etc.  See value list image.<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='preparation 1 Remarks' uri='urn:preparation1Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 1 Remarks' uri='urn:preparation1Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
 		<attribute column='Preparation 2' uri='urn:preparation2' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='preparation 2 Remarks' uri='urn:preparation2Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 2 Remarks' uri='urn:preparation2Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
 		<attribute column='Preparation 3' uri='urn:preparation3' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='preparation 3 Remarks' uri='urn:preparation3Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 3 Remarks' uri='urn:preparation3Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
 		<attribute column='Preparation 4' uri='urn:preparation4' group='Preparation' defined_by='http://rs.tdwg.org/dwc/terms/#preparations'><![CDATA[<p><b>Synonyms:</b><p>"preparations" = DwC,<br />"DarPreparations" = EMuDwC,<br />"Prep Type" = Birds,<br />"PreparationType" = Biocode,<br />"Object Category" = Entomology - Ted Schultz,]]></attribute>
-		<attribute column='preparation 4 Remarks' uri='urn:preparation4Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
+		<attribute column='Preparation 4 Remarks' uri='urn:preparation4Remarks' group='Preparation' defined_by='urn:preparationRemarks'><![CDATA[]]></attribute>
 		<attribute column='Preparation Date' uri='urn:preparationDate' group='Preparation' defined_by='urn:preparationDate'><![CDATA[DwC_Ext: Date of preparation, year-month-day (e.g., 2012-10-26)<p><b>Synonyms:</b><p>"preparationDate" = DwC_Ext,]]></attribute>
 		<attribute column='Preparator' uri='urn:preparedBy' group='Preparation' defined_by='urn:preparedBy'><![CDATA[DwC_Ext: Person and/or institution responsible for or effecting the preparation<p><b>Synonyms:</b><p>"preparedBy" = DwC_Ext,<br />"Preparator" = Birds,]]></attribute>
 		<attribute column='Age' uri='urn:age' group='Specimen' defined_by='urn:age'><![CDATA[]]></attribute>
@@ -251,8 +242,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Sex</field>
 			<field>Genus</field>
 			<field>Species</field>
-			<field>Genetic Sample Type Primary</field>
-			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
 			<field>Elevation From (m)</field>
@@ -279,6 +268,8 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Soft Part 1</field>
 			<field>Soft Part 1 Color</field>
 			<field>Biorepository ID</field>
+			<field>Genetic Sample Type Primary</field>
+			<field>Genetic Sample Type Secondary</field>
 			<field>Genetic Sample Type Verbatim</field>
 			<field>Genetic Sample quality</field>
 		</rule>
@@ -296,10 +287,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='controlledVocabulary' column='Longitude Direction' list='longitudeEastWest' level='warning'></rule>
 		<rule type='validateNumeric' column='Longitude Minutes' level='warning' value='%3E%3D0+and+%3C60'></rule>
 		<rule type='validateNumeric' column='Longitude Seconds' level='warning' value='%3E%3D0+and+%3C60'></rule>
-		<rule type='controlledVocabulary' column='Identification Qualifier' list='identificationQualifier' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Identification Qualifier Rank' list='Identification Qualifier Rank' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Identification Qualifier Rank' level='warning' otherColumn='Identification Qualifier'></rule>
-		<rule type='controlledVocabulary' column='Collection Department/Division' list='collectionCode' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Continent' list='continent' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Ocean' list='ocean' level='error'></rule>
@@ -323,15 +311,15 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		<rule type='requiredValueFromOtherColumn' column='Weight' level='warning' otherColumn='weightUnits'></rule>
 		<rule type='controlledVocabulary' column='Weight unit' list='weightUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight unit' level='warning' otherColumn='Weight'></rule>
-		<rule type='controlledVocabulary' column='Preparation 1' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 2' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 3' list='Zoology Preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 4' list='Zoology Preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 4' list='preparation' level='Warning'></rule>
 		<rule type='isNumber' column='Age' level='error'></rule>
-		<rule type='controlledVocabulary' column='Kind of Object' list='Object Type' level='error'></rule>
+		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='isNumber' column='Bursa Length' level='error'></rule>
 		<rule type='isNumber' column='Bursa Width' level='error'></rule>
-		<rule type='controlledVocabulary' column='Life Stage' list='Zoology Stage' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='uniqueValue' column='Preparator number' level='error'></rule>
 		<rule type='isNumber' column='Reproductive Part 1 Length' level='error'></rule>
 		<rule type='isNumber' column='Reproductive Part 1 Width' level='error'></rule>
@@ -364,6 +352,10 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 		</rule>
 	</worksheet>
 	<lists>
+		<list alias='Kind of Object' caseInsensitive='true'>
+			<field><![CDATA[Genetic Sample]]></field>
+			<field><![CDATA[Specimen/Lot]]></field>
+		</list>
 		<list alias='sex' caseInsensitive='true'>
 			<field><![CDATA[Female]]></field>
 			<field><![CDATA[Male]]></field>
@@ -400,15 +392,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 		</list>
-		<list alias='Zoology Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-			<field><![CDATA[Adult]]></field>
-			<field><![CDATA[Chick]]></field>
-			<field><![CDATA[Embryo]]></field>
-			<field><![CDATA[Immature]]></field>
-			<field><![CDATA[Juvenile]]></field>
-			<field><![CDATA[Subadult]]></field>
-		</list>
 		<list alias='phylum' caseInsensitive='true'>
 			<field><![CDATA[]]></field>
 		</list>
@@ -442,6 +425,9 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[greater than]]></field>
 			<field><![CDATA[less than]]></field>
 			<field><![CDATA[±]]></field>
+		</list>
+		<list alias='Collection Department' caseInsensitive='true'>
+			<field><![CDATA[Birds]]></field>
 		</list>
 		<list alias='Genetic Sample Type Tertiary' caseInsensitive='true'>
 			<field><![CDATA[Ancient Bone]]></field>
@@ -484,6 +470,15 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Species]]></field>
 			<field><![CDATA[Subspecies]]></field>
 		</list>
+		<list alias='taxonRank' caseInsensitive='true'>
+			<field><![CDATA[aberration]]></field>
+			<field><![CDATA[forma]]></field>
+			<field><![CDATA[morpha]]></field>
+			<field><![CDATA[race]]></field>
+			<field><![CDATA[subforma]]></field>
+			<field><![CDATA[subvariety]]></field>
+			<field><![CDATA[variety]]></field>
+		</list>
 		<list alias='Genetic Sample Type Primary' caseInsensitive='true'>
 			<field><![CDATA[Blood]]></field>
 			<field><![CDATA[Cell]]></field>
@@ -494,6 +489,25 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Germplasm]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
+		</list>
+		<list alias='preparation' caseInsensitive='true'>
+			<field><![CDATA[Alcoholic: Partial]]></field>
+			<field><![CDATA[Alcoholic: Whole]]></field>
+			<field><![CDATA[Cleared and Stained: Partial]]></field>
+			<field><![CDATA[Cleared and Stained: Whole]]></field>
+			<field><![CDATA[Egg(s)]]></field>
+			<field><![CDATA[Egg(s): Cast]]></field>
+			<field><![CDATA[Egg(s): Mixed Clutch]]></field>
+			<field><![CDATA[Egg(s): Multiple Clutch]]></field>
+			<field><![CDATA[Midden]]></field>
+			<field><![CDATA[Nest(s)]]></field>
+			<field><![CDATA[Skeleton: Cast]]></field>
+			<field><![CDATA[Skeleton: Mounted]]></field>
+			<field><![CDATA[Skeleton: Partial]]></field>
+			<field><![CDATA[Skeleton: Whole]]></field>
+			<field><![CDATA[Skin: Mounted]]></field>
+			<field><![CDATA[Skin: Partial]]></field>
+			<field><![CDATA[Skin: Whole]]></field>
 		</list>
 		<list alias='yesNo' caseInsensitive='true'>
 			<field><![CDATA[Yes]]></field>
@@ -507,9 +521,14 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
 		</list>
-		<list alias='Object Type' caseInsensitive='true'>
-			<field><![CDATA[Genetic Sample]]></field>
-			<field><![CDATA[Specimen/Lot]]></field>
+		<list alias='Life Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+			<field><![CDATA[Adult]]></field>
+			<field><![CDATA[Chick]]></field>
+			<field><![CDATA[Embryo]]></field>
+			<field><![CDATA[Immature]]></field>
+			<field><![CDATA[Juvenile]]></field>
+			<field><![CDATA[Subadult]]></field>
 		</list>
 		<list alias='genus' caseInsensitive='true'>
 			<field><![CDATA[Abeillia]]></field>
@@ -2955,12 +2974,8 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Zoothera]]></field>
 			<field><![CDATA[Zosterops]]></field>
 		</list>
-		<list alias='collectionCode' caseInsensitive='true'>
-			<field><![CDATA[Birds]]></field>
-		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>
-			<field><![CDATA[Afghanistan ?]]></field>
 			<field><![CDATA[Africa]]></field>
 			<field><![CDATA[Albania]]></field>
 			<field><![CDATA[Algeria]]></field>
@@ -2982,7 +2997,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Austria]]></field>
 			<field><![CDATA[Aves Island]]></field>
 			<field><![CDATA[Azerbaijan]]></field>
-			<field><![CDATA[Azerbaijan ?]]></field>
 			<field><![CDATA[Azores]]></field>
 			<field><![CDATA[Bahamas]]></field>
 			<field><![CDATA[Bahrain]]></field>
@@ -2995,14 +3009,12 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Bermuda]]></field>
 			<field><![CDATA[Bhutan]]></field>
 			<field><![CDATA[Bolivia]]></field>
-			<field><![CDATA[Bolivia / Peru]]></field>
 			<field><![CDATA[Bonin Islands]]></field>
 			<field><![CDATA[Borneo]]></field>
 			<field><![CDATA[Bosnia and Herzegovina]]></field>
 			<field><![CDATA[Botswana]]></field>
 			<field><![CDATA[Brazil]]></field>
 			<field><![CDATA[British Virgin Islands]]></field>
-			<field><![CDATA[Brunei ?]]></field>
 			<field><![CDATA[Bulgaria]]></field>
 			<field><![CDATA[Burkina Faso]]></field>
 			<field><![CDATA[Burundi]]></field>
@@ -3017,16 +3029,11 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Chad]]></field>
 			<field><![CDATA[Chagos Archipelago]]></field>
 			<field><![CDATA[Chile]]></field>
-			<field><![CDATA[Chile ?]]></field>
 			<field><![CDATA[China]]></field>
-			<field><![CDATA[Christmas Island (Indian Ocean)]]></field>
 			<field><![CDATA[Clipperton Island]]></field>
-			<field><![CDATA[Cocos Island (Costa Rica)]]></field>
 			<field><![CDATA[Colombia]]></field>
 			<field><![CDATA[Comoro Islands]]></field>
 			<field><![CDATA[Congo]]></field>
-			<field><![CDATA[Congo / Congo, Dem. Rep. of the]]></field>
-			<field><![CDATA[Congo ?]]></field>
 			<field><![CDATA[Congo, Dem. Rep. of the]]></field>
 			<field><![CDATA[Cook Islands]]></field>
 			<field><![CDATA[Costa Rica]]></field>
@@ -3041,7 +3048,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Dominican Republic]]></field>
 			<field><![CDATA[East Africa]]></field>
 			<field><![CDATA[East Indies]]></field>
-			<field><![CDATA[East Indies ?]]></field>
 			<field><![CDATA[Easter Island]]></field>
 			<field><![CDATA[Ecuador]]></field>
 			<field><![CDATA[Egypt]]></field>
@@ -3049,7 +3055,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Equatorial Guinea]]></field>
 			<field><![CDATA[Eritrea]]></field>
 			<field><![CDATA[Ethiopia]]></field>
-			<field><![CDATA[Ethiopia ?]]></field>
 			<field><![CDATA[Europe]]></field>
 			<field><![CDATA[Falkland Islands]]></field>
 			<field><![CDATA[Faroe Islands]]></field>
@@ -3059,7 +3064,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[France]]></field>
 			<field><![CDATA[French Equatorial Africa]]></field>
 			<field><![CDATA[French Guiana]]></field>
-			<field><![CDATA[French Guiana ?]]></field>
 			<field><![CDATA[French Indochina]]></field>
 			<field><![CDATA[French Polynesia]]></field>
 			<field><![CDATA[French West Africa]]></field>
@@ -3068,7 +3072,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Gambia]]></field>
 			<field><![CDATA[Georgia]]></field>
 			<field><![CDATA[Germany]]></field>
-			<field><![CDATA[Germany ?]]></field>
 			<field><![CDATA[Ghana]]></field>
 			<field><![CDATA[Gilbert Islands]]></field>
 			<field><![CDATA[Glorioso Islands]]></field>
@@ -3078,25 +3081,20 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Guadeloupe]]></field>
 			<field><![CDATA[Guatemala]]></field>
 			<field><![CDATA[Guinea]]></field>
-			<field><![CDATA[Guinea-Bissau]]></field>
 			<field><![CDATA[Guyana]]></field>
 			<field><![CDATA[Haiti]]></field>
 			<field><![CDATA[Heard and Mcdonald Islands]]></field>
 			<field><![CDATA[Honduras]]></field>
-			<field><![CDATA[Honduras / Nicaragua]]></field>
 			<field><![CDATA[Howland Island]]></field>
 			<field><![CDATA[Hungary]]></field>
 			<field><![CDATA[Iceland]]></field>
 			<field><![CDATA[India]]></field>
-			<field><![CDATA[India ?]]></field>
 			<field><![CDATA[Indonesia]]></field>
-			<field><![CDATA[Indonesia ?]]></field>
 			<field><![CDATA[Iran]]></field>
 			<field><![CDATA[Iraq]]></field>
 			<field><![CDATA[Ireland]]></field>
 			<field><![CDATA[Israel]]></field>
 			<field><![CDATA[Italy]]></field>
-			<field><![CDATA[Italy ?]]></field>
 			<field><![CDATA[Izu Islands]]></field>
 			<field><![CDATA[Jamaica]]></field>
 			<field><![CDATA[Jan Mayen]]></field>
@@ -3106,22 +3104,17 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Juan Fernandez Islands]]></field>
 			<field><![CDATA[Kazakhstan]]></field>
 			<field><![CDATA[Kenya]]></field>
-			<field><![CDATA[Kenya / Uganda]]></field>
 			<field><![CDATA[Kerguelen Islands]]></field>
 			<field><![CDATA[Kermadec Islands]]></field>
 			<field><![CDATA[Korea]]></field>
-			<field><![CDATA[Kuwait ?]]></field>
 			<field><![CDATA[Kyrgyzstan]]></field>
-			<field><![CDATA[Kyrgyzstan ?]]></field>
 			<field><![CDATA[Laos]]></field>
 			<field><![CDATA[Lapland]]></field>
-			<field><![CDATA[Latvia ?]]></field>
 			<field><![CDATA[Lebanon]]></field>
 			<field><![CDATA[Liberia]]></field>
 			<field><![CDATA[Libya]]></field>
 			<field><![CDATA[Liechtenstein]]></field>
 			<field><![CDATA[Line Islands]]></field>
-			<field><![CDATA[Locality Unknown]]></field>
 			<field><![CDATA[Lord Howe Island]]></field>
 			<field><![CDATA[Luxembourg]]></field>
 			<field><![CDATA[Macedonia]]></field>
@@ -3131,17 +3124,14 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Main Hawaiian Islands]]></field>
 			<field><![CDATA[Malawi]]></field>
 			<field><![CDATA[Malaysia]]></field>
-			<field><![CDATA[Malaysia ?]]></field>
 			<field><![CDATA[Maldives]]></field>
 			<field><![CDATA[Malta]]></field>
 			<field><![CDATA[Mariana Islands]]></field>
 			<field><![CDATA[Marquesas Islands]]></field>
 			<field><![CDATA[Marshall Islands]]></field>
 			<field><![CDATA[Martinique]]></field>
-			<field><![CDATA[Martinique / St. Lucia]]></field>
 			<field><![CDATA[Mauritius]]></field>
 			<field><![CDATA[Mexico]]></field>
-			<field><![CDATA[Mexico ?]]></field>
 			<field><![CDATA[Moldova]]></field>
 			<field><![CDATA[Mongolia]]></field>
 			<field><![CDATA[Montenegro]]></field>
@@ -3165,7 +3155,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[North America]]></field>
 			<field><![CDATA[Northern Mariana Islands]]></field>
 			<field><![CDATA[Northwestern Hawaiian Islands]]></field>
-			<field><![CDATA[Northwestern Hawaiian Islands ?]]></field>
 			<field><![CDATA[Norway]]></field>
 			<field><![CDATA[Oman]]></field>
 			<field><![CDATA[Pakistan]]></field>
@@ -3179,7 +3168,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Phoenix Islands]]></field>
 			<field><![CDATA[Pitcairn Islands]]></field>
 			<field><![CDATA[Poland]]></field>
-			<field><![CDATA[Poland ?]]></field>
 			<field><![CDATA[Portugal]]></field>
 			<field><![CDATA[Puerto Rico]]></field>
 			<field><![CDATA[Reunion]]></field>
@@ -3187,9 +3175,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Rhodesia]]></field>
 			<field><![CDATA[Romania]]></field>
 			<field><![CDATA[Russia]]></field>
-			<field><![CDATA[Russia ?]]></field>
 			<field><![CDATA[Ryukyu Islands]]></field>
-			<field><![CDATA[Ryukyu Islands ?]]></field>
 			<field><![CDATA[Saba]]></field>
 			<field><![CDATA[Saint Helena]]></field>
 			<field><![CDATA[Samoa Islands]]></field>
@@ -3199,20 +3185,16 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Sao Tome and Principe]]></field>
 			<field><![CDATA[Saudi Arabia]]></field>
 			<field><![CDATA[Senegal]]></field>
-			<field><![CDATA[Senegal ?]]></field>
 			<field><![CDATA[Serbia and Montenegro]]></field>
 			<field><![CDATA[Seychelles]]></field>
 			<field><![CDATA[Sierra Leone]]></field>
 			<field><![CDATA[Singapore]]></field>
 			<field><![CDATA[Slovakia]]></field>
-			<field><![CDATA[Slovakia ?]]></field>
-			<field><![CDATA[Slovenia ?]]></field>
 			<field><![CDATA[Society Islands]]></field>
 			<field><![CDATA[Socotra]]></field>
 			<field><![CDATA[Solomon Islands]]></field>
 			<field><![CDATA[Somalia]]></field>
 			<field><![CDATA[South Africa]]></field>
-			<field><![CDATA[South Africa ?]]></field>
 			<field><![CDATA[South America]]></field>
 			<field><![CDATA[South Georgia Island]]></field>
 			<field><![CDATA[South Orkney Islands]]></field>
@@ -3223,10 +3205,8 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[St. Eustatius]]></field>
 			<field><![CDATA[St. Helena]]></field>
 			<field><![CDATA[St. Kitts and Nevis]]></field>
-			<field><![CDATA[St. Kitts and Nevis ?]]></field>
 			<field><![CDATA[St. Lucia]]></field>
 			<field><![CDATA[St. Martin]]></field>
-			<field><![CDATA[St. Paul Island (Indian Ocean)]]></field>
 			<field><![CDATA[St. Peter and St. Paul Rocks]]></field>
 			<field><![CDATA[St. Pierre and Miquelon]]></field>
 			<field><![CDATA[St. Vincent and the Grenadines]]></field>
@@ -3241,7 +3221,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Taiwan]]></field>
 			<field><![CDATA[Tajikistan]]></field>
 			<field><![CDATA[Tanzania]]></field>
-			<field><![CDATA[Tanzania/ Kenya]]></field>
 			<field><![CDATA[Thailand]]></field>
 			<field><![CDATA[Togo]]></field>
 			<field><![CDATA[Tokelau]]></field>
@@ -3254,26 +3233,19 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Turkestan]]></field>
 			<field><![CDATA[Turkey]]></field>
 			<field><![CDATA[Turkmenistan]]></field>
-			<field><![CDATA[Turkmenistan ?]]></field>
 			<field><![CDATA[Turks and Caicos Islands]]></field>
-			<field><![CDATA[Turks and Caicos Islands ?]]></field>
 			<field><![CDATA[Tuvalu]]></field>
 			<field><![CDATA[Uganda]]></field>
 			<field><![CDATA[Ukraine]]></field>
 			<field><![CDATA[United Arab Emirates]]></field>
 			<field><![CDATA[United Kingdom]]></field>
-			<field><![CDATA[United Kingdom ?]]></field>
 			<field><![CDATA[United States]]></field>
-			<field><![CDATA[United States / Canada]]></field>
-			<field><![CDATA[United States / Mexico]]></field>
 			<field><![CDATA[Uruguay]]></field>
 			<field><![CDATA[USSR]]></field>
 			<field><![CDATA[Uzbekistan]]></field>
-			<field><![CDATA[Uzbekistan ?]]></field>
 			<field><![CDATA[Vanuatu]]></field>
 			<field><![CDATA[Venezuela]]></field>
 			<field><![CDATA[Vietnam]]></field>
-			<field><![CDATA[Virgin Islands (U.S.)]]></field>
 			<field><![CDATA[Volcano Islands]]></field>
 			<field><![CDATA[Wake Island]]></field>
 			<field><![CDATA[West Africa]]></field>
@@ -3282,27 +3254,7 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[Yemen]]></field>
 			<field><![CDATA[Yugoslavia]]></field>
 			<field><![CDATA[Zambia]]></field>
-			<field><![CDATA[Zambia / Zimbabwe]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
-		</list>
-		<list alias='Zoology Preparation' caseInsensitive='true'>
-			<field><![CDATA[Alcoholic: Partial]]></field>
-			<field><![CDATA[Alcoholic: Whole]]></field>
-			<field><![CDATA[Cleared and Stained: Partial]]></field>
-			<field><![CDATA[Cleared and Stained: Whole]]></field>
-			<field><![CDATA[Egg(s)]]></field>
-			<field><![CDATA[Egg(s): Cast]]></field>
-			<field><![CDATA[Egg(s): Mixed Clutch]]></field>
-			<field><![CDATA[Egg(s): Multiple Clutch]]></field>
-			<field><![CDATA[Midden]]></field>
-			<field><![CDATA[Nest(s)]]></field>
-			<field><![CDATA[Skeleton: Cast]]></field>
-			<field><![CDATA[Skeleton: Mounted]]></field>
-			<field><![CDATA[Skeleton: Partial]]></field>
-			<field><![CDATA[Skeleton: Whole]]></field>
-			<field><![CDATA[Skin: Mounted]]></field>
-			<field><![CDATA[Skin: Partial]]></field>
-			<field><![CDATA[Skin: Whole]]></field>
 		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[aff.]]></field>
@@ -3335,15 +3287,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field><![CDATA[µm]]></field>
 			<field><![CDATA[in]]></field>
 			<field><![CDATA[ft]]></field>
-		</list>
-		<list alias='Taxonomy Other Rank' caseInsensitive='true'>
-			<field><![CDATA[aberration]]></field>
-			<field><![CDATA[forma]]></field>
-			<field><![CDATA[morpha]]></field>
-			<field><![CDATA[race]]></field>
-			<field><![CDATA[subforma]]></field>
-			<field><![CDATA[subvariety]]></field>
-			<field><![CDATA[variety]]></field>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Aerosol]]></field>

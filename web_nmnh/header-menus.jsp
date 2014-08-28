@@ -17,29 +17,33 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tools<b class="caret"></b></a>
+
                         <ul class="dropdown-menu">
                             <c:if test="${user != null}">
-                            <ul>
-                                <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
-                                <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
-                            </ul>
-                        </c:if>
+                                <ul>
+                                    <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
+                                    <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
+                                </ul>
+                            </c:if>
 
-                        <c:if test="${user == null}">
-                            <ul>
-                                <li><div class='disabled' style='font-size: 75%;'>Generate Template (login required)</div></li>
-                                <li><div class='disabled' style='font-size: 75%;'>Validation (login required)</div></li>
-                            </ul>
+                            <c:if test="${user == null}">
+                                <ul>
+                                    <li><div class='disabled' style='font-size: 80%;'>Generate Template (login required)</div></li>
+                                    <li><div class='disabled' style='font-size: 80%;'>Validation (login required)</div></li>
+                                </ul>
                             </c:if>
                         </ul>
                     </li>
+
                     <c:if test="${user == null}">
                         <li><a id="login" href="/fims/rest/authenticationService/login">Login</a></li>
                     </c:if>
+
                     <c:if test="${user != null}">
                         <li><a href="#">${user}</a></li>
                         <li><a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a></li>
                     </c:if>
+
                     <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
