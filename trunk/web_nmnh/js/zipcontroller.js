@@ -10,7 +10,6 @@ function parseSpreadsheet(regExpression) {
         var inputFile= $('#dataset')[0].files[0];
         var zipFile = false;
         zipmodel.getEntries(inputFile, function(entries) {
-            try {
                 zipFile = true;
                 entries.forEach(function(entry) {
                         entry.getData(new zip.TextWriter(), function(text) {
@@ -23,9 +22,6 @@ function parseSpreadsheet(regExpression) {
                                 }
                         });
                 });
-            } catch(e) {
-                deferred.resolve(-1);
-            }
         });
         // If this is a zip file then return the promise, else just try and read it directly
         if (zipFile) {
