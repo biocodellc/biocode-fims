@@ -187,7 +187,6 @@ BOLD: General notes regarding the specimen<p><b>Synonyms:</b><p>"occurrenceRemar
 		<attribute column='Sex' uri='urn:sex' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#sex'><![CDATA[DwC: The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. Examples: "female", "hermaphrodite", "8 males, 4 females". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/sex
 
 BOLD: Male/female/hermaphrodite only.<p><b>Synonyms:</b><p>"sex" = DwC,<br />"sex" = IndoPacific Template v7,<br />"DarSex" = EMuDwC,<br />"SexCaste" = Biocode.specimen,<br />"Sex" = BOLD,<br />"Sex" = Biocode Search,<br />"Sex" = LAB Field Coll'n SS,<br />"Sex" = BOLD Batch Upload (Amy's),<br />"Sex" = BOLD Batch Upload,<br />"Sex" = DwC, 1.4,<br />"Sex" = Fishes,<br />"Sex" = Birds,<br />"LifeStageSex" = Entomology - Sean Brady (part),]]></attribute>
-		<attribute column='Sex / Life Stage Remarks' uri='urn:sexLifeStageRemarks' group='Specimen' defined_by='urn:sexLifeStageRemarks'><![CDATA[]]></attribute>
 		<attribute column='Skull' uri='urn:skull' group='Specimen' defined_by='urn:skull'><![CDATA[]]></attribute>
 		<attribute column='Soft Part 1' uri='urn:softPart1' group='Specimen' defined_by='urn:softPart'><![CDATA[]]></attribute>
 		<attribute column='Soft Part 1 Color' uri='urn:softPart1Color' group='Specimen' defined_by='urn:softPartColor'><![CDATA[]]></attribute>
@@ -264,7 +263,6 @@ DwC_Ext: used for both DNA and tissue<p><b>Synonyms:</b><p>"quality" = DwC_Ext, 
 			<field>Reproductive Part 1 Remarks</field>
 			<field>Reproductive Part 1 Unit</field>
 			<field>Reproductive Part 1 Width</field>
-			<field>Sex / Life Stage Remarks</field>
 			<field>Soft Part 1</field>
 			<field>Soft Part 1 Color</field>
 			<field>Biorepository ID</field>
