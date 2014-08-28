@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="biocode-fims" default="all">
 
-
-
     <property name="jdk.home.1.6" value="/usr"/>
 
     <!-- Compiler options -->
