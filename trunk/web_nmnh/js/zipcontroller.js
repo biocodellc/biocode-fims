@@ -7,7 +7,7 @@ function parseZip(paramToParse) {
     // older browsers don't have a FileReader
     if (f != null) {
         var deferred = new $.Deferred();
-
+        var inputFile= $('#dataset')[0].files[0];
         zipmodel.getEntries(inputFile, function(entries) {
               try {
                 entries.forEach(function(entry) {
@@ -25,6 +25,8 @@ function parseZip(paramToParse) {
                 deferred.resolve(-1);
               }
         });
+        return deferred.promise();
+
     }
     return -1;
 
