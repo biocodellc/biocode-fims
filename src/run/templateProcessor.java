@@ -900,7 +900,13 @@ public class templateProcessor {
     }
 
     /**
-     * Create the Excel File for output
+     * Create the Excel File for output.
+     * This function ALWAYS  creates XLSX files as this format is the only one
+     * which will pass compatibility checks in data validation
+     *
+     * Dataset code is used as the basis for the outputfile name
+     * If Dataset code is not available, it uses the metadata shortname for project
+     * If that is not available it uses "output"
      *
      * @param defaultSheetname
      * @param uploadPath
@@ -918,15 +924,20 @@ public class templateProcessor {
         createDataFields(fields);
         createListsSheetAndValidations(fields);
 
-        // Write the excel file
-        String filename = "output";
-        if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals(""))
+        // Create the output Filename and Write Excel File
+        String filename = null;
+        if (this.datasetCode != null && !this.datasetCode.equals("")) {
+             filename = this.datasetCode;
+        }
+        else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
             filename = getFims().getMetadata().getShortname().replace(" ", "_");
-        String outputName = filename + ".xlsx";
+        } else {
+            filename = "output";
+        }
 
-        // Create the file
-        File file = null;
-        file = PathManager.createUniqueFile(outputName, uploadPath);
+        // Create the file: NOTE: this application ALWAYS should create XLSX files as this format is the only one
+        // which will pass compatibility checks in data validation
+        File file = PathManager.createUniqueFile(filename + ".xlsx", uploadPath);
         FileOutputStream out = new FileOutputStream(file);
         workbook.write(out);
         out.close();
