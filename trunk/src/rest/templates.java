@@ -87,7 +87,7 @@ public class templates {
 
     @POST
     @Path("/createExcel/")
-    @Produces("application/vnd.ms-excel")
+    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     public Response createExcel(
             @FormParam("fields") List<String> fields,
             @FormParam("project_id") Integer project_id,
@@ -98,7 +98,6 @@ public class templates {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-   System.out.println("at beginning ");
         if (accessionNumber != null || datasetCode != null) {
             if (accessionNumber == null || datasetCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
@@ -123,7 +122,6 @@ public class templates {
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
- System.out.println("before process");
         process p = new process(
                 null,
                 uploadPath(),
@@ -149,7 +147,6 @@ public class templates {
                 }
             }
         }
-    System.out.println("here");
         templateProcessor t;
         // Create the template processor which handles all functions related to the template, reading, generation
         if (accessionNumber != null) {
@@ -167,7 +164,6 @@ public class templates {
         // Set the default sheet-name
         String defaultSheetname = t.getMapping().getDefaultSheetName();
 
-System.out.println("defaultSheetname = " + defaultSheetname);
         File file = null;
         try {
             file = t.createExcelFile(defaultSheetname, uploadPath(), fields);
@@ -180,7 +176,6 @@ System.out.println("defaultSheetname = " + defaultSheetname);
         if (file == null)
             return Response.status(204).build();
 
-System.out.println("file: " + file.getAbsolutePath());
         // Return response
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
