@@ -18,8 +18,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class utils {
      * Refresh the configuration File cache
      *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -67,7 +70,9 @@ public class utils {
      * bcid service.
      *
      * @param projectId
+     *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -93,12 +98,16 @@ public class utils {
     }
 
     /**
-     * Check whether or not an expedition code is valid by calling the BCID expeditionService/validateExpedition Service
+     * Check whether or not an expedition code is valid by calling the BCID expeditionService/validateExpedition
+     * Service
      * Should return update, insert, or error
+     *
      * @param projectId
      * @param expeditionCode
      * @param request
+     *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -107,6 +116,8 @@ public class utils {
     public Response validateExpedition(@PathParam("project_id") Integer projectId,
                                        @PathParam("expedition_code") String expeditionCode,
                                        @Context HttpServletRequest request) throws Exception {
+
+
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
@@ -124,18 +135,22 @@ public class utils {
         String response = bcidConnector.createGETConnection(url);
 
         // Debugging
-        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode() );
+        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode());
         System.out.println("FIMS validateExpedition response = " + response);
 
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }
+
+
 
     /**
      * Retrieve a user's expeditions in a given project from bcid. This uses an access token to access the
      * bcid service.
      *
      * @param projectId
+     *
      * @return
+     *
      * @throws Exception
      */
     @GET
@@ -165,7 +180,7 @@ public class utils {
         StringBuilder sb = new StringBuilder();
 
         if (column_name != null && !column_name.trim().equals("")) {
-            sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name,"utf-8") + "</b><br>\n");
+            sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name, "utf-8") + "</b><br>\n");
         } else {
             sb.append("<b>Acceptable values for " + list_name + "</b><br>\n");
         }

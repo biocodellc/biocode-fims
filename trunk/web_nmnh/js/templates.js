@@ -100,7 +100,7 @@
                     // Save the context of this so it can be used inside the POST
                     var $this = $(this);
 
-                    $.getJSON("/fims/rest/utils/validateExpedition/" + $("#projects").val() + "/" + $("#dataset_code").val())
+                    $.getJSON("/fims/rest/utils/validateExpedition/" + $("#projects").val() + "/" + encodeURIComponent($("#dataset_code").val()))
                         .done(function(data) {
                             if (data.update) {
                                 var buttons = {
