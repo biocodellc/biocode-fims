@@ -84,7 +84,8 @@ function populateAbstract(targetDivId) {
 }
 
 function populateProjects() {
-    theUrl = "/id/projectService/list";
+    //theUrl = "/id/projectService/list";
+    theUrl = "https://nmnh-fims.si.edu/id/projectService/list";
     var jqxhr = $.getJSON( theUrl, function(data) {
         var listItems = "";
         listItems+= "<option value='0'>Select a department ...</option>";
@@ -98,7 +99,7 @@ function populateProjects() {
         if (textStatus == "timeout") {
 	        showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
         } else {
-	        showMessage ("Error completing request!");
+	        showMessage ("Error fetching projects!");
         }
     });
 }
