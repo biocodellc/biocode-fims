@@ -8,9 +8,7 @@ function parseSpreadsheet(regExpression) {
     if (f != null) {
         var deferred = new $.Deferred();
         var inputFile= $('#dataset')[0].files[0];
-        var zipFile = false;
         zipmodel.getEntries(inputFile, function(entries) {
-                zipFile = true;
                 entries.forEach(function(entry) {
                         entry.getData(new zip.TextWriter(), function(text) {
                                 // text contains the entry data as a String
@@ -19,16 +17,14 @@ function parseSpreadsheet(regExpression) {
                                 if (!!results) {
                                         var myResult = results.toString().split('=')[1].slice(0, -1);
                                         deferred.resolve(myResult);
+                                        return deferred.promise();
                                 }
                         });
                 });
         });
-        // If this is a zip file then return the promise, else just try and read it directly
-        if (zipFile) {
-            return deferred.promise();
-        }
-        // if not a zip archive just try and read normally
-        else {
+
+        // If we get to this point we are not a zip archive
+                                                           /*
             f.onload = function () {
                 var fileContents = f.result;
                 try {
@@ -45,7 +41,7 @@ function parseSpreadsheet(regExpression) {
             };
             f.readAsText(inputFile);
             return deferred.promise();
-        }
+                  */
     }
     return -1;
 
