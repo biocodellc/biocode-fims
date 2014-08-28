@@ -1,4 +1,4 @@
-function parseZip(regExpression) {
+function parseSpreadsheet(regExpression) {
     try {
         f = new FileReader();
     } catch(err) {
@@ -8,8 +8,10 @@ function parseZip(regExpression) {
     if (f != null) {
         var deferred = new $.Deferred();
         var inputFile= $('#dataset')[0].files[0];
+        var zipFile = false;
         zipmodel.getEntries(inputFile, function(entries) {
               try {
+              zipFile = true;
                 entries.forEach(function(entry) {
                         entry.getData(new zip.TextWriter(), function(text) {
                                 // text contains the entry data as a String
@@ -25,10 +27,57 @@ function parseZip(regExpression) {
                 deferred.resolve(-1);
               }
         });
-        return deferred.promise();
+        // If this is a zip file then return the promise, else just try and read it directly
+        if (zipFile) {
+            return deferred.promise();
+        }
+        // if not a zip archive just try and read normally
+        else {
+            f.onload = function () {
+                var fileContents = f.result;
+                try {
+                    var results = fileContents.match(regExpression)[0];
+
+                    if (results != null) {
+                        var myResult = results.split('=')[1].slice(0, -1);
+                        if (project_id > 0) {
+                            deferred.resolve(myResult);
+                        }
+                    } else {
+                        deferred.resolve(-1);
+                    }
+                } catch (e) {
+                    deferred.resolve(-1);
+                }
+            };
+            f.readAsText(inputFile);
+            return deferred.promise();
+        }
     }
     return -1;
 
+}
+
+function parseTextFile(inputFile,regExpression) {
+    f.onload = function () {
+            var fileContents = f.result;
+            try {
+                var results = fileContents.match(regExpression)[0];
+
+                if (results != null) {
+                    var project_id = results.split('=')[1].slice(0, -1);
+                    if (project_id > 0) {
+                        deferred.resolve(project_id);
+                    }
+                } else {
+                    deferred.resolve(-1);
+                }
+            } catch (e) {
+                deferred.resolve(-1);
+            }
+        };
+        f.readAsText(inputFile);
+        return deferred.promise();
 }
 
 var zipmodel = (function() {

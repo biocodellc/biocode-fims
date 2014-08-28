@@ -672,7 +672,7 @@ function validationFormToggle() {
     $('#dataset').change(function() {
 
         // Check NAAN
-        $.when(parseZip("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
+        $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 if (spreadsheetNaan != naan) {
 			    var buttons = {
@@ -692,7 +692,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(parseZip("~project_id=[0-9]+~")).done(function(project_id) {
+        $.when(parseSpreadsheet("~project_id=[0-9]+~")).done(function(project_id) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
@@ -722,7 +722,7 @@ function validationFormToggle() {
             if(oldBrowser) {
                     getExpeditionCodes();
             } else {
-                $.when(parseZip("~dataset_code=[a-zA-Z0-9-_]{4,16}~")).done(function(dataset_code) {
+                $.when(parseSpreadsheet("~dataset_code=[a-zA-Z0-9-_]{4,16}~")).done(function(dataset_code) {
                     if (dataset_code != null) {
                         //$("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                         $("#expedition_code_container").html('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
