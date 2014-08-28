@@ -29,10 +29,9 @@
 
         <div style="width: 45%; float:left;border-right: 1px solid gray; ">
 
-            <h2>Available Columns</h2>
+            <h2>Field Categories</h2>
 
-            <p>Check available column headings to include in your customized FIMS
-                spreadsheet.</p>
+            <p>Expand category headings to select or un-select fields.</p>
 
             <div id="cat1"></div>
 
