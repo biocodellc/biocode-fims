@@ -550,7 +550,8 @@ function uploadResults(data) {
 }
 
 // function to extract the project_id from a dataset to be uploaded
-function extractNAAN() {
+/*function extractNAAN() {
+
     var f;
     try {
         f = new FileReader();
@@ -664,14 +665,14 @@ function extractDatasetCode() {
         return null;
     }
 }
-
+*/
 
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
 
         // Check NAAN
-        $.when(extractNAAN()).done(function(spreadsheetNaan) {
+        $.when(parseZip("naan")).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 if (spreadsheetNaan != naan) {
 			    var buttons = {
@@ -691,7 +692,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(extractProjectId()).done(function(project_id) {
+        $.when(parseZip("project_id")).done(function(project_id) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
@@ -721,7 +722,7 @@ function validationFormToggle() {
             if(oldBrowser) {
                     getExpeditionCodes();
             } else {
-                $.when(extractDatasetCode()).done(function(dataset_code) {
+                $.when(parseZip("dataset_code")).done(function(dataset_code) {
                     if (dataset_code != null) {
                         //$("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                         $("#expedition_code_container").html('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
