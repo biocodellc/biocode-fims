@@ -1,4 +1,4 @@
-function parseZip(paramToParse) {
+function parseZip(regExpression) {
     try {
         f = new FileReader();
     } catch(err) {
@@ -13,8 +13,8 @@ function parseZip(paramToParse) {
                 entries.forEach(function(entry) {
                         entry.getData(new zip.TextWriter(), function(text) {
                                 // text contains the entry data as a String
-                                var re = "~" + paramToParse + "=[0-9]+~";
-                                var results = text.match(re);
+                                //var re = "~" + paramToParse + "=[0-9]+~";
+                                var results = text.match(regExpression);
                                 if (!!results) {
                                         var myResult = results.toString().split('=')[1].slice(0, -1);
                                         deferred.resolve(myResult);
@@ -26,7 +26,6 @@ function parseZip(paramToParse) {
               }
         });
         return deferred.promise();
-
     }
     return -1;
 
