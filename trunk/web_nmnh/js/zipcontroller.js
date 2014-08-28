@@ -8,23 +8,24 @@ function parseSpreadsheet(regExpression) {
     if (f != null) {
         var deferred = new $.Deferred();
         var inputFile= $('#dataset')[0].files[0];
-        zipmodel.getEntries(inputFile, function(entries) {
+
+        // Only try to use zip functions if this an XLSX file
+        if (getExtension(inputFile.name) == "xlsx") {
+            zipmodel.getEntries(inputFile, function(entries) {
                 entries.forEach(function(entry) {
                         entry.getData(new zip.TextWriter(), function(text) {
                                 // text contains the entry data as a String
-                                //var re = "~" + paramToParse + "=[0-9]+~";
                                 var results = text.match(regExpression);
                                 if (!!results) {
                                         var myResult = results.toString().split('=')[1].slice(0, -1);
                                         deferred.resolve(myResult);
-                                        return deferred.promise();
                                 }
                         });
                 });
-        });
-
-        // If we get to this point we are not a zip archive
-                                                           /*
+            });
+        }
+        // All other cases besides XLSX use plain file reader
+        else {
             f.onload = function () {
                 var fileContents = f.result;
                 try {
@@ -40,8 +41,9 @@ function parseSpreadsheet(regExpression) {
                 }
             };
             f.readAsText(inputFile);
-            return deferred.promise();
-                  */
+        }
+
+        return deferred.promise();
     }
     return -1;
 
@@ -56,3 +58,12 @@ var zipmodel = (function() {
                 }
         };
 })();
+
+// Return file extension
+function getExtension(filename) {
+    var a = filename.split(".");
+    if( a.length === 1 || ( a[0] === "" && a.length === 2 ) ) {
+        return "";
+    }
+    return a.pop();
+}
