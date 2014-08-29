@@ -307,6 +307,8 @@ public class Rule {
      * Check a particular column to see if all the values are unique.
      * This rule is strongly encouraged for at least
      * one column in the spreadsheet
+     * NOTE: that NULL values are not counted in this rule, so this rule, by itself does not
+     * enforce a primary key... it must be combined with a rule requiring some column value
      * <p></p>
      * Example:
      * <br></br>
@@ -323,6 +325,7 @@ public class Rule {
             statement = connection.createStatement();
             rs = null;
             String sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
+                    " where " + getColumn()  + " NOT null " +
                     " group by " + getColumn() +
                     " having count(*) > 1";
 
@@ -331,7 +334,9 @@ public class Rule {
             StringBuilder values = new StringBuilder();
             int count = 0;
             while (rs.next()) {
-                if (count > 0) values.append(", ");
+                if (count > 0) {
+                    values.append(", ");
+                }
                 values.append(rs.getString(getColumn()));
                 count++;
             }
