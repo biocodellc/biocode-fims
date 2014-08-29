@@ -284,6 +284,11 @@ public class configurationFileTester {
         return keys;
     }
 
+    /**
+     * For testing purposes ONLY, call this script from unit_tests directory
+     * @param args
+     * @throws configurationFileError
+     */
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
         File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/Documents/Smithsonian/SIBOT.xml");

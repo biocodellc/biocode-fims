@@ -10,4 +10,5 @@ run
 settings
 tools
 triplify
+unit_tests
 utils
