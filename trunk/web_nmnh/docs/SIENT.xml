@@ -358,9 +358,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 		</list>
-		<list alias='phylum' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='collector' caseInsensitive='true'>
 			<field><![CDATA[Adamski, D.]]></field>
 			<field><![CDATA[Beati, L.]]></field>
@@ -417,9 +414,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Wilkerson, R. C.]]></field>
 			<field><![CDATA[Woodley, N. E.]]></field>
 		</list>
-		<list alias='order' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
@@ -430,7 +424,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[WGS84]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Afrotropical]]></field>
 			<field><![CDATA[Australasian]]></field>
 			<field><![CDATA[Nearctic]]></field>
@@ -2598,7 +2591,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[family]]></field>
 			<field><![CDATA[genus]]></field>
 			<field><![CDATA[section]]></field>
@@ -2653,7 +2645,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[ton]]></field>
 		</list>
 		<list alias='Life Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Adult]]></field>
 			<field><![CDATA[bottom]]></field>
 			<field><![CDATA[dault]]></field>
@@ -2680,9 +2671,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Wings Apterous]]></field>
 			<field><![CDATA[Wings Brachypterous]]></field>
 			<field><![CDATA[Wings Unknown]]></field>
-		</list>
-		<list alias='genus' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Abessinia]]></field>

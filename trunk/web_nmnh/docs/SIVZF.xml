@@ -480,12 +480,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 		</list>
-		<list alias='phylum' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='collector' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='order' caseInsensitive='true'>
 			<field><![CDATA[Acipenseriformes]]></field>
 			<field><![CDATA[Albuliformes]]></field>
@@ -565,15 +559,11 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Antarctic]]></field>
 			<field><![CDATA[Arctic]]></field>
 			<field><![CDATA[Caribbean]]></field>
 			<field><![CDATA[Central America]]></field>
 			<field><![CDATA[Mediterranean]]></field>
-		</list>
-		<list alias='family' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -641,7 +631,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
 			<field><![CDATA[Species]]></field>
@@ -713,12 +702,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[mg]]></field>
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
-		</list>
-		<list alias='Life Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='genus' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>

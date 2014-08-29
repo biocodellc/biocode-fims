@@ -558,12 +558,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Vestimentifera]]></field>
 			<field><![CDATA[Xenophyophora]]></field>
 		</list>
-		<list alias='collector' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='order' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
 			<field><![CDATA[NAD27]]></field>
 			<field><![CDATA[NAD83]]></field>
@@ -574,11 +568,7 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Gulf of Mexico]]></field>
-		</list>
-		<list alias='family' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -640,7 +630,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Family]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
@@ -712,11 +701,7 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
 		</list>
-		<list alias='establishmentMeans' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='Life Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[A-1]]></field>
 			<field><![CDATA[A-2]]></field>
 			<field><![CDATA[A-3]]></field>
@@ -840,9 +825,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[zoea VIII]]></field>
 			<field><![CDATA[zoeae 1]]></field>
 			<field><![CDATA[zoeae 2]]></field>
-		</list>
-		<list alias='genus' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Aden]]></field>

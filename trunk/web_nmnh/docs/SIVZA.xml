@@ -417,15 +417,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 		</list>
-		<list alias='phylum' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='collector' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='order' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
 			<field><![CDATA[NAD27]]></field>
 			<field><![CDATA[NAD83]]></field>
@@ -436,7 +427,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Asia Minor]]></field>
 			<field><![CDATA[Indoaustralia]]></field>
 			<field><![CDATA[Middle America]]></field>
@@ -444,9 +434,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Oceania]]></field>
 			<field><![CDATA[West Africa]]></field>
 			<field><![CDATA[West Indies]]></field>
-		</list>
-		<list alias='family' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -490,7 +477,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Unknown tissue sample]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 			<field><![CDATA[Subspecies]]></field>
@@ -533,7 +519,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[ton]]></field>
 		</list>
 		<list alias='Life Stage' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[1 adult, 1 larva]]></field>
 			<field><![CDATA[2 year old juvenile]]></field>
 			<field><![CDATA[Adolescent]]></field>

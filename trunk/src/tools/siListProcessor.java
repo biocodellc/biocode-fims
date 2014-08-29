@@ -170,12 +170,12 @@ public class siListProcessor {
                 this.listName = elements[0];
                 this.department = elements[1];
                 // 3rd element often empty, just call it an empty value
-                try {
+                //try {
                     this.value = elements[2];
-                }   catch (Exception e2) {
-                    this.value = "";
+                //}   catch (Exception e2) {
+                //    this.value = "";
                     //System.out.println(line);
-                }
+                //}
             } catch (Exception e) {
                 throw new Exception("bad line: " + line, e);
             }
