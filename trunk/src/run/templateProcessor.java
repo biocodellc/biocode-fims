@@ -45,11 +45,9 @@ public class templateProcessor {
     XSSFCellStyle headingStyle, regularStyle, requiredStyle, wrapStyle;
 
     final int NAME = 0;
-    //    final int ENTITY = 1;
-//    final int URI = 2;
     final int DEFINITION = 1;
     final int CONTROLLED_VOCABULARY = 2;
-    final int DATA_FORMAT = 2;
+    final int DATA_FORMAT = 3;
 
 
     String instructionsSheetName = "Instructions";
