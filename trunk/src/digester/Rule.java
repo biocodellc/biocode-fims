@@ -1140,7 +1140,7 @@ public class Rule {
         try {
             statement = connection.createStatement();
             String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
-                    " where " + getColumn()  + " NOT NULL AND ";
+                    " where (" + getColumn()  + " NOT NULL && " + getColumn() + " != \"\") && ";
             if (caseInsensitiveSearch)
                 sql += "UPPER(" + getColumn() + ")";
             else
