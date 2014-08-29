@@ -174,7 +174,7 @@ public class utils {
         // NO results mean no list has been defined!
         if (results == null) {
             return Response.ok("No list has been defined for \"" + column_name + "\" but there is a rule saying it exists.  " +
-                    "Please talk to your FIMS project manager to fix this").build();
+                    "Please talk to your FIMS data manager to fix this").build();
         }
         Iterator it = results.getFields().iterator();
         StringBuilder sb = new StringBuilder();
