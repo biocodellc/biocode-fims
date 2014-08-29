@@ -497,12 +497,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 		</list>
-		<list alias='phylum' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
-		<list alias='collector' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='habit' caseInsensitive='true'>
 			<field><![CDATA[Aquatic herb]]></field>
 			<field><![CDATA[Cespitose herb]]></field>
@@ -524,9 +518,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Tree]]></field>
 			<field><![CDATA[Treelet]]></field>
 		</list>
-		<list alias='order' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
-		</list>
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
@@ -537,7 +528,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[WGS84]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[??]]></field>
 			<field><![CDATA[1 - Europe]]></field>
 			<field><![CDATA[10 - Northern Europe]]></field>
@@ -1799,7 +1789,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[Wood]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 			<field><![CDATA[forma]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
@@ -1859,9 +1848,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field><![CDATA[uncertain]]></field>
 			<field><![CDATA[waif]]></field>
 			<field><![CDATA[wild]]></field>
-		</list>
-		<list alias='genus' caseInsensitive='true'>
-			<field><![CDATA[]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA["America Australis"]]></field>
