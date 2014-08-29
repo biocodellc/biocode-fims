@@ -549,80 +549,12 @@ function uploadResults(data) {
     }
 }
 
-// function to extract the project_id from a dataset to be uploaded
-function extractNAAN() {
-    var f = new FileReader();
-    // older browsers don't have a FileReader
-    if (f != null) {
-        var deferred = new $.Deferred();
-        var file = $('#dataset')[0].files[0];
-        // after file has been read, extract the naan if present
-        f.onload = function () {
-            var fileContents = f.result;
-            var re = "~naan=[0-9]+~";
-            try {
-                var results = fileContents.match(re)[0];
-
-                if (results != null) {
-                    var project_id = results.split('=')[1].slice(0, -1);
-                    if (project_id > 0) {
-                        deferred.resolve(project_id);
-                    }
-                } else {
-                    deferred.resolve(-1);
-                }
-            } catch (e) {
-                deferred.resolve(-1);
-            }
-        };
-        f.readAsText(file);
-        return deferred.promise();
-    } else {
-        // can't find the project_id, so return -1
-        return -1;
-    }
-}
-
-// function to extract the project_id from a dataset to be uploaded
-function extractProjectId() {
-    var f = new FileReader();
-    // older browsers don't have a FileReader
-    if (f != null) {
-        var deferred = new $.Deferred();
-        var file = $('#dataset')[0].files[0];
-        // after file has been read, extract the project_id if present
-        f.onload = function () {
-            var fileContents = f.result;
-            var re = "~project_id=[0-9]+~";
-            try {
-                var results = fileContents.match(re)[0];
-
-                if (results != null) {
-                    var project_id = results.split('=')[1].slice(0, -1);
-                    if (project_id > 0) {
-                        deferred.resolve(project_id);
-                    }
-                } else {
-                    deferred.resolve(-1);
-                }
-            } catch (e) {
-                deferred.resolve(-1);
-            }
-        };
-        f.readAsText(file);
-        return deferred.promise();
-    } else {
-        // can't find the project_id, so return -1
-        return -1;
-    }
-}
-
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
 
         // Check NAAN
-        $.when(extractNAAN()).done(function(spreadsheetNaan) {
+        $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 if (spreadsheetNaan != naan) {
 			    var buttons = {
@@ -642,7 +574,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(extractProjectId()).done(function(project_id) {
+        $.when(parseSpreadsheet("~project_id=[0-9]+~")).done(function(spreadsheetNaan) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
