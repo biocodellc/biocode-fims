@@ -1,5 +1,6 @@
 package tools;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
@@ -24,6 +25,7 @@ public class siConverter {
 
     static Integer columnIndex;
     static Integer definitionIndex;
+    static Integer validationFormatAndValuesIndex;
     static Integer uriIndex;
     static Integer definedByIndex;
     static Integer groupIndex;
@@ -132,12 +134,25 @@ public class siConverter {
 
                 String column = row.getCell(columnIndex).toString();
                 String definition = row.getCell(definitionIndex).toString();
+
                 // Handle synonyms, appending on to definition field
                 String synonyms = row.getCell(synonymIndex).toString();
                 if (synonyms != null && !synonyms.trim().equals("")) {
                     definition +=
-                            "<p><b>Synonyms:</b><p>" +
-                                    row.getCell(synonymIndex).toString().replaceAll("(\r\n|\n)", "<br />");
+                            "<br><div id='synonyms'><b>Synonyms:</b><p>" +
+                                    row.getCell(synonymIndex).toString().replaceAll("(\r\n|\n)", "<br />") + "</div>";
+                }
+
+                // Handle Data Format Validation, appending on to definition field
+                //<div id='dataformat'>Data Formatting instructions:<p>YYYY-MM-DD</div>
+                try {
+                    String dataFormat = row.getCell(validationFormatAndValuesIndex).toString();
+                    if (dataFormat != null && !dataFormat.trim().equals("")) {
+                        definition += "<br><div id='dataFormat'><b>Data Formatting Instructions:</b><p id='dataFormatValue'>" +
+                                StringEscapeUtils.escapeHtml(dataFormat) + "</p></div>";
+                    }
+                } catch (NullPointerException e) {
+
                 }
 
                 String uri = "urn:" + row.getCell(uriIndex).toString();
@@ -310,8 +325,8 @@ public class siConverter {
                 "Smithsonian" + System.getProperty("file.separator"));
 
         output_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
-                        "web_nmnh" + System.getProperty("file.separator") +
-                        "docs" + System.getProperty("file.separator"));
+                "web_nmnh" + System.getProperty("file.separator") +
+                "docs" + System.getProperty("file.separator"));
 
         inputFile = new File(input_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_master.xlsx");
         listsFile = new File(output_directory.getAbsolutePath() + System.getProperty("file.separator") + "si_lookups.txt");
@@ -350,6 +365,7 @@ public class siConverter {
         groupIndex = getColumnIndex("Field Group");
         SIFieldTemplate = getColumnIndex("SI Field Template Flag");
         globalValidationRuleIndex = getColumnIndex("Global Validation Rule");
+        validationFormatAndValuesIndex = getColumnIndex("Validation Format & Values");
 
         // Loop each of the projects
         Iterator projectsIt = projects.iterator();
