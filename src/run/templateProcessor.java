@@ -613,10 +613,10 @@ public class templateProcessor {
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Controlled Vocabulary (see Lists)");
 
-        /*cell = row.createCell(DATA_FORMAT);
+        cell = row.createCell(DATA_FORMAT);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Data Format");
-        */
+
 
         // Must loop entities first
         while (fieldsIt.hasNext()) {
@@ -678,10 +678,9 @@ public class templateProcessor {
         }
         // Set column width
         dataFieldsSheet.autoSizeColumn(NAME);
-        //       dataFieldsSheet.autoSizeColumn(ENTITY);
-        //       dataFieldsSheet.autoSizeColumn(URI);
         dataFieldsSheet.setColumnWidth(DEFINITION, 80 * 256);
         dataFieldsSheet.autoSizeColumn(CONTROLLED_VOCABULARY);
+        dataFieldsSheet.autoSizeColumn(DATA_FORMAT);
 
     }
 
