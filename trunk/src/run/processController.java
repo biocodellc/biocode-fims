@@ -30,6 +30,7 @@ public class processController {
     private String worksheetName;
     private StringBuilder statusSB = new StringBuilder();
     private Boolean NMNH;
+    private Integer accessionNumber;
 
     public String getWorksheetName() {
         return worksheetName;
@@ -226,4 +227,11 @@ public class processController {
         return f.getAbsolutePath();
     }
 
+    public void setAccessionNumber(Integer accessionNumber) {
+        this.accessionNumber = accessionNumber;
+    }
+
+    public Integer getAccessionNumber() {
+        return accessionNumber;
+    }
 }
