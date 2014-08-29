@@ -715,7 +715,8 @@ public class Rule {
                 if (!column.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
-                    msg = "\"" + getColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
+                    msg = "\"" + getColumnWorksheetName() + "\" column contains a value, but associated column \"" +
+                            getOtherColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
                    /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
                     if (!fieldListSB.toString().equals("")) {
                         msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + fieldListSB.toString() + "})";
