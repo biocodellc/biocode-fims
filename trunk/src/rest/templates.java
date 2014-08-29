@@ -155,9 +155,17 @@ public class templates {
             // TODO: Resource may change in future... better to figure this out programatically at some point
             String ark = bcidConnector.getArkFromDataset(project_id, URLEncoder.encode(datasetCode,"utf-8"),"Resource");
 
+            String username = session.getAttribute("user").toString();
+
             // Construct the new templateProcessor
-            t = new templateProcessor(project_id, uploadPath(), true,
-                    accessionNumber, datasetCode, ark);
+            t = new templateProcessor(
+                    project_id,
+                    uploadPath(),
+                    true,
+                    accessionNumber,
+                    datasetCode,
+                    ark,
+                    username);
         } else {
             t = new templateProcessor(project_id, uploadPath(), true);
         }
