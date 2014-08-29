@@ -118,6 +118,8 @@ public class templates {
 
         // Check if the project is an NMNH project
         processController processController = new processController(project_id, datasetCode);
+        processController.setAccessionNumber(accessionNumber);
+
 
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");

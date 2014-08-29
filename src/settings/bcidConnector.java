@@ -507,9 +507,13 @@ public class bcidConnector {
                     "before loading each spreadsheet and may take a minute...\n";
             processController.appendStatus(status);
             fimsPrinter.out.println(status);
+            String expedition_title = processController.getExpeditionCode() + " spreadsheet";
+            if (processController.getAccessionNumber() != null) {
+                expedition_title += " (accession " + processController.getAccessionNumber() + ")";
+            }
             String output = createExpedition(
                     processController.getExpeditionCode(),
-                    processController.getExpeditionCode() + " spreadsheet dataset",
+                    expedition_title,
                     processController.getProject_id());
             //fimsPrinter.out.println("\t" + output);
         } catch (Exception e) {
