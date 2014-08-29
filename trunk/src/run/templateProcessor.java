@@ -857,7 +857,7 @@ public class templateProcessor {
                 "Some fields have a controlled vocabulary associated with them in the \"" + listsSheetName + "\" tab " +
                 "and are provided as data validation in the provided cells" +
                 "If you have more than one entry to a field (i.e. a list of publications), " +
-                "please delimit your list with semicolons (;).  Also please make sure that there are no newline " +
+                "please delimit your list with pipes (|).  Also please make sure that there are no newline " +
                 "characters (=carriage returns) in any of your metadata. Fields in the " + defaultSheetName + " tab may be re-arranged " +
                 "in any order so long as you don't change the field names.");
 
