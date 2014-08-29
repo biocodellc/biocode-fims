@@ -9,6 +9,7 @@ import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
+import org.jsoup.Jsoup;
 import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
@@ -48,6 +49,7 @@ public class templateProcessor {
 //    final int URI = 2;
     final int DEFINITION = 1;
     final int CONTROLLED_VOCABULARY = 2;
+    final int DATA_FORMAT = 2;
 
 
     String instructionsSheetName = "Instructions";
@@ -605,14 +607,6 @@ public class templateProcessor {
         cell.setCellStyle(headingStyle);
         cell.setCellValue("ColumnName");
 
-/*        cell = row.createCell(ENTITY);
-        cell.setCellStyle(headingStyle);
-        cell.setCellValue("Entity");
-
-        cell = row.createCell(URI);
-        cell.setCellStyle(headingStyle);
-        cell.setCellValue("URI");
-*/
         cell = row.createCell(DEFINITION);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Definition");
@@ -620,6 +614,11 @@ public class templateProcessor {
         cell = row.createCell(CONTROLLED_VOCABULARY);
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Controlled Vocabulary (see Lists)");
+
+        /*cell = row.createCell(DATA_FORMAT);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue("Data Format");
+        */
 
         // Must loop entities first
         while (fieldsIt.hasNext()) {
@@ -639,7 +638,7 @@ public class templateProcessor {
                     if (a.getColumn().equals(columnName)) {
                         row = dataFieldsSheet.createRow(rowNum++);
 
-                        // Column Name
+                        // Field Name Cell
                         Cell nameCell = row.createCell(NAME);
                         nameCell.setCellValue(a.getColumn());
                         if (requiredColumns != null && requiredColumns.contains(a.getColumn()))
@@ -647,15 +646,12 @@ public class templateProcessor {
                         else
                             nameCell.setCellStyle(this.headingStyle);
 
-                        //                       row.createCell(ENTITY).setCellValue(e.getConceptAlias());
-//                        row.createCell(URI).setCellValue(a.getUri());
-
                         // Definition Cell
                         Cell defCell = row.createCell(DEFINITION);
                         defCell.setCellValue(a.getDefinition());
                         defCell.setCellStyle(wrapStyle);
 
-                        // Find any related controlled Vocabulary lists to display
+                        // Controlled Vocabulary Cell
                         Worksheet sheet = this.validation.getWorksheets().get(0);
                         Iterator rulesIt = sheet.getRules().iterator();
                         while (rulesIt.hasNext()) {
@@ -668,6 +664,16 @@ public class templateProcessor {
                             }
                         }
 
+                        // Data Format Cell parses the Definition cell value for DOM element = dataFormatValue
+                        try {
+                            org.jsoup.nodes.Document doc = Jsoup.parse(a.getDefinition());
+                            String dataFormat = doc.getElementById("dataFormatValue").html().toString();
+                            Cell formatCell = row.createCell(DATA_FORMAT);
+                            formatCell.setCellValue(dataFormat);
+                            formatCell.setCellStyle(wrapStyle);
+                        } catch (NullPointerException npe) {
+
+                        }
                     }
                 }
             }
@@ -820,8 +826,8 @@ public class templateProcessor {
         DateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
         Calendar cal = Calendar.getInstance();
         String dateAndUser = "Templated generated ";
-        if (username!=null && !username.trim().equals("")) {
-            dateAndUser+= "by " + username + " ";
+        if (username != null && !username.trim().equals("")) {
+            dateAndUser += "by '" + username + "' ";
         }
         dateAndUser += "on " + dateFormat.format(cal.getTime());
         cell.setCellValue(dateAndUser);
@@ -919,7 +925,7 @@ public class templateProcessor {
      * Create the Excel File for output.
      * This function ALWAYS  creates XLSX files as this format is the only one
      * which will pass compatibility checks in data validation
-     *
+     * <p/>
      * Dataset code is used as the basis for the outputfile name
      * If Dataset code is not available, it uses the metadata shortname for project
      * If that is not available it uses "output"
@@ -943,9 +949,8 @@ public class templateProcessor {
         // Create the output Filename and Write Excel File
         String filename = null;
         if (this.datasetCode != null && !this.datasetCode.equals("")) {
-             filename = this.datasetCode;
-        }
-        else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
+            filename = this.datasetCode;
+        } else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
             filename = getFims().getMetadata().getShortname().replace(" ", "_");
         } else {
             filename = "output";
