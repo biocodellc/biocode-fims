@@ -56,6 +56,7 @@ public class templateProcessor {
 
     static File configFile = null;
     Integer project_id;
+    private String username = null;
 
     /**
      * Instantiate tempalateProcessor using a pre-defined configurationFile (don't fetch using projectID)
@@ -138,11 +139,12 @@ public class templateProcessor {
      * @throws Exception
      */
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
-                             Integer accessionNumber, String datasetCode, String ark) throws Exception {
+                             Integer accessionNumber, String datasetCode, String ark, String username) throws Exception {
         // we can't have a null value for accessionNumber or datasetCode if using this constructor
         if (accessionNumber == null || datasetCode == null) {
             throw new FIMSException("dataset code and accession number are required");
         }
+        this.username = username;
         this.accessionNumber = accessionNumber;
         this.datasetCode = datasetCode;
         this.ark = ark;
@@ -810,15 +812,29 @@ public class templateProcessor {
         }
 
 
-        // Print todays date
+        // Print todays date with user name
         row = instructionsSheet.createRow(rowIndex);
-        rowIndex++;
         rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
         DateFormat dateFormat = new SimpleDateFormat("MMMMM dd, yyyy");
         Calendar cal = Calendar.getInstance();
-        cell.setCellValue("Template generated on " + dateFormat.format(cal.getTime()));
+        String dateAndUser = "Templated generated ";
+        if (username!=null && !username.trim().equals("")) {
+            dateAndUser+= "by " + username + " ";
+        }
+        dateAndUser += "on " + dateFormat.format(cal.getTime());
+        cell.setCellValue(dateAndUser);
+
+        // Prompt for data enterer name
+        row = instructionsSheet.createRow(rowIndex);
+        rowIndex++;
+        cell = row.createCell(0);
+        cell.setCellStyle(titleStyle);
+        cell.setCellValue("Person(s) responsible for data entry [                       ]");
+
+        // Insert additional row before next content
+        rowIndex++;
 
         // Default sheet instructions
         row = instructionsSheet.createRow(rowIndex);
