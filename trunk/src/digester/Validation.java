@@ -1,5 +1,8 @@
 package digester;
 
+import static ch.lambdaj.Lambda.*;
+
+import ch.lambdaj.group.Group;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import renderers.Message;
@@ -10,9 +13,7 @@ import settings.*;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * digester.Validation class holds all worksheets that are part of this validator
@@ -89,6 +90,7 @@ public class Validation implements RendererInterface {
      * Lookup a list by its alias
      *
      * @param alias
+     *
      * @return
      */
     public List findList(String alias) {
@@ -104,6 +106,7 @@ public class Validation implements RendererInterface {
      * Create a SQLLite database instance
      *
      * @return
+     *
      * @throws Exception
      */
     private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
@@ -182,9 +185,12 @@ public class Validation implements RendererInterface {
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
             processController.setWorksheetName(worksheet.getSheetname());
-            String status1 = "\t" + worksheet.getSheetname() + " worksheet results";
+            String status1 = "\t<b>Validation results on \"" + worksheet.getSheetname() + "\" worksheet.</b>";
             processController.appendStatus("<br>" + status1 + "<br>");
+
             fimsPrinter.out.println(status1);
+
+            /*
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
                 errorSB.append("\t\t" + msg + "\n");
                 //fimsPrinter.out.println("\t\t" + msg);
@@ -193,16 +199,28 @@ public class Validation implements RendererInterface {
                 warningSB.append("\t\t" + msg + "\n");
                 //warnings.add(msg);
             }
+            */
+
+            // Group all Messages using lambdaj jar library
+            Group<RowMessage> rowGroup = group(worksheet.getMessages(), by(on(RowMessage.class).getGroupMessageAsString()));
+            warningSB.append("<div id=\"expand\">");
+
+            for (String key : rowGroup.keySet()) {
+                warningSB.append("<dl>");
+                warningSB.append("<dt>" + key + "</dt>");
+                java.util.List<RowMessage> rowMessageList = rowGroup.find(key);
+                for (RowMessage m : rowMessageList) {
+                    warningSB.append("<dd>" + m.print() + "</dd>");
+                }
+                warningSB.append("</dl>");
+            }
+            warningSB.append("</div>");
+
             // Worksheet has errors
             if (!worksheet.errorFree()) {
-                fimsPrinter.out.println(errorSB.toString());
                 fimsPrinter.out.println(warningSB.toString());
-                processController.appendStatus(errorSB.toString() + "<br>");
-                processController.appendStatus(warningSB.toString() + "<br>");
-
-                String status2 = "\tErrors found on " + worksheet.getSheetname() + " worksheet.  Must fix to continue.";
-                fimsPrinter.out.println(status2);
-                processController.appendStatus("<font color=#d73027>" + status2 + "</font>");
+                processController.appendStatus("<br><b>1 or more errors found.  Must fix to continue. Click each message for details</b>");
+                processController.appendStatus(warningSB.toString());
 
                 processController.setHasErrors(true);
                 processController.setWarningsSB(warningSB);
@@ -210,8 +228,8 @@ public class Validation implements RendererInterface {
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    processController.appendStatus("<font color=#d73027>Warnings found on " + worksheet.getSheetname() + " worksheet.</font><br>" +
-                            warningSB.toString() + "<br>");
+                    processController.appendStatus("<br><b>1 or more warnings found. Click each message for details</b>");
+                    processController.appendStatus(warningSB.toString());
                     processController.setHasWarnings(true);
                     processController.setWarningsSB(warningSB);
                     return processController;
@@ -230,6 +248,7 @@ public class Validation implements RendererInterface {
      * Begin the validation run.process, looping through worksheets
      *
      * @return
+     *
      * @throws Exception
      */
     public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
@@ -246,7 +265,7 @@ public class Validation implements RendererInterface {
             tabularDataReader.setTable(sheetName);
         } catch (Exception e) {
             // An error here means the sheetname was not found, throw an application message
-            sheet.getMessages().addLast(new RowMessage("Unable to find a required worksheet named '" + sheetName + "' (no quotes)", RowMessage.ERROR));
+            sheet.getMessages().addLast(new RowMessage("Unable to find a required worksheet named '" + sheetName + "' (no quotes)", "Spreadsheet check", RowMessage.ERROR));
             return false;
         }
 

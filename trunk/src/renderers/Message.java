@@ -1,5 +1,7 @@
 package renderers;
 
+import ch.lambdaj.group.Group;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
 public class Message {
     protected String message;
     protected Integer level;
-    protected java.util.List list;
+    protected   String groupMessage;
     public static final Integer WARNING = 0;
     public static final Integer ERROR = 1;
 
@@ -24,14 +26,14 @@ public class Message {
     public Message() {
     }
 
-    public Message(String message, Integer level, List list) {
+    public Message(String message, Integer level, String groupMessage) {
         this.message = message;
         this.level = level;
-        this.list = list;
+        this.groupMessage = groupMessage;
     }
 
-    public List getList() {
-        return list;
+    public   String getGroupMessage() {
+        return groupMessage;
     }
 
     public String getMessage() {
@@ -41,13 +43,14 @@ public class Message {
     /**
      * @return Message for this line
      */
-    public String print() {
+   public String print() {
 
         // Check that there is stuff in this list
-        String listString = "";
+       /* String listString = "";
         if (list != null)
             listString = " " + list.toString();
+        */
+        return getLevelAsString() + ": " + message + " ("+groupMessage + ")";
 
-        return getLevelAsString() + ": " + message + listString;
     }
 }

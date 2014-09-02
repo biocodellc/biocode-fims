@@ -59,7 +59,7 @@ public class Worksheet {
         // Create just a plain Message, no row designation
         for (RowMessage m : messages) {
             if (m.getLevel() == errorLevel) {
-                Message newMsg = new Message(m.getMessage(), m.getLevel(), m.getList());
+                Message newMsg = new Message(m.getMessage(), m.getLevel(), m.getGroupMessage());
                 stringMessage.add(newMsg.print());
             }
         }
@@ -235,7 +235,7 @@ public class Worksheet {
 
         // Default rule... always check that there is some data
         if (validation.getTabularDataReader().getNumRows() < 1) {
-            messages.addLast(new RowMessage("No data found", RowMessage.ERROR));
+            messages.addLast(new RowMessage("No data found", "Spreadsheet check", RowMessage.ERROR));
             //System.out.println("number of rows = " + validation.getTabularDataReader().getNumRows());
         } else {
 

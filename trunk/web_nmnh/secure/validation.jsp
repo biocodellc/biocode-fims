@@ -82,6 +82,11 @@
         $("input[type=button]").click(function() {
             validatorSubmit();
         });
+
+        // expand/contract messages -- use 'on' function and initially to 'body' since this is dynamically loaded
+        jQuery("body").on("click", "#groupMessage", function () {
+            $(this).parent().siblings("dd").slideToggle();
+        });
     });
 </script>
 

@@ -261,7 +261,7 @@ public class Rule {
             String theWarning = "bioValidator processed " + bVRows + " rows, but it appears there may be " + poiRows +
                     " rows on your sheet. This usually occurs when cell formatting has extended below the area of data but " +
                     "may also occur when you have left blank rows in the data.";
-            messages.addLast(new RowMessage(theWarning, RowMessage.WARNING));
+            messages.addLast(new RowMessage(theWarning, "Spreadsheet check", RowMessage.WARNING));
         }
     }
 
@@ -298,7 +298,7 @@ public class Rule {
         Iterator outputit = output.iterator();
         while (outputit.hasNext()) {
             String message = (String) outputit.next();
-            messages.addLast(new RowMessage(message, RowMessage.WARNING));
+            messages.addLast(new RowMessage(message, "Spreadsheet check", RowMessage.WARNING));
         }
     }
 
@@ -319,6 +319,7 @@ public class Rule {
      * @throws Exception
      */
     public void uniqueValue() throws Exception {
+        String groupMessage = "Check that all values in column are unique failed";
         Statement statement = null;
         ResultSet rs = null;
         try {
@@ -338,11 +339,11 @@ public class Rule {
                     values.append(", ");
                 }
                 values.append(rs.getString(getColumn()));
+                addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString(),groupMessage);
                 count++;
             }
-            if (count > 0) {
-                addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString());
-            }
+            //if (count > 0) {
+            //}
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
@@ -369,6 +370,7 @@ public class Rule {
      * @throws Exception
      */
     public void BoundingBox() throws Exception {
+        String groupMessage = "Check coordinates are in bounding box failed";
 
         // Build List of XML Fields
         java.util.List<String> listFields = getFields();
@@ -390,7 +392,7 @@ public class Rule {
 
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLatitude(), j)) ||
                     !checkValidNumber(worksheet.getStringValue(getDecimalLongitude(), j))) {
-                addMessage(j, "Unable to perform BoundingBox check due to illegal Latitude or Longitude value");
+                addMessage("Unable to perform BoundingBox check due to illegal Latitude or Longitude value",groupMessage, j);
             } else {
 
                 latValue = worksheet.getDoubleValue(getDecimalLatitude(), j);
@@ -398,11 +400,11 @@ public class Rule {
 
                 if (latValue != null && latValue != 0.0 && (latValue < minLat || latValue > maxLat)) {
                     msg = getDecimalLatitude() + " " + latValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
-                    addMessage(j, msg);
+                    addMessage (msg,groupMessage,j);
                 }
                 if (longValue != null && longValue != 0.0 && (longValue < minLng || longValue > maxLng)) {
                     msg = getDecimalLongitude() + " " + longValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
-                    addMessage(j, msg);
+                    addMessage(msg,groupMessage,j);
                 }
             }
         }
@@ -423,6 +425,7 @@ public class Rule {
      * @throws Exception
      */
     public void minimumMaximumNumberCheck() throws Exception {
+        String groupMessage = "Check min/max ranges for a number rule failed";
         String minimum = getColumn().split(",")[0];
         String maximum = getColumn().split(",")[1];
         String minMaxArray[] = new String[]{minimum, maximum};
@@ -438,10 +441,10 @@ public class Rule {
             //        RowMessage.WARNING));
             return;
         } else if (!minimumExists && maximumExists) {
-            messages.addLast(new RowMessage("Column " + maximum + " exists but must have corresponding column " + minimum, RowMessage.WARNING));
+            messages.addLast(new RowMessage("Column " + maximum + " exists but must have corresponding column " + minimum, "Spreadsheet check", RowMessage.WARNING));
             return;
         } else if (minimumExists && !maximumExists) {
-            messages.addLast(new RowMessage("Column " + minimum + " exists but must have corresponding column " + maximum, RowMessage.WARNING));
+            messages.addLast(new RowMessage("Column " + minimum + " exists but must have corresponding column " + maximum, "Spreadsheet check", RowMessage.WARNING));
             return;
         }
 
@@ -460,7 +463,7 @@ public class Rule {
                 resultSet = statement.executeQuery(sql);
                 while (resultSet.next()) {
                     msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
-                    addMessage(msg);
+                    addMessage(msg,groupMessage);
                 }
             } catch (Exception e) {
                 throw new Exception("minimumMaximumCheck exception", e);
@@ -477,7 +480,7 @@ public class Rule {
                         resultSet.getString(minimum) +
                         " while " + maximum + " = " +
                         resultSet.getString(maximum);
-                addMessage(msg);
+                addMessage(msg,groupMessage);
             }
 
         } catch (Exception e) {
@@ -492,15 +495,16 @@ public class Rule {
      * @throws Exception
      */
     public void checkLowestTaxonLevel() throws Exception {
+        String groupMessage = "Check lowest taxon level rule failed";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
             String LowestTaxonLevelValue = worksheet.getStringValue("LowestTaxonLevel", j);
             String LowestTaxonValue = worksheet.getStringValue("LowestTaxon", j);
 
             if (LowestTaxonLevelValue == null && LowestTaxonValue != null) {
-                addMessage(j, "LowestTaxon entered without a LowestTaxonLevel");
+                addMessage("LowestTaxon entered without a LowestTaxonLevel",groupMessage,j);
             } else if (LowestTaxonLevelValue != null && LowestTaxonValue == null) {
-                addMessage(j, "LowestTaxonLevel entered without a LowestTaxon");
+                addMessage("LowestTaxonLevel entered without a LowestTaxon",groupMessage, j);
             }
         }
 
@@ -537,6 +541,7 @@ public class Rule {
      */
     @Deprecated
     void checkGenusSpeciesCountsSI() throws Exception {
+        String groupMessage = "Check Genus and species counts SI rule failed";
         String genusHeading = "Genus";
         String speciesHeading = "Species";
         String[] headings = {genusHeading, speciesHeading};
@@ -547,7 +552,7 @@ public class Rule {
         int speciesIndex = columnIndices[1];
 
         if (genusIndex == -1 || speciesIndex == -1) {
-            addMessage(0, "Did not find Genus / species column headings in spreadsheet");
+            addMessage("Did not find Genus / species column headings in spreadsheet",groupMessage, 0);
             return;
         }
 
@@ -572,9 +577,9 @@ public class Rule {
             key = itr.next();
             Integer count = genusSpeciesCombos.get(key);
             if (count > 4) {
-                addMessage(0, "You collected " + count + " " + key + ". Should collect 4.");
+                addMessage("You collected " + count + " " + key + ". Should collect 4.",groupMessage, 0);
             } else if (count < 4) {
-                addMessage(0, "You collected " + count + " " + key + ". Should collect at least 4.");
+                addMessage("You collected " + count + " " + key + ". Should collect at least 4.",groupMessage, 0);
             }
         }
     }
@@ -589,6 +594,7 @@ public class Rule {
      */
     @Deprecated
     public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
+        String groupMessage = "Check voucher SI rule failed";
         String[] headings = {"Voucher Specimen?", "Herbarium Accession No./Catalog No.", "Herbarium Acronym"};
         int[] columnIndices = this.getColumnIndices(headings);
         int vsIdx = columnIndices[0];
@@ -596,15 +602,15 @@ public class Rule {
         int haIdx = columnIndices[2];
 
         if (vsIdx == -1) {
-            addMessage(0, "Did not find Voucher Specimen heading in spreadsheet.");
+            addMessage("Did not find Voucher Specimen heading in spreadsheet.", groupMessage, 0);
         }
 
         if (hanIdx == -1) {
-            addMessage(0, "Did  not find Herbarium Accession No./Catalog No. column heading in spreadsheet.");
+            addMessage("Did  not find Herbarium Accession No./Catalog No. column heading in spreadsheet.", groupMessage, 0);
         }
 
         if (haIdx == -1) {
-            addMessage(0, "Did not find Herbarium Acronym heading in spreadsheet.");
+            addMessage("Did not find Herbarium Acronym heading in spreadsheet.", groupMessage, 0);
         }
 
         if (vsIdx == -1 || hanIdx == -1 || haIdx == -1) {
@@ -614,23 +620,23 @@ public class Rule {
         for (int row = 1; row <= worksheet.getNumRows(); row++) {
             String voucher = worksheet.getStringValue(vsIdx, row);
             if (voucher == null) {
-                addMessage(row, "Missing value for 'Voucher Specimen?'. Must be Y or N.");
+                addMessage("Missing value for 'Voucher Specimen?'. Must be Y or N.", groupMessage, row);
                 continue;
             }
             voucher = voucher.trim();
             if (voucher.equals("Y")) {
                 String han = worksheet.getStringValue(hanIdx, row);
                 if (han == null) {
-                    addMessage(row, "Missing Herbarium Accession No./Catalog No. for voucher specimen.");
+                    addMessage("Missing Herbarium Accession No./Catalog No. for voucher specimen.",groupMessage, row);
                 } else if (han.trim().length() <= 2) {
-                    addMessage(row, "Herbarium Accession No./Catalog No. must be at least two characters long.");
+                    addMessage("Herbarium Accession No./Catalog No. must be at least two characters long.",groupMessage, row);
                 }
 
                 String ha = worksheet.getStringValue(haIdx, row);
                 if (ha == null) {
-                    addMessage(row, "Missing Herbarium Acronym for voucher specimen.");
+                    addMessage("Missing Herbarium Acronym for voucher specimen.",groupMessage, row);
                 } else if (ha.trim().length() == 0) {
-                    addMessage(row, "Herbarium Acronym must be at least one character long.");
+                    addMessage("Herbarium Acronym must be at least one character long.",groupMessage, row);
                 }
 
             }
@@ -645,6 +651,7 @@ public class Rule {
      * @throws Exception
      */
     public void requiredValueFromOtherColumn() throws Exception {
+
         StringBuilder fieldListSB = new StringBuilder();
         ArrayList<String> fieldListArrayList = new ArrayList<String>();
         java.util.List<String> listFields;
@@ -700,33 +707,40 @@ public class Rule {
         try {
             statement = connection.createStatement();
             // Do the select on values based on other column values
-            String sql = "SELECT " + getColumn() + "," + getOtherColumn() + " FROM " + digesterWorksheet.getSheetname();
-            sql += " WHERE ifnull(" + getColumn() + ",'') != '' ";
+            String sql = "SELECT rowid," + getColumn() + "," + getOtherColumn() + " FROM " + digesterWorksheet.getSheetname();
+            sql += " WHERE ifnull(" + getColumn() + ",'') == '' ";
 
             // if null lookup look that we just have SOME value
             if (fieldListSB.toString().equals("")) {
-                sql += " AND ifnull(" + getOtherColumn() + ",'') = ''";
+                sql += " AND ifnull(" + getOtherColumn() + ",'') != ''";
                 // else we look in the lookup list
             } else {
                 sql += " AND " + getOtherColumn();
-                sql += " NOT IN (" + fieldListSB.toString() + ")";
+                sql += " IN (" + fieldListSB.toString() + ")";
             }
-
+            System.out.println(sql);
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String column = resultSet.getString(getColumn()).trim();
                 String otherColumn = resultSet.getString(getOtherColumn()).trim();
+                int rowNum = resultSet.getInt("rowid");
+
                 // Only display messages for items that exist, that is empty cell contents are an approved value
-                if (!column.equals("")) {
+                if (column.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 
-                    msg = "\"" + getColumnWorksheetName() + "\" column contains a value, but associated column \"" +
-                            getOtherColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
+                    //msg = "\"" + getColumnWorksheetName() + "\" column contains a value, but associated column \"" +
+                    //        getOtherColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
+
+                    msg = "\"" + getOtherColumnWorksheetName() + "\" is declared as " + listToString(fieldListArrayList) +
+                            " and associated column \"" + getColumnWorksheetName() + "\" has no value";
+                    //kind of object is declared as 'VALUE' and required Column is empty
+
                    /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
                     if (!fieldListSB.toString().equals("")) {
                         msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + fieldListSB.toString() + "})";
                     }*/
-                    addMessage(msg, null, null);
+                    addMessage(msg, "Dependent column value check", rowNum);
                 }
             }
 
@@ -754,6 +768,7 @@ public class Rule {
      */
     @Deprecated
     public void checkTissueColumnsSI() throws Exception {
+        String groupMessage = "Check tissue columns SI rule failed";
         String plateNoHeading = "Plate No.";
         String rowLetterHeading = "Row Letter";
         String columnNumberHeading = "Column No.";
@@ -776,7 +791,7 @@ public class Rule {
 
         //This check may be redundant...
         if (colNoIndex == -1 || rowLetterIndex == -1 || plateNoIndex == -1) {
-            addMessage(0, "Did not find required headings for Plate / Well Row / Well Column in spreadsheet");
+            addMessage("Did not find required headings for Plate / Well Row / Well Column in spreadsheet", groupMessage, 0);
             return;
         }
 
@@ -794,14 +809,14 @@ public class Rule {
             plateCount += 1;
 
             if (plateCount > 96) {
-                addMessage(row, "Too many rows for plate " + plateNo);
+                addMessage( "Too many rows for plate " + plateNo, groupMessage, row);
             }
             plateCounts.put(plateNo, plateCount);
 
             //Row letter must be A-H only (no lowercase)
             String rowLetter = worksheet.getStringValue(rowLetterIndex, row).trim();
             if (!RegEx.verifyValue("^[A-H]$", rowLetter)) {
-                addMessage(row, "Bad row letter " + rowLetter + " (must be between A and H)");
+                addMessage("Bad row letter " + rowLetter + " (must be between A and H)", groupMessage, row);
             }
 
             //Column Number must be 01-12
@@ -810,16 +825,16 @@ public class Rule {
             try {
                 col = Integer.parseInt(colNo);
                 if (col < 1 && col > 12) {
-                    addMessage(row, "Bad Column Number " + colNo + " (must be between 01 and 12).");
+                    addMessage("Bad Column Number " + colNo + " (must be between 01 and 12).", groupMessage, row);
                 }
             } catch (NumberFormatException e) {
-                addMessage(row, "Invalid number format for Column Number");
+                addMessage("Invalid number format for Column Number", groupMessage, row);
             }
 
             String prc = plateNo + rowLetter + colNo;
             Integer prcRow = plateRowColumnCombined.get(prc);
             if (prcRow != null) {
-                addMessage(row, "Duplicate Plate / Row / Column combination (previously defined at row " + prcRow + ")");
+                addMessage("Duplicate Plate / Row / Column combination (previously defined at row " + prcRow + ")", groupMessage, row);
             } else {
                 plateRowColumnCombined.put(prc, row);
             }
@@ -842,6 +857,7 @@ public class Rule {
      * @throws Exception
      */
     public void checkTissueColumns() throws Exception {
+        String groupMessage = "Check tissue columns rule failed";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
 
@@ -849,9 +865,9 @@ public class Rule {
             String well_number96Value = worksheet.getStringValue(getWellNumber(), j);
 
             if (format_name96Value == null && well_number96Value != null) {
-                addMessage(j, "Well Number (well_number96) entered without a Plate Name (format_name96)");
+                addMessage("Well Number (well_number96) entered without a Plate Name (format_name96)", groupMessage, j);
             } else if (format_name96Value != null && well_number96Value == null) {
-                addMessage(j, "Plate Name (format_name96) entered without a Well Number (well_number96)");
+                addMessage("Plate Name (format_name96) entered without a Well Number (well_number96)", groupMessage,j);
             } else if (format_name96Value == null && well_number96Value == null) {
                 // ignore case where both are null (just means no tissue entered)
             } else {
@@ -863,20 +879,20 @@ public class Rule {
                         intNumber = Integer.parseInt(strNumber);
                     } catch (NumberFormatException nme) {
                         // Not a valid integer
-                        addMessage(j, "Bad Well Number " + well_number96Value);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
                     } catch (Exception e) {
-                        addMessage(j, "Bad Well Number " + well_number96Value);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
                     } finally {
                         if (intNumber <= 12 && intNumber >= 1) {
                             // ok
                         } else {
                             // Number OK but is out of range
-                            addMessage(j, "Bad Well Number " + well_number96Value);
+                            addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
                         }
                     }
                 } else {
                     // Something bigger wrong with well number syntax
-                    addMessage(j, "Bad Well Number " + well_number96Value);
+                    addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
                 }
             }
 
@@ -889,6 +905,7 @@ public class Rule {
      * or, simply value:">=0"
      */
     public void validateNumeric() throws Exception {
+        String groupMessage = "Check for valid number format rule failed";
         boolean validNumber = true;
         ResultSet resultSet;
         Statement statement = connection.createStatement();
@@ -912,7 +929,7 @@ public class Rule {
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 msg = "Value out of range " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\" using range validation = " + value;
-                addMessage(msg);
+                addMessage(msg, groupMessage);
                 validNumber = false;
             }
 
@@ -946,6 +963,7 @@ public class Rule {
      * @throws Exception
      */
     private boolean checkValidNumberSQL(String thisColumn) throws Exception {
+        String groupMessage = "Checking valid number message rule failed";
         boolean validNumber = true;
         ResultSet resultSet;
         Statement statement = connection.createStatement();
@@ -959,7 +977,7 @@ public class Rule {
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 msg = "Non-numeric value " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\"";
-                addMessage(msg);
+                addMessage(msg,groupMessage);
                 validNumber = false;
             }
         } catch (Exception e) {
@@ -1014,6 +1032,7 @@ public class Rule {
     public void DwCLatLngChecker
     () throws Exception {
         String msg = "";
+        String groupMessage = "Latitude / longitude checker rule failed";
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
             Double latValue = null;
             Double lngValue = null;
@@ -1025,30 +1044,30 @@ public class Rule {
             String maxerrorValue = worksheet.getStringValue(getMaxErrorInMeters(), j);
 
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLatitude(), j))) {
-                addMessage(j, worksheet.getStringValue(getDecimalLatitude(), j) + " not a valid " + getDecimalLatitude());
+                addMessage(worksheet.getStringValue(getDecimalLatitude(), j) + " not a valid " + getDecimalLatitude(),groupMessage,j);
             }
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLongitude(), j))) {
-                addMessage(j, worksheet.getStringValue(getDecimalLongitude(), j) + " not a valid " + getDecimalLongitude());
+                addMessage(worksheet.getStringValue(getDecimalLongitude(), j) + " not a valid " + getDecimalLongitude(), groupMessage,j);
             }
 
             if (lngValue != null && latValue == null) {
                 msg = getDecimalLongitude() + " entered without a " + getDecimalLatitude();
-                addMessage(j, msg);
+                addMessage(msg,groupMessage,j);
             }
 
             if (lngValue == null && latValue != null) {
                 msg = getDecimalLatitude() + " entered without a " + getDecimalLongitude();
-                addMessage(j, msg);
+                addMessage(msg,groupMessage,j);
             }
 
             if (datumValue != null && (lngValue == null && latValue == null)) {
                 msg = getHorizontalDatum() + " entered without a " + getDecimalLatitude() + " or " + getDecimalLongitude();
-                addMessage(j, msg);
+                addMessage(msg,groupMessage,j);
             }
 
             if (maxerrorValue != null && (lngValue == null && latValue == null)) {
                 msg = getMaxErrorInMeters() + " entered without a " + getDecimalLatitude() + " or " + getDecimalLongitude();
-                addMessage(j, msg);
+                addMessage(msg,groupMessage,j);
             }
 
         }
@@ -1139,17 +1158,17 @@ public class Rule {
 
         try {
             statement = connection.createStatement();
-            String sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
-                    " where (" + getColumn()  + " NOT NULL && " + getColumn() + " != \"\") && ";
+            String sql = "select rowid," + getColumn() + " from " + digesterWorksheet.getSheetname() +
+                    " where (" + getColumn()  + " NOT NULL AND " + getColumn() + " != \"\") AND ";
             if (caseInsensitiveSearch)
                 sql += "UPPER(" + getColumn() + ")";
             else
                 sql += getColumn();
             sql += " not in (" + lookupSB.toString() + ")";
-
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String value = resultSet.getString(getColumn()).trim();
+                int rowNum = resultSet.getInt("rowid");
                 // Only display messages for items that exist, that is empty cell contents are an approved value
                 if (!value.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
@@ -1159,12 +1178,12 @@ public class Rule {
                     URL url = new URL(serviceRoot);
                     String urlPath = url.getPath();
                     //msg += " <a  href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
-                    msg += " <a  href=\"#\" onclick=\"list('" + urlPath + "utils/getListFields/" + getList() + "/?" +
+                    String groupMessage = "\"" + getColumnWorksheetName() + "\" contains invalid value <a  href=\"#\" onclick=\"list('" + urlPath + "utils/getListFields/" + getList() + "/?" +
                             "column_name=" + URLEncoder.encode(column, "utf-8") + "&" +
-                            "project_id=');\">see approved</a>";
+                            "project_id=');\">see list</a>";
                     //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&project_id=1');">link</a>
 
-                    addMessage(msg, null, null);
+                    addMessage(msg, groupMessage , rowNum);
                 }
             }
 
@@ -1197,6 +1216,7 @@ public class Rule {
      * }
      */
     public void RequiredColumns() {
+        String groupMessage = "Required column check rule failed";
         Statement statement = null;
         ResultSet rs = null;
         try {
@@ -1243,7 +1263,7 @@ public class Rule {
                     sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + fieldNameSQLLite + "`='' or `" + fieldNameSQLLite + "` is null";
                     rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
-                        addMessage("\"" + fieldNameWorksheet + "\" has a missing cell value");
+                        addMessage("\"" + fieldNameWorksheet + "\" has a missing cell value", groupMessage);
                     }
                 } catch (SQLException e) {
                     System.out.println(sql);
@@ -1254,7 +1274,7 @@ public class Rule {
 
         if (notFoundArray.size() > 0) {
             msg = "Did not find " + levelValue + " columns: " + listToString(notFoundArray);
-            addMessage(msg);
+            addMessage(msg, groupMessage);
         }
         try {
             statement.close();
@@ -1271,6 +1291,12 @@ public class Rule {
     private static String listToString(java.util.List<?> list) {
         StringBuilder result = new StringBuilder();
 
+        // If only one value then just return that
+        if (list.size() ==1) {
+            return list.get(0).toString();
+        }
+
+        // If more than one value then return an array syntax
         for (int i = 0; i < list.size(); i++) {
             if (i ==0)
                 result.append("[");
@@ -1303,12 +1329,11 @@ public class Rule {
      * @param row
      * @param message
      */
-    private void addMessage
-    (Integer
-             row, String
-            message) {
+    /*private void addMessage
+        (Integer row,
+        String message) {
         messages.addLast(new RowMessage(message, getMessageLevel(), row));
-    }
+    }*/
 
     /**
      * Add a message with just a message and no row assigned
@@ -1316,17 +1341,15 @@ public class Rule {
      * @param message
      */
     private void addMessage
-    (String
-             message) {
-        messages.addLast(new RowMessage(message, getMessageLevel()));
+    (String message, String groupMessage) {
+        messages.addLast(new RowMessage(message, groupMessage, getMessageLevel()));
     }
 
     private void addMessage
-            (String
-                     message, java.util.List
-                    list, Integer
-                    row) {
-        messages.addLast(new RowMessage(message, list, getMessageLevel(), row));
+            (String message,
+             String groupMessage,
+             Integer row) {
+        messages.addLast(new RowMessage(message, groupMessage, getMessageLevel(), row));
     }
 
     /**
