@@ -327,7 +327,7 @@ public class Rule {
             rs = null;
             String sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
                    // " where " + getColumn()  + " NOT null " +
-                   " WHERE ifnull(" + getColumn() + ",'') == '' " +
+                   " WHERE ifnull(" + getColumn() + ",'') != '' " +
                     " group by " + getColumn() +
                     " having count(*) > 1";
 
