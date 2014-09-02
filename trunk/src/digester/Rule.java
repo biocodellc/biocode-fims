@@ -1293,7 +1293,7 @@ public class Rule {
 
         // If only one value then just return that
         if (list.size() ==1) {
-            return list.get(0).toString();
+            return "\"" + list.get(0).toString() + "\"";
         }
 
         // If more than one value then return an array syntax
