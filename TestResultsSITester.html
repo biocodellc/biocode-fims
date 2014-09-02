@@ -572,8 +572,8 @@ jQuery.cookie = function(name, value, options) {
 <body>
 <div id="container">
 <div id="header">
-<div class="time">979 ms</div>
-<h1>siTester: <strong><span class="total">24 total, </span><span class="passed">24 passed</span></strong>
+<div class="time">1.26 s</div>
+<h1>siTester: <strong><span class="total">24 total, </span><span class="failed">8 failed, </span><span class="passed">16 passed</span></strong>
 </h1>
 <div id="treecontrol">
 <ul>
@@ -589,134 +589,164 @@ jQuery.cookie = function(name, value, options) {
 </div>
 <div id="content">
 <ul id="tree">
-<li xmlns="" class="level top open">
+<li xmlns="" class="level top failed open">
 <span><em class="time">
-<div class="time">979 ms</div>
+<div class="time">1.26 s</div>
 </em>siTester</span>
 <ul>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">429 ms</div>
+<div class="time">570 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">279 ms</div>
-</em><em class="status">passed</em>checkLists[SIBOT.xml]</span>
+<div class="time">386 ms</div>
+</em><em class="status">failed</em>checkLists[SIBOT.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 5, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 6, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 7, but was not named as a list<br/>SIBOT.xml;checkList;message = collector is specified by a rule as a list for column Collector 8, but was not named as a list<br/>SIBOT.xml;checkList;message = genus is specified by a rule as a list for column Genus, but was not named as a list<br/>SIBOT.xml;checkList;message = phylum is specified by a rule as a list for column Phylum, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">114 ms</div>
+<div class="time">133 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIBOT.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">36 ms</div>
+<div class="time">51 ms</div>
 </em><em class="status">passed</em>parse[SIBOT.xml]</span>
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">157 ms</div>
+<div class="time">240 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">93 ms</div>
-</em><em class="status">passed</em>checkLists[SIENT.xml]</span>
+<div class="time">149 ms</div>
+</em><em class="status">failed</em>checkLists[SIENT.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIENT.xml;checkList;message = genus is specified by a rule as a list for column Genus, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">43 ms</div>
+<div class="time">81 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIENT.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">21 ms</div>
+<div class="time">10 ms</div>
 </em><em class="status">passed</em>parse[SIENT.xml]</span>
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">130 ms</div>
+<div class="time">87 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">70 ms</div>
-</em><em class="status">passed</em>checkLists[SIINV.xml]</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">52 ms</div>
-</em><em class="status">passed</em>checkUniqueURIValues[SIINV.xml]</span>
-</li>
-<li class="level test">
-<span><em class="time">
-<div class="time">8 ms</div>
-</em><em class="status">passed</em>parse[SIINV.xml]</span>
+<div class="time">55 ms</div>
+</em><em class="status">failed</em>checkLists[SIINV.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 5, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 6, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 7, but was not named as a list<br/>SIINV.xml;checkList;message = collector is specified by a rule as a list for column Collector 8, but was not named as a list<br/>SIINV.xml;checkList;message = family is specified by a rule as a list for column Family, but was not named as a list<br/>SIINV.xml;checkList;message = genus is specified by a rule as a list for column Genus, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
 </li>
 </ul>
-</li>
-<li class="level suite open">
-<span><em class="time">
-<div class="time">63 ms</div>
-</em>xml]</span>
-<ul>
-<li class="level test">
-<span><em class="time">
-<div class="time">32 ms</div>
-</em><em class="status">passed</em>checkLists[SIVZA.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
 <div class="time">23 ms</div>
+</em><em class="status">passed</em>checkUniqueURIValues[SIINV.xml]</span>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">9 ms</div>
+</em><em class="status">passed</em>parse[SIINV.xml]</span>
+</li>
+</ul>
+</li>
+<li class="level suite failed open">
+<span><em class="time">
+<div class="time">88 ms</div>
+</em>xml]</span>
+<ul>
+<li class="level test failed open">
+<span><em class="time">
+<div class="time">65 ms</div>
+</em><em class="status">failed</em>checkLists[SIVZA.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 5, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 6, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 7, but was not named as a list<br/>SIVZA.xml;checkList;message = collector is specified by a rule as a list for column Collector 8, but was not named as a list<br/>SIVZA.xml;checkList;message = family is specified by a rule as a list for column Family, but was not named as a list<br/>SIVZA.xml;checkList;message = phylum is specified by a rule as a list for column Phylum, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
+</li>
+<li class="level test">
+<span><em class="time">
+<div class="time">17 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIVZA.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">8 ms</div>
+<div class="time">6 ms</div>
 </em><em class="status">passed</em>parse[SIVZA.xml]</span>
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">66 ms</div>
+<div class="time">83 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">46 ms</div>
-</em><em class="status">passed</em>checkLists[SIVZB.xml]</span>
+<div class="time">63 ms</div>
+</em><em class="status">failed</em>checkLists[SIVZB.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIVZB.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">15 ms</div>
+<div class="time">16 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIVZB.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">5 ms</div>
+<div class="time">4 ms</div>
 </em><em class="status">passed</em>parse[SIVZB.xml]</span>
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">31 ms</div>
+<div class="time">32 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">18 ms</div>
-</em><em class="status">passed</em>checkLists[SIVZF.xml]</span>
+<div class="time">21 ms</div>
+</em><em class="status">failed</em>checkLists[SIVZF.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 5, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 6, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 7, but was not named as a list<br/>SIVZF.xml;checkList;message = collector is specified by a rule as a list for column Collector 8, but was not named as a list<br/>SIVZF.xml;checkList;message = Life Stage is specified by a rule as a list for column Life Stage, but was not named as a list<br/>SIVZF.xml;checkList;message = family is specified by a rule as a list for column Family, but was not named as a list<br/>SIVZF.xml;checkList;message = genus is specified by a rule as a list for column Genus, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">11 ms</div>
+<div class="time">9 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIVZF.xml]</span>
 </li>
 <li class="level test">
@@ -726,15 +756,20 @@ jQuery.cookie = function(name, value, options) {
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">42 ms</div>
+<div class="time">104 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">27 ms</div>
-</em><em class="status">passed</em>checkLists[SIVZM.xml]</span>
+<div class="time">53 ms</div>
+</em><em class="status">failed</em>checkLists[SIVZM.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIVZM.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIVZM.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIVZM.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIVZM.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIVZM.xml;checkList;message = family is specified by a rule as a list for column Family, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
@@ -743,29 +778,34 @@ jQuery.cookie = function(name, value, options) {
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">4 ms</div>
+<div class="time">40 ms</div>
 </em><em class="status">passed</em>parse[SIVZM.xml]</span>
 </li>
 </ul>
 </li>
-<li class="level suite open">
+<li class="level suite failed open">
 <span><em class="time">
-<div class="time">61 ms</div>
+<div class="time">51 ms</div>
 </em>xml]</span>
 <ul>
-<li class="level test">
+<li class="level test failed open">
 <span><em class="time">
-<div class="time">15 ms</div>
-</em><em class="status">passed</em>checkLists[SIMIN.xml]</span>
+<div class="time">33 ms</div>
+</em><em class="status">failed</em>checkLists[SIMIN.xml]</span>
+<ul>
+<li class="text">
+<span class="stderr">java.lang.AssertionError: SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 1 (Primary), but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 2, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 3, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 4, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 5, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 6, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 7, but was not named as a list<br/>SIMIN.xml;checkList;message = collector is specified by a rule as a list for column Collector 8, but was not named as a list<br/>SIMIN.xml;checkList;message = preparation is specified by a rule as a list for column Preparation 1, but was not named as a list<br/>	at org.junit.Assert.fail(Assert.java:88)<br/>	at org.junit.Assert.assertTrue(Assert.java:41)<br/>	at unit_tests.siTester.checkLists(siTester.java:91)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)<br/>	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)<br/>	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)<br/>	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)<br/>	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)<br/>	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runners.Suite.runChild(Suite.java:127)<br/>	at org.junit.runners.Suite.runChild(Suite.java:26)<br/>	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)<br/>	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)<br/>	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)<br/>	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)<br/>	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)<br/>	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)<br/>	at org.junit.runner.JUnitCore.run(JUnitCore.java:160)<br/>	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:71)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:199)<br/>	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:62)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:120)<br/></span>
+</li>
+</ul>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">43 ms</div>
+<div class="time">13 ms</div>
 </em><em class="status">passed</em>checkUniqueURIValues[SIMIN.xml]</span>
 </li>
 <li class="level test">
 <span><em class="time">
-<div class="time">3 ms</div>
+<div class="time">5 ms</div>
 </em><em class="status">passed</em>parse[SIMIN.xml]</span>
 </li>
 </ul>
@@ -776,7 +816,7 @@ jQuery.cookie = function(name, value, options) {
 </div>
 </div>
 <div id="footer">
-<p>Generated by IntelliJ IDEA on 8/7/14 1:40 PM</p>
+<p>Generated by IntelliJ IDEA on 9/2/14 2:50 PM</p>
 </div>
 </body>
 </html>

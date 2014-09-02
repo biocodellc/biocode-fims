@@ -70,8 +70,10 @@ public class configurationFileTester {
         try {
             document = builder.parse(new InputSource(fileToTest.getAbsoluteFile().toString()));
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         } catch (SAXException e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -106,8 +108,9 @@ public class configurationFileTester {
                 NamedNodeMap ruleAttributes = rules.item(i).getAttributes();
                 if (ruleAttributes != null &&
                         ruleAttributes.getNamedItem("type") != null &&
-                        ruleAttributes.getNamedItem("type").getNodeValue().equalsIgnoreCase("CheckInXMLFields")) {
-                    String list = ruleAttributes.getNamedItem("list").getNodeValue();
+                        ((ruleAttributes.getNamedItem("type").getNodeValue().equalsIgnoreCase("CheckInXMLFields")
+                                || ruleAttributes.getNamedItem("type").getNodeValue().equalsIgnoreCase("controlledVocabulary")))) {
+                    String list = ruleAttributes.getNamedItem("list").getNodeValue() + "|" + ruleAttributes.getNamedItem("column").getNodeValue();
                     rulesCheckInXMLFields.add(list);
                 }
             }
@@ -116,8 +119,16 @@ public class configurationFileTester {
         Iterator it = rulesCheckInXMLFields.iterator();
         while (it.hasNext()) {
             String ruleListName = (String) it.next();
-            if (!listAliases.contains(ruleListName)) {
-                messages.add(this, ruleListName + " is specified by a rule as a list, but was not named as a list", "checkList");
+            String[] parsed = ruleListName.split("\\|");
+            String listname = parsed[0];
+            String columnname = "";
+            try {
+                columnname = " for column " + parsed[1];
+            } catch (Exception e) {
+                columnname = "";
+            }
+            if (!listAliases.contains(listname)) {
+                messages.add(this, listname + " is specified by a rule as a list" + columnname + ", but was not named as a list", "checkList");
                 passedTest = false;
             }
         }
@@ -130,7 +141,7 @@ public class configurationFileTester {
      *
      * @return
      */
-    public boolean checkUniqueKeys()  {
+    public boolean checkUniqueKeys() {
         if (!parse()) {
             return false;
         }
@@ -286,16 +297,19 @@ public class configurationFileTester {
 
     /**
      * For testing purposes ONLY, call this script from unit_tests directory
+     *
      * @param args
+     *
      * @throws configurationFileError
      */
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/Documents/Smithsonian/SIBOT.xml");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
         configurationFileTester cFT = new configurationFileTester();
         cFT.init(file);
         cFT.parse();
         cFT.checkLists();
+        System.out.println(cFT.messages.printMessages());
         /*
         // Check ACTIVE Project configuration files
         Integer projects[] = {1, 3, 4, 5, 8, 9, 10, 11, 12, 22};

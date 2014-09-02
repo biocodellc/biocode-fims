@@ -186,8 +186,7 @@ public class Validation implements RendererInterface {
             Worksheet worksheet = w.next();
             processController.setWorksheetName(worksheet.getSheetname());
             String status1 = "\t<b>Validation results on \"" + worksheet.getSheetname() + "\" worksheet.</b>";
-            processController.appendStatus("<br>" + status1 + "<br>");
-
+            processController.appendStatus("<br>" + status1);
             fimsPrinter.out.println(status1);
 
             /*
@@ -219,7 +218,7 @@ public class Validation implements RendererInterface {
             // Worksheet has errors
             if (!worksheet.errorFree()) {
                 fimsPrinter.out.println(warningSB.toString());
-                processController.appendStatus("<br><b>1 or more errors found.  Must fix to continue. Click each message for details</b>");
+                processController.appendStatus("<br><b>1 or more errors found.  Must fix to continue. Click each message for details</b><br>");
                 processController.appendStatus(warningSB.toString());
 
                 processController.setHasErrors(true);
@@ -228,7 +227,7 @@ public class Validation implements RendererInterface {
             } else {
                 // Worksheet has no errors but does have some warnings
                 if (!worksheet.warningFree()) {
-                    processController.appendStatus("<br><b>1 or more warnings found. Click each message for details</b>");
+                    processController.appendStatus("<br><b>1 or more warnings found. Click each message for details</b><br>");
                     processController.appendStatus(warningSB.toString());
                     processController.setHasWarnings(true);
                     processController.setWarningsSB(warningSB);

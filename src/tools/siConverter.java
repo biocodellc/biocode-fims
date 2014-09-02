@@ -184,8 +184,10 @@ public class siConverter {
                 if (globalValidationValue != null && !globalValidationValue.equals("")) {
                     try {
 
-                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column, treeMap));
+
+                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column, treeMap, p));
                     } catch (Exception e) {
+                        e.printStackTrace();
                         System.err.println("Unable to process " + globalValidationValue);
                     }
                 }

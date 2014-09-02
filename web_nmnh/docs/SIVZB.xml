@@ -279,7 +279,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample Type Verbatim</field>
 			<field>Genetic Sample quality</field>
 		</rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
 		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
