@@ -71,19 +71,19 @@ Pre-registration in EMu is a requirement for the field collecting event and will
 project will have an acquisition transaction record in EMu for later referencing and appending
 and scientists can populate their field templates with these acquisition numbers before going
 into the field.
-Pre-registration involves the creation of a new In Process Acquisition transaction in EMu.
-Subtype of this acquisition should be Collected for Museum with Primary Sponsor or Collector
-recorded as the Primary Transactor. Other collectors or collaborating institutions can be
+Pre-registration involves the creation of a new <i>In Process Acquisition</i> transaction in EMu.
+<i>Subtype</i> of this acquisition should be <i>Collected for Museum</i> with <i>Primary Sponsor</i> or <i>Collector</i>
+recorded as the <i>Primary Transactor</i>. Other collectors or collaborating institutions can be
 included as secondary transactors. General information about where and what will be
 collected should be included in the material description field of the transaction. Any permits or
-agreements received prior to the trip should be scanned and referenced via Rights records and
+agreements received prior to the trip should be scanned and referenced via <i>Rights</i> records and
 linked to the transaction. Item level information will not be flushed out until after return from the
 trip. The data spreadsheet itself should be loaded in as a multimedia asset associated with the
 transaction upon return and final validation.
 
 <h2>Generate Template</h2>
 
-Users can generate a unit-specific Excel template spreadsheet to be used as the primary
+Users can generate a unit-specific Excel spreadsheet template to be used as the primary
 method of recording field collection information in the field.
 To create the Excel template, a user will select from a robust set of standardized metadata
 fields, with the core set EMu, Darwin Core, MIxS, and the ABCDDNA/DwC DNA and Tissue
@@ -99,8 +99,8 @@ Once in the field, researchers can use the pre-generated spreadsheet to record d
 <h2>Validation</h2>
 
 Researchers can validate recorded data against quality assurance validation scripts. These
-scripts will show errors (where incorrect values or used) or warnings when data might need
-modification. Users will use errors and warnings to edit spreadsheet data until it passes
+scripts will show errors (where incorrect values are used) or warnings when data might need
+modification. Users will use errors and warnings to edit spreadsheet data until the spreadsheet passes
 validation (an iterative process of checking and correcting).
 
 <h2>Upload</h2>
