@@ -14,7 +14,7 @@
                     <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
                 </c:if>
                 <c:if test="${user == null}">
-                    <select width=20 id=projects onChange="alert('Must login before generating template');">
+                    <select width=20 id=projects onChange="alert('You must login before generating a template');">
                 </c:if>
                         <option value=0>Loading projects ...</option>
                 </select>
@@ -44,7 +44,7 @@
 
             <h2>Definition</h2>
 
-            <p>Click on the "DEF" link next to any of the headings to see its definition in this pane.</p>
+            <p>Click on the "DEF" link next to any field to see its definition in this pane.</p>
 
             <div id='definition'></div>
         </div>
