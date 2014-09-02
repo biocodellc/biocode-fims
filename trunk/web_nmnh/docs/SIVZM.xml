@@ -341,10 +341,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample quality</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
@@ -426,7 +422,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='controlledVocabulary' column='Reproductive Part 4 Unit' list='reproductivePartUnit' level='warning'></rule>
 		<rule type='validateNumeric' column='Reproductive Part 4 Width' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>

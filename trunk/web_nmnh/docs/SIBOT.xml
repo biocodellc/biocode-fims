@@ -336,14 +336,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 5' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
@@ -391,10 +383,8 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='validateNumeric' column='Sheets per specimen' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Hybrid rank' list='hybridRank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Epithet below subspecies' level='warning' otherColumn=''></rule>
-		<rule type='controlledVocabulary' column='Phylum' list='phylum' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Rank below subspecies' list='taxonRank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Rank below subspecies' level='warning' otherColumn='Epithet below subspecies'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>

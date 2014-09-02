@@ -25,11 +25,12 @@ public class siRuleProcessor {
     String otherColumn = null;
     LinkedList values = null;
     TreeMap treeMap = null;
+    siProjects p = null;
 
     static ArrayList<String> ruleTypes = new ArrayList<String>();
     ArrayList<String> rules = new ArrayList<String>();
 
-    public siRuleProcessor(String jsonInput, String column, TreeMap treeMap) throws Exception {
+    public siRuleProcessor(String jsonInput, String column, TreeMap treeMap, siProjects p) throws Exception {
         ruleTypes.add("controlledVocabulary");
         ruleTypes.add("requiredValueFromOtherColumn");
         ruleTypes.add("minimumMaximumNumberCheck");
@@ -40,7 +41,7 @@ public class siRuleProcessor {
         this.jsonInput = jsonInput;
         this.column = column;
         this.treeMap = treeMap;
-
+        this.p = p;
         // Parse the JSON
         JSONParser parser = new JSONParser();
         ContainerFactory containerFactory = new ContainerFactory() {
@@ -138,10 +139,52 @@ public class siRuleProcessor {
 
     /**
      * Construct the rule output
+     * This method contains exceptions to rule processing!
      *
      * @throws Exception
      */
-    private void constructRule() throws Exception {
+    public void constructRule() throws Exception {
+
+        // TODO: find a better way to filter non-standard rules for particular departments
+        // for now, this solution filters certain rules known to cause problems
+        // These are EXCEPTIONS where we DO NOT want to build a RULE.  ALL Of these involve the use
+        // of lists, hence we do a not NULL check here
+        if (list != null) {
+            if (p.abbreviation.equals("SIBOT") && (
+                    list.equals("collector") ||
+                            list.equals("genus") ||
+                            list.equals("phylum")
+            )) return;
+            if (p.abbreviation.equals("SIENT") && (
+                    list.equals("genus"))) return;
+            if (p.abbreviation.equals("SIINV") && (
+                    list.equals("collector") ||
+                            list.equals("family") ||
+                            list.equals("genus")
+            )) return;
+            if (p.abbreviation.equals("SIVZA") && (
+                    list.equals("collector") ||
+                            list.equals("family") ||
+                            list.equals("phylum")
+            )) return;
+            if (p.abbreviation.equals("SIVZB") && (
+                    column.equals("Collector 1 (Primary)") && list.equals("collector")
+            )) return;
+            if (p.abbreviation.equals("SIVZF") && (
+                    list.equals("collector") ||
+                            list.equals("Life Stage") ||
+                            list.equals("family") ||
+                            list.equals("genus")
+            )) return;
+            if (p.abbreviation.equals("SIVZM") && (
+                    list.equals("collector") ||
+                            list.equals("family")
+            )) return;
+            if (p.abbreviation.equals("SIMIN") && (
+                    list.equals("collector") ||
+                            (column.equals("Preparation 1") && list.equals("preparation"))
+            )) return;
+        }
         StringBuilder sbOutput = new StringBuilder();
         // prevent returning null type rules
         if (type == null) {
@@ -223,7 +266,7 @@ public class siRuleProcessor {
         //siRuleProcessor test = new siRuleProcessor("{\"type\":\"controlledVocabulary\",\"list\":\"softParts\"}", "testColumn");
         //siRuleProcessor test = new siRuleProcessor("[{\"type\":\"controlledVocabulary\",\"list\":\"geneticSampleTypePrimary\"},{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}]", "geneticSampleTypePrimary");
         //siRuleProcessor test = new siRuleProcessor("{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}","geneticSampleTypePrimary");
-        siRuleProcessor test = new siRuleProcessor("{\"type\":\"minimumMaximumNumberCheck\",\"column\":\"minimumDepthInMeters,maximumDepthInMeters\",\"level\":\"error\"}", "foo", null);
+        siRuleProcessor test = new siRuleProcessor("{\"type\":\"minimumMaximumNumberCheck\",\"column\":\"minimumDepthInMeters,maximumDepthInMeters\",\"level\":\"error\"}", "foo", null, null);
 
         System.out.println(test.print());
 

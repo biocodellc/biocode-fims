@@ -263,14 +263,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 5' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
@@ -314,9 +306,7 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Phylum' list='phylum' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>

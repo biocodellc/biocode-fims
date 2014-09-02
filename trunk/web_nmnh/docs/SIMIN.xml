@@ -314,14 +314,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 5' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
@@ -391,7 +383,6 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='requiredValueFromOtherColumn' column='Weight' level='warning' otherColumn='weightUnits'></rule>
 		<rule type='controlledVocabulary' column='Weight unit' list='weightUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight unit' level='warning' otherColumn='Weight'></rule>
-		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='Warning'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Organism count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>

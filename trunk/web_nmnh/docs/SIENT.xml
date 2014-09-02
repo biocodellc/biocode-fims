@@ -278,7 +278,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>

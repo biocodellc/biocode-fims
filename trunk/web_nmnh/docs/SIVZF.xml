@@ -262,14 +262,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Well</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 1 (Primary)' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 2' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 3' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 4' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 5' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='validateNumeric' column='Bottom depth' level='error' value='%3E%3D0'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='error'></rule>
@@ -293,11 +285,8 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Value' level='warning' otherColumn='Measurement 1 Unit'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
-		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
