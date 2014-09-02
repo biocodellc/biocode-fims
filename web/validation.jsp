@@ -72,6 +72,7 @@
         fimsBrowserCheck($('#warning'));
         validationFormToggle();
         populateProjects();
+
         // call validatorSubmit if the enter key was pressed in an input
         $("input").keydown( function(event) {
             if (event.which == 13) {
@@ -79,10 +80,17 @@
             validatorSubmit();
             }
         });
+
         $("input[type=button]").click(function() {
             validatorSubmit();
         });
+
+       // expand/contract messages -- use 'on' function and initially to 'body' since this is dynamically loaded
+       jQuery("body").on("click", "#groupMessage", function () {
+            $(this).parent().siblings("dd").slideToggle();
+        });
     });
+
 </script>
 
 <script type="text/javascript" src="/biocode-fims/js/zipcontroller.js"></script>

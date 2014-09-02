@@ -301,7 +301,9 @@ function writeResults(message) {
     message= message.replace(/Error:/g,"<span style='color:red;'>Error:</span>");
     // set the project key for any project_id expressions... these come from the validator to call REST services w/ extra data
     message= message.replace(/project_id=/g,getProjectKeyValue());
-    $("#resultsContainer").html("<table><tr><td>" + message + "</td></tr></table>");
+
+    //$("#resultsContainer").html("<table><tr><td>" + message + "</td></tr></table>");
+    $("#resultsContainer").html(message);
 }
 
 // If the user wants to create a new expedition, get the expedition code

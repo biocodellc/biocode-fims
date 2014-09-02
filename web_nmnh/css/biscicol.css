@@ -324,3 +324,16 @@ li {
     background: linear-gradient(to bottom, #fff, #82CFE1);
     box-shadow: 0px 0px 6px rgba(0, 0, 0, .3);
 }
+
+/*
+*  dd element defines those items that are hidden in a toggle option on validation results
+*/
+dd { margin: 0; padding: 0; display: none }
+
+/*
+* Styles for Warning and Error messages
+*/
+.Warning { color:orange;}
+.Warning:hover { text-decoration: underline;}
+.Error {color:red;}
+.Error:hover { text-decoration: underline;}
