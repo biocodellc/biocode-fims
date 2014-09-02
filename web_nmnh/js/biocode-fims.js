@@ -50,7 +50,7 @@ function populateColumns(targetDivId) {
         $(targetDivId).html(data);
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
-                showMessage ("Timed out waiting for response!");
+                showMessage ("Timed out, waiting for response!");
         } else {
                 showMessage ("Error completing request!" );
         }
@@ -76,7 +76,7 @@ function populateAbstract(targetDivId) {
         $(targetDivId).html(data +"<p>");
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
-                showMessage ("Timed out waiting for response!");
+                showMessage ("Timed out, waiting for response!");
         } else {
                 showMessage ("Error completing request!" );
         }
@@ -97,7 +97,7 @@ function populateProjects() {
         $("#projects").val($("#projects option:first").val());
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
-	        showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+	        showMessage ("Timed out, waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
         } else {
 	        showMessage ("Error fetching projects!");
         }
@@ -151,7 +151,7 @@ function queryJSON(params) {
 
 // Get results as Excel
 function queryExcel(params) {
-    showMessage ("Downloading results as an Excel document<br>this will appear in your browsers download folder.");
+    showMessage ("Downloading results as an Excel document<br>this will appear in your browser's download folder.");
     download("/fims/rest/query/excel/", params);
 }
 
@@ -385,11 +385,11 @@ function validForm() {
             message = "Please select a project.";
             error = true;
         } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
-            $('#expedition_code').val().length < 4)) {
-            message = "Dataset code is too short. Must be between 4 and 16 characters.";
+            $('#expedition_code').val().length < 8)) {
+            message = "Dataset code is too short. Must be between 8 and 20 characters.";
             error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 16)) {
-            message = "Dataset code is too long. Please limit to 16 characters.";
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 20)) {
+            message = "Dataset code is too long. Please limit to 20 characters.";
             error = true;
         }
         if (error) {
