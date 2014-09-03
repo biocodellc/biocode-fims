@@ -604,7 +604,7 @@ function validationFormToggle() {
             if(oldBrowser) {
                     getExpeditionCodes();
             } else {
-                $.when(parseSpreadsheet("~dataset_code=[a-zA-Z0-9-_]{4,16}~")).done(function(dataset_code) {
+                $.when(parseSpreadsheet("~dataset_code=[a-zA-Z0-9-_]{8,20}~")).done(function(dataset_code) {
                     if (dataset_code != null) {
                         //$("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                         $("#expedition_code_container").html('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
