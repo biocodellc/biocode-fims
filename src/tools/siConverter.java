@@ -339,7 +339,7 @@ public class siConverter {
         projects.add(new siProjects("SIENT", "Entomology", "Barcode"));
         projects.add(new siProjects("SIINV", "Invertebrate Zoology", "Primary Collector Number"));
         projects.add(new siProjects("SIVZA", "VZ-Amphibians and Reptiles", "Primary Collector Number"));
-        projects.add(new siProjects("SIVZB", "VZ-Birds", "Preparator number"));
+        projects.add(new siProjects("SIVZB", "VZ-Birds", "Preparator Number"));
         projects.add(new siProjects("SIVZF", "VZ-Fishes", "Primary Collector Number"));
         projects.add(new siProjects("SIVZM", "VZ-Mammals", "Primary Collector Number"));
         projects.add(new siProjects("SIMIN", "Mineral Sciences", "Primary Collector Number"));
