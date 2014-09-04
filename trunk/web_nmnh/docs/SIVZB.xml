@@ -279,8 +279,8 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 			<field>Genetic Sample Type Verbatim</field>
 			<field>Genetic Sample Quality</field>
 		</rule>
-		<rule type='isNumber' column='Elevation From (ft)' level='error'></rule>
-		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='isNumber' column='Elevation From (ft)' level='warning'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
 		<rule type='controlledVocabulary' column='Datum' list='geodeticDatum' level='warning'></rule>
@@ -316,10 +316,10 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='requiredValueFromOtherColumn' column='Weight' level='warning' otherColumn='weightUnits'></rule>
 		<rule type='controlledVocabulary' column='Weight Unit' list='weightUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight Unit' level='warning' otherColumn='Weight'></rule>
-		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 4' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 4' list='preparation' level='warning'></rule>
 		<rule type='validateNumeric' column='Age' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Age Modifier' list='ageModifier' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Age Unit' list='ageUnit' level='warning'></rule>
@@ -350,23 +350,23 @@ DwC_Ext: used for both DNA and tissue<br><div id='synonyms'><b>Synonyms:</b><p>"
 		<rule type='requiredValueFromOtherColumn' column='Reproductive Part 4 Width' level='warning' otherColumn='Reproductive Part 4 Unit'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Quality' list='sampleQuality' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Quality' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Quality' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 	</worksheet>

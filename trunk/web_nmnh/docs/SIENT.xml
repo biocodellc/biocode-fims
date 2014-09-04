@@ -257,8 +257,8 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
-		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='error'></rule>
-		<rule type='isNumber' column='Elevation From (m)' level='error'></rule>
+		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
+		<rule type='isNumber' column='Elevation From (m)' level='warning'></rule>
 		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Longitude Decimal' level='error' value='%3E%3D-180+and+%3C%3D180'></rule>
@@ -269,7 +269,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Collection Department/Division' list='Collection Department' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Biogeographic Region' list='Biogeography Region' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
@@ -277,33 +277,33 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Notes' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Notes' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='error' otherColumn='Genetic Sample Type Secondary'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Medium' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Medium' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Temperature' level='error' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Temperature' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
