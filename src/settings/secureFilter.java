@@ -25,12 +25,12 @@ public class secureFilter implements Filter {
                           ServletResponse res,
                           FilterChain filterchain)
         throws IOException, ServletException {
-                         System.out.println("START FILTER");
+        //System.out.println("START FILTER");
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
         HttpSession session = request.getSession();
-        System.out.println("here: " + session.getAttribute("user") + " that should be a user");
+        //System.out.println("here: " + session.getAttribute("user") + " that should be a user");
         if (session.getAttribute("user") == null) {
             response.sendRedirect("/fims/rest/authenticationService/login");
         }
