@@ -41,7 +41,7 @@ public class validate {
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String validate(@FormDataParam("project_id") Integer project_id,
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
@@ -194,7 +194,7 @@ public class validate {
      */
     @GET
     @Path("/continue")
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -298,7 +298,7 @@ public class validate {
      */
     @GET
     @Path("/continue_spreadsheet")
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -406,6 +406,11 @@ public class validate {
                         "Your file will be processed soon for ingestion into RCIS.\"}";
 
             } catch (FIMSException e) {
+                // If some error was thrown, refresh session variables
+                if (connector.getRefreshedToken()) {
+                    session.setAttribute("access_token", connector.getAccessToken());
+                    session.setAttribute("refresh_token", connector.getRefreshToken());
+                }
                 e.printStackTrace();
                 throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
             }
@@ -428,7 +433,7 @@ public class validate {
      */
     @GET
     @Path("/status")
-    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String status(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
 
