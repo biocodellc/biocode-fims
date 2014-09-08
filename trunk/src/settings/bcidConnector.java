@@ -480,7 +480,11 @@ public class bcidConnector {
                 getValidAccessToken();
                 return checkExpedition(processController);
             } else {
-                throw new NotAuthorizedException("User authorization error. This account may not be attached to this dataset or project.");
+                throw new NotAuthorizedException("" +
+                        "<br>User authorization error. " +
+                        "<br>This account may not be attached to this dataset or project." +
+                        "<br>A common cause of this error is when a person other than the one generating" +
+                        "<br>the dataset code attempts to load data to that dataset.");
             }
         } else {
             if (response.containsKey("error")) {
