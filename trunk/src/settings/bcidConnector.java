@@ -458,27 +458,33 @@ public class bcidConnector {
      *
      * @throws Exception
      */
-    public boolean checkExpedition(processController processController) throws Exception {
+    public boolean checkExpedition(processController processController, boolean ignore_user) throws Exception {
         // if the expedition code isn't set we can just immediately return true which is
         if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
             return true;
         }
 
+        // Validate expedition at this address
         String urlString = expedition_validation_uri + processController.getProject_id() + "/" + processController.getExpeditionCode();
+        // Set the accessToken if not null
         if (accessToken != null) {
             urlString += "?access_token=" + accessToken;
         }
+        // Set ignore_user if it is true (this tells BCID to not run user check for expedition owner)
+        if (ignore_user) {
+            if (accessToken!=null) urlString += "&";
+            else urlString +="?";
+            urlString += "ignore_user=true";
+        }
+
         URL url = new URL(urlString);
         JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
-        //System.out.print(urlString);
-        //System.out.print(response.toJSONString());
-        //System.out.print(getResponseCode());
 
+        // Some error message was returned from the expedition validation service
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
-                //if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
-                return checkExpedition(processController);
+                return checkExpedition(processController, ignore_user);
             } else {
                 throw new NotAuthorizedException("" +
                         "<br>User authorization error. " +
