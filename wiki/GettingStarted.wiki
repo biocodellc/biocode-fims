@@ -4,6 +4,6 @@
 
 Biocode-FIMS is used for generating spreadsheet templates and validating data for field expeditions, typically involving genomic workflows and working with biological samples and sub-samples.  You can begin using Biocode-FIMS by reading the instructions on this wiki and looking at the [http://biscicol.org/biocode-fims Biocode FIMS website].  To load data into either the online database or a customized repository (e.g. for Smithsonian Users) you will need a user account.  For this, you will need to contact the appropriate project administrator.  
 
-You an use one of the three interfaces available for using the Biocode FIMS: command-line, web, or Geneious Plugin.
+You can use Biocode FIMS as a command-line application, through a web-interface, or accessing via REST services.
 
 If you would like to start your own Biocode FIMS project, you can either download and install the source code or contact the owner of the Biocode FIMS code site to see if you can be added as a project to an existing installation.
