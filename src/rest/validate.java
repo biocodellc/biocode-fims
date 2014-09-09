@@ -241,7 +241,7 @@ public class validate {
 
             try {
                 if (!processController.isExpeditionAssignedToUserAndExists()) {
-                    p.runExpeditionCheck();
+                    p.runExpeditionCheck(false);
                 }
 
                 if (processController.isExpeditionCreateRequired()) {
@@ -345,7 +345,7 @@ public class validate {
 
             try {
                 if (!processController.isExpeditionAssignedToUserAndExists()) {
-                    p.runExpeditionCheck();
+                    p.runExpeditionCheck(true);
                 }
 
                 if (processController.isExpeditionCreateRequired()) {
