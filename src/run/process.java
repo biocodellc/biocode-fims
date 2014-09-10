@@ -201,7 +201,7 @@ public class process {
      */
     public void runExpeditionCheck(boolean ignore_user) throws FIMSException {
         try {
-            Boolean checkExpedition = connector.checkExpedition(processController, ignore_user);
+            Boolean checkExpedition = connector.checkExpedition(processController);
             processController.setExpeditionCreateRequired(checkExpedition);
             if (!checkExpedition) {
                 processController.setExpeditionAssignedToUserAndExists(true);
@@ -219,7 +219,7 @@ public class process {
      */
     public void runExpeditionCreate() throws FIMSException {
         try {
-            if (connector.checkExpedition(processController,false)) {
+            if (connector.checkExpedition(processController)) {
                 System.out.println("Creating expedition " + processController.getExpeditionCode() + "...");
                 connector.createExpedition(processController, mapping);
             }

@@ -56,8 +56,7 @@ public class bcidConnector {
     private String client_secret;
     private String refresh_uri;
     private Integer naan;
-    private String trust_store;
-    private String trust_store_password;
+    private Boolean ignore_user;
 
     private Integer responseCode;
     private String accessToken;
@@ -156,6 +155,9 @@ public class bcidConnector {
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
         naan = Integer.parseInt(sm.retrieveValue("naan"));
+        ignore_user = Boolean.parseBoolean(sm.retrieveValue("ignore_user"));
+        if (ignore_user == null) ignore_user = false;
+
         //trust_store = sm.retrieveValue("trust_store");
         //ls
         // trust_store_password = sm.retrieveValue("trust_store_password");
@@ -458,7 +460,7 @@ public class bcidConnector {
      *
      * @throws Exception
      */
-    public boolean checkExpedition(processController processController, boolean ignore_user) throws Exception {
+    public boolean checkExpedition(processController processController) throws Exception {
         // if the expedition code isn't set we can just immediately return true which is
         if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
             return true;
@@ -484,7 +486,7 @@ public class bcidConnector {
         if (getResponseCode() == 401) {
             if (accessToken != null && !triedToRefreshToken) {
                 getValidAccessToken();
-                return checkExpedition(processController, ignore_user);
+                return checkExpedition(processController);
             } else {
                 throw new NotAuthorizedException("" +
                         "<br>User authorization error. " +
