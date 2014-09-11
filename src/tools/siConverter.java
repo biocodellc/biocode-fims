@@ -134,8 +134,10 @@ public class siConverter {
 
                 String column = row.getCell(columnIndex).toString();
                 String definition = row.getCell(definitionIndex).toString();
+                String synonyms = row.getCell(synonymIndex).toString();
+                String dataFormat = row.getCell(validationFormatAndValuesIndex).toString();
 
-                // Handle synonyms, appending on to definition field
+                /*// Handle synonyms, appending on to definition field
                 String synonyms = row.getCell(synonymIndex).toString();
                 if (synonyms != null && !synonyms.trim().equals("")) {
                     definition +=
@@ -153,7 +155,7 @@ public class siConverter {
                     }
                 } catch (NullPointerException e) {
 
-                }
+                } */
 
                 String uri = "urn:" + row.getCell(uriIndex).toString();
                 String group = row.getCell(groupIndex).toString();
@@ -169,8 +171,12 @@ public class siConverter {
                 sb.append("column='" + column + "' ");
                 sb.append("uri='" + uri + "' ");
                 sb.append("group='" + group + "' ");
-                sb.append("defined_by='" + defined_by + "'>");
-                sb.append("<![CDATA[" + definition + "]]>");
+                sb.append("defined_by='" + defined_by + "'>\n");
+                sb.append("\t\t\t<![CDATA[" + definition + "]]>\n");
+                if (synonyms != null)
+                    sb.append("\t\t\t<synonyms><![CDATA[" + synonyms + "]]></synonyms>\n");
+                if (dataFormat != null)
+                    sb.append("\t\t\t<dataFormat><![CDATA[" + dataFormat + "]]></dataFormat>\n");
                 sb.append("</attribute>\n");
 
                 // Populate required and desired columns here, used in validation step

@@ -18,6 +18,8 @@ public class Attribute implements Comparable {
     private String defined_by;
     private String datatype = "string";  // string is default type
     private String definition;
+    private String synonyms;
+    private String dataformat;
 
 
     public String getColumn() {
@@ -66,6 +68,22 @@ public class Attribute implements Comparable {
 
     public void addDefinition(String definition) {
         this.definition = definition;
+    }
+
+    public String getSynonyms() {
+        return synonyms;
+    }
+
+    public void addSynonyms(String synonyms) {
+        this.synonyms = synonyms;
+    }
+
+    public String getDataFormat() {
+        return dataformat;
+    }
+
+    public void addDataFormat(String dataFormat) {
+        this.dataformat = dataFormat;
     }
 
     /**

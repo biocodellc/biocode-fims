@@ -48,6 +48,7 @@ public class templateProcessor {
     final int DEFINITION = 1;
     final int CONTROLLED_VOCABULARY = 2;
     final int DATA_FORMAT = 3;
+    final int SYNONYMS = 4;
 
 
     String instructionsSheetName = "Instructions";
@@ -97,6 +98,7 @@ public class templateProcessor {
         bold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
         headingStyle.setFont(bold);
 
+
         requiredStyle = workbook.createCellStyle();
         XSSFFont redBold = workbook.createFont();
         redBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
@@ -106,6 +108,7 @@ public class templateProcessor {
 
         wrapStyle = workbook.createCellStyle();
         wrapStyle.setWrapText(true);
+        wrapStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
 
         // Set the style for all other cells
         regularStyle = workbook.createCellStyle();
@@ -241,6 +244,20 @@ public class templateProcessor {
                         output.append("<p>\n" +
                                 "<b>Definition:</b>\n" +
                                 "<p>No custom definition available\n");
+                    }
+
+                    // Synonyms
+                    if (!a.getSynonyms().trim().equals("")) {
+                        output.append("<p>\n" +
+                                "<b>Synonyms:</b>\n" +
+                                "<p>" + a.getSynonyms() + "\n");
+                    }
+
+                    // Synonyms
+                    if (!a.getDataFormat().trim().equals("")) {
+                        output.append("<p>\n" +
+                                "<b>Data Formatting Instructions:</b>\n" +
+                                "<p>" + a.getDataFormat() + "\n");
                     }
 
                     // Rules
@@ -600,6 +617,9 @@ public class templateProcessor {
         int rowNum = 0;
         Row row = dataFieldsSheet.createRow(rowNum++);
 
+        //XSSFCellStyle dataFieldStyle = headingStyle;
+        //dataFieldStyle.setBorderBottom(BorderStyle.THIN);
+
         // HEADER ROWS
         Cell cell = row.createCell(NAME);
         cell.setCellStyle(headingStyle);
@@ -617,6 +637,10 @@ public class templateProcessor {
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Data Format");
 
+        cell = row.createCell(SYNONYMS);
+        cell.setCellStyle(headingStyle);
+        cell.setCellValue("Synonyms");
+
 
         // Must loop entities first
         while (fieldsIt.hasNext()) {
@@ -633,23 +657,36 @@ public class templateProcessor {
                 while (attributesIt.hasNext()) {
 
                     Attribute a = (Attribute) attributesIt.next();
+
+                /*    System.out.println("************************************");
+                    System.out.println(a.getColumn());
+                    System.out.println("************************************");
+                    System.out.println("definition: " + a.getDefinition());
+                    System.out.println("synonyms: " + a.getSynonyms());
+                    System.out.println("dataFormat: " + a.getDataFormat());
+                    */
+
                     if (a.getColumn().equals(columnName)) {
                         row = dataFieldsSheet.createRow(rowNum++);
 
-                        // Field Name Cell
+                        // Column Name
                         Cell nameCell = row.createCell(NAME);
                         nameCell.setCellValue(a.getColumn());
-                        if (requiredColumns != null && requiredColumns.contains(a.getColumn()))
-                            nameCell.setCellStyle(requiredStyle);
-                        else
-                            nameCell.setCellStyle(this.headingStyle);
+                         XSSFCellStyle nameStyle;
+                        if (requiredColumns != null && requiredColumns.contains(a.getColumn())) {
+                            nameStyle = requiredStyle;
+                        } else {
+                            nameStyle = headingStyle;
+                        }
+                        nameStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+                        nameCell.setCellStyle(nameStyle);
 
-                        // Definition Cell
+                        // Definition
                         Cell defCell = row.createCell(DEFINITION);
                         defCell.setCellValue(a.getDefinition());
                         defCell.setCellStyle(wrapStyle);
 
-                        // Controlled Vocabulary Cell
+                        // Controlled Vocabulary
                         Worksheet sheet = this.validation.getWorksheets().get(0);
                         Iterator rulesIt = sheet.getRules().iterator();
                         while (rulesIt.hasNext()) {
@@ -658,29 +695,36 @@ public class templateProcessor {
                                     r.getList() != null &&
                                     r.getColumn().replace("_", " ").equals(columnName) &&
                                     (r.getType().equals("controlledVocabulary") || r.getType().equals("checkInXMLFields"))) {
-                                row.createCell(CONTROLLED_VOCABULARY).setCellValue(r.getList());
+                                Cell controlledVocabCell = row.createCell(CONTROLLED_VOCABULARY);
+                                controlledVocabCell.setCellValue(r.getList());
+                                controlledVocabCell.setCellStyle(wrapStyle);
                             }
                         }
 
-                        // Data Format Cell parses the Definition cell value for DOM element = dataFormatValue
+                        // Data Format
                         try {
-                            org.jsoup.nodes.Document doc = Jsoup.parse(a.getDefinition());
-                            String dataFormat = doc.getElementById("dataFormatValue").html().toString();
                             Cell formatCell = row.createCell(DATA_FORMAT);
-                            formatCell.setCellValue(dataFormat);
+                            formatCell.setCellValue(a.getDataFormat());
                             formatCell.setCellStyle(wrapStyle);
-                        } catch (NullPointerException npe) {
+                        } catch (NullPointerException npe) {}
 
-                        }
+                         // Synonyms
+                        try {
+                            Cell synonymCell = row.createCell(SYNONYMS);
+                            synonymCell.setCellValue(a.getSynonyms());
+                            synonymCell.setCellStyle(wrapStyle);
+                        } catch (NullPointerException npe) {}
                     }
                 }
             }
         }
+
         // Set column width
-        dataFieldsSheet.autoSizeColumn(NAME);
-        dataFieldsSheet.setColumnWidth(DEFINITION, 80 * 256);
-        dataFieldsSheet.autoSizeColumn(CONTROLLED_VOCABULARY);
-        dataFieldsSheet.autoSizeColumn(DATA_FORMAT);
+        dataFieldsSheet.setColumnWidth(NAME, 25 * 256);
+        dataFieldsSheet.setColumnWidth(DEFINITION, 60 * 256);
+        dataFieldsSheet.setColumnWidth(CONTROLLED_VOCABULARY, 25 * 256);
+        dataFieldsSheet.setColumnWidth(DATA_FORMAT, 40 * 256);
+        dataFieldsSheet.setColumnWidth(SYNONYMS, 40 * 256);
 
     }
 
