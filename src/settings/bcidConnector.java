@@ -405,6 +405,8 @@ public class bcidConnector {
         //http://localhost:8080/id/expeditionService/18/DEMO4/Resource
         URL url = new URL(expedition_creation_uri + "/" + project_id + "/" + dataset_code + "/" + resource);
         JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+        System.out.println("FIMS response = " + response.toString() );
+        System.out.println("ark = " + response.get("ark").toString() );
         return response.get("ark").toString();
     }
 
