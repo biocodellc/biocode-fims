@@ -1,6 +1,7 @@
 package run;
 
 //import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
+
 import digester.Validation;
 import org.json.simple.JSONObject;
 import utils.stringGenerator;
@@ -31,6 +32,7 @@ public class processController {
     private StringBuilder statusSB = new StringBuilder();
     private Boolean NMNH;
     private Integer accessionNumber;
+    private String defaultSheetUniqueKey;
 
     public String getWorksheetName() {
         return worksheetName;
@@ -162,11 +164,11 @@ public class processController {
     }
 
 
-
     /**
      * return a string that is to be used in html and is json safe
      *
      * @param s
+     *
      * @return
      */
     public String stringToHTMLJSON(String s) {
@@ -200,11 +202,12 @@ public class processController {
         return retVal;
     }
 
- /**
+    /**
      * take an InputStream and extension and write it to a file in the operating systems temp dir.
      *
      * @param is
      * @param ext
+     *
      * @return
      */
     public String saveTempFile(InputStream is, String ext) {
@@ -233,5 +236,13 @@ public class processController {
 
     public Integer getAccessionNumber() {
         return accessionNumber;
+    }
+
+    public void setDefaultSheetUniqueKey(String defaultSheetUniqueKey) {
+        this.defaultSheetUniqueKey = defaultSheetUniqueKey;
+    }
+
+    public String getDefaultSheetUniqueKey() {
+        return defaultSheetUniqueKey;
     }
 }

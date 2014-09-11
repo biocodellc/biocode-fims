@@ -1,6 +1,7 @@
 package digester;
 
 import java.net.URI;
+
 import org.jdom.Document;
 import org.jsoup.Jsoup;
 import renderers.RendererInterface;
@@ -55,6 +56,20 @@ public class Mapping implements RendererInterface {
     }
 
     /**
+     * The default unique key is the one referenced by the first entity
+     *
+     * @return
+     */
+    public String getDefaultSheetUniqueKey() {
+        Iterator it = entities.iterator();
+        while (it.hasNext()) {
+            Entity entity = (Entity) it.next();
+            return entity.getWorksheetUniqueKey();
+        }
+        return null;
+    }
+
+    /**
      * Add an Entity to this Mapping by appending to the LinkedList of entities
      *
      * @param e
@@ -80,6 +95,7 @@ public class Mapping implements RendererInterface {
      * Find Entity defined by given worksheet and worksheetUniqueKey
      *
      * @param conceptAlias
+     *
      * @return
      */
     Entity findEntity(String conceptAlias) {
@@ -94,6 +110,7 @@ public class Mapping implements RendererInterface {
      * Sets the URI as a prefix to a column, or not, according to D2RQ conventions
      *
      * @param entity
+     *
      * @return
      */
     public String getPersistentIdentifier(Entity entity) throws Exception {
@@ -102,9 +119,9 @@ public class Mapping implements RendererInterface {
         // Is this a hash?
         //if (entity.getWorksheetUniqueKey().trim().equals("hash")) {
         //    columnName = "1234567hashABCD";
-            // if not a hash then use column name value
-       // } else {
-            columnName = "@@" + entity.getColumn() + "@@";
+        // if not a hash then use column name value
+        // } else {
+        columnName = "@@" + entity.getColumn() + "@@";
         //}
 
 
@@ -175,14 +192,14 @@ public class Mapping implements RendererInterface {
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(),expedition_code);
+        dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(), expedition_code);
 
         // Create a connection to a SQL Lite Instance
         try {
             this.connection = new Connection(processController.getValidation().getSqliteFile());
         } catch (Exception e) {
             //e.printStackTrace();
-            throw new Exception("Unable to establish connection to SQLLite",e);
+            throw new Exception("Unable to establish connection to SQLLite", e);
         }
         triplifier.getTriples(this, processController);
         return true;
@@ -231,10 +248,12 @@ public class Mapping implements RendererInterface {
     /**
      * Lookup any property associated with a column name from a list of attributes
      * (generated from  functions)
+     *
      * @param attributes
+     *
      * @return
      */
-    public URI lookupAnyProperty(URI property, ArrayList<Attribute> attributes) throws  URISyntaxException {
+    public URI lookupAnyProperty(URI property, ArrayList<Attribute> attributes) throws URISyntaxException {
         Iterator it = attributes.iterator();
         while (it.hasNext()) {
             Attribute a = (Attribute) it.next();
@@ -242,15 +261,18 @@ public class Mapping implements RendererInterface {
                 return new URI(a.getUri());
             }
         }
-       return null;
+        return null;
     }
-     /**
+
+    /**
      * Lookup any property associated with a column name from a list of attributes
      * (generated from getAllAttributes functions)
+     *
      * @param attributes
+     *
      * @return
      */
-    public URI lookupColumn(String columnName, ArrayList<Attribute> attributes) throws  URISyntaxException {
+    public URI lookupColumn(String columnName, ArrayList<Attribute> attributes) throws URISyntaxException {
         Iterator it = attributes.iterator();
         while (it.hasNext()) {
             Attribute a = (Attribute) it.next();
@@ -258,6 +280,6 @@ public class Mapping implements RendererInterface {
                 return new URI(a.getUri());
             }
         }
-       return null;
+        return null;
     }
 }
