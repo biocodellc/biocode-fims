@@ -446,6 +446,9 @@ public class process {
         d.addObjectCreate("fims/mapping/entity/attribute", Attribute.class);
         d.addSetProperties("fims/mapping/entity/attribute");
         d.addCallMethod("fims/mapping/entity/attribute", "addDefinition", 0);
+        // Next two lines are newer, may not appear in all configuration files
+        d.addCallMethod("fims/mapping/entity/attribute/synonyms", "addSynonyms", 0);
+        d.addCallMethod("fims/mapping/entity/attribute/dataFormat", "addDataFormat", 0);
         d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
 
         // Create relation objects
