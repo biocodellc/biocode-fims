@@ -115,7 +115,7 @@ public class fimsModel {
             Statement s = stmtIterator.next();
            // Print the BCID as a property
             if (count == 0) {
-                     queryWriter.createCell(row, "EZID", s.getSubject().toString());
+                     queryWriter.createCell(row, "BCID", s.getSubject().toString());
             }
             // Print just the predicates we care about
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {

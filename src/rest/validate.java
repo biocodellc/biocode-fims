@@ -4,6 +4,7 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONObject;
 import run.configurationFileTester;
+import run.guidify;
 import run.process;
 import run.processController;
 import settings.FIMSException;
@@ -327,6 +328,7 @@ public class validate {
                         connector,
                         processController
                 );
+
             } catch (FIMSException e) {
                 e.printStackTrace();
                 //throw new FIMSException("{\"error\": \"Server Error.\"}");
@@ -348,6 +350,7 @@ public class validate {
                     p.runExpeditionCheck(true);
                 }
 
+                // Check to see if we need to create a new Expedition, if so we make a slight diversition
                 if (processController.isExpeditionCreateRequired()) {
                     // if a new access token was issued, update the session variables
                     if (connector.getRefreshedToken()) {
@@ -361,16 +364,35 @@ public class validate {
                             "If you choose to continue, your data will be associated with this new dataset code.\"}";
                 }
 
-                // Copy file to a standard location
-                File inputFile = new File(processController.getInputFilename());
-                String outputFileName = "/opt/jetty_files/" + inputFile.getName();
-                //"project_" + processController.getProject_id() + "_" +
-                //"dataset_" + processController.getExpeditionCode() +
-                //".xls";
-                File outputFile = new File(outputFileName);
+                /*
+                * Copy Spreadsheet to a standard location
+                */
+                // Get the BCID Root
+                String bcidRoot = null;
                 try {
-                    copyFile(inputFile, outputFile);
+                    bcidRoot = connector.getArkFromDataset(
+                            processController.getProject_id(),
+                            processController.getExpeditionCode(),
+                            "Resource");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new FIMSException("{\"error\": \"Server Message: Unable to find a Resource ARK for this dataset.\"}");
+                }
+
+                // Set input and output files
+                File inputFile = new File(processController.getInputFilename());
+                File outputFile = new File("/opt/jetty_files/" + inputFile.getName());
+
+                // Run guidify, which adds a BCID to the spreadsheet
+                try {
+                    guidify g = new guidify(
+                            inputFile,
+                            processController.getWorksheetName(),
+                            processController.getDefaultSheetUniqueKey(),
+                            bcidRoot);
+                    g.getSpreadsheet(outputFile);
                 } catch (Exception e) {
+                    // Just throw an exception if we get here
                     throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
                 } finally {
                     // Always remove the file from tmp directory... we do not want to leave them there.
@@ -391,6 +413,7 @@ public class validate {
                 // Remove the processController from the session
                 session.removeAttribute("processController");
 
+                // Reset access and refresh tokens
                 if (connector.getRefreshedToken()) {
                     session.setAttribute("access_token", connector.getAccessToken());
                     session.setAttribute("refresh_token", connector.getRefreshToken());
@@ -398,10 +421,12 @@ public class validate {
 
                 processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
 
+                // This is the message the user sees after succesfully uploading a spreadsheet to the server
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
-                        //"server filename = " + outputFile.getName() + "<br>" +
+                        //"server filename = " + outputFile.getName() + "<br>" +  \
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "dataset ARK = " + ark + "<br>" +
+                        "resource ARK = " + ark + "<br>" +
                         "Please maintain a local copy of your File!<br>" +
                         "Your file will be processed soon for ingestion into RCIS.\"}";
 
@@ -419,7 +444,7 @@ public class validate {
             new File(processController.getInputFilename()).delete();
             // remove the processController from the session
             session.removeAttribute("processController");
-
+            // Return the error message
             return e.getMessage();
         }
     }
@@ -479,7 +504,6 @@ public class validate {
         }
         // Not real clean but need to be able to allow others on the system to see file
         Runtime.getRuntime().exec("chmod 775 " + destFile);
-
     }
 
 }
