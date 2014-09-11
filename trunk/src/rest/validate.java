@@ -426,7 +426,7 @@ public class validate {
                         //"server filename = " + outputFile.getName() + "<br>" +  \
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
                         "dataset ARK = " + ark + "<br>" +
-                        "resource ARK = " + ark + "<br>" +
+                        "resource ARK = " + bcidRoot + "<br>" +
                         "Please maintain a local copy of your File!<br>" +
                         "Your file will be processed soon for ingestion into RCIS.\"}";
 
