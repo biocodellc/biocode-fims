@@ -402,10 +402,10 @@ public class validate {
                 // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
                 // gives us a way to track what spreadsheets are uploaded into the system as they can
                 // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
-                String ark = null;
+                String datasetArk = null;
                 try {
-                    ark = connector.createDatasetBCID(null, inputFile.getName());
-                    connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), ark);
+                    datasetArk = connector.createDatasetBCID(null, inputFile.getName());
+                    connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
                 } catch (Exception e) {
                     throw new FIMSException("{\"error\": \"Error writing file data to database. Server Message: " + e.getMessage() + "\"}");
                 }
@@ -425,7 +425,7 @@ public class validate {
                 return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
                         //"server filename = " + outputFile.getName() + "<br>" +  \
                         "dataset code = " + processController.getExpeditionCode() + "<br>" +
-                        "dataset ARK = " + ark + "<br>" +
+                        "dataset ARK = " + datasetArk + "<br>" +
                         "resource ARK = " + bcidRoot + "<br>" +
                         "Please maintain a local copy of your File!<br>" +
                         "Your file will be processed soon for ingestion into RCIS.\"}";
