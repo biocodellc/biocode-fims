@@ -220,12 +220,6 @@ BOLD: The time or time of day during which the sample was collected.]]>
 "Plot Elevation" = BOLD Batch Upload,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Elevation Modifier' uri='urn:elevationModifier' group='DepthElevation' defined_by='urn:elevationModifier'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["ELEV_MOD" = Kress Coll. tblKresFile,
-"Elev_is_Approx" = Entomology - Ted Schultz,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
-</attribute>
 		<attribute column='Elevation To (m)' uri='urn:maximumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#maximumElevationInMeters'>
 			<![CDATA[DwC: The upper limit of the range of elevation (altitude, usually above sea level), in meters. Example: "200". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/maximumElevationInMeters]]>
 			<synonyms><![CDATA["maximumElevationInMeters" = DwC,
@@ -447,11 +441,6 @@ BOLD: The source of the latitude and longitude.]]>
 			<synonyms><![CDATA["VerbatimLongitude2" = Biocode Backend.collectingevent]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Verbatim Datum' uri='urn:verbatimSRS' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimSRS'>
-			<![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in verbatimLatitude and verbatimLongitude, or verbatimCoordinates are based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimSRS]]>
-			<synonyms><![CDATA["verbatimSRS" = DwC,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Identification Qualifier' uri='urn:identificationQualifier' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#identificationQualifier'>
 			<![CDATA[DwC: A brief phrase or a standard term ("cf.", "aff.") to express the determiner's doubts about the Identification. Examples: 1) For the determination "Quercus aff. agrifolia var. oxyadenia", identificationQualifier would be "aff. agrifolia var. oxyadenia" with accompanying values "Quercus" in genus, "agrifolia" in specificEpithet, "oxyadenia" in infraspecificE http://rs.tdwg.org/dwc/terms/identificationQualifier
 
@@ -635,14 +624,6 @@ A Driskell: If you've got a name for the collection site, such as "left of Lucky
 "Exact Site" = BOLD
 "Exact Site" = LAB Field Collection Spreadsheet,
 "???" = Fishes,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Locality Remarks' uri='urn:locationRemarks' group='Locality' defined_by='http://rs.tdwg.org/dwc/terms/#locationRemarks'>
-			<![CDATA[DwC: Comments or notes about the Location. Example: "under water since 2005". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/locationRemarks]]>
-			<synonyms><![CDATA["locationRemarks" = DwC,
-"locality_geographic_notes" = Plantbarcodes.individual,
-"locality_geographic_notes" = Plantbarcodes.plot,
-"Locality/Geographic Notes" = Kress PB Collect'n Spreadsheet,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Ocean' uri='urn:ocean' group='Locality' defined_by='urn:ocean'>
@@ -1164,11 +1145,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<synonyms><![CDATA["quality" = DwC_Ext, ]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Genetic Sample Storage Conditions' uri='urn:storageConditions' group='Tissue' defined_by='urn:storageConditions'>
-			<![CDATA[MIxS: explain how and for how long the soil sample was stored before DNA extraction.]]>
-			<synonyms><![CDATA["SampleStorage" = Kress PB DB back-end,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Well' uri='urn:well' group='Tissue' defined_by='urn:well'>
 			<![CDATA[Biocode: Part of 96 well plate number]]>
 			<synonyms><![CDATA["Well" = Biocode
@@ -1198,7 +1174,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='warning'></rule>
 		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
@@ -1281,9 +1256,6 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='isNumber' column='Genetic Sample Preservation Temperature' level='error'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Quality' list='sampleQuality' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Quality' level='warning' otherColumn='Kind of Object'>
-			<field>Genetic Sample</field>
-		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Storage Conditions' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Well' level='warning' otherColumn='Kind of Object'>

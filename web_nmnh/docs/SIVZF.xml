@@ -247,19 +247,6 @@ BOLD: The name of, reference to, or description of the method or protocol used d
 "Plot Elevation" = BOLD Batch Upload,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Elevation Modifier' uri='urn:elevationModifier' group='DepthElevation' defined_by='urn:elevationModifier'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["ELEV_MOD" = Kress Coll. tblKresFile,
-"Elev_is_Approx" = Entomology - Ted Schultz,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
-</attribute>
-		<attribute column='Elevation Precision' uri='urn:elevationPrecision' group='DepthElevation' defined_by='urn:elevationPrecision'>
-			<![CDATA[BOLD: A numerical representation of the precision of the elevation given in meters and is represented as +/- the elevation value. ]]>
-			<synonyms><![CDATA["Elevation Precision" = BOLD,
-"Elevation Precision" = LAB Collection SS,
-"Elevation Precision" = Fishes,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Depth To (m)' uri='urn:maximumDepthInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#maximumDepthInMeters'>
 			<![CDATA[DwC: The greater depth of a range of depth below the local surface, in meters. Example: "200". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/maximumDepthInMeters]]>
 			<synonyms><![CDATA["maximumDepthInMeters" = DwC,
@@ -439,11 +426,6 @@ BOLD: The source of the latitude and longitude.]]>
 		<attribute column='Longitude Verbatim 2' uri='urn:verbatimLongitude2' group='Georeference' defined_by='urn:verbatimLongitude2'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["VerbatimLongitude2" = Biocode Backend.collectingevent]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Verbatim Datum' uri='urn:verbatimSRS' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#verbatimSRS'>
-			<![CDATA[DwC: The ellipsoid, geodetic datum, or spatial reference system (SRS) upon which coordinates given in verbatimLatitude and verbatimLongitude, or verbatimCoordinates are based. Recommended best practice is use the EPSG code as a controlled vocabulary to provide Examples: "EPSG:4326", "WGS84", "NAD27", "Campo Inchauspe", "European 1950", "Clarke 1866". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/verbatimSRS]]>
-			<synonyms><![CDATA["verbatimSRS" = DwC,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Identification Qualifier' uri='urn:identificationQualifier' group='Identification' defined_by='http://rs.tdwg.org/dwc/terms/#identificationQualifier'>
@@ -1034,6 +1016,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Precise Locality</field>
 			<field>Kind of Object</field>
 			<field>Specimen Count</field>
+			<field>Primary Collector Number</field>
 			<field>Family</field>
 		</rule>
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
@@ -1057,7 +1040,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Project Code</field>
 			<field>Life Stage</field>
 			<field>Specimen Notes</field>
-			<field>Primary Collector Number</field>
 			<field>Genus</field>
 			<field>Species</field>
 			<field>Taxon Notes</field>
@@ -1071,7 +1053,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
 		<rule type='validateNumeric' column='Bottom Depth' level='warning' value='%3E%3D0'></rule>
-		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
 		<rule type='validateNumeric' column='Depth From (m)' level='warning' value='%3E%3D0'></rule>

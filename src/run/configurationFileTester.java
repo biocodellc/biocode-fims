@@ -142,6 +142,7 @@ public class configurationFileTester {
      * @return
      */
     public boolean checkUniqueKeys() {
+        String worksheetUniqueKey = "";
         if (!parse()) {
             return false;
         }
@@ -150,19 +151,28 @@ public class configurationFileTester {
         // Loop Rules
         NodeList rules = document.getElementsByTagName("rule");
         ArrayList<String> uniqueKeys = getUniqueValueRules(rules);
+
+        ArrayList<String> requiredColumns = getRequiredValueThrowsErrorRules(rules);
+        //System.out.println("REQUIRED COLUMNS = " + requiredColumns);
+
         // Loop Entities
         NodeList entities = document.getElementsByTagName("entity");
         // atLeastOneUniqueKey
         boolean atLeastOneUniqueKeyFound = false;
+        boolean atLeastOneRequiredColumnFound = false;
         // Loop Entities
         for (int i = 0; i < entities.getLength(); i++) {
             NamedNodeMap entityAttributes = entities.item(i).getAttributes();
 
             // Check worksheetUniqueKeys
-            String worksheetUniqueKey = entityAttributes.getNamedItem("worksheetUniqueKey").getNodeValue();
+             worksheetUniqueKey = entityAttributes.getNamedItem("worksheetUniqueKey").getNodeValue();
 
             if (uniqueKeys.contains(worksheetUniqueKey)) {
                 atLeastOneUniqueKeyFound = true;
+            }
+
+            if (requiredColumns.contains(worksheetUniqueKey)) {
+                atLeastOneRequiredColumnFound = true;
             }
 
             // construct a List to hold URI values to check they are unique within the node
@@ -208,7 +218,13 @@ public class configurationFileTester {
 
         // Tell is if atLeastOneUniqueKey is not found.
         if (!atLeastOneUniqueKeyFound) {
-            messages.add(this, "Must define a at least one Entity worksheetUniqueKey that has a uniqueValue rule", "atLeastOneUniqueKeyFound");
+            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey+ "' does not have uniqueValue rule", "atLeastOneUniqueKeyFound");
+            passedTest = false;
+        }
+
+         // Tell is if atLeastOneUniqueKey is not found.
+        if (!atLeastOneRequiredColumnFound) {
+            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey+ "' is not defined as a Required Column with level = 'error'", "atLeastOneRequiredColumnFound");
             passedTest = false;
         }
 
@@ -289,6 +305,41 @@ public class configurationFileTester {
                 // Get the column name on this key
                 String columnName = attributes.getNamedItem("column").getNodeValue();
                 keys.add(columnName);
+            }
+        }
+
+        return keys;
+    }
+
+    /**
+     * Return an ArrayList of rules that have unique values
+     *
+     * @param rules
+     *
+     * @return
+     */
+    private ArrayList<String> getRequiredValueThrowsErrorRules(NodeList rules) {
+        ArrayList<String> keys = new ArrayList<String>();
+        int length = rules.getLength();
+        Node[] copy = new Node[length];
+
+        for (int n = 0; n < length; ++n) {
+            Node node = rules.item(n);
+            NamedNodeMap attributes = node.getAttributes();
+            // Search all rules type=uniqueValue
+            if (attributes.getNamedItem("type").getNodeValue().equals("RequiredColumns")) {
+                // Get the column name on this key
+                String level = attributes.getNamedItem("level").getNodeValue();
+                // If this defines an error, then loop the entities
+
+                if (level.equalsIgnoreCase("error")) {
+                    NodeList nodeList = node.getChildNodes();
+                    int lengthNodeList = nodeList.getLength();
+                    for (int nl = 0; nl < lengthNodeList; nl++) {
+                        Node nodeNodeList = nodeList.item(nl);
+                        keys.add(nodeNodeList.getTextContent());
+                    }
+                }
             }
         }
 

@@ -394,7 +394,8 @@ public class validate {
                 } catch (Exception e) {
                     e.printStackTrace();
                     // Just throw an exception if we get here
-                    throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
+                    throw new FIMSException("{\"error\": \"Server Message: Unable to attach BCID to spreadsheet." +
+                            "This issue typically arises when there is an issue with the spreadsheet unique key.\"}");
                 } finally {
                     // Always remove the file from tmp directory... we do not want to leave them there.
                     new File(processController.getInputFilename()).delete();

@@ -296,11 +296,6 @@ BOLD: The name of, reference to, or description of the method or protocol used d
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Depth Modifier' uri='urn:depthModifier' group='DepthElevation' defined_by='urn:depthModifier'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["DepthModifier" = Kress Coll DB tblKresFile,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
-</attribute>
 		<attribute column='Bottom Depth' uri='urn:depthOfBottomInMeters' group='DepthElevation' defined_by='urn:depthOfBottomInMeters'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["DepthOfBottomMeters" = Biocode Backend.collectingevent,]]></synonyms>
@@ -311,19 +306,6 @@ BOLD: The name of, reference to, or description of the method or protocol used d
 			<synonyms><![CDATA["plot_elevation" = Plantbarcodes.plot,
 "Plot Elevation" = Kress Coll'n SS, 
 "Plot Elevation" = BOLD Batch Upload,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Elevation Modifier' uri='urn:elevationModifier' group='DepthElevation' defined_by='urn:elevationModifier'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["ELEV_MOD" = Kress Coll. tblKresFile,
-"Elev_is_Approx" = Entomology - Ted Schultz,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
-</attribute>
-		<attribute column='Elevation Precision' uri='urn:elevationPrecision' group='DepthElevation' defined_by='urn:elevationPrecision'>
-			<![CDATA[BOLD: A numerical representation of the precision of the elevation given in meters and is represented as +/- the elevation value. ]]>
-			<synonyms><![CDATA["Elevation Precision" = BOLD,
-"Elevation Precision" = LAB Collection SS,
-"Elevation Precision" = Fishes,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Depth To (m)' uri='urn:maximumDepthInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#maximumDepthInMeters'>
@@ -370,6 +352,13 @@ BOLD: For organisms collected beneath the surface of a water body. Measured in m
 "specimen_MinDepthMeters" = Biocode.specimen,
 "specimen_MinDepthMeters" = Biocode.collectingevent,]]></synonyms>
 			<dataFormat><![CDATA[>=0]]></dataFormat>
+</attribute>
+		<attribute column='Elevation From (ft)' uri='urn:minimumElevationInFeet' group='DepthElevation' defined_by='urn:minimumElevationInFeet'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["Elevation feet" = Entomology - Ted Schultz,
+"Elevation feet Calc" = Entomology - Ted Schultz,
+"ELEV1" = Kress Coll. tblKresFile (if ELEV_UNIT= ft),]]></synonyms>
+			<dataFormat><![CDATA[A numeric value]]></dataFormat>
 </attribute>
 		<attribute column='Elevation From (m)' uri='urn:minimumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#minimumElevationInMeters'>
 			<![CDATA[DwC: The lower limit of the range of elevation (altitude, usually above sea level), in meters. Example: "100". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/minimumElevationInMeters.
@@ -1513,11 +1502,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<synonyms><![CDATA["quality" = DwC_Ext, ]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Genetic Sample Storage Conditions' uri='urn:storageConditions' group='Tissue' defined_by='urn:storageConditions'>
-			<![CDATA[MIxS: explain how and for how long the soil sample was stored before DNA extraction.]]>
-			<synonyms><![CDATA["SampleStorage" = Kress PB DB back-end,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Genetic Sample Barcode' uri='urn:tissueBarcode' group='Tissue' defined_by='urn:tissueBarcode'>
 			<![CDATA[Biocode: for the actual barcode on the bottom of the little tubes that the come with the matrix boxes - each tube has a little 2d unique barcode.]]>
 			<synonyms><![CDATA["tissue_barcode" = Biocode Backend.Tissues,]]></synonyms>
@@ -1557,13 +1541,12 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Genetic Sample Type Secondary</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Depth Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='validateNumeric' column='Bottom Depth' level='warning' value='%3E%3D0'></rule>
-		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInFeet,maximumElevationInFeet' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
 		<rule type='validateNumeric' column='Depth From (m)' level='warning' value='%3E%3D0'></rule>
+		<rule type='isNumber' column='Elevation From (ft)' level='warning'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='warning'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
 		<rule type='validateNumeric' column='Latitude Decimal 2' level='error' value='%3E%3D-90+and+%3C%3D90'></rule>
@@ -1605,8 +1588,8 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='validateNumeric' column='Salinity' level='error' value='%3E%3D0'></rule>
 		<rule type='isNumber' column='Temperature' level='error'></rule>
 		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 4' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
@@ -1656,9 +1639,6 @@ DwC_Ext: used for both DNA and tissue]]>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Quality' list='sampleQuality' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Quality' level='warning' otherColumn='Kind of Object'>
-			<field>Genetic Sample</field>
-		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Storage Conditions' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Barcode' level='warning' otherColumn='Kind of Object'>

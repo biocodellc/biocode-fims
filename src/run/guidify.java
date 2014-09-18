@@ -122,12 +122,12 @@ public class guidify {
     public static void main(String[] args) {
         try {
             guidify guidIfier = new guidify(
-                    new File("/Users/jdeck/Downloads/JSWPanama2014v17.xlsx"),
+                    new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014.xlsx"),
                     "Samples",
                     "Preparator Number",
                     "ark:/whosyourdaddy/"
             );
-            guidIfier.getSpreadsheet(new File("/Users/jdeck/Downloads/JSWPanama2014v17_out.xlsx"));
+            guidIfier.getSpreadsheet(new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014_out.xlsx"));
 
         } catch (Exception e) {
             e.printStackTrace();
