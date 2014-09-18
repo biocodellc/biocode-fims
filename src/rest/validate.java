@@ -392,6 +392,7 @@ public class validate {
                             bcidRoot);
                     g.getSpreadsheet(outputFile);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     // Just throw an exception if we get here
                     throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
                 } finally {
