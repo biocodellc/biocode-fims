@@ -1166,8 +1166,8 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='controlledVocabulary' column='Weight Unit' list='weightUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Weight Unit' level='warning' otherColumn='Weight'></rule>
 		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 3' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 4' list='preparation' level='warning'></rule>
 		<rule type='validateNumeric' column='Age' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Age Modifier' list='ageModifier' level='warning'></rule>

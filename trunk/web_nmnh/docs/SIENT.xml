@@ -258,11 +258,6 @@ ABCDDNA: This is whatever number you used before the specimen was vouchered. Spe
 "Collector8" = Biocode Backend.collectingevent,]]></synonyms>
 			<dataFormat><![CDATA[Lastname, FirstInitial. SecondInitial.  Ex.: Darwin, C. R. (with spaces)]]></dataFormat>
 </attribute>
-		<attribute column='Sampling Effort' uri='urn:samplingEffort' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#samplingEffort'>
-			<![CDATA[DwC: The amount of effort expended during an Event. Example: "40 trap-nights", "10 observer-hours; 10 km by foot; 30 km by car". For discussion see http://code.google.com/p/darwincore/wiki/Event http://rs.tdwg.org/dwc/terms/samplingEffort]]>
-			<synonyms><![CDATA["samplingEffort" = DwC,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Collection Method' uri='urn:samplingProtocol' group='CollectingEvent' defined_by='http://rs.tdwg.org/dwc/terms/#samplingProtocol'>
 			<![CDATA[DwC: The name of, reference to, or description of the method or protocol used during an Event. Examples: "UV light trap", "mist net", "bottom trawl", "ad hoc observation", "point count", "Penguins from space: faecal stains reveal the location of emperor penguin colonies, http://dx.doi.org/10.1111/j.1466-8238.2009.00467.x", "Takats et al. 20 http://rs.tdwg.org/dwc/terms/samplingProtocol
 
@@ -284,12 +279,6 @@ BOLD: The name of, reference to, or description of the method or protocol used d
 "Plot Elevation" = Kress Coll'n SS, 
 "Plot Elevation" = BOLD Batch Upload,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Elevation Modifier' uri='urn:elevationModifier' group='DepthElevation' defined_by='urn:elevationModifier'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["ELEV_MOD" = Kress Coll. tblKresFile,
-"Elev_is_Approx" = Entomology - Ted Schultz,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
 		<attribute column='Elevation To (m)' uri='urn:maximumElevationInMeters' group='DepthElevation' defined_by='http://rs.tdwg.org/dwc/terms/#maximumElevationInMeters'>
 			<![CDATA[DwC: The upper limit of the range of elevation (altitude, usually above sea level), in meters. Example: "200". For discussion see http://code.google.com/p/darwincore/wiki/Location http://rs.tdwg.org/dwc/terms/maximumElevationInMeters]]>
@@ -1054,7 +1043,6 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Collector 6' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Collector 7' list='collector' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Collector 8' list='collector' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Elevation Modifier' list='elevDepthModifier' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
 		<rule type='isNumber' column='Elevation From (m)' level='warning'></rule>
 		<rule type='validateNumeric' column='Coordinate Radius (m)' level='warning' value='%3E%3D0'></rule>
@@ -1068,7 +1056,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Biogeographic Region' list='Biogeography Region' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='Warning'></rule>
+		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='warning'></rule>
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
