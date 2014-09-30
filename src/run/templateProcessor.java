@@ -1045,8 +1045,13 @@ public class templateProcessor {
      */
     public static void main(String[] args) throws Exception {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/config.1.xml");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/config.3.xml");
+        templateProcessor t1 = new templateProcessor(file,"tripleOutput",false,12345,"DEMO4","ark:/99999/fk2");
+        System.out.println(t1.definition("SexCaste"));
+
+                /*
         templateProcessor t = new templateProcessor(file, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
+
 
         //System.out.println(t.definition("materialSampleID"));
 
@@ -1073,6 +1078,7 @@ public class templateProcessor {
         //t.getRequiredColumns();
 
         //System.out.println(t.printCheckboxes());
+        */
     }
 
 }
