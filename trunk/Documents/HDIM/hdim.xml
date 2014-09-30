@@ -16,7 +16,7 @@
         <worksheet sheetname='Samples'>
 
             <rule type='duplicateColumnNames' level='error'></rule>
-            <rule type='uniqueValue' column='HDIM_Num' level='error'></rule>
+            <rule type='uniqueValue' column='hdimNumber' level='error'></rule>
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>HDIM_Num</field>
             </rule>
