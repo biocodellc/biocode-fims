@@ -236,7 +236,7 @@ public class templateProcessor {
                     }
 
                     // Definition
-                    if (!a.getDefinition().trim().equals("")) {
+                    if (a.getDefinition() != null && !a.getDefinition().trim().equals("")) {
                         output.append("<p>\n" +
                                 "<b>Definition:</b>\n" +
                                 "<p>" + a.getDefinition() + "\n");
@@ -247,14 +247,14 @@ public class templateProcessor {
                     }
 
                     // Synonyms
-                    if (!a.getSynonyms().trim().equals("")) {
+                    if (a.getSynonyms() != null && !a.getSynonyms().trim().equals("")) {
                         output.append("<p>\n" +
                                 "<b>Synonyms:</b>\n" +
                                 "<p>" + a.getSynonyms() + "\n");
                     }
 
                     // Synonyms
-                    if (!a.getDataFormat().trim().equals("")) {
+                    if (a.getDataFormat() != null && !a.getDataFormat().trim().equals("")) {
                         output.append("<p>\n" +
                                 "<b>Data Formatting Instructions:</b>\n" +
                                 "<p>" + a.getDataFormat() + "\n");
@@ -292,11 +292,7 @@ public class templateProcessor {
                 }
             }
 
-        } catch (
-                Exception e
-                )
-
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new FIMSException("Exception handling templates " + e.getMessage(), e);
         }
@@ -658,7 +654,7 @@ public class templateProcessor {
 
                     Attribute a = (Attribute) attributesIt.next();
 
-                /*    System.out.println("************************************");
+                    /*    System.out.println("************************************");
                     System.out.println(a.getColumn());
                     System.out.println("************************************");
                     System.out.println("definition: " + a.getDefinition());
@@ -672,7 +668,7 @@ public class templateProcessor {
                         // Column Name
                         Cell nameCell = row.createCell(NAME);
                         nameCell.setCellValue(a.getColumn());
-                         XSSFCellStyle nameStyle;
+                        XSSFCellStyle nameStyle;
                         if (requiredColumns != null && requiredColumns.contains(a.getColumn())) {
                             nameStyle = requiredStyle;
                         } else {
@@ -706,14 +702,16 @@ public class templateProcessor {
                             Cell formatCell = row.createCell(DATA_FORMAT);
                             formatCell.setCellValue(a.getDataFormat());
                             formatCell.setCellStyle(wrapStyle);
-                        } catch (NullPointerException npe) {}
+                        } catch (NullPointerException npe) {
+                        }
 
-                         // Synonyms
+                        // Synonyms
                         try {
                             Cell synonymCell = row.createCell(SYNONYMS);
                             synonymCell.setCellValue(a.getSynonyms());
                             synonymCell.setCellStyle(wrapStyle);
-                        } catch (NullPointerException npe) {}
+                        } catch (NullPointerException npe) {
+                        }
                     }
                 }
             }
