@@ -465,7 +465,10 @@ public class bcidConnector {
     public boolean makeExpeditionPublic(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
 
         if (publicStatus) {
+
             String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/true";
+            System.out.println("Calling " + urlString + " to make this expedition public!");
+
             URL url = new URL(urlString);
 
             JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
