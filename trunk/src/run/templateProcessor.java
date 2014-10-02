@@ -401,8 +401,8 @@ public class templateProcessor {
                 "  });\n" +
                 "$('#select_none').click(function(event) {\n" +
                 "    $(':checkbox').each(function() {\n" +
-                "       if (!this.is(':disabled')) \n" +
-                "          this.checked = false;\n" +
+                "       if (!($this).is(':disabled')) {\n" +
+                "          this.checked = false;}\n" +
                 "      });\n" +
                 "});" +
                 "</script>");
