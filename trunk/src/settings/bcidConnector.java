@@ -467,29 +467,25 @@ public class bcidConnector {
      */
     public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
 
-        if (publicStatus) {
 
-            String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/" + publicStatus;
+        String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/" + publicStatus;
 
-            URL url = new URL(urlString);
-            System.out.println(urlString);
+        URL url = new URL(urlString);
+        System.out.println(urlString);
 
-            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
 
-            // Some error message was returned from the expedition validation service
-            if (getResponseCode() == 401 || getResponseCode() == 500) {
-                throw new Exception("" +
-                        "<br>Unable to update the public status of expedition to true.  This event is being logged.");
-
+        // Some error message was returned from the expedition validation service
+        if (getResponseCode() == 401 || getResponseCode() == 500) {
+            throw new Exception("" +
+                    "<br>Unable to update the public status of expedition to true.  This event is being logged.");
+        } else {
+            if (response.containsKey("error")) {
+                throw new Exception(response.get("error").toString());
             } else {
-                if (response.containsKey("error")) {
-                    throw new Exception(response.get("error").toString());
-                } else {
-                    return true;
-                }
+                return true;
             }
         }
-        return false;
     }
 
     /**
