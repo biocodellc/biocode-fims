@@ -419,9 +419,9 @@ public class validate {
                     connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
                     // Set the public status if relevant
                     if (processController.getPublicStatus()) {
-                        connector.makeExpeditionPublic(true,processController.getProject_id(),processController.getExpeditionCode());
+                        connector.setExpeditionPublicStatus(true, processController.getProject_id(), processController.getExpeditionCode());
                     } else {
-                        System.out.println("not making expedition public or calling any service");
+                        connector.setExpeditionPublicStatus(false, processController.getProject_id(), processController.getExpeditionCode());
                     }
                 } catch (Exception e) {
                     throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");

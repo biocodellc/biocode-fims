@@ -456,18 +456,20 @@ public class bcidConnector {
 
     /**
      * Call service to make this expedition public if the user wants it public
+     *
      * @param publicStatus
      * @param project_id
      * @param expedition_code
+     *
      * @return
+     *
      * @throws Exception
      */
-    public boolean makeExpeditionPublic(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
+    public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
 
         if (publicStatus) {
 
-            String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/true";
-            System.out.println("Calling " + urlString + " to make this expedition public!");
+            String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/" + publicStatus;
 
             URL url = new URL(urlString);
 
