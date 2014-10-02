@@ -424,7 +424,7 @@ public class validate {
                         System.out.println("not making expedition public or calling any service");
                     }
                 } catch (Exception e) {
-                    throw new FIMSException("{\"error\": \"Error writing file data to database. Server Message: " + e.getMessage() + "\"}");
+                    throw new FIMSException("{\"error\": \"Server Message: " + e.getMessage() + "\"}");
                 }
 
                 // Remove the processController from the session
