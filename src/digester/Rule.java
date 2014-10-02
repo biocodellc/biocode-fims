@@ -333,15 +333,16 @@ public class Rule {
 
             rs = statement.executeQuery(sql);
 
-            StringBuilder values = new StringBuilder();
-            int count = 0;
+            //int count = 0;
             while (rs.next()) {
-                if (count > 0) {
+                StringBuilder values = new StringBuilder();
+
+              /*  if (count > 0) {
                     values.append(", ");
-                }
+                }  */
                 values.append(rs.getString(getColumn()));
                 addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString(),groupMessage);
-                count++;
+                //count++;
             }
             //if (count > 0) {
             //}
