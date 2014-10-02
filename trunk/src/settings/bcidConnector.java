@@ -166,12 +166,13 @@ public class bcidConnector {
         // to the appropriate keystore location on the server... The keystore stores the
         // BCID certificates that have been installed.  Without an SSL certificate or a non-HTTPS
         // connection this can be safely ignored
-       // System.setProperty("javax.net.ssl.trustStore", trust_store);
-       // System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
+        // System.setProperty("javax.net.ssl.trustStore", trust_store);
+        // System.setProperty("javax.net.ssl.trustStorePassword", trust_store_password);
     }
 
     /**
      * Return the BCID NAAN that we expect for projects in this FIMS
+     *
      * @return
      */
     public Integer getNAAN() {
@@ -454,6 +455,38 @@ public class bcidConnector {
     }
 
     /**
+     * Call service to make this expedition public if the user wants it public
+     * @param publicStatus
+     * @param project_id
+     * @param expedition_code
+     * @return
+     * @throws Exception
+     */
+    public boolean makeExpeditionPublic(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
+
+        if (publicStatus) {
+            String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/true";
+            URL url = new URL(urlString);
+
+            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+
+            // Some error message was returned from the expedition validation service
+            if (getResponseCode() == 401 || getResponseCode() == 500) {
+                throw new Exception("" +
+                        "<br>Unable to update the public status of expedition to true.  This event is being logged.");
+
+            } else {
+                if (response.containsKey("error")) {
+                    throw new Exception(response.get("error").toString());
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
      * unique within
      * a particular project
@@ -462,6 +495,7 @@ public class bcidConnector {
      *
      * @throws Exception
      */
+
     public boolean checkExpedition(processController processController) throws Exception {
         // if the expedition code isn't set we can just immediately return true which is
         if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
@@ -476,8 +510,8 @@ public class bcidConnector {
         }
         // Set ignore_user if it is true (this tells BCID to not run user check for expedition owner)
         if (ignore_user) {
-            if (accessToken!=null) urlString += "&";
-            else urlString +="?";
+            if (accessToken != null) urlString += "&";
+            else urlString += "?";
             urlString += "ignore_user=true";
         }
 
@@ -652,17 +686,17 @@ public class bcidConnector {
         // default is GET
         conn.setRequestMethod("GET");
         conn.setUseCaches(false);
-                /*
-        // act like a browser
-        conn.setRequestProperty("User-Agent", USER_AGENT);
-        conn.setRequestProperty("Accept",
-                "text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8");
-        conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        if (cookies != null) {
-            for (String cookie : this.cookies) {
-                conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
-            }
-        }    */
+        /*
+    // act like a browser
+    conn.setRequestProperty("User-Agent", USER_AGENT);
+    conn.setRequestProperty("Accept",
+            "text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8");
+    conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+    if (cookies != null) {
+        for (String cookie : this.cookies) {
+            conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
+        }
+    }    */
 
         conn.setRequestProperty("Host", HOST);
         conn.setRequestProperty("User-Agent", USER_AGENT);
