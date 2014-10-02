@@ -33,6 +33,7 @@ public class processController {
     private Boolean NMNH;
     private Integer accessionNumber;
     private String defaultSheetUniqueKey;
+    private Boolean publicStatus = false;   // default to false
 
     public String getWorksheetName() {
         return worksheetName;
@@ -145,6 +146,14 @@ public class processController {
 
     public void setValidation(Validation validation) {
         this.validation = validation;
+    }
+
+    public Boolean getPublicStatus() {
+        return publicStatus;
+    }
+
+    public void setPublicStatus(Boolean publicStatus) {
+        this.publicStatus = publicStatus;
     }
 
     /**

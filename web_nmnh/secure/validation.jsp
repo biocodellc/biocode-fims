@@ -47,6 +47,13 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td align="right">Final Copy&nbsp;&nbsp;</td>
+                    <td style="font-size:11px;">
+                            <input type="checkbox" id="publicStatus" name="publicStatus" />
+                    </td>
+                </tr>
+
                 <tr class="toggle-content" id="expedition_code_toggle">
                     <td align="right">Dataset Code&nbsp;&nbsp;</td>
                     <td id="expedition_code_container"><input type="text" name="expedition_code" id="expedition_code" /></td>
