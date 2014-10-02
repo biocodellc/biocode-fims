@@ -390,6 +390,22 @@ public class templateProcessor {
         // Iterate through any defined groups, which makes the template processor easier to navigate
         Iterator it = groups.entrySet().iterator();
         StringBuilder output = new StringBuilder();
+        output.append("<a href='#' id='select_all'>Select ALL</a> | ");
+        output.append("<a href='#' id='select_none'>Select NONE</div>");
+        output.append("<script>" +
+                "$('#select_all').click(function(event) {\n" +
+                "      // Iterate each checkbox\n" +
+                "      $(':checkbox').each(function() {\n" +
+                "          this.checked = true;\n" +
+                "      });\n" +
+                "  });\n" +
+                "$('#select_none').click(function(event) {\n" +
+                "    $(':checkbox').each(function() {\n" +
+                "          this.checked = false;\n" +
+                "      });\n" +
+                "});" +
+                "</script>");
+
         int count = 0;
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
