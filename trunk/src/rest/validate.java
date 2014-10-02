@@ -418,8 +418,11 @@ public class validate {
                     // associate the BCID
                     connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
                     // Set the public status if relevant
-                    if (processController.getPublicStatus())
+                    if (processController.getPublicStatus()) {
                         connector.makeExpeditionPublic(true,processController.getProject_id(),processController.getExpeditionCode());
+                    } else {
+                        System.out.println("not making expedition public or calling any service");
+                    }
                 } catch (Exception e) {
                     throw new FIMSException("{\"error\": \"Error writing file data to database. Server Message: " + e.getMessage() + "\"}");
                 }
