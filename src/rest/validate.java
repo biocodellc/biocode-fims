@@ -392,10 +392,11 @@ public class validate {
 
                 // Run guidify, which adds a BCID to the spreadsheet
                 try {
+                    Integer userId = (Integer)session.getAttribute("userId");
                     guidify g = new guidify(
                             inputFile,
                             processController.getWorksheetName(),
-                            processController.getDefaultSheetUniqueKey(),
+                            userId,
                             bcidRoot);
                     g.getSpreadsheet(outputFile);
                 } catch (Exception e) {
