@@ -392,10 +392,10 @@ public class validate {
 
                 // Run guidify, which adds a BCID to the spreadsheet
                 try {
-                    System.out.println("userId = " + session.getAttribute("userId"));
-                    System.out.println("Session string = " + session.toString());
-                    System.out.println("session attribute names = " + session.getAttributeNames());
-                    Integer userId = Integer.getInteger((String) session.getAttribute("userId"));
+                    //System.out.println("userId = " + session.getAttribute("userId"));
+                    //System.out.println("Session string = " + session.toString());
+                    //System.out.println("session attribute names = " + session.getAttributeNames());
+                    Integer userId = Integer.valueOf((String) session.getAttribute("userId"));
                     System.out.println("now userId = " + userId);
                     guidify g = new guidify(
                             inputFile,
