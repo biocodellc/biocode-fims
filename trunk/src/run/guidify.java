@@ -99,7 +99,8 @@ public class guidify {
     private Integer getEZIDColumnNum() {
         // See if the column name exists, and if so, return that position
         Integer columnIndex = getColumnIndex(sheet.getRow(0), ezidColumnName);
-        if (columnIndex >= 0) {
+        // A value of 0 means it was NOT found, negative i presume is an error and positive integers are a good sign
+        if (columnIndex > 0) {
             return columnIndex;
         }
         // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
