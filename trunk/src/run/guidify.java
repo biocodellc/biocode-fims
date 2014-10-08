@@ -17,6 +17,7 @@ public class guidify {
     private String localIDColumnName;
     private Integer userID;
     private Boolean SIMethod = false; // default SIMethod to false
+    private String ezidColumnName = "BCID";
 
     /**
      * Create the guidIfier with everything it needs to accomplish its mission:
@@ -91,15 +92,32 @@ public class guidify {
     }
 
     /**
+     * Get the column number to use for the EZID column
+     *
+     * @return
+     */
+    private Integer getEZIDColumnNum() {
+        // See if the column name exists, and if so, return that position
+        Integer columnIndex = getColumnIndex(sheet.getRow(0), ezidColumnName);
+        if (columnIndex >= 0) {
+            return columnIndex;
+        }
+        // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
+        // while the ezidColumnName is an array index, so it gets placed in the spot after the last column
+        else {
+            return sheet.getRow(0).getPhysicalNumberOfCells();
+        }
+
+    }
+
+    /**
      * ONLY use this method for SI cases... it is specifically only to their implementation
      *
      * @throws NullPointerException
      */
     private void addSuffixPassthroughGuidSIMethod() throws NullPointerException {
-        int numColumns = sheet.getRow(0).getPhysicalNumberOfCells();
-        // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
-        // while the ezidColumnName is an array index, so it gets placed in the spot after the last column
-        int ezidColumnNum = numColumns;
+        int ezidColumnNum = getEZIDColumnNum();
+
         //int localIdColumnNum = getColumnIndex(sheet.getRow(0), localIDColumnName);
         DataFormatter fmt = new DataFormatter();
 
@@ -108,7 +126,7 @@ public class guidify {
             // This is the header
             if (rowNum == 0) {
                 Cell cell = row.createCell(ezidColumnNum);
-                cell.setCellValue("BCID");
+                cell.setCellValue(ezidColumnName);
             }
             // The EZID cell contents
             else {
@@ -131,10 +149,8 @@ public class guidify {
      * @throws NullPointerException
      */
     private void addSuffixPassthroughGuid() throws NullPointerException {
-        int numColumns = sheet.getRow(0).getPhysicalNumberOfCells();
-        // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
-        // while the ezidColumnName is an array index, so it gets placed in the spot after the last column
-        int ezidColumnNum = numColumns;
+        int ezidColumnNum = getEZIDColumnNum();
+
         int localIdColumnNum = getColumnIndex(sheet.getRow(0), localIDColumnName);
         DataFormatter fmt = new DataFormatter();
 
@@ -143,7 +159,7 @@ public class guidify {
             // This is the header
             if (count == 0) {
                 Cell cell = row.createCell(ezidColumnNum);
-                cell.setCellValue("BCID");
+                cell.setCellValue(ezidColumnName);
             }
             // The EZID cell contents
             else {
