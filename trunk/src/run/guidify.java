@@ -15,10 +15,12 @@ public class guidify {
     private XSSFWorkbook workbook;
     private String bcidRoot;
     private String localIDColumnName;
+    private Integer userID;
+    private Boolean SIMethod = false; // default SIMethod to false
 
     /**
      * Create the guidIfier with everything it needs to accomplish its mission:
-     * reading an inputWoorkbook, and looking at a sheet, figuring out the locally unique identifier,
+     * reading an inputWoorkbook, using the locally unique identifier,
      * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
      * wait for the run() method to be called to actually write our output spreadsheet
      *
@@ -41,6 +43,36 @@ public class guidify {
         this.sheet = workbook.getSheet(sheetName);
         this.bcidRoot = bcidRoot;
         this.localIDColumnName = localIDColumnName;
+        this.SIMethod = false;
+
+    }
+
+    /**
+     * Create the guidIfier with the SI-specific rules for guidifying an identifier.
+     * reading an inputWoorkbook, using the userID (as an argument), and appending the rowNum (based on sheet).
+     * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
+     * wait for the run() method to be called to actually write our output spreadsheet
+     *
+     * @param sourceFile
+     * @param sheetName
+     * @param userID
+     * @param bcidRoot
+     *
+     * @throws IOException
+     */
+    public guidify(
+            File sourceFile,
+            String sheetName,
+            Integer userID,
+            String bcidRoot
+    ) throws IOException {
+        // Assign class level variables
+        FileInputStream fis = new FileInputStream(sourceFile);
+        this.workbook = new XSSFWorkbook(fis);
+        this.sheet = workbook.getSheet(sheetName);
+        this.bcidRoot = bcidRoot;
+        this.userID = userID;
+        this.SIMethod = true;
     }
 
     /**
@@ -50,11 +82,54 @@ public class guidify {
      */
     public void getSpreadsheet(File outputFile) throws IOException {
         // Add the suffixPassthroughGUID (the BCID) to the end of the sheet
-        addSuffixPassthroughGuid();
+        if (SIMethod)
+            addSuffixPassthroughGuidSIMethod();
+        else
+            addSuffixPassthroughGuid();
         // Write the output
         write(outputFile);
     }
 
+    /**
+     * ONLY use this method for SI cases... it is specifically only to their implementation
+     *
+     * @throws NullPointerException
+     */
+    private void addSuffixPassthroughGuidSIMethod() throws NullPointerException {
+        int numColumns = sheet.getRow(0).getPhysicalNumberOfCells();
+        // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
+        // while the ezidColumnName is an array index, so it gets placed in the spot after the last column
+        int ezidColumnNum = numColumns;
+        //int localIdColumnNum = getColumnIndex(sheet.getRow(0), localIDColumnName);
+        DataFormatter fmt = new DataFormatter();
+
+        int rowNum = 0;
+        for (Row row : sheet) {
+            // This is the header
+            if (rowNum == 0) {
+                Cell cell = row.createCell(ezidColumnNum);
+                cell.setCellValue("BCID");
+            }
+            // The EZID cell contents
+            else {
+                //Cell localIDCell = row.getCell(localIdColumnNum);
+                String guid = bcidRoot;
+                guid += userID + "." + rowNum;
+
+                // Set the Cell's value and Style
+                Cell guidCell = row.createCell(ezidColumnNum);
+                guidCell.setCellValue(guid);
+
+            }
+            rowNum++;
+        }
+    }
+
+    /**
+     * This is the preferred method of implementation
+     *
+     * @throws NullPointerException
+     */
     private void addSuffixPassthroughGuid() throws NullPointerException {
         int numColumns = sheet.getRow(0).getPhysicalNumberOfCells();
         // Put the BCID in the last column place.  Num Columns works out because this is an absolute number,
