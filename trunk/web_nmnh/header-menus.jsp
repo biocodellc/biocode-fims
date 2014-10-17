@@ -44,7 +44,7 @@
                         <li><a id="logout" href="/fims/rest/authenticationService/logout/">Logout</a></li>
                     </c:if>
 
-                    <li><a href="/fims/docs/FIMS-NMNH-Help_Master.pdf">Help</a></li>
+                    <li><a href="/fims/docs/FIMS-NMNH-Help_Master.pdf" target="_blank">Help</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
