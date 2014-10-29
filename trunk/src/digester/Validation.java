@@ -10,8 +10,10 @@ import renderers.RendererInterface;
 import renderers.RowMessage;
 import run.processController;
 import settings.*;
+import utils.Html2Text;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -179,7 +181,9 @@ public class Validation implements RendererInterface {
     public processController printMessages(processController processController) {
         StringBuilder errorSB = new StringBuilder();
         StringBuilder warningSB = new StringBuilder();
-
+        // Create a simplified output stream just for commandline printing.
+        StringBuilder commandLineWarningSB = new StringBuilder();
+        Html2Text htmlParser = new Html2Text();
         java.util.List<String> warnings = new ArrayList<String>();
 
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
@@ -187,7 +191,7 @@ public class Validation implements RendererInterface {
             processController.setWorksheetName(worksheet.getSheetname());
             String status1 = "\t<b>Validation results on \"" + worksheet.getSheetname() + "\" worksheet.</b>";
             processController.appendStatus("<br>" + status1);
-            fimsPrinter.out.println(status1);
+            //fimsPrinter.out.println(status1);
 
             /*
             for (String msg : worksheet.getUniqueMessages(Message.ERROR)) {
@@ -203,13 +207,21 @@ public class Validation implements RendererInterface {
             // Group all Messages using lambdaj jar library
             Group<RowMessage> rowGroup = group(worksheet.getMessages(), by(on(RowMessage.class).getGroupMessageAsString()));
             warningSB.append("<div id=\"expand\">");
-
             for (String key : rowGroup.keySet()) {
                 warningSB.append("<dl>");
                 warningSB.append("<dt>" + key + "</dt>");
                 java.util.List<RowMessage> rowMessageList = rowGroup.find(key);
+
+                // Parse the Row Messages that are meant for HTML display
+                try {
+                    commandLineWarningSB.append(htmlParser.convert(key)+"\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 for (RowMessage m : rowMessageList) {
                     warningSB.append("<dd>" + m.print() + "</dd>");
+                    commandLineWarningSB.append("\t" + m.print() + "\n");
                 }
                 warningSB.append("</dl>");
             }
@@ -217,7 +229,10 @@ public class Validation implements RendererInterface {
 
             // Worksheet has errors
             if (!worksheet.errorFree()) {
-                fimsPrinter.out.println(warningSB.toString());
+
+                //fimsPrinter.out.println(warningSB.toString());
+                fimsPrinter.out.println(commandLineWarningSB.toString());
+
                 processController.appendStatus("<br><b>1 or more errors found.  Must fix to continue. Click each message for details</b><br>");
                 processController.appendStatus(warningSB.toString());
 

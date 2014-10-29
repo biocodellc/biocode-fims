@@ -12,6 +12,7 @@ import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.triplifier;
+import utils.Html2Text;
 import utils.SettingsManager;
 import utils.stringGenerator;
 
@@ -253,7 +254,15 @@ public class process {
 
         // Run the validation step
         if (!processController.isValidated() && processController.getHasWarnings()) {
+            Html2Text parser = new Html2Text();
+
             String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
+            // In LOCAL version convert HTML tags to readable Text
+            try {
+                message = parser.convert(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Boolean continueOperation = fimsInputter.in.continueOperation(message);
 
             if (!continueOperation)
@@ -307,6 +316,7 @@ public class process {
             // Run the validation
             validation.run(tdr, outputPrefix, outputFolder, mapping);
 
+            //
             processController = validation.printMessages(processController);
             processController.setValidation(validation);
             processController.setDefaultSheetUniqueKey(mapping.getDefaultSheetUniqueKey());
@@ -354,6 +364,8 @@ public class process {
                 fims.run(connector, processController);
                 String results = fims.results();
                 processController.appendStatus("<br>" + results);
+                //Html2Text parser = new Html2Text();
+                //fimsPrinter.out.println(parser.convert(results));
                 fimsPrinter.out.println(results);
             } catch (Exception e) {
                 throw new FIMSException(e.getMessage(), e);

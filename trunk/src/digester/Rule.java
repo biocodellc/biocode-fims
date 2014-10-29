@@ -319,7 +319,7 @@ public class Rule {
      * @throws Exception
      */
     public void uniqueValue() throws Exception {
-        String groupMessage = "Check that all values in column are unique failed";
+        String groupMessage = "Unique value constraint did not pass";
         Statement statement = null;
         ResultSet rs = null;
         try {
@@ -372,7 +372,7 @@ public class Rule {
      * @throws Exception
      */
     public void BoundingBox() throws Exception {
-        String groupMessage = "Check coordinates are in bounding box failed";
+        String groupMessage = "Coordinates outside specified bounding box";
 
         // Build List of XML Fields
         java.util.List<String> listFields = getFields();
@@ -427,7 +427,7 @@ public class Rule {
      * @throws Exception
      */
     public void minimumMaximumNumberCheck() throws Exception {
-        String groupMessage = "Check min/max ranges for a number rule failed";
+        String groupMessage = "Number outside of range";
         String minimum = getColumn().split(",")[0];
         String maximum = getColumn().split(",")[1];
         String minMaxArray[] = new String[]{minimum, maximum};
@@ -497,7 +497,7 @@ public class Rule {
      * @throws Exception
      */
     public void checkLowestTaxonLevel() throws Exception {
-        String groupMessage = "Check lowest taxon level rule failed";
+        String groupMessage = "Lowest taxon level not entered correctly";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
             String LowestTaxonLevelValue = worksheet.getStringValue("LowestTaxonLevel", j);
@@ -543,7 +543,7 @@ public class Rule {
      */
     @Deprecated
     void checkGenusSpeciesCountsSI() throws Exception {
-        String groupMessage = "Check Genus and species counts SI rule failed";
+        String groupMessage = "Check Genus and species counts for SI";
         String genusHeading = "Genus";
         String speciesHeading = "Species";
         String[] headings = {genusHeading, speciesHeading};
@@ -596,7 +596,7 @@ public class Rule {
      */
     @Deprecated
     public void checkVoucherSI(TabularDataReader worksheet) throws Exception {
-        String groupMessage = "Check voucher SI rule failed";
+        String groupMessage = "Check voucher SI rule";
         String[] headings = {"Voucher Specimen?", "Herbarium Accession No./Catalog No.", "Herbarium Acronym"};
         int[] columnIndices = this.getColumnIndices(headings);
         int vsIdx = columnIndices[0];
@@ -720,7 +720,7 @@ public class Rule {
                 sql += " AND " + getOtherColumn();
                 sql += " IN (" + fieldListSB.toString() + ")";
             }
-            System.out.println(sql);
+            //System.out.println(sql);
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String column = resultSet.getString(getColumn()).trim();
@@ -770,7 +770,7 @@ public class Rule {
      */
     @Deprecated
     public void checkTissueColumnsSI() throws Exception {
-        String groupMessage = "Check tissue columns SI rule failed";
+        String groupMessage = "Check tissue columns SI rule";
         String plateNoHeading = "Plate No.";
         String rowLetterHeading = "Row Letter";
         String columnNumberHeading = "Column No.";
@@ -859,7 +859,7 @@ public class Rule {
      * @throws Exception
      */
     public void checkTissueColumns() throws Exception {
-        String groupMessage = "Check tissue columns rule failed";
+        String groupMessage = "Well number / plate names not entered correctly";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
 
@@ -907,7 +907,7 @@ public class Rule {
      * or, simply value:">=0"
      */
     public void validateNumeric() throws Exception {
-        String groupMessage = "Check for valid number format rule failed";
+        String groupMessage = "Invalid number format";
         boolean validNumber = true;
         ResultSet resultSet;
         Statement statement = connection.createStatement();
@@ -965,7 +965,7 @@ public class Rule {
      * @throws Exception
      */
     private boolean checkValidNumberSQL(String thisColumn) throws Exception {
-        String groupMessage = "Checking valid number message rule failed";
+        String groupMessage = "Invalid number";
         boolean validNumber = true;
         ResultSet resultSet;
         Statement statement = connection.createStatement();
@@ -1034,7 +1034,7 @@ public class Rule {
     public void DwCLatLngChecker
     () throws Exception {
         String msg = "";
-        String groupMessage = "Latitude / longitude checker rule failed";
+        String groupMessage = "Invalid Latitude / longitude";
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
             Double latValue = null;
             Double lngValue = null;
@@ -1218,7 +1218,7 @@ public class Rule {
      * }
      */
     public void RequiredColumns() {
-        String groupMessage = "Required column check rule failed";
+        String groupMessage = "Required column(s) not present";
         Statement statement = null;
         ResultSet rs = null;
         try {
