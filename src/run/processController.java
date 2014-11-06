@@ -20,6 +20,7 @@ public class processController {
     private Boolean hasErrors = false;
     private Boolean hasWarnings = false;
     private StringBuilder warningsSB;
+    private StringBuilder commandLineWarningsSB;
     private Boolean clearedOfWarnings = false;
     private Boolean expeditionAssignedToUserAndExists = false;   // checks that the user is authenticated against the supplied expedition
     private Boolean expeditionCreateRequired = false;
@@ -254,5 +255,12 @@ public class processController {
 
     public String getDefaultSheetUniqueKey() {
         return defaultSheetUniqueKey;
+    }
+
+    public void setCommandLineSB(StringBuilder commandLineWarningsSB) {
+        this.commandLineWarningsSB = commandLineWarningsSB;
+    }
+    public StringBuilder getCommandLineSB() {
+        return commandLineWarningsSB;
     }
 }

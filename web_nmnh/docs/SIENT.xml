@@ -971,6 +971,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "Secondary Sample Type" = FreezerPro Integration,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
+		<attribute column='Parent ID' uri='urn:parentID' group='Tissue' defined_by='urn:parentID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Genetic Sample Preservation Date' uri='urn:preservationDate' group='Tissue' defined_by='urn:preservationDate'>
 			<![CDATA[DwC_Ext: preservationDate- Day/Month/year (e.g., 2012-10-26T18:35:27)]]>
 			<synonyms><![CDATA[]]></synonyms>
@@ -1030,6 +1035,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
+			<field>Parent ID</field>
 			<field>Genetic Sample Preservation Date</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Prepared By</field>
@@ -1058,6 +1064,10 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='controlledVocabulary' column='Preparation 1' list='preparation' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Preparation 2' list='preparation' level='warning'></rule>
 		<rule type='uniqueValue' column='Barcode' level='error'></rule>
+
+        <!--RULE FORMAT FOR ADDING TO si_matrix.xlsx -->
+        <!--<rule type='uniqueValueUnlessParentPresent' column='barcode' otherColumn='Parent ID' level='error'></rule>-->
+
 		<rule type='controlledVocabulary' column='Kind of Object' list='Kind of Object' level='error'></rule>
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Life Stage' list='Life Stage' level='warning'></rule>
@@ -1066,23 +1076,28 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='uniqueValue' column='Biorepository ID' level='error'></rule>
+		<rule type='uniqueValue' column='Biorepository ID'  level='error'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Notes' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>

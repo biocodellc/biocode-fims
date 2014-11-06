@@ -1066,6 +1066,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "Tissue Descriptor" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Parent ID' uri='urn:parentID' group='Tissue' defined_by='urn:parentID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Genetic Sample Prepared By' uri='urn:samplePreparedBy' group='Tissue' defined_by='urn:samplePreparedBy'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
@@ -1126,6 +1131,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
 			<field>Genetic Sample Type Verbatim</field>
+			<field>Parent ID</field>
 			<field>Genetic Sample Quality</field>
 		</rule>
 		<rule type='isNumber' column='Elevation From (ft)' level='warning'></rule>
@@ -1206,12 +1212,17 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Quality' list='sampleQuality' level='warning'></rule>

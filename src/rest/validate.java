@@ -3,7 +3,7 @@ package rest;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONObject;
-import run.configurationFileTester;
+import unit_tests.SIConfigurationFileTester;
 import run.guidify;
 import run.process;
 import run.processController;
@@ -101,7 +101,7 @@ public class validate {
             );
 
             // Test the configuration file to see that we're good to go...
-            configurationFileTester cFT = new configurationFileTester();
+            SIConfigurationFileTester cFT = new SIConfigurationFileTester();
             boolean configurationGood = true;
 
             cFT.init(p.configFile);

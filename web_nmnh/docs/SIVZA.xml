@@ -1112,6 +1112,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "Tissue Descriptor" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Parent ID' uri='urn:parentID' group='Tissue' defined_by='urn:parentID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
@@ -1172,6 +1177,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
+			<field>Parent ID</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumElevationInMeters,maximumElevationInMeters' level='warning'></rule>
@@ -1228,10 +1234,12 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
@@ -1239,6 +1247,9 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>

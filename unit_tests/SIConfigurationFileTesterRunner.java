@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import run.configurationFileTester;
 import tools.siConverter;
 import tools.siProjects;
 
@@ -19,20 +18,21 @@ import java.util.Iterator;
 
 
 /**
- * Test the SI configuration Files
+ * Test SI configuration files that were automatically generated using tools.siConverter Class
  */
 @RunWith(value = Parameterized.class)
-public class siTester {
+public class SIConfigurationFileTesterRunner {
 
-    private configurationFileTester tester;
+    private SIConfigurationFileTester tester;
      String name;
+
     /**
-     * Construct the tester framework by creating a configurationFileTester object and calling its initializer
+     * Setup the tester framework by creating a SIConfigurationFileTester object and calling its initializer
      *
      * @param file
      */
-    public siTester(String name, File file) {
-        tester = new configurationFileTester();
+    public SIConfigurationFileTesterRunner(String name, File file) {
+        tester = new SIConfigurationFileTester();
         tester.init(file);
         this.name = name;
     }

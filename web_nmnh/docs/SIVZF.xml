@@ -976,6 +976,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "Tissue Descriptor" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Parent ID' uri='urn:parentID' group='Tissue' defined_by='urn:parentID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
@@ -1046,6 +1051,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
+			<field>Parent ID</field>
 			<field>Plate</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Barcode</field>
@@ -1082,12 +1088,17 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>

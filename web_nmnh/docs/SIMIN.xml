@@ -362,11 +362,6 @@ DwC_Ext: Date of DNA extraction (DNA only)]]>
 "ExtractionDate" = ABCDDNA,]]></synonyms>
 			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
-		<attribute column='Pooled DNA Extracts' uri='urn:pooledDNAExtracts' group='DNA' defined_by='urn:pooledDNAExtracts'>
-			<![CDATA[MIxS: were multiple DNA extractions mixed? how many?]]>
-			<synonyms><![CDATA["pool_dna_extracts" = MIxS,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Coordinate Radius (m)' uri='urn:coordinateUncertaintyInMeters' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#coordinateUncertaintyInMeters'>
 			<![CDATA[DwC: The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (be Example: "30" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), "71" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system). For discus http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters]]>
 			<synonyms><![CDATA["coordinateUncertaintyInMeters" = DwC,
@@ -668,11 +663,6 @@ Schultz: A political or geographic unit (above the level of a specific Locality)
 "County/District" = Birds, 
 "MinorUnit" = Entomology - Ted Schultz,
 "DIVISION2(Locality)" = tblKressFile,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Current Land Use' uri='urn:currentLandUse' group='Locality' defined_by='urn:currentLandUse'>
-			<![CDATA[MIxS: present state of sample site. values are; urban (artificial cover):cities, farmstead, industrial areas, roads/railroads; barren land:rock, sand, gravel, mudflats, salt flats, badlands, permanent snow or ice, saline seeps, mines/quarries, oil waste areas; crop cover:small grains, row crops, vegetable crops, horticultural plants (e.g., tulips); grass/herbaceous cover: marshlands (grass, sedges, rushes), tundra (mosses, lichens), rangeland, pastureland (grasslands used for livestock grazing), hayland, meadows (grasses, alfalfa, fescue, bromegrass, timothy); shrub cover: shrub land (e.g., mesquite, sage-brush, creosote bush, shrub oak, eucalyptus), successional shrub land (tree saplings, hazels, sumacs, chokecherry, shrub dogwoods, blackberries), shrub crops (blueberries, nursery ornamentals, filberts), vine crops (grapes); tree cover:conifers (e.g., pine, spruce, fir, cypress), hardwoods (e.g., oak, hickory, elm, aspen), intermixed hardwood and conifers, tropical (e.g., mangrove, palms), rainforest (evergreen forest receiving >406 cm annual rainfall), swamp (permanent or semi-permanent water body dominated by woody plants), crop trees (nuts, fruit, christmas trees, nursery trees)]]>
-			<synonyms><![CDATA["cur_land_use" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Current Vegetation' uri='urn:currentVegetation' group='Locality' defined_by='urn:currentVegetation'>
@@ -1148,7 +1138,7 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "Record Creation Date" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
-		<attribute column='Establishment Means' uri='urn:extremeEvent' group='Specimen' defined_by='urn:extremeEvent'>
+		<attribute column='Extreme Event' uri='urn:extremeEvent' group='Specimen' defined_by='urn:extremeEvent'>
 			<![CDATA[MIxS: unusual physical events that may have affected microbial populations]]>
 			<synonyms><![CDATA["extreme_event" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -1327,6 +1317,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "Tissue Descriptor" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Parent ID' uri='urn:parentID' group='Tissue' defined_by='urn:parentID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
@@ -1400,6 +1395,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
+			<field>Parent ID</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='warning'></rule>
@@ -1484,10 +1480,12 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
@@ -1495,6 +1493,9 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Genetic Sample Type Secondary'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Tertiary' list='Genetic Sample Type Tertiary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>
