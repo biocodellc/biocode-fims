@@ -1,5 +1,7 @@
 package run;
 
+import unit_tests.SIConfigurationFileTester;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,7 +11,7 @@ import java.util.Iterator;
 public class configurationFileErrorMessager extends ArrayList {
     ArrayList<message> messages = new ArrayList<message>();
 
-    public void add(configurationFileTester tester, String message, String validationName) {
+    public void add(SIConfigurationFileTester tester, String message, String validationName) {
         messages.add(new message(tester, message, validationName));
     }
 
@@ -30,11 +32,11 @@ public class configurationFileErrorMessager extends ArrayList {
      * Hold message contents
       */
     class message {
-        configurationFileTester tester;
+        SIConfigurationFileTester tester;
         String message;
         String validationName;
 
-        message(configurationFileTester tester, String message, String validationName) {
+        message(SIConfigurationFileTester tester, String message, String validationName) {
             this.tester = tester;
             this.message = message;
             this.validationName = validationName;

@@ -32,7 +32,7 @@ public class sqlLiteNameCleaner {
         newname = newname.replace('.', '_');
 
         // Remove any remaining non-alphanumeric characters.
-        newname = newname.replaceAll("[^_a-zA-Z0-9]", "");
+        newname = newname.replaceAll("[^_a-zA-Z0-9()]", "");
 
         // if the table name starts with a digit, prepend an underscore
         if (newname.matches("[0-9].*"))

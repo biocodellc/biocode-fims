@@ -1,9 +1,12 @@
-package run;
+package unit_tests;
 
 import org.junit.Test;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import run.configurationFileError;
+import run.configurationFileErrorHandler;
+import run.configurationFileErrorMessager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +23,7 @@ import java.util.regex.Pattern;
  * retrieved at any point to display any explanatory information regarding why a particular test failed.   If all
  * tests pass then no messages are written to the configurationFileErrorMessager
  */
-public class configurationFileTester {
+public class SIConfigurationFileTester {
     DocumentBuilder builder = null;
     Document document = null;
     public File fileToTest = null;
@@ -84,7 +87,7 @@ public class configurationFileTester {
      *
      * @return StringBuilder
      *
-     * @throws configurationFileError
+     * @throws run.configurationFileError
      */
     public boolean checkLists() {
         if (!parse()) {
@@ -351,12 +354,12 @@ public class configurationFileTester {
      *
      * @param args
      *
-     * @throws configurationFileError
+     * @throws run.configurationFileError
      */
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
         File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
-        configurationFileTester cFT = new configurationFileTester();
+        SIConfigurationFileTester cFT = new SIConfigurationFileTester();
         cFT.init(file);
         cFT.parse();
         cFT.checkLists();
@@ -369,7 +372,7 @@ public class configurationFileTester {
             int project_id = projects[i];
             System.out.println("Configuration File Testing For Project = " + project_id);
             try {
-                configurationFileTester cFT = new configurationFileTester();
+                SIConfigurationFileTester cFT = new SIConfigurationFileTester();
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
                 cFT.init(file);
                 //cFT.readConfigFile();
@@ -385,7 +388,7 @@ public class configurationFileTester {
 
         // Check for well-formedness -- this one passes
         /*
-        configurationFileTester cFT = new configurationFileTester();
+        SIConfigurationFileTester cFT = new SIConfigurationFileTester();
 
         try {
             cFT.testConfigFile(new File(output_directory + "testConfiguration1.xml"));

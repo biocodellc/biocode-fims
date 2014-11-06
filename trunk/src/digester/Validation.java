@@ -238,6 +238,7 @@ public class Validation implements RendererInterface {
 
                 processController.setHasErrors(true);
                 processController.setWarningsSB(warningSB);
+                processController.setCommandLineSB(commandLineWarningSB);
                 return processController;
             } else {
                 // Worksheet has no errors but does have some warnings
@@ -246,6 +247,8 @@ public class Validation implements RendererInterface {
                     processController.appendStatus(warningSB.toString());
                     processController.setHasWarnings(true);
                     processController.setWarningsSB(warningSB);
+                    processController.setCommandLineSB(commandLineWarningSB);
+
                     return processController;
                     //Worksheet has no errors or warnings
                 } else {

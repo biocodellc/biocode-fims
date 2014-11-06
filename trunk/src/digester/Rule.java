@@ -734,8 +734,9 @@ public class Rule {
                     //msg = "\"" + getColumnWorksheetName() + "\" column contains a value, but associated column \"" +
                     //        getOtherColumnWorksheetName() + "\" must be one of: " + listToString(fieldListArrayList);
 
-                    msg = "\"" + getOtherColumnWorksheetName() + "\" is declared as " + listToString(fieldListArrayList) +
-                            " and associated column \"" + getColumnWorksheetName() + "\" has no value";
+                    //msg = "\"" + getOtherColumnWorksheetName() + "\" is declared as " + listToString(fieldListArrayList) +
+                    msg = "\"" + getOtherColumnWorksheetName() + "\" has value " + "\"" + otherColumn + "\"" +
+                            ", but associated column \"" + getColumnWorksheetName() + "\" has no value";
                     //kind of object is declared as 'VALUE' and required Column is empty
 
                    /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
@@ -1218,7 +1219,7 @@ public class Rule {
      * }
      */
     public void RequiredColumns() {
-        String groupMessage = "Required column(s) not present";
+        String groupMessage = "Missing column(s)";
         Statement statement = null;
         ResultSet rs = null;
         try {
