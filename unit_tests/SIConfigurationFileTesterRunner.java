@@ -23,16 +23,16 @@ import java.util.Iterator;
 @RunWith(value = Parameterized.class)
 public class SIConfigurationFileTesterRunner {
 
-    private SIConfigurationFileTester tester;
+    private configurationFileTester tester;
      String name;
 
     /**
-     * Setup the tester framework by creating a SIConfigurationFileTester object and calling its initializer
+     * Setup the tester framework by creating a configurationFileTester object and calling its initializer
      *
      * @param file
      */
     public SIConfigurationFileTesterRunner(String name, File file) {
-        tester = new SIConfigurationFileTester();
+        tester = new configurationFileTester();
         tester.init(file);
         this.name = name;
     }

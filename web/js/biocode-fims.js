@@ -578,7 +578,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(parseSpreadsheet("~project_id=[0-9]+~")).done(function(spreadsheetNaan) {
+        $.when(parseSpreadsheet("~project_id=[0-9]+~")).done(function(project_id) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
