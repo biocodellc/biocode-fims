@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * retrieved at any point to display any explanatory information regarding why a particular test failed.   If all
  * tests pass then no messages are written to the configurationFileErrorMessager
  */
-public class SIConfigurationFileTester {
+public class configurationFileTester {
     DocumentBuilder builder = null;
     Document document = null;
     public File fileToTest = null;
@@ -359,7 +359,7 @@ public class SIConfigurationFileTester {
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
         File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
-        SIConfigurationFileTester cFT = new SIConfigurationFileTester();
+        configurationFileTester cFT = new configurationFileTester();
         cFT.init(file);
         cFT.parse();
         cFT.checkLists();
@@ -372,7 +372,7 @@ public class SIConfigurationFileTester {
             int project_id = projects[i];
             System.out.println("Configuration File Testing For Project = " + project_id);
             try {
-                SIConfigurationFileTester cFT = new SIConfigurationFileTester();
+                configurationFileTester cFT = new configurationFileTester();
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
                 cFT.init(file);
                 //cFT.readConfigFile();
@@ -388,7 +388,7 @@ public class SIConfigurationFileTester {
 
         // Check for well-formedness -- this one passes
         /*
-        SIConfigurationFileTester cFT = new SIConfigurationFileTester();
+        configurationFileTester cFT = new configurationFileTester();
 
         try {
             cFT.testConfigFile(new File(output_directory + "testConfiguration1.xml"));
