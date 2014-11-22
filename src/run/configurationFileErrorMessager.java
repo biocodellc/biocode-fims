@@ -1,7 +1,5 @@
 package run;
 
-import unit_tests.configurationFileTester;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 

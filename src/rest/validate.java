@@ -3,7 +3,7 @@ package rest;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONObject;
-import unit_tests.configurationFileTester;
+import run.configurationFileTester;
 import run.guidify;
 import run.process;
 import run.processController;

@@ -1,12 +1,9 @@
-package unit_tests;
+package run;
 
 import org.junit.Test;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import run.configurationFileError;
-import run.configurationFileErrorHandler;
-import run.configurationFileErrorMessager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
