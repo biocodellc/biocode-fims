@@ -2,6 +2,7 @@ package digester;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -25,6 +26,7 @@ import java.util.*;
 public class QueryWriter {
     // Loop all the columns associated with this worksheet
     ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+    Validation validation;
     ArrayList extraColumns;
     Integer totalColumns;
     String sheetName;
@@ -33,22 +35,24 @@ public class QueryWriter {
 
     /**
      * @param attributes ArrayList of attributes passed as argument is meant to come from digester.Mapping instance
+     *
      * @throws IOException
      */
-    public QueryWriter(ArrayList<Attribute> attributes, String sheetName) throws IOException {
+    public QueryWriter(ArrayList<Attribute> attributes, String sheetName, Validation validation) throws IOException {
         this.sheetName = sheetName;
         this.attributes = attributes;
+        this.validation = validation;
         totalColumns = attributes.size() - 1;
         extraColumns = new ArrayList();
 
         sheet = wb.createSheet(sheetName);
-
     }
 
     /**
      * Find the column position for this array
      *
      * @param columnName
+     *
      * @return
      */
     public Integer getColumnPosition(String columnName) {
@@ -85,6 +89,7 @@ public class QueryWriter {
      * Create a header row for all columns (initial + extra ones encountered)
      *
      * @param sheet
+     *
      * @return
      */
     public org.apache.poi.ss.usermodel.Row createHeaderRow(Sheet sheet) {
@@ -115,6 +120,7 @@ public class QueryWriter {
      * create a row at a specified index
      *
      * @param rowNum
+     *
      * @return
      */
     public Row createRow(int rowNum) {
@@ -321,19 +327,19 @@ public class QueryWriter {
                                 break;
                             case Cell.CELL_TYPE_NUMERIC:
                                 if (DateUtil.isCellDateFormatted(cell)) {
-                                     sbRow.append("<td>" + cell.getDateCellValue() + "</td>");
+                                    sbRow.append("<td>" + cell.getDateCellValue() + "</td>");
                                 } else {
-                                     sbRow.append("<td>" + cell.getNumericCellValue() + "</td>");
+                                    sbRow.append("<td>" + cell.getNumericCellValue() + "</td>");
                                 }
                                 break;
                             case Cell.CELL_TYPE_BOOLEAN:
-                                 sbRow.append("<td>" + cell.getBooleanCellValue() + "</td>");
+                                sbRow.append("<td>" + cell.getBooleanCellValue() + "</td>");
                                 break;
                             case Cell.CELL_TYPE_FORMULA:
-                                 sbRow.append("<td>" + cell.getCellFormula() + "</td>");
+                                sbRow.append("<td>" + cell.getCellFormula() + "</td>");
                                 break;
                             default:
-                                 sbRow.append("<td>" + cell.toString() + "</td>");
+                                sbRow.append("<td>" + cell.toString() + "</td>");
                         }
                     }
 
@@ -352,7 +358,7 @@ public class QueryWriter {
         }
 
 
-        return writeFile("<table border=1>\n"  + sbHeader.toString() + sb.toString() + "</table>", file);
+        return writeFile("<table border=1>\n" + sbHeader.toString() + sb.toString() + "</table>", file);
     }
 
     private String writeFile(String content, File file) {
@@ -500,5 +506,106 @@ public class QueryWriter {
         sb.append("</Document>\n" +
                 "</kml>");
         return writeFile(sb.toString(), file);
+    }
+
+    public String writeCSPACE(File file) {
+        createHeaderRow(sheet);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        sb.append("<document name=\"collectionobjects\">\n");
+
+
+        // Iterate through the rows.
+        ArrayList rows = new ArrayList();
+        for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
+            Row row = rowsIT.next();
+            // Iterate through the cells.
+            ArrayList cells = new ArrayList();
+            for (Iterator<Cell> cellsIT = row.cellIterator(); cellsIT.hasNext(); ) {
+                Cell cell = cellsIT.next();
+                cells.add(cell);
+            }
+            rows.add(cells);
+        }
+        Iterator rowsIt = rows.iterator();
+        int count = 0;
+
+        // Lop each record
+        while (rowsIt.hasNext()) {
+
+            ArrayList cells = (ArrayList) rowsIt.next();
+            Iterator cellsIt = cells.iterator();
+
+            // don't take the first row, its a header.
+            if (count > 1) {
+                sb.append("<ns2:collectionobjects_common xmlns:ns2=\"http://collectionspace.org/services/collectionobject\"" +
+                        "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n");
+                int fields = 0;
+                // Loop all fields in row
+                while (cellsIt.hasNext()) {
+                    Cell c = (Cell) cellsIt.next();
+                    Integer index = c.getColumnIndex();
+                    String fieldName = sheet.getRow(0).getCell(index).toString();
+                    String value = c.toString();
+                    // Write out the Scientific Name values
+                    if (fieldName.equals("ScientificName")) {
+                        sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(fieldName, value)) + "\n");
+                    }  else {
+                        // write out the actual value
+                        sb.append("\t" + writeXMLValue(fieldName, value) + "\n");
+                    }
+                    //urn:cspace:ucjeps.cspace.berkeley.edu:taxonomyauthority:name(taxon):item:name(11524)'Abies concolor (Gordon & Glend.) Lindl. ex Hildebr.'
+                    fields++;
+                }
+                sb.append("</ns2:collectionobjects_common>\n");
+            }
+            count++;
+        }
+
+        // closing document tag
+        sb.append("</document>\n");
+
+        return writeFile(sb.toString(), file);
+    }
+
+    /**
+     * Special function built for CSPACE case that looks up the Field.uri and appends Field.value to it
+     *
+     * @param fieldName
+     * @param value
+     *
+     * @return
+     */
+    private String fieldURILookup(String fieldName, String value) {
+        // Loop XML attribute value of ScientificName to get the REFNAME
+        LinkedList<digester.List> lists = validation.getLists();
+        Iterator listsIt = lists.iterator();
+        while (listsIt.hasNext()) {
+            digester.List l = (digester.List) listsIt.next();
+            if (l.getAlias().equals(fieldName)) {
+                java.util.List fieldlist = l.getFields();
+                Iterator fieldlistIt = fieldlist.iterator();
+                while (fieldlistIt.hasNext()) {
+                    Field f = (Field) fieldlistIt.next();
+                    if (f.getValue().equals(value)) {
+                        return f.getUri() + "'" + f.getValue() + "'";
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
+    private String writeXMLValue(String field, String value) {
+        if (value == null || value.trim().equals("")) {
+            return "<" + field + "/>";
+        }
+        if (StringUtils.containsAny(value, "<>&")) {
+            return "<" + field + "><![CDATA[" + value + "]]><" + field + ">";
+        } else {
+            return "<" + field + ">" + value + "</" + field + ">";
+        }
+
     }
 }

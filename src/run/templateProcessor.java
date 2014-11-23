@@ -82,7 +82,7 @@ public class templateProcessor {
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);
 
-        fims = new Fims(mapping);
+        fims = new Fims(mapping,null);
         p.addFimsRules(new Digester(), fims);
 
         validation = new Validation();
