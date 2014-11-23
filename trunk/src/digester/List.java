@@ -1,6 +1,7 @@
 package digester;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * A list of data to use in the validator.  We store data in lists because we find that different rules can refer
@@ -9,7 +10,9 @@ import java.util.ArrayList;
 public class List {
     private String alias;
     private String caseInsensitive;
-    private java.util.List fields = new ArrayList();
+    //private java.util.List fields = new ArrayList();
+     // Loop all the lists associated with the validation element
+    private final LinkedList<Field> fields = new LinkedList<Field>();
 
     /**
      * return the alias for which this list is known
@@ -42,7 +45,7 @@ public class List {
      *
      * @param field
      */
-    public void addField(String field) {
+    public void addField(Field field) {
         fields.add(field);
     }
 

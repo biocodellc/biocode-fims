@@ -21,12 +21,20 @@ import java.lang.String;
 public class Fims implements RendererInterface {
     private Metadata metadata;
     private Mapping mapping;
+    private Validation validation;
+
     private boolean updateGood = true;
     uploader uploader;
     private String bcid;
 
-    public Fims(Mapping mapping) {
+    /**
+     * Validation is usually NULL, fill it in when running CSPACE queries
+     * @param mapping
+     * @param validation
+     */
+    public Fims(Mapping mapping, Validation validation) {
         this.mapping = mapping;
+        this.validation = validation;
     }
 
     public Mapping getMapping() {
@@ -146,7 +154,8 @@ public class Fims implements RendererInterface {
         // Create a queryWriter object
         QueryWriter queryWriter = new QueryWriter(
                 mapping.getAllAttributes(sheetname),
-                sheetname);
+                sheetname,
+                validation);
 
         // Construct the FIMS model
         fimsModel fimsModel = new fimsModel(

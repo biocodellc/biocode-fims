@@ -161,7 +161,7 @@ public class process {
      * @throws Exception
      */
     public Boolean isNMNHProject() throws Exception {
-        Fims fims = new Fims(mapping);
+        Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
 
         String nmnh = fims.getMetadata().getNmnh();
@@ -238,7 +238,7 @@ public class process {
     public void runAllLocally(Boolean triplifier, Boolean upload) throws FIMSException {
         // Set whether this is a NMNH project or not
         try {
-            Fims fims = new Fims(mapping);
+            Fims fims = new Fims(mapping, null);
             addFimsRules(new Digester(), fims);
             processController.setNMNH(fims.getMetadata().getNmnh());
             if (processController.getNMNH()) {
@@ -358,7 +358,7 @@ public class process {
         // If the triplification was good and the user wants to upload, then proceed
         if (processController.isReadyToUpload() &&
                 runTriplifier()) {
-            Fims fims = new Fims(mapping);
+            Fims fims = new Fims(mapping, null);
             try {
                 addFimsRules(new Digester(), fims);
                 fims.run(connector, processController);
@@ -431,7 +431,13 @@ public class process {
         d.addObjectCreate("fims/validation/lists/list", List.class);
         d.addSetProperties("fims/validation/lists/list");
         d.addSetNext("fims/validation/lists/list", "addList");
-        d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
+        //d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
+
+        // Create field objects
+        d.addObjectCreate("fims/validation/lists/list/field", Field.class);
+        d.addSetProperties("fims/validation/lists/list/field");
+        d.addSetNext("fims/validation/lists/list/field", "addField");
+        d.addCallMethod("fims/validation/lists/list/field", "setValue", 0);
 
         // Create column objects
         d.addObjectCreate("fims/validation/worksheet/column", Column_trash.class);

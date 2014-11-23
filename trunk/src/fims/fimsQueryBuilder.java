@@ -5,10 +5,12 @@ import com.hp.hpl.jena.rdf.model.*;
 import digester.Attribute;
 import digester.Fims;
 import digester.Mapping;
+import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
 import run.configurationFileFetcher;
 import run.process;
+import run.processController;
 import settings.FIMSException;
 import settings.PathManager;
 
@@ -26,6 +28,7 @@ public class fimsQueryBuilder {
     String graphArray[];
     Fims fims;
     Mapping mapping;
+    Validation validation;
     run.process process;
     String sparqlServer;
     String output_directory;// = System.getProperty("user.dir") + File.separator + "tripleOutput";
@@ -44,8 +47,11 @@ public class fimsQueryBuilder {
         mapping = new Mapping();
         process.addMappingRules(new Digester(), mapping);
 
+        validation = new Validation();
+        process.addValidationRules(new Digester(),validation);
+
         // Build FIMS object
-        fims = new Fims(mapping);
+        fims = new Fims(mapping,validation);
         process.addFimsRules(new Digester(), fims);
 
         // Build the "query" location for SPARQL queries
@@ -219,6 +225,8 @@ public class fimsQueryBuilder {
                 outputPath = fimsModel.writeHTML(PathManager.createUniqueFile("output.html", output_directory));
             else if (format.equals("kml"))
                 outputPath = fimsModel.writeKML(PathManager.createUniqueFile("output.kml", output_directory));
+             else if (format.equals("cspace"))
+                outputPath = fimsModel.writeCSPACE(PathManager.createUniqueFile("output.cspace.xml", output_directory));
             else
                 outputPath = fimsModel.writeJSON(PathManager.createUniqueFile("output.json", output_directory));
         } catch (Exception e) {

@@ -2,9 +2,12 @@ package fims;
 
 import com.hp.hpl.jena.rdf.model.*;
 import digester.QueryWriter;
+import digester.Validation;
 import org.apache.poi.ss.usermodel.Row;
+import run.processController;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Model representing FIMS
@@ -154,7 +157,6 @@ public class fimsModel {
      */
     public String writeJSON(File file) throws Exception {
         //return stringBuilder.toString();
-
         return queryWriter.writeJSON(file);
     }
 
@@ -176,6 +178,9 @@ public class fimsModel {
         return queryWriter.writeKML(file);
     }
 
+     public String writeCSPACE(File file) {
+        return queryWriter.writeCSPACE(file);
+    }
     public  void close() {
         model.close();
     }
