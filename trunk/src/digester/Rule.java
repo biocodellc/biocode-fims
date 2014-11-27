@@ -232,10 +232,14 @@ public class Rule {
         fields.add(field);
     }
 
+    /**
+     * getFields returns a standard list of not part of a List
+     * see getListElement for lookup list Field values
+     * @return
+     */
     public LinkedList<String> getFields() {
         return fields;
     }
-
 
     public void print() {
         //fimsPrinter.out.println("    rule type = " + this.type + "; column = " + this.column + "; level = " + this.level);
@@ -656,7 +660,7 @@ public class Rule {
 
         StringBuilder fieldListSB = new StringBuilder();
         ArrayList<String> fieldListArrayList = new ArrayList<String>();
-        java.util.List<String> listFields;
+        java.util.List<Field> listFields = null;
         String msg;
         ResultSet resultSet = null;
         Statement statement = null;
@@ -682,20 +686,21 @@ public class Rule {
         try {
             listFields = getListElements();
         } catch (Exception e) {
-            listFields = getFields();
+            //listFields = getFields();
         }
         // Loop the fields and put in a StringBuilder
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
             try {
+                String value = ((Field)listFields.get(k)).getValue();
                // if (count > 0)
                //     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
                 if (caseInsensitiveSearch) {
-                    fieldListSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
+                    fieldListSB.append("\'" + value.toUpperCase().replace("'", "''") + "\'");
                 } else {
-                    fieldListSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                    fieldListSB.append("\'" + value.toString().replace("'", "''") + "\'");
                 }
                 fieldListArrayList.add(listFields.get(k).toString());
 
@@ -1111,7 +1116,7 @@ public class Rule {
      */
     public void checkInXMLFields() throws Exception {
         StringBuilder lookupSB = new StringBuilder();
-        java.util.List<String> listFields;
+        java.util.List<Field> listFields = null;
         String msg;
         ResultSet resultSet = null;
         Statement statement = null;
@@ -1137,20 +1142,21 @@ public class Rule {
         try {
             listFields = getListElements();
         } catch (Exception e) {
-            listFields = getFields();
+            //listFields = getFields();
         }
         // Loop the fields and put in a StringBuilder
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
             try {
+                String value = ((Field)listFields.get(k)).getValue();
                 if (count > 0)
                     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
                 if (caseInsensitiveSearch)
-                    lookupSB.append("\'" + listFields.get(k).toString().toUpperCase().replace("'", "''") + "\'");
+                    lookupSB.append("\'" + value.toUpperCase().replace("'", "''") + "\'");
                 else
-                    lookupSB.append("\'" + listFields.get(k).toString().replace("'", "''") + "\'");
+                    lookupSB.append("\'" + value.replace("'", "''") + "\'");
                 count++;
             } catch (Exception e) {
                 // do nothing

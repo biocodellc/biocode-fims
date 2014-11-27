@@ -1,5 +1,6 @@
 package rest;
 
+import digester.Field;
 import digester.Fims;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
@@ -185,8 +186,10 @@ public class utils {
             sb.append("<b>Acceptable values for " + list_name + "</b><br>\n");
         }
 
+        // Get field values
         while (it.hasNext()) {
-            sb.append("<li>" + (String) it.next() + "</li>\n");
+            Field f = (Field)it.next();
+            sb.append("<li>" + f.getValue() + "</li>\n");
         }
 
         return Response.ok(sb.toString()).build();
