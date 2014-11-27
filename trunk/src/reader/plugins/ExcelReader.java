@@ -409,13 +409,17 @@ public class ExcelReader implements TabularDataReader {
                         date = new DateTime(cell.getDateCellValue());
                         ret[cnt] = date.toString();
                     } else {
-                        // NOTE: JBD on 11/22/2014, i set this back to just returning cell.toString() as lat/lng were returning
-                        // erroneaus decimal plays.  I haven't explored this fully but this seems far more reliable...
+                        // TODO: Fix this rendering.  They both are bad!!!
+
+                        // This one works for BCID buts messes up latitude / longitude values
                         // Set celltype back to String here since this is a more reliable rendering of the input data,
                         // as Excel actually sees it.  The Numeric type adds additional ".0"'s on the end...
-                        //cell.setCellType(Cell.CELL_TYPE_STRING);
-                        //ret[cnt] = cell.getStringCellValue();
-                        ret[cnt] = cell.toString();
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                        ret[cnt] = cell.getStringCellValue();
+
+                        // This one works for latitude/longitude values rendering appropriately
+                        // but adds a .0 to BCID in the output-- BAD
+                        //ret[cnt] = cell.toString();
                     }
                     break;
                 case Cell.CELL_TYPE_BOOLEAN:
