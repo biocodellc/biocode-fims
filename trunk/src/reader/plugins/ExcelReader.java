@@ -73,15 +73,15 @@ public class ExcelReader implements TabularDataReader {
     /**
      * See if the specified file is an Excel file.  As currently implemented,
      * this method simply tests if the file extension is "xls" or "xlsx".  A
-     * better approach would be to actually test for a specific "magic number."
+     * better approach would be to actually encodeURIcomponent for a specific "magic number."
      * This method also tests if the file actually exists.
      *
-     * @param filepath The file to test.
+     * @param filepath The file to encodeURIcomponent.
      * @return True if the specified file exists and appears to be an Excel
      *         file, false otherwise.
      */
     public boolean testFile(String filepath) {
-        // test if the file exists
+        // encodeURIcomponent if the file exists
         File file = new File(filepath);
         if (!file.exists())
             return false;

@@ -67,16 +67,16 @@ public class TabReader extends ExcelReader {
 
     /**
      * See if the specified file is a TAb Text file.  Since no "magic number" can
-     * be defined for Tab files, this test is limited to seeing if the file
+     * be defined for Tab files, this encodeURIcomponent is limited to seeing if the file
      * extension is "txt".  This method also tests if the file actually exists.
      *
-     * @param filepath The file to test.
+     * @param filepath The file to encodeURIcomponent.
      *
      * @return True if the specified file exists and appears to be a txt file,
      *         false otherwise.
      */
     public boolean testFile(String filepath) {
-        // test if the file exists
+        // encodeURIcomponent if the file exists
         File file = new File(filepath);
         if (!file.exists())
             return false;

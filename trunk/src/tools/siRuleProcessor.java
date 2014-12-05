@@ -263,14 +263,14 @@ public class siRuleProcessor {
     }
 
     public static void main(String[] args) throws Exception {
-        //siRuleProcessor test = new siRuleProcessor("{\"type\":\"controlledVocabulary\",\"list\":\"softParts\"}", "testColumn");
-        //siRuleProcessor test = new siRuleProcessor("[{\"type\":\"controlledVocabulary\",\"list\":\"geneticSampleTypePrimary\"},{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}]", "geneticSampleTypePrimary");
-        //siRuleProcessor test = new siRuleProcessor("{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}","geneticSampleTypePrimary");
+        //siRuleProcessor encodeURIcomponent = new siRuleProcessor("{\"type\":\"controlledVocabulary\",\"list\":\"softParts\"}", "testColumn");
+        //siRuleProcessor encodeURIcomponent = new siRuleProcessor("[{\"type\":\"controlledVocabulary\",\"list\":\"geneticSampleTypePrimary\"},{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}]", "geneticSampleTypePrimary");
+        //siRuleProcessor encodeURIcomponent = new siRuleProcessor("{\"type\":\"requiredValueFromOtherColumn\",\"otherColumn\":\"basisOfRecord\",\"values\":[\"Genetic Sample\"]}","geneticSampleTypePrimary");
         siRuleProcessor test = new siRuleProcessor("{\"type\":\"minimumMaximumNumberCheck\",\"column\":\"minimumDepthInMeters,maximumDepthInMeters\",\"level\":\"error\"}", "foo", null, null);
 
         System.out.println(test.print());
 
-        //System.out.println(test.print());
+        //System.out.println(encodeURIcomponent.print());
     }
 }
 
