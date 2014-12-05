@@ -6,6 +6,7 @@ import renderers.RowMessage;
 import settings.Connection;
 import settings.RegEx;
 import settings.fimsPrinter;
+import utils.encodeURIcomponent;
 import utils.sqlLiteNameCleaner;
 
 import javax.xml.transform.Result;
@@ -235,6 +236,7 @@ public class Rule {
     /**
      * getFields returns a standard list of not part of a List
      * see getListElement for lookup list Field values
+     *
      * @return
      */
     public LinkedList<String> getFields() {
@@ -323,33 +325,75 @@ public class Rule {
      * @throws Exception
      */
     public void uniqueValue() throws Exception {
-        String groupMessage = "Unique value constraint did not pass";
+        String sql = "";
         Statement statement = null;
         ResultSet rs = null;
+        String groupMessage = "";
+
+        /**
+         * Acceptable Value portion, only run if the uniqueKey is also the default Sheet Key
+         */
+        groupMessage = "Unique Value not well formed";
+
+        // If this uniqueValue is also the sheet uniqueKey then lets sanitize the Key Value to make it suitable for use
+        if (getColumn().equalsIgnoreCase(this.getDigesterWorksheet().getValidation().getMapping().getDefaultSheetUniqueKey())) {
+            utils.encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
+
+            // Extract all unique Values from SQL
+            try {
+                statement = connection.createStatement();
+                rs = null;
+                // Search for non-unique values in resultSet
+                sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
+                        " WHERE ifnull(" + getColumn() + ",'') != '' " +
+                        " group by " + getColumn();
+
+                rs = statement.executeQuery(sql);
+
+                // Hold values that are not good
+                StringBuilder values = new StringBuilder();
+                // Loop results
+                while (rs.next()) {
+                    String value = rs.getString(getColumn());
+                    // Compare the list of values of against their encoded counterparts...
+                    if (!value.equals(encodeURIcomponent.encode(value))) {
+                        values.append(rs.getString(getColumn()));
+                        addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+            } finally {
+                statement.close();
+                rs.close();
+            }
+        }
+
+        /**
+         * UniqueValue Portion
+         */
+        groupMessage = "Unique value constraint did not pass";
+
         try {
             statement = connection.createStatement();
             rs = null;
-            String sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
-                   // " where " + getColumn()  + " NOT null " +
-                   " WHERE ifnull(" + getColumn() + ",'') != '' " +
+            // Search for non-unique values in resultSet
+            sql = "select " + getColumn() + ",count(*) from " + digesterWorksheet.getSheetname() +
+                    " WHERE ifnull(" + getColumn() + ",'') != '' " +
                     " group by " + getColumn() +
                     " having count(*) > 1";
 
             rs = statement.executeQuery(sql);
 
-            //int count = 0;
+            // Loop results
             while (rs.next()) {
                 StringBuilder values = new StringBuilder();
-
-              /*  if (count > 0) {
-                    values.append(", ");
-                }  */
                 values.append(rs.getString(getColumn()));
-                addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString(),groupMessage);
-                //count++;
+                addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString(), groupMessage);
             }
-            //if (count > 0) {
-            //}
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
@@ -398,7 +442,7 @@ public class Rule {
 
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLatitude(), j)) ||
                     !checkValidNumber(worksheet.getStringValue(getDecimalLongitude(), j))) {
-                addMessage("Unable to perform BoundingBox check due to illegal Latitude or Longitude value",groupMessage, j);
+                addMessage("Unable to perform BoundingBox check due to illegal Latitude or Longitude value", groupMessage, j);
             } else {
 
                 latValue = worksheet.getDoubleValue(getDecimalLatitude(), j);
@@ -406,11 +450,11 @@ public class Rule {
 
                 if (latValue != null && latValue != 0.0 && (latValue < minLat || latValue > maxLat)) {
                     msg = getDecimalLatitude() + " " + latValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
-                    addMessage (msg,groupMessage,j);
+                    addMessage(msg, groupMessage, j);
                 }
                 if (longValue != null && longValue != 0.0 && (longValue < minLng || longValue > maxLng)) {
                     msg = getDecimalLongitude() + " " + longValue + " outside of \"" + getColumnWorksheetName() + "\" bounding box.";
-                    addMessage(msg,groupMessage,j);
+                    addMessage(msg, groupMessage, j);
                 }
             }
         }
@@ -469,7 +513,7 @@ public class Rule {
                 resultSet = statement.executeQuery(sql);
                 while (resultSet.next()) {
                     msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
-                    addMessage(msg,groupMessage);
+                    addMessage(msg, groupMessage);
                 }
             } catch (Exception e) {
                 throw new Exception("minimumMaximumCheck exception", e);
@@ -486,7 +530,7 @@ public class Rule {
                         resultSet.getString(minimum) +
                         " while " + maximum + " = " +
                         resultSet.getString(maximum);
-                addMessage(msg,groupMessage);
+                addMessage(msg, groupMessage);
             }
 
         } catch (Exception e) {
@@ -508,9 +552,9 @@ public class Rule {
             String LowestTaxonValue = worksheet.getStringValue("LowestTaxon", j);
 
             if (LowestTaxonLevelValue == null && LowestTaxonValue != null) {
-                addMessage("LowestTaxon entered without a LowestTaxonLevel",groupMessage,j);
+                addMessage("LowestTaxon entered without a LowestTaxonLevel", groupMessage, j);
             } else if (LowestTaxonLevelValue != null && LowestTaxonValue == null) {
-                addMessage("LowestTaxonLevel entered without a LowestTaxon",groupMessage, j);
+                addMessage("LowestTaxonLevel entered without a LowestTaxon", groupMessage, j);
             }
         }
 
@@ -558,7 +602,7 @@ public class Rule {
         int speciesIndex = columnIndices[1];
 
         if (genusIndex == -1 || speciesIndex == -1) {
-            addMessage("Did not find Genus / species column headings in spreadsheet",groupMessage, 0);
+            addMessage("Did not find Genus / species column headings in spreadsheet", groupMessage, 0);
             return;
         }
 
@@ -583,9 +627,9 @@ public class Rule {
             key = itr.next();
             Integer count = genusSpeciesCombos.get(key);
             if (count > 4) {
-                addMessage("You collected " + count + " " + key + ". Should collect 4.",groupMessage, 0);
+                addMessage("You collected " + count + " " + key + ". Should collect 4.", groupMessage, 0);
             } else if (count < 4) {
-                addMessage("You collected " + count + " " + key + ". Should collect at least 4.",groupMessage, 0);
+                addMessage("You collected " + count + " " + key + ". Should collect at least 4.", groupMessage, 0);
             }
         }
     }
@@ -633,16 +677,16 @@ public class Rule {
             if (voucher.equals("Y")) {
                 String han = worksheet.getStringValue(hanIdx, row);
                 if (han == null) {
-                    addMessage("Missing Herbarium Accession No./Catalog No. for voucher specimen.",groupMessage, row);
+                    addMessage("Missing Herbarium Accession No./Catalog No. for voucher specimen.", groupMessage, row);
                 } else if (han.trim().length() <= 2) {
-                    addMessage("Herbarium Accession No./Catalog No. must be at least two characters long.",groupMessage, row);
+                    addMessage("Herbarium Accession No./Catalog No. must be at least two characters long.", groupMessage, row);
                 }
 
                 String ha = worksheet.getStringValue(haIdx, row);
                 if (ha == null) {
-                    addMessage("Missing Herbarium Acronym for voucher specimen.",groupMessage, row);
+                    addMessage("Missing Herbarium Acronym for voucher specimen.", groupMessage, row);
                 } else if (ha.trim().length() == 0) {
-                    addMessage("Herbarium Acronym must be at least one character long.",groupMessage, row);
+                    addMessage("Herbarium Acronym must be at least one character long.", groupMessage, row);
                 }
 
             }
@@ -692,9 +736,9 @@ public class Rule {
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
             try {
-                String value = ((Field)listFields.get(k)).getValue();
-               // if (count > 0)
-               //     lookupSB.append(",");
+                String value = ((Field) listFields.get(k)).getValue();
+                // if (count > 0)
+                //     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
                 // (two single quotes in a row allows us to query one single quote in SQLlite)
                 if (caseInsensitiveSearch) {
@@ -744,7 +788,7 @@ public class Rule {
                             ", but associated column \"" + getColumnWorksheetName() + "\" has no value";
                     //kind of object is declared as 'VALUE' and required Column is empty
 
-                   /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
+                    /* msg += " without an approved value in \"" + getOtherColumnWorksheetName() + "\"";
                     if (!fieldListSB.toString().equals("")) {
                         msg += " (Appropriate \"" + getOtherColumnWorksheetName() + "\" values: {" + fieldListSB.toString() + "})";
                     }*/
@@ -817,7 +861,7 @@ public class Rule {
             plateCount += 1;
 
             if (plateCount > 96) {
-                addMessage( "Too many rows for plate " + plateNo, groupMessage, row);
+                addMessage("Too many rows for plate " + plateNo, groupMessage, row);
             }
             plateCounts.put(plateNo, plateCount);
 
@@ -875,7 +919,7 @@ public class Rule {
             if (format_name96Value == null && well_number96Value != null) {
                 addMessage("Well Number (well_number96) entered without a Plate Name (format_name96)", groupMessage, j);
             } else if (format_name96Value != null && well_number96Value == null) {
-                addMessage("Plate Name (format_name96) entered without a Well Number (well_number96)", groupMessage,j);
+                addMessage("Plate Name (format_name96) entered without a Well Number (well_number96)", groupMessage, j);
             } else if (format_name96Value == null && well_number96Value == null) {
                 // ignore case where both are null (just means no tissue entered)
             } else {
@@ -887,20 +931,20 @@ public class Rule {
                         intNumber = Integer.parseInt(strNumber);
                     } catch (NumberFormatException nme) {
                         // Not a valid integer
-                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                     } catch (Exception e) {
-                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                     } finally {
                         if (intNumber <= 12 && intNumber >= 1) {
                             // ok
                         } else {
                             // Number OK but is out of range
-                            addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
+                            addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                         }
                     }
                 } else {
                     // Something bigger wrong with well number syntax
-                    addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
+                    addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                 }
             }
 
@@ -985,7 +1029,7 @@ public class Rule {
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 msg = "Non-numeric value " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\"";
-                addMessage(msg,groupMessage);
+                addMessage(msg, groupMessage);
                 validNumber = false;
             }
         } catch (Exception e) {
@@ -1052,30 +1096,30 @@ public class Rule {
             String maxerrorValue = worksheet.getStringValue(getMaxErrorInMeters(), j);
 
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLatitude(), j))) {
-                addMessage(worksheet.getStringValue(getDecimalLatitude(), j) + " not a valid " + getDecimalLatitude(),groupMessage,j);
+                addMessage(worksheet.getStringValue(getDecimalLatitude(), j) + " not a valid " + getDecimalLatitude(), groupMessage, j);
             }
             if (!checkValidNumber(worksheet.getStringValue(getDecimalLongitude(), j))) {
-                addMessage(worksheet.getStringValue(getDecimalLongitude(), j) + " not a valid " + getDecimalLongitude(), groupMessage,j);
+                addMessage(worksheet.getStringValue(getDecimalLongitude(), j) + " not a valid " + getDecimalLongitude(), groupMessage, j);
             }
 
             if (lngValue != null && latValue == null) {
                 msg = getDecimalLongitude() + " entered without a " + getDecimalLatitude();
-                addMessage(msg,groupMessage,j);
+                addMessage(msg, groupMessage, j);
             }
 
             if (lngValue == null && latValue != null) {
                 msg = getDecimalLatitude() + " entered without a " + getDecimalLongitude();
-                addMessage(msg,groupMessage,j);
+                addMessage(msg, groupMessage, j);
             }
 
             if (datumValue != null && (lngValue == null && latValue == null)) {
                 msg = getHorizontalDatum() + " entered without a " + getDecimalLatitude() + " or " + getDecimalLongitude();
-                addMessage(msg,groupMessage,j);
+                addMessage(msg, groupMessage, j);
             }
 
             if (maxerrorValue != null && (lngValue == null && latValue == null)) {
                 msg = getMaxErrorInMeters() + " entered without a " + getDecimalLatitude() + " or " + getDecimalLongitude();
-                addMessage(msg,groupMessage,j);
+                addMessage(msg, groupMessage, j);
             }
 
         }
@@ -1083,11 +1127,12 @@ public class Rule {
 
     /**
      * Duplicate of checkInXMLFields
+     *
      * @throws Exception
      */
-     public void controlledVocabulary() throws Exception {
-         checkInXMLFields();
-     }
+    public void controlledVocabulary() throws Exception {
+        checkInXMLFields();
+    }
 
     /**
      * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
@@ -1148,7 +1193,7 @@ public class Rule {
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
             try {
-                String value = ((Field)listFields.get(k)).getValue();
+                String value = ((Field) listFields.get(k)).getValue();
                 if (count > 0)
                     lookupSB.append(",");
                 // NOTE: the following escapes single quotes using another single quote
@@ -1168,7 +1213,7 @@ public class Rule {
         try {
             statement = connection.createStatement();
             String sql = "select rowid," + getColumn() + " from " + digesterWorksheet.getSheetname() +
-                    " where (" + getColumn()  + " NOT NULL AND " + getColumn() + " != \"\") AND ";
+                    " where (" + getColumn() + " NOT NULL AND " + getColumn() + " != \"\") AND ";
             if (caseInsensitiveSearch)
                 sql += "UPPER(" + getColumn() + ")";
             else
@@ -1192,7 +1237,7 @@ public class Rule {
                             "project_id=');\">see list</a>";
                     //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&project_id=1');">link</a>
 
-                    addMessage(msg, groupMessage , rowNum);
+                    addMessage(msg, groupMessage, rowNum);
                 }
             }
 
@@ -1294,25 +1339,27 @@ public class Rule {
 
     /**
      * Convert an ArrayList to a string
+     *
      * @param list
+     *
      * @return
      */
     private static String listToString(java.util.List<?> list) {
         StringBuilder result = new StringBuilder();
 
         // If only one value then just return that
-        if (list.size() ==1) {
+        if (list.size() == 1) {
             return "\"" + list.get(0).toString() + "\"";
         }
 
         // If more than one value then return an array syntax
         for (int i = 0; i < list.size(); i++) {
-            if (i ==0)
+            if (i == 0)
                 result.append("[");
             result.append("\"" + list.get(i) + "\"");
             if (i < list.size() - 1)
                 result.append(", ");
-            if (i == list.size()-1)
+            if (i == list.size() - 1)
                 result.append("]");
         }
         return result.toString();

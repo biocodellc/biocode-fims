@@ -32,6 +32,9 @@ public class Validation implements RendererInterface {
     // A SQL Lite connection is mainted by the validation class so we can run through the various rules
     private java.sql.Connection connection = null;
 
+    // Create a reference to the mapping component
+    private Mapping mapping;
+
     /**
      * Construct using tabularDataReader object, defining how to read the incoming tabular data
      */
@@ -259,6 +262,14 @@ public class Validation implements RendererInterface {
             }
         }
         return processController;
+    }
+
+    /**
+     * Get the mapping component that was set by the run() method
+     * @return
+     */
+    public Mapping getMapping() {
+        return mapping;
     }
 
     /**
