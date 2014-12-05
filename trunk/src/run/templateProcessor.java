@@ -82,7 +82,7 @@ public class templateProcessor {
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);
 
-        fims = new Fims(mapping,null);
+        fims = new Fims(mapping, null);
         p.addFimsRules(new Digester(), fims);
 
         validation = new Validation();
@@ -475,40 +475,37 @@ public class templateProcessor {
             int numRowsInList = list.getFields().size();
 
             // List of fields from this validation rule
-            String[] validationFields = (String[]) list.getFields().toArray(new String[list.getFields().size()]);
-
-
-            //Attribute a = .getAllAttributes(defaultSheet.getSheetName()).get(0);
-            // Set the index of this particular column
-            //column = fields.indexOf(listAlias);
-            //column = fields.indexOf(li());
+            java.util.List validationFieldList = list.getFields();
 
             // Validation Fields
-            if (validationFields.length > 0) {
+            if (validationFieldList.size() > 0) {
 
                 // populate this validation list in the Lists sheet
                 int counterForRows = 0;
-                for (int i = 0, length = validationFields.length; i < length; i++) {
+                Iterator fieldlistIt = validationFieldList.iterator();
+                while (fieldlistIt.hasNext()) {
                     String value;
                     XSSFCellStyle style;
                     // Write header
-                    if (i == 0) {
+                    if (counterForRows == 0) {
                         value = list.getAlias();
                         style = headingStyle;
-                        XSSFRow row = listsSheet.getRow(i);
+                        XSSFRow row = listsSheet.getRow(counterForRows);
                         if (row == null)
-                            row = listsSheet.createRow(i);
+                            row = listsSheet.createRow(counterForRows);
 
                         XSSFCell cell = row.createCell(listColumnNumber);
                         cell.setCellValue(value);
                         cell.setCellStyle(style);
                     }
                     // Write cell values
-                    value = validationFields[i];
+                    Field f = (Field) fieldlistIt.next();
+                    value = f.getValue();
+
                     style = regularStyle;
 
                     // Set the row counter to +1 because of the header issues
-                    counterForRows = i + 1;
+                    counterForRows++;
                     XSSFRow row = listsSheet.getRow(counterForRows);
                     if (row == null)
                         row = listsSheet.createRow(counterForRows);
@@ -524,13 +521,9 @@ public class templateProcessor {
 
                 // Get the letter of this column
                 String listColumnLetter = CellReference.convertNumToColString(listColumnNumber);
-                /*Name namedCell = workbook.createName();
-                namedCell.setNameName(listsSheetName + listColumnLetter);
-                namedCell.setRefersToFormula(listsSheetName + "!$" + listColumnLetter + "$1:$" + listColumnLetter + "$" + endRowNum);
-                */
-                int endRowNum = numRowsInList + 1;
 
-                //String listAlias = list.getAlias();
+                // Figure out the last row number
+                int endRowNum = numRowsInList + 1;
 
                 // DATA VALIDATION COMPONENT
                 // TODO: expand this to select the appropriate worksheet but for NOW there is only ONE so just get last
@@ -552,11 +545,6 @@ public class templateProcessor {
                         // Assumes that header is in column #1
                         String constraintSyntax = listsSheetName + "!$" + listColumnLetter + "$2:$" + listColumnLetter + "$" + endRowNum;
 
-                        /*       XSSFName name = workbook.createName();
-                            name.setNameName(thisColumnName);
-                            name.setRefersToFormula(constraintSyntax);
-                        */
-
                         XSSFDataValidationHelper dvHelper =
                                 new XSSFDataValidationHelper(listsSheet);
 
@@ -573,8 +561,6 @@ public class templateProcessor {
                         // Data validation styling
                         dataValidation.setSuppressDropDownArrow(true);
                         dataValidation.setShowErrorBox(true);
-                        //dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
-                        // System.out.println(defaultSheet.getSheetName());
 
                         // Add the validation to the defaultsheet
                         defaultSheet.addValidationData(dataValidation);
@@ -1089,7 +1075,6 @@ public class templateProcessor {
         a.add("Measurement 1 Unit");
         a.add("Associated Multimedia");
         a.add("Collector 1 (Primary)");
-
 
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
