@@ -340,10 +340,16 @@ public class Rule {
                 String value = rs.getString(getColumn());
                 // Compare the list of values of against their encoded counterparts...
                 if (!value.equals(encodeURIcomponent.encode(value))) {
+                    if (!values.toString().trim().equals("")) {
+                        values.append(", ");
+                    }
                     values.append(rs.getString(getColumn()));
-                    addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
                 }
             }
+            if (!values.toString().trim().equals("")) {
+                addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
+            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -374,10 +380,7 @@ public class Rule {
         Statement statement = null;
         ResultSet rs = null;
         String groupMessage = "";
-
-        /**
-         * UniqueValue Portion
-         */
+        StringBuilder values = new StringBuilder();
         groupMessage = "Unique value constraint did not pass";
 
         try {
@@ -393,8 +396,14 @@ public class Rule {
 
             // Loop results
             while (rs.next()) {
-                StringBuilder values = new StringBuilder();
+
+                if (!values.toString().trim().equals("")) {
+                    values.append(", ");
+                }
                 values.append(rs.getString(getColumn()));
+
+            }
+            if (!values.toString().trim().equals("")) {
                 addMessage("\"" + getColumnWorksheetName() + "\" column is defined as unique but some values used more than once: " + values.toString(), groupMessage);
             }
 
