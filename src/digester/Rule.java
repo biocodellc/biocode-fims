@@ -310,6 +310,51 @@ public class Rule {
 
 
     /**
+     * Checks that characters in a string can form a valid URI
+     * This is necessary for cases where data is being triplified and constructed as a URI
+     *
+     * @throws Exception
+     */
+    public void validURI() throws Exception {
+        String sql = "";
+        Statement statement = null;
+        ResultSet rs = null;
+        String groupMessage = "Unique Value not well formed";
+        utils.encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
+
+        // Extract all unique Values from SQL
+        try {
+            statement = connection.createStatement();
+            rs = null;
+            // Search for non-unique values in resultSet
+            sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
+                    " WHERE ifnull(" + getColumn() + ",'') != '' " +
+                    " group by " + getColumn();
+
+            rs = statement.executeQuery(sql);
+
+            // Hold values that are not good
+            StringBuilder values = new StringBuilder();
+            // Loop results
+            while (rs.next()) {
+                String value = rs.getString(getColumn());
+                // Compare the list of values of against their encoded counterparts...
+                if (!value.equals(encodeURIcomponent.encode(value))) {
+                    values.append(rs.getString(getColumn()));
+                    addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+        } finally {
+            statement.close();
+            rs.close();
+        }
+    }
+
+    /**
      * Check a particular column to see if all the values are unique.
      * This rule is strongly encouraged for at least
      * one column in the spreadsheet
@@ -329,47 +374,6 @@ public class Rule {
         Statement statement = null;
         ResultSet rs = null;
         String groupMessage = "";
-
-        /**
-         * Acceptable Value portion, only run if the uniqueKey is also the default Sheet Key
-         */
-        groupMessage = "Unique Value not well formed";
-
-        // If this uniqueValue is also the sheet uniqueKey then lets sanitize the Key Value to make it suitable for use
-        if (getColumn().equalsIgnoreCase(this.getDigesterWorksheet().getValidation().getMapping().getDefaultSheetUniqueKey())) {
-            utils.encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
-
-            // Extract all unique Values from SQL
-            try {
-                statement = connection.createStatement();
-                rs = null;
-                // Search for non-unique values in resultSet
-                sql = "select " + getColumn() + " from " + digesterWorksheet.getSheetname() +
-                        " WHERE ifnull(" + getColumn() + ",'') != '' " +
-                        " group by " + getColumn();
-
-                rs = statement.executeQuery(sql);
-
-                // Hold values that are not good
-                StringBuilder values = new StringBuilder();
-                // Loop results
-                while (rs.next()) {
-                    String value = rs.getString(getColumn());
-                    // Compare the list of values of against their encoded counterparts...
-                    if (!value.equals(encodeURIcomponent.encode(value))) {
-                        values.append(rs.getString(getColumn()));
-                        addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
-                    }
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
-            } finally {
-                statement.close();
-                rs.close();
-            }
-        }
 
         /**
          * UniqueValue Portion
