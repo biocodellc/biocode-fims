@@ -272,7 +272,7 @@ public class Worksheet {
 
                     // Close the connection
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     String message = "\tUnable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column";
                     if (e.getMessage() != null)
                         message += ", message = " + e.getMessage();
