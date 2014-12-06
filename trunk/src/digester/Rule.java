@@ -310,12 +310,19 @@ public class Rule {
 
 
     /**
-     * Checks that characters in a string can form a valid URI
+     * Checks that characters in a string can become a portion of a valid URI
      * This is necessary for cases where data is being triplified and constructed as a URI
+     * One approach is to encode all characters, however, this creates a mis-leading identifier
+     * and if used as part of a URI should be only valid characters.
+     *
+     * Characters that are disallowed are: %$&+,/:;=?@<>#%\
+     *
+     * Note that this rule does not check if this a valid URI in its entirety, only that the portion of
+     * the string, when appended onto other valid URI syntax, will not break the URI itself
      *
      * @throws Exception
      */
-    public void validURI() throws Exception {
+    public void validForURI() throws Exception {
         String sql = "";
         Statement statement = null;
         ResultSet rs = null;

@@ -17,7 +17,7 @@
 
             <rule type='duplicateColumnNames' level='error'></rule>
             <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
-            <rule type='validURI' column='materialSampleID' level='error'></rule>
+            <rule type='validForURI' column='materialSampleID' level='error'></rule>
 
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>materialSampleID</field>
