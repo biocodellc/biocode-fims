@@ -319,7 +319,7 @@ public class Rule {
         String sql = "";
         Statement statement = null;
         ResultSet rs = null;
-        String groupMessage = "Unique Value not well formed";
+        String groupMessage = "Non-valid URI characters";
         utils.encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
 
         // Extract all unique Values from SQL
@@ -347,7 +347,7 @@ public class Rule {
                 }
             }
             if (!values.toString().trim().equals("")) {
-                addMessage("\"" + getColumnWorksheetName() + "\" column is also a worksheet key and some values cannot build valid URIs: " + values.toString(), groupMessage);
+                addMessage("\"" + getColumnWorksheetName() + "\" contains some bad characters: " + values.toString(), groupMessage);
             }
 
 
