@@ -33,11 +33,11 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
     @Context
     static HttpHeaders httpHeaders;
 
-    private Logger logger = LoggerFactory.getLogger(exceptionMapper.class);
+    private static Logger logger = LoggerFactory.getLogger(exceptionMapper.class);
 
     @Override
     public Response toResponse( Exception e) {
-        logger.warn("{} thrown.", e.getClass().toString(), e);
+        logger.error(null, e);
         errorInfo errorInfo = getErrorInfo(e);
         String mediaType;
 
