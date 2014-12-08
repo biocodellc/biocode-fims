@@ -12,6 +12,7 @@ import triplify.triplifier;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Mapping implements RendererInterface {
     private String expedition_code;
     private List<String> colNames;
 
-    public Mapping() throws Exception {
+    public Mapping() {
 
     }
 
@@ -113,7 +114,7 @@ public class Mapping implements RendererInterface {
      *
      * @return
      */
-    public String getPersistentIdentifier(Entity entity) throws Exception {
+    public String getPersistentIdentifier(Entity entity) {
         String columnName = "";
 
         // Is this a hash?
@@ -142,7 +143,7 @@ public class Mapping implements RendererInterface {
      *
      * @param pw PrintWriter used to write output to.
      */
-    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
+    public void printD2RQ(PrintWriter pw, Object parent) {
         printPrefixes(pw);
         connection.printD2RQ(pw);
         for (Entity entity : entities)
@@ -181,7 +182,7 @@ public class Mapping implements RendererInterface {
      *
      * @throws Exception
      */
-    public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) throws Exception {
+    public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) {
 
         String status = "Converting Data Format ...";
         processController.appendStatus(status + "<br>");
@@ -195,12 +196,7 @@ public class Mapping implements RendererInterface {
         dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(), expedition_code);
 
         // Create a connection to a SQL Lite Instance
-        try {
-            this.connection = new Connection(processController.getValidation().getSqliteFile());
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("Unable to establish connection to SQLLite", e);
-        }
+        this.connection = new Connection(processController.getValidation().getSqliteFile());
         triplifier.getTriples(this, processController);
         return true;
     }
