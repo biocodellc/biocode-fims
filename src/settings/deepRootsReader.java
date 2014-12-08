@@ -8,6 +8,7 @@ import utils.SettingsManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 public class deepRootsReader {
 
 
-    public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) throws IOException, URISyntaxException {
+    public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) {
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
         String deeproots_uri = sm.retrieveValue("deeproots_uri");
@@ -33,46 +34,53 @@ public class deepRootsReader {
 //        String url = "http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code;
         String url = deeproots_uri + project_id + "/" + expedition_code;
 
-        // Read file into String variable
-        String json = readFile(new URL(url));
-        // Create the deepLinks.rootData Class
-        deepRoots rootData = new deepRoots(bcidConnector,project_id,expedition_code);
-        // Create the Hashmap to store in the deepLinks.rootData class
-        //HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
-        HashMap<String, String> data = new HashMap<String, String>();
-        // write json String into array
-        JSONArray jsonOutputArray = (JSONArray) JSONSerializer.toJSON(JSONArray.fromObject(json));
-        // Loop the Output
-        Iterator it = jsonOutputArray.iterator();
-        while (it.hasNext()) {
-            // Create an outputObject for each top-level element
-            JSONObject outputObject = (JSONObject) it.next();
-            // Get the section dealing with "data"
-            if (outputObject.containsKey("data")) {
-                JSONArray dataArray = (JSONArray) outputObject.values().toArray()[0];
-                Iterator dataIt = dataArray.iterator();
-                // Loop the data elements
-                while (dataIt.hasNext()) {
-                    JSONObject dataObject = (JSONObject) dataIt.next();
-                    java.net.URI concept = new java.net.URI((String) dataObject.get("concept"));
-                    String alias = (String) dataObject.get("alias");
-                    String prefix = (String) dataObject.get("prefix");
-                    //data.put(concept, prefix);
-                    data.put(alias, prefix);
+        try {
+            // Read file into String variable
+            String json = readFile(new URL(url));
+            // Create the deepLinks.rootData Class
+            deepRoots rootData = new deepRoots(bcidConnector, project_id, expedition_code);
+            // Create the Hashmap to store in the deepLinks.rootData class
+            //HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
+            HashMap<String, String> data = new HashMap<String, String>();
+            // write json String into array
+            JSONArray jsonOutputArray = (JSONArray) JSONSerializer.toJSON(JSONArray.fromObject(json));
+            // Loop the Output
+            Iterator it = jsonOutputArray.iterator();
+            while (it.hasNext()) {
+                // Create an outputObject for each top-level element
+                JSONObject outputObject = (JSONObject) it.next();
+                // Get the section dealing with "data"
+                if (outputObject.containsKey("data")) {
+                    JSONArray dataArray = (JSONArray) outputObject.values().toArray()[0];
+                    Iterator dataIt = dataArray.iterator();
+                    // Loop the data elements
+                    while (dataIt.hasNext()) {
+                        JSONObject dataObject = (JSONObject) dataIt.next();
+                        java.net.URI concept = new java.net.URI((String) dataObject.get("concept"));
+                        String alias = (String) dataObject.get("alias");
+                        String prefix = (String) dataObject.get("prefix");
+                        //data.put(concept, prefix);
+                        data.put(alias, prefix);
+                    }
+                } else if (outputObject.containsKey("metadata")) {
+                    JSONObject metadataObject = (JSONObject) outputObject.values().toArray()[0];
+                    rootData.setGuid((String) metadataObject.get("guid"));
+                    rootData.setDescription((String) metadataObject.get("description"));
+                    rootData.setDate((String) metadataObject.get("date"));
+                    rootData.setShortName((String) metadataObject.get("name"));
                 }
-            } else if (outputObject.containsKey("metadata")) {
-                JSONObject metadataObject = (JSONObject) outputObject.values().toArray()[0];
-                rootData.setGuid((String) metadataObject.get("guid"));
-                rootData.setDescription((String) metadataObject.get("description"));
-                rootData.setDate((String) metadataObject.get("date"));
-                rootData.setShortName((String) metadataObject.get("name"));
             }
+            rootData.setData(data);
+            // Assign the actual data to the deepLinks.rootData element
+
+            return rootData;
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (URISyntaxException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-
-        // Assign the actual data to the deepLinks.rootData element
-        rootData.setData(data);
-
-        return rootData;
     }
 
     /**
@@ -80,7 +88,6 @@ public class deepRootsReader {
      *
      * @param url
      * @return
-     * @throws java.io.IOException
      */
     protected String readFile(URL url) throws IOException {
         String everything;
