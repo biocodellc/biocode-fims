@@ -70,7 +70,7 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
             }
         }
 
-        if (mediaType.equalsIgnoreCase( MediaType.APPLICATION_JSON )) {
+        if (mediaType.contains( MediaType.APPLICATION_JSON )) {
             return Response.status(errorInfo.getHttpStatusCode())
                     .entity(errorInfo.toJSON())
                     .type(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
                         .location(url)
                         .build();
             } catch (URISyntaxException ex) {
-                logger.warn("URISyntaxException forming url for bcid error page.", ex);
+                logger.error("URISyntaxException forming url for bcid error page.", ex);
                 return Response.status(errorInfo.getHttpStatusCode())
                         .entity(errorInfo.toJSON())
                         .type(MediaType.APPLICATION_JSON)
