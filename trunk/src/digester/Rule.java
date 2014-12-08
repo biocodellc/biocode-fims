@@ -742,8 +742,8 @@ public class Rule {
         try {
             listFields = getListElements();
         } catch (Exception e) {
-//            logger.warn("Exception", e);
-            listFields = getFields();
+            logger.warn("Exception", e);
+//            listFields = getFields();
         }
         // Loop the fields and put in a StringBuilder
         int count = 0;

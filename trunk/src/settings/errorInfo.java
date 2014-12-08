@@ -62,54 +62,6 @@ public class errorInfo {
         if (developerMessage == null) developerMessage = JSONNull.getInstance();
     }
 
-    public String toHTMLTable() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<th colspan=2><font color=#d73027>Server Error</font></th>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>Message:</td>\n");
-        sb.append("\t\t<td>" + usrMessage + "</td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>Status Code:</td>\n");
-        sb.append("\t\t<td>" + httpStatusCode + "</td>\n");
-        sb.append("\t</tr>\n");
-
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
-        String debug = sm.retrieveValue("debug", "false");
-
-        if (debug.equalsIgnoreCase("true")) {
-
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td>time:</td>\n");
-            sb.append("\t\t<td>" + ts + "</td>\n");
-            sb.append("\t</tr>\n");
-
-            if (e != null) {
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>Exception Message:</td>\n");
-                sb.append("\t\t<td>" + e.getMessage() + "</td>\n");
-                sb.append("\t</tr>\n");
-
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>Stacktrace:</td>\n");
-                sb.append("\t\t<td>" + getStackTraceString() + "</td>\n");
-                sb.append("\t</tr>\n");
-            }
-        }
-
-        sb.append("</table>");
-
-        return sb.toString();
-
-    }
-
     // returns the full stackTrace as a string
     private String getStackTraceString() {
         final StringWriter sw = new StringWriter();
