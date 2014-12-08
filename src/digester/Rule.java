@@ -324,10 +324,8 @@ public class Rule {
      *
      * Note that this rule does not check if this a valid URI in its entirety, only that the portion of
      * the string, when appended onto other valid URI syntax, will not break the URI itself
-     *
-     * @throws Exception
      */
-    public void validForURI() throws Exception {
+    public void validForURI() {
         String sql = "";
         Statement statement = null;
         ResultSet rs = null;
@@ -364,11 +362,14 @@ public class Rule {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+            throw new FIMSRuntimeException("SQL exception processing uniqueValue rule ", 500, e);
         } finally {
-            statement.close();
-            rs.close();
+            try {
+                statement.close();
+                rs.close();
+            } catch (SQLException e) {
+                logger.warn(null, e);
+            }
         }
     }
 
