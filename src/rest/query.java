@@ -5,14 +5,18 @@ import digester.Mapping;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
 import org.apache.commons.digester3.Digester;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import run.configurationFileFetcher;
 import run.process;
+import settings.FIMSRuntimeException;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.*;
 
@@ -21,7 +25,8 @@ import java.util.*;
  */
 @Path("query")
 public class query {
-    @Context
+    private static Logger logger = LoggerFactory.getLogger(query.class);
+
     static ServletContext context;
 
     /**
@@ -29,7 +34,6 @@ public class query {
      *
      * @param graphs indicate a comma-separated list of graphs
      * @return
-     * @throws Exception
      */
     @GET
     @Path("/json/")
@@ -37,7 +41,7 @@ public class query {
     public Response queryJson(
             @QueryParam("graphs") String graphs,
             @QueryParam("project_id") Integer project_id,
-            @QueryParam("filter") String filter) throws Exception {
+            @QueryParam("filter") String filter) {
 
         File file = GETQueryResult(graphs, project_id, filter, "json");
 
@@ -58,14 +62,13 @@ public class query {
      * name={URI} value={filter value}
      *
      * @return
-     * @throws Exception
      */
     @POST
     @Path("/json/")
     @Consumes("application/x-www-form-urlencoded")
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJsonAsPOST(
-            MultivaluedMap<String, String> form) throws Exception {
+            MultivaluedMap<String, String> form) {
 
         // Build the query, etc..
         fimsQueryBuilder q = POSTQueryResult(form);
@@ -90,7 +93,6 @@ public class query {
      *
      * @param graphs indicate a comma-separated list of graphs
      * @return
-     * @throws Exception
      */
     @GET
     @Path("/kml/")
@@ -98,27 +100,22 @@ public class query {
     public Response queryKml(
             @QueryParam("graphs") String graphs,
             @QueryParam("project_id") Integer project_id,
-            @QueryParam("filter") String filter) throws Exception {
+            @QueryParam("filter") String filter) {
 
-        try {
-            // Construct a file
-            File file = GETQueryResult(graphs, project_id, filter, "kml");
+        // Construct a file
+        File file = GETQueryResult(graphs, project_id, filter, "kml");
 
-            // Return file to client
-            Response.ResponseBuilder response = Response.ok((Object) file);
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
 
-            response.header("Content-Disposition",
-                    "attachment; filename=biocode-fims-output.kml");
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.kml");
 
-            // Return response
-            if (response == null) {
-                return Response.status(204).build();
-            } else {
-                return response.build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.ok("\nError: " + e.getMessage()).build();
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
         }
     }
 
@@ -129,36 +126,30 @@ public class query {
      * name={URI} value={filter value}
      *
      * @return
-     * @throws Exception
      */
     @POST
     @Path("/kml/")
     @Consumes("application/x-www-form-urlencoded")
     @Produces("application/vnd.google-earth.kml+xml")
     public Response queryKml(
-            MultivaluedMap<String, String> form) throws Exception {
+            MultivaluedMap<String, String> form) {
 
-        try {
-            // Build the query, etc..
-            fimsQueryBuilder q = POSTQueryResult(form);
+        // Build the query, etc..
+        fimsQueryBuilder q = POSTQueryResult(form);
 
-            // Run the query, passing in a format and returning the location of the output file
-            File file = new File(q.run("kml"));
+        // Run the query, passing in a format and returning the location of the output file
+        File file = new File(q.run("kml"));
 
-            // Return file to client
-            Response.ResponseBuilder response = Response.ok((Object) file);
-            response.header("Content-Disposition",
-                    "attachment; filename=biocode-fims-output.kml");
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.kml");
 
-            // Return response
-            if (response == null) {
-                return Response.status(204).build();
-            } else {
-                return response.build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.ok("\nError: " + e.getMessage()).build();
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
         }
     }
 
@@ -167,7 +158,6 @@ public class query {
      *
      * @param graphs indicate a comma-separated list of graphs
      * @return
-     * @throws Exception
      */
     @GET
     @Path("/excel/")
@@ -175,26 +165,20 @@ public class query {
     public Response queryExcel(
             @QueryParam("graphs") String graphs,
             @QueryParam("project_id") Integer project_id,
-            @QueryParam("filter") String filter
-    ) throws Exception {
+            @QueryParam("filter") String filter) {
 
-        try {
-            File file = GETQueryResult(graphs, project_id, filter, "excel");
+        File file = GETQueryResult(graphs, project_id, filter, "excel");
 
-            // Return file to client
-            Response.ResponseBuilder response = Response.ok((Object) file);
-            response.header("Content-Disposition",
-                    "attachment; filename=biocode-fims-output.xls");
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.xls");
 
-            // Return response
-            if (response == null) {
-                return Response.status(204).build();
-            } else {
-                return response.build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.ok("\nError: " + e.getMessage()).build();
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
         }
     }
 
@@ -205,36 +189,30 @@ public class query {
      * name={URI} value={filter value}
      *
      * @return
-     * @throws Exception
      */
     @POST
     @Path("/excel/")
     @Consumes("application/x-www-form-urlencoded")
     @Produces("application/vnd.ms-excel")
     public Response queryExcel(
-            MultivaluedMap<String, String> form) throws Exception {
+            MultivaluedMap<String, String> form) {
 
-        try {
-            // Build the query, etc..
-            fimsQueryBuilder q = POSTQueryResult(form);
+        // Build the query, etc..
+        fimsQueryBuilder q = POSTQueryResult(form);
 
-            // Run the query, passing in a format and returning the location of the output file
-            File file = new File(q.run("excel"));
+        // Run the query, passing in a format and returning the location of the output file
+        File file = new File(q.run("excel"));
 
-            // Return file to client
-            Response.ResponseBuilder response = Response.ok((Object) file);
-            response.header("Content-Disposition",
-                    "attachment; filename=biocode-fims-output.xls");
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.xls");
 
-            // Return response
-            if (response == null) {
-                return Response.status(204).build();
-            } else {
-                return response.build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.ok("\nError: " + e.getMessage()).build();
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
         }
     }
 
@@ -242,9 +220,8 @@ public class query {
      * Get the POST query result as a file
      *
      * @return
-     * @throws Exception
      */
-    private fimsQueryBuilder POSTQueryResult(MultivaluedMap<String, String> form) throws Exception {
+    private fimsQueryBuilder POSTQueryResult(MultivaluedMap<String, String> form) {
         Iterator entries = form.entrySet().iterator();
         String[] graphs = null;
         Integer project_id = null;
@@ -275,7 +252,7 @@ public class query {
 
         // Make sure graphs and project_id are set
         if (graphs != null && graphs.length < 1 && project_id != null) {
-            throw new Exception("ERROR: incomplete arguments");
+            throw new FIMSRuntimeException("ERROR: incomplete arguments", 400);
         }
 
         // Create a process object here so we can look at uri/column values
@@ -309,12 +286,15 @@ public class query {
      * @param filter
      * @param format
      * @return
-     * @throws Exception
      */
-    private File GETQueryResult(String graphs, Integer project_id, String filter, String format) throws Exception {
+    private File GETQueryResult(String graphs, Integer project_id, String filter, String format) {
         java.net.URLDecoder decoder = new java.net.URLDecoder();
 
-        graphs = URLDecoder.decode(graphs, "UTF-8");
+        try {
+            graphs = URLDecoder.decode(graphs, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.warn("UnsupportedEncodingException", e);
+        }
 
         process p = getProcess(project_id);
 
@@ -333,7 +313,7 @@ public class query {
         }
     }
 
-    private process getProcess(Integer project_id) throws Exception {
+    private process getProcess(Integer project_id) {
         File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
 
         // Create a process object
@@ -360,16 +340,25 @@ public class query {
      *
      * @param file
      * @return
-     * @throws IOException
      */
-    private String readFile(String file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
+    private String readFile(String file) {
+        FileReader fr;
+        try {
+            fr = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+        BufferedReader reader = new BufferedReader(fr);
         String line = null;
         StringBuilder stringBuilder = new StringBuilder();
         String ls = System.getProperty("line.separator");
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
-            stringBuilder.append(ls);
+        try {
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
         return stringBuilder.toString();
     }
@@ -382,9 +371,8 @@ public class query {
      * @param value
      * @param process
      * @return
-     * @throws Exception
      */
-    public static fimsFilterCondition parsePOSTFilter(String key, String value, process process) throws Exception {
+    public static fimsFilterCondition parsePOSTFilter(String key, String value, process process) {
         java.net.URI uri = null;
 
         if (key == null || key.equals("") || value == null || value.equals(""))
@@ -392,7 +380,11 @@ public class query {
 
         // this is a predicate/URI query
         if (key.contains(":")) {
-            uri = new URI(key);
+            try {
+                uri = new URI(key);
+            } catch (URISyntaxException e) {
+                throw new FIMSRuntimeException(500, e);
+            }
         } else {
             Mapping mapping = new Mapping();
             process.addMappingRules(new Digester(), mapping);
@@ -409,9 +401,8 @@ public class query {
      *
      * @param filter
      * @return
-     * @throws Exception
      */
-    public static fimsFilterCondition parseGETFilter(String filter, process process) throws Exception {
+    public static fimsFilterCondition parseGETFilter(String filter, process process) {
         Mapping mapping = new Mapping();
         process.addMappingRules(new Digester(), mapping);
 
@@ -426,33 +417,38 @@ public class query {
 
         // Get the value we're looking for
         Integer lastValue = filterSplit.length - 1;
-        String value = decoder.decode(filterSplit[lastValue], "UTF8").toString();
+        try {
+            String value = decoder.decode(filterSplit[lastValue], "UTF8").toString();
 
-        // Build the predicate.
-        if (filterSplit.length != lastValue) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < lastValue; i++) {
-                if (i > 0) {
-                    sb.append(delimiter);
+            // Build the predicate.
+            if (filterSplit.length != lastValue) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < lastValue; i++) {
+                    if (i > 0) {
+                        sb.append(delimiter);
+                    }
+                    sb.append(decoder.decode(filterSplit[i], "UTF8").toString());
                 }
-                sb.append(decoder.decode(filterSplit[i], "UTF8").toString());
-            }
 
-            // re-assemble the string
-            String key = sb.toString();
+                // re-assemble the string
+                String key = sb.toString();
 
-            // If the key contains a semicolon, then assume it is a URI
-            if (key.contains(":")) {
-                uri = new java.net.URI(key);
+                // If the key contains a semicolon, then assume it is a URI
+                if (key.contains(":")) {
+                    uri = new java.net.URI(key);
+                }
+                // If there is no semicolon here then assume the user passed in a column name
+                else {
+                    ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
+                    uri = mapping.lookupColumn(key, attributeArrayList);
+                }
             }
-            // If there is no semicolon here then assume the user passed in a column name
-            else {
-                ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
-                uri = mapping.lookupColumn(key, attributeArrayList);
-            }
+            return new fimsFilterCondition(uri, value, fimsFilterCondition.AND);
+        } catch (UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (URISyntaxException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-
-        return new fimsFilterCondition(uri, value, fimsFilterCondition.AND);
     }
 }
 

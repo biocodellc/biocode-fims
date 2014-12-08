@@ -1,5 +1,7 @@
 package utils;
 
+import settings.FIMSRuntimeException;
+
 import java.io.*;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.*;
@@ -12,7 +14,7 @@ public class Html2Text extends HTMLEditorKit.ParserCallback {
 
     }
 
-    public String convert(String sp) throws IOException {
+    public String convert(String sp) {
 
         StringReader sr = new StringReader(sp);
         parse(sr);
@@ -20,11 +22,15 @@ public class Html2Text extends HTMLEditorKit.ParserCallback {
         return s.toString();
     }
 
-    public void parse(Reader in) throws IOException {
+    public void parse(Reader in) {
         s = new StringBuffer();
         ParserDelegator delegator = new ParserDelegator();
         // the third parameter is TRUE to ignore charset directive
-        delegator.parse(in, this, Boolean.TRUE);
+        try {
+            delegator.parse(in, this, Boolean.TRUE);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     @Override
@@ -39,14 +45,10 @@ public class Html2Text extends HTMLEditorKit.ParserCallback {
     }
 
     public static void main(String[] args) {
-        try {
             // the HTML to convert
             Html2Text parser = new Html2Text();
 
             System.out.println(parser.convert("<div>hello</div>"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 

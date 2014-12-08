@@ -2,7 +2,6 @@ package run;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.jsoup.Jsoup;
 import settings.FIMSRuntimeException;
 import settings.PathManager;
 import settings.bcidConnector;
@@ -58,8 +57,6 @@ public class configurationFileFetcher {
      * Create the class object given a particular expedition code and a default Output Directory
      *
      * @param defaultOutputDirectory
-     *
-     * @throws IOException
      */
     public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) {
         this.project_id = project_id;
@@ -101,7 +98,6 @@ public class configurationFileFetcher {
      * Download the file!
      * @param url
      * @param defaultOutputDirectory
-     * @throws Exception
      */
     private void init(URL url, String defaultOutputDirectory) {
         boolean redirect = false;
@@ -176,8 +172,6 @@ public class configurationFileFetcher {
             // Close the connection input stream
             conn.getInputStream().close();
 
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
         } catch (IOException e) {
             throw new FIMSRuntimeException(500, e);
         }

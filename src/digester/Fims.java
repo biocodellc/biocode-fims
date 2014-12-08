@@ -22,8 +22,6 @@ public class Fims implements RendererInterface {
     private Metadata metadata;
     private Mapping mapping;
     private Validation validation;
-
-    private boolean updateGood = true;
     uploader uploader;
     private String bcid;
 
@@ -58,7 +56,7 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public boolean run(bcidConnector bcidConnector, processController processController) throws Exception {
+    public void run(bcidConnector bcidConnector, processController processController) {
         Integer project_id = processController.getProject_id();
         String expedition_code = processController.getExpeditionCode();
 
@@ -66,49 +64,30 @@ public class Fims implements RendererInterface {
                 metadata.getTarget(),
                 new File(mapping.getTriplifier().getTripleOutputFile()));
 
-        try {
-            uploader.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-            updateGood = false;
-        }
+        uploader.execute();
 
-        // If the update worked then set a BCID to refer to it
-        if (updateGood) {
-            try {
-                bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
-                // Create the BCID to use for upload service
-                String status1 = "\tCreated BCID =" + bcid + " to represent your uploaded dataset";
-                processController.appendStatus(status1);
-                fimsPrinter.out.println(status1);
-                // Associate the expedition_code with this bcid
-                String status2 = "\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid);
-                processController.appendStatus(status2);
-                fimsPrinter.out.println(status2);
-
-            } catch (Exception e) {
-                throw new Exception("Unable to create BCID", e);
-            }
-        }
-        return updateGood;
+        bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
+        // Create the BCID to use for upload service
+        String status1 = "\tCreated BCID =" + bcid + " to represent your uploaded dataset";
+        processController.appendStatus(status1);
+        fimsPrinter.out.println(status1);
+        // Associate the expedition_code with this bcid
+        String status2 = "\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid);
+        processController.appendStatus(status2);
+        fimsPrinter.out.println(status2);
+        return;
     }
 
     /**
      * Print out command prompt data
      */
     public void print() {
-        if (updateGood) {
-            //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
-            //fimsPrinter.out.println("\tBCID =  " + bcid);
-            fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
-            fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
-            fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
-            //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
-        } else {
-            fimsPrinter.out.println("\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". " +
-                    "If this persists, your network may be blocking access to the database port. " +
-                    "Please contact jdeck@berkeley.edu for more information.");
-        }
+        //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
+        //fimsPrinter.out.println("\tBCID =  " + bcid);
+        fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
+        fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
+        fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
+        //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
     }
 
     /**
@@ -116,15 +95,9 @@ public class Fims implements RendererInterface {
      */
     public String results() {
         String retVal = "";
-        if (updateGood) {
-            retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
-            retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
-            retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
-        } else {
-            retVal += "\tUnable to reach FIMS server for upload at " + metadata.getTarget() + ". " +
-                    "If this persists, your network may be blocking access to the database port. " +
-                    "Please contact jdeck@berkeley.edu for more information.\n";
-        }
+        retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
+        retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
+        retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
         return retVal;
     }
 
@@ -138,7 +111,7 @@ public class Fims implements RendererInterface {
     /**
      * Create a fimsModel to store the results from this query
      */
-    public fimsModel getFIMSModel(Model model) throws Exception {
+    public fimsModel getFIMSModel(Model model) {
        /*
         com.hp.hpl.jena.rdf.model.Resource r = model.getResource("ark:/21547/Hz2F9198780");
         StmtIterator s = r.listProperties();

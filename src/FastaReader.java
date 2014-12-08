@@ -4,10 +4,7 @@ import java.util.Map.Entry;
 
 import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.io.FastaReaderHelper;
-import reader.ReaderManager;
-import reader.TabularDataConverter;
-import reader.plugins.TabularDataReader;
-import settings.PathManager;
+import settings.FIMSRuntimeException;
 import settings.fimsPrinter;
 
 public class FastaReader {
@@ -15,7 +12,7 @@ public class FastaReader {
     File file;
      File sqliteFile;
 
-    public FastaReader(String filename, int limit) throws Exception {
+    public FastaReader(String filename, int limit) {
         this.limit = limit;
         this.file = new File(filename);
 
@@ -24,8 +21,13 @@ public class FastaReader {
         if (fileType().equals("nexus"));
     }
 
-    private void FastaOpen() throws Exception {
-        LinkedHashMap<String, ProteinSequence> a = FastaReaderHelper.readFastaProteinSequence(file);
+    private void FastaOpen() {
+        LinkedHashMap<String, ProteinSequence> a;
+        try {
+            a = FastaReaderHelper.readFastaProteinSequence(file);
+        } catch (Exception e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         int count = 0;
         for (Entry<String, ProteinSequence> entry : a.entrySet()) {
             fimsPrinter.out.println( count + " of " +a.size() + " for " + file.getName());
@@ -57,7 +59,7 @@ public class FastaReader {
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         FastaReader fastaReader = new FastaReader("sampledata/A.doe.CO1.fasta",2);
 
         // TODO:, see the following list to integrate FASTA sequence files into database

@@ -7,7 +7,7 @@ import org.apache.commons.digester3.Digester;
 import run.configurationFileFetcher;
 import run.process;
 import run.processController;
-import settings.FIMSException;
+import settings.FIMSRuntimeException;
 import settings.bcidConnector;
 import utils.SettingsManager;
 
@@ -20,11 +20,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Iterator;
-import java.util.List;
 
 
 /**
@@ -39,15 +38,12 @@ public class utils {
      * Refresh the configuration File cache
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/refreshCache/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJson(
-            @QueryParam("project_id") Integer project_id
-    ) throws Exception {
+            @QueryParam("project_id") Integer project_id) {
 
         new configurationFileFetcher(project_id, uploadPath(), false).getOutputFile();
 
@@ -73,14 +69,12 @@ public class utils {
      * @param projectId
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/expeditionCodes/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getExpeditionCodes(@PathParam("project_id") Integer projectId,
-                                       @Context HttpServletRequest request) throws Exception {
+                                       @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
@@ -91,7 +85,12 @@ public class utils {
         String expedition_list_uri = sm.retrieveValue("expedition_list_uri");
 
 //        URL url = new URL("http://biscicol.org:8080/id/expeditionService/list/" + projectId + "?access_token=" + accessToken);
-        URL url = new URL(expedition_list_uri + projectId + "?access_token=" + accessToken);
+        URL url;
+        try {
+            url = new URL(expedition_list_uri + projectId + "?access_token=" + accessToken);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
 
         String response = bcidConnector.createGETConnection(url);
 
@@ -108,15 +107,13 @@ public class utils {
      * @param request
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/validateExpedition/{project_id}/{expedition_code}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response validateExpedition(@PathParam("project_id") Integer projectId,
                                        @PathParam("expedition_code") String expeditionCode,
-                                       @Context HttpServletRequest request) throws Exception {
+                                       @Context HttpServletRequest request) {
 
 
         HttpSession session = request.getSession();
@@ -128,10 +125,15 @@ public class utils {
         sm.loadProperties();
         String expedition_list_uri = sm.retrieveValue("expedition_validation_uri");
 
-        URL url = new URL(expedition_list_uri +
-                projectId + "/" +
-                expeditionCode +
-                "?access_token=" + accessToken);
+        URL url;
+        try {
+            url = new URL(expedition_list_uri +
+                    projectId + "/" +
+                    expeditionCode +
+                    "?access_token=" + accessToken);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
 
         String response = bcidConnector.createGETConnection(url);
 
@@ -151,15 +153,13 @@ public class utils {
      * @param projectId
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/getListFields/{list_name}/")
     @Produces(MediaType.TEXT_HTML)
     public Response getListFields(@QueryParam("project_id") Integer projectId,
                                   @PathParam("list_name") String list_name,
-                                  @QueryParam("column_name") String column_name) throws Exception {
+                                  @QueryParam("column_name") String column_name) {
 
         File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
 
@@ -181,7 +181,11 @@ public class utils {
         StringBuilder sb = new StringBuilder();
 
         if (column_name != null && !column_name.trim().equals("")) {
-            sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name, "utf-8") + "</b><br>\n");
+            try {
+                sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name, "utf-8") + "</b><br>\n");
+            } catch (UnsupportedEncodingException e) {
+                throw new FIMSRuntimeException(500, e);
+            }
         } else {
             sb.append("<b>Acceptable values for " + list_name + "</b><br>\n");
         }
@@ -199,19 +203,14 @@ public class utils {
     @Path("/isNMNHProject/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response isNMNHProject(@PathParam("project_id") Integer projectId) {
-        try {
-            processController processController = new processController(projectId, null);
-            process p = new process(
-                    null,
-                    uploadPath(),
-                    null,
-                    processController);
+        processController processController = new processController(projectId, null);
+        process p = new process(
+                null,
+                uploadPath(),
+                null,
+                processController);
 
-            return Response.ok("{\"isNMNHProject\": \"" + p.isNMNHProject() + "\"}").build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500).entity("{\"error\": \"Server Error: " + e.getMessage() + "\"}").build();
-        }
+        return Response.ok("{\"isNMNHProject\": \"" + p.isNMNHProject() + "\"}").build();
     }
 
     static String uploadpath() {

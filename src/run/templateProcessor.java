@@ -2,21 +2,19 @@ package run;
 
 import digester.*;
 import org.apache.commons.digester3.Digester;
-//import org.apache.poi.hssf.usermodel.*;
-//import org.apache.poi.hssf.usermodel.DVConstraint;
-import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
-import org.jsoup.Jsoup;
-import settings.FIMSException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 import settings.PathManager;
 import settings.bcidConnector;
-//import utils.SettingsManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -38,6 +36,8 @@ public class templateProcessor {
     private Integer naan;
 
     private String ark;
+
+    private static Logger logger = LoggerFactory.getLogger(templateProcessor.class);
 
     XSSFSheet defaultSheet;
     XSSFWorkbook workbook;
@@ -67,10 +67,8 @@ public class templateProcessor {
      * @param file
      * @param outputFolder
      * @param useCache
-     *
-     * @throws Exception
      */
-    private void instantiateTemplateProcessor(File file, String outputFolder, Boolean useCache) throws Exception {
+    private void instantiateTemplateProcessor(File file, String outputFolder, Boolean useCache) {
         configFile = file;
 
         bcidConnector bcidConnector = new bcidConnector();
@@ -120,10 +118,8 @@ public class templateProcessor {
      * @param project_id
      * @param outputFolder
      * @param useCache
-     *
-     * @throws Exception
      */
-    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) {
         this.project_id = project_id;
         configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
         instantiateTemplateProcessor(fetcher.getOutputFile(), outputFolder, useCache);
@@ -138,14 +134,12 @@ public class templateProcessor {
      * @param useCache
      * @param accessionNumber
      * @param datasetCode
-     *
-     * @throws Exception
      */
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
-                             Integer accessionNumber, String datasetCode, String ark, String username) throws Exception {
+                             Integer accessionNumber, String datasetCode, String ark, String username) {
         // we can't have a null value for accessionNumber or datasetCode if using this constructor
         if (accessionNumber == null || datasetCode == null) {
-            throw new FIMSException("dataset code and accession number are required");
+            throw new FIMSRuntimeException("dataset code and accession number are required", 500);
         }
         this.username = username;
         this.accessionNumber = accessionNumber;
@@ -162,14 +156,12 @@ public class templateProcessor {
      * @param useCache
      * @param accessionNumber
      * @param datasetCode
-     *
-     * @throws Exception
      */
     public templateProcessor(File file, String outputFolder, Boolean useCache,
-                             Integer accessionNumber, String datasetCode, String ark) throws Exception {
+                             Integer accessionNumber, String datasetCode, String ark) {
         // we can't have a null value for accessionNumber or datasetCode if using this constructor
         if (accessionNumber == null || datasetCode == null) {
-            throw new FIMSException("dataset code and accession number are required");
+            throw new FIMSRuntimeException("dataset code and accession number are required", 500);
         }
         this.accessionNumber = accessionNumber;
         this.datasetCode = datasetCode;
@@ -177,7 +169,7 @@ public class templateProcessor {
         instantiateTemplateProcessor(file, outputFolder, useCache);
     }
 
-    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) throws Exception {
+    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) {
         instantiateTemplateProcessor(project_id, outputFolder, useCache);
     }
 
@@ -199,102 +191,94 @@ public class templateProcessor {
      * @param column_name
      *
      * @return
-     *
-     * @throws settings.FIMSException
      */
-    public String definition(String column_name) throws FIMSException {
+    public String definition(String column_name) {
         StringBuilder output = new StringBuilder();
-        try {
 
-            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
-            // Get a list of rules for the first digester.Worksheet instance
-            Worksheet sheet = this.validation.getWorksheets().get(0);
+        Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
+        // Get a list of rules for the first digester.Worksheet instance
+        Worksheet sheet = this.validation.getWorksheets().get(0);
 
-            List<Rule> rules = sheet.getRules();
+        List<Rule> rules = sheet.getRules();
 
 
-            while (attributes.hasNext()) {
-                Attribute a = (Attribute) attributes.next();
-                String column = a.getColumn();
-                if (column_name.trim().equals(column.trim())) {
-                    // The column name
-                    output.append("<b>Column Name: " + column_name + "</b><p>");
+        while (attributes.hasNext()) {
+            Attribute a = (Attribute) attributes.next();
+            String column = a.getColumn();
+            if (column_name.trim().equals(column.trim())) {
+                // The column name
+                output.append("<b>Column Name: " + column_name + "</b><p>");
 
-                    // URI
-                    if (a.getUri() != null) {
-                        output.append("URI = " +
-                                "<a href='" + a.getUri() + "' target='_blank'>" +
-                                a.getUri() +
-                                "</a><br>\n");
-                    }
-                    // Defined_by
-                    if (a.getDefined_by() != null) {
-                        output.append("Defined_by = " +
-                                "<a href='" + a.getDefined_by() + "' target='_blank'>" +
-                                a.getDefined_by() +
-                                "</a><br>\n");
-                    }
+                // URI
+                if (a.getUri() != null) {
+                    output.append("URI = " +
+                            "<a href='" + a.getUri() + "' target='_blank'>" +
+                            a.getUri() +
+                            "</a><br>\n");
+                }
+                // Defined_by
+                if (a.getDefined_by() != null) {
+                    output.append("Defined_by = " +
+                            "<a href='" + a.getDefined_by() + "' target='_blank'>" +
+                            a.getDefined_by() +
+                            "</a><br>\n");
+                }
 
-                    // Definition
-                    if (a.getDefinition() != null && !a.getDefinition().trim().equals("")) {
-                        output.append("<p>\n" +
-                                "<b>Definition:</b>\n" +
-                                "<p>" + a.getDefinition() + "\n");
-                    } else {
-                        output.append("<p>\n" +
-                                "<b>Definition:</b>\n" +
-                                "<p>No custom definition available\n");
-                    }
+                // Definition
+                if (a.getDefinition() != null && !a.getDefinition().trim().equals("")) {
+                    output.append("<p>\n" +
+                            "<b>Definition:</b>\n" +
+                            "<p>" + a.getDefinition() + "\n");
+                } else {
+                    output.append("<p>\n" +
+                            "<b>Definition:</b>\n" +
+                            "<p>No custom definition available\n");
+                }
 
-                    // Synonyms
-                    if (a.getSynonyms() != null && !a.getSynonyms().trim().equals("")) {
-                        output.append("<p>\n" +
-                                "<b>Synonyms:</b>\n" +
-                                "<p>" + a.getSynonyms() + "\n");
-                    }
+                // Synonyms
+                if (a.getSynonyms() != null && !a.getSynonyms().trim().equals("")) {
+                    output.append("<p>\n" +
+                            "<b>Synonyms:</b>\n" +
+                            "<p>" + a.getSynonyms() + "\n");
+                }
 
-                    // Synonyms
-                    if (a.getDataFormat() != null && !a.getDataFormat().trim().equals("")) {
-                        output.append("<p>\n" +
-                                "<b>Data Formatting Instructions:</b>\n" +
-                                "<p>" + a.getDataFormat() + "\n");
-                    }
+                // Synonyms
+                if (a.getDataFormat() != null && !a.getDataFormat().trim().equals("")) {
+                    output.append("<p>\n" +
+                            "<b>Data Formatting Instructions:</b>\n" +
+                            "<p>" + a.getDataFormat() + "\n");
+                }
 
-                    // Rules
-                    Iterator it = rules.iterator();
-                    StringBuilder ruleValidations = new StringBuilder();
-                    while (it.hasNext()) {
+                // Rules
+                Iterator it = rules.iterator();
+                StringBuilder ruleValidations = new StringBuilder();
+                while (it.hasNext()) {
 
-                        Rule r = (Rule) it.next();
-                        r.setDigesterWorksheet(sheet);
-                        if (r != null) {
-                            digester.List sList = validation.findList(r.getList());
+                    Rule r = (Rule) it.next();
+                    r.setDigesterWorksheet(sheet);
+                    if (r != null) {
+                        digester.List sList = validation.findList(r.getList());
 
-                            // Convert to native state (without underscores)
-                            String ruleColumn = r.getColumn();
+                        // Convert to native state (without underscores)
+                        String ruleColumn = r.getColumn();
 
-                            if (ruleColumn != null) {
-                                // Match column names with or without underscores
-                                if (ruleColumn.replace("_", " ").equals(column) ||
-                                        ruleColumn.equals(column)) {
-                                    ruleValidations.append(r.printRuleMetadata(sList));
-                                }
+                        if (ruleColumn != null) {
+                            // Match column names with or without underscores
+                            if (ruleColumn.replace("_", " ").equals(column) ||
+                                    ruleColumn.equals(column)) {
+                                ruleValidations.append(r.printRuleMetadata(sList));
                             }
                         }
                     }
-                    if (!ruleValidations.toString().equals("")) {
-                        output.append("<p>\n" +
-                                "<b>Validation Rules:</b>\n<p>");
-                        output.append(ruleValidations.toString());
-                    }
-
-                    return output.toString();
                 }
-            }
+                if (!ruleValidations.toString().equals("")) {
+                    output.append("<p>\n" +
+                            "<b>Validation Rules:</b>\n<p>");
+                    output.append(ruleValidations.toString());
+                }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("Exception handling templates " + e.getMessage(), e);
+                return output.toString();
+            }
         }
 
         return "No definition found for " + column_name;
@@ -304,10 +288,8 @@ public class templateProcessor {
      * Generate checkBoxes/Column Names for the mappings in a template
      *
      * @return
-     *
-     * @throws FIMSException
      */
-    public String printCheckboxes() throws FIMSException {
+    public String printCheckboxes() {
         LinkedList<String> requiredColumns = getRequiredColumns("error");
         LinkedList<String> desiredColumns = getRequiredColumns("warning");
         // Use TreeMap for natural sorting of groups
@@ -316,75 +298,69 @@ public class templateProcessor {
         //StringBuilder output = new StringBuilder();
         // A list of names we've already added
         ArrayList addedNames = new ArrayList();
-        try {
-            Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
-            while (attributes.hasNext()) {
-                Attribute a = (Attribute) attributes.next();
+        Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
+        while (attributes.hasNext()) {
+            Attribute a = (Attribute) attributes.next();
 
-                StringBuilder thisOutput = new StringBuilder();
-                // Set the column name
-                String column = a.getColumn();
-                String group = a.getGroup();
+            StringBuilder thisOutput = new StringBuilder();
+            // Set the column name
+            String column = a.getColumn();
+            String group = a.getGroup();
 
-                // Check that this name hasn't been read already.  This is necessary in some situations where
-                // column names are repeated for different entities in the configuration file
-                if (!addedNames.contains(column)) {
-                    // Set boolean to tell us if this is a requiredColumn
-                    Boolean aRequiredColumn = false, aDesiredColumn = false;
-                    if (requiredColumns == null) {
-                        aRequiredColumn = false;
-                    } else if (requiredColumns.contains(a.getColumn())) {
-                        aRequiredColumn = true;
-                    }
-                    if (desiredColumns == null) {
-                        aDesiredColumn = false;
-                    } else if (desiredColumns.contains(a.getColumn())) {
-                        aDesiredColumn = true;
-                    }
-
-
-                    // Construct the checkbox text
-                    thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
-
-                    // If this is a required column then make it checked (and immutable)
-                    if (aRequiredColumn)
-                        thisOutput.append(" checked disabled");
-                    else if (aDesiredColumn)
-                        thisOutput.append(" checked");
-
-                    // Close tag and insert Definition link
-                    thisOutput.append(">" + column + " \n" +
-                            "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" + "<br>\n");
-
-                    // Fetch any existing content for this key
-                    if (group == null || group.equals("")) {
-                        group = "Default Group";
-                    }
-                    StringBuilder existing = groups.get(group);
-
-                    // Append (not required) or Insert (required) the new content onto any existing in this key
-                    if (existing == null) {
-                        existing = thisOutput;
-                    } else {
-                        if (aRequiredColumn) {
-                            existing.insert(0, thisOutput);
-                        } else {
-                            existing.append(thisOutput);
-                        }
-                    }
-                    groups.put(group, existing);
-
-                    //groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
-
+            // Check that this name hasn't been read already.  This is necessary in some situations where
+            // column names are repeated for different entities in the configuration file
+            if (!addedNames.contains(column)) {
+                // Set boolean to tell us if this is a requiredColumn
+                Boolean aRequiredColumn = false, aDesiredColumn = false;
+                if (requiredColumns == null) {
+                    aRequiredColumn = false;
+                } else if (requiredColumns.contains(a.getColumn())) {
+                    aRequiredColumn = true;
+                }
+                if (desiredColumns == null) {
+                    aDesiredColumn = false;
+                } else if (desiredColumns.contains(a.getColumn())) {
+                    aDesiredColumn = true;
                 }
 
-                // Now that we've added this to the output, add it to the ArrayList so we don't add it again
-                addedNames.add(column);
+
+                // Construct the checkbox text
+                thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
+
+                // If this is a required column then make it checked (and immutable)
+                if (aRequiredColumn)
+                    thisOutput.append(" checked disabled");
+                else if (aDesiredColumn)
+                    thisOutput.append(" checked");
+
+                // Close tag and insert Definition link
+                thisOutput.append(">" + column + " \n" +
+                        "<a href='#' class='def_link' name='" + column + "'>DEF</a>\n" + "<br>\n");
+
+                // Fetch any existing content for this key
+                if (group == null || group.equals("")) {
+                    group = "Default Group";
+                }
+                StringBuilder existing = groups.get(group);
+
+                // Append (not required) or Insert (required) the new content onto any existing in this key
+                if (existing == null) {
+                    existing = thisOutput;
+                } else {
+                    if (aRequiredColumn) {
+                        existing.insert(0, thisOutput);
+                    } else {
+                        existing.append(thisOutput);
+                    }
+                }
+                groups.put(group, existing);
+
+                //groups.put(group, existing == null ? thisOutput : existing.append(thisOutput));
+
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("exception handling templates " + e.getMessage(), e);
+            // Now that we've added this to the output, add it to the ArrayList so we don't add it again
+            addedNames.add(column);
         }
 
         // Iterate through any defined groups, which makes the template processor easier to navigate
@@ -706,6 +682,7 @@ public class templateProcessor {
                             formatCell.setCellValue(a.getDataFormat());
                             formatCell.setCellStyle(wrapStyle);
                         } catch (NullPointerException npe) {
+                            logger.warn("NullPointerException", npe);
                         }
 
                         // Synonyms
@@ -714,6 +691,7 @@ public class templateProcessor {
                             synonymCell.setCellValue(a.getSynonyms());
                             synonymCell.setCellStyle(wrapStyle);
                         } catch (NullPointerException npe) {
+                            logger.warn("NullPointerException", npe);
                         }
                     }
                 }
@@ -977,10 +955,8 @@ public class templateProcessor {
      * @param fields
      *
      * @return
-     *
-     * @throws Exception
      */
-    public File createExcelFile(String defaultSheetname, String uploadPath, List<String> fields) throws Exception {
+    public File createExcelFile(String defaultSheetname, String uploadPath, List<String> fields) {
 
         // Create each of the sheets
         createInstructions(defaultSheetname);
@@ -1001,9 +977,13 @@ public class templateProcessor {
         // Create the file: NOTE: this application ALWAYS should create XLSX files as this format is the only one
         // which will pass compatibility checks in data validation
         File file = PathManager.createUniqueFile(filename + ".xlsx", uploadPath);
-        FileOutputStream out = new FileOutputStream(file);
-        workbook.write(out);
-        out.close();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            workbook.write(out);
+            out.close();
+        } catch(IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
 
         return file;
     }
@@ -1046,7 +1026,7 @@ public class templateProcessor {
      *
      * @param args
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
         File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml");
         //templateProcessor t1 = new templateProcessor(file,"tripleOutput",false,12345,"DEMO4","ark:/99999/fk2");

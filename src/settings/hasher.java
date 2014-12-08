@@ -1,5 +1,7 @@
 package settings;
 
+import digester.Fims;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -34,8 +36,8 @@ public class hasher {
         try {
             md = MessageDigest.getInstance(algorithm);
         }
-        catch (Exception e) {
-            System.err.println(e.toString());
+        catch (NoSuchAlgorithmException e) {
+            throw new FIMSRuntimeException(500, e);
         }
 		md.reset();
 		md.update(plainText);

@@ -1,5 +1,8 @@
 package settings;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,13 +11,8 @@ import java.io.InputStreamReader;
  * Allows us to read from Standard In, always using Y/y as a positive response
  */
 public class standardInputter extends fimsInputter {
+    private static Logger logger = LoggerFactory.getLogger(standardInputter.class);
 
-    /**
-     * Ask the user if they wish to continue this operation given certain information
-     * @param message
-     * @return
-     */
-    @Override
     public boolean continueOperation(String message) {
         fimsPrinter.out.print(message + "\n\nIf you wish to continue, enter 'Y': ");
         //  open up standard input
@@ -25,7 +23,7 @@ public class standardInputter extends fimsInputter {
                 return true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("IOException", e);
             return false;
         }
         return false;

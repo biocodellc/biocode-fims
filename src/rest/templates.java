@@ -3,17 +3,17 @@ package rest;
 import run.process;
 import run.processController;
 import run.templateProcessor;
+import settings.FIMSRuntimeException;
 import settings.bcidConnector;
-import utils.stringGenerator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -32,15 +32,13 @@ public class templates {
      * Return the available attributes for a particular graph
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/attributes/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateCheckboxes(
             @QueryParam("project_id") Integer project_id,
-            @Context HttpServletRequest request) throws Exception {
+            @Context HttpServletRequest request) {
 
         HttpSession session = request.getSession();
 
@@ -63,14 +61,12 @@ public class templates {
      * Return the abstract for a particular graph
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/abstract/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAbstract(
-            @QueryParam("project_id") Integer project_id) throws Exception {
+            @QueryParam("project_id") Integer project_id) {
 
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
         templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
@@ -95,7 +91,7 @@ public class templates {
             @FormParam("accession_number") Integer accessionNumber,
             @FormParam("dataset_code") String datasetCode,
             @FormParam("operation") String operation,
-            @Context HttpServletRequest request) throws Exception {
+            @Context HttpServletRequest request) {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
@@ -141,12 +137,7 @@ public class templates {
 
                 // Only create expedition if necessary
                 if (operation.equalsIgnoreCase("insert")) {
-                    try {
-                        p.runExpeditionCreate();
-                    } catch (Exception e) {
-                        return Response.status(400).entity("{\"error\": " +
-                                "\"Error trying to create expedition: " + e.getMessage() + "}").build();
-                    }
+                    p.runExpeditionCreate();
                 }
             }
         }
@@ -155,7 +146,12 @@ public class templates {
         if (accessionNumber != null) {
             // Get the ARK associated with this dataset code
             // TODO: Resource may change in future... better to figure this out programatically at some point
-            String ark = bcidConnector.getArkFromDataset(project_id, URLEncoder.encode(datasetCode,"utf-8"),"Resource");
+            String ark;
+            try {
+              ark = bcidConnector.getArkFromDataset(project_id, URLEncoder.encode(datasetCode,"utf-8"),"Resource");
+            } catch (UnsupportedEncodingException e) {
+                throw new FIMSRuntimeException(500, e);
+            }
 
             String username = session.getAttribute("user").toString();
 
@@ -176,12 +172,7 @@ public class templates {
         String defaultSheetname = t.getMapping().getDefaultSheetName();
 
         File file = null;
-        try {
-            file = t.createExcelFile(defaultSheetname, uploadPath(), fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(204).build();
-        }
+        file = t.createExcelFile(defaultSheetname, uploadPath(), fields);
 
         // Catch a null file and return 204
         if (file == null)
@@ -198,15 +189,13 @@ public class templates {
      * Return a definition for a particular column
      *
      * @return
-     *
-     * @throws Exception
      */
     @GET
     @Path("/definition/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDefinitions(
             @QueryParam("project_id") Integer project_id,
-            @QueryParam("column_name") String column_name) throws Exception {
+            @QueryParam("column_name") String column_name) {
 
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
         templateProcessor t = new templateProcessor(project_id, uploadPath(), true);

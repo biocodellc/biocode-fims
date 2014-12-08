@@ -180,7 +180,6 @@ public class Mapping implements RendererInterface {
     /**
      * Run the triplifier using this class
      *
-     * @throws Exception
      */
     public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) {
 
@@ -249,12 +248,16 @@ public class Mapping implements RendererInterface {
      *
      * @return
      */
-    public URI lookupAnyProperty(URI property, ArrayList<Attribute> attributes) throws URISyntaxException {
+    public URI lookupAnyProperty(URI property, ArrayList<Attribute> attributes) {
         Iterator it = attributes.iterator();
         while (it.hasNext()) {
             Attribute a = (Attribute) it.next();
             if (a.getUri().equalsIgnoreCase(property.toString())) {
-                return new URI(a.getUri());
+                try {
+                    return new URI(a.getUri());
+                } catch (URISyntaxException e) {
+                    throw new FIMSRuntimeException(500, e);
+                }
             }
         }
         return null;
@@ -268,12 +271,16 @@ public class Mapping implements RendererInterface {
      *
      * @return
      */
-    public URI lookupColumn(String columnName, ArrayList<Attribute> attributes) throws URISyntaxException {
+    public URI lookupColumn(String columnName, ArrayList<Attribute> attributes) {
         Iterator it = attributes.iterator();
         while (it.hasNext()) {
             Attribute a = (Attribute) it.next();
             if (a.getColumn().equalsIgnoreCase(columnName)) {
-                return new URI(a.getUri());
+               try {
+                    return new URI(a.getUri());
+                } catch (URISyntaxException e) {
+                    throw new FIMSRuntimeException(500, e);
+                }
             }
         }
         return null;

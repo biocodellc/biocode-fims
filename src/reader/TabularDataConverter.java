@@ -5,10 +5,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-import com.sun.tools.internal.xjc.api.Mapping;
+import de.fuberlin.wiwiss.d2rq.sql.SQL;
 import digester.Attribute;
 import digester.Entity;
+import digester.Fims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
+import settings.FIMSRuntimeException;
 import settings.hasher;
 import utils.sqlLiteNameCleaner;
 
@@ -23,13 +27,13 @@ public final class TabularDataConverter {
     String dest;
     String tablename;
 
+    private static Logger logger = LoggerFactory.getLogger(TabularDataConverter.class);
     /**
      * Constructs a new TabularDataConverter for the specified source.
      *
      * @param source A TabularDataReader with an open data source.
-     * @throws ClassNotFoundException
      */
-    public TabularDataConverter(TabularDataReader source) throws ClassNotFoundException, SQLException {
+    public TabularDataConverter(TabularDataReader source) {
         this(source, "");
     }
 
@@ -39,9 +43,8 @@ public final class TabularDataConverter {
      *
      * @param source A TabularDataReader with an open data source.
      * @param dest   A valid SQLIte JDBC connection string.
-     * @throws ClassNotFoundException
      */
-    public TabularDataConverter(TabularDataReader source, String dest) throws ClassNotFoundException, SQLException {
+    public TabularDataConverter(TabularDataReader source, String dest) {
         // load the Sqlite JDBC driver
         //Class.forName("org.sqlite.JDBC");
 
@@ -127,37 +130,45 @@ public final class TabularDataConverter {
      * If the input data source is a Darwin Core archive, convert() will also
      * attempt to "re-normalize" the archive data.  This task is handed off to
      * an instance of DwCAFixer.
-     *
-     * @throws SQLException
      */
-    public void convert(digester.Mapping mapping) throws SQLException {
+    public void convert(digester.Mapping mapping) {
         //int tablecnt = 0;
-        String tname = source.getCurrentTableName();
-        Connection connection = DriverManager.getConnection(dest);
+        Connection connection = null;
+        try {
+            String tname = source.getCurrentTableName();
+            connection = DriverManager.getConnection(dest);
 
-        if (source.tableHasNextRow()) {
-            String fixedtname = fixSQLiteIdentifierName(tname);
-            buildTable(connection, fixedtname);
-            buildHashes(connection, mapping, fixedtname);
+            if (source.tableHasNextRow()) {
+                String fixedtname = fixSQLiteIdentifierName(tname);
+                buildTable(connection, fixedtname);
+                buildHashes(connection, mapping, fixedtname);
+            }
+
+            // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
+            /*
+             while (source.hasNextTable()) {
+              source.moveToNextTable();
+              tablecnt++;
+              // If the user supplied a name for the first table in the data
+              // source, use it.  Otherwise, take the table name from the data
+              // source.
+              if ((tablecnt == 1) && !tablename.equals(""))
+                  tname = tablename;
+              else
+                  tname = source.getCurrentTableName();
+
+              if (source.tableHasNextRow())
+                  buildTable(conn, fixSQLiteIdentifierName(tname));
+          }  */
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
+            }
         }
-
-        // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
-        /*
-         while (source.hasNextTable()) {
-          source.moveToNextTable();
-          tablecnt++;
-          // If the user supplied a name for the first table in the data
-          // source, use it.  Otherwise, take the table name from the data
-          // source.
-          if ((tablecnt == 1) && !tablename.equals(""))
-              tname = tablename;
-          else
-              tname = source.getCurrentTableName();
-
-          if (source.tableHasNextRow())
-              buildTable(conn, fixSQLiteIdentifierName(tname));
-      }  */
-        connection.close();
     }
 
     /**
@@ -166,49 +177,59 @@ public final class TabularDataConverter {
      * @param connection
      * @param mapping
      */
-    private void buildHashes(Connection connection, digester.Mapping mapping, String tname) throws SQLException {
+    private void buildHashes(Connection connection, digester.Mapping mapping, String tname) {
         // Loop through entities and find which ones define HASH
         LinkedList<Entity> entities = mapping.getEntities();
         Iterator it = entities.iterator();
-        Statement stmt = connection.createStatement();
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
 
-        while (it.hasNext()) {
-            Entity entity = (Entity) it.next();
-            if (entity.getWorksheetUniqueKey().contains("HASH")) {
+            while (it.hasNext()) {
+                Entity entity = (Entity) it.next();
+                if (entity.getWorksheetUniqueKey().contains("HASH")) {
 
-                // Add this column identifier
-                String alter = "ALTER TABLE " + tname + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
-                stmt.executeUpdate(alter);
+                    // Add this column identifier
+                    String alter = "ALTER TABLE " + tname + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
+                    stmt.executeUpdate(alter);
 
-                LinkedList<Attribute> attributes = entity.getAttributes();
-                Iterator attributesIt = attributes.iterator();
-                StringBuilder sb = new StringBuilder();
-                sb.append("SELECT rowid,");
-                while (attributesIt.hasNext()) {
-                    Attribute attribute = (Attribute) attributesIt.next();
-                    sb.append(attribute.getColumn());
-                    if (attributesIt.hasNext())
-                        sb.append(" || ");
+                    LinkedList<Attribute> attributes = entity.getAttributes();
+                    Iterator attributesIt = attributes.iterator();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("SELECT rowid,");
+                    while (attributesIt.hasNext()) {
+                        Attribute attribute = (Attribute) attributesIt.next();
+                        sb.append(attribute.getColumn());
+                        if (attributesIt.hasNext())
+                            sb.append(" || ");
+                    }
+                    sb.append(" AS toHash FROM " + tname);
+                    //System.out.println(sb.toString());
+                    ResultSet rs = stmt.executeQuery(sb.toString());
+
+                    Statement updateStatement = connection.createStatement();
+                    hasher hasher = new hasher();
+                    updateStatement.execute("BEGIN TRANSACTION");
+                    while (rs.next()) {
+                        String update = "UPDATE " + tname +
+                                " SET " + entity.getWorksheetUniqueKey() + " = \"" +
+                                hasher.hasherDigester(rs.getString("toHash")) + "\" " +
+                                " WHERE rowid = " + rs.getString("rowid");
+                        updateStatement.executeUpdate(update);
+                    }
+                    updateStatement.execute("COMMIT");
+                    updateStatement.close();
                 }
-                sb.append(" AS toHash FROM " + tname);
-//System.out.println(sb.toString());
-                ResultSet rs = stmt.executeQuery(sb.toString());
-
-                Statement updateStatement = connection.createStatement();
-                hasher hasher = new hasher();
-                updateStatement.execute("BEGIN TRANSACTION");
-                while (rs.next()) {
-                    String update = "UPDATE " + tname +
-                            " SET " + entity.getWorksheetUniqueKey() + " = \"" +
-                            hasher.hasherDigester(rs.getString("toHash")) + "\" " +
-                            " WHERE rowid = " + rs.getString("rowid");
-                    updateStatement.executeUpdate(update);
-                }
-                updateStatement.execute("COMMIT");
-                updateStatement.close();
+            }
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
             }
         }
-        stmt.close();
     }
 
     /**
@@ -222,94 +243,107 @@ public final class TabularDataConverter {
      *
      * @param conn  A valid connection to a destination database.
      * @param tname The name to use for the table in the destination database.
-     * @throws SQLException
      */
-    private void buildTable(Connection conn, String tname) throws SQLException {
+    private void buildTable(Connection conn, String tname) {
         int colcnt, cnt;
-        Statement stmt = conn.createStatement();
-        // Counter for machine-generated column names.
-        int col_cnt = 0;
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            // Counter for machine-generated column names.
+            int col_cnt = 0;
 
-        // Generate a short string of random characters to use for machine-
-        // generated column names if the data source provides a blank column
-        // name.
-        char[] rand_prefix_arr = new char[10];
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int alphindex;
-        Random randgen = new Random();
-        for (cnt = 0; cnt < rand_prefix_arr.length; cnt++) {
-            alphindex = randgen.nextInt(alphabet.length());
-            rand_prefix_arr[cnt] = alphabet.charAt(alphindex);
-        }
-        String rand_prefix = String.copyValueOf(rand_prefix_arr);
-
-        // if this table exists, drop it
-        stmt.executeUpdate("DROP TABLE IF EXISTS [" + tname + "]");
-
-        // set up the table definition query
-        String query = "CREATE TABLE [" + tname + "] (";
-        colcnt = 0;
-        for (String colname : source.tableGetNextRow()) {
-            if (colcnt++ > 0)
-                query += ", ";
-            // If the column name is blank, generate a suitable name.
-            if (colname.trim().equals("")) {
-                colname = tname + "_" + rand_prefix + "_" + col_cnt;
-                col_cnt++;
+            // Generate a short string of random characters to use for machine-
+            // generated column names if the data source provides a blank column
+            // name.
+            char[] rand_prefix_arr = new char[10];
+            String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            int alphindex;
+            Random randgen = new Random();
+            for (cnt = 0; cnt < rand_prefix_arr.length; cnt++) {
+                alphindex = randgen.nextInt(alphabet.length());
+                rand_prefix_arr[cnt] = alphabet.charAt(alphindex);
             }
-            colname = fixSQLiteIdentifierName(colname);
-            query += "\"" + colname + "\"";
-        }
-        query += ")";
-        //fimsPrinter.out.println(query);
+            String rand_prefix = String.copyValueOf(rand_prefix_arr);
 
-        // create the table
-        stmt.executeUpdate(query);
+            // if this table exists, drop it
+            stmt.executeUpdate("DROP TABLE IF EXISTS [" + tname + "]");
 
-        // create a prepared statement for insert queries
-        query = "INSERT INTO [" + tname + "] VALUES (";
-        for (cnt = 0; cnt < colcnt; cnt++) {
-            if (cnt > 0)
-                query += ", ";
-            query += "?";
-        }
-        query += ")";
-        //fimsPrinter.out.println(query);
-        PreparedStatement insstmt = conn.prepareStatement(query);
+            // set up the table definition query
+            String query = "CREATE TABLE [" + tname + "] (";
+            colcnt = 0;
+            for (String colname : source.tableGetNextRow()) {
+                if (colcnt++ > 0)
+                    query += ", ";
+                // If the column name is blank, generate a suitable name.
+                if (colname.trim().equals("")) {
+                    colname = tname + "_" + rand_prefix + "_" + col_cnt;
+                    col_cnt++;
+                }
+                colname = fixSQLiteIdentifierName(colname);
+                query += "\"" + colname + "\"";
+            }
+            query += ")";
+            //fimsPrinter.out.println(query);
 
-        // Start a new transaction for all of the INSERT statements.  This
-        // dramatically improves the run time from many minutes for a large data
-        // source to a matter of seconds.
-        stmt.execute("BEGIN TRANSACTION");
+            // create the table
+            stmt.executeUpdate(query);
 
-        // populate the table with the source data
-        while (source.tableHasNextRow()) {
-            cnt = 0;
-            StringBuilder sb = new StringBuilder();
-            for (String dataval : source.tableGetNextRow()) {
-                //fimsPrinter.out.println(dataval);
-                sb.append(dataval);
-                insstmt.setString(++cnt, dataval);
+            // create a prepared statement for insert queries
+            query = "INSERT INTO [" + tname + "] VALUES (";
+            for (cnt = 0; cnt < colcnt; cnt++) {
+                if (cnt > 0)
+                    query += ", ";
+                query += "?";
+            }
+            query += ")";
+            //fimsPrinter.out.println(query);
+            PreparedStatement insstmt = conn.prepareStatement(query);
+
+            // Start a new transaction for all of the INSERT statements.  This
+            // dramatically improves the run time from many minutes for a large data
+            // source to a matter of seconds.
+            stmt.execute("BEGIN TRANSACTION");
+
+            // populate the table with the source data
+            while (source.tableHasNextRow()) {
+                cnt = 0;
+                StringBuilder sb = new StringBuilder();
+                for (String dataval : source.tableGetNextRow()) {
+                    //fimsPrinter.out.println(dataval);
+                    sb.append(dataval);
+                    insstmt.setString(++cnt, dataval);
+                }
+
+                // Supply blank strings for any missing columns.  This does not appear
+                // to be strictly necessary, at least with the Sqlite driver we're
+                // using, but it is included as insurance against future changes.
+                while (cnt < colcnt) {
+                    insstmt.setString(++cnt, "");
+                }
+
+                // Only execute this portion of the strinbuilder identified ANY datavalues for this row
+                if (!sb.toString().equals("")) {
+                    // add the row to the database
+                    insstmt.executeUpdate();
+                }
             }
 
-            // Supply blank strings for any missing columns.  This does not appear
-            // to be strictly necessary, at least with the Sqlite driver we're
-            // using, but it is included as insurance against future changes.
-            while (cnt < colcnt) {
-                insstmt.setString(++cnt, "");
+            try {
+                insstmt.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
             }
 
-            // Only execute this portion of the strinbuilder identified ANY datavalues for this row
-            if (!sb.toString().equals("")) {
-                // add the row to the database
-                insstmt.executeUpdate();
+            // end the transaction
+            stmt.execute("COMMIT");
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
             }
         }
-
-        insstmt.close();
-
-        // end the transaction
-        stmt.execute("COMMIT");
-        stmt.close();
     }
 }

@@ -104,7 +104,7 @@ public class Attribute implements Comparable {
      * @param parent
      * @param colNames
      */
-    public void printD2RQ(PrintWriter pw, Object parent, List<String> colNames) throws Exception {
+    public void printD2RQ(PrintWriter pw, Object parent, List<String> colNames) {
 
         String classMap = ((Entity) parent).classMap();
         String table = ((Entity) parent).getWorksheet();

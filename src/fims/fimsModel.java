@@ -155,7 +155,7 @@ public class fimsModel {
      *
      * @return
      */
-    public String writeJSON(File file) throws Exception {
+    public String writeJSON(File file) {
         //return stringBuilder.toString();
         return queryWriter.writeJSON(file);
     }
@@ -163,13 +163,13 @@ public class fimsModel {
     /**
      * Return output as an Excel file
      */
-    public String writeExcel(File file) throws Exception {
+    public String writeExcel(File file) {
         return queryWriter.writeExcel(file);
     }
       /**
      * Return output as an HTML table
      */
-    public String writeHTML(File file) throws Exception {
+    public String writeHTML(File file) {
         return queryWriter.writeHTML(file);
     }
 

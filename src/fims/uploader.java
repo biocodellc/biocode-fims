@@ -1,7 +1,12 @@
 package fims;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
+
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.channels.Channels;
@@ -23,6 +28,7 @@ public class uploader {
     private String connectionPoint;
     private String graphID;
 
+    private static Logger logger = LoggerFactory.getLogger(uploader.class);
 
     public String getConnectionPoint() {
         return this.getService() + "?graph="+graphID;
@@ -55,7 +61,7 @@ public class uploader {
             this.endpoint = service + "?graph=" + URLEncoder.encode(graphID, encoding);
             //System.out.println(endpoint);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.warn("UnsupportedEncodingException", e);
         }
         this.file = file;
     }
@@ -63,7 +69,7 @@ public class uploader {
     /**
      * @method execute the update
      */
-    public String execute() throws Exception {
+    public String execute() {
         try {
             // Setup URL connection to this endpoint
             URL url = new URL(endpoint);
@@ -84,11 +90,12 @@ public class uploader {
                 // Process line...
             }
             rd.close();
-        } catch (Exception e) {
+        } catch (MalformedURLException e) {
             // throw a general exception here since we want to inform the call application of any mis-deeds
             // typically this will be the service being down
-            //e.printStackTrace();
-            throw e;
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
         return graphID;
     }
@@ -122,7 +129,7 @@ public class uploader {
             if (brackets) toEncode += ">";
             return URLEncoder.encode(toEncode, encoding);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.warn("UnsupportedEncodingException", e);
             return null;
         }
     }
@@ -140,11 +147,7 @@ public class uploader {
         //String uuid = "urn%3Auuid%3A2eddf62e-a58a-11e3-aae7-d4c45d837ce1";
         //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
         uploader u = new uploader("http://data.biscicol.org/ds/data",file);
-        try {
-           System.out.println( u.execute());
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+       System.out.println( u.execute());
     }
 }
 

@@ -5,7 +5,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
-import net.sf.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,12 +39,8 @@ public class availableProjectsFetcher {
                 availableProjects.add(new availableProject(iterator.next()));
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new FIMSRuntimeException(500, e);
         }
     }
 
@@ -73,14 +68,18 @@ public class availableProjectsFetcher {
         return availableProjects;
     }
 
-    public static String readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
+    public static String readJsonFromUrl(String url) {
+        try {
+            InputStream is = new URL(url).openStream();
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-        String json = org.apache.commons.io.IOUtils.toString(br);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String json = org.apache.commons.io.IOUtils.toString(br);
 
-        is.close();
-        return json;
+            is.close();
+            return json;
+        } catch(IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     public static void main (String[] args) throws Exception {

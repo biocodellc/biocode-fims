@@ -1,10 +1,15 @@
 package digester;
 
+import com.hp.hpl.jena.graph.query.PatternStageBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import renderers.Message;
 import renderers.RowMessage;
+import settings.FIMSRuntimeException;
 import settings.fimsPrinter;
 import utils.SettingsManager;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.*;
@@ -30,6 +35,7 @@ public class Worksheet {
     // Store the reference for the columns associated with this worksheet
     private final java.util.List<Column_trash> columns = new ArrayList<Column_trash>();
 
+    private static Logger logger = LoggerFactory.getLogger(Worksheet.class);
     /**
      * Add columns element to the worksheet element
      *
@@ -223,11 +229,7 @@ public class Worksheet {
      */
     public boolean run(Object parent) {
         SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sm.loadProperties();
 
         // Set a reference to the validation parent
         validation = (Validation) parent;
@@ -271,14 +273,15 @@ public class Worksheet {
                     }
 
                     // Close the connection
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    String message = "\tUnable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column";
-                    if (e.getMessage() != null)
-                        message += ", message = " + e.getMessage();
-                    //fimsPrinter.out.println(message);
-                    System.err.println(message);
-                    //return false;
+                } catch (NoSuchMethodException e) {
+                   throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
+                        "\" column", 500, e);
+                } catch(IllegalAccessException e) {
+                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
+                        "\" column", 500, e);
+                } catch (InvocationTargetException e) {
+                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
+                        "\" column", 500, e);
                 }
 
                 // Display warnings/etc...
@@ -290,7 +293,7 @@ public class Worksheet {
         try {
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("SQLException", e);
         }
 
         return errorFree();

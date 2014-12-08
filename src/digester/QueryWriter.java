@@ -6,11 +6,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
-import run.templateProcessor;
-import settings.PathManager;
-import settings.fimsPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,13 +31,12 @@ public class QueryWriter {
     String sheetName;
     Workbook wb = new HSSFWorkbook();
     Sheet sheet;
+    private static Logger logger = LoggerFactory.getLogger(QueryWriter.class);
 
     /**
      * @param attributes ArrayList of attributes passed as argument is meant to come from digester.Mapping instance
-     *
-     * @throws IOException
      */
-    public QueryWriter(ArrayList<Attribute> attributes, String sheetName, Validation validation) throws IOException {
+    public QueryWriter(ArrayList<Attribute> attributes, String sheetName, Validation validation) {
         this.sheetName = sheetName;
         this.attributes = attributes;
         this.validation = validation;
@@ -152,6 +150,7 @@ public class QueryWriter {
                 }
 
             } catch (Exception e) {
+                logger.warn("Exception", e);
                 // For now, do nothing.
             }
         }
@@ -215,7 +214,7 @@ public class QueryWriter {
     /**
      * Write output to a file
      */
-    public String writeExcel(File file) throws Exception {
+    public String writeExcel(File file) {
         // Header Row
         createHeaderRow(sheet);
         // Write the output to a file
@@ -231,16 +230,14 @@ public class QueryWriter {
             fileOut.close();
             return file.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new Exception(e.getMessage());
+            throw new FIMSRuntimeException(500, e);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new Exception(e.getMessage());
+            throw new FIMSRuntimeException(500, e);
         }
     }
 
 
-    public String writeJSON(File file) throws Exception {
+    public String writeJSON(File file) {
         // Header Row
         createHeaderRow(sheet);
 
@@ -301,7 +298,7 @@ public class QueryWriter {
         return writeFile(json.toString(), file);
     }
 
-    public String writeHTML(File file) throws Exception {
+    public String writeHTML(File file) {
         StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         // Header Row
@@ -381,14 +378,14 @@ public class QueryWriter {
             fop.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("IOException", e);
         } finally {
             try {
                 if (fop != null) {
                     fop.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.warn("IOException", e);
             }
         }
         return file.getAbsolutePath();
