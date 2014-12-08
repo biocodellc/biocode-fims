@@ -1,6 +1,10 @@
 package utils;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
+
 import java.io.*;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -12,17 +16,19 @@ import java.util.Iterator;
  */
 public class encodeURIcomponent {
 
-    public static void main(String[] args) throws Exception {
+    private static Logger logger = LoggerFactory.getLogger(encodeURIcomponent.class);
+
+    public static void main(String[] args) {
         if (!testURIcomponent()) {
-            System.out.println("Failed tests!");
+            logger.warn("Failed tests!");
         } else {
-            System.out.println("Passed tests!");
+            logger.info("Passed tests!");
         }
 
 
     }
 
-    public static boolean testURIcomponent() throws UnsupportedEncodingException {
+    public static boolean testURIcomponent() {
         encodeURIcomponent e = new encodeURIcomponent();
         ArrayList tests = new ArrayList();
         tests.add("dfofo&&");
@@ -33,10 +39,14 @@ public class encodeURIcomponent {
         while (i.hasNext()) {
             String value = (String) i.next();
              String encoded = e.encode(value);
-            String decoded = URLDecoder.decode(encoded,"utf-8");
-            System.out.println(value + ";" + encoded + ";" + decoded);
-            if (!value.equals(decoded))
-                return false;
+            try {
+                String decoded = URLDecoder.decode(encoded, "utf-8");
+                System.out.println(value + ";" + encoded + ";" + decoded);
+                if (!value.equals(decoded))
+                    return false;
+            } catch (UnsupportedEncodingException ex) {
+                throw new FIMSRuntimeException(null, 500, ex);
+            }
         }
         return true;
     }
