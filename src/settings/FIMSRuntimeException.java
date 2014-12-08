@@ -3,7 +3,7 @@ package settings;
 import org.json.simple.JSONObject;
 
 /**
- * An abstract exception to be extended by exceptions thrown to return appropriate responses.
+ * An exception class to wrap exceptions thrown by the biocode-fims system.
  */
 public class FIMSRuntimeException extends RuntimeException {
     String usrMessage = "Server Error";
@@ -43,7 +43,7 @@ public class FIMSRuntimeException extends RuntimeException {
 
     public FIMSRuntimeException(JSONObject response) {
         super((String) response.get("developerMessage"));
-        this.httpStatusCode = (Integer) response.get("httpStatusCode");
+        this.httpStatusCode = ((Long) response.get("httpStatusCode")).intValue();
         this.usrMessage = (String) response.get("usrMessage");
         this.developerMessage = (String) response.get("developerMessage");
     }

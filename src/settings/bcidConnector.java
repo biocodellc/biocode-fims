@@ -6,19 +6,13 @@ import net.sf.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import run.processController;
 import utils.SettingsManager;
 
-import javax.net.ssl.*;
 import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
 import java.nio.charset.Charset;
-import java.security.KeyManagementException;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -195,13 +189,11 @@ public class bcidConnector {
             createPOSTConnnection(url, postParams);
         } catch (MalformedURLException e) {
             throw new FIMSRuntimeException("malformed url: " + authentication_uri, 500, e);
+        } catch (BCIDConnectorException e) {
+            return false;
         }
 
-        if (getResponseCode() != 200) {
-            return false;
-        } else {
-            return true;
-        }
+        return true;
     }
 
     public Boolean getRefreshedToken() {
@@ -231,8 +223,7 @@ public class bcidConnector {
 
             if (tokenJSON.containsKey("usrMessage")) {
                 //TODO if usrMessage = 'invalid_grant' then the user needs to re-login
-                throw new FIMSRuntimeException((String) tokenJSON.get("usrMessage"),
-                        (String) tokenJSON.get("developerMessage"), (Integer) tokenJSON.get("httpStatusCode"));
+                throw new BCIDConnectorException(tokenJSON);
             }
 
             this.accessToken = tokenJSON.get("access_token").toString();
@@ -271,9 +262,7 @@ public class bcidConnector {
             throw new FIMSRuntimeException(500, e);
         }
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
-        if (getResponseCode() != 200) {
-            throw new FIMSRuntimeException(response);
-        }
+
         return response.get("prefix").toString();
     }
 
@@ -301,9 +290,7 @@ public class bcidConnector {
         }
 
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
-        if (getResponseCode() != 200) {
-            throw new FIMSRuntimeException(response);
-        }
+
         return response.get("prefix").toString();
     }
 
@@ -326,10 +313,6 @@ public class bcidConnector {
         }
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
 
-        if (getResponseCode() != 200) {
-            throw new FIMSRuntimeException(response);
-        }
-
         return response.get("success").toString();
     }
 
@@ -347,10 +330,6 @@ public class bcidConnector {
         }
         try {
             JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(new URL(url)));
-
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException(response);
-            }
 
             // loop array
             JSONArray msg = (JSONArray) response.get("projects");
@@ -412,11 +391,6 @@ public class bcidConnector {
             throw new FIMSRuntimeException(500, e);
         }
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
-
-        // Catch Error using response code...
-        if (getResponseCode() != 200) {
-            throw new FIMSRuntimeException(response);
-        }
 
         return response.toString();
     }
@@ -482,28 +456,28 @@ public class bcidConnector {
             JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
 
             // Some error message was returned from the expedition validation service
-            if (getResponseCode() != 200) {
+//            if (getResponseCode() != 200) {
 //                    throw new NotAuthorizedException("" +
 //                            "<br>User authorization error. " +
 //                            "<br>This account may not be attached to this dataset or project." +
 //                            "<br>A common cause of this error is when a person other than the one generating" +
 //                            "<br>the dataset code attempts to load data to that dataset.");
-                throw new FIMSRuntimeException(response);
+//                throw new FIMSRuntimeException(response);
+//            } else {
+            if (response.containsKey("update")) {
+                return false;
+            } else if (response.containsKey("insert")) {
+                return true;
+                /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                        "Do you wish to create it now?" +
+                        "\nIf you choose to continue, your data will be associated with this new expedition code.";
+                Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                return continueOperation;
+                */
             } else {
-                if (response.containsKey("update")) {
-                    return false;
-                } else if (response.containsKey("insert")) {
-                    return true;
-                    /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
-                            "Do you wish to create it now?" +
-                            "\nIf you choose to continue, your data will be associated with this new expedition code.";
-                    Boolean continueOperation = fimsInputter.in.continueOperation(message);
-                    return continueOperation;
-                    */
-                } else {
-                    return false;
-                }
+                return false;
             }
+//            }
         } catch (MalformedURLException e) {
             throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
         }
@@ -618,18 +592,18 @@ public class bcidConnector {
             // Get the response cookies
             setCookies(conn.getHeaderFields().get("Set-Cookie"));
 
-            // try and authenticate if needed
-            if (getResponseCode() == 401) {
-                if ( accessToken != null && !triedToRefreshToken) {
+            if (getResponseCode() != 200) {
+                // try and authenticate if needed
+                if ( getResponseCode() == 401 && (accessToken != null && !triedToRefreshToken)) {
                     getValidAccessToken();
                     return createPOSTConnnection(url, postParams);
                 } else {
                     try {
                         JSONObject JSONresponse = (JSONObject) JSONValue.parse(response.toString());
-                        throw new FIMSRuntimeException(JSONresponse);
+                        throw new BCIDConnectorException(JSONresponse);
                     // response wasn't valid json
                     } catch (NullPointerException e) {
-                        throw new FIMSRuntimeException(responseCode, e);
+                        throw new BCIDConnectorException(responseCode, e);
                     }
                 }
             }
@@ -709,15 +683,15 @@ public class bcidConnector {
             // Get the response cookies
             setCookies(conn.getHeaderFields().get("Set-Cookie"));
 
-            // try and authenticate if needed
-            if (getResponseCode() == 401) {
-                if ( accessToken != null && !triedToRefreshToken) {
+            if (getResponseCode() != 200) {
+                // try and authenticate if needed
+                if ( getResponseCode() == 401 && (accessToken != null && !triedToRefreshToken)) {
                     getValidAccessToken();
                     return createGETConnection(url);
                 } else {
                     try {
                         JSONObject JSONresponse = (JSONObject) JSONValue.parse(response.toString());
-                        throw new FIMSRuntimeException(JSONresponse);
+                        throw new BCIDConnectorException(JSONresponse);
                         // response wasn't valid json
                     } catch (NullPointerException e) {
                         throw new FIMSRuntimeException(responseCode, e);
