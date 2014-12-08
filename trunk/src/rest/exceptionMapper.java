@@ -4,6 +4,7 @@ import com.sun.jersey.api.core.ExtendedUriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.processController;
+import settings.BCIDConnectorException;
 import settings.FIMSRuntimeException;
 import settings.errorInfo;
 
@@ -37,7 +38,7 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse( Exception e) {
-        logger.error(null, e);
+        logException(e);
         errorInfo errorInfo = getErrorInfo(e);
         String mediaType;
 
@@ -120,6 +121,21 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
             return ((FIMSRuntimeException) e).getHttpStatusCode();
         } else {
             return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
+        }
+    }
+
+    private void logException(Exception e) {
+        // don't log BCIDConnectorExceptions stacktrace
+        if (!(e instanceof BCIDConnectorException)) {
+            logger.error(null, e);
+        } else {
+            if (((BCIDConnectorException) e).getHttpStatusCode() == 500) {
+                logger.error("Error returned from the bcid system. Look in bcid logs for the stacktrace.");
+            } else if (((BCIDConnectorException) e).getHttpStatusCode() == 400) {
+                logger.error("Bad Request sent to bcid system");
+            } else {
+                logger.error("Bcid system returned httpStatusCode: {}", ((BCIDConnectorException) e).getHttpStatusCode());
+            }
         }
     }
 }
