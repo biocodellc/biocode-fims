@@ -1,21 +1,17 @@
 package triplify;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.FileUtils;
 import de.fuberlin.wiwiss.d2rq.jena.ModelD2RQ;
 import digester.Mapping;
-import reader.TabularDataConverter;
-import reader.plugins.TabularDataReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import run.processController;
+import settings.FIMSRuntimeException;
 import settings.PathManager;
 import settings.fimsPrinter;
 
-import javax.print.DocFlavor;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * Triplify source file, using code adapted from the BiSciCol Triplifier
@@ -29,13 +25,14 @@ public class triplifier {
     private String updateOutputFile;
     private String filenamePrefix;
 
+    private static Logger logger = LoggerFactory.getLogger(triplifier.class);
+
     /**
      * triplify dataset on the tabularDataReader, writing output to the specified outputFolder and filenamePrefix
      * @param filenamePrefix
      * @param outputFolder
-     * @throws Exception
      */
-    public triplifier(String filenamePrefix, String outputFolder) throws Exception {
+    public triplifier(String filenamePrefix, String outputFolder) {
         this.outputFolder = outputFolder;
         this.filenamePrefix = filenamePrefix;
     }
@@ -66,9 +63,8 @@ public class triplifier {
      *
      * @param mapping
      * @return
-     * @throws Exception
      */
-    public void getTriples(Mapping mapping, processController processController) throws Exception {
+    public void getTriples(Mapping mapping, processController processController) {
         //String filenamePrefix = inputFile.getName();
         System.gc();
         String status = "\tWriting Temporary Output ...";
@@ -80,13 +76,19 @@ public class triplifier {
                 FileUtils.langN3, "urn:x-biscicol:");
         // Write the model as simply a Turtle file
         File tripleFile = PathManager.createUniqueFile(filenamePrefix + ".n3", outputFolder);
-        FileOutputStream fos = new FileOutputStream(tripleFile);
-        model.write(fos, FileUtils.langNTriple,null);
-        fos.close();
+        try {
+            FileOutputStream fos = new FileOutputStream(tripleFile);
+            model.write(fos, FileUtils.langNTriple, null);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            logger.warn("IOException thrown trying to close FileOutputStream object.", e);
+        }
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 
         if (tripleFile.length() < 1)
-            throw new Exception("No data has been written to database!  No triples to write.");
+            throw new FIMSRuntimeException("No data has been written to database!  No triples to write.", 500);
     }
 
     /**
@@ -96,16 +98,19 @@ public class triplifier {
      * @param mapping
      * @param verifyFile
      * @return
-     * @throws Exception
      */
-    private String getMapping(String filenamePrefix, Mapping mapping, Boolean verifyFile) throws Exception {
+    private String getMapping(String filenamePrefix, Mapping mapping, Boolean verifyFile) {
         if (verifyFile)
             mapping.connection.verifyFile();
 
         File mapFile = PathManager.createUniqueFile(filenamePrefix + ".mapping.n3", outputFolder);
-        PrintWriter pw = new PrintWriter(mapFile);
-        mapping.printD2RQ(pw, mapping);
-        pw.close();
+        try {
+            PrintWriter pw = new PrintWriter(mapFile);
+            mapping.printD2RQ(pw, mapping);
+            pw.close();
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         return outputFolder + File.separator + mapFile.getName();
     }
 }
