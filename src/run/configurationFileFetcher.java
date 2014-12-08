@@ -1,7 +1,11 @@
 package run;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.jsoup.Jsoup;
+import settings.FIMSRuntimeException;
 import settings.PathManager;
+import settings.bcidConnector;
 import utils.SettingsManager;
 import utils.urlFreshener;
 import java.io.*;
@@ -33,7 +37,7 @@ public class configurationFileFetcher {
      *
      * @return
      */
-    public Boolean getCachedConfigFile(String defaultOutputDirectory) throws Exception {
+    public Boolean getCachedConfigFile(String defaultOutputDirectory) {
         // Create a file reference
         File file = new File(defaultOutputDirectory, configFileName);
 
@@ -57,7 +61,7 @@ public class configurationFileFetcher {
      *
      * @throws IOException
      */
-    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) throws Exception {
+    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) {
         this.project_id = project_id;
         configFileName = "config." + project_id + ".xml";
 
@@ -75,9 +79,21 @@ public class configurationFileFetcher {
         // get a fresh copy if the useCacheResults is false
         if (!useCacheResults) {
             // Get the URL for this configuration File by fetching it from the project service
-            String urlString = Jsoup.connect(projectServiceString).timeout(10000).get().body().html();
-            // Initialize the connection
-            init(new URL(urlString), defaultOutputDirectory);
+            bcidConnector bcidConnector = new bcidConnector();
+
+            try {
+                JSONObject response = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(projectServiceString)));
+                String urlString = (String) response.get("url");
+                try {
+                    // Initialize the connection
+                    init(new URL(urlString), defaultOutputDirectory);
+                } catch (MalformedURLException e) {
+                    throw new FIMSRuntimeException("configuration file url: " + urlString + " returned from bcid system for project id: " +
+                            project_id + " is malformed.", 500, e);
+                }
+            } catch (MalformedURLException e) {
+                throw new FIMSRuntimeException(500, e);
+            }
         }
     }
 
@@ -87,65 +103,62 @@ public class configurationFileFetcher {
      * @param defaultOutputDirectory
      * @throws Exception
      */
-    private void init(URL url, String defaultOutputDirectory) throws Exception {
+    private void init(URL url, String defaultOutputDirectory) {
         boolean redirect = false;
 
         // Always ensure we have the freshest copy of a particular URL
         urlFreshener freshener = new urlFreshener();
-        url = freshener.forceLatestURL(url);
+        try {
+            url = freshener.forceLatestURL(url);
 
-        HttpURLConnection.setFollowRedirects(true);
+            HttpURLConnection.setFollowRedirects(true);
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setUseCaches(false);
-        conn.setDefaultUseCaches(false);
-        conn.setRequestMethod("GET");
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-        conn.setReadTimeout(5000);
-        conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-        conn.addRequestProperty("User-Agent", "Mozilla");
-        conn.addRequestProperty("Referer", "google.com");
-        conn.addRequestProperty("Cache-Control", "no-store,no-cache");
-
-
-        // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
-        int status = conn.getResponseCode();
-        if (status != HttpURLConnection.HTTP_OK) {
-            if (status == HttpURLConnection.HTTP_MOVED_TEMP
-                    || status == HttpURLConnection.HTTP_MOVED_PERM
-                    || status == HttpURLConnection.HTTP_SEE_OTHER)
-                redirect = true;
-        }
-
-        // Handle redirects
-        if (redirect) {
-            // get redirect url from "location" header field
-            String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
-            // open the  connnection
-
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setUseCaches(false);
             conn.setDefaultUseCaches(false);
-            conn = (HttpURLConnection) new URL(newUrl).openConnection();
-            conn.addRequestProperty("Cache-Control", "no-store,no-cache");
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setReadTimeout(5000);
             conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
             conn.addRequestProperty("User-Agent", "Mozilla");
             conn.addRequestProperty("Referer", "google.com");
-        }
+            conn.addRequestProperty("Cache-Control", "no-store,no-cache");
 
-        conn.connect();
-        InputStream inputStream = conn.getInputStream();
 
-        // Set outputFile location
-        try {
+            // Handle response Codes, Normally, 3xx is redirect, setting redirect boolean variable if it is a redirect
+            int status = conn.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                        || status == HttpURLConnection.HTTP_MOVED_PERM
+                        || status == HttpURLConnection.HTTP_SEE_OTHER)
+                    redirect = true;
+            }
+
+
+            // Handle redirects
+            if (redirect) {
+                // get redirect url from "location" header field
+                String newUrl = freshener.forceLatestURL(conn.getHeaderField("Location"));
+                // open the  connnection
+
+                conn.setUseCaches(false);
+                conn.setDefaultUseCaches(false);
+                conn = (HttpURLConnection) new URL(newUrl).openConnection();
+                conn.addRequestProperty("Cache-Control", "no-store,no-cache");
+                conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+                conn.addRequestProperty("User-Agent", "Mozilla");
+                conn.addRequestProperty("Referer", "google.com");
+            }
+
+            conn.connect();
+            InputStream inputStream = conn.getInputStream();
+
+            // Set outputFile location
             outputFile = PathManager.createFile(configFileName, defaultOutputDirectory);
-        } catch (Exception e) {
-            throw new IOException("Unable to create configuration file", e);
-        }
 
-        // Write the data using input and output streams
-        FileOutputStream os = new FileOutputStream(outputFile);
-        try {
+            // Write the data using input and output streams
+            FileOutputStream os = new FileOutputStream(outputFile);
             byte[] buffer = new byte[1024];
             int bytesRead;
             //read from is to buffer
@@ -155,7 +168,7 @@ public class configurationFileFetcher {
             inputStream.close();
 
             // Debugging where file output is stored
-            System.out.println("writing " + url + " to " + outputFile.getAbsolutePath());
+//            System.out.println("writing " + url + " to " + outputFile.getAbsolutePath());
 
             //flush OutputStream to write any buffered data to file
             os.flush();
@@ -163,11 +176,10 @@ public class configurationFileFetcher {
             // Close the connection input stream
             conn.getInputStream().close();
 
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         } catch (IOException e) {
-            throw new Exception("Unable to get configuration file, server down or network error ", e);
-        } finally {
-            // Disconnect at the end
-            conn.disconnect();
+            throw new FIMSRuntimeException(500, e);
         }
     }
 
@@ -175,14 +187,8 @@ public class configurationFileFetcher {
         configurationFileFetcher cFF = null;
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
 
-        try {
-            cFF = new configurationFileFetcher(1, defaultOutputDirectory, false);
-            // System.out.println(readFile(cFF.getOutputFile()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        cFF = new configurationFileFetcher(1, defaultOutputDirectory, false);
+        // System.out.println(readFile(cFF.getOutputFile()));
     }
 
 }

@@ -71,7 +71,7 @@ public class PathManager {
      * @param pFilename Name of the file.
      * @return The new file.
      */
-    public static File createUniqueFile(String pFilename, String pOutputFolder) throws Exception {
+    public static File createUniqueFile(String pFilename, String pOutputFolder) {
 
         // Get just the filename
         File fileFilename = new File(pFilename);
@@ -96,7 +96,7 @@ public class PathManager {
      * @param pFilename Name of the file.
      * @return The new file.
      */
-    public static File createFile(String pFilename, String pOutputFolder) throws Exception {
+    public static File createFile(String pFilename, String pOutputFolder) {
         File file = new File(pOutputFolder, pFilename);
         if (file.exists()) {
             file.delete();

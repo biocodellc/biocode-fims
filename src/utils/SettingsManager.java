@@ -1,5 +1,8 @@
 package utils;
 
+import org.ibex.nestedvm.*;
+import settings.FIMSRuntimeException;
+
 import java.io.*;
 import java.net.URL;
 import java.util.Properties;
@@ -95,19 +98,20 @@ public class SettingsManager {
      * Attempt to load the properties file associated with this util.SettingsManager.
      * This method must be called to properly initialize the util.SettingsManager
      * before it can be used by Configurable classes.
-     *
-     * @throws java.io.FileNotFoundException
      */
-    public void loadProperties() throws FileNotFoundException {
+    public void loadProperties() {
         try {
             props = new Properties();
             FileInputStream in = new FileInputStream(propsfile);
 
-
             props.load(in);
             in.close();
-        } catch (Exception e) {
-            throw new FileNotFoundException("Unable to find settings file " + propsfile + ". Make sure you have included this file in the root class of your deployed application!");
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException("Unable to find settings file " + propsfile +
+                    ". Make sure you have included this file in the root class of your deployed application!", 500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException("Error while loading the settings file " + propsfile + ". Is the file correct?",
+                    500, e);
         }
     }
 
