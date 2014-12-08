@@ -3,9 +3,10 @@ package digester;
 import static ch.lambdaj.Lambda.*;
 
 import ch.lambdaj.group.Group;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
-import renderers.Message;
 import renderers.RendererInterface;
 import renderers.RowMessage;
 import run.processController;
@@ -31,6 +32,7 @@ public class Validation implements RendererInterface {
     private File sqliteFile;
     // A SQL Lite connection is mainted by the validation class so we can run through the various rules
     private java.sql.Connection connection = null;
+    private static Logger logger = LoggerFactory.getLogger(Validation.class);
 
     // Create a reference to the mapping component
     private Mapping mapping;
@@ -38,7 +40,7 @@ public class Validation implements RendererInterface {
     /**
      * Construct using tabularDataReader object, defining how to read the incoming tabular data
      */
-    public Validation() throws Exception {
+    public Validation() {
 
     }
 
@@ -111,50 +113,35 @@ public class Validation implements RendererInterface {
      * Create a SQLLite database instance
      *
      * @return
-     *
-     * @throws Exception
      */
-    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
+    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) {
         PathManager pm = new PathManager();
         File processDirectory = null;
 
-        try {
-            processDirectory = pm.setDirectory(outputFolder);
-        } catch (Exception e) {
-            // e.printStackTrace();
-            throw new Exception("unable to set output directory " + processDirectory);
-        }
+        processDirectory = pm.setDirectory(outputFolder);
 
         // Load the SQLite JDBC driver.
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
-            //ex.printStackTrace();
-            throw new Exception("could not load the SQLite JDBC driver.");
+            throw new FIMSRuntimeException("could not load the SQLite JDBC driver.", 500, ex);
         }
 
-        try {
-            // Create SQLite file
-            //String pathPrefix = processDirectory + File.separator + inputFile.getName();
-            String pathPrefix = processDirectory + File.separator + filenamePrefix;
-            sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
+        // Create SQLite file
+        //String pathPrefix = processDirectory + File.separator + inputFile.getName();
+        String pathPrefix = processDirectory + File.separator + filenamePrefix;
+        sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
 
-            TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
-            tdc.convert(mapping);
-            tabularDataReader.closeFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception(e.getMessage(), e);
-        }
-
+        TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
+        tdc.convert(mapping);
+        tabularDataReader.closeFile();
 
         // Create the SQLLite connection
         try {
             Connection localConnection = new Connection(sqliteFile);
             connection = java.sql.DriverManager.getConnection(localConnection.getJdbcUrl());
-        } catch (Exception e) {
-            // e.printStackTrace();
-            throw new Exception("Trouble finding SQLLite Connection", e);
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException("Trouble finding SQLLite Connection", 500, e);
         }
 
     }
@@ -216,11 +203,7 @@ public class Validation implements RendererInterface {
                 java.util.List<RowMessage> rowMessageList = rowGroup.find(key);
 
                 // Parse the Row Messages that are meant for HTML display
-                try {
-                    commandLineWarningSB.append(htmlParser.convert(key)+"\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                commandLineWarningSB.append(htmlParser.convert(key)+"\n");
 
                 for (RowMessage m : rowMessageList) {
                     warningSB.append("<dd>" + m.print() + "</dd>");
@@ -276,10 +259,8 @@ public class Validation implements RendererInterface {
      * Begin the validation run.process, looping through worksheets
      *
      * @return
-     *
-     * @throws Exception
      */
-    public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) throws Exception {
+    public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) {
         fimsPrinter.out.println("Validate ...");
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
@@ -291,18 +272,13 @@ public class Validation implements RendererInterface {
             sheet = worksheets.get(0);
             sheetName = sheet.getSheetname();
             tabularDataReader.setTable(sheetName);
-        } catch (Exception e) {
+        } catch (FIMSException e) {
             // An error here means the sheetname was not found, throw an application message
             sheet.getMessages().addLast(new RowMessage("Unable to find a required worksheet named '" + sheetName + "' (no quotes)", "Spreadsheet check", RowMessage.ERROR));
             return false;
         }
 
-        try {
-            createSqlLite(filenamePrefix, outputFolder, mapping);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception(e.getMessage(), e);
-        }
+        createSqlLite(filenamePrefix, outputFolder, mapping);
 
         boolean errorFree = true;
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
@@ -324,7 +300,7 @@ public class Validation implements RendererInterface {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("SQLException", e);
         }
     }
 

@@ -57,7 +57,7 @@ public class Relation {
      * @param parent Reference to parent entity (a Mapping)
      */
     public void printD2RQ(PrintWriter
-                                  pw, Object parent) throws Exception {
+                                  pw, Object parent) {
         Mapping mapping = (Mapping) parent;
 
         Entity subjEntity = mapping.findEntity(subject.toString());

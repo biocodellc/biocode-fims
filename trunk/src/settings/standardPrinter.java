@@ -1,6 +1,5 @@
 package settings;
 
-import settings.fimsPrinter;
 
 /**
  * Send output to fimsPrinter.out (for command-line applications)

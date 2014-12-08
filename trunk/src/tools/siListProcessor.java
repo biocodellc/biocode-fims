@@ -2,6 +2,9 @@ package tools;
 
 import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.MultiMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 
 import java.io.*;
 import java.util.*;
@@ -15,6 +18,8 @@ public class siListProcessor {
     private File output_directory, inputFile, listsFile;
     private String delimiter = "\\|";
     private HashMap<String, String> departmentLookup = new HashMap<String, String>();
+
+    private static Logger logger = LoggerFactory.getLogger(siListProcessor.class);
 
     public siListProcessor() {
         output_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
@@ -37,25 +42,37 @@ public class siListProcessor {
      * Return an iterator over distinct departments
      *
      * @return
-     *
-     * @throws IOException
      */
-    public Iterator distinctDepartment() throws IOException {
+    public Iterator distinctDepartment() {
         Set<String> department = new HashSet<String>();
 
         String line;
+        FileReader fr;
+
+        try {
+            fr = new FileReader(listsFile);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+
         // Loop the Lists file
-        BufferedReader br = new BufferedReader(new FileReader(listsFile));
-        while ((line = br.readLine()) != null) {
-            // Create a list element holding each of the values
-            try {
+        BufferedReader br = new BufferedReader(fr);
+
+        try {
+            while ((line = br.readLine()) != null) {
+                // Create a list element holding each of the values
                 listElement elem = new listElement(line);
                 department.add(elem.getDepartment());
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
+            }
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                logger.warn("IOException", e);
             }
         }
-        br.close();
         return department.iterator();
     }
 
@@ -84,32 +101,40 @@ public class siListProcessor {
      * @param department
      *
      * @return
-     *
-     * @throws IOException
      */
-    public MultiHashMap loopDepartment(String department) throws IOException {
+    public MultiHashMap loopDepartment(String department) {
         department = mapDepartment(department);
 
         MultiMap departmentMap = new MultiHashMap();
         String line;
 
         // Loop the Lists file
-        BufferedReader br = new BufferedReader(new FileReader(listsFile));
-        while ((line = br.readLine()) != null) {
-            // Create a list element holding each of the values
-            try {
+        FileReader fr = null;
+        try {
+            fr = new FileReader(listsFile);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+        BufferedReader br = new BufferedReader(fr);
+        try {
+            while ((line = br.readLine()) != null) {
+                // Create a list element holding each of the values
                 listElement elem = new listElement(line);
                 // Search for our department or the default ALL departments
                 if (elem.getDepartment().equals(department) ||
                         elem.getDepartment().equals("")) {
                     departmentMap.put(elem.getListName(), elem.getValue());
                 }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
             }
-
+        } catch(IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                br.close();
+            } catch(IOException e) {
+                logger.warn("IOException", e);
+            }
         }
-        br.close();
 
         // Return the lists for this department
         return (MultiHashMap) departmentMap;
@@ -143,7 +168,7 @@ public class siListProcessor {
         return sb;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         siListProcessor t = new siListProcessor();
         StringBuilder sb = t.printList(t.loopDepartment("Mineral Sciences"));
         System.out.println(sb.toString());
@@ -164,21 +189,17 @@ public class siListProcessor {
          *
          * @param line
          */
-        public listElement(String line) throws Exception {
+        public listElement(String line) {
             String[] elements = line.split(delimiter);
-            try {
-                this.listName = elements[0];
-                this.department = elements[1];
-                // 3rd element often empty, just call it an empty value
-                //try {
-                    this.value = elements[2];
-                //}   catch (Exception e2) {
-                //    this.value = "";
-                    //System.out.println(line);
-                //}
-            } catch (Exception e) {
-                throw new Exception("bad line: " + line, e);
-            }
+            this.listName = elements[0];
+            this.department = elements[1];
+            // 3rd element often empty, just call it an empty value
+            //try {
+                this.value = elements[2];
+            //}   catch (Exception e2) {
+            //    this.value = "";
+                //System.out.println(line);
+            //}
         }
 
         public String getListName() {

@@ -127,7 +127,7 @@ public class deepRoots {
      *
      * @return returns the identifier for this conceptAlias in this DeepRoots file
      */
-    public String lookupPrefix(Entity entity) throws Exception {
+    public String lookupPrefix(Entity entity) {
         // when viewing in graphviz.
         //String prefixRoot = "http://biscicol.org/id/metadata/";
         Iterator it = data.entrySet().iterator();
@@ -143,24 +143,16 @@ public class deepRoots {
         fimsPrinter.out.println("\tWarning: " + entity.getConceptAlias() + " cannot be mapped in Deep Roots, attempting to create mapping");
         String bcid = null;
         // Create a mapping in the deeproots system for this URI
-        try {
-            fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
-            // Create the entity BCID
-             bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
-            // Associate this identifier with this expedition
-            bcidConnector.associateBCID(project_id, expedition_code, bcid);
+        fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
+        // Create the entity BCID
+         bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+        // Associate this identifier with this expedition
+        bcidConnector.associateBCID(project_id, expedition_code, bcid);
 
-            // Add this element to the data string so we don't keep trying to add it in the loop above
-            //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
-            data.put(entity.getConceptAlias(),bcid);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            fimsPrinter.out.println("\tUnable to map  " + entity.getConceptAlias() + " -- using default namespace!");
-            return null;
-        } finally {
-            System.out.println("\tNew prefix = " + bcid);
-            return bcid;
-        }
-
+        // Add this element to the data string so we don't keep trying to add it in the loop above
+        //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
+        data.put(entity.getConceptAlias(),bcid);
+        System.out.println("\tNew prefix = " + bcid);
+        return bcid;
     }
 }

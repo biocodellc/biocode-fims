@@ -1,19 +1,17 @@
 package settings;
 
-import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Manage input/output path designations.
  * This was created to handle input from command prompts and tells application where to read and write various files.
  */
 public class PathManager {
-    public File setFile(String path) throws Exception {
+    public File setFile(String path) {
         return setPaths(path, true);
     }
 
-    public File setDirectory(String path) throws Exception {
+    public File setDirectory(String path) {
         return setPaths(path, false);
     }
 
@@ -24,9 +22,8 @@ public class PathManager {
      *
      * @param path
      * @return
-     * @throws Exception
      */
-    private File setPaths(String path, boolean file) throws Exception {
+    private File setPaths(String path, boolean file) {
         String fullPath = null;
 
         // outputPath is specified somehow
@@ -59,7 +56,7 @@ public class PathManager {
             boolean result = theDir.mkdirs();
 
             if (!result) {
-                throw new FileNotFoundException("Unable to create directory " + theDir.getAbsolutePath());
+                throw new FIMSRuntimeException("Unable to create directory " + theDir.getAbsolutePath(), 500);
             }
         }
         return theDir;

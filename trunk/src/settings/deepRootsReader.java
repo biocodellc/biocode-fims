@@ -3,10 +3,13 @@ package settings;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -25,6 +28,7 @@ import java.util.Iterator;
  */
 public class deepRootsReader {
 
+    private static Logger logger = LoggerFactory.getLogger(deepRootsReader.class);
 
     public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) {
         SettingsManager sm = SettingsManager.getInstance();
@@ -78,8 +82,6 @@ public class deepRootsReader {
             throw new FIMSRuntimeException(500, e);
         } catch (URISyntaxException e) {
             throw new FIMSRuntimeException(500, e);
-        } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
         }
     }
 
@@ -89,11 +91,19 @@ public class deepRootsReader {
      * @param url
      * @return
      */
-    protected String readFile(URL url) throws IOException {
+    protected String readFile(URL url) {
         String everything;
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(url.openStream()));
+        InputStream is = null;
         try {
+            is = url.openStream();
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(is));
+        try {
+
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
@@ -103,8 +113,14 @@ public class deepRootsReader {
                 line = br.readLine();
             }
             everything = sb.toString();
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         } finally {
-            br.close();
+            try {
+                br.close();
+            } catch (IOException e) {
+                logger.warn("IOException", e);
+            }
         }
         return everything;
     }
@@ -113,10 +129,8 @@ public class deepRootsReader {
      * Main method used for local testing
      *
      * @param args
-     * @throws java.io.IOException
-     * @throws java.net.URISyntaxException
      */
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) {
         deepRootsReader reader = new deepRootsReader();
         // Some path name to the file
         String filePath = "file:///Users/jdeck/IdeaExpeditions/bcid/src/deepRoots/encodeURIcomponent.json";

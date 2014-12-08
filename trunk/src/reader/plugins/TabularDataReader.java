@@ -136,7 +136,7 @@ public interface TabularDataReader {
      *
      * @return The next row of data from the data source.
      */
-    public String[] tableGetNextRow() throws FIMSException;
+    public String[] tableGetNextRow();
 
     /**
      * Close the open data source, if there is one.

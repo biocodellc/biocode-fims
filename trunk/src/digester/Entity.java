@@ -119,7 +119,7 @@ public class Entity {
      *
      * @param pw PrintWriter used to write output to.
      */
-    public void printD2RQ(PrintWriter pw, Object parent) throws Exception {
+    public void printD2RQ(PrintWriter pw, Object parent) {
         pw.println("map:" + classMap() + " a d2rq:ClassMap;");
         pw.println("\td2rq:dataStorage " + "map:database;");
         pw.println(((Mapping) parent).getPersistentIdentifier(this));

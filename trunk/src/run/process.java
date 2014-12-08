@@ -7,16 +7,15 @@ import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.triplifier;
 import utils.Html2Text;
-import utils.SettingsManager;
-import utils.stringGenerator;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -38,6 +37,7 @@ public class process {
     bcidConnector connector;
     private processController processController;
 
+    private static Logger logger = LoggerFactory.getLogger(process.class);
 
     /**
      * Setup class variables for processing FIMS data.
@@ -49,7 +49,7 @@ public class process {
             String inputFilename,
             String outputFolder,
             bcidConnector connector,
-            processController processController) throws FIMSException {
+            processController processController) {
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -65,22 +65,12 @@ public class process {
         this.connector = connector;
 
         // Read the Configuration File
-        try {
-            configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("Unable to obtain configuration file from server... <br>" +
-                    "Please check that your project code is valid.<br>");
-        }
+        configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
 
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
-        try {
-            mapping = new Mapping();
-            addMappingRules(new Digester(), mapping);
-        } catch (Exception e) {
-            throw new FIMSException("Problem reading mapping in configuration file", e);
-        }
+        mapping = new Mapping();
+        addMappingRules(new Digester(), mapping);
     }
 
     /**
@@ -94,7 +84,7 @@ public class process {
             String outputFolder,
             bcidConnector connector,
             processController processController,
-            File file) throws FIMSException {
+            File file) {
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -110,21 +100,12 @@ public class process {
         this.connector = connector;
 
         // Read the Configuration File
-        try {
-            configFile = file;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("Unable to load configuration file");
-        }
+        configFile = file;
 
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
-        try {
-            mapping = new Mapping();
-            addMappingRules(new Digester(), mapping);
-        } catch (Exception e) {
-            throw new FIMSException("Problem reading mapping in configuration file", e);
-        }
+        mapping = new Mapping();
+        addMappingRules(new Digester(), mapping);
     }
 
     /**
@@ -141,13 +122,10 @@ public class process {
      *
      * @param outputFolder
      * @param configFile
-     *
-     * @throws settings.FIMSException
      */
     public process(
             String outputFolder,
-            File configFile
-    ) throws FIMSException {
+            File configFile) {
         this.outputFolder = outputFolder;
         this.configFile = configFile;
         this.outputPrefix = "output";
@@ -157,10 +135,8 @@ public class process {
      * Check if this is a NMNH project
      *
      * @return
-     *
-     * @throws Exception
      */
-    public Boolean isNMNHProject() throws Exception {
+    public Boolean isNMNHProject() {
         Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
 
@@ -171,19 +147,13 @@ public class process {
             return true;
     }
 
-    public static bcidConnector createConnection(String username, String password) throws FIMSException {
+    public static bcidConnector createConnection(String username, String password) {
         bcidConnector bcidConnector = new bcidConnector();
 
         // Authenticate all the time, even if not uploading
         fimsPrinter.out.println("Authenticating ...");
 
-        boolean authenticationSuccess = false;
-        try {
-            authenticationSuccess = bcidConnector.authenticate(username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException("A system error occurred attempting to authenticate " + username + ". Is authentication server running?");
-        }
+        boolean authenticationSuccess = bcidConnector.authenticate(username, password);
 
         if (!authenticationSuccess) {
             String message = "Unable to authenticate " + username + " using the supplied credentials!";
@@ -197,56 +167,38 @@ public class process {
 
     /**
      * Check the status of this expedition
-     *
-     * @throws FIMSException
      */
-    public void runExpeditionCheck(boolean ignore_user) throws FIMSException {
-        try {
-            Boolean checkExpedition = connector.checkExpedition(processController);
-            processController.setExpeditionCreateRequired(checkExpedition);
-            if (!checkExpedition) {
-                processController.setExpeditionAssignedToUserAndExists(true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException(e.getMessage(), e);
+    public void runExpeditionCheck(boolean ignore_user) {
+        Boolean checkExpedition = connector.checkExpedition(processController);
+        processController.setExpeditionCreateRequired(checkExpedition);
+        if (!checkExpedition) {
+            processController.setExpeditionAssignedToUserAndExists(true);
         }
     }
 
     /**
      * Create an expedition
-     *
-     * @throws FIMSException
      */
-    public void runExpeditionCreate() throws FIMSException {
-        try {
-            if (connector.checkExpedition(processController)) {
-                System.out.println("Creating expedition " + processController.getExpeditionCode() + "...");
-                connector.createExpedition(processController, mapping);
-            }
-            processController.setExpeditionCreateRequired(false);
-            processController.setExpeditionAssignedToUserAndExists(true);
-        } catch (Exception e) {
-            throw new FIMSException(e.getMessage(), e);
+    public void runExpeditionCreate() {
+        if (connector.checkExpedition(processController)) {
+            System.out.println("Creating expedition " + processController.getExpeditionCode() + "...");
+            connector.createExpedition(processController, mapping);
         }
+        processController.setExpeditionCreateRequired(false);
+        processController.setExpeditionAssignedToUserAndExists(true);
     }
 
     /**
      * runAll method is designed to go through the FIMS process for a local application.  The REST services
      * would handle user input/output differently
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload) throws FIMSException {
+    public void runAllLocally(Boolean triplifier, Boolean upload) {
         // Set whether this is a NMNH project or not
-        try {
-            Fims fims = new Fims(mapping, null);
-            addFimsRules(new Digester(), fims);
-            processController.setNMNH(fims.getMetadata().getNmnh());
-            if (processController.getNMNH()) {
-                System.out.println("\tthis is a NMNH designated project");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException(e.getMessage(), e);
+        Fims fims = new Fims(mapping, null);
+        addFimsRules(new Digester(), fims);
+        processController.setNMNH(fims.getMetadata().getNmnh());
+        if (processController.getNMNH()) {
+            System.out.println("\tthis is a NMNH designated project");
         }
 
         // Validation Step
@@ -258,11 +210,7 @@ public class process {
 
             String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
             // In LOCAL version convert HTML tags to readable Text
-            try {
-                message = parser.convert(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            message = parser.convert(message);
             Boolean continueOperation = fimsInputter.in.continueOperation(message);
 
             if (!continueOperation)
@@ -298,55 +246,48 @@ public class process {
         }
     }
 
-    public void runValidation() throws FIMSException {
+    public void runValidation() {
         Validation validation = null;
 
-        try {
-            // Create the tabulardataReader for reading the input file
-            ReaderManager rm = new ReaderManager();
-            TabularDataReader tdr = null;
-            rm.loadReaders();
+        // Create the tabulardataReader for reading the input file
+        ReaderManager rm = new ReaderManager();
+        TabularDataReader tdr = null;
+        rm.loadReaders();
 
-            tdr = rm.openFile(processController.getInputFilename(), mapping.getDefaultSheetName(), outputFolder);
+        tdr = rm.openFile(processController.getInputFilename(), mapping.getDefaultSheetName(), outputFolder);
 
-            // Load validation rules
-            validation = new Validation();
-            addValidationRules(new Digester(), validation);
-
-            // Run the validation
-            validation.run(tdr, outputPrefix, outputFolder, mapping);
-
-            //
-            processController = validation.printMessages(processController);
-            processController.setValidation(validation);
-            processController.setDefaultSheetUniqueKey(mapping.getDefaultSheetUniqueKey());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException(e.getMessage(), e);
+        if (tdr == null) {
+            processController.setHasErrors(true);
+            processController.appendStatus("<br>Unable to open the file you attempted to upload.<br>");
+            return;
         }
+        // Load validation rules
+        validation = new Validation();
+        addValidationRules(new Digester(), validation);
+
+        // Run the validation
+        validation.run(tdr, outputPrefix, outputFolder, mapping);
+
+        //
+        processController = validation.printMessages(processController);
+        processController.setValidation(validation);
+        processController.setDefaultSheetUniqueKey(mapping.getDefaultSheetUniqueKey());
     }
 
     /**
      * Run the triplification engine
      *
      * @return
-     *
-     * @throws FIMSException
      */
-    public boolean runTriplifier() throws FIMSException {
+    public boolean runTriplifier() {
         // If Validation passed, we can go ahead and triplify
         Boolean triplifyGood = false;
         if (processController.isValidated()) {
-            try {
-                triplifyGood = mapping.run(
-                        connector,
-                        new triplifier(outputPrefix, outputFolder),
-                        processController
-                );
-            } catch (Exception e) {
-                //e.printStackTrace();
-                throw new FIMSException(e.getMessage(), e);
-            }
+            triplifyGood = mapping.run(
+                    connector,
+                    new triplifier(outputPrefix, outputFolder),
+                    processController
+            );
 
             mapping.print();
         }
@@ -354,22 +295,18 @@ public class process {
         return triplifyGood;
     }
 
-    public void runUpload() throws FIMSException {
+    public void runUpload() {
         // If the triplification was good and the user wants to upload, then proceed
         if (processController.isReadyToUpload() &&
                 runTriplifier()) {
-            Fims fims = new Fims(mapping, null);
-            try {
-                addFimsRules(new Digester(), fims);
-                fims.run(connector, processController);
-                String results = fims.results();
-                processController.appendStatus("<br>" + results);
-                //Html2Text parser = new Html2Text();
-                //fimsPrinter.out.println(parser.convert(results));
-                fimsPrinter.out.println(results);
-            } catch (Exception e) {
-                throw new FIMSException(e.getMessage(), e);
-            }
+            Fims fims = new Fims(mapping), null;
+            addFimsRules(new Digester(), fims);
+            fims.run(connector, processController);
+            String results = fims.results();
+            processController.appendStatus("<br>" + results);
+            //Html2Text parser = new Html2Text();
+            //fimsPrinter.out.println(parser.convert(results));
+            fimsPrinter.out.println(results);
         }
     }
 
@@ -377,20 +314,14 @@ public class process {
     /**
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
      * fetching results
-     *
-     * @throws settings.FIMSException
      */
-    public String query(String graphs, String format, ArrayList<fimsFilterCondition> filter) throws FIMSException {
-        try {
-            // Build the Query Object by passing this object and an array of graph objects, separated by commas
-            fimsQueryBuilder q = new fimsQueryBuilder(this, graphs.split(","), outputFolder);
-            // Add our filter conditions
-            q.addFilter(filter);
-            // Run the query, passing in a format and returning the location of the output file
-            return q.run(format);
-        } catch (Exception e) {
-            throw new FIMSException(e.getMessage(), e);
-        }
+    public String query(String graphs, String format, ArrayList<fimsFilterCondition> filter) {
+        // Build the Query Object by passing this object and an array of graph objects, separated by commas
+        fimsQueryBuilder q = new fimsQueryBuilder(this, graphs.split(","), outputFolder);
+        // Add our filter conditions
+        q.addFilter(filter);
+        // Run the query, passing in a format and returning the location of the output file
+        return q.run(format);
     }
 
     /**
@@ -398,14 +329,20 @@ public class process {
      *
      * @param d
      */
-    public synchronized void addFimsRules(Digester d, Fims fims) throws IOException, SAXException {
+    public synchronized void addFimsRules(Digester d, Fims fims) {
         d.push(fims);
         d.addObjectCreate("fims/metadata", Metadata.class);
         d.addSetProperties("fims/metadata");
         d.addCallMethod("fims/metadata", "addText_abstract", 0);
         d.addSetNext("fims/metadata", "addMetadata");
 
-        d.parse(configFile);
+        try {
+            d.parse(configFile);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (SAXException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**
@@ -413,7 +350,7 @@ public class process {
      *
      * @param d
      */
-    public synchronized void addValidationRules(Digester d, Validation validation) throws IOException, SAXException {
+    public synchronized void addValidationRules(Digester d, Validation validation) {
         d.push(validation);
 
         // Create worksheet objects
@@ -444,7 +381,13 @@ public class process {
         d.addSetProperties("fims/validation/worksheet/column");
         d.addSetNext("fims/validation/worksheet/column", "addColumn");
 
-        d.parse(configFile);
+        try {
+            d.parse(configFile);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (SAXException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**
@@ -452,7 +395,7 @@ public class process {
      *
      * @param d
      */
-    public synchronized void addMappingRules(Digester d, Mapping mapping) throws IOException, SAXException {
+    public synchronized void addMappingRules(Digester d, Mapping mapping) {
         d.push(mapping);
 
         // Create entity objects
@@ -476,7 +419,13 @@ public class process {
         d.addCallMethod("fims/mapping/relation/predicate", "addPredicate", 0);
         d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
 
-        d.parse(configFile);
+        try {
+            d.parse(configFile);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (SAXException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package run;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import settings.FIMSRuntimeException;
 
 import java.io.*;
 
@@ -29,18 +30,21 @@ public class guidify {
      * @param sheetName
      * @param localIDColumnName
      * @param bcidRoot
-     *
-     * @throws IOException
      */
     public guidify(
             File sourceFile,
             String sheetName,
             String localIDColumnName,
-            String bcidRoot
-    ) throws IOException {
+            String bcidRoot) {
         // Assign class level variables
-        FileInputStream fis = new FileInputStream(sourceFile);
-        this.workbook = new XSSFWorkbook(fis);
+       try {
+            FileInputStream fis = new FileInputStream(sourceFile);
+            this.workbook = new XSSFWorkbook(fis);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         this.sheet = workbook.getSheet(sheetName);
         this.bcidRoot = bcidRoot;
         this.localIDColumnName = localIDColumnName;
@@ -58,18 +62,21 @@ public class guidify {
      * @param sheetName
      * @param userID
      * @param bcidRoot
-     *
-     * @throws IOException
      */
     public guidify(
             File sourceFile,
             String sheetName,
             Integer userID,
-            String bcidRoot
-    ) throws IOException {
+            String bcidRoot) {
         // Assign class level variables
-        FileInputStream fis = new FileInputStream(sourceFile);
-        this.workbook = new XSSFWorkbook(fis);
+        try {
+            FileInputStream fis = new FileInputStream(sourceFile);
+            this.workbook = new XSSFWorkbook(fis);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         this.sheet = workbook.getSheet(sheetName);
         this.bcidRoot = bcidRoot;
         this.userID = userID;
@@ -78,10 +85,8 @@ public class guidify {
 
     /**
      * Construct the output spreadsheet and then write it
-     *
-     * @throws IOException
      */
-    public void getSpreadsheet(File outputFile) throws IOException {
+    public void getSpreadsheet(File outputFile) {
         // Add the suffixPassthroughGUID (the BCID) to the end of the sheet
         if (SIMethod)
             addSuffixPassthroughGuidSIMethod();
@@ -113,10 +118,8 @@ public class guidify {
 
     /**
      * ONLY use this method for SI cases... it is specifically only to their implementation
-     *
-     * @throws NullPointerException
      */
-    private void addSuffixPassthroughGuidSIMethod() throws NullPointerException {
+    private void addSuffixPassthroughGuidSIMethod() {
         int ezidColumnNum = getEZIDColumnNum();
 
         //int localIdColumnNum = getColumnIndex(sheet.getRow(0), localIDColumnName);
@@ -146,10 +149,8 @@ public class guidify {
 
     /**
      * This is the preferred method of implementation
-     *
-     * @throws NullPointerException
      */
-    private void addSuffixPassthroughGuid() throws NullPointerException {
+    private void addSuffixPassthroughGuid() {
         int ezidColumnNum = getEZIDColumnNum();
 
         int localIdColumnNum = getColumnIndex(sheet.getRow(0), localIDColumnName);
@@ -200,10 +201,14 @@ public class guidify {
         return 0;
     }
 
-    private void write(File outputFile) throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(outputFile);
-        workbook.write(fileOut);
-        fileOut.close();
+    private void write(File outputFile) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(outputFile);
+            workbook.write(fileOut);
+            fileOut.close();
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**

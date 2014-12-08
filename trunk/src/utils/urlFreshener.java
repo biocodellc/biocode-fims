@@ -1,5 +1,9 @@
 package utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -7,6 +11,7 @@ import java.net.URL;
  * Always ensure a fresh URL with this nifty little class
  */
 public class urlFreshener {
+    private static Logger logger = LoggerFactory.getLogger(urlFreshener.class);
     public static void main(String[]  args) {
         urlFreshener t = new urlFreshener();
 
@@ -33,10 +38,13 @@ public class urlFreshener {
      * pass in a URL as a URL
      * @param url
      * @return
-     * @throws MalformedURLException
      */
-    public URL forceLatestURL(URL url) throws MalformedURLException {
-        return new URL(forceLatestURL(url.toString()));
+    public URL forceLatestURL(URL url) {
+        try {
+            return new URL(forceLatestURL(url.toString()));
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**
@@ -49,6 +57,7 @@ public class urlFreshener {
         try {
             url = new URL(urlString);
         } catch (MalformedURLException e) {
+            logger.warn("MalformedURLException", e);
             return "&";
         }
         if (url.getQuery() != null && !url.getQuery().equals("")) {

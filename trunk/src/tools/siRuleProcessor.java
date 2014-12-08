@@ -3,8 +3,11 @@ package tools;
 import org.json.simple.parser.ContainerFactory;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 
-import java.net.URLDecoder;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -27,10 +30,12 @@ public class siRuleProcessor {
     TreeMap treeMap = null;
     siProjects p = null;
 
+    private static Logger logger = LoggerFactory.getLogger(siRuleProcessor.class);
+
     static ArrayList<String> ruleTypes = new ArrayList<String>();
     ArrayList<String> rules = new ArrayList<String>();
 
-    public siRuleProcessor(String jsonInput, String column, TreeMap treeMap, siProjects p) throws Exception {
+    public siRuleProcessor(String jsonInput, String column, TreeMap treeMap, siProjects p) {
         ruleTypes.add("controlledVocabulary");
         ruleTypes.add("requiredValueFromOtherColumn");
         ruleTypes.add("minimumMaximumNumberCheck");
@@ -62,13 +67,8 @@ public class siRuleProcessor {
                 Iterator it = jsonList.iterator();
                 while (it.hasNext()) {
                     Map json = (Map) it.next();
-                    try {
-                        individualRuleProcessor(json);
-                        resetVals();
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        System.err.println(e.getMessage());
-                    }
+                    individualRuleProcessor(json);
+                    resetVals();
                 }
                 // If it is not a linkedlist then it is just a single rule
             } else {
@@ -78,7 +78,7 @@ public class siRuleProcessor {
             }
 
         } catch (ParseException pe) {
-            throw new Exception("unabled to parse JSON" + jsonInput);
+            throw new FIMSRuntimeException("unabled to parse JSON" + jsonInput, 500, pe);
         }
     }
 
@@ -97,10 +97,8 @@ public class siRuleProcessor {
      * Build the elements of the rule by looking at the JSON
      *
      * @param json
-     *
-     * @throws Exception
      */
-    private void individualRuleProcessor(Map json) throws Exception {
+    private void individualRuleProcessor(Map json) {
         // Iterate the JSON responses
         Iterator iter = json.entrySet().iterator();
         while (iter.hasNext()) {
@@ -110,7 +108,7 @@ public class siRuleProcessor {
 
             if (key.equalsIgnoreCase("type")) {
                 if (!ruleTypes.contains(value)) {
-                    throw new Exception("Unrecognized ruletype " + value);
+                    throw new FIMSRuntimeException("Unrecognized ruletype " + value, 500);
                 } else {
                     this.type = value;
                 }
@@ -132,7 +130,7 @@ public class siRuleProcessor {
 
         }
         if (type == null || type.equalsIgnoreCase("null") || type.equalsIgnoreCase("")) {
-            throw new Exception("No rule type specified");
+            throw new FIMSRuntimeException("No rule type specified", 500);
         }
         constructRule();
     }
@@ -140,10 +138,8 @@ public class siRuleProcessor {
     /**
      * Construct the rule output
      * This method contains exceptions to rule processing!
-     *
-     * @throws Exception
      */
-    public void constructRule() throws Exception {
+    public void constructRule() {
 
         // TODO: find a better way to filter non-standard rules for particular departments
         // for now, this solution filters certain rules known to cause problems
@@ -204,9 +200,14 @@ public class siRuleProcessor {
         }
         if (level != null)
             sbOutput.append(" level='" + level + "'");
-        if (value != null)
+        if (value != null) {
             // Must encode the value field since it probably contains special characters
-            sbOutput.append(" value='" + URLEncoder.encode(value, "utf-8") + "'");
+            try {
+                sbOutput.append(" value='" + URLEncoder.encode(value, "utf-8") + "'");
+            } catch (UnsupportedEncodingException e) {
+                throw new FIMSRuntimeException(500, e);
+            }
+        }
         if (otherColumn != null)
             sbOutput.append(" otherColumn='" + columnMapper(otherColumn) + "'");
 
@@ -238,6 +239,7 @@ public class siRuleProcessor {
         try {
             mappedVal = treeMap.get(value).toString();
         } catch (NullPointerException e) {
+            logger.warn("NullPointerException", e);
             return value;
         }
         if (mappedVal != null)

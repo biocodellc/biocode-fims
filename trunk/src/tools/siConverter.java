@@ -1,9 +1,11 @@
 package tools;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 
 import java.io.*;
 import java.util.*;
@@ -39,9 +41,9 @@ public class siConverter {
     static ArrayList<String> desiredColumns = new ArrayList<String>();
     static ArrayList<siRuleProcessor> globalValidationRules = new ArrayList<siRuleProcessor>();
 
-    public siConverter() throws IOException, InvalidFormatException {
+    private static Logger logger = LoggerFactory.getLogger(siConverter.class);
 
-
+    public siConverter() {
     }
 
     public static Integer getColumnIndex(String columnName) {
@@ -103,14 +105,14 @@ public class siConverter {
                 Cell cell = row.getCell(projectIndex);
                 value = cell.getStringCellValue();
             } catch (Exception e) {
-                System.err.println("Unable to process value on line " + row.getRowNum());
+                throw new FIMSRuntimeException("Unable to process value on line " + row.getRowNum(), 500, e);
             }
 
             try {
                 Cell siTemplateCell = row.getCell(SIFieldTemplate);
                 siTemplateValue = siTemplateCell.getStringCellValue();
             } catch (Exception e) {
-                System.err.println("Unable to process siTemplateCell on line " + row.getRowNum());
+                throw new FIMSRuntimeException("Unable to process siTemplateCell on line " + row.getRowNum(), 500, e);
             }
 
             try {
@@ -122,8 +124,7 @@ public class siConverter {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("Unable to process globalValidationRule on line " + row.getRowNum());
+                throw new FIMSRuntimeException("Unable to process globalValidationRule on line " + row.getRowNum(), 500, e);
             }
 
             // Must have template value as Y and some designation in sheet of p/m/d
@@ -188,14 +189,7 @@ public class siConverter {
 
                 // Populate other global validation Rules
                 if (globalValidationValue != null && !globalValidationValue.equals("")) {
-                    try {
-
-
-                        globalValidationRules.add(new siRuleProcessor(globalValidationValue, column, treeMap, p));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.err.println("Unable to process " + globalValidationValue);
-                    }
+                    globalValidationRules.add(new siRuleProcessor(globalValidationValue, column, treeMap, p));
                 }
 
             }
@@ -225,7 +219,7 @@ public class siConverter {
         return treeMap;
     }
 
-    public static String validation(String abbreviation) throws IOException {
+    public static String validation(String abbreviation) {
         StringBuilder sbValidation = new StringBuilder();
 
         // header
@@ -280,7 +274,7 @@ public class siConverter {
      *
      * @return
      */
-    private static String lists(String abbreviation) throws IOException {
+    private static String lists(String abbreviation) {
         siListProcessor listProcessor = new siListProcessor();
         return listProcessor.printList(listProcessor.loopDepartment(abbreviation)).toString();
     }
@@ -309,25 +303,22 @@ public class siConverter {
             System.out.println("Done writing " + file.getAbsolutePath());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FIMSRuntimeException(500, e);
         } finally {
             try {
                 if (fop != null) {
                     fop.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.warn("IOException", e);
             }
         }
     }
 
     /**
      * Initialize our environment
-     *
-     * @throws IOException
-     * @throws InvalidFormatException
      */
-    public static void init() throws IOException, InvalidFormatException {
+    public static void init() {
         input_directory = new File(System.getProperty("user.dir") + System.getProperty("file.separator") +
                 "Documents" + System.getProperty("file.separator") +
                 "Smithsonian" + System.getProperty("file.separator"));
@@ -350,8 +341,15 @@ public class siConverter {
         projects.add(new siProjects("SIVZM", "VZ-Mammals", "Primary Collector Number"));
         projects.add(new siProjects("SIMIN", "Mineral Sciences", "Primary Collector Number"));
 
-        InputStream inp = new FileInputStream(inputFile);
-        Workbook workbook = WorkbookFactory.create(inp);
+        Workbook workbook;
+        try {
+            InputStream inp = new FileInputStream(inputFile);
+            workbook = WorkbookFactory.create(inp);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (InvalidFormatException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
 
         // Get all the sheets that we expect to be using
         MatrixSheet = workbook.getSheet("Matrix");
@@ -360,7 +358,7 @@ public class siConverter {
 
     }
 
-    public static void main(String[] args) throws IOException, InvalidFormatException {
+    public static void main(String[] args) {
 
         System.err.println("Need to reed entityWorksheetKey from spreadsheet itself (it is hardcoded here)");
         init();

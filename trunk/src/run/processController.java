@@ -4,12 +4,11 @@ package run;
 
 import digester.Validation;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.stringGenerator;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * Tracks status of data validation.  Helpful especially in a stateless environment.
@@ -35,6 +34,8 @@ public class processController {
     private Integer accessionNumber;
     private String defaultSheetUniqueKey;
     private Boolean publicStatus = false;   // default to false
+
+    private static Logger logger = LoggerFactory.getLogger(processController.class);
 
     public String getWorksheetName() {
         return worksheetName;
@@ -234,8 +235,8 @@ public class processController {
             } finally {
                 os.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            logger.warn("IOException", e);
             return null;
         }
         return f.getAbsolutePath();

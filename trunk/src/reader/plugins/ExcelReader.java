@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.FIMSException;
+import settings.FIMSRuntimeException;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003
@@ -376,7 +377,7 @@ public class ExcelReader implements TabularDataReader {
         return null;
     }
 
-    public String[] tableGetNextRow() throws FIMSException {
+    public String[] tableGetNextRow() {
         if (!tableHasNextRow())
             throw new NoSuchElementException();
 
@@ -440,11 +441,11 @@ public class ExcelReader implements TabularDataReader {
                         ret[cnt] = df.formatCellValue(cell, fe);
                     } catch (Exception e) {
                         int rowNum = cell.getRowIndex() + 1;
-                        throw new FIMSException("There was an issue processing a formula on this sheet.\n" +
+                        throw new FIMSRuntimeException("There was an issue processing a formula on this sheet.\n" +
                                 "\tWhile standard formulas are allowed, formulas with references to external sheets cannot be read!\n" +
                                 "\tCell = " + CellReference.convertNumToColString(cnt) + rowNum + "\n" +
                                 "\tUnreadable Formula = " + cell + "\n" +
-                                "\t(There may be additional formulas you may need to fix)"
+                                "\t(There may be additional formulas you may need to fix)", "Exception", 400, e
                         );
                     }
                     //ret[cnt] = df.formatCellValue(cell);

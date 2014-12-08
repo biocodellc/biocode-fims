@@ -37,7 +37,7 @@ public class fimsQueryBuilder {
 
     private ArrayList<fimsFilterCondition> filterArrayList = new ArrayList<fimsFilterCondition>();
 
-    public fimsQueryBuilder(run.process process, String[] graphArray, String output_directory) throws Exception {
+    public fimsQueryBuilder(run.process process, String[] graphArray, String output_directory) {
         this.output_directory = output_directory;
 
         this.process = process;
@@ -48,7 +48,7 @@ public class fimsQueryBuilder {
         process.addMappingRules(new Digester(), mapping);
 
         validation = new Validation();
-        process.addValidationRules(new Digester(),validation);
+        process.addValidationRules(new Digester(), validation);
 
         // Build FIMS object
         fims = new Fims(mapping,validation);
@@ -88,7 +88,7 @@ public class fimsQueryBuilder {
      *
      * @return
      */
-    public Model getModel() throws URISyntaxException {
+    public Model getModel() {
         String queryString = "CONSTRUCT {?s ?p ?o} \n" +
                 // String queryString = "DESCRIBE ?s ?p ?o \n" +
                 buildFromStatement() +
@@ -130,7 +130,7 @@ public class fimsQueryBuilder {
      *
      * @return
      */
-    private String buildFilterStatements() throws URISyntaxException {
+    private String buildFilterStatements() {
         StringBuilder sb = new StringBuilder();
         Iterator filterArrayListIt = filterArrayList.iterator();
         while (filterArrayListIt.hasNext()) {
@@ -204,37 +204,31 @@ public class fimsQueryBuilder {
      *
      * @param format
      * @return
-     * @throws FIMSException
      */
-    public String run(String format) throws FIMSException {
+    public String run(String format) {
 
         fimsModel fimsModel = null;
         String outputPath;
-        try {
 
-            // Construct a  fimsModel
-            fimsModel = fims.getFIMSModel(getModel());
-            if (format.equals("model"))
-                return fimsModel.model.toString();
-            if (format == null)
-                format = "json";
+        // Construct a  fimsModel
+        fimsModel = fims.getFIMSModel(getModel());
+        if (format.equals("model"))
+            return fimsModel.model.toString();
+        if (format == null)
+            format = "json";
 
-            if (format.equals("excel"))
-                outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xls", output_directory));
-            else if (format.equals("html"))
-                outputPath = fimsModel.writeHTML(PathManager.createUniqueFile("output.html", output_directory));
-            else if (format.equals("kml"))
-                outputPath = fimsModel.writeKML(PathManager.createUniqueFile("output.kml", output_directory));
-             else if (format.equals("cspace"))
-                outputPath = fimsModel.writeCSPACE(PathManager.createUniqueFile("output.cspace.xml", output_directory));
-            else
-                outputPath = fimsModel.writeJSON(PathManager.createUniqueFile("output.json", output_directory));
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FIMSException(e.getMessage(), e);
-        } finally {
-            fimsModel.close();
-        }
+        if (format.equals("excel"))
+            outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xls", output_directory));
+        else if (format.equals("html"))
+            outputPath = fimsModel.writeHTML(PathManager.createUniqueFile("output.html", output_directory));
+        else if (format.equals("kml"))
+            outputPath = fimsModel.writeKML(PathManager.createUniqueFile("output.kml", output_directory));
+        else if (format.equals("cspace"))
+            outputPath = fimsModel.writeCSPACE(PathManager.createUniqueFile("output.cspace.xml", output_directory));
+        else
+            outputPath = fimsModel.writeJSON(PathManager.createUniqueFile("output.json", output_directory));
+
+        fimsModel.close();
 
         return outputPath;
     }
@@ -244,7 +238,7 @@ public class fimsQueryBuilder {
      *
      * @param args
      */
-    public static void main(String[] args) throws Exception, FIMSException {
+    public static void main(String[] args) {
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
         String output_directory = System.getProperty("user.dir") + File.separator + "tripleOutput";
 

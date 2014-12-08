@@ -31,39 +31,34 @@ public class mapping {
     @Produces(MediaType.APPLICATION_JSON)
     public String getFilterOptions(@PathParam("project_id") Integer projectID) {
 
-        try {
-            File configFile = new configurationFileFetcher(projectID, uploadPath(), true).getOutputFile();
+        File configFile = new configurationFileFetcher(projectID, uploadPath(), true).getOutputFile();
 
-            // Create a process object
-            process p = new process(
-                    uploadPath(),
-                    configFile
-            );
+        // Create a process object
+        process p = new process(
+                uploadPath(),
+                configFile
+        );
 
-            Mapping mapping = new Mapping();
-            p.addMappingRules(new Digester(), mapping);
-            ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
+        Mapping mapping = new Mapping();
+        p.addMappingRules(new Digester(), mapping);
+        ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
 
-            StringBuilder json = new StringBuilder();
-            json.append("{\n\"attributes\": {\n");
+        StringBuilder json = new StringBuilder();
+        json.append("{\n\"attributes\": {\n");
 
-            Iterator it = attributeArrayList.iterator();
-            while (it.hasNext()) {
-                Attribute a = (Attribute) it.next();
-                json.append("\t\"" + a.getColumn() + "\":");
-                json.append("\"" + a.getUri() + "\"");
-                if (it.hasNext()) {
-                    json.append(",");
-                }
-                json.append("\n");
+        Iterator it = attributeArrayList.iterator();
+        while (it.hasNext()) {
+            Attribute a = (Attribute) it.next();
+            json.append("\t\"" + a.getColumn() + "\":");
+            json.append("\"" + a.getUri() + "\"");
+            if (it.hasNext()) {
+                json.append(",");
             }
-            json.append("\t}\n}");
-
-            return json.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "{\"error\": \"server error\"}";
+            json.append("\n");
         }
+        json.append("\t}\n}");
+
+        return json.toString();
     }
 
     /**

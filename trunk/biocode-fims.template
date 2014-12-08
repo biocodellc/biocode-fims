@@ -28,6 +28,9 @@ rootName = biocode-fims
 # for a particular dataset.  That is, it allows users besides the dataset creator to load data to this dataset
 ignore_user = false
 
+# when set to true, stack traces will be returned form the server when exceptions occur.
+# should be set to false for production use.
+debug = false
 
 
 
