@@ -3,6 +3,9 @@ package reader.plugins;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSRuntimeException;
 import settings.PathManager;
 
 import java.io.*;
@@ -42,6 +45,8 @@ public class TabReader extends ExcelReader {
     private boolean hasnext = false;
     private LinkedList<String> reclist;
     private int currtable;
+
+    private static Logger logger = LoggerFactory.getLogger(TabReader.class);
 
     private String sheetName = "Samples";
 
@@ -96,21 +101,17 @@ public class TabReader extends ExcelReader {
 
 
 
-    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception {
+    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) {
         if (defaultSheetName != null) {
             this.sheetName = defaultSheetName;
         }
         if (outputFolder == null) {
-            throw new Exception("No outputfolder specified for tab format conversion");
+            throw new FIMSRuntimeException("No outputfolder specified for tab format conversion", 500);
         }
-         Sheet sheet1;
-        try {
-            excelwb = new HSSFWorkbook();
-            sheet1 = excelwb.createSheet(this.sheetName);
-            currsheet = 0;
-        } catch (Exception e) {
-            return false;
-        }
+
+        excelwb = new HSSFWorkbook();
+        Sheet sheet1 = excelwb.createSheet(this.sheetName);
+        currsheet = 0;
 
         int i = 0;
         int field = 0;
@@ -130,10 +131,16 @@ public class TabReader extends ExcelReader {
                 }
                 rowNum++;
             }
-            br.close();
+            try {
+                br.close();
+            } catch (IOException e) {
+                logger.warn("exception closing BufferedReader", e);
+            }
 
-        } catch (Exception e) {
-            throw new Exception("Trouble converting TAB format",e);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException("Trouble converting TAB format", 500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
         currtable = -1;
 
@@ -151,10 +158,16 @@ public class TabReader extends ExcelReader {
 
             excelwb.write(fileOut);
 
-            fileOut.close();
+            try {
+                fileOut.close();
+            } catch (IOException e) {
+                logger.warn("error closing FileOutputStream", e);
+            }
 
-        } catch (Exception e) {
-            throw new Exception("Trouble saving file",e);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException("Trouble saving file", 500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException("Trouble saving file", 500, e);
         }
 
         return true;

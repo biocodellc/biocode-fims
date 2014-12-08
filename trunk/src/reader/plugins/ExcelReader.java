@@ -3,14 +3,18 @@ package reader.plugins;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import settings.FIMSException;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003
@@ -27,6 +31,8 @@ public class ExcelReader implements TabularDataReader {
     // iterator for moving through the active worksheet
     protected Iterator<Row> rowiter = null;
     protected boolean hasnext = false;
+
+    private static Logger logger = LoggerFactory.getLogger(ExcelReader.class);
 
     protected Row nextrow;
 
@@ -98,7 +104,7 @@ public class ExcelReader implements TabularDataReader {
         return false;
     }
 
-    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception {
+    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) {
 
         //fimsPrinter.out.println(filepath);
         FileInputStream is;
@@ -106,6 +112,7 @@ public class ExcelReader implements TabularDataReader {
         try {
             is = new FileInputStream(filepath);
         } catch (FileNotFoundException e) {
+            logger.warn("File not found: {}", filepath, e);
             return false;
         }
 
@@ -113,7 +120,11 @@ public class ExcelReader implements TabularDataReader {
             excelwb = WorkbookFactory.create(is);
 
             currsheet = 0;
-        } catch (Exception e) {
+        } catch (InvalidFormatException e) {
+            logger.warn("invalid format", e);
+            return false;
+        } catch (IOException e) {
+            logger.warn("IOException", e);
             return false;
         }
 
@@ -135,16 +146,16 @@ public class ExcelReader implements TabularDataReader {
             return (currsheet < excelwb.getNumberOfSheets());
     }
 
-    public void setTable(String worksheet) throws Exception {
-        try {
-            Sheet exsheet = excelwb.getSheet(worksheet);
-            currsheet = excelwb.getSheetIndex(worksheet) + 1;
-            rowiter = exsheet.rowIterator();
-            numcols = -1;
-            testNext();
-        } catch (Exception e) {
-           throw new Exception("Unable to find worksheet " + worksheet, e);
+    public void setTable(String worksheet) throws FIMSException {
+        Sheet exsheet = excelwb.getSheet(worksheet);
+
+        if (exsheet == null) {
+            throw new FIMSException("Unable to find worksheet " + worksheet);
         }
+        currsheet = excelwb.getSheetIndex(worksheet) + 1;
+        rowiter = exsheet.rowIterator();
+        numcols = -1;
+        testNext();
     }
 
     public void moveToNextTable() {
@@ -270,16 +281,10 @@ public class ExcelReader implements TabularDataReader {
      * @param column
      * @param row
      * @return value of this cell
-     * @throws Exception
      */
-    public String getStringValue(String column, int row) throws Exception {
-        String strValue = null;
-        try {
-            strValue = getStringValue(getColumnPosition(column), row);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            return null;
-        }
+    public String getStringValue(String column, int row) {
+        String strValue = getStringValue(getColumnPosition(column), row);
+
         return strValue;
     }
 
@@ -327,10 +332,11 @@ public class ExcelReader implements TabularDataReader {
                 return null;
             }
         } catch (NullPointerException e) {
+            logger.warn("NullPointerException", e);
             return null;
             // case where this may be a numeric cell lets still try and return a string
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            logger.warn("IllegalStateException", e);
             return null;
         }
     }
@@ -341,14 +347,13 @@ public class ExcelReader implements TabularDataReader {
      * @param column
      * @param row
      * @return double value in this cell
-     * @throws Exception
      */
-    public Double getDoubleValue(String column, int row) throws Exception {
+    public Double getDoubleValue(String column, int row) {
         Double dblValue = null;
-        try {
-            dblValue = Double.parseDouble(getStringValue(column, row));
-        } catch (Exception e) {
-            return null;
+        String strValue = getStringValue(column, row);
+
+        if (strValue != null) {
+            dblValue = Double.parseDouble(strValue);
         }
         return dblValue;
     }
@@ -358,9 +363,8 @@ public class ExcelReader implements TabularDataReader {
      *
      * @param colName
      * @return integer of the column position
-     * @throws Exception
      */
-    public Integer getColumnPosition(String colName) throws Exception {
+    public Integer getColumnPosition(String colName) {
         java.util.List<String> listColumns = this.getColNames();
         for (int i = 0; i < listColumns.size(); i++) {
             //fimsPrinter.out.println("\tarray val = " + this.getColNames().toArray()[i].toString());
@@ -372,7 +376,7 @@ public class ExcelReader implements TabularDataReader {
         return null;
     }
 
-    public String[] tableGetNextRow() throws SQLException {
+    public String[] tableGetNextRow() throws FIMSException {
         if (!tableHasNextRow())
             throw new NoSuchElementException();
 
@@ -436,7 +440,7 @@ public class ExcelReader implements TabularDataReader {
                         ret[cnt] = df.formatCellValue(cell, fe);
                     } catch (Exception e) {
                         int rowNum = cell.getRowIndex() + 1;
-                        throw new SQLException("There was an issue processing a formula on this sheet.\n" +
+                        throw new FIMSException("There was an issue processing a formula on this sheet.\n" +
                                 "\tWhile standard formulas are allowed, formulas with references to external sheets cannot be read!\n" +
                                 "\tCell = " + CellReference.convertNumToColString(cnt) + rowNum + "\n" +
                                 "\tUnreadable Formula = " + cell + "\n" +

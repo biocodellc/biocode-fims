@@ -1,7 +1,6 @@
 package reader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
@@ -9,8 +8,10 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
-import settings.fimsPrinter;
+import settings.FIMSRuntimeException;
 
 
 /**
@@ -23,6 +24,7 @@ import settings.fimsPrinter;
  */
 public class ReaderManager implements Iterable<TabularDataReader> {
     private LinkedList<TabularDataReader> readers;
+    private static Logger logger = LoggerFactory.getLogger(ReaderManager.class);
 
     /**
      * Initializes a new ReaderManager.  No plugins are loaded by default.  The
@@ -37,10 +39,8 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * reader/plugins directory will be examined to see if they implement the
      * TabularDataReader interface.  If so, they will be loaded as valid reader
      * plugins for use by the ReaderManager.
-     *
-     * @throws FileNotFoundException
      */
-    public void loadReaders() throws IOException {
+    public void loadReaders() {
         URL resource = getClass().getResource("plugins");
         if(resource != null && resource.getFile().contains(".jar!")) {
             loadReaderPluginsFromJar(resource);
@@ -49,19 +49,19 @@ public class ReaderManager implements Iterable<TabularDataReader> {
         }
     }
 
-    private void loadReaderPluginsFromDirectory() throws FileNotFoundException {
+    private void loadReaderPluginsFromDirectory() {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
         // get location of the plugins package
         URL rsc = cl.getResource(PACKAGE_PATH);
         if (rsc == null)
-            throw new FileNotFoundException("Could not locate plugins directory.");
+            throw new FIMSRuntimeException("Could not locate plugins directory.", 500);
 
         File pluginsdir = new File(rsc.getFile());
 
         // make sure the location is a valid directory
         if (!pluginsdir.exists() || !pluginsdir.isDirectory())
-            throw new FileNotFoundException("Could not locate plugins directory.");
+            throw new FIMSRuntimeException("Could not locate plugins directory.", 500);
 
         // createEZID a simple filter to only look at compiled class files
         FilenameFilter filter = new FilenameFilter() {
@@ -92,40 +92,51 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                     // add it to the list of valid readers
                     readers.add((TabularDataReader) newreader);
                 }
-            } catch (Exception e) {
-                fimsPrinter.out.println(e.getMessage());
+            } catch (ClassNotFoundException e) {
+                throw new FIMSRuntimeException(500, e);
+            } catch (InstantiationException e) {
+                throw new FIMSRuntimeException(500, e);
+            } catch (IllegalAccessException e) {
+                throw new FIMSRuntimeException(500, e);
             }
         }
     }
 
     private static final String PACKAGE_PATH = "reader/plugins";
 
-    private void loadReaderPluginsFromJar(URL resource) throws IOException {
+    private void loadReaderPluginsFromJar(URL resource) {
 
-
-        List<String> classNames = new ArrayList<String>();
-        String pathToJar = resource.getFile().substring(0, resource.getFile().indexOf("!"));
-        ZipInputStream zipStream = new ZipInputStream(new URL(pathToJar).openStream());
-        ZipEntry entry = zipStream.getNextEntry();
-        while(entry != null) {
-            String toFind = PACKAGE_PATH + "/";
-            int indexOfPackages = entry.getName().indexOf(toFind);
-            if(indexOfPackages != -1) {
-                classNames.add(entry.getName().substring(indexOfPackages + toFind.length()).replace(".class", ""));
-            }
-            entry = zipStream.getNextEntry();
-        }
-
-        for (String classname : classNames) {
-            try {
-                Class<?> clazz = Class.forName(getClassNameWithReaderPluginsPackage(classname));
-                Object newInstance = clazz.newInstance();
-                if(newInstance instanceof TabularDataReader) {
-                    readers.add((TabularDataReader) newInstance);
+        try {
+            List<String> classNames = new ArrayList<String>();
+            String pathToJar = resource.getFile().substring(0, resource.getFile().indexOf("!"));
+            ZipInputStream zipStream = new ZipInputStream(new URL(pathToJar).openStream());
+            ZipEntry entry = zipStream.getNextEntry();
+            while (entry != null) {
+                String toFind = PACKAGE_PATH + "/";
+                int indexOfPackages = entry.getName().indexOf(toFind);
+                if (indexOfPackages != -1) {
+                    classNames.add(entry.getName().substring(indexOfPackages + toFind.length()).replace(".class", ""));
                 }
-            } catch (Exception e) {
-                fimsPrinter.out.println(e.getMessage());
+                entry = zipStream.getNextEntry();
             }
+
+            for (String classname : classNames) {
+                try {
+                    Class<?> clazz = Class.forName(getClassNameWithReaderPluginsPackage(classname));
+                    Object newInstance = clazz.newInstance();
+                    if (newInstance instanceof TabularDataReader) {
+                        readers.add((TabularDataReader) newInstance);
+                    }
+                } catch (ClassNotFoundException e) {
+                    throw new FIMSRuntimeException(500, e);
+                } catch (InstantiationException e) {
+                    throw new FIMSRuntimeException(500, e);
+                } catch (IllegalAccessException e) {
+                    throw new FIMSRuntimeException(500, e);
+                }
+            }
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
     }
 
@@ -163,8 +174,10 @@ public class ReaderManager implements Iterable<TabularDataReader> {
             if (reader.getFormatString().equals(formatstring)) {
                 try {
                     return reader.getClass().newInstance();
-                } catch (Exception e) {
-                    return null;
+                } catch (IllegalAccessException e){
+                    logger.warn("IllegalAccessException", e);
+                } catch (InstantiationException e) {
+                    logger.warn("InstantiationException", e);
                 }
             }
         }
@@ -195,28 +208,28 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * @return A new instance of a reader if an appropriate reader is found that
      *         opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception {
+    public TabularDataReader openFile(String filepath, String defaultSheetName, String outputFolder) {
         // Check all readers to see if we have one that can read the
         // specified file.
         for (TabularDataReader reader : readers) {
             if (reader.testFile(filepath)) {
-                try {
                     // A matching reader was found, so create a new instance of
                     // the reader, open the file with it, and return it.
+                try{
                     TabularDataReader newreader = reader.getClass().newInstance();
                     newreader.openFile(filepath, defaultSheetName, outputFolder);
                     // Set input file
                     return newreader;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    throw new Exception(e.getMessage());
-                    //return null;
+                } catch (InstantiationException e) {
+                    throw new FIMSRuntimeException(500, e);
+                } catch (IllegalAccessException e) {
+                    throw new FIMSRuntimeException(500, e);
                 }
             }
         }
 
         // no matching reader was found
-        throw new Exception("Unable to open the file you attempted to upload");
+        return null;
     }
 
     /**
@@ -224,9 +237,8 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * and kept as a legacy.  Other tab formats end up being converted to spreadsheets in the end.
      * @param filepath
      * @return
-     * @throws Exception
      */
-    public TabularDataReader openFile(String filepath) throws Exception {
+    public TabularDataReader openFile(String filepath) {
         return openFile(filepath,null,null);
     }
 
@@ -240,7 +252,7 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * @return A new instance of a reader if a reader for the format is
      *         available and opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath, String formatstring) throws Exception {
+    public TabularDataReader openFile(String filepath, String formatstring) {
         // get the reader for the specified file format
         TabularDataReader reader = getReader(formatstring);
 
