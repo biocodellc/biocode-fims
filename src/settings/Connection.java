@@ -2,7 +2,6 @@ package settings;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
@@ -30,11 +29,7 @@ public class Connection {
 	 */
 	public Connection(File sqliteFile) {
 		system = DBsystem.sqlite;
-        try {
 		host = sqliteFile.getParent().replace("\\", "/" );
-        } catch (NullPointerException e) {
-            //host = sqliteFile.toString();
-        }
 		database = sqliteFile.getName();
 
 	}
@@ -78,7 +73,7 @@ public class Connection {
      *
      * @param pw PrintWriter used to write output to.
      */
-	public void printD2RQ(PrintWriter pw) throws SQLException {
+	public void printD2RQ(PrintWriter pw) {
 		pw.println("map:database a d2rq:Database;");
 		pw.println("\td2rq:jdbcDriver \"" + system.driver + "\";");
 		pw.println("\td2rq:jdbcDSN \"" + getJdbcUrl() + "\";");
@@ -95,9 +90,9 @@ public class Connection {
      * in local filesystem, throw exception if not.
      *
      */
-	public void verifyFile() throws Exception {
+	public void verifyFile() {
 		if (system.equals(DBsystem.sqlite) && !new File(host + File.separator + database).exists())
-			throw new Exception("Data Source file not available.");
+			throw new FIMSRuntimeException("Data Source file not available.", 500);
 	}
 	
 }
