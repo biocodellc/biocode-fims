@@ -2,6 +2,7 @@ package reader.plugins;
 
 
 import org.apache.poi.ss.usermodel.Sheet;
+import settings.FIMSException;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -23,15 +24,15 @@ public interface TabularDataReader {
 
     public File getInputFile();
 
-    public String getStringValue(String column, int row) throws Exception;
+    public String getStringValue(String column, int row);
 
     public String getStringValue(int col, int row);
 
-    public Double getDoubleValue(String column, int row) throws Exception;
+    public Double getDoubleValue(String column, int row);
 
-    public Integer getColumnPosition(String colName) throws Exception;
+    public Integer getColumnPosition(String colName);
 
-    public void setTable(String table) throws Exception;
+    public void setTable(String table) throws FIMSException;
     /**
      * Get a short string identifying the file format(s) supported by this
      * reader.  This string can be treated as a constant that is used to request
@@ -92,7 +93,7 @@ public interface TabularDataReader {
      * @return True if the file was opened and is ready to read data from; false
      *         otherwise.
      */
-    public boolean openFile(String filepath, String defaultSheetName, String outputFolder) throws Exception;
+    public boolean openFile(String filepath, String defaultSheetName, String outputFolder);
 
     /**
      * Test if there is at least one table waiting to be processed in the
@@ -135,7 +136,7 @@ public interface TabularDataReader {
      *
      * @return The next row of data from the data source.
      */
-    public String[] tableGetNextRow() throws SQLException;
+    public String[] tableGetNextRow() throws FIMSException;
 
     /**
      * Close the open data source, if there is one.
