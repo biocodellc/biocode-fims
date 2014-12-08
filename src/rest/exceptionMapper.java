@@ -3,6 +3,7 @@ package rest;
 import com.sun.jersey.api.core.ExtendedUriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import run.processController;
 import settings.FIMSRuntimeException;
 import settings.errorInfo;
 
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -38,6 +40,18 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
         logger.warn("{} thrown.", e.getClass().toString(), e);
         errorInfo errorInfo = getErrorInfo(e);
         String mediaType;
+
+        HttpSession session = request.getSession();
+        if (session != null) {
+            processController pc = (processController) session.getAttribute("processController");
+            if (pc != null) {
+                //delete any tmp files that were created
+                new File(pc.getInputFilename()).delete();
+
+                //remove processController from session
+                session.removeAttribute("processController");
+            }
+        }
 
         // check if the called service is expected to return HTML of JSON
         // try to get the mediaType of the matched method. If an exception was thrown before the resource was constructed
@@ -65,7 +79,6 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
             try {
 //              send the user to error.jsp to display info about the exception/error
                 URI url = new URI("error.jsp");
-                HttpSession session = request.getSession();
                 session.setAttribute("errorInfo", errorInfo);
 
                 return Response.status(errorInfo.getHttpStatusCode())

@@ -299,7 +299,7 @@ public class process {
         // If the triplification was good and the user wants to upload, then proceed
         if (processController.isReadyToUpload() &&
                 runTriplifier()) {
-            Fims fims = new Fims(mapping), null;
+            Fims fims = new Fims(mapping, null);
             addFimsRules(new Digester(), fims);
             fims.run(connector, processController);
             String results = fims.results();

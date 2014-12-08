@@ -1,7 +1,6 @@
 package rest;
 
 import digester.Field;
-import digester.Fims;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import run.configurationFileFetcher;
