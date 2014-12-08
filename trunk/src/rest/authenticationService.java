@@ -40,11 +40,7 @@ public class authenticationService {
 
         // Initialize settings
         SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sm.loadProperties();
 
         // If the redirect_uri contains a "www" on the beginning of the hostname, and the incoming request
         // to this login service does not contain a "www" in the hostname, then we want to call this service
@@ -111,11 +107,7 @@ public class authenticationService {
 
         // Initialize Settings
         SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sm.loadProperties();
 
         URL url = new URL(sm.retrieveValue("access_token_uri"));
         String profileURL = sm.retrieveValue("profile_uri");
@@ -169,10 +161,10 @@ public class authenticationService {
         JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 
         //if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
-        if (tokenJSON.containsKey("error")) {
+        if (tokenJSON.containsKey("usrMessage")) {
             System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
-            if (tokenJSON.containsKey("error")) {
-                response.sendRedirect(homepage +"?error=" + tokenJSON.get("error"));
+            if (tokenJSON.containsKey("usrMessage")) {
+                response.sendRedirect(homepage +"?error=" + tokenJSON.get("usrMessage"));
                 return;
             } else {
                 //response.sendRedirect(homepage +"?error=Returned state variable was not the same. Was the request/response hacked?");
@@ -185,8 +177,8 @@ public class authenticationService {
 
         JSONObject profileJSON = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
 
-        if (profileJSON.containsKey("error")) {
-            response.sendRedirect(homepage +"?error=" + profileJSON.get("error"));
+        if (profileJSON.containsKey("usrMessage")) {
+            response.sendRedirect(homepage +"?error=" + profileJSON.get("usrMessage"));
             return;
         }
 
@@ -219,11 +211,7 @@ public class authenticationService {
         // Invalidate the session for Biocode FIMS
         session.invalidate();
         SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sm.loadProperties();
 
         // Need to also logout of the BCID system
         res.sendRedirect(sm.retrieveValue("logout_uri"));

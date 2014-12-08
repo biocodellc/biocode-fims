@@ -140,11 +140,8 @@ public class bcidConnector {
     }
 
     public void setProperties() {
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sm.loadProperties();
+
         authentication_uri = sm.retrieveValue("authentication_uri");
         ark_creation_uri = sm.retrieveValue("ark_creation_uri");
         associate_uri = sm.retrieveValue("associate_uri");
@@ -188,18 +185,19 @@ public class bcidConnector {
      * @param password
      *
      * @return
-     *
-     * @throws Exception
      */
-    public boolean authenticate(String username, String password) throws Exception {
+    public boolean authenticate(String username, String password) {
         this.username = username;
         this.password = password;
         String postParams = "username=" + username + "&password=" + password;
-        URL url = new URL(authentication_uri);
-        String response = createPOSTConnnection(url, postParams);
+        try {
+            URL url = new URL(authentication_uri);
+            createPOSTConnnection(url, postParams);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed url: " + authentication_uri, 500, e);
+        }
 
-        // TODO: find a more robust way to search for bad credentials than just parsing the response for text
-        if (response.toString().contains("Bad Credentials")) {
+        if (getResponseCode() != 200) {
             return false;
         } else {
             return true;
@@ -221,22 +219,28 @@ public class bcidConnector {
     /**
      * Obtain a new access token from the BCID system in order to continue the upload process.
      */
-    private void getValidAccessToken() throws Exception {
+    private void getValidAccessToken() {
         this.triedToRefreshToken = true;
 
         String params = "client_id=" + client_id + "&" +
                 "client_secret=" + client_secret + "&" +
                 "refresh_token=" + refreshToken;
 
-        JSONObject tokenJSON = (JSONObject) JSONValue.parse(createPOSTConnnection(new URL(refresh_uri), params));
+        try {
+            JSONObject tokenJSON = (JSONObject) JSONValue.parse(createPOSTConnnection(new URL(refresh_uri), params));
 
-        if (tokenJSON.containsKey("error")) {
-            throw new FIMSException(tokenJSON.get("error").toString());
+            if (tokenJSON.containsKey("usrMessage")) {
+                //TODO if usrMessage = 'invalid_grant' then the user needs to re-login
+                throw new FIMSRuntimeException((String) tokenJSON.get("usrMessage"),
+                        (String) tokenJSON.get("developerMessage"), (Integer) tokenJSON.get("httpStatusCode"));
+            }
+
+            this.accessToken = tokenJSON.get("access_token").toString();
+            this.refreshToken = tokenJSON.get("refresh_token").toString();
+            this.refreshedToken = true;
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-
-        this.accessToken = tokenJSON.get("access_token").toString();
-        this.refreshToken = tokenJSON.get("refresh_token").toString();
-        this.refreshedToken = true;
     }
 
     /**
@@ -245,10 +249,8 @@ public class bcidConnector {
      * suffixPassthrough is set to False since we only want to represent a single entity here
      *
      * @return
-     *
-     * @throws Exception
      */
-    public String createDatasetBCID(String webaddress, String graph) throws Exception {
+    public String createDatasetBCID(String webaddress, String graph) {
         String createBCIDDatasetPostParams =
                 "title=Loaded Dataset from Biocode-FIMS&" +
                         "resourceTypesMinusDataset=1&" +
@@ -259,22 +261,18 @@ public class bcidConnector {
             createBCIDDatasetPostParams += "&graph=" + graph;
 
         URL url;
-        if (accessToken != null) {
-            url = new URL(ark_creation_uri + "?access_token=" + accessToken);
-        } else {
-            url = new URL(ark_creation_uri);
+        try {
+            if (accessToken != null) {
+                url = new URL(ark_creation_uri + "?access_token=" + accessToken);
+            } else {
+                url = new URL(ark_creation_uri);
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
-        if (getResponseCode() == 401) {
-            if (accessToken != null && !triedToRefreshToken) {
-                getValidAccessToken();
-                return createDatasetBCID(webaddress, graph);
-            } else {
-                throw new NotAuthorizedException(response.get("error").toString());
-            }
-        }
-        if (response.containsKey("error")) {
-            throw new FIMSException(response.get("error").toString());
+        if (getResponseCode() != 200) {
+            throw new FIMSRuntimeException(response);
         }
         return response.get("prefix").toString();
     }
@@ -283,10 +281,8 @@ public class bcidConnector {
      * Create BCIDs corresponding to expedition entities
      *
      * @return
-     *
-     * @throws Exception
      */
-    public String createEntityBCID(String webaddress, String resourceAlias, String resourceType) throws Exception {
+    public String createEntityBCID(String webaddress, String resourceAlias, String resourceType) {
         String createBCIDDatasetPostParams =
                 "title=" + resourceAlias + "&" +
                         "resourceType=" + resourceAlias + "&" +
@@ -294,23 +290,19 @@ public class bcidConnector {
                         "webaddress=" + webaddress;
 
         URL url;
-        if (accessToken != null) {
-            url = new URL(ark_creation_uri + "?access_token=" + accessToken);
-        } else {
-            url = new URL(ark_creation_uri);
+        try {
+            if (accessToken != null) {
+                url = new URL(ark_creation_uri + "?access_token=" + accessToken);
+            } else {
+                url = new URL(ark_creation_uri);
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
 
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
-        if (getResponseCode() == 401) {
-            if (accessToken != null && !triedToRefreshToken) {
-                getValidAccessToken();
-                return createEntityBCID(webaddress, resourceAlias, resourceType);
-            } else {
-                throw new NotAuthorizedException(response.get("error").toString());
-            }
-        }
-        if (response.containsKey("error")) {
-            throw new FIMSException(response.get("error").toString());
+        if (getResponseCode() != 200) {
+            throw new FIMSRuntimeException(response);
         }
         return response.get("prefix").toString();
     }
@@ -319,20 +311,23 @@ public class bcidConnector {
      * Asscociate a expedition_code to a BCID
      *
      * @return
-     *
-     * @throws Exception
      */
-    public String associateBCID(Integer project_id, String expedition_code, String bcid) throws Exception {
+    public String associateBCID(Integer project_id, String expedition_code, String bcid) {
         String createPostParams =
                 "expedition_code=" + expedition_code + "&" +
                         "project_id=" + project_id + "&" +
                         "bcid=" + bcid;
 
-        URL url = new URL(associate_uri);
+        URL url;
+        try {
+            url = new URL(associate_uri);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
 
-        if (response.containsKey("error")) {
-            throw new FIMSException(response.get("error").toString());
+        if (getResponseCode() != 200) {
+            throw new FIMSRuntimeException(response);
         }
 
         return response.get("success").toString();
@@ -342,50 +337,30 @@ public class bcidConnector {
      * List the available projects by User
      *
      * @return
-     *
-     * @throws Exception
      */
-    public ArrayList<availableProject> listAvailableProjects() throws Exception {
+    public ArrayList<availableProject> listAvailableProjects() {
         ArrayList<availableProject> availableProjects = new ArrayList<availableProject>();
 
-        //URL url = new URL(availableProjectsURL);
-        //String response = createGETConnection(url);
-
-        JSONParser parser = new JSONParser();
+        String url = available_projects_uri;
+        if (accessToken != null) {
+            url += "?access_token=" + accessToken;
+        }
         try {
-            String url = available_projects_uri;
-            if (accessToken != null) {
-                url += "?access_token=" + accessToken;
-            }
-            Object obj = parser.parse(readJsonFromUrl(url));
-            JSONObject jsonObject = (JSONObject) obj;
+            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(new URL(url)));
 
-            if (jsonObject.containsKey("error") && jsonObject.get("error") == "authorization_error") {
-                if (accessToken != null && !triedToRefreshToken) {
-                    getValidAccessToken();
-                    return listAvailableProjects();
-                } else {
-                    throw new NotAuthorizedException(jsonObject.get("error").toString());
-                }
-            }
-
-            if (jsonObject.containsKey("error")) {
-                throw new FIMSException(jsonObject.get("error").toString());
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException(response);
             }
 
             // loop array
-            JSONArray msg = (JSONArray) jsonObject.get("projects");
+            JSONArray msg = (JSONArray) response.get("projects");
             Iterator<JSONObject> iterator = msg.iterator();
             while (iterator.hasNext()) {
                 availableProjects.add(new availableProject(iterator.next()));
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
 
         return availableProjects;
@@ -399,57 +374,49 @@ public class bcidConnector {
      * @param resource
      *
      * @return
-     *
-     * @throws IOException
      */
-    public String getArkFromDataset(Integer project_id, String dataset_code, String resource) throws IOException {
+    public String getArkFromDataset(Integer project_id, String dataset_code, String resource) {
         //http://localhost:8080/id/expeditionService/18/DEMO4/Resource
-        URL url = new URL(expedition_creation_uri + "/" + project_id + "/" + dataset_code + "/" + resource);
-        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
-        //System.out.println("FIMS response = " + response.toString() );
-        //System.out.println("ark = " + response.get("ark").toString() );
-        return response.get("ark").toString();
+        try {
+            URL url = new URL(expedition_creation_uri + "/" + project_id + "/" + dataset_code + "/" + resource);
+            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+            //System.out.println("FIMS response = " + response.toString() );
+            //System.out.println("ark = " + response.get("ark").toString() );
+            return response.get("ark").toString();
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     /**
      * create a expedition
      *
      * @return
-     *
-     * @throws Exception
      */
     public String createExpedition(String expedition_code,
                                    String expedition_title,
-                                   Integer project_id) throws Exception {
+                                   Integer project_id) {
         String createPostParams =
                 "expedition_code=" + expedition_code + "&" +
                         "expedition_title=" + expedition_title + "&" +
                         "project_id=" + project_id;
 
         URL url;
-        if (accessToken != null) {
-            url = new URL(expedition_creation_uri + "?access_token=" + accessToken);
-        } else {
-            url = new URL(expedition_creation_uri);
-        }
-        String response = createPOSTConnnection(url, createPostParams);
-
-        // Catch Error using response string...
-        if (getResponseCode() == 401) {
-            if (accessToken != null && !triedToRefreshToken) {
-                getValidAccessToken();
-                return createExpedition(expedition_code, expedition_title, project_id);
+        try {
+            if (accessToken != null) {
+                url = new URL(expedition_creation_uri + "?access_token=" + accessToken);
             } else {
-                throw new NotAuthorizedException("This user is not authorized to load data into this project!<br>Talk to your project administrator.");
+                url = new URL(expedition_creation_uri);
             }
-        } else if (getResponseCode() == 500) {
-            throw new Exception(response.toString());
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-        if (response.contains("ERROR")) {
-            throw new Exception(response.toString());
-        }
+        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
 
-        // When i create a expedition, i also want to create
+        // Catch Error using response code...
+        if (getResponseCode() != 200) {
+            throw new FIMSRuntimeException(response);
+        }
 
         return response.toString();
     }
@@ -462,27 +429,24 @@ public class bcidConnector {
      * @param expedition_code
      *
      * @return
-     *
-     * @throws Exception
      */
-    public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) throws Exception {
+    public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) {
 
         String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/" + publicStatus;
 
-        URL url = new URL(urlString);
+        try {
+            URL url = new URL(urlString);
 
-        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
 
-        // Some error message was returned from the expedition validation service
-        if (getResponseCode() == 401 || getResponseCode() == 500) {
-            throw new Exception("" +
-                    "<br>Unable to update the public status of expedition to true.  This event is being logged.");
-        } else {
-            if (response.containsKey("error")) {
-                throw new Exception(response.get("error").toString());
+            // Some error message was returned from the expedition validation service
+            if (getResponseCode() != 401) {
+                throw new FIMSRuntimeException(response);
             } else {
                 return true;
             }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
         }
     }
 
@@ -492,11 +456,9 @@ public class bcidConnector {
      * a particular project
      *
      * @return true if we need to insert a new expedition
-     *
-     * @throws Exception
      */
 
-    public boolean checkExpedition(processController processController) throws Exception {
+    public boolean checkExpedition(processController processController) {
         // if the expedition code isn't set we can just immediately return true which is
         if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
             return true;
@@ -515,80 +477,68 @@ public class bcidConnector {
             urlString += "ignore_user=true";
         }
 
-        URL url = new URL(urlString);
-        JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
+        try {
+            URL url = new URL(urlString);
+            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
 
-        // Some error message was returned from the expedition validation service
-        if (getResponseCode() == 401) {
-            if (accessToken != null && !triedToRefreshToken) {
-                getValidAccessToken();
-                return checkExpedition(processController);
+            // Some error message was returned from the expedition validation service
+            if (getResponseCode() != 200) {
+//                    throw new NotAuthorizedException("" +
+//                            "<br>User authorization error. " +
+//                            "<br>This account may not be attached to this dataset or project." +
+//                            "<br>A common cause of this error is when a person other than the one generating" +
+//                            "<br>the dataset code attempts to load data to that dataset.");
+                throw new FIMSRuntimeException(response);
             } else {
-                throw new NotAuthorizedException("" +
-                        "<br>User authorization error. " +
-                        "<br>This account may not be attached to this dataset or project." +
-                        "<br>A common cause of this error is when a person other than the one generating" +
-                        "<br>the dataset code attempts to load data to that dataset.");
+                if (response.containsKey("update")) {
+                    return false;
+                } else if (response.containsKey("insert")) {
+                    return true;
+                    /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                            "Do you wish to create it now?" +
+                            "\nIf you choose to continue, your data will be associated with this new expedition code.";
+                    Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                    return continueOperation;
+                    */
+                } else {
+                    return false;
+                }
             }
-        } else {
-            if (response.containsKey("error")) {
-                throw new Exception(response.get("error").toString());
-            } else if (response.containsKey("update")) {
-                return false;
-            } else if (response.containsKey("insert")) {
-                return true;
-                /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
-                        "Do you wish to create it now?" +
-                        "\nIf you choose to continue, your data will be associated with this new expedition code.";
-                Boolean continueOperation = fimsInputter.in.continueOperation(message);
-                return continueOperation;
-                */
-            } else {
-                return false;
-            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
         }
     }
 
-    public boolean createExpedition(processController processController, Mapping mapping) throws Exception {
-        try {
-            String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
-                    "before loading each spreadsheet and may take a minute...\n";
-            processController.appendStatus(status);
-            fimsPrinter.out.println(status);
-            String expedition_title = processController.getExpeditionCode() + " spreadsheet";
-            if (processController.getAccessionNumber() != null) {
-                expedition_title += " (accession " + processController.getAccessionNumber() + ")";
-            }
-            String output = createExpedition(
-                    processController.getExpeditionCode(),
-                    expedition_title,
-                    processController.getProject_id());
-            //fimsPrinter.out.println("\t" + output);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            //
-            throw new Exception("Unable to create dataset " + processController.getExpeditionCode() + "\n" + e.getMessage(), e);
+    public boolean createExpedition(processController processController, Mapping mapping) {
+        String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
+                "before loading each spreadsheet and may take a minute...\n";
+        processController.appendStatus(status);
+        fimsPrinter.out.println(status);
+        String expedition_title = processController.getExpeditionCode() + " spreadsheet";
+        if (processController.getAccessionNumber() != null) {
+            expedition_title += " (accession " + processController.getAccessionNumber() + ")";
         }
+        String output = createExpedition(
+                processController.getExpeditionCode(),
+                expedition_title,
+                processController.getProject_id());
+        //fimsPrinter.out.println("\t" + output);
+
         // Loop the mapping file and create a BCID for every entity that we specified there!
         if (mapping != null) {
             LinkedList<Entity> entities = mapping.getEntities();
             Iterator it = entities.iterator();
             while (it.hasNext()) {
                 Entity entity = (Entity) it.next();
-                try {
-                    String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
-                    processController.appendStatus(s);
-                    fimsPrinter.out.println(s);
-                    // Create the entity BCID
-                    String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
-                    // Associate this identifier with this expedition
-                    associateBCID(processController.getProject_id(), processController.getExpeditionCode(), bcid);
 
-                } catch (Exception e) {
-                    throw new Exception("The dataset " + processController.getExpeditionCode() +
-                            " has been created but unable to create a BCID for\n" +
-                            "resourceType = " + entity.getConceptURI(), e);
-                }
+                String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
+                processController.appendStatus(s);
+                fimsPrinter.out.println(s);
+                // Create the entity BCID
+                String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+                // Associate this identifier with this expedition
+                associateBCID(processController.getProject_id(), processController.getExpeditionCode(), bcid);
+
             }
         }
 
@@ -604,70 +554,90 @@ public class bcidConnector {
      * @param postParams
      *
      * @return
-     *
-     * @throws IOException
      */
-    public String createPOSTConnnection(URL url, String postParams) throws IOException {
+    public String createPOSTConnnection(URL url, String postParams) {
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        try {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        // Acts like a browser
-        conn.setUseCaches(false);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Host", HOST);
-        conn.setRequestProperty("User-Agent", USER_AGENT);
-        conn.setRequestProperty("Accept", ACCEPT);
-        conn.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
-        if (cookies != null) {
-            for (String cookie : this.cookies) {
-                conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
+            // Acts like a browser
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Host", HOST);
+            conn.setRequestProperty("User-Agent", USER_AGENT);
+            conn.setRequestProperty("Accept", ACCEPT);
+            conn.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
+            if (cookies != null) {
+                for (String cookie : this.cookies) {
+                    conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
+                }
             }
+
+            conn.setRequestProperty("Connection", CONNECTION);
+            //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
+            conn.setRequestProperty("Content-Type", CONTENT_TYPE);
+            conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
+
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+            // Send post request
+            //System.out.println("URL = " + url.toString());
+            //System.out.println("postparams = " + postParams);
+            //System.out.println("Starting getting output stream");
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            //System.out.println("Ending getting output stream");
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+
+            /*
+            int responseCode = conn.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + authenticationURL);
+            System.out.println("Post parameters : " + postParams);
+            System.out.println("Response Code : " + responseCode);
+            */
+
+            responseCode = conn.getResponseCode();
+
+
+            BufferedReader in;
+
+            if (responseCode >= 400) {
+                in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            } else {
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            // Get the response cookies
+            setCookies(conn.getHeaderFields().get("Set-Cookie"));
+
+            // try and authenticate if needed
+            if (getResponseCode() == 401) {
+                if ( accessToken != null && !triedToRefreshToken) {
+                    getValidAccessToken();
+                    return createPOSTConnnection(url, postParams);
+                } else {
+                    try {
+                        JSONObject JSONresponse = (JSONObject) JSONValue.parse(response.toString());
+                        throw new FIMSRuntimeException(JSONresponse);
+                    // response wasn't valid json
+                    } catch (NullPointerException e) {
+                        throw new FIMSRuntimeException(responseCode, e);
+                    }
+                }
+            }
+
+            return response.toString();
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-
-        conn.setRequestProperty("Connection", CONNECTION);
-        //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
-        conn.setRequestProperty("Content-Type", CONTENT_TYPE);
-        conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
-
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-
-        // Send post request
-        //System.out.println("URL = " + url.toString());
-        //System.out.println("postparams = " + postParams);
-        //System.out.println("Starting getting output stream");
-        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-        //System.out.println("Ending getting output stream");
-        wr.writeBytes(postParams);
-        wr.flush();
-        wr.close();
-
-        /*
-        int responseCode = conn.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + authenticationURL);
-        System.out.println("Post parameters : " + postParams);
-        System.out.println("Response Code : " + responseCode);
-        */
-
-        responseCode = conn.getResponseCode();
-
-        BufferedReader in;
-
-        if (responseCode >= 400) {
-            in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        } else {
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        }
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-        // Get the response cookies
-        setCookies(conn.getHeaderFields().get("Set-Cookie"));
-        return response.toString();
     }
 
     /**
@@ -676,70 +646,88 @@ public class bcidConnector {
      * @param url
      *
      * @return
-     *
-     * @throws IOException
      */
-    public String createGETConnection(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    public String createGETConnection(URL url) {
+        try {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 
-        // default is GET
-        conn.setRequestMethod("GET");
-        conn.setUseCaches(false);
-        /*
-    // act like a browser
-    conn.setRequestProperty("User-Agent", USER_AGENT);
-    conn.setRequestProperty("Accept",
-            "text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8");
-    conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-    if (cookies != null) {
-        for (String cookie : this.cookies) {
-            conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
-        }
-    }    */
-
-        conn.setRequestProperty("Host", HOST);
+            // default is GET
+            conn.setRequestMethod("GET");
+            conn.setUseCaches(false);
+            /*
+        // act like a browser
         conn.setRequestProperty("User-Agent", USER_AGENT);
-        conn.setRequestProperty("Accept", ACCEPT);
-        conn.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
+        conn.setRequestProperty("Accept",
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*;q=0.8");
+        conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         if (cookies != null) {
             for (String cookie : this.cookies) {
                 conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
             }
+        }    */
+
+            conn.setRequestProperty("Host", HOST);
+            conn.setRequestProperty("User-Agent", USER_AGENT);
+            conn.setRequestProperty("Accept", ACCEPT);
+            conn.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
+            if (cookies != null) {
+                for (String cookie : this.cookies) {
+                    conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
+                }
+            }
+
+            conn.setRequestProperty("Connection", CONNECTION);
+            //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
+            conn.setRequestProperty("Content-Type", CONTENT_TYPE);
+            //conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
+
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+
+
+            responseCode = conn.getResponseCode();
+            //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
+
+            //System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in;
+
+            if (responseCode >= 400) {
+                in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            } else {
+                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // Get the response cookies
+            setCookies(conn.getHeaderFields().get("Set-Cookie"));
+
+            // try and authenticate if needed
+            if (getResponseCode() == 401) {
+                if ( accessToken != null && !triedToRefreshToken) {
+                    getValidAccessToken();
+                    return createGETConnection(url);
+                } else {
+                    try {
+                        JSONObject JSONresponse = (JSONObject) JSONValue.parse(response.toString());
+                        throw new FIMSRuntimeException(JSONresponse);
+                        // response wasn't valid json
+                    } catch (NullPointerException e) {
+                        throw new FIMSRuntimeException(responseCode, e);
+                    }
+                }
+            }
+            return response.toString();
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
         }
-
-        conn.setRequestProperty("Connection", CONNECTION);
-        //conn.setRequestProperty("Referer", "https://accounts.google.com/ServiceLoginAuth");
-        conn.setRequestProperty("Content-Type", CONTENT_TYPE);
-        //conn.setRequestProperty("Content-Length", Integer.toString(postParams.length()));
-
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-
-
-        responseCode = conn.getResponseCode();
-        //System.out.println("\nSending 'GET' request to URL : " + arkCreationURL);
-
-        //System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in;
-
-        if (responseCode >= 400) {
-            in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        } else {
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        }
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        // Get the response cookies
-        setCookies(conn.getHeaderFields().get("Set-Cookie"));
-        return response.toString();
     }
 
     /**
