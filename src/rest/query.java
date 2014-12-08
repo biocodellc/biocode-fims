@@ -27,6 +27,7 @@ import java.util.*;
 public class query {
     private static Logger logger = LoggerFactory.getLogger(query.class);
 
+    @Context
     static ServletContext context;
 
     /**

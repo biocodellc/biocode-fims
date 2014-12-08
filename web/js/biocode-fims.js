@@ -344,7 +344,7 @@ function submitForm(){
             }
         },
         error: function(jqxhr) {
-            de.reject();
+            de.reject(jqxhr);
         },
         success: function(data) {
             de.resolve(data);
@@ -376,7 +376,7 @@ function failError(jqxhr) {
 
     var message;
     if (jqxhr.responseText != null) {
-        message = jqxhr.responseText;
+        message = JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage);
     } else {
         message = "Server Error!";
     }
@@ -632,7 +632,7 @@ function getExpeditionCodes() {
                 $(this).dialog("close");
                 }
             }
-            dialog("Error fetching expeditions!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).error), "Error!", buttons)
+            dialog("Error fetching expeditions!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
         });
 }
 
