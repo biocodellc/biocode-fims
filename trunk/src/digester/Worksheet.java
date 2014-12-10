@@ -285,6 +285,10 @@ public class Worksheet {
                     logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
 //                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
 //                        "\" column", 500, e);
+                } catch (Exception e) {
+                    logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
+//                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
+//                        "\" column", 500, e);
                 }
 
                 // Display warnings/etc...
