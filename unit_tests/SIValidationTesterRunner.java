@@ -85,6 +85,11 @@ public class SIValidationTesterRunner {
         assertTrue(tester.getMessages(), result);
     }
 
+     @Test
+    public void checkRuleFormation() {
+        boolean result = tester.checkRuleFormation();
+        assertTrue(tester.getMessages(), result);
+    }
     @Test
     public void checkLists() {
         boolean result = tester.checkLists();

@@ -32,7 +32,8 @@ public class sqlLiteNameCleaner {
         newname = newname.replace('.', '_');
 
         // Remove any remaining non-alphanumeric characters.
-        newname = newname.replaceAll("[^_a-zA-Z0-9()]", "");
+        // JBD Note 12/10/2014 added comma as an acceptable character here explicitly so folks can refer to multiple columns
+        newname = newname.replaceAll("[^_a-zA-Z0-9(),]", "");
 
         // if the table name starts with a digit, prepend an underscore
         if (newname.matches("[0-9].*"))
