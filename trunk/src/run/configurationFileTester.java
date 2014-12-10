@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 /**
  * The publicly accessible tests return or true or false, with true indicating success and false indicating that
  * the encodeURIcomponent was failed.  All messages are managed by the configurationFileErrorMessager class and can be
- * retrieved at any point to display any explanatory information regarding why a particular encodeURIcomponent failed.   If all
+ * retrieved at any point to display any explanatory information regarding why a particular encodeURIcomponent failed.
+ * If all
  * tests pass then no messages are written to the configurationFileErrorMessager
  */
 public class configurationFileTester {
@@ -165,7 +166,7 @@ public class configurationFileTester {
             NamedNodeMap entityAttributes = entities.item(i).getAttributes();
 
             // Check worksheetUniqueKeys
-             worksheetUniqueKey = entityAttributes.getNamedItem("worksheetUniqueKey").getNodeValue();
+            worksheetUniqueKey = entityAttributes.getNamedItem("worksheetUniqueKey").getNodeValue();
 
             if (uniqueKeys.contains(worksheetUniqueKey)) {
                 atLeastOneUniqueKeyFound = true;
@@ -207,6 +208,8 @@ public class configurationFileTester {
                             passedTest = false;
                         }
                     }
+
+
                 }
 
             }
@@ -218,13 +221,13 @@ public class configurationFileTester {
 
         // Tell is if atLeastOneUniqueKey is not found.
         if (!atLeastOneUniqueKeyFound) {
-            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey+ "' does not have uniqueValue rule", "atLeastOneUniqueKeyFound");
+            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey + "' does not have uniqueValue rule", "atLeastOneUniqueKeyFound");
             passedTest = false;
         }
 
-         // Tell is if atLeastOneUniqueKey is not found.
+        // Tell is if atLeastOneUniqueKey is not found.
         if (!atLeastOneRequiredColumnFound) {
-            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey+ "' is not defined as a Required Column with level = 'error'", "atLeastOneRequiredColumnFound");
+            messages.add(this, "Worksheet unique key = '" + worksheetUniqueKey + "' is not defined as a Required Column with level = 'error'", "atLeastOneRequiredColumnFound");
             passedTest = false;
         }
 
@@ -277,11 +280,43 @@ public class configurationFileTester {
         boolean passedTest = true;
         // Check worksheetUniqueKeys
         //String column = attributeAttributes.getNamedItem("column").getNodeValue();
-        Pattern p = Pattern.compile("[^a-z0-9 \\(\\)\\/\\_-]", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("[^a-z0-9 \\(\\)\\/\\.\\_-]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(stringToCheck);
         if (m.find()) {
             messages.add(this, "Column attribute value " + stringToCheck + " contains an invalid character", "checkSpecialCharacters");
             passedTest = false;
+        }
+        return passedTest;
+    }
+
+
+    /**
+     * Check that Rules are well-formed
+     *
+     * @return
+     */
+    public boolean checkRuleFormation() {
+        // Build a NodeList of Rules
+        NodeList rules = document.getElementsByTagName("rule");
+
+        Boolean passedTest = true;
+        int length = rules.getLength();
+
+        for (int n = 0; n < length; ++n) {
+            NamedNodeMap attributes = rules.item(n).getAttributes();
+            String type = attributes.getNamedItem("type").getNodeValue();
+            String column = attributes.getNamedItem("column").getNodeValue();
+            if (column == null || column.trim().equals("")) {
+                if (type.equalsIgnoreCase("uniqueValue") ||
+                        type.equalsIgnoreCase("requiredValueFromOtherColumn") ||
+                        type.equalsIgnoreCase("validateNumeric") ||
+                        type.equalsIgnoreCase("isNumeric") ||
+                        type.equalsIgnoreCase("controlledVocabulary")) {
+                    messages.add(this, "Missing column specification for a rule that requires it", "missingColumnValueForRule");
+
+                    passedTest = false;
+                }
+            }
         }
         return passedTest;
     }
@@ -310,6 +345,7 @@ public class configurationFileTester {
 
         return keys;
     }
+
 
     /**
      * Return an ArrayList of rules that have unique values

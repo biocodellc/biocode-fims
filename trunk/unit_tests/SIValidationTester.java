@@ -82,20 +82,22 @@ public class SIValidationTester {
         tester.init(
                 "/Users/jdeck/IdeaProjects/biocode-fims/sampledata/SIENT_error.xlsx",
                 new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml"),
-                new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.encodeURIcomponent")
+                new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.test")
         );
 
         // Lines below this point are TEST lines.
         // Check for unexpected lines in the validation method
         ArrayList unexpected = tester.unexpectedLines();
+        System.out.println("Looking for unexpected lines in output:");
         if (unexpected.size() > 0) {
-            System.out.println("Unexpected lines in output!" + unexpected);
+            System.out.println("\tUnexpected lines in output!" + unexpected);
         }
 
         // Check for missing lines in the validation method
         ArrayList missing = tester.missingLines();
+        System.out.println("Looking for missing lines in output:");
         if (missing.size() > 0) {
-            System.out.println("Missing lines in output!" + unexpected);
+            System.out.println("\tMissing lines in output!" + missing);
         }
     }
 

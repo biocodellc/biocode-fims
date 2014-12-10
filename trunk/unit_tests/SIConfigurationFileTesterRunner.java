@@ -85,6 +85,11 @@ public class SIConfigurationFileTesterRunner {
         boolean result = tester.checkUniqueKeys();
         assertTrue(tester.getMessages(), result);
     }
+     @Test
+    public void checkRuleFormation() {
+        boolean result = tester.checkRuleFormation();
+        assertTrue(tester.getMessages(), result);
+    }
 
     @Test
     public void checkLists() {
