@@ -255,7 +255,12 @@ public class templateProcessor {
                 while (it.hasNext()) {
 
                     Rule r = (Rule) it.next();
-                    r.setDigesterWorksheet(sheet);
+                    try {
+                        r.setDigesterWorksheet(sheet);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "Unable to parse digester worksheet = " + sheet.getSheetname();
+                    }
                     if (r != null) {
                         digester.List sList = validation.findList(r.getList());
 
