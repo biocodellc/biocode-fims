@@ -102,6 +102,7 @@ public class authenticationService {
     @Consumes(MediaType.TEXT_HTML)
     public void access_token(@QueryParam("code") String code,
                              @QueryParam("state") String state,
+                             @QueryParam("error") String error,
                              @Context HttpServletResponse response,
                              @Context HttpServletRequest request) throws IOException {
 
@@ -114,6 +115,12 @@ public class authenticationService {
         String rootName = sm.retrieveValue("rootName");
         String homepage = "/" + rootName + "/index.jsp";
         HttpSession session = request.getSession();
+
+        if (error != null) {
+            error += " Please contact your system administrator.";
+            response.sendRedirect(homepage + "?error=" + error);
+            return;
+        }
 
         /*
         if (session != null) {
