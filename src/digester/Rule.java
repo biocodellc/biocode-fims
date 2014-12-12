@@ -1523,10 +1523,13 @@ public class Rule {
         // Look at the Fields
         output.append("\t\t<ul>\n");
 
+        // Loop all the fields in this list, if the iterator is not null, printing their values
         if (it != null) {
             while (it.hasNext()) {
-                String field = (String) it.next();
-                output.append("\t\t\t<li>" + field + "</li>\n");
+                //String field = (String) it.next();
+                Field field = (Field) it.next();
+                String fieldValue = field.getValue();
+                output.append("\t\t\t<li>" + fieldValue + "</li>\n");
             }
         }
         output.append("\t\t</ul>\n");
