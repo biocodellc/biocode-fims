@@ -17,7 +17,7 @@ expedition_validation_uri = http://www.biscicol.org/id/expeditionService/validat
 available_projects_uri = http://www.biscicol.org/id/projectService/listUserProjects
 project_lookup_uri = http://www.biscicol.org/id/projectService/validation/
 deeproots_uri = http://www.biscicol.org/id/expeditionService/deepRoots/
-project_service_uri = http://www.biscicol.org/id/projectService/list;
+project_service_uri = http://www.biscicol.org/id/projectService/list
 expedition_list_uri = http://www.biscicol.org/id/expeditionService/list/
 logout_uri = http://www.biscicol.org/id/authenticationService/logout?redirect_uri=http://www.biscicol.org/biocode-fims/
 

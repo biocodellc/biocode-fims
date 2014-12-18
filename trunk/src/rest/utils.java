@@ -212,6 +212,22 @@ public class utils {
         return Response.ok("{\"isNMNHProject\": \"" + p.isNMNHProject() + "\"}").build();
     }
 
+    @GET
+    @Path("/listProjects")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listProjects(@Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        String response = bcidConnector.fetchProjects();
+
+        return Response.status(bcidConnector.getResponseCode())
+                .entity(response)
+                .build();
+    }
+
     static String uploadpath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
