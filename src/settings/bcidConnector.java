@@ -49,6 +49,7 @@ public class bcidConnector {
     private String client_id;
     private String client_secret;
     private String refresh_uri;
+    private String project_service_uri;
     private Integer naan;
     private Boolean ignore_user;
 
@@ -142,6 +143,7 @@ public class bcidConnector {
         expedition_creation_uri = sm.retrieveValue("expedition_creation_uri");
         expedition_validation_uri = sm.retrieveValue("expedition_validation_uri");
         available_projects_uri = sm.retrieveValue("available_projects_uri");
+        project_service_uri = sm.retrieveValue("project_service_uri");
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
@@ -414,7 +416,7 @@ public class bcidConnector {
             JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
 
             // Some error message was returned from the expedition validation service
-            if (getResponseCode() != 401) {
+            if (getResponseCode() != 200) {
                 throw new FIMSRuntimeException(response);
             } else {
                 return true;
@@ -518,6 +520,31 @@ public class bcidConnector {
 
         return true;
 
+
+    }
+
+    /**
+     * method for fetching public and current user member project's from bcid system
+     * @return
+     */
+    public String fetchProjects() {
+
+        String urlString = project_service_uri + "?access_token=" + accessToken;
+
+        try {
+            URL url = new URL(urlString);
+
+            String response = createGETConnection(url);
+
+            // Some error message was returned from the expedition validation service
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
+            } else {
+                return response;
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
 
     }
 

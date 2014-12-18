@@ -85,7 +85,7 @@ function populateAbstract(targetDivId) {
 
 function populateProjects() {
     //theUrl = "/id/projectService/list";
-    theUrl = "https://nmnh-fims.si.edu/id/projectService/list";
+    theUrl = "https://nmnh-fims.si.edu/rest/utils/listProjects";
     var jqxhr = $.getJSON( theUrl, function(data) {
         var listItems = "";
         listItems+= "<option value='0'>Select a department ...</option>";
