@@ -105,6 +105,7 @@ public class siConverter {
                 Cell cell = row.getCell(projectIndex);
                 value = cell.getStringCellValue();
             } catch (Exception e) {
+                //TODO should we be catching Exception?
                 throw new FIMSRuntimeException("Unable to process value on line " + row.getRowNum(), 500, e);
             }
 
@@ -112,6 +113,7 @@ public class siConverter {
                 Cell siTemplateCell = row.getCell(SIFieldTemplate);
                 siTemplateValue = siTemplateCell.getStringCellValue();
             } catch (Exception e) {
+                //TODO should we be catching Exception?
                 throw new FIMSRuntimeException("Unable to process siTemplateCell on line " + row.getRowNum(), 500, e);
             }
 
@@ -124,6 +126,7 @@ public class siConverter {
                 }
 
             } catch (Exception e) {
+                //TODO should we be catching Exception?
                 throw new FIMSRuntimeException("Unable to process globalValidationRule on line " + row.getRowNum(), 500, e);
             }
 

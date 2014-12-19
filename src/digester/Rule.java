@@ -1,17 +1,19 @@
 package digester;
 
-import com.sun.org.apache.xpath.internal.operations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
 import renderers.RowMessage;
-import settings.Connection;
+import settings.FIMSException;
+import settings.FIMSRuntimeException;
 import settings.RegEx;
 import settings.fimsPrinter;
 import utils.encodeURIcomponent;
 import utils.sqlLiteNameCleaner;
 
-import javax.xml.transform.Result;
 import java.io.UnsupportedEncodingException;
 import java.lang.String;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -55,6 +57,8 @@ public class Rule {
     private final LinkedList<String> fields = new LinkedList<String>();
     //private List fields = new List();
 
+    private static Logger logger = LoggerFactory.getLogger(Rule.class);
+
     // NOTE: not sure i want these values in this class, maybe define a sub-class?
     // values for DwCLatLngChecker (optional)
     private String decimalLatitude;
@@ -75,7 +79,7 @@ public class Rule {
         return digesterWorksheet;
     }
 
-    public void setDigesterWorksheet(Worksheet digesterWorksheet) throws Exception {
+    public void setDigesterWorksheet(Worksheet digesterWorksheet) {
         this.digesterWorksheet = digesterWorksheet;
     }
 
@@ -87,11 +91,15 @@ public class Rule {
         return worksheet;
     }
 
-    public void setWorksheet(TabularDataReader worksheet) throws Exception {
+    public void setWorksheet(TabularDataReader worksheet) {
         this.worksheet = worksheet;
         // Synchronize the Excel Worksheet instance with the digester worksheet instance
         //fimsPrinter.out.println("setting to "+ digesterWorksheet.getSheetname());
-        worksheet.setTable(digesterWorksheet.getSheetname());
+        try {
+            worksheet.setTable(digesterWorksheet.getSheetname());
+        } catch (FIMSException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 
     public void setServiceRoot(String serviceRoot) {
@@ -319,10 +327,8 @@ public class Rule {
      *
      * Note that this rule does not check if this a valid URI in its entirety, only that the portion of
      * the string, when appended onto other valid URI syntax, will not break the URI itself
-     *
-     * @throws Exception
      */
-    public void validForURI() throws Exception {
+    public void validForURI() {
         String sql = "";
         Statement statement = null;
         ResultSet rs = null;
@@ -359,11 +365,16 @@ public class Rule {
 
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+            throw new FIMSRuntimeException("SQL exception processing uniqueValue rule", 500, e);
         } finally {
-            statement.close();
-            rs.close();
+            try {
+                if (statement != null)
+                    statement.close();
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+                logger.warn(null, e);
+            }
         }
     }
 
@@ -379,16 +390,13 @@ public class Rule {
      * {@code
      * <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
      * }
-     *
-     * @throws Exception
      */
-    public void uniqueValue() throws Exception {
+    public void uniqueValue() {
+        String groupMessage = "Unique value constraint did not pass";
         String sql = "";
         Statement statement = null;
         ResultSet rs = null;
-        String groupMessage = "";
         StringBuilder values = new StringBuilder();
-        groupMessage = "Unique value constraint did not pass";
 
         try {
             statement = connection.createStatement();
@@ -415,11 +423,16 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("SQL exception processing uniqueValue rule " + e.getMessage());
+            throw new FIMSRuntimeException("SQL exception processing uniqueValue rule", 500, e);
         } finally {
-            statement.close();
-            rs.close();
+            try {
+                if (statement != null)
+                    statement.close();
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+                logger.warn(null, e);
+            }
         }
     }
 
@@ -436,10 +449,8 @@ public class Rule {
      * <field>BOX3D(-18.5 -150.8,-16.7 -148.4)</field>
      * </rule>
      * }
-     *
-     * @throws Exception
      */
-    public void BoundingBox() throws Exception {
+    public void BoundingBox() {
         String groupMessage = "Coordinates outside specified bounding box";
 
         // Build List of XML Fields
@@ -491,10 +502,8 @@ public class Rule {
      * <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
      * level='error'></rule>
      * }
-     *
-     * @throws Exception
      */
-    public void minimumMaximumNumberCheck() throws Exception {
+    public void minimumMaximumNumberCheck() {
         String groupMessage = "Number outside of range";
         String minimum = getColumn().split(",")[0];
         String maximum = getColumn().split(",")[1];
@@ -518,14 +527,14 @@ public class Rule {
             return;
         }
 
-        Statement statement;
-        ResultSet resultSet;
+        Statement statement = null;
+        ResultSet resultSet = null;
         String msg;
-        statement = connection.createStatement();
+        try {
+            statement = connection.createStatement();
 
-        // Look for non numeric values in minimum & maximum columns
-        for (String thisColumn : Arrays.asList(minMaxArray)) {
-            try {
+            // Look for non numeric values in minimum & maximum columns
+            for (String thisColumn : Arrays.asList(minMaxArray)) {
                 String sql = "select " + thisColumn + " from  " + digesterWorksheet.getSheetname() +
                         " where abs(" + thisColumn + ") == 0 AND " +
                         "trim(" + thisColumn + ") != '0' AND " +
@@ -535,13 +544,9 @@ public class Rule {
                     msg = "non-numeric value " + resultSet.getString(thisColumn) + " for " + thisColumn;
                     addMessage(msg, groupMessage);
                 }
-            } catch (Exception e) {
-                throw new Exception("minimumMaximumCheck exception", e);
             }
-        }
 
-        // Check to see that minimum is less than maximum
-        try {
+            // Check to see that minimum is less than maximum
             String sql = "select " + minimum + "," + maximum + " from " + digesterWorksheet.getSheetname() +
                     " where abs(" + minimum + ") > abs(" + maximum + ")";
             resultSet = statement.executeQuery(sql);
@@ -553,18 +558,15 @@ public class Rule {
                 addMessage(msg, groupMessage);
             }
 
-        } catch (Exception e) {
-            throw new Exception("minimumMaximumCheck exception", e);
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException("minimumMaximumCheck exception", 500, e);
         }
-
     }
 
     /**
      * Check that lowestTaxonLevel and LowestTaxon are entered correctly (Biocode Database only)
-     *
-     * @throws Exception
      */
-    public void checkLowestTaxonLevel() throws Exception {
+    public void checkLowestTaxonLevel() {
         String groupMessage = "Lowest taxon level not entered correctly";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
@@ -577,7 +579,6 @@ public class Rule {
                 addMessage("LowestTaxonLevel entered without a LowestTaxon", groupMessage, j);
             }
         }
-
     }
 
     /**
@@ -717,10 +718,8 @@ public class Rule {
      * If a user enters data in a particular column, it is required to:
      * 1.  have a value in second column
      * 2.  if there is a list of values specified under the rule, it needs to match one of those values
-     *
-     * @throws Exception
      */
-    public void requiredValueFromOtherColumn() throws Exception {
+    public void requiredValueFromOtherColumn() {
 
         StringBuilder fieldListSB = new StringBuilder();
         ArrayList<String> fieldListArrayList = new ArrayList<String>();
@@ -735,6 +734,7 @@ public class Rule {
                 caseInsensitiveSearch = true;
             }
         } catch (NullPointerException e) {
+            logger.warn("NullPointerException", e);
             // do nothing, just make it not caseInsensitive
         }
 
@@ -747,11 +747,8 @@ public class Rule {
         }
 
         // Convert XML Field values to a Stringified list
-        try {
-            listFields = getListElements();
-        } catch (Exception e) {
-            //listFields = getFields();
-        }
+        listFields = getListElements();
+        //listFields = getFields();
         // Loop the fields and put in a StringBuilder
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
@@ -770,6 +767,8 @@ public class Rule {
 
                 count++;
             } catch (Exception e) {
+                //TODO should we be catching Exception?
+                logger.warn("Exception", e);
                 // do nothing
             }
         }
@@ -817,15 +816,16 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new Exception("SQL exception processing requiredValueFromOtherColumn rule " + e.getMessage(), e);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("Unhandled exception processing requiredValueFromOtherColumn for " + getColumn(), e);
+            throw new FIMSRuntimeException("SQL exception processing requiredValueFromOtherColumn rule", 500, e);
         } finally {
-            statement.close();
-            if (resultSet != null)
-                resultSet.close();
+            try {
+                if (statement != null)
+                    statement.close();
+                if (resultSet != null)
+                    resultSet.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
+            }
         }
     }
 
@@ -835,8 +835,6 @@ public class Rule {
      * Row letter between A-H
      * Column No between 01-12
      * No duplicate plate_row_column
-     *
-     * @throws Exception
      */
     @Deprecated
     public void checkTissueColumnsSI() throws Exception {
@@ -900,6 +898,7 @@ public class Rule {
                     addMessage("Bad Column Number " + colNo + " (must be between 01 and 12).", groupMessage, row);
                 }
             } catch (NumberFormatException e) {
+                logger.warn("NumberFormatException", e);
                 addMessage("Invalid number format for Column Number", groupMessage, row);
             }
 
@@ -925,10 +924,8 @@ public class Rule {
      * {@code
      * <rule type="checkTissueColumns" name="" plateName="format_name96" wellNumber="well_number96" level="warning"/>
      * }
-     *
-     * @throws Exception
      */
-    public void checkTissueColumns() throws Exception {
+    public void checkTissueColumns() {
         String groupMessage = "Well number / plate names not entered correctly";
 
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
@@ -950,10 +947,13 @@ public class Rule {
                         String strNumber = well_number96Value.substring(1, well_number96Value.length());
                         intNumber = Integer.parseInt(strNumber);
                     } catch (NumberFormatException nme) {
+                        logger.warn("NumberFormatException", nme);
                         // Not a valid integer
                         addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                     } catch (Exception e) {
-                        addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
+                        //TODO should we be catching Exception?
+                        logger.warn("Exception", e);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
                     } finally {
                         if (intNumber <= 12 && intNumber >= 1) {
                             // ok
@@ -976,14 +976,15 @@ public class Rule {
      * Multiple ranges can be specified in value, like:   value:">=-90 and <=90"
      * or, simply value:">=0"
      */
-    public void validateNumeric() throws Exception {
+    public void validateNumeric() {
         String groupMessage = "Invalid number format";
         boolean validNumber = true;
         ResultSet resultSet;
-        Statement statement = connection.createStatement();
         String thisColumn = getColumn();
         String msg = null;
         try {
+            Statement statement = connection.createStatement();
+
             // Split the value according to our convention
             String[] values = value.split("=");
 
@@ -1005,9 +1006,10 @@ public class Rule {
                 validNumber = false;
             }
 
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("validateNumeric Check exception", e);
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
         }
     }
 
@@ -1019,7 +1021,7 @@ public class Rule {
      * However, the following are recognized as numeric values ("15%", "100$", "1.02E10")
      * }
      */
-    public void isNumber() throws Exception {
+    public void isNumber() {
         boolean validNumber = checkValidNumberSQL(getColumn());
     }
 
@@ -1031,17 +1033,15 @@ public class Rule {
      * @param thisColumn
      *
      * @return
-     *
-     * @throws Exception
      */
-    private boolean checkValidNumberSQL(String thisColumn) throws Exception {
+    private boolean checkValidNumberSQL(String thisColumn) {
         String groupMessage = "Invalid number";
         boolean validNumber = true;
         ResultSet resultSet;
-        Statement statement = connection.createStatement();
-
         String msg;
+
         try {
+            Statement statement = connection.createStatement();
             String sql = "select " + thisColumn + " from  " + digesterWorksheet.getSheetname() +
                     " where abs(" + thisColumn + ") == 0 AND " +
                     "trim(" + thisColumn + ") != '0' AND " +
@@ -1052,9 +1052,8 @@ public class Rule {
                 addMessage(msg, groupMessage);
                 validNumber = false;
             }
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("isNumber Check exception", e);
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
         }
         return validNumber;
     }
@@ -1073,12 +1072,14 @@ public class Rule {
                 try {
                     Double.parseDouble(rowValue);
                 } catch (NumberFormatException nme) {
+                    logger.warn("NumberFormatException", nme);
                     return false;
                 }
             } else {
                 try {
                     Integer.parseInt(rowValue);
                 } catch (NumberFormatException nme) {
+                    logger.warn("NumberFormatException", nme);
                     return false;
                 }
             }
@@ -1101,8 +1102,7 @@ public class Rule {
      * level="warning"/>
      * }
      */
-    public void DwCLatLngChecker
-    () throws Exception {
+    public void DwCLatLngChecker() {
         String msg = "";
         String groupMessage = "Invalid Latitude / longitude";
         for (int j = 1; j <= worksheet.getNumRows(); j++) {
@@ -1147,12 +1147,10 @@ public class Rule {
 
     /**
      * Duplicate of checkInXMLFields
-     *
-     * @throws Exception
      */
-    public void controlledVocabulary() throws Exception {
-        checkInXMLFields();
-    }
+     public void controlledVocabulary() {
+         checkInXMLFields();
+     }
 
     /**
      * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
@@ -1179,7 +1177,7 @@ public class Rule {
      * <rule type="checkInXMLFields" name="relaxant" level="warning" list="list3"/>
      * }
      */
-    public void checkInXMLFields() throws Exception {
+    public void checkInXMLFields() {
         StringBuilder lookupSB = new StringBuilder();
         java.util.List<Field> listFields = null;
         String msg;
@@ -1192,6 +1190,7 @@ public class Rule {
                 caseInsensitiveSearch = true;
             }
         } catch (NullPointerException e) {
+            logger.warn("NullPointerException", e);
             // do nothing, just make it not caseInsensitive
         }
 
@@ -1204,11 +1203,7 @@ public class Rule {
         }
 
         // Convert XML Field values to a Stringified list
-        try {
-            listFields = getListElements();
-        } catch (Exception e) {
-            //listFields = getFields();
-        }
+        listFields = getListElements();
         // Loop the fields and put in a StringBuilder
         int count = 0;
         for (int k = 0; k < listFields.size(); k++) {
@@ -1224,6 +1219,8 @@ public class Rule {
                     lookupSB.append("\'" + value.replace("'", "''") + "\'");
                 count++;
             } catch (Exception e) {
+                //TODO should we be catching Exception?
+                logger.warn("Exception", e);
                 // do nothing
             }
         }
@@ -1262,15 +1259,20 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            //e.printStackTrace();
-            throw new Exception("SQL exception processing checkInXMLFields rule " + e.getMessage(), e);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            throw new Exception("Unhandled exception processing checkInXMLFields for " + getColumn(), e);
+            throw new FIMSRuntimeException("SQL exception processing checkInXMLFields rule", 500, e);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch(UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
         } finally {
-            statement.close();
-            if (resultSet != null)
-                resultSet.close();
+                try {
+                    if (statement != null)
+                        statement.close();
+                    if (resultSet != null)
+                        resultSet.close();
+                } catch (SQLException e) {
+                    logger.warn("SQLException", e);
+                }
         }
     }
 
@@ -1295,65 +1297,64 @@ public class Rule {
         ResultSet rs = null;
         try {
             statement = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        // Set text for this warning values
-        String levelValue = "mandatory";
-        if (getMessageLevel() == RowMessage.WARNING) {
-            levelValue = "desirable";
-        }
-
-        String fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
-        ArrayList<String> notFoundArray = new ArrayList<String>();
-        sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
-        boolean booFound = false;
-        // Create a hashset of column names for easy lookup
-        Set<String> hashset = new HashSet<String>(worksheet.getColNames());
-        // Loop through the list of required fields using the iterator
-        Iterator itRequiredField = getFields().iterator();
-        while (itRequiredField.hasNext()) {
-            booFound = false;
-
-            // fieldNameWorksheet has spaces
-            fieldNameWorksheet = itRequiredField.next().toString().trim();
-            // fieldNameSQLLite has underscores instead of spaces
-            fieldNameSQLLite = cleaner.fixNames(fieldNameWorksheet);
-
-            // Simple search in hashset for required field name
-            if (hashset.contains(fieldNameWorksheet)) {
-                booFound = true;
+            // Set text for this warning values
+            String levelValue = "mandatory";
+            if (getMessageLevel() == RowMessage.WARNING) {
+                levelValue = "desirable";
             }
 
-            // Error message if column not found
-            if (!booFound) {
-                notFoundArray.add(fieldNameWorksheet);
-                // Examine column contents -- required columns need some content
-            } else {
-                String sql = "";
+            String fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
+            ArrayList<String> notFoundArray = new ArrayList<String>();
+            sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
+            boolean booFound = false;
+            // Create a hashset of column names for easy lookup
+            Set<String> hashset = new HashSet<String>(worksheet.getColNames());
+            // Loop through the list of required fields using the iterator
+            Iterator itRequiredField = getFields().iterator();
+            while (itRequiredField.hasNext()) {
+                booFound = false;
 
-                try {
+                // fieldNameWorksheet has spaces
+                fieldNameWorksheet = itRequiredField.next().toString().trim();
+                // fieldNameSQLLite has underscores instead of spaces
+                fieldNameSQLLite = cleaner.fixNames(fieldNameWorksheet);
+
+                // Simple search in hashset for required field name
+                if (hashset.contains(fieldNameWorksheet)) {
+                    booFound = true;
+                }
+
+                // Error message if column not found
+                if (!booFound) {
+                    notFoundArray.add(fieldNameWorksheet);
+                    // Examine column contents -- required columns need some content
+                } else {
+                    String sql = "";
+
                     sql = "select count(*) from " + digesterWorksheet.getSheetname() + " where `" + fieldNameSQLLite + "`='' or `" + fieldNameSQLLite + "` is null";
                     rs = statement.executeQuery(sql);
                     if (rs.getInt(1) > 0) {
                         addMessage("\"" + fieldNameWorksheet + "\" has a missing cell value", groupMessage);
                     }
-                } catch (SQLException e) {
-                    System.out.println(sql);
-                    e.printStackTrace();
                 }
             }
-        }
 
-        if (notFoundArray.size() > 0) {
-            msg = "Did not find " + levelValue + " columns: " + listToString(notFoundArray);
-            addMessage(msg, groupMessage);
-        }
-        try {
-            statement.close();
+            if (notFoundArray.size() > 0) {
+                msg = "Did not find " + levelValue + " columns: " + listToString(notFoundArray);
+                addMessage(msg, groupMessage);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new FIMSRuntimeException(500, e);
+        } finally {
+            try {
+                if (statement != null)
+                    statement.close();
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
+            }
         }
     }
 
@@ -1421,6 +1422,11 @@ public class Rule {
         messages.addLast(new RowMessage(message, groupMessage, getMessageLevel()));
     }
 
+    public void addMessage(String message) {
+        String groupMessage = "Rule doesn't exist or no such Rule";
+        messages.addLast(new RowMessage(message, groupMessage, getMessageLevel()));
+    }
+
     private void addMessage
             (String message,
              String groupMessage,
@@ -1447,28 +1453,26 @@ public class Rule {
      * @param column
      *
      * @return
-     *
-     * @throws SQLException
      */
-    private boolean checkColumnExists
-    (String
-             column) throws SQLException {
+    private boolean checkColumnExists(String column) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT sql FROM sqlite_master WHERE sql like '%" + column + "%'");
 
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT sql FROM sqlite_master WHERE sql like '%" + column + "%'");
-
-        if (rs.next())
-            return true;
-        else
-            return false;
+            if (rs.next())
+                return true;
+            else
+                return false;
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException("SQLException checking if " + column + " column exists", 500, e);
+        }
     }
 
-    public void close
-            () {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(null, e);
         }
     }
 
@@ -1497,7 +1501,7 @@ public class Rule {
                 output.append("\t<li>value: " + URLDecoder.decode(this.value, "utf-8") + "</li>\n");
             } catch (UnsupportedEncodingException e) {
                 output.append("\t<li>value: " + this.value + "</li>\n");
-                e.printStackTrace();
+                logger.warn("UnsupportedEncodingException", e);
             }
         }
         // Display fields
@@ -1512,6 +1516,7 @@ public class Rule {
         try {
             it = listFields.iterator();
         } catch (NullPointerException e) {
+            logger.warn("NullPointerException", e);
             return output.toString();
         }
         // One or the other types of list need data
@@ -1523,13 +1528,10 @@ public class Rule {
         // Look at the Fields
         output.append("\t\t<ul>\n");
 
-        // Loop all the fields in this list, if the iterator is not null, printing their values
         if (it != null) {
             while (it.hasNext()) {
-                //String field = (String) it.next();
-                Field field = (Field) it.next();
-                String fieldValue = field.getValue();
-                output.append("\t\t\t<li>" + fieldValue + "</li>\n");
+                String field = (String) it.next();
+                output.append("\t\t\t<li>" + field + "</li>\n");
             }
         }
         output.append("\t\t</ul>\n");

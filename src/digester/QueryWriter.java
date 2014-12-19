@@ -150,6 +150,7 @@ public class QueryWriter {
                 }
 
             } catch (Exception e) {
+                //TODO should we be catching Exception?
                 logger.warn("Exception", e);
                 // For now, do nothing.
             }

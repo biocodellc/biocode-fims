@@ -440,6 +440,7 @@ public class ExcelReader implements TabularDataReader {
                     try {
                         ret[cnt] = df.formatCellValue(cell, fe);
                     } catch (Exception e) {
+                        //TODO should we be catching Exception?
                         int rowNum = cell.getRowIndex() + 1;
                         throw new FIMSRuntimeException("There was an issue processing a formula on this sheet.\n" +
                                 "\tWhile standard formulas are allowed, formulas with references to external sheets cannot be read!\n" +
