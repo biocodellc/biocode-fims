@@ -616,6 +616,26 @@ function validationFormToggle() {
     });
 }
 
+// update the checkbox to reflect the expedition's public status
+function updateExpeditionPublicStatus(expeditionList) {
+    $('#expedition_code').change(function() {
+        var code = $('#expedition_code').val();
+        var public;
+        $.each(expeditionList.expeditions, function(key, e) {
+            if (e.expedition_code == code) {
+                public = e.public;
+                return false;
+            }
+        });
+        if (public == 'true') {
+            $('#public_status').prop('checked', true);
+        } else {
+            $('#public_status').prop('checked', false);
+        }
+    });
+}
+
+
 // get the expeditions codes a user owns for a project
 function getExpeditionCodes() {
     var projectID = $("#projects").val();
@@ -629,6 +649,7 @@ function getExpeditionCodes() {
 
             select += "</select>";
             $("#expedition_code").replaceWith(select);
+            updateExpeditionPublicStatus(data);
         }).fail(function(jqxhr) {
             $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code" />');
             $("#dialogContainer").addClass("error");

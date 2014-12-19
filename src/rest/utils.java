@@ -79,19 +79,7 @@ public class utils {
         String refreshToken = (String) session.getAttribute("refresh_token");
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
 
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
-        String expedition_list_uri = sm.retrieveValue("expedition_list_uri");
-
-//        URL url = new URL("http://biscicol.org:8080/id/expeditionService/list/" + projectId + "?access_token=" + accessToken);
-        URL url;
-        try {
-            url = new URL(expedition_list_uri + projectId + "?access_token=" + accessToken);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-
-        String response = bcidConnector.createGETConnection(url);
+        String response = bcidConnector.getExpeditionCodes(projectId);
 
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }

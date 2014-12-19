@@ -45,6 +45,7 @@ public class bcidConnector {
     private String associate_uri;
     private String expedition_creation_uri;
     private String expedition_validation_uri;
+    private String expedition_list_uri;
     private String available_projects_uri;
     private String client_id;
     private String client_secret;
@@ -144,6 +145,7 @@ public class bcidConnector {
         expedition_creation_uri = sm.retrieveValue("expedition_creation_uri");
         expedition_validation_uri = sm.retrieveValue("expedition_validation_uri");
         expedition_public_status_uri = sm.retrieveValue("expedition_public_status_uri");
+        expedition_list_uri = sm.retrieveValue("expedition_list_uri");
         available_projects_uri = sm.retrieveValue("available_projects_uri");
         project_service_uri = sm.retrieveValue("project_service_uri");
         client_id = sm.retrieveValue("client_id");
@@ -429,6 +431,28 @@ public class bcidConnector {
         }
     }
 
+    /**
+     * get the JSON list of expeditions that belong to a project
+     * @param projectId
+     * @return
+     */
+    public String getExpeditionCodes(Integer projectId) {
+        String urlString = expedition_list_uri + projectId + "?access_token=" + accessToken;
+
+        try {
+            URL url = new URL(urlString);
+            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
+
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException(response);
+            } else {
+                return response.toJSONString();
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
     /**
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
      * unique within
