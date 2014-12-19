@@ -50,6 +50,7 @@ public class bcidConnector {
     private String client_secret;
     private String refresh_uri;
     private String project_service_uri;
+    private String expedition_public_status_uri;
     private Integer naan;
     private Boolean ignore_user;
 
@@ -142,6 +143,7 @@ public class bcidConnector {
         associate_uri = sm.retrieveValue("associate_uri");
         expedition_creation_uri = sm.retrieveValue("expedition_creation_uri");
         expedition_validation_uri = sm.retrieveValue("expedition_validation_uri");
+        expedition_public_status_uri = sm.retrieveValue("expedition_public_status_uri");
         available_projects_uri = sm.retrieveValue("available_projects_uri");
         project_service_uri = sm.retrieveValue("project_service_uri");
         client_id = sm.retrieveValue("client_id");
@@ -408,7 +410,8 @@ public class bcidConnector {
      */
     public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) {
 
-        String urlString = expedition_creation_uri + "/admin/publicExpedition/" + project_id + "/" + expedition_code + "/" + publicStatus;
+        String urlString = expedition_public_status_uri + project_id + "/" + expedition_code + "/" + publicStatus +
+                "?access_token=" + accessToken;
 
         try {
             URL url = new URL(urlString);

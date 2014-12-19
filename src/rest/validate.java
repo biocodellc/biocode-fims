@@ -45,7 +45,7 @@ public class validate {
     public String validate(@FormDataParam("project_id") Integer project_id,
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
-                           @FormDataParam("publicStatus") String publicStatus,
+                           @FormDataParam("public_status") String publicStatus,
                            @FormDataParam("dataset") InputStream is,
                            @FormDataParam("dataset") FormDataContentDisposition fileData,
                            @Context HttpServletRequest request) {
