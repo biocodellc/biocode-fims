@@ -538,6 +538,7 @@ function uploadResults(data) {
         $('form').clearForm();
         $('.toggle-content#projects_toggle').hide(400);
         $('.toggle-content#expedition_code_toggle').hide(400);
+        $('.toggle-content#expedition_public_toggle').hide(400);
 
     } else {
         // ask user if want to proceed
@@ -599,6 +600,11 @@ function validationFormToggle() {
             $('.toggle-content#expedition_code_toggle').show(400);
         } else {
             $('.toggle-content#expedition_code_toggle').hide(400);
+        }
+        if ($('.toggle-content#expedition_public_toggle').is(':hidden') && $('#upload').is(":checked")) {
+            $('.toggle-content#expedition_public_toggle').show(400);
+        } else {
+            $('.toggle-content#expedition_public_toggle').hide(400);
         }
     });
     $("#projects").change(function() {

@@ -164,7 +164,8 @@ public final class TabularDataConverter {
             throw new FIMSRuntimeException(500, e);
         } finally {
             try {
-                connection.close();
+                if (connection != null)
+                    connection.close();
             } catch (SQLException e) {
                 logger.warn("SQLException", e);
             }

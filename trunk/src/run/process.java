@@ -304,6 +304,9 @@ public class process {
             fims.run(connector, processController);
             String results = fims.results();
             processController.appendStatus("<br>" + results);
+            // Set the public status
+            connector.setExpeditionPublicStatus(processController.getPublicStatus(), processController.getProject_id(),
+                    processController.getExpeditionCode());
             //Html2Text parser = new Html2Text();
             //fimsPrinter.out.println(parser.convert(results));
             fimsPrinter.out.println(results);

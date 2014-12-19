@@ -52,6 +52,11 @@
                     <td><input type="text" name="expedition_code" id="expedition_code" /></td>
                 </tr>
 
+                <tr class="toggle-content" id="expedition_public_toggle">
+                    <td align="right">Public&nbsp;&nbsp;</td>
+                    <td><input type="checkbox" name="public_status" id="public_status" /></td>
+                </tr>
+
                 <tr>
                     <td></td>
                     <td><input type="button" value="Submit" class="btn btn-default btn-xs"></td>
