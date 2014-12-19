@@ -75,7 +75,7 @@ public class SIConfigurationFileTesterRunner {
     }
 
     @Test
-    public void parse() throws Exception {
+    public void parse() {
         boolean result = tester.parse();
         assertTrue("Unabled to parse " + tester.fileToTest.getName(), result);
     }

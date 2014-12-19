@@ -274,21 +274,14 @@ public class Worksheet {
 
                     // Close the connection
                 } catch (NoSuchMethodException e) {
-                    logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
-//                   throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
-//                        "\" column", 500, e);
+                    logger.warn(null, e);
+                    r.addMessage("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column.");
                 } catch(IllegalAccessException e) {
-                    logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
-//                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
-//                        "\" column", 500, e);
+                    logger.warn(null, e);
+                    r.addMessage("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column.");
                 } catch (InvocationTargetException e) {
-                    logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
-//                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
-//                        "\" column", 500, e);
-                } catch (Exception e) {
-                    logger.warn("Unable to run {} on \"{}\" column", r.getType(), r.getColumnWorksheetName());
-//                    throw new FIMSRuntimeException("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() +
-//                        "\" column", 500, e);
+                    logger.warn(null, e);
+                    r.addMessage("Unable to run " + r.getType() + " on \"" + r.getColumnWorksheetName() + "\" column.");
                 }
 
                 // Display warnings/etc...

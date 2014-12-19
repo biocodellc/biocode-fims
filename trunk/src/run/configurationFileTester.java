@@ -123,11 +123,10 @@ public class configurationFileTester {
             String[] parsed = ruleListName.split("\\|");
             String listname = parsed[0];
             String columnname = "";
-            try {
+
+            if (parsed.length > 1)
                 columnname = " for column " + parsed[1];
-            } catch (Exception e) {
-                columnname = "";
-            }
+
             if (!listAliases.contains(listname)) {
                 messages.add(this, listname + " is specified by a rule as a list" + columnname + ", but was not named as a list", "checkList");
                 passedTest = false;
