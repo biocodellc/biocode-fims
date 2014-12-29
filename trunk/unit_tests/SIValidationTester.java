@@ -56,6 +56,11 @@ public class SIValidationTester {
         actualSB = processController.getCommandLineSB();
 
         // Read TEST file
+        /*
+        ArrayList<String> messages = new ArrayList<String>();
+        messages.add(Message.MESSAGE_REQUIRED_COLUMN);
+          */
+
         BufferedReader br = new BufferedReader(new FileReader(testFile));
         try {
             String line = br.readLine();
@@ -81,7 +86,7 @@ public class SIValidationTester {
         SIValidationTester tester = new SIValidationTester();
         tester.init(
                 "/Users/jdeck/IdeaProjects/biocode-fims/sampledata/SIENT_error.xlsx",
-                new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml"),
+                new File("/Users/jdeck/IdeaProjects/biocode-fims/sampledata/SIENT_configuration.xml"),
                 new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.test")
         );
 

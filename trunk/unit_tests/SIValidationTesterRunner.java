@@ -48,14 +48,8 @@ public class SIValidationTesterRunner {
 
         // Create a converter object so we can initialize each of the SI projects
         siConverter si = null;
-        try {
-            si = new siConverter();
-            si.init();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-        }
+        si = new siConverter();
+        si.init();
         // Loop each of the projects
         Iterator projectsIt = si.projects.iterator();
         int count = 0;
