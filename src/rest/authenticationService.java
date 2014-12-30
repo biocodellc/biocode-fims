@@ -217,11 +217,7 @@ public class authenticationService {
 
         // Invalidate the session for Biocode FIMS
         session.invalidate();
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
-
-        // Need to also logout of the BCID system
-        res.sendRedirect(sm.retrieveValue("logout_uri"));
+        res.sendRedirect("/biocode-fims/index.jsp");
 
         return;
     }
