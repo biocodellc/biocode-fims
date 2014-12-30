@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -215,9 +216,13 @@ public class authenticationService {
         ////@Produces(MediaType.TEXT_HTML)
         HttpSession session = req.getSession(true);
 
+         // Initialize settings
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
         // Invalidate the session for Biocode FIMS
         session.invalidate();
-        res.sendRedirect("/biocode-fims/index.jsp");
+        res.sendRedirect(sm.retrieveValue("rootName") + File.separator );
 
         return;
     }
