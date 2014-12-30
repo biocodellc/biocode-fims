@@ -222,7 +222,7 @@ public class authenticationService {
 
         // Invalidate the session for Biocode FIMS
         session.invalidate();
-        res.sendRedirect(sm.retrieveValue("rootName") + File.separator );
+        res.sendRedirect(File.separator + sm.retrieveValue("rootName") + File.separator  + "index.jsp");
 
         return;
     }
