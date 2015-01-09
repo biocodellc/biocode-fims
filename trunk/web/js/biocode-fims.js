@@ -114,7 +114,7 @@ function populateGraphs(project_id) {
 	    graphsMessage('Choose an project to see loaded spreadsheets');
 	    return;
     }
-    theUrl = "/id/projectService/graphs/" + project_id;
+    theUrl = "rest/utils/graphs/" + project_id;
     var jqxhr = $.getJSON( theUrl, function(data) {
         // Check for empty object in response
         if (typeof data['data'][0] === "undefined") {

@@ -85,6 +85,29 @@ public class utils {
     }
 
     /**
+     * Retrieve a user's graphs in a given project from bcid. This uses an access token to access the
+     * bcid service.
+     *
+     * @param projectId
+     *
+     * @return
+     */
+    @GET
+    @Path("/graphs/{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGraphs(@PathParam("project_id") Integer projectId,
+                              @Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        String response = bcidConnector.getGraphs(projectId);
+
+        return Response.status(bcidConnector.getResponseCode()).entity(response).build();
+    }
+
+    /**
      * Check whether or not an expedition code is valid by calling the BCID expeditionService/validateExpedition
      * Service
      * Should return update, insert, or error
