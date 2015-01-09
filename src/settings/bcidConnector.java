@@ -52,6 +52,7 @@ public class bcidConnector {
     private String refresh_uri;
     private String project_service_uri;
     private String expedition_public_status_uri;
+    private String graphs_uri;
     private Integer naan;
     private Boolean ignore_user;
 
@@ -148,6 +149,7 @@ public class bcidConnector {
         expedition_list_uri = sm.retrieveValue("expedition_list_uri");
         available_projects_uri = sm.retrieveValue("available_projects_uri");
         project_service_uri = sm.retrieveValue("project_service_uri");
+        graphs_uri = sm.retrieveValue("graphs_uri");
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
@@ -438,6 +440,29 @@ public class bcidConnector {
      */
     public String getExpeditionCodes(Integer projectId) {
         String urlString = expedition_list_uri + projectId + "?access_token=" + accessToken;
+
+        try {
+            URL url = new URL(urlString);
+            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
+
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException(response);
+            } else {
+                return response.toJSONString();
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
+
+    /**
+     * get the JSON list of graphs that belong to a project
+     * @param projectId
+     * @return
+     */
+    public String getGraphs(Integer projectId) {
+        String urlString = graphs_uri + projectId + "?access_token=" + accessToken;
 
         try {
             URL url = new URL(urlString);
