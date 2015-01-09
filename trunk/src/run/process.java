@@ -204,14 +204,19 @@ public class process {
         // Validation Step
         runValidation();
 
+        // If there is errors, tell the user and stop the operation
+        if (processController.getHasErrors()) {
+            fimsPrinter.out.println(processController.getCommandLineSB().toString());
+            return;
+        }
         // Run the validation step
         if (!processController.isValidated() && processController.getHasWarnings()) {
-            Html2Text parser = new Html2Text();
 
-            String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getWarningsSB().toString();
+            String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getCommandLineSB().toString();
             // In LOCAL version convert HTML tags to readable Text
-            message = parser.convert(message);
-            Boolean continueOperation = fimsInputter.in.continueOperation(message);
+            // the fimsInputter isn't working correctly, just using the standardInputter for now
+            //Boolean continueOperation = fimsInputter.in.continueOperation(message);
+            Boolean continueOperation = new standardInputter().continueOperation(message);
 
             if (!continueOperation)
                 return;
@@ -259,6 +264,7 @@ public class process {
         if (tdr == null) {
             processController.setHasErrors(true);
             processController.appendStatus("<br>Unable to open the file you attempted to upload.<br>");
+            processController.setCommandLineSB(new StringBuilder("Unable to open the file you attempted to upload."));
             return;
         }
         // Load validation rules

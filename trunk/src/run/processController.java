@@ -18,7 +18,6 @@ import java.io.*;
 public class processController {
     private Boolean hasErrors = false;
     private Boolean hasWarnings = false;
-    private StringBuilder warningsSB;
     private StringBuilder commandLineWarningsSB;
     private Boolean clearedOfWarnings = false;
     private Boolean expeditionAssignedToUserAndExists = false;   // checks that the user is authenticated against the supplied expedition
@@ -67,14 +66,6 @@ public class processController {
     public processController(Integer project_id, String expeditionCode) {
         this.expeditionCode = expeditionCode;
         this.project_id = project_id;
-    }
-
-    public StringBuilder getWarningsSB() {
-        return warningsSB;
-    }
-
-    public void setWarningsSB(StringBuilder warningsSB) {
-        this.warningsSB = warningsSB;
     }
 
     public Boolean isExpeditionCreateRequired() {
