@@ -154,29 +154,27 @@ public class query {
         }
     }
 
-     /**
+      /**
      * Return KML for a graph query using POST
-     * * <p/>
-     * filter parameters are of the form:
-     * name={URI} value={filter value}
+     * filter is just a single value to filter the entire dataset
      *
+     * @param graphs indicate a comma-separated list of graphs
      * @return
      */
-    @POST
+    @GET
     @Path("/cspace/")
-    @Consumes("application/x-www-form-urlencoded")
-    @Produces("application/vnd.google-earth.kml+xml")
+    @Produces(MediaType.APPLICATION_XML)
     public Response queryCspace(
-            MultivaluedMap<String, String> form) {
+            @QueryParam("graphs") String graphs,
+            @QueryParam("project_id") Integer project_id,
+            @QueryParam("filter") String filter) {
 
-        // Build the query, etc..
-        fimsQueryBuilder q = POSTQueryResult(form);
-
-        // Run the query, passing in a format and returning the location of the output file
-        File file = new File(q.run("kml"));
+        // Construct a file
+        File file = GETQueryResult(graphs, project_id, filter, "cspace");
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
+
         response.header("Content-Disposition",
                 "attachment; filename=biocode-fims-output.xml");
 
