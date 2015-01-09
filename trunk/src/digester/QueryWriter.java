@@ -538,7 +538,7 @@ public class QueryWriter {
             // don't take the first row, its a header.
             if (count > 1) {
                 sb.append("<ns2:collectionobjects_common xmlns:ns2=\"http://collectionspace.org/services/collectionobject\"" +
-                        "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n");
+                        " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n");
                 int fields = 0;
                 // Loop all fields in row
                 while (cellsIt.hasNext()) {
@@ -600,7 +600,7 @@ public class QueryWriter {
             return "<" + field + "/>";
         }
         if (StringUtils.containsAny(value, "<>&")) {
-            return "<" + field + "><![CDATA[" + value + "]]><" + field + ">";
+            return "<" + field + "><![CDATA[" + value + "]]></" + field + ">";
         } else {
             return "<" + field + ">" + value + "</" + field + ">";
         }
