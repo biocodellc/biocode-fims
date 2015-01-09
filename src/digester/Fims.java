@@ -70,10 +70,12 @@ public class Fims implements RendererInterface {
         // Create the BCID to use for upload service
         String status1 = "\tCreated BCID =" + bcid + " to represent your uploaded dataset";
         processController.appendStatus(status1);
+        // Inform cmd line users
         fimsPrinter.out.println(status1);
         // Associate the expedition_code with this bcid
         String status2 = "\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid);
         processController.appendStatus(status2);
+        // Inform cmd line users
         fimsPrinter.out.println(status2);
         return;
     }

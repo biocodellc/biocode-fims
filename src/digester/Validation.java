@@ -169,12 +169,10 @@ public class Validation implements RendererInterface {
      * Print output for the commandline
      */
     public processController printMessages(processController processController) {
-        StringBuilder errorSB = new StringBuilder();
         StringBuilder warningSB = new StringBuilder();
         // Create a simplified output stream just for commandline printing.
         StringBuilder commandLineWarningSB = new StringBuilder();
         Html2Text htmlParser = new Html2Text();
-        java.util.List<String> warnings = new ArrayList<String>();
 
         for (Iterator<Worksheet> w = worksheets.iterator(); w.hasNext(); ) {
             Worksheet worksheet = w.next();
@@ -216,14 +214,10 @@ public class Validation implements RendererInterface {
             // Worksheet has errors
             if (!worksheet.errorFree()) {
 
-                //fimsPrinter.out.println(warningSB.toString());
-                fimsPrinter.out.println(commandLineWarningSB.toString());
-
                 processController.appendStatus("<br><b>1 or more errors found.  Must fix to continue. Click each message for details</b><br>");
                 processController.appendStatus(warningSB.toString());
 
                 processController.setHasErrors(true);
-                processController.setWarningsSB(warningSB);
                 processController.setCommandLineSB(commandLineWarningSB);
                 return processController;
             } else {
@@ -232,7 +226,6 @@ public class Validation implements RendererInterface {
                     processController.appendStatus("<br><b>1 or more warnings found. Click each message for details</b><br>");
                     processController.appendStatus(warningSB.toString());
                     processController.setHasWarnings(true);
-                    processController.setWarningsSB(warningSB);
                     processController.setCommandLineSB(commandLineWarningSB);
 
                     return processController;

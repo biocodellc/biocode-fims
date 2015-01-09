@@ -414,8 +414,11 @@ public class bcidConnector {
      */
     public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) {
 
-        String urlString = expedition_public_status_uri + project_id + "/" + expedition_code + "/" + publicStatus +
-                "?access_token=" + accessToken;
+        String urlString = expedition_public_status_uri + project_id + "/" + expedition_code + "/" + publicStatus;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
 
         try {
             URL url = new URL(urlString);
@@ -439,7 +442,11 @@ public class bcidConnector {
      * @return
      */
     public String getExpeditionCodes(Integer projectId) {
-        String urlString = expedition_list_uri + projectId + "?access_token=" + accessToken;
+        String urlString = expedition_list_uri + projectId;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
 
         try {
             URL url = new URL(urlString);
@@ -462,7 +469,11 @@ public class bcidConnector {
      * @return
      */
     public String getGraphs(Integer projectId) {
-        String urlString = graphs_uri + projectId + "?access_token=" + accessToken;
+        String urlString = graphs_uri + projectId;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
 
         try {
             URL url = new URL(urlString);
@@ -581,7 +592,11 @@ public class bcidConnector {
      */
     public String fetchProjects() {
 
-        String urlString = project_service_uri + "?access_token=" + accessToken;
+        String urlString = project_service_uri;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
 
         try {
             URL url = new URL(urlString);
@@ -668,8 +683,11 @@ public class bcidConnector {
                 response.append(inputLine);
             }
             in.close();
-            // Get the response cookies
-            setCookies(conn.getHeaderFields().get("Set-Cookie"));
+
+            // Set the response cookies only if there is a Set-Cookie header
+            if (conn.getHeaderField("Set-Cookie") != null) {
+                setCookies(conn.getHeaderFields().get("Set-Cookie"));
+            }
 
             if (getResponseCode() != 200) {
                 // try and authenticate if needed
@@ -759,8 +777,10 @@ public class bcidConnector {
             }
             in.close();
 
-            // Get the response cookies
-            setCookies(conn.getHeaderFields().get("Set-Cookie"));
+            // Set the response cookies only if there is a Set-Cookie header
+            if (conn.getHeaderField("Set-Cookie") != null) {
+                setCookies(conn.getHeaderFields().get("Set-Cookie"));
+            }
 
             if (getResponseCode() != 200) {
                 // try and authenticate if needed

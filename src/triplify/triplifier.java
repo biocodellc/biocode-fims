@@ -69,6 +69,7 @@ public class triplifier {
         System.gc();
         String status = "\tWriting Temporary Output ...";
         processController.appendStatus(status + "<br>");
+        // Inform cmd line users
         fimsPrinter.out.println(status);
 
         // Write the model
