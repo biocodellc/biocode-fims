@@ -175,8 +175,8 @@ public class query {
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
 
-        response.header("Content-Disposition",
-                "attachment; filename=biocode-fims-output.xml");
+       // response.header("Content-Disposition",
+         //       "attachment; filename=biocode-fims-output.xml");
 
         // Return response
         if (response == null) {
@@ -184,6 +184,7 @@ public class query {
         } else {
             return response.build();
         }
+
     }
 
     /**
