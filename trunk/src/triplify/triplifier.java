@@ -89,7 +89,7 @@ public class triplifier {
         tripleOutputFile = outputFolder + File.separator +  tripleFile.getName();
 
         if (tripleFile.length() < 1)
-            throw new FIMSRuntimeException("No data has been written to database!  No triples to write.", 500);
+            throw new FIMSRuntimeException("No triples to write!", 500);
     }
 
     /**
