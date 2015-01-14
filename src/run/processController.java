@@ -67,6 +67,9 @@ public class processController {
         this.expeditionCode = expeditionCode;
         this.project_id = project_id;
     }
+     public processController() {
+
+    }
 
     public Boolean isExpeditionCreateRequired() {
         return expeditionCreateRequired;

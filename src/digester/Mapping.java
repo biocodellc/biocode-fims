@@ -125,9 +125,11 @@ public class Mapping implements RendererInterface {
         columnName = "@@" + entity.getColumn() + "@@";
         //}
 
-
         // Use the deepRoots System to lookup Key
-        String bcid = dRoots.lookupPrefix(entity);
+        String bcid = null;
+        if (dRoots != null) {
+            bcid = dRoots.lookupPrefix(entity);
+        }
 
         // Use the default namespace value if dRoots is unsuccesful...
         if (bcid == null) {
@@ -193,6 +195,28 @@ public class Mapping implements RendererInterface {
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
         dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(), expedition_code);
+
+        // Create a connection to a SQL Lite Instance
+        this.connection = new Connection(processController.getValidation().getSqliteFile());
+        triplifier.getTriples(this, processController);
+        return true;
+    }
+       /**
+     * Run the triplifier using this class without dRoots function
+     *
+     */
+    public boolean run(triplifier t, processController processController) {
+
+        String status = "Converting Data Format ...";
+        processController.appendStatus(status + "<br>");
+        fimsPrinter.out.println(status);
+        this.expedition_code = processController.getExpeditionCode();
+        this.colNames = processController.getValidation().getTabularDataReader().getColNames();
+        triplifier = t;
+
+        // Create a deepRoots object based on results returned from the BCID deepRoots service
+        // TODO: put this into a settings file
+        //dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(), expedition_code);
 
         // Create a connection to a SQL Lite Instance
         this.connection = new Connection(processController.getValidation().getSqliteFile());

@@ -84,7 +84,7 @@ public class process {
             String outputFolder,
             bcidConnector connector,
             processController processController,
-            File file) {
+            File configFile) {
 
         // Setup logging
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
@@ -100,21 +100,12 @@ public class process {
         this.connector = connector;
 
         // Read the Configuration File
-        configFile = file;
+        this.configFile = configFile;
 
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
         mapping = new Mapping();
         addMappingRules(new Digester(), mapping);
-    }
-
-    /**
-     * Always use this method to fetch the process Controller from the process class as it has the current status
-     *
-     * @return
-     */
-    public processController getProcessController() {
-        return processController;
     }
 
     /**
@@ -130,6 +121,41 @@ public class process {
         this.configFile = configFile;
         this.outputPrefix = "output";
     }
+
+    /**
+     * A constructor for running the triplifier locally
+     *
+     * @param outputFolder
+     * @param configFile
+     */
+    public process(
+            String inputFilename,
+            String outputFolder,
+            processController processController,
+            File configFile) {
+        this.outputFolder = outputFolder;
+        this.configFile = configFile;
+        this.outputPrefix = "output";
+        // Update the processController Settings
+        this.processController = processController;
+
+        this.processController = processController;
+
+        processController.setInputFilename(inputFilename);
+        // Parse the Mapping object (this object is used extensively in downstream functions!)
+        mapping = new Mapping();
+        addMappingRules(new Digester(), mapping);
+    }
+
+    /**
+     * Always use this method to fetch the process Controller from the process class as it has the current status
+     *
+     * @return
+     */
+    public processController getProcessController() {
+        return processController;
+    }
+
 
     /**
      * Check if this is a NMNH project
@@ -473,6 +499,7 @@ public class process {
         // Write spreadsheet content back to a spreadsheet file, for testing
         Boolean triplify = false;
         Boolean upload = false;
+        Boolean local = false;
 
 
         // Define our commandline options
@@ -490,6 +517,8 @@ public class process {
         options.addOption("configFile", true, "Use a local config file instead of getting from server");
 
         options.addOption("t", "triplify", false, "Triplify only (upload process triplifies)");
+        options.addOption("l", "local", false, "Local option operates purely locally and does not create proper globally unique identifiers.  Running the local option means you don't need a username and password.");
+
         options.addOption("u", "upload", false, "Upload");
 
         options.addOption("U", "username", true, "Username (for uploading data)");
@@ -499,7 +528,6 @@ public class process {
 
         // Create the commands parser and parse the command line arguments.
         try {
-
             cl = clp.parse(options, args);
         } catch (UnrecognizedOptionException e) {
             fimsPrinter.out.println("Error: " + e.getMessage());
@@ -516,18 +544,23 @@ public class process {
             fimsInputter.in = new standardInputter();
         }
 
-
+        // Set username
         if (cl.hasOption("U")) {
             username = cl.getOptionValue("U");
         }
+
+        // Set password
         if (cl.hasOption("P")) {
             password = cl.getOptionValue("P");
         }
+
+        // Check username and password
         if (cl.hasOption("u") && (username.equals("") || password.equals(""))) {
             fimsPrinter.out.println("Must specify a valid username or password for uploading data!");
             return;
         }
-        // query option must also have project_id option
+
+        // Query option must also have project_id option
         if (cl.hasOption("q")) {
             if (!cl.hasOption("p")) {
                 helpf.printHelp("fims ", options, true);
@@ -535,18 +568,19 @@ public class process {
             }
 
         }
-        // help options
+        // Help
         else if (cl.hasOption("h")) {
             helpf.printHelp("fims ", options, true);
             return;
         }
 
-        // Nop options returns help message
+        // No options returns help message
         if (cl.getOptions().length < 1) {
             helpf.printHelp("fims ", options, true);
             return;
         }
 
+        // Sanitize project specification
         if (cl.hasOption("p")) {
             try {
                 project_id = new Integer(cl.getOptionValue("p"));
@@ -556,21 +590,38 @@ public class process {
                 return;
             }
         }
+
+        // Check for project_id when uploading data
         if (cl.hasOption("u") && project_id < 1) {
             fimsPrinter.out.println("Must specify a valid project_id when uploading data");
             return;
         }
+
+        // Set input file
         if (cl.hasOption("i"))
             input_file = cl.getOptionValue("i");
+
+        // Set output directory
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
+
+        // Set dataset_code
         if (cl.hasOption("e"))
             dataset_code = cl.getOptionValue("e");
 
+        // Set triplify option
         if (cl.hasOption("t"))
             triplify = true;
+
+        // Set the "local" option
+        if (cl.hasOption("l"))
+            local = true;
+
+        // Set upload option
         if (cl.hasOption("u"))
             upload = true;
+
+        // Set default output directory if one is not specified
         if (!cl.hasOption("o")) {
             fimsPrinter.out.println("Using default output directory " + defaultOutputDirectory);
             output_directory = defaultOutputDirectory;
@@ -610,57 +661,75 @@ public class process {
            Run the validator
             */
             else {
+                // if we only want to triplify and not upload, then we operate in LOCAL mode
+                if (local && triplify) {
+                    processController pc = new processController();
+                    pc.appendStatus("Triplifying using LOCAL only options, useful for debugging\n");
+                    pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
 
-                // Create the appropritate connection string depending on options
-                bcidConnector connector = null;
-                if (triplify || upload) {
-                    if (username == null || username.equals("") || password == null || password.equals("")) {
-                        fimsPrinter.out.println("Need valid username / password for uploading or triplifying");
-                        helpf.printHelp("fims ", options, true);
-                        return;
-                    } else {
-                        connector = createConnection(username, password);
-                        if (!cl.hasOption("e")) {
-                            fimsPrinter.out.println("Need to enter a dataset code before triplifying or uploading");
+                    process p = new process(input_file, output_directory, pc, new File(cl.getOptionValue("configFile")));
+                    p.runValidation();
+                    triplifier t = new triplifier("test", output_directory);
+                    p.mapping.run(t, pc);
+                    p.mapping.print();
+
+                } else {
+                    // Create the appropritate connection string depending on options
+                    bcidConnector connector = null;
+                    if (triplify || upload) {
+                        if (username == null || username.equals("") || password == null || password.equals("")) {
+                            fimsPrinter.out.println("Need valid username / password for uploading");
                             helpf.printHelp("fims ", options, true);
                             return;
+                        } else {
+                            connector = createConnection(username, password);
+                            // Check that a dataset code has been entered
+                            if (!cl.hasOption("e")) {
+                                fimsPrinter.out.println("Need to enter a dataset code before  uploading");
+                                helpf.printHelp("fims ", options, true);
+                                return;
+                            }
                         }
-                    }
-                } else {
-                    connector = new bcidConnector();
-                }
-
-
-                // Now run the process
-                if (connector != null) {
-                    process p;
-                    // use local configFile if specified
-                    if (cl.hasOption("configFile")) {
-                        System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
-                        p = new process(
-                                input_file,
-                                output_directory,
-                                connector,
-                                new processController(project_id, dataset_code),
-                                new File(cl.getOptionValue("configFile")));
                     } else {
-                        p = new process(
-                                input_file,
-                                output_directory,
-                                connector,
-                                new processController(project_id, dataset_code)
-                        );
+                        connector = new bcidConnector();
                     }
 
-                    fimsPrinter.out.println("Initializing ...");
-                    fimsPrinter.out.println("\tinputFilename = " + input_file);
 
-                    // Run the processor
-                    p.runAllLocally(triplify, upload);
+                    // Now run the process
+                    if (connector != null) {
+                        process p;
+                        // use local configFile if specified
+                        if (cl.hasOption("configFile")) {
+                            System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
+                            p = new process(
+                                    input_file,
+                                    output_directory,
+                                    connector,
+                                    new processController(project_id, dataset_code),
+                                    new File(cl.getOptionValue("configFile")));
+                        } else {
+                            p = new process(
+                                    input_file,
+                                    output_directory,
+                                    connector,
+                                    new processController(project_id, dataset_code)
+                            );
+                        }
+
+                        fimsPrinter.out.println("Initializing ...");
+                        fimsPrinter.out.println("\tinputFilename = " + input_file);
+
+                        // Run the processor
+                        p.runAllLocally(triplify, upload);
+                    }
                 }
 
             }
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             fimsPrinter.out.println("\nError: " + e.getMessage());
             e.printStackTrace();
             System.exit(-1);
