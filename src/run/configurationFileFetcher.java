@@ -83,11 +83,11 @@ public class configurationFileFetcher {
                 /**
                  * This section no longer works here when running from command-line
                  */
-                //JSONObject response = (JSONObject) JSONValue.parse(strResponse);
-                //String urlString = (String) response.get("url");
+                JSONObject response = (JSONObject) JSONValue.parse(strResponse);
+                String urlString = (String) response.get("url");
                 try {
                     // Initialize the connection
-                    init(new URL(strResponse), defaultOutputDirectory);
+                    init(new URL(urlString), defaultOutputDirectory);
                 } catch (MalformedURLException e) {
                     throw new FIMSRuntimeException("configuration file url: " + strResponse + " returned from bcid system for project id: " +
                             project_id + " is malformed.", 500, e);
@@ -95,6 +95,7 @@ public class configurationFileFetcher {
             } catch (MalformedURLException e) {
                 throw new FIMSRuntimeException(500, e);
             }
+
         }
     }
 
