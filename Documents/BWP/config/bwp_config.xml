@@ -69,6 +69,8 @@
       <attribute column="commonName" uri="urn:commonName" defined_by="http://rs.tdwg.org/dwc/terms/vernacularName"><![CDATA[A common or vernacular name.]]></attribute>
       <attribute column="associatedTaxa" uri="urn:associatedTaxa" defined_by="http://rs.tdwg.org/dwc/terms/associatedTaxa"><![CDATA[A list (concatenated and separated by semicolons) of names of taxa and their associations with the specimen voucher.]]></attribute>
       <attribute column="taxonRemarks" uri="urn:taxonRemarks" defined_by="http://rs.tdwg.org/dwc/terms/taxonRemarks"><![CDATA[Comments of notes about the taxon or name.]]></attribute>
+      <attribute column='decimalLatitude,decimalLongitude' delimited_by=' ' uri="urn:verbatimCoordinates" defined_by='http://rs.tdwg.org/dwc/terms/verbatimCoordinates' type='all'></attribute>
+      <attribute column='yearCollected,monthCollected,dayCollected' delimited_by='-' uri="urn:dateCollected" defined_by="http://rs.tdwg.org/dwc/terms/dateIdentified" type='ymd'></attribute>
     </entity>
   </mapping>
   <validation>
@@ -7345,6 +7347,7 @@
         <field>lectotype</field>
         <field>paralectotype</field>
         <field>hapantotype</field>
+        <field>none</field>
         <field>other</field>
       </list>
       <list alias="plateWell">
