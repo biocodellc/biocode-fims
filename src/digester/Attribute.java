@@ -164,66 +164,79 @@ public class Attribute implements Comparable {
 
             // TODO: clean this up and integrate with above code.
             String tempColumnName = column.replace(",", "");
-            String classMapString = "map:" + classMap + "_" + tempColumnName;
-            pw.println(classMapString + " a d2rq:PropertyBridge;");
-            pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
-            pw.println("\td2rq:property <" + uri + ">;");
 
-            // Construct SQL Expression
             String[] columns = column.split(",");
-            StringBuilder result = new StringBuilder();
 
-            // Call this a sqlExpression
-            result.append("\td2rq:sqlExpression \"");
-
-            // Append ALL columns together using the delimiter... ALL are required
-            if (type.equals("all")) {
-                for (int i = 0; i < columns.length; i++) {
-                    if (i != 0)
-                        result.append(" || '" + delimited_by + "' || ");
-                    // Set required function parameters
-                    if (type.equals("all"))
-                        pw.println("\td2rq:condition \"" + table + "." + columns[i] + " <> ''\";");
-                    result.append(columns[i]);
+            // Check if we should run this -- all columns need to be present in colNames list
+            Boolean runMultiValueColumn = true;
+            for (int i = 0; i < columns.length; i++) {
+                if (!colNames.contains(columns[i])) {
+                    runMultiValueColumn = false;
                 }
-                result.append("\";");
             }
 
-            // This is the YMD case using a very special SQLIte function to format data
-            // Assume that columns are Year, Month, and Day EXACTLY
-            else if (type.equals("ymd")) {
-                // Require Year
-                pw.println("\td2rq:condition \"" + table + "." + columns[0] + " <> ''\";");
+            // Only run this portion if the tempColumnName appears
+            if (runMultiValueColumn) {
 
-                result.append("yearCollected ||  ifnull(nullif('-'||substr('0'||monthCollected,-2,2),'-0') || " +
-                        "ifnull(nullif('-'||substr('0'||dayCollected,-2,2),'-0'),'')" +
-                        ",'') ");
-                result.append("\";");
+                String classMapString = "map:" + classMap + "_" + tempColumnName;
+                pw.println(classMapString + " a d2rq:PropertyBridge;");
+                pw.println("\td2rq:belongsToClassMap " + "map:" + classMap + ";");
+                pw.println("\td2rq:property <" + uri + ">;");
+
+                // Construct SQL Expression
+                StringBuilder result = new StringBuilder();
+
+                // Call this a sqlExpression
+                result.append("\td2rq:sqlExpression \"");
+
+                // Append ALL columns together using the delimiter... ALL are required
+                if (type.equals("all")) {
+                    for (int i = 0; i < columns.length; i++) {
+                        if (i != 0)
+                            result.append(" || '" + delimited_by + "' || ");
+                        // Set required function parameters
+                        if (type.equals("all"))
+                            pw.println("\td2rq:condition \"" + table + "." + columns[i] + " <> ''\";");
+                        result.append(columns[i]);
+                    }
+                    result.append("\";");
+                }
+
+                // This is the YMD case using a very special SQLIte function to format data
+                // Assume that columns are Year, Month, and Day EXACTLY
+                else if (type.equals("ymd")) {
+                    // Require Year
+                    pw.println("\td2rq:condition \"" + table + "." + columns[0] + " <> ''\";");
+
+                    result.append("yearCollected ||  ifnull(nullif('-'||substr('0'||monthCollected,-2,2),'-0') || " +
+                            "ifnull(nullif('-'||substr('0'||dayCollected,-2,2),'-0'),'')" +
+                            ",'') ");
+                    result.append("\";");
+
+                }
+
+                pw.println(result.toString());
+
+                //pw.println("\td2rq:column \"" + table + "." + column + "\";");
+                //pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
+
+                // Specify an equivalence, which is isDefinedBy
+                classMapStringEquivalence = classMapString + "_Equivalence";
+                pw.println("\td2rq:additionalPropertyDefinitionProperty " + classMapStringEquivalence + ";");
+                pw.println("\t.");
+
+                // Always use isDefinedBy, even if the user has not expressed it explicitly.  We do this by
+                // using the uri value if NO isDefinedBy is expressed.
+                pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
+                pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
+                if (defined_by != null) {
+                    pw.println("\td2rq:propertyValue <" + defined_by + ">;");
+                } else {
+                    pw.println("\td2rq:propertyValue <" + uri + ">;");
+                }
+                pw.println("\t.");
 
             }
-
-            pw.println(result.toString());
-
-            //pw.println("\td2rq:column \"" + table + "." + column + "\";");
-            //pw.println("\td2rq:condition \"" + table + "." + column + " <> ''\";");
-
-            // Specify an equivalence, which is isDefinedBy
-            classMapStringEquivalence = classMapString + "_Equivalence";
-            pw.println("\td2rq:additionalPropertyDefinitionProperty " + classMapStringEquivalence + ";");
-            pw.println("\t.");
-
-            // Always use isDefinedBy, even if the user has not expressed it explicitly.  We do this by
-            // using the uri value if NO isDefinedBy is expressed.
-            pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
-            pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
-            if (defined_by != null) {
-                pw.println("\td2rq:propertyValue <" + defined_by + ">;");
-            } else {
-                pw.println("\td2rq:propertyValue <" + uri + ">;");
-            }
-            pw.println("\t.");
-
-
         }
     }
 
