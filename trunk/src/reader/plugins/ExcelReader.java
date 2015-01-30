@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -84,6 +88,7 @@ public class ExcelReader implements TabularDataReader {
      * This method also tests if the file actually exists.
      *
      * @param filepath The file to encodeURIcomponent.
+     *
      * @return True if the specified file exists and appears to be an Excel
      *         file, false otherwise.
      */
@@ -98,7 +103,7 @@ public class ExcelReader implements TabularDataReader {
         if (index != -1 && index != (filepath.length() - 1)) {
             // get the extension
             String ext = filepath.substring(index + 1);
-            if (ext.equals("xls") || ext.equals("xlsx") )
+            if (ext.equals("xls") || ext.equals("xlsx"))
                 return true;
         }
 
@@ -240,7 +245,8 @@ public class ExcelReader implements TabularDataReader {
     }
 
     /**
-     * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the count--- this
+     * Secure way to count number of rows in spreadsheet --- this method finds the first blank row and then returns the
+     * count--- this
      * means there can be no blank rows.
      *
      * @return a count of number of rows
@@ -281,11 +287,11 @@ public class ExcelReader implements TabularDataReader {
      *
      * @param column
      * @param row
+     *
      * @return value of this cell
      */
     public String getStringValue(String column, int row) {
         String strValue = getStringValue(getColumnPosition(column), row);
-
         return strValue;
     }
 
@@ -295,6 +301,7 @@ public class ExcelReader implements TabularDataReader {
      *
      * @param col
      * @param row
+     *
      * @return
      */
     public String getStringValue(int col, int row) {
@@ -347,6 +354,7 @@ public class ExcelReader implements TabularDataReader {
      *
      * @param column
      * @param row
+     *
      * @return double value in this cell
      */
     public Double getDoubleValue(String column, int row) {
@@ -363,6 +371,7 @@ public class ExcelReader implements TabularDataReader {
      * find the position of a column as an integer
      *
      * @param colName
+     *
      * @return integer of the column position
      */
     public Integer getColumnPosition(String colName) {
@@ -419,12 +428,24 @@ public class ExcelReader implements TabularDataReader {
                         // This one works for BCID buts messes up latitude / longitude values
                         // Set celltype back to String here since this is a more reliable rendering of the input data,
                         // as Excel actually sees it.  The Numeric type adds additional ".0"'s on the end...
-                        cell.setCellType(Cell.CELL_TYPE_STRING);
-                        ret[cnt] = cell.getStringCellValue();
+                        //cell.setCellType(Cell.CELL_TYPE_STRING);
+                        //ret[cnt] = cell.getStringCellValue();
+
 
                         // This one works for latitude/longitude values rendering appropriately
                         // but adds a .0 to BCID in the output-- BAD
                         //ret[cnt] = cell.toString();
+
+                        // This option, using Decimal Format seems to work for everything
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                        DecimalFormat pattern = new DecimalFormat("#,#,#,#,#,#,#,#,#,#");
+                        Number n = null;
+                        try {
+                            n = pattern.parse(cell.getStringCellValue());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        ret[cnt] = n.toString();
                     }
                     break;
                 case Cell.CELL_TYPE_BOOLEAN:
@@ -455,7 +476,7 @@ public class ExcelReader implements TabularDataReader {
                     ret[cnt] = "";
             }
         }
-
+        //System.out.println(ret);
         // Determine if another row is available after this one.
         testNext();
 
