@@ -146,7 +146,7 @@ public class FIMSUploadOperation extends DocumentOperation {
             try {
                 processController processController = new processController(project_id,expedition_code);
                 process process = new process(sampleDataFile,outputFolder,uploadOptions.connector, processController);// (sampleDataFile, outputFolder, expedition_code, export, triplify, upload, project_id, uploadOptions.connector);
-                process.runAllLocally(false, uploadOptions.uploadOption.getValue());
+                process.runAllLocally(false, uploadOptions.uploadOption.getValue(), true);
             } catch (FIMSException e) {
                 e.printStackTrace();
                 //Dialogs.showTextFieldDialog("Error Message", e.getMessage().toString(), null, null);

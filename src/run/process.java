@@ -217,8 +217,11 @@ public class process {
     /**
      * runAll method is designed to go through the FIMS process for a local application.  The REST services
      * would handle user input/output differently
+     * @param triplifier
+     * @param upload
+     * @param expeditionCheck  -- only set to FALSE for testing and debugging usually, or local triplify usage.
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload) {
+    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck) {
         // Set whether this is a NMNH project or not
         Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
@@ -253,27 +256,37 @@ public class process {
         // We only need to check on assigning Expedition if the user wants to triplify or upload data
         if (triplifier || upload) {
 
-            // Expedition Check Step
-            if (!processController.isExpeditionAssignedToUserAndExists())
-                runExpeditionCheck(false);
+            if (expeditionCheck) {
+                // Expedition Check Step
+                if (!processController.isExpeditionAssignedToUserAndExists())
+                    runExpeditionCheck(false);
 
-            // if an expedition creation is required, get feedback from user
-            if (processController.isExpeditionCreateRequired()) {
-                String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
-                        "Do you wish to create it now?" +
-                        "\nIf you choose to continue, your data will be associated with this new dataset code.";
-                Boolean continueOperation = fimsInputter.in.continueOperation(message);
-                if (!continueOperation)
-                    return;
-                else
-                    runExpeditionCreate();
+                // if an expedition creation is required, get feedback from user
+                if (processController.isExpeditionCreateRequired()) {
+                    String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                            "Do you wish to create it now?" +
+                            "\nIf you choose to continue, your data will be associated with this new dataset code.";
+                    Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                    if (!continueOperation)
+                        return;
+                    else
+                        runExpeditionCreate();
+                }
+
+                // Triplify OR Upload -- not ever both
+                if (triplifier)
+                    runTriplifier();
+                else if (upload)
+                    runUpload();
+            // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
+                // In other, words, this is typically used for local debug & test modes
+            } else {
+                triplifier t = new triplifier("test", this.outputFolder);
+                mapping.run(t, processController);
+                mapping.print();
             }
 
-            // Triplify OR Upload -- not ever both
-            if (triplifier)
-                runTriplifier();
-            else if (upload)
-                runUpload();
+
         }
     }
 
@@ -668,10 +681,11 @@ public class process {
                     pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
 
                     process p = new process(input_file, output_directory, pc, new File(cl.getOptionValue("configFile")));
-                    p.runValidation();
+                    p.runAllLocally(true, false, false);
+                    /*p.runValidation();
                     triplifier t = new triplifier("test", output_directory);
                     p.mapping.run(t, pc);
-                    p.mapping.print();
+                    p.mapping.print();  */
 
                 } else {
                     // Create the appropritate connection string depending on options
@@ -720,7 +734,7 @@ public class process {
                         fimsPrinter.out.println("\tinputFilename = " + input_file);
 
                         // Run the processor
-                        p.runAllLocally(triplify, upload);
+                        p.runAllLocally(triplify, upload, true);
                     }
                 }
 

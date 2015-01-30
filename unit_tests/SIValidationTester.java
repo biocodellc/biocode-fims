@@ -50,7 +50,7 @@ public class SIValidationTester {
                 configFile);
 
         // Run the validation processor
-        p.runAllLocally(false, false);
+        p.runAllLocally(false, false, true);
 
         // Generate output results from the Validation engine
         actualSB = processController.getCommandLineSB();
