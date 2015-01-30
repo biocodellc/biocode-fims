@@ -220,9 +220,25 @@
 
             <attribute column='hdimNumber' uri='urn:hdim_num'
                        defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
-                <![CDATA[unique value with format: HDIM_xxx.Y.y.Y.y.zzz. xxx is the collection number, Y is the first pot, an uppercase letter. Additional splits of the specimen into pots are denoted by alternating lower and uppercase letters seperated by a period (y.Y.y etc.) POTS ARE OPTIONAL. When the collections are reduced to species or morphospecies they are given a final specimen number. example: HDIM_001.A.c.B.001. Collection 001, pot A, subpot c, further subpot B, species 001 from subpot B. If there are more than 26 pots use AA, AB, AC etc. Simplest value would be HDIM_001.01, collection 1, specimen(s) of species1.]]>
+                <![CDATA[unique value for each collection event, i.e., all of the specimens from a given method for a given day and plot, with format: HDIM_xxxx for each unique collection event, indicate number of vials in numberOfVials column when returning from field and update the numberOfVials column value when splitting during sorting]]>
             </attribute>
+            <attribute column='numberOfVials' uri='urn:number_of_vials'
+                       defined_by='urn:number_of_vials'>
+                <![CDATA[number of vials containing specimens from this collecting event]]>
+            </attribute>
+              <attribute column='fieldCrew' uri='urn:field_crew'
+                       defined_by='urn:field_crew'>
+                <![CDATA[all memebers of the field crew during the collection event]]>
+            </attribute>          
             <attribute column='collectionCollector' uri='urn:collection_collector'
+                       defined_by='urn:collection_collector'>
+                <![CDATA[collectors personal collection number]]>
+            </attribute>
+                        <attribute column='collectionCollector' uri='urn:collection_collector'
+                       defined_by='urn:collection_collector'>
+                <![CDATA[collectors personal collection number]]>
+            </attribute>
+                        <attribute column='collectionCollector' uri='urn:collection_collector'
                        defined_by='urn:collection_collector'>
                 <![CDATA[collectors personal collection number]]>
             </attribute>
@@ -252,18 +268,26 @@
             <attribute column='localitySite' uri='urn:locality_site' defined_by='urn:locality_site'/>
             <attribute column='flowAge' uri='urn:flow_age' defined_by='urn:flow_age'/>
             <attribute column='plot' uri='urn:plot_num' defined_by='urn:plot_num'/>
+            <attribute column='sliceLetter' uri='urn:slice_letter' defined_by='urn:slice_letter'/>
+            
             <attribute column='eventDate' uri='urn:event_date' defined_by='urn:event_date'/>
-            <attribute column='dateColl1' uri='urn:date_coll' defined_by='urn:date_coll'/>
-            <attribute column='dateColl2' uri='urn:date_coll2' defined_by='urn:date_coll'/>
+            <attribute column='weatherNotes' uri='urn:weather_notes' defined_by='urn:weather_notes'/>
+
+            <attribute column='sampleStartFinishTimes' uri='urn:sample_start_finish_times' defined_by='urn:sample_start_finish_times'/>
             <attribute column='collNotes' uri='urn:coll_notes' defined_by='urn:coll_notes'>
-                <![CDATA[collectors collection notes]]>
+                <![CDATA[collectors collection notes describing any notable occurrences]]>
             </attribute>
             <attribute column='collection' uri='urn:collection' defined_by='urn:collection'/>
             <attribute column='collCollectorNum' uri='urn:coll_collector_num' defined_by='urn:coll_collector_num'/>
             <attribute column='labelElevationFeet' uri='urn:elevation' defined_by='urn:elevation'/>
             <attribute column='collMethod' uri='urn:collection_method' defined_by='urn:collection_method'/>
+            <attribute column='beatingDuration' uri='urn:beating_duration' defined_by='urn:beating_duration'>
+                <![CDATA[time of day during beating sample in the format "10:25-11:45; assumed to be day unless indicated in dayNight column"]]>
+            </attribute>
+                        <attribute column='beatingSpecimensLost' uri='urn:beating_specimens_lost' defined_by='urn:beating_specimens_lost'>
+                <![CDATA[description of number of each kind of specimen lost during "beating sample"]]>
+            </attribute>
             <attribute column='dayNite' uri='urn:day_night' defined_by='urn:day_night'/>
-
             <attribute column='collector' uri='urn:collector' defined_by='urn:collector'/>
             <attribute column='collector2' uri='urn:collector2' defined_by='urn:collector2'/>
             <attribute column='collector3' uri='urn:collector3' defined_by='urn:collector3'/>
@@ -271,10 +295,6 @@
             <attribute column='Long1' uri='urn:long_1' defined_by='urn:long_1'/>
             <attribute column='Lat2' uri='urn:lat_2' defined_by='urn:lat_2'/>
             <attribute column='Long2' uri='urn:long_2' defined_by='urn:long_2'/>
-            <attribute column='Label_1' uri='urn:label_1' defined_by='urn:label_1'/>
-            <attribute column='Label_2' uri='urn:label_2' defined_by='urn:label_2'/>
-            <attribute column='Label_3' uri='urn:label_3' defined_by='urn:label_3'/>
-            <attribute column='Label_4' uri='urn:label_4' defined_by='urn:label_4'/>
 
             <attribute column='LatLongErrorInMeters' uri='urn:latlongerrorinmeters'
                        defined_by='urn:latlongerrorinmeters'/>
@@ -285,8 +305,12 @@
             <attribute column='maxElMeters' uri='urn:max_el_meters' defined_by='urn:max_el_meters'/>
             <attribute column='minElMeters' uri='urn:min)el_meters' defined_by='urn:min_el_meters'/>
 
-            <attribute column='GPS Unit' uri='urn:gps_unit' defined_by='urn:gps_unit'/>
-            <attribute column='WP' uri='urn:way_point' defined_by='urn:way_point'/>
+            <attribute column='GPS Unit' uri='urn:gps_unit' defined_by='urn:gps_unit'>
+                            <![CDATA[make and model number and any other identifying information for GPS unit used]]>
+            </attribute>
+            <attribute column='WP' uri='urn:way_point' defined_by='urn:way_point'>
+                                        <![CDATA[Waypoint name or number]]>
+            </attribute>
 
             <attribute column='landowner' uri='urn:landowner' defined_by='urn:landowner'/>
             <attribute column='permit' uri='urn:permit_info' defined_by='urn:permit_info'/>
@@ -300,8 +324,27 @@
 
             <attribute column='timeofDay1' uri='urn:timeofday_1' defined_by='urn:timeofday_1'/>
             <attribute column='timeofDay2' uri='urn:timeofday_2' defined_by='urn:timeofday_2'/>
-
-
+            
+            <attribute column='litterComp1' uri='urn:litter_comp_1' defined_by='urn:litter_comp_1'>
+                <![CDATA[composition of the litter: percentage estimate of one plant's contribution to leaf litter in the format "50 treefern" for 50% treefern litter]]>
+            </attribute>
+            <attribute column='litterComp2' uri='urn:litter_comp_2' defined_by='urn:litter_comp_2'>
+                <![CDATA[composition of the litter: percentage estimate of one plant's contribution to leaf litter in the format "50 treefern" for 50% treefern litter]]>
+            </attribute>
+            <attribute column='litterComp3' uri='urn:litter_comp_3' defined_by='urn:litter_comp_3'>
+                <![CDATA[composition of the litter: percentage estimate of one plant's contribution to leaf litter in the format "50 treefern" for 50% treefern litter]]>
+            </attribute>
+            <attribute column='litterComp4' uri='urn:litter_comp_4' defined_by='urn:litter_comp_4'>
+                <![CDATA[composition of the litter: percentage estimate of one plant's contribution to leaf litter in the format "50 treefern" for 50% treefern litter]]>
+            </attribute>
+            <attribute column='litterComp5' uri='urn:litter_comp_5' defined_by='urn:litter_comp_5'>
+                <![CDATA[composition of the litter: percentage estimate of one plant's contribution to leaf litter in the format "50 treefern" for 50% treefern litter]]>
+            </attribute>
+            
+            <attribute column='litterOtherLive' uri='urn:litter_other_live' defined_by='urn:litter_other_live'>
+                <![CDATA[if some of the litter contained bits of live moss or other live material indicate here]]>
+            </attribute>
+            
             <attribute column='habitatType' uri='urn:habitattype' defined_by='urn:habitattype'/>
             <attribute column='habitatComposition' uri='urn:habitatcomposition' defined_by='urn:habitatcomposition'/>
             <attribute column='habitatNotes' uri='urn:habitatnotes' defined_by='urn:habitatnotes'/>
