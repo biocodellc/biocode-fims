@@ -279,7 +279,7 @@ public class configurationFileTester {
         boolean passedTest = true;
         // Check worksheetUniqueKeys
         //String column = attributeAttributes.getNamedItem("column").getNodeValue();
-        Pattern p = Pattern.compile("[^a-z0-9 \\(\\)\\/\\.\\_-]", Pattern.CASE_INSENSITIVE);
+        Pattern p = Pattern.compile("[^a-z0-9 \\(\\)\\/\\,\\.\\_-]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(stringToCheck);
         if (m.find()) {
             messages.add(this, "Column attribute value " + stringToCheck + " contains an invalid character", "checkSpecialCharacters");
@@ -390,11 +390,14 @@ public class configurationFileTester {
      */
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
+        //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/sampledata/bwp_config_concat.xml");
+
         configurationFileTester cFT = new configurationFileTester();
         cFT.init(file);
         cFT.parse();
         cFT.checkLists();
+        cFT.checkUniqueKeys();
         System.out.println(cFT.messages.printMessages());
         /*
         // Check ACTIVE Project configuration files
