@@ -226,22 +226,26 @@
                        defined_by='urn:number_of_vials'>
                 <![CDATA[number of vials containing specimens from this collecting event]]>
             </attribute>
-              <attribute column='fieldCrew' uri='urn:field_crew'
-                       defined_by='urn:field_crew'>
-                <![CDATA[all memebers of the field crew during the collection event]]>
-            </attribute>          
+         
             <attribute column='collectionCollector' uri='urn:collection_collector'
                        defined_by='urn:collection_collector'>
                 <![CDATA[collectors personal collection number]]>
             </attribute>
-                        <attribute column='collectionCollector' uri='urn:collection_collector'
-                       defined_by='urn:collection_collector'>
-                <![CDATA[collectors personal collection number]]>
+            <attribute column='GPSunit' uri='urn:gps_unit' defined_by='urn:gps_unit'>
+            <![CDATA[make and model number and any other identifying information for GPS unit used]]>
             </attribute>
-                        <attribute column='collectionCollector' uri='urn:collection_collector'
-                       defined_by='urn:collection_collector'>
-                <![CDATA[collectors personal collection number]]>
+            <attribute column='WP' uri='urn:way_point' defined_by='urn:way_point'>
+                                        <![CDATA[Waypoint name or number]]>
             </attribute>
+
+              <attribute column='fieldCrew' uri='urn:field_crew'
+                       defined_by='urn:field_crew'>
+                <![CDATA[all memebers of the field crew during the collection event]]>
+            </attribute> 
+            <attribute column='collNotes' uri='urn:coll_notes' defined_by='urn:coll_notes'>
+                <![CDATA[collectors collection notes describing any notable occurrences]]>
+            </attribute>
+
             <attribute column='specNumCollector' uri='urn:specimen_num_collector'
                        defined_by='urn:specimen_num_collector'>
                 <![CDATA[collectors personal specimen number]]>
@@ -256,13 +260,13 @@
             <attribute column='numberSpec' uri='urn:no_spec' defined_by='urn:no_spec'>
                 <![CDATA[ number of specimens, ~, > are acceptable qualifiers]]>
             </attribute>
+            <attribute column='stage' uri='urn:stage' defined_by='urn:stage'/>
             <attribute column='genus' uri='urn:genus' defined_by='urn:genus'/>
             <attribute column='sp' uri='urn:species' defined_by='urn:species'/>
             <attribute column='morphoSpNotes' uri='urn:morpho_sp_notes' defined_by='urn:morpho_sp_notes'/>
             <attribute column='morphoSp' uri='urn:morpho_sp' defined_by='urn:morpho_sp'/>
             <attribute column='vernacularName' uri='urn:vernacular_name' defined_by='urn:vernacular_name'/>
             <attribute column='sex' uri='urn:sexcaste' defined_by='urn:sexcaste'/>
-            <attribute column='IDcertainty' uri='urn:id_certainty' defined_by='urn:id_certainty'/>
             <attribute column='state' uri='urn:state' defined_by='urn:state'/>
             <attribute column='islandVolcano' uri='urn:islandVolcano' defined_by='urn:island'/>
             <attribute column='localitySite' uri='urn:locality_site' defined_by='urn:locality_site'/>
@@ -270,21 +274,24 @@
             <attribute column='plot' uri='urn:plot_num' defined_by='urn:plot_num'/>
             <attribute column='sliceLetter' uri='urn:slice_letter' defined_by='urn:slice_letter'/>
             
-            <attribute column='eventDate' uri='urn:event_date' defined_by='urn:event_date'/>
+            <attribute column='dateColl1' uri='urn:date_coll_1' defined_by='urn:date_coll_1'>
+            <![CDATA[ date sample taken or setup date for when Malaise or Pitfall traps are taken out of the field]]>
+            </attribute>
+            <attribute column='dateColl2' uri='urn:date_coll_2' defined_by='urn:date_coll_2'>
+                            <![CDATA[ usually for date when Malaise or Pitfall traps are taken out of the field]]>
+            </attribute>
+   
             <attribute column='weatherNotes' uri='urn:weather_notes' defined_by='urn:weather_notes'/>
 
-            <attribute column='sampleStartFinishTimes' uri='urn:sample_start_finish_times' defined_by='urn:sample_start_finish_times'/>
-            <attribute column='collNotes' uri='urn:coll_notes' defined_by='urn:coll_notes'>
-                <![CDATA[collectors collection notes describing any notable occurrences]]>
-            </attribute>
-            <attribute column='collection' uri='urn:collection' defined_by='urn:collection'/>
-            <attribute column='collCollectorNum' uri='urn:coll_collector_num' defined_by='urn:coll_collector_num'/>
+            <attribute column='sampleStartFinishTimes' uri='urn:sample_start_finish_times'     defined_by='urn:sample_start_finish_times'/>
+
+            <attribute column='collCollector' uri='urn:coll_collector' defined_by='urn:coll_collector'/>
             <attribute column='labelElevationFeet' uri='urn:elevation' defined_by='urn:elevation'/>
             <attribute column='collMethod' uri='urn:collection_method' defined_by='urn:collection_method'/>
             <attribute column='beatingDuration' uri='urn:beating_duration' defined_by='urn:beating_duration'>
                 <![CDATA[time of day during beating sample in the format "10:25-11:45; assumed to be day unless indicated in dayNight column"]]>
             </attribute>
-                        <attribute column='beatingSpecimensLost' uri='urn:beating_specimens_lost' defined_by='urn:beating_specimens_lost'>
+            <attribute column='beatingSpecimensLost' uri='urn:beating_specimens_lost' defined_by='urn:beating_specimens_lost'>
                 <![CDATA[description of number of each kind of specimen lost during "beating sample"]]>
             </attribute>
             <attribute column='dayNite' uri='urn:day_night' defined_by='urn:day_night'/>
@@ -296,8 +303,7 @@
             <attribute column='Lat2' uri='urn:lat_2' defined_by='urn:lat_2'/>
             <attribute column='Long2' uri='urn:long_2' defined_by='urn:long_2'/>
 
-            <attribute column='LatLongErrorInMeters' uri='urn:latlongerrorinmeters'
-                       defined_by='urn:latlongerrorinmeters'/>
+            <attribute column='LatLongErrorInMeters' uri='urn:latlongerrorinmeters' defined_by='urn:latlongerrorinmeters'/>
 
             <attribute column='HorizontalDatum' uri='urn:horizontaldatum' defined_by='urn:horizontaldatum'/>
             <attribute column='ErrorLatLongMeters' uri='urn:error_lat_long_meters'
@@ -305,12 +311,6 @@
             <attribute column='maxElMeters' uri='urn:max_el_meters' defined_by='urn:max_el_meters'/>
             <attribute column='minElMeters' uri='urn:min)el_meters' defined_by='urn:min_el_meters'/>
 
-            <attribute column='GPS Unit' uri='urn:gps_unit' defined_by='urn:gps_unit'>
-                            <![CDATA[make and model number and any other identifying information for GPS unit used]]>
-            </attribute>
-            <attribute column='WP' uri='urn:way_point' defined_by='urn:way_point'>
-                                        <![CDATA[Waypoint name or number]]>
-            </attribute>
 
             <attribute column='landowner' uri='urn:landowner' defined_by='urn:landowner'/>
             <attribute column='permit' uri='urn:permit_info' defined_by='urn:permit_info'/>
@@ -320,8 +320,8 @@
             <attribute column='IdentifiedBy' uri='urn:identifiedby' defined_by='urn:identifiedby'/>
             <attribute column='BasisOfID' uri='urn:basisofid' defined_by='urn:basisofid'/>
             <attribute column='DateIdentified' uri='urn:dateidentified' defined_by='urn:dateidentified'/>
-
-
+            <attribute column='IDcertainty' uri='urn:id_certainty' defined_by='urn:id_certainty'/>
+            
             <attribute column='timeofDay1' uri='urn:timeofday_1' defined_by='urn:timeofday_1'/>
             <attribute column='timeofDay2' uri='urn:timeofday_2' defined_by='urn:timeofday_2'/>
             
@@ -369,7 +369,7 @@
             <attribute column='gallNotes' uri='urn:gallnotes' defined_by='urn:gallnotes'/>
             <attribute column='rearingEmergenceTime(days)' uri='urn:rearingemergencetime(days)'
                        defined_by='urn:rearingemergencetime(days)'/>
-            <attribute column='stage' uri='urn:stage' defined_by='urn:stage'/>
+
             <attribute column='rearingNotes' uri='urn:rearingnotes' defined_by='urn:rearingnotes'/>
             <attribute column='endophyte1' uri='urn:endophyte_1' defined_by='urn:endophyte_1'/>
             <attribute column='endophyte2' uri='urn:endophyte_2' defined_by='urn:endophyte_2'/>
