@@ -43,7 +43,6 @@
                 <field>horizontalDatum</field>
   
             </rule>
-            <rule type='checkInXMLFields' column=''list='' level='warning'></rule>
             <rule type='checkInXMLFields' column='holdingInstitution' list='holdingInstitution' level='warning'></rule>
             <rule type='checkInXMLFields' column='collector' list='collectors' level='warning'></rule>
             <rule type='checkInXMLFields' column='state' list='state' level='warning'></rule>
@@ -416,7 +415,7 @@
             <attribute column='localitySites' uri='urn:locality_site' defined_by='urn:locality_site'/>
             <attribute column='site/plot' uri='urn:site/plot' defined_by='urn:site/plot'/>     
             <attribute column='sliceLetter' uri='urn:slice_letter' defined_by='urn:slice_letter'/>
-            <attribute column='dateTrapSet' uri='urn:date_trap_set' defined_by='urn:date_trap_set'/>
+            <attribute column='dateTrapSet' uri='urn:date_trap_set' defined_by='urn:date_trap_set'>
                 <![CDATA[date when Malaise or Pitfall traps are set up in field]]>
             </attribute>
             <attribute column='dateColl1' uri='urn:date_coll_1' defined_by='urn:date_coll_1'>
