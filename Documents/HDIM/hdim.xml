@@ -48,7 +48,7 @@
             <rule type='checkInXMLFields' column='state' list='state' level='warning'></rule>
             <rule type='checkInXMLFields' column='islandVolcano' list='islandVolcano' level='warning'></rule>
             <rule type='checkInXMLFields' column='localitySites' list='localitySites' level='warning'></rule>
-            <rule type='checkInXMLFields' column='site/plot' list='site/plot' level='warning'></rule>
+            <rule type='checkInXMLFields' column='site-plot' list='site-plot' level='warning'></rule>
             <rule type='checkInXMLFields' column='sliceLetter' list='sliceLetter' level='warning'></rule>
             <rule type='checkInXMLFields' column='collMethod' list='collMethod' level='warning'></rule>
             <rule type='checkInXMLFields' column='horizontalDatum' list='horizontalDatum' level='warning'></rule>
@@ -126,7 +126,7 @@
                 <field>Saddle</field>
             </list>
 
-            <list alias='site/plot' caseInsensitive='true'>
+            <list alias='site-plot' caseInsensitive='true'>
                 <field>1973 flow-079</field>
                 <field>1973 flow-081</field>
                 <field>1973 flow-084</field>
@@ -413,7 +413,7 @@
             <attribute column='islandVolcano' uri='urn:islandVolcano' defined_by='urn:island'/>
             <attribute column='localityNon-Sites' uri='urn:locality_siteNon' defined_by='urn:locality_site'/>
             <attribute column='localitySites' uri='urn:locality_site' defined_by='urn:locality_site'/>
-            <attribute column='site/plot' uri='urn:site/plot' defined_by='urn:site/plot'/>     
+            <attribute column='site-plot' uri='urn:site-plot' defined_by='urn:site-plot'/>     
             <attribute column='sliceLetter' uri='urn:slice_letter' defined_by='urn:slice_letter'/>
             <attribute column='dateTrapSet' uri='urn:date_trap_set' defined_by='urn:date_trap_set'>
                 <![CDATA[date when Malaise or Pitfall traps are set up in field]]>
