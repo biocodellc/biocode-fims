@@ -383,7 +383,7 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="hdimGUI"
+                worksheetUniqueKey="hdimNumber"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
@@ -411,7 +411,7 @@
             <attribute column='collector3' uri='urn:collector3' defined_by='urn:collector3'/>
             <attribute column='state' uri='urn:state' defined_by='urn:state'/>
             <attribute column='islandVolcano' uri='urn:islandVolcano' defined_by='urn:island'/>
-            <attribute column='localityNon-Sites' uri='urn:locality_site' defined_by='urn:locality_site'/>
+            <attribute column='localityNon-Sites' uri='urn:locality_siteNon' defined_by='urn:locality_site'/>
             <attribute column='localitySites' uri='urn:locality_site' defined_by='urn:locality_site'/>
             <attribute column='site/plot' uri='urn:site/plot' defined_by='urn:site/plot'/>     
             <attribute column='sliceLetter' uri='urn:slice_letter' defined_by='urn:slice_letter'/>
@@ -481,9 +481,9 @@
             <attribute column='dayNite' uri='urn:day_night' defined_by='urn:day_night'/>
             <attribute column='labelElevationFeet' uri='urn:elevation' defined_by='urn:elevation'/>
             <attribute column='Label_1' uri='urn:label_1' defined_by='urn:label_1'/>
-            <attribute column='Label_2' uri='urn:label_1' defined_by='urn:label_2'/>
-            <attribute column='Label_3' uri='urn:label_1' defined_by='urn:label_3'/>
-            <attribute column='Label_4' uri='urn:label_1' defined_by='urn:label_4'/>
+            <attribute column='Label_2' uri='urn:label_2' defined_by='urn:label_2'/>
+            <attribute column='Label_3' uri='urn:label_3' defined_by='urn:label_3'/>
+            <attribute column='Label_4' uri='urn:label_4' defined_by='urn:label_4'/>
             <attribute column='landowner' uri='urn:landowner' defined_by='urn:landowner'/>
             <attribute column='permit' uri='urn:permit_info' defined_by='urn:permit_info'/>
             <attribute column='pic' uri='urn:pic' defined_by='urn:pic'/>
