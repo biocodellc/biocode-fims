@@ -88,12 +88,12 @@
                 //var alNumRegExp = /^\w{4,16}$/;
                 var aRE = /^\d{6,20}$/;
                 //var dRE = /^[a-zA-Z0-9-_]{8,20}$/
-                var dRE = /^[a-zA-Z0-9_]{8,20}$/
+                var dRE = /^[a-zA-Z0-9_]{8,50}$/
 
                 if (!aRE.test($("#accession_number").val()) || !dRE.test($("#dataset_code").val())) {
                     var error = "<br><p class=error>" +
                     "<b>Accession</b> must be an integer with greater or equal to 6 numbers"+
-                        "<br><b>Dataset Code</b> must contain numbers or letters or underscores and be 8 and 20 characters long</p>";
+                        "<br><b>Dataset Code</b> must contain only numbers, letters, or underscores and be 8 and 50 characters long</p>";
                     dialog(message + error, title, buttons);
                 // Call
                 } else {
