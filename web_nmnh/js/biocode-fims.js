@@ -388,10 +388,10 @@ function validForm() {
             error = true;
         } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
             $('#expedition_code').val().length < 8)) {
-            message = "Dataset code is too short. Must be between 8 and 20 characters.";
+            message = "Dataset code is too short. Must be between 8 and 50 characters.";
             error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 20)) {
-            message = "Dataset code is too long. Please limit to 20 characters.";
+        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 50)) {
+            message = "Dataset code is too long. Please limit to 50 characters.";
             error = true;
         }
         if (error) {
