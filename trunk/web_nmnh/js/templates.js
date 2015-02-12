@@ -93,7 +93,7 @@
                 if (!aRE.test($("#accession_number").val()) || !dRE.test($("#dataset_code").val())) {
                     var error = "<br><p class=error>" +
                     "<b>Accession</b> must be an integer with greater or equal to 6 numbers"+
-                        "<br><b>Dataset Code</b> must contain only numbers, letters, or underscores and be 8 and 50 characters long</p>";
+                        "<br><b>Dataset Code</b> must contain only numbers, letters, or underscores and be 8 to 50 characters long</p>";
                     dialog(message + error, title, buttons);
                 // Call
                 } else {
