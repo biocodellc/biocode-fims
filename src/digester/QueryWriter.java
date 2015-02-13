@@ -529,6 +529,18 @@ public class QueryWriter {
         Iterator rowsIt = rows.iterator();
         int count = 0;
 
+        // Populate what lists there are -- we do this so we can inspect field URIs where pertinent
+        // HACK just get first worksheet
+      /*  Worksheet w = validation.getWorksheets().get(0);
+        Iterator rIt = w.getRules().iterator();
+        ArrayList listAliases = new ArrayList();
+        while (rIt.hasNext()) {
+            Rule r = (Rule)rIt.next();
+            if (r.getList() != null && !r.getList().equals("")) {
+                listAliases.add(r.getList());
+            }
+        }    */
+
         // Lop each record
         while (rowsIt.hasNext()) {
 
@@ -545,9 +557,14 @@ public class QueryWriter {
                     Cell c = (Cell) cellsIt.next();
                     Integer index = c.getColumnIndex();
                     String fieldName = sheet.getRow(0).getCell(index).toString();
+
                     String value = c.toString();
-                    // Write out the Scientific Name values
-                    if (fieldName.equals("ScientificName")) {
+                    // Write out the values
+                    // TODO: figure these out programatically, right now these are just hardcoded (see stub code above for populating lists to start with)
+                    if (fieldName.equals("ScientificName") ||
+                            fieldName.equals("Label_Header") ||
+                            fieldName.equals("Collector") ||
+                            fieldName.equals("DeterminedBy")) {
                         sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(fieldName, value)) + "\n");
                     }  else {
                         // write out the actual value
