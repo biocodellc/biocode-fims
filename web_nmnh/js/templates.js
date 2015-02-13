@@ -87,7 +87,6 @@
                 //var digitRegExp = /^\d+$/;
                 //var alNumRegExp = /^\w{4,16}$/;
                 var aRE = /^\d{6,20}$/;
-                //var dRE = /^[a-zA-Z0-9-_]{8,20}$/
                 var dRE = /^[a-zA-Z0-9_]{8,50}$/
 
                 if (!aRE.test($("#accession_number").val()) || !dRE.test($("#dataset_code").val())) {

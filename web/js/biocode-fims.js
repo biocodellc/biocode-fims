@@ -388,15 +388,13 @@ function validForm() {
     if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
         var error = false;
+        var dRE = /^[a-zA-Z0-9_]{4,50}$/
+
         if ($('#projects').val() == 0) {
             message = "Please select a project.";
             error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val() == null ||
-            $('#expedition_code').val().length < 4)) {
-            message = "Dataset code is too short. Must be between 4 and 20 characters.";
-            error = true;
-        } else if ($("#upload").is(":checked") && ($('#expedition_code').val().length > 20)) {
-            message = "Dataset code is too long. Please limit to 20 characters.";
+        } else if ($("#upload").is(":checked") && (!dRE.test($("#dataset_code").val()))) {
+            message = "<b>Dataset Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
             error = true;
         }
         if (error) {
