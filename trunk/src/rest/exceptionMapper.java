@@ -125,6 +125,8 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
     }
 
     private void logException(Exception e) {
+        // TODO: remove this after i get logging system working
+        e.printStackTrace();
         // don't log BCIDConnectorExceptions stacktrace
         if (!(e instanceof BCIDConnectorException)) {
             logger.error(null, e);
