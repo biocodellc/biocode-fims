@@ -563,7 +563,8 @@ public class QueryWriter {
                     // TODO: figure these out programatically, right now these are just hardcoded (see stub code above for populating lists to start with)
                     if (fieldName.equals("ScientificName") ||
                             fieldName.equals("Label_Header") ||
-                            fieldName.equals("Collector") ||
+                            fieldName.equals("Main_Collector") ||
+                            fieldName.equals("All_Collectors") ||
                             fieldName.equals("DeterminedBy")) {
                         sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(fieldName, value)) + "\n");
                     }  else {
