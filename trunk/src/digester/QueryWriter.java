@@ -566,7 +566,12 @@ public class QueryWriter {
                             fieldName.equals("Main_Collector") ||
                             fieldName.equals("All_Collectors") ||
                             fieldName.equals("DeterminedBy")) {
-                        sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(fieldName, value)) + "\n");
+                        String listName = fieldName;
+                        // TODO: This is a bit of a hack here, which can be fixed when we implement this programatically, Main_Collector and All_Collectors point to Collector list
+                        if (fieldName.equals("Main_Collector") || fieldName.equals("All_Collectors")) {
+                            listName = "Collector";
+                        }
+                        sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(listName, value)) + "\n");
                     }  else {
                         // write out the actual value
                         sb.append("\t" + writeXMLValue(fieldName, value) + "\n");
