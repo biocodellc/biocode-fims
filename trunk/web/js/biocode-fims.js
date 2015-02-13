@@ -393,7 +393,7 @@ function validForm() {
         if ($('#projects').val() == 0) {
             message = "Please select a project.";
             error = true;
-        } else if ($("#upload").is(":checked") && (!dRE.test($("#dataset_code").val()))) {
+        } else if ($("#upload").is(":checked") && (!dRE.test($("#expedition_code").val()))) {
             message = "<b>Dataset Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
             error = true;
         }
