@@ -421,14 +421,14 @@ function validatorSubmit() {
     // User wants to create a new expedition
     if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
         createExpedition().done(function (e) {
-           $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
 
-            //$("#expedition_code").val(e);
             if (validForm(e)) {
+                // if the form is valid, update the dataset code value
+                $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
+
+                // Submit form
                 submitForm().done(function(data) {
                     validationResults(data);
-                    // if this is successful, then replace the dataset code value
-                    //$("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
                 }).fail(function(jqxhr) {
                     failError(jqxhr);
                 });
