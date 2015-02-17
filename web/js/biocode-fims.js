@@ -564,6 +564,8 @@ function uploadResults(data) {
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
+        // Clear the resultsContainer
+        $("#resultsContainer").html();
 
         // Check NAAN
         $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
