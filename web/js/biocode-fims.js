@@ -565,7 +565,7 @@ function uploadResults(data) {
 function validationFormToggle() {
     $('#dataset').change(function() {
         // Clear the resultsContainer
-        $("#resultsContainer").html();
+        $("#resultsContainer").empty();
 
         // Check NAAN
         $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
