@@ -384,7 +384,7 @@ function failError(jqxhr) {
 }
 
 // Check that the validation form has a project id and if uploading, has an expedition code
-function validForm() {
+function validForm(dataset_code) {
     if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
         var error = false;
@@ -395,9 +395,9 @@ function validForm() {
             error = true;
         } else if ($("#upload").is(":checked")) {
             // get the dataset code value
-            var datasetcodeval = $("#expedition_code").val();
+            //var datasetcodeval = $("#expedition_code").val();
             // if it doesn't pass the regexp test, then set error message and set error to true
-            if (!dRE.test(datasetcodeval)) {
+            if (!dRE.test(dataset_code)) {
                 message = "<b>Dataset Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
                 error = true;
             }
@@ -422,7 +422,7 @@ function validatorSubmit() {
     if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
         createExpedition().done(function (e) {
             $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
-            if (validForm()) {
+            if (validForm(e)) {
                 submitForm().done(function(data) {
                     validationResults(data);
                 }).fail(function(jqxhr) {
@@ -430,7 +430,7 @@ function validatorSubmit() {
                 });
             }
         })
-    } else if (validForm()) {
+    } else if (validForm($("#expedition_code").val())) {
         submitForm().done(function(data) {
             validationResults(data);
         }).fail(function(jqxhr) {
