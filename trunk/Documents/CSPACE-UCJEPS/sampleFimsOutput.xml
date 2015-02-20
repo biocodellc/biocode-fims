@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="collectionobjects">
+<ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Barcode_Number>JEPS121479</Barcode_Number>
+        <ScientificName><![CDATA[urn:cspace:ucjeps.cspace.berkeley.edu:taxonomyauthority:name(taxon):item:name(39352)'Polypodium calirhiza S. A. Whitmore & A. R. Sm.']]></ScientificName>
+        <DeterminedBy>urn:cspace:ucjeps.cspace.berkeley.edu:orgauthorities:name(determination):item:name(AdamCSchneider1390521123940)'Adam C. Schneider'</DeterminedBy>
+        <Det_Year>2009</Det_Year>
+        <Det_Month>2</Det_Month>
+        <Det_Day>18</Det_Day>
+        <Label_Header>urn:cspace:ucjeps.cspace.berkeley.edu:conceptauthorities:name(concept):item:name(FLORAOFCALIFORNIA1341853963647)'FLORA OF CALIFORNIA'</Label_Header>
+        <Plant_Description>Found exclusively in crevaces between rocks.</Plant_Description>
+        <Coll_Year>2009</Coll_Year>
+        <Coll_Month>02</Coll_Month>
+        <Coll_Day>01</Coll_Day>
+        <Coll_Date>2009-02-01</Coll_Date>
+        <Main_Collector>urn:cspace:ucjeps.cspace.berkeley.edu:orgauthorities:name(organization):item:name(AlisonColwell1417801426830)'Adam C. Schneider'</Main_Collector>
+        <Coll_Num>1</Coll_Num>
+        <All_Collectors>urn:cspace:ucjeps.cspace.berkeley.edu:orgauthorities:name(organization):item:name(AdamCSchneiderwithCMattGuilliams1417801968342)'Adam C. Schneider with C. Matt Guilliams'</All_Collectors>
+        <Habitat>Rocky outcropping within native grassland.</Habitat>
+        <Country>USA</Country>
+        <State_Province>CA</State_Province>
+        <County>San Mateo</County>
+        <Locality>Crystal Springs Reservoir, 100 yards west from the intersection of Lexington Ave. and Allegheny Way, Highlands-Baywood Park, CA.</Locality>
+        <Latitude>37.51425</Latitude>
+        <Longitude>122.34618</Longitude>
+        <Datum>WGS84</Datum>
+        <Coordinate_Uncertainty_In_Meters>30</Coordinate_Uncertainty_In_Meters>
+        <Coordinate_Source>Collector GPS</Coordinate_Source>
+        <Elevation>496</Elevation>
+        <Elevation_Units>feet</Elevation_Units>
+        <BCID>ark:/21547/aR21</BCID>
+</ns2:collectionobjects_common>
+</document>

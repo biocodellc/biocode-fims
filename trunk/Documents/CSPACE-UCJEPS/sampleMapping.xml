@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<imports>
+<import service="CollectionObjects" type="CollectionObject" CSID="{FILLED ON THE FLY?}">
+    <schema xmlns:collectionobjects_common="http://collectionspace.org/services/collectionobject" name="collectionobjects_common">
+
+        <objectNumber>{Barcode_Number}</objectNumber>
+        <fieldCollectors>
+            <fieldCollector>{MainCollector}</fieldCollector>
+            <fieldCollector>{AllCollectors}</fieldCollector>
+        </fieldCollectors>
+        <fieldlCollectionNumber>{Coll_Num}</fieldCollectionNumber>
+
+        <fieldCollectionDateGroup>
+            <dateDisplayDate>{Coll_Year}-{Coll_Month}-{Coll_Day}</dateDisplayDate>
+            <dateEarliestSingleDay>{Coll_Day}</dateEarliestSingleDay>
+            <dateEarliestSingleMonth>{Coll_Month}</dateEarliestSingleMonth>
+            <dateEarliestSingleYear>{Coll_Year}</dateEarliestSingleYear>
+            <dateEarliestScalarValue>{Coll_Year}-{Coll_Month}-{Coll_Day}'T'00:00:00'Z'</dateEarliestScalarValue>
+        </fieldCollectionDateGroup>
+
+        <briefDescriptions>
+            <briefDescription>{Plant_Description}</briefDescription>
+        </briefDescriptions>
+
+    </schema>
+
+    <schema2 xmlns:collectionobjects_naturalhistory="http://collectionspace.org/services/collectionobject/domain/naturalhistory" name="collectionobjects_naturalhistory">
+
+        <taxonomicIdentGroupList>
+            <taxonomicIdentGroup>
+                <taxon>{ScientificName}</taxon>
+                <qualifier></qualifier>
+                <identBy>{DeterminedBy}</identBy>
+                <identDateGroup>
+                    <dateDisplayDate>{Det_Year}-{Det_Month}-{Det_Day}</dateDisplayDate>
+                    <dateEarliestSingleDay>{Det_Day}</dateEarliestSingleDay>
+                    <dateEarliestSingleMonth>{Det_Month}</dateEarliestSingleMonth>
+                    <dateEarliestSingleYear>{Det_Year}</dateEarliestSingleYear>
+                    <dateEarliestScalarValue>{Det_Year}-{Det_Month}-{Det_Day}'T'00:00:00'Z'</dateEarliestScalarValue>
+                </identDateGroup>
+                <notes/>
+            </taxonomicIdentGroup>
+        </taxonomicIdentGroupList>
+
+        <localityGroupList>
+            <localityGroup>
+                <fieldLocVerbatim>{Locality}</fieldLocVerbatim>
+                <fieldLocCountry>{Country}</fieldLocCountry>
+                <fieldLocState>{State_Province}</fieldLocState>
+                <fieldLocCounty>{County}</fieldLocCounty>
+                <minElevation>{Elevation}</minElevation>
+                <elevationUnit>{Elevation_Units}</elevationUnit>
+                <decimalLatitude>{Latitude}</decimalLatitude>
+                <decimalLongitude>{Longitude}</decimalLongitude>
+                <georefProtocol>{Coordinate_Source}</georefProtocol>
+            </localityGroup>
+        </localityGroupList>
+
+    </schema2>
+</import>
+</imports>
