@@ -101,9 +101,9 @@ public class templates {
                         " Both an Accession Number and a Dataset Code are required if this is a NMNH project.").build();
                 // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
                 // wasn't an Integer
-            } else if (!datasetCode.matches("^\\w{4,20}$")) {
+            } else if (!datasetCode.matches("^\\w{4,50}$")) {
                 return Response.status(400).entity("{\"error\": \"The Dataset Code must be an alphanumeric between" +
-                        " 4 and 20 characters.").build();
+                        " 4 and 50 characters.").build();
             }
 
         }
