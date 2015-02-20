@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <imports>
-<import service="CollectionObjects" type="CollectionObject" CSID="{FILLED ON THE FLY?}">
+<import service="CollectionObjects" type="CollectionObject">
     <schema xmlns:collectionobjects_common="http://collectionspace.org/services/collectionobject" name="collectionobjects_common">
-
+        
+        <otherNumberList>
+          <otherNumber>
+            <numberValue>{BCID}</numberValue>
+            <numberType>FIMS Identifier</numberType>
+            </otherNumber>
+        </otherNumberList>
+        
+        <fieldCollectionNote>{Habitat}</fieldCollectionNote>
+        
         <objectNumber>{Barcode_Number}</objectNumber>
+        
         <fieldCollectors>
             <fieldCollector>{MainCollector}</fieldCollector>
             <fieldCollector>{AllCollectors}</fieldCollector>
@@ -27,6 +37,8 @@
 
     <schema2 xmlns:collectionobjects_naturalhistory="http://collectionspace.org/services/collectionobject/domain/naturalhistory" name="collectionobjects_naturalhistory">
 
+        <labelHeader>{Label_Header}</labelHeader>
+        
         <taxonomicIdentGroupList>
             <taxonomicIdentGroup>
                 <taxon>{ScientificName}</taxon>
