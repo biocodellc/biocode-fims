@@ -35,7 +35,7 @@
 
     </schema>
 
-    <schema2 xmlns:collectionobjects_naturalhistory="http://collectionspace.org/services/collectionobject/domain/naturalhistory" name="collectionobjects_naturalhistory">
+    <schema xmlns:collectionobjects_naturalhistory="http://collectionspace.org/services/collectionobject/domain/naturalhistory" name="collectionobjects_naturalhistory">
 
         <labelHeader>{Label_Header}</labelHeader>
         
@@ -71,6 +71,6 @@
             </localityGroup>
         </localityGroupList>
 
-    </schema2>
+    </schema>
 </import>
 </imports>
