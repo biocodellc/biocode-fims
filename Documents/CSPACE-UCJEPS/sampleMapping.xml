@@ -16,10 +16,10 @@
         <objectNumber>{Barcode_Number}</objectNumber>
         
         <fieldCollectors>
-            <fieldCollector>{MainCollector}</fieldCollector>
             <fieldCollector>{AllCollectors}</fieldCollector>
         </fieldCollectors>
-        <fieldlCollectionNumber>{Coll_Num}</fieldCollectionNumber>
+        
+        <fieldCollectionNumber>{Coll_Num}</fieldCollectionNumber>
 
         <fieldCollectionDateGroup>
             <dateDisplayDate>{Coll_Year}-{Coll_Month}-{Coll_Day}</dateDisplayDate>
@@ -38,6 +38,8 @@
     <schema2 xmlns:collectionobjects_naturalhistory="http://collectionspace.org/services/collectionobject/domain/naturalhistory" name="collectionobjects_naturalhistory">
 
         <labelHeader>{Label_Header}</labelHeader>
+        
+        <fieldCollectionNumberAssignor>{MainCollector}</fieldCollectionNumberAssignor>
         
         <taxonomicIdentGroupList>
             <taxonomicIdentGroup>
