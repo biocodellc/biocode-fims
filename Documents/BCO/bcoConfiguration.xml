@@ -47,8 +47,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="destructedTissueSampleHASH"
                 conceptAlias="destructedTissueSample"
-                conceptURI="bco:materialSample"
-                uri="http://purl.obolibrary.org/obo/bco_0000036">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                uri="bco:materialSample">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="geneticTissueTypeDestructive" uri="urn:geneticTissueTypeDestructive"/>
         </entity>
@@ -57,8 +57,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSampleID"
                 conceptAlias="preservedTissueSample"
-                conceptURI="bco:materialSample"
-                uri="http://purl.obolibrary.org/obo/bco_0000036">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                uri="bco:materialSample">
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="geneticTissueTypePreserved" uri="urn:geneticTissueTypePreserved"/>
         </entity>
@@ -67,8 +67,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="occurrenceID"
                 conceptAlias="occurrence"
-                conceptURI="bco:materialSample"
-                uri="http://purl.obolibrary.org/obo/bco_0000036">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                uri="bco:materialSample">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
 
@@ -76,8 +76,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="morphologicalIdentificationProcessHASH"
                 conceptAlias="morphologicalIdentificationProcess"
-                conceptURI="bco:morphologicalIdentificationProcess"
-                uri="http://purl.obolibrary.org/obo/BCO_examples_0000083">
+                conceptURI="http://purl.obolibrary.org/obo/bco_0000042"
+                uri="bco:taxonomicIdentificationProcess">
             <attribute column="basisOfIdentification" uri="urn:basisOfIdentification"/>
             <attribute column="identifiedBy" uri="urn:identifiedBy"/>
             <attribute column="yearIdentified" uri="urn:yearIdentified"/>
@@ -89,8 +89,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessDestructiveHASH"
                 conceptAlias="materialSamplingProcessDestructive"
-                conceptURI="bco:materialSamplingProcess"
-                uri="http://purl.obolibrary.org/obo/bco_0000022">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0000659"
+                uri="bco:materialSamplingProcess">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
         </entity>
@@ -99,8 +99,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessPreservedHASH"
                 conceptAlias="materialSamplingProcessPreserved"
-                conceptURI="bco:materialSamplingProcess"
-                uri="http://purl.obolibrary.org/obo/bco_0000022">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0000659"
+                uri="bco:materialSamplingProcess">
             <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
             <attribute column="materialSampleID" uri="http://rs.tdwg.org/dwc/terms/materialSampleID"/>
             <attribute column="preservative" uri="http://rs.tdwg.org/dwc/terms/preservative"/>
@@ -112,8 +112,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="materialSamplingProcessEventHASH"
                 conceptAlias="materialSamplingProcessEvent"
-                conceptURI="bco:materialSamplingProcess"
-                uri="http://purl.obolibrary.org/obo/bco_0000022">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0000659"
+                uri="bco:materialSamplingProcess">
             <attribute column="minimumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
             <attribute column="maximumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
             <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
@@ -129,8 +129,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="multiWellPlateHASH"
                 conceptAlias="multiWellPlate"
-                conceptURI="obi:multiWellPlate"
-                uri="http://purl.obolibrary.org/obo/OBI_0400076">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0400076"
+                uri="obi:multiWellPlate">
             <attribute column="plate" uri="urn:plate"/>
             <attribute column='well' uri='urn:well'/>
         </entity>
@@ -139,8 +139,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="taxonomicNameHASH"
                 conceptAlias="taxonomicName"
-                conceptURI="bco:taxonomicName"
-                uri="">
+                conceptURI="http://rs.tdwg.org/dwc/dwctype/Taxon"
+                uri="bco:taxonomicName">
             <attribute column="genus" uri="urn:genus"/>
             <attribute column='species' uri='urn:species'/>
         </entity>
@@ -148,8 +148,8 @@
                 worksheet="Samples"
                 worksheetUniqueKey="ownerInstitutionCode"
                 conceptAlias="ownerInstitutionCode"
-                conceptURI="obi:organization"
-                uri="">
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0000245"
+                uri="obi:organization">
             <attribute column="ownerInstitutionCode" uri="urn:ownerInstitutionCode"/>
         </entity>
 
