@@ -191,8 +191,8 @@
 
         <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>obi:located_in</predicate>
-            <uri>http://purl.obolibrary.org/obo/RO_0001025</uri>
+            <predicate>http://purl.obolibrary.org/obo/RO_0001025</predicate>
+            <uri>obi:located_in</uri>
             <object>multiWellPlate</object>
         </relation>
 
