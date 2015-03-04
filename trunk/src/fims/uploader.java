@@ -141,7 +141,7 @@ public class uploader {
      * @param args
      */
     public static void main (String[] args) {
-        File file = new File("/Users/jdeck/Downloads/triplifierTest.n3");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/test.n3");
         //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/DEMOH_output.31.n3");
         //http://data.biscicol.org/ds/data?graph=urn%3Auuid%3A37797bda-7602-42af-82a5-c8a3827d1c61
         //String uuid = "urn%3Auuid%3A2eddf62e-a58a-11e3-aae7-d4c45d837ce1";
