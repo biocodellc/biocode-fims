@@ -155,36 +155,37 @@
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>obi:is_specified_input_of</predicate>
-            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000295</predicate>
+            <uri>obi:is_specified_input_of</uri>
             <object>materialSamplingProcessDestructive</object>
         </relation>
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>obi:is_specified_input_of</predicate>
-            <uri>http://purl.obolibrary.org/obo/OBI_0000295</uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000295</predicate>
+            <uri>obi:is_specified_input_of</uri>
             <object>materialSamplingProcessPreserved</object>
         </relation>
 
 
         <relation>
             <subject>materialSamplingProcessEvent</subject>
-            <predicate>obi:has_specified_output</predicate>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000299</predicate>
+            <uri>obi:has_specified_output</uri>
             <object>occurrence</object>
         </relation>
 
         <relation>
             <subject>destructedTissueSample</subject>
-            <predicate>obi:is_specified_output_of</predicate>
-            <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
+            <uri>obi:is_specified_output_of</uri>
             <object>materialSamplingProcessDestructive</object>
         </relation>
 
         <relation>
             <subject>preservedTissueSample</subject>
-            <predicate>obi:is_specified_output_of</predicate>
-            <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
+            <uri>obi:is_specified_output_of</uri>
             <object>materialSamplingProcessPreserved</object>
         </relation>
 
@@ -197,22 +198,22 @@
 
         <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>obi:has_specified_input</predicate>
-            <uri></uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000293</predicate>
+            <uri>obi:has_specified_input</uri>
             <object>occurrence</object>
         </relation>
 
         <relation>
             <subject>morphologicalIdentificationProcess</subject>
-            <predicate>obi:has_specified_output</predicate>
-            <uri></uri>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000299</predicate>
+            <uri>obi:has_specified_output</uri>
             <object>taxonomicName</object>
         </relation>
 
         <relation>
             <subject>occurrence</subject>
-            <predicate>obi:located_in</predicate>
-            <uri></uri>
+            <predicate>http://purl.obolibrary.org/obo/RO_0001025</predicate>
+            <uri>obi:located_in</uri>
             <object>ownerInstitutionCode</object>
         </relation>
 
