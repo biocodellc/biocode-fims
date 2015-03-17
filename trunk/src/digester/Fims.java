@@ -69,7 +69,9 @@ public class Fims implements RendererInterface {
         bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
         // Create the BCID to use for upload service
         String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
-        status1 += "\tDataset resolvable at http://ezid.cdlib.org/id/" + bcid + "\n";
+        status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";
+        status1 += "\tDataset resolution at http://n2t.net/" + bcid + "\n";
+
         processController.appendStatus(status1);
         // Inform cmd line users
         fimsPrinter.out.println(status1);
@@ -99,9 +101,9 @@ public class Fims implements RendererInterface {
      */
     public String results() {
         String retVal = "";
-        retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
-        retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
-        retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
+        //retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
+        //retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
+        //retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
         return retVal;
     }
 
