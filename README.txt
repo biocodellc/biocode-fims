@@ -16,7 +16,7 @@ chgrp -R jetty /opt/jettydev/temp/logs
 ###################
 # start.ini:
 ###################
-jetty= port 8080
+jetty= port 80
 jettydev  = port 8179
 
 ## SetUID Configuration

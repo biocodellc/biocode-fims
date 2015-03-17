@@ -388,7 +388,7 @@ function validForm(dataset_code) {
     if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
         var error = false;
-        var dRE = /^[a-zA-Z0-9_]{4,50}$/
+        var dRE = /^[a-zA-Z0-9_-]{4,50}$/
 
         if ($('#projects').val() == 0) {
             message = "Please select a project.";
