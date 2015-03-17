@@ -1,7 +1,6 @@
 package run;
 
 import digester.*;
-import digester.List;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
@@ -14,11 +13,10 @@ import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.triplifier;
-import utils.Html2Text;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
