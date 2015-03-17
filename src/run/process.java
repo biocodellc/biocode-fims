@@ -49,7 +49,7 @@ public class process {
             bcidConnector connector,
             processController processController) {
 
-        // Setup logging
+        // Setup
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
 
         // Update the processController Settings

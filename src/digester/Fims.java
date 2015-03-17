@@ -68,12 +68,13 @@ public class Fims implements RendererInterface {
 
         bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
         // Create the BCID to use for upload service
-        String status1 = "\tCreated BCID =" + bcid + " to represent your uploaded dataset";
+        String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
+        status1 += "\tDataset resolvable at http://ezid.cdlib.org/id/" + bcid + "\n";
         processController.appendStatus(status1);
         // Inform cmd line users
         fimsPrinter.out.println(status1);
         // Associate the expedition_code with this bcid
-        String status2 = "\tAssociator ... " + bcidConnector.associateBCID(project_id, expedition_code, bcid);
+        String status2 = "\t" + bcidConnector.associateBCID(project_id, expedition_code, bcid);
         processController.appendStatus(status2);
         // Inform cmd line users
         fimsPrinter.out.println(status2);
@@ -86,9 +87,10 @@ public class Fims implements RendererInterface {
     public void print() {
         //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
         //fimsPrinter.out.println("\tBCID =  " + bcid);
-        fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
-        fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
-        fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
+        //fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
+        //fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
+        //fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
+
         //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
     }
 
