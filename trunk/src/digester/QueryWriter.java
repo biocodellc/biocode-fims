@@ -506,15 +506,22 @@ public class QueryWriter {
         return writeFile(sb.toString(), file);
     }
 
+
+    /**
+     * A special method for writing output to CSPACE...
+     * TODO: Make the writeCSPACE function general purpose using a library (apache?) for variable substitution
+     * @param file
+     * @return
+     */
     public String writeCSPACE(File file) {
         createHeaderRow(sheet);
 
+        // Store all String elements
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        sb.append("<document name=\"collectionobjects\">\n");
+        sb.append("<imports>\n");
 
-
-        // Iterate through the rows.
+        // Build Row Iterator
         ArrayList rows = new ArrayList();
         for (Iterator<Row> rowsIT = sheet.rowIterator(); rowsIT.hasNext(); ) {
             Row row = rowsIT.next();
@@ -529,63 +536,165 @@ public class QueryWriter {
         Iterator rowsIt = rows.iterator();
         int count = 0;
 
-        // Populate what lists there are -- we do this so we can inspect field URIs where pertinent
-        // HACK just get first worksheet
-      /*  Worksheet w = validation.getWorksheets().get(0);
-        Iterator rIt = w.getRules().iterator();
-        ArrayList listAliases = new ArrayList();
-        while (rIt.hasNext()) {
-            Rule r = (Rule)rIt.next();
-            if (r.getList() != null && !r.getList().equals("")) {
-                listAliases.add(r.getList());
-            }
-        }    */
-
-        // Lop each record
+        // Loop each record
         while (rowsIt.hasNext()) {
 
             ArrayList cells = (ArrayList) rowsIt.next();
             Iterator cellsIt = cells.iterator();
 
+            //Variables pertaining to row level only
+            String year = "", month = "", day = "", taxon = "", identBy = "";
+            String identyear = "", identmonth = "", identday = "";
+            String Locality = "", Country = "", State_Province = "", County = "", Elevation = "", Elevation_Units = "", Latitude = "", Longitude = "", Coordinate_Source = "";
+            StringBuilder common = new StringBuilder();
+            StringBuilder naturalhistory = new StringBuilder();
+
             // don't take the first row, its a header.
             if (count > 1) {
-                sb.append("<ns2:collectionobjects_common xmlns:ns2=\"http://collectionspace.org/services/collectionobject\"" +
-                        " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n");
+                sb.append("<import>\n");
+
                 int fields = 0;
+
                 // Loop all fields in row
                 while (cellsIt.hasNext()) {
                     Cell c = (Cell) cellsIt.next();
                     Integer index = c.getColumnIndex();
+                    // Set the fieldName Value
                     String fieldName = sheet.getRow(0).getCell(index).toString();
-
+                    // Assign the value as a simple string
                     String value = c.toString();
-                    // Write out the values
-                    // TODO: figure these out programatically, right now these are just hardcoded (see stub code above for populating lists to start with)
-                    if (fieldName.equals("ScientificName") ||
-                            fieldName.equals("Label_Header") ||
-                            fieldName.equals("Main_Collector") ||
-                            fieldName.equals("All_Collectors") ||
-                            fieldName.equals("DeterminedBy")) {
-                        String listName = fieldName;
-                        // TODO: This is a bit of a hack here, which can be fixed when we implement this programatically, Main_Collector and All_Collectors point to Collector list
-                        if (fieldName.equals("Main_Collector") || fieldName.equals("All_Collectors")) {
-                            listName = "Collector";
+
+                    // Write out XML Values
+                    if (fieldName.equals("BCID")) {
+                        // check if resolution mechanism is attached
+                        if (!value.contains("http")) {
+                            value = "http://nt2.net/" + value;
                         }
-                        sb.append("\t" + writeXMLValue(fieldName,fieldURILookup(listName, value)) + "\n");
-                    }  else {
-                        // write out the actual value
-                        sb.append("\t" + writeXMLValue(fieldName, value) + "\n");
+                        common.append("\t<otherNumberList>\n" +
+                                "\t\t<otherNumber>\n" +
+                                "\t\t\t" + writeXMLValue("numberValue", value) + "\n" +
+                                "\t\t\t<numberType>FIMS Identifier</numberType>\n" +
+                                "\t\t</otherNumber>\n" +
+                                "\t</otherNumberList>\n");
+                    } else if (fieldName.equals("Habitat")) {
+                        common.append("\t" + writeXMLValue("fieldCollectionNote", value) + "\n");
+                    } else if (fieldName.equals("Barcode_Number")) {
+                        common.append("\t" + writeXMLValue("objectNumber", value) + "\n");
+                    } else if (fieldName.equals("All_Collectors")) {
+                        common.append("\t<fieldCollectors>\n");
+                        common.append("\t\t" + writeXMLValue("fieldCollector", fieldURILookup("Collector", value)) + "\n");
+                        common.append("\t</fieldCollectors>\n");
+                    } else if (fieldName.equals("Coll_Num")) {
+                        common.append("\t" + writeXMLValue("fieldCollectionNumber", value) + "\n");
+                    } else if (fieldName.equals("Coll_Year")) {
+                        year = value;
+                    } else if (fieldName.equals("Coll_Month")) {
+                        month = value;
+                    } else if (fieldName.equals("Coll_Day")) {
+                        day = value;
+                    } else if (fieldName.equals("Plant_Description")) {
+                        common.append("\t<briefDescriptions>\n" +
+                                "\t\t" + writeXMLValue("briefDescription", value) + "\n" +
+                                "\t</briefDescriptions>\n");
+                    } else if (fieldName.equals("Label_Header")) {
+                        naturalhistory.append("\t" + writeXMLValue(fieldName, fieldURILookup("Label_Header", value)) + "\n");
+                    } else if (fieldName.equals("Main_Collector")) {
+                        naturalhistory.append("\t" + writeXMLValue("fieldCollectorNumberAssignor", fieldURILookup("Collector", value)) + "\n");
+                    } else if (fieldName.equals("ScientificName")) {
+                        taxon = writeXMLValue("taxon",fieldURILookup("ScientificName", value));
+                    } else if (fieldName.equals("DeterminedBy")) {
+                        identBy = writeXMLValue("identBy",fieldURILookup("DeterminedBy", value));
+                    } else if (fieldName.equals("Det_Year")) {
+                        identyear = value;
+                    } else if (fieldName.equals("Det_Month")) {
+                        identmonth = value;
+                    } else if (fieldName.equals("Det_Day")) {
+                        identday = value;
+                    } else if (fieldName.equals("Locality")) {
+                        Locality = value;
+                    } else if (fieldName.equals("Country")) {
+                        Country = value;
+                    } else if (fieldName.equals("State_Province")) {
+                        State_Province = value;
+                    } else if (fieldName.equals("County")) {
+                        County = value;
+                    } else if (fieldName.equals("Elevation")) {
+                        Elevation = value;
+                    } else if (fieldName.equals("Elevation_Units")) {
+                        Elevation_Units = value;
+                    } else if (fieldName.equals("Latitude")) {
+                        Latitude = value;
+                    } else if (fieldName.equals("Longitude")) {
+                        Longitude = value;
+                    } else if (fieldName.equals("Coordinate_Source")) {
+                        Coordinate_Source = value;
+                    } else {
+                        // All the rest of the values
+                        naturalhistory.append("\t" + writeXMLValue(fieldName, value) + "\n");
                     }
-                    //urn:cspace:ucjeps.cspace.berkeley.edu:taxonomyauthority:name(taxon):item:name(11524)'Abies concolor (Gordon & Glend.) Lindl. ex Hildebr.'
+
                     fields++;
                 }
-                sb.append("</ns2:collectionobjects_common>\n");
+
+                // Field Date Group
+                common.append("\t<fieldCollectionDateGroup>\n");
+                common.append("\t\t<dateDisplayDate>" + year + "-" + month + "-" + day + "</dateDisplayDate>\n");
+                common.append("\t\t<dateEarliestSingleDay>" + day + "</dateEarliestSingleDay>\n");
+                common.append("\t\t<dateEarliestSingleMonth>" + month + "</dateEarliestSingleMonth>\n");
+                common.append("\t\t<dateEarliestSingleYear>" + year + "</dateEarliestSingleYear>\n");
+                common.append("\t\t<dateEarliestScalarValue>" + year + "-" + month + "-" + day + "'T'00:00:00'Z'</dateEarliestScalarValue>\n");
+                common.append("\t</fieldCollectionDateGroup>\n");
+
+                // TaxonomicIdentGroup
+                naturalhistory.append("\t<taxonomicIdentGroupList>\n" +
+                        "\t\t<taxonomicIdentGroup>\n" +
+                        "\t\t\t" + taxon + "\n" +
+                        "\t\t\t<qualifier></qualifier>\n" +
+                        "\t\t\t" + identBy + "\n" +
+                        "\t\t\t<identDateGroup>\n" +
+                        "\t\t\t\t<dateDisplayDate>" + identyear + "-" + identmonth + "-" + identday + "</dateDisplayDate>\n" +
+                        "\t\t\t\t<dateEarliestSingleDay>" + identday + "</dateEarliestSingleDay>\n" +
+                        "\t\t\t\t<dateEarliestSingleMonth>" + identmonth + "</dateEarliestSingleMonth>\n" +
+                        "\t\t\t\t<dateEarliestSingleYear>" + identyear + "</dateEarliestSingleYear>\n" +
+                        "\t\t\t\t<dateEarliestScalarValue>" + identyear + "-" + identmonth + "-" + identday + "'T'00:00:00'Z'</dateEarliestScalarValue>\n" +
+                        "\t\t\t</identDateGroup>\n" +
+                        "\t\t\t<notes/>\n" +
+                        "\t\t</taxonomicIdentGroup>\n" +
+                        "\t</taxonomicIdentGroupList>\n");
+
+                naturalhistory.append("\t<localityGroupList>\n" +
+                        "\t\t<localityGroup>\n" +
+                        "\t\t\t<fieldLocVerbatim>" + Locality + "</fieldLocVerbatim>\n" +
+                        "\t\t\t<fieldLocCountry>" + Country + "</fieldLocCountry>\n" +
+                        "\t\t\t<fieldLocState>" + State_Province + "</fieldLocState>\n" +
+                        "\t\t\t<fieldLocCounty>" + County + "</fieldLocCounty>\n" +
+                        "\t\t\t<minElevation>" + Elevation + "</minElevation>\n" +
+                        "\t\t\t<elevationUnit>" + Elevation_Units + "</elevationUnit>\n" +
+                        "\t\t\t<decimalLatitude>" + Latitude + "</decimalLatitude>\n" +
+                        "\t\t\t<decimalLongitude>" + Longitude + "</decimalLongitude>\n" +
+                        "\t\t\t<georefProtocol>" + Coordinate_Source + "</georefProtocol>\n" +
+                        "\t\t</localityGroup>\n" +
+                        "\t</localityGroupList>\n");
+
+                // collectionobjects_common element
+                sb.append("<schema xmlns:collectionobjects_common=\"http://collectionspace.org/services/collectionobject\" name=\"collectionobjects_common\">\n");
+                sb.append(common);
+                sb.append("</schema>\n");
+
+                // collectionobjects_naturalhistory element
+                sb.append("<schema xmlns:collectionobjects_naturalhistory=\"http://collectionspace.org/services/collectionobject/domain/naturalhistory\" name=\"collectionobjects_naturalhistory\">\n");
+                sb.append(naturalhistory);
+                sb.append("</schema>\n");
+
+                // End of this object/row
+                sb.append("</import>\n");
+
             }
             count++;
         }
 
         // closing document tag
-        sb.append("</document>\n");
+        sb.append("</imports>\n");
 
         return writeFile(sb.toString(), file);
     }
@@ -598,6 +707,7 @@ public class QueryWriter {
      *
      * @return
      */
+
     private String fieldURILookup(String fieldName, String value) {
         // Loop XML attribute value of ScientificName to get the REFNAME
         LinkedList<digester.List> lists = validation.getLists();

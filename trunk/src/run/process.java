@@ -517,7 +517,7 @@ public class process {
         Options options = new Options();
         options.addOption("h", "help", false, "print this help message and exit");
         options.addOption("q", "query", true, "Run a query and pass in graph UUIDs to look at for this query -- Use this along with options C and S");
-        options.addOption("f", "format", true, "excel|html|json  specifying the return format for the query");
+        options.addOption("f", "format", true, "excel|html|json|cspace  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
         options.addOption("e", "dataset_code", true, "Dataset code.  You will need to obtain a data code before " +
