@@ -568,7 +568,7 @@ public class QueryWriter {
                     if (fieldName.equals("BCID")) {
                         // check if resolution mechanism is attached
                         if (!value.contains("http")) {
-                            value = "http://nt2.net/" + value;
+                            value = "http://n2t.net/" + value;
                         }
                         common.append("\t<otherNumberList>\n" +
                                 "\t\t<otherNumber>\n" +
