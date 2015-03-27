@@ -597,9 +597,9 @@ public class QueryWriter {
                                 "\t\t" + writeXMLValue("briefDescription", value) + "\n" +
                                 "\t</briefDescriptions>\n");
                     } else if (fieldName.equals("Label_Header")) {
-                        naturalhistory.append("\t" + writeXMLValue(fieldName, fieldURILookup("Label_Header", value)) + "\n");
+                        naturalhistory.append("\t" + writeXMLValue("labelHeader", fieldURILookup("Label_Header", value)) + "\n");
                     } else if (fieldName.equals("Main_Collector")) {
-                        naturalhistory.append("\t" + writeXMLValue("fieldCollectorNumberAssignor", fieldURILookup("Collector", value)) + "\n");
+                        naturalhistory.append("\t" + writeXMLValue("fieldCollectionNumberAssignor", fieldURILookup("Collector", value)) + "\n");
                     } else if (fieldName.equals("ScientificName")) {
                         taxon = writeXMLValue("taxon",fieldURILookup("ScientificName", value));
                     } else if (fieldName.equals("DeterminedBy")) {
@@ -630,7 +630,7 @@ public class QueryWriter {
                         Coordinate_Source = value;
                     } else {
                         // All the rest of the values
-                        naturalhistory.append("\t" + writeXMLValue(fieldName, value) + "\n");
+                        //naturalhistory.append("\t" + writeXMLValue(fieldName, value) + "\n");
                     }
 
                     fields++;
