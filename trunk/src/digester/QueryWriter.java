@@ -603,7 +603,11 @@ public class QueryWriter {
                     } else if (fieldName.equals("ScientificName")) {
                         taxon = writeXMLValue("taxon",fieldURILookup("ScientificName", value));
                     } else if (fieldName.equals("DeterminedBy")) {
-                        identBy = writeXMLValue("identBy",fieldURILookup("DeterminedBy", value));
+                        identBy = writeXMLValue("identBy", fieldURILookup("DeterminedBy", value));
+                    } else if (fieldName.equals("Comments")) {
+                        common.append("\t<comments>\n");
+                        common.append("\t\t" + writeXMLValue("comment", value) + "\n");
+                        common.append("\t</comments>\n");
                     } else if (fieldName.equals("Det_Year")) {
                         identyear = value;
                     } else if (fieldName.equals("Det_Month")) {
