@@ -551,7 +551,7 @@ public class QueryWriter {
 
             // don't take the first row, its a header.
             if (count > 1) {
-                sb.append("<import>\n");
+                sb.append("<import service='CollectionObjects' type='CollectionObject'>\n");
 
                 int fields = 0;
 
@@ -646,7 +646,7 @@ public class QueryWriter {
                 common.append("\t\t<dateEarliestSingleDay>" + day + "</dateEarliestSingleDay>\n");
                 common.append("\t\t<dateEarliestSingleMonth>" + month + "</dateEarliestSingleMonth>\n");
                 common.append("\t\t<dateEarliestSingleYear>" + year + "</dateEarliestSingleYear>\n");
-                common.append("\t\t<dateEarliestScalarValue>" + year + "-" + month + "-" + day + "'T'00:00:00'Z'</dateEarliestScalarValue>\n");
+                common.append("\t\t<dateEarliestScalarValue>" + year + "-" + month + "-" + day + "T00:00:00Z</dateEarliestScalarValue>\n");
                 common.append("\t</fieldCollectionDateGroup>\n");
 
                 // TaxonomicIdentGroup
@@ -660,7 +660,7 @@ public class QueryWriter {
                         "\t\t\t\t<dateEarliestSingleDay>" + identday + "</dateEarliestSingleDay>\n" +
                         "\t\t\t\t<dateEarliestSingleMonth>" + identmonth + "</dateEarliestSingleMonth>\n" +
                         "\t\t\t\t<dateEarliestSingleYear>" + identyear + "</dateEarliestSingleYear>\n" +
-                        "\t\t\t\t<dateEarliestScalarValue>" + identyear + "-" + identmonth + "-" + identday + "'T'00:00:00'Z'</dateEarliestScalarValue>\n" +
+                        "\t\t\t\t<dateEarliestScalarValue>" + identyear + "-" + identmonth + "-" + identday + "T00:00:00Z</dateEarliestScalarValue>\n" +
                         "\t\t\t</identDateGroup>\n" +
                         "\t\t\t<notes/>\n" +
                         "\t\t</taxonomicIdentGroup>\n" +
@@ -686,9 +686,9 @@ public class QueryWriter {
                 sb.append("</schema>\n");
 
                 // collectionobjects_naturalhistory element
-                sb.append("<schema xmlns:collectionobjects_naturalhistory=\"http://collectionspace.org/services/collectionobject/domain/naturalhistory\" name=\"collectionobjects_naturalhistory\">\n");
+                sb.append("<schema2 xmlns:collectionobjects_naturalhistory=\"http://collectionspace.org/services/collectionobject/domain/naturalhistory\" name=\"collectionobjects_naturalhistory\">\n");
                 sb.append(naturalhistory);
-                sb.append("</schema>\n");
+                sb.append("</schema2>\n");
 
                 // End of this object/row
                 sb.append("</import>\n");
