@@ -662,7 +662,6 @@ public class QueryWriter {
                         "\t\t\t\t<dateEarliestSingleYear>" + identyear + "</dateEarliestSingleYear>\n" +
                         "\t\t\t\t<dateEarliestScalarValue>" + identyear + "-" + identmonth + "-" + identday + "T00:00:00Z</dateEarliestScalarValue>\n" +
                         "\t\t\t</identDateGroup>\n" +
-                        "\t\t\t<notes/>\n" +
                         "\t\t</taxonomicIdentGroup>\n" +
                         "\t</taxonomicIdentGroupList>\n");
 
@@ -676,7 +675,9 @@ public class QueryWriter {
                         "\t\t\t<elevationUnit>" + Elevation_Units + "</elevationUnit>\n" +
                         "\t\t\t<decimalLatitude>" + Latitude + "</decimalLatitude>\n" +
                         "\t\t\t<decimalLongitude>" + Longitude + "</decimalLongitude>\n" +
-                        "\t\t\t<georefProtocol>" + Coordinate_Source + "</georefProtocol>\n" +
+                        "\t\t\t<vLatitude>" + Latitude + "</vLatitude>\n" +
+                        "\t\t\t<vLongitude>" + Longitude + "</vLongitude>\n" +
+                        "\t\t\t<geoRefProtocol>" + Coordinate_Source + "</geoRefProtocol>\n" +
                         "\t\t</localityGroup>\n" +
                         "\t</localityGroupList>\n");
 
@@ -686,9 +687,9 @@ public class QueryWriter {
                 sb.append("</schema>\n");
 
                 // collectionobjects_naturalhistory element
-                sb.append("<schema2 xmlns:collectionobjects_naturalhistory=\"http://collectionspace.org/services/collectionobject/domain/naturalhistory\" name=\"collectionobjects_naturalhistory\">\n");
+                sb.append("<schema xmlns:collectionobjects_naturalhistory=\"http://collectionspace.org/services/collectionobject/domain/naturalhistory\" name=\"collectionobjects_naturalhistory\">\n");
                 sb.append(naturalhistory);
-                sb.append("</schema2>\n");
+                sb.append("</schema>\n");
 
                 // End of this object/row
                 sb.append("</import>\n");
