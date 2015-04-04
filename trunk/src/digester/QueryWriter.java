@@ -677,7 +677,8 @@ public class QueryWriter {
                         "\t\t\t<decimalLongitude>" + Longitude + "</decimalLongitude>\n" +
                         "\t\t\t<vLatitude>" + Latitude + "</vLatitude>\n" +
                         "\t\t\t<vLongitude>" + Longitude + "</vLongitude>\n" +
-                        "\t\t\t<geoRefProtocol>" + Coordinate_Source + "</geoRefProtocol>\n" +
+                        "\t\t\t<geoRefSource>" + Coordinate_Source + "</geoRefSource>\n" +
+                        "\t\t\t<localitySource>" + Coordinate_Source + "</localitySource>\n" +
                         "\t\t</localityGroup>\n" +
                         "\t</localityGroupList>\n");
 
