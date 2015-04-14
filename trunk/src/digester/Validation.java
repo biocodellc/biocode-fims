@@ -281,7 +281,7 @@ public class Validation implements RendererInterface {
             createSqlLite(filenamePrefix, outputFolder, mapping);
         }   catch (Exception e) {
             errorFree = false;
-            sheet.getMessages().addLast(new RowMessage("Unable to validate sheet due to system exception: " + e, "Spreadsheet check", RowMessage.ERROR));
+            sheet.getMessages().addLast(new RowMessage("Unable to validate sheet due to system exception: " + e, "Initial Spreadsheet check", RowMessage.ERROR));
         }
 
         if (errorFree) {
