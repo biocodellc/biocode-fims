@@ -114,7 +114,7 @@ public class Validation implements RendererInterface {
      *
      * @return
      */
-    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) {
+    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws FIMSException {
         PathManager pm = new PathManager();
         File processDirectory = null;
 
@@ -133,7 +133,11 @@ public class Validation implements RendererInterface {
         sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
 
         TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
-        tdc.convert(mapping);
+        try {
+            tdc.convert(mapping);
+        } catch (Exception e) {
+            throw new FIMSException(e);
+        }
         tabularDataReader.closeFile();
 
         // Create the SQLLite connection
@@ -279,7 +283,7 @@ public class Validation implements RendererInterface {
         // processing data, such as worksheets containing duplicate column names, which will fail the data load.
         try {
             createSqlLite(filenamePrefix, outputFolder, mapping);
-        }   catch (Exception e) {
+        }   catch (FIMSException e) {
             errorFree = false;
             sheet.getMessages().addLast(new RowMessage("Unable to validate sheet due to error loading into Server-side database: " + e.getMessage(), "Initial Spreadsheet check", RowMessage.ERROR));
             e.printStackTrace();
