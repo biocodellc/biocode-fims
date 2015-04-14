@@ -161,6 +161,7 @@ public final class TabularDataConverter {
                   buildTable(conn, fixSQLiteIdentifierName(tname));
           }  */
         } catch (SQLException e) {
+            // If we through an excaption here, it could be ANYTHING that SQLlite doesn't like, including duplicate columnnames
             throw new FIMSRuntimeException(500, e);
         } finally {
             try {

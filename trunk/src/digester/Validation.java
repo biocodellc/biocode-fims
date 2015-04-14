@@ -271,17 +271,32 @@ public class Validation implements RendererInterface {
             return false;
         }
 
-        createSqlLite(filenamePrefix, outputFolder, mapping);
-
+        // Use the errorFree variable to control validation checking workflow
         boolean errorFree = true;
-        for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
-            digester.Worksheet w = i.next();
 
-            boolean thisError = w.run(this);
-            if (errorFree)
-                errorFree = thisError;
+        // Create the SQLLite Connection and catch any exceptions, and send to Error Message
+        // Exceptions generated here are most likely useful to the user and the result of SQL exceptions when
+        // processing data, such as worksheets containing duplicate column names, which will fail the data load.
+        try {
+            createSqlLite(filenamePrefix, outputFolder, mapping);
+        }   catch (Exception e) {
+            errorFree = false;
+            sheet.getMessages().addLast(new RowMessage("Unable to validate sheet due to system exception: " + e, "Spreadsheet check", RowMessage.ERROR));
         }
-        return errorFree;
+
+        if (errorFree) {
+            // Loop rules to be run after connection
+            for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
+                digester.Worksheet w = i.next();
+
+                boolean thisError = w.run(this);
+                if (errorFree)
+                    errorFree = thisError;
+            }
+            return errorFree;
+        } else {
+            return false;
+        }
     }
 
     /**
