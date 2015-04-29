@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Smithsonian National Museum of Natural History Field Information Management System</title>
+    <title>NMNH FIMS</title>
 
     <link rel="stylesheet" type="text/css" href="/fims/css/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="/fims/css/bootstrap.min.css">
