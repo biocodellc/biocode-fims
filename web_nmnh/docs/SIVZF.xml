@@ -730,6 +730,11 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "ObjectNature" = Botany - Acevedo,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. Required]]></dataFormat>
 </attribute>
+		<attribute column='Image' uri='urn:Image' group='Specimen' defined_by='urn:Image'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Specimen Count' uri='urn:individualCount' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#individualCount'>
 			<![CDATA[DwC: The number of individuals represented present at the time of the Occurrence. Examples: "1", "25". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualCount]]>
 			<synonyms><![CDATA["individualCount" = DwC,
@@ -824,6 +829,38 @@ BOLD: Male/female/hermaphrodite only.]]>
 "LifeStageSex" = Entomology - Sean Brady (part),]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
+		<attribute column='Voucher Field ID' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Voucher Type' uri='urn:VoucherType' group='Specimen' defined_by='urn:VoucherType'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Select from look-up list.]]></dataFormat>
+</attribute>
+		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'>
+			<![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
+
+BOLD: None provided.]]>
+			<synonyms><![CDATA["order" = DwC,
+"order" = IndoPacific Template v7,
+"Ordr" = Biocode.specimen, 
+"ordr" = Biocode.Taxonomy,
+"Order" = Kress PB Collect'n Spreadsheet,
+"order" = Kress Plantbarcodes DB,
+"Order" = BOLD,
+"Order" = Entomology - Ted Schultz,
+"Order" = Biocode Search Screen,
+"Order" = LAB Field Coll'n SS,
+"Order" = BOLD Batch Upload (Amy's),
+"Order" = BOLD Batch Upload,
+"Order" = Fishes,
+"Order" = Entomology - Sean Brady,
+"Order" = Birds,
+"DarOrder" = EMuDwC,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
 		<attribute column='Family' uri='urn:family' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#family'>
 			<![CDATA[DwC: The full scientific name of the family in which the taxon is classified. Example: "Felidae", "Monocleaceae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/family
 
@@ -865,28 +902,6 @@ BOLD: None provided.]]>
 "DarGenus" = EMuDwC,]]></synonyms>
 			<dataFormat><![CDATA[If provided, select from lookup list. Otherwise a valid genus name or "Unknown"]]></dataFormat>
 </attribute>
-		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'>
-			<![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
-
-BOLD: None provided.]]>
-			<synonyms><![CDATA["order" = DwC,
-"order" = IndoPacific Template v7,
-"Ordr" = Biocode.specimen, 
-"ordr" = Biocode.Taxonomy,
-"Order" = Kress PB Collect'n Spreadsheet,
-"order" = Kress Plantbarcodes DB,
-"Order" = BOLD,
-"Order" = Entomology - Ted Schultz,
-"Order" = Biocode Search Screen,
-"Order" = LAB Field Coll'n SS,
-"Order" = BOLD Batch Upload (Amy's),
-"Order" = BOLD Batch Upload,
-"Order" = Fishes,
-"Order" = Entomology - Sean Brady,
-"Order" = Birds,
-"DarOrder" = EMuDwC,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Species' uri='urn:specificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#specificEpithet'>
 			<![CDATA[DwC: The name of the first or species epithet of the scientificName. Example: "concolor", "gottschei". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/specificEpithet
 
@@ -917,6 +932,19 @@ Unsure of case on remaining systems]]></synonyms>
 "TaxonNotes" = Biocode Backend,
 "TaxonNotes" = Biocode Batch Upload,
 "Taxonomic Notes/Other Specimen Details" = Bold (Kress collection sheet?),]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Sample Field ID' uri='urn:sampleID' group='Tissue' defined_by='urn:sampleID'>
+			<![CDATA[Biocode: (integer) unique ID = bnhm_id.tissue_num.
+
+BOLD: ID associated with the sample being sequenced (often identical to or an extension of Field or Museum ID.]]>
+			<synonyms><![CDATA["tissue_num" = Biocode Backend.Tissues,
+"Sample ID" = BOLD,]]></synonyms>
+			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
+</attribute>
+		<attribute column='Project/Unit ID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'>
@@ -981,7 +1009,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
 </attribute>
-		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
+		<attribute column='Plate ID' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
 "Plate" = LAB Field Collection Spreadsheet,
@@ -990,6 +1018,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "plate_no" = Plantbarcodes.tissue,
 "Plate No." = Plantbarcodes Coll'n SS,
 "plateID" = IndoPacific Template v7,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Plate Buffer' uri='urn:plateBuffer' group='Tissue' defined_by='urn:plateBuffer'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Genetic Sample Preservation Medium' uri='urn:preservationMedium' group='Tissue' defined_by='urn:preservationMedium'>
@@ -1045,14 +1078,15 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field>Project Code</field>
 			<field>Life Stage</field>
 			<field>Specimen Notes</field>
+			<field>Voucher Field ID</field>
+			<field>Voucher Type</field>
 			<field>Genus</field>
 			<field>Species</field>
 			<field>Taxon Notes</field>
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
-			<field>Parent ID</field>
-			<field>Plate</field>
+			<field>Plate ID</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Barcode</field>
 			<field>Well</field>
@@ -1081,6 +1115,14 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Voucher Type' list='voucherType' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Sample Field ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='uniqueValue' column='' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Project/Unit ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -1088,12 +1130,10 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Verbatim' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
@@ -1101,7 +1141,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Plate ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Medium' level='warning' otherColumn='Kind of Object'>
@@ -1167,6 +1207,12 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[year]]></field>
 			<field><![CDATA[years]]></field>
 		</list>
+		<list alias='phylum' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='Specimen Count Modifier' caseInsensitive='true'>
 			<field><![CDATA[ca.]]></field>
 			<field><![CDATA[Count Not Recorded]]></field>
@@ -1181,6 +1227,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Valve Fragment]]></field>
 		</list>
 		<list alias='order' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Acipenseriformes]]></field>
 			<field><![CDATA[Albuliformes]]></field>
 			<field><![CDATA[Amiiformes]]></field>
@@ -1259,11 +1306,15 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[S]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Antarctic]]></field>
 			<field><![CDATA[Arctic]]></field>
 			<field><![CDATA[Caribbean]]></field>
 			<field><![CDATA[Central America]]></field>
 			<field><![CDATA[Mediterranean]]></field>
+		</list>
+		<list alias='family' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -1331,6 +1382,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
 			<field><![CDATA[Species]]></field>
@@ -2557,7 +2609,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Clone]]></field>
 			<field><![CDATA[DNA, RNA, Proteins]]></field>
 			<field><![CDATA[Environmental Sample]]></field>
-			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Excretion & Secretion]]></field>
 			<field><![CDATA[Germplasm]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
@@ -2609,6 +2661,9 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[oz]]></field>
 			<field><![CDATA[ton]]></field>
 		</list>
+		<list alias='Life Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='progenyPart' caseInsensitive='true'>
 			<field><![CDATA[attached young]]></field>
 			<field><![CDATA[embryo]]></field>
@@ -2617,6 +2672,9 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[neonate]]></field>
 			<field><![CDATA[pouch young]]></field>
 			<field><![CDATA[young]]></field>
+		</list>
+		<list alias='genus' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>
@@ -2864,6 +2922,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zanzibar]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
+		</list>
+		<list alias='voucherType' caseInsensitive='true'>
+			<field><![CDATA[Voucher]]></field>
+			<field><![CDATA[Exemplar]]></field>
+			<field><![CDATA[e-Voucher]]></field>
 		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[aff.]]></field>

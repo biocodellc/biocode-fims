@@ -2,6 +2,7 @@ package tools;
 
 import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.MultiMap;
+import org.apache.commons.io.input.BOMInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.FIMSRuntimeException;
@@ -49,14 +50,14 @@ public class siListProcessor {
         String line;
         FileReader fr;
 
-        try {
+       /* try {
             fr = new FileReader(listsFile);
         } catch (FileNotFoundException e) {
             throw new FIMSRuntimeException(500, e);
-        }
+        } */
 
-        // Loop the Lists file
-        BufferedReader br = new BufferedReader(fr);
+        // Use encoding
+        BufferedReader br = encodedBR(listsFile, "UTF8");
 
         try {
             while ((line = br.readLine()) != null) {
@@ -74,6 +75,27 @@ public class siListProcessor {
             }
         }
         return department.iterator();
+    }
+
+    /**
+     * Method for reading files which skips Byte Order Mark (BOM). This shows up in some files and screws some
+     * things up so we generally don't want it.
+     *
+     * @param file
+     * @param encoding
+     *
+     * @return
+     */
+    public BufferedReader encodedBR(File file, String encoding) {
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+        // Skip BOM indicated by false in constructor
+        BOMInputStream bomIn = new BOMInputStream(is, false);
+        return new BufferedReader(new InputStreamReader(bomIn));
     }
 
     /**
@@ -110,12 +132,17 @@ public class siListProcessor {
 
         // Loop the Lists file
         FileReader fr = null;
-        try {
+        /*(try {
             fr = new FileReader(listsFile);
         } catch (FileNotFoundException e) {
             throw new FIMSRuntimeException(500, e);
         }
         BufferedReader br = new BufferedReader(fr);
+        */
+        // Use encoding
+        BufferedReader br = encodedBR(listsFile, "UTF8");
+
+
         try {
             while ((line = br.readLine()) != null) {
                 // Create a list element holding each of the values
@@ -126,12 +153,12 @@ public class siListProcessor {
                     departmentMap.put(elem.getListName(), elem.getValue());
                 }
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new FIMSRuntimeException(500, e);
         } finally {
             try {
                 br.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 logger.warn("IOException", e);
             }
         }
@@ -194,12 +221,12 @@ public class siListProcessor {
             this.listName = elements[0];
             this.department = elements[1];
             // 3rd element often empty, just call it an empty value
-            //try {
+            try {
                 this.value = elements[2];
-            //}   catch (Exception e2) {
-            //    this.value = "";
+            } catch (Exception e2) {
+                this.value = "";
                 //System.out.println(line);
-            //}
+            }
         }
 
         public String getListName() {

@@ -391,34 +391,37 @@ public class configurationFileTester {
     public static void main(String[] args) throws configurationFileError {
         String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
         //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIBOT.xml");
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/sampledata/bwp_config_concat.xml");
+        //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/sampledata/bwp_config_concat.xml");
 
-        configurationFileTester cFT = new configurationFileTester();
+        /*configurationFileTester cFT = new configurationFileTester();
         cFT.init(file);
         cFT.parse();
         cFT.checkLists();
         cFT.checkUniqueKeys();
         System.out.println(cFT.messages.printMessages());
-        /*
+        */
+
         // Check ACTIVE Project configuration files
-        Integer projects[] = {1, 3, 4, 5, 8, 9, 10, 11, 12, 22};
+        //Integer projects[] = {1, 3, 4, 5, 8, 9, 10, 11, 12, 22};
+        String projects[] = {"BOT", "ENT", "INV", "MIN", "VZA", "VZB", "VZF", "VZM"};
 
         for (int i = 0; i < projects.length; i++) {
-            int project_id = projects[i];
-            System.out.println("Configuration File Testing For Project = " + project_id);
+            String project = "SI" + projects[i];
+            System.out.println("Configuration File Testing For Project = " + project);
             try {
                 configurationFileTester cFT = new configurationFileTester();
-                File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
+                //File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
+                File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/" + project + ".xml");
+                System.out.println("Checking file " + file.toString());
                 cFT.init(file);
-                //cFT.readConfigFile();
+                cFT.parse();
                 cFT.checkLists();
-            } catch (configurationFileError e) {
-                System.out.println("Configuration File Construction Error Messages: \n" + e.getMessage());
+                cFT.checkUniqueKeys();
+                System.out.println(cFT.messages.printMessages());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        */
 
 
         // Check for well-formedness -- this one passes

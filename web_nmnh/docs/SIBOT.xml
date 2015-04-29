@@ -368,14 +368,6 @@ BOLD: Elevation of sampling site. Measured in meters relative to sea level. Nega
 "Elev Lat Long Label Text" = Entomology - Ted Schultz (in part),]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Extraction Date (Tissue)' uri='urn:extractionDate' group='Tissue' defined_by='urn:extractionDate'>
-			<![CDATA[ABCDDNA: date of DNA extraction
-
-DwC_Ext: Date of DNA extraction (DNA only)]]>
-			<synonyms><![CDATA["extractionDate" = DwC_Ext,
-"ExtractionDate" = ABCDDNA,]]></synonyms>
-			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
-</attribute>
 		<attribute column='Coordinate Radius (m)' uri='urn:coordinateUncertaintyInMeters' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#coordinateUncertaintyInMeters'>
 			<![CDATA[DwC: The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (be Example: "30" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), "71" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system). For discus http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters]]>
 			<synonyms><![CDATA["coordinateUncertaintyInMeters" = DwC,
@@ -860,6 +852,11 @@ IndoPacific: The state or province where the sample was found.]]>
 "State/Province" = Remaining systems,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Height' uri='urn:heightInMeters' group='Measurements' defined_by='urn:height'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["height" = Botany - Acevedo,]]></synonyms>
+			<dataFormat><![CDATA[>0]]></dataFormat>
+</attribute>
 		<attribute column='Measurement 1 Of' uri='urn:measurement1Of' group='Measurements' defined_by='urn: measurementOf'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
@@ -994,10 +991,10 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "habit" = Botany - Acevedo,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Height' uri='urn:heightInMeters' group='Measurements' defined_by='urn:height'>
+		<attribute column='Image' uri='urn:Image' group='Specimen' defined_by='urn:Image'>
 			<![CDATA[]]>
-			<synonyms><![CDATA["height" = Botany - Acevedo,]]></synonyms>
-			<dataFormat><![CDATA[>0]]></dataFormat>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
 </attribute>
 		<attribute column='Specimen Count' uri='urn:individualCount' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#individualCount'>
 			<![CDATA[DwC: The number of individuals represented present at the time of the Occurrence. Examples: "1", "25". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualCount]]>
@@ -1099,6 +1096,55 @@ not in Zoology; map it if you have content (e.g. 765/10)]]>
 			<synonyms><![CDATA["tree_tag_no" = Plantbarcodes.individual,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Voucher Field ID' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Voucher Type' uri='urn:VoucherType' group='Specimen' defined_by='urn:VoucherType'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Select from look-up list.]]></dataFormat>
+</attribute>
+		<attribute column='Kingdom' uri='urn:kingdom' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#kingdom'>
+			<![CDATA[DwC: The full scientific name of the kingdom in which the taxon is classified. Example: "Animalia", "Plantae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/kingdom]]>
+			<synonyms><![CDATA["DarKingdom" = EMuDwC,
+"kingdom" = DwC,
+"Kingdom" = Biocode.specimen, 
+"kingdom" = Biocode.Taxonomy,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["Subphylum" = Biocode.specimen, 
+"subphylum" = Biocode.Taxonomy,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Phylum' uri='urn:phylum' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#phylum'>
+			<![CDATA[DwC: The full scientific name of the phylum or division in which the taxon is classified. Example: "Chordata" (phylum), "Bryophyta" (division). For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/phylum
+
+BOLD: None provided.]]>
+			<synonyms><![CDATA["phylum" = DwC,
+"phylum" = IndoPacific Template v7,
+"Phylum" = Biocode. Specimen, 
+"phylum" = Biocode.Taxonomy,
+"Phylum" = BOLD,
+"Phylum" = Kress Plantbarcodes,
+"Phylum" = Biocode Backend,
+"Phylum" = LAB Field Coll'n SS,
+"Phylum" = BOLD Batch Upload (Amy's),
+"Phylum" = BOLD Batch Upload,
+"Phylum" = DwC 1.4,
+"Phylum" = Fishes,
+"DarPhylum" = EMuDwC,]]></synonyms>
+			<dataFormat><![CDATA[If provided, select from lookup list. Otherwise a valid phylum name or "Unknown"]]></dataFormat>
+</attribute>
+		<attribute column='Subclass' uri='urn:subclass' group='Taxonomy' defined_by='urn:subclass'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["Subclass" = Biocode.specimen, 
+"subclass" = Biocode.Taxonomy,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
 		<attribute column='Class' uri='urn:class' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#class'>
 			<![CDATA[DwC: The full scientific name of the class in which the taxon is classified. Example: "Mammalia", "Hepaticopsida". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/class
 
@@ -1111,11 +1157,47 @@ BOLD: None provided]]>
 "Class" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Cultivar Name' uri='urn:cultivatedName' group='Taxonomy' defined_by='urn:cultivatedName'>
+		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'>
 			<![CDATA[]]>
-			<synonyms><![CDATA["cultivated_name" = Plantbarcodes.individual,
-"Cultivated Name" = Plantbarcodes Coll'n SS, 
-"Cultivated Name" = Kress Coll'n DB,]]></synonyms>
+			<synonyms><![CDATA["Suborder" = Biocode.specimen, 
+"suborder" = Biocode.Taxonomy,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'>
+			<![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
+
+BOLD: None provided.]]>
+			<synonyms><![CDATA["order" = DwC,
+"order" = IndoPacific Template v7,
+"Ordr" = Biocode.specimen, 
+"ordr" = Biocode.Taxonomy,
+"Order" = Kress PB Collect'n Spreadsheet,
+"order" = Kress Plantbarcodes DB,
+"Order" = BOLD,
+"Order" = Entomology - Ted Schultz,
+"Order" = Biocode Search Screen,
+"Order" = LAB Field Coll'n SS,
+"Order" = BOLD Batch Upload (Amy's),
+"Order" = BOLD Batch Upload,
+"Order" = Fishes,
+"Order" = Entomology - Sean Brady,
+"Order" = Birds,
+"DarOrder" = EMuDwC,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Subfamily' uri='urn:subfamily' group='Taxonomy' defined_by='urn:subfamily'>
+			<![CDATA[BOLD: None provided.]]>
+			<synonyms><![CDATA["Subfamily" = Biocode.specimen,
+"subfamily" = Biocode.Taxonomy,
+"subfamily" = Plantbarcodes.individual,
+"Sub-family" = BOLD,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Tribe' uri='urn:tribe' group='Taxonomy' defined_by='urn:tribe'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["Tribe" = Biocode.specimen, 
+"tribe" = Biocode.Taxonomy,
+"Tribe" = Entomology - Sean Brady,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Family' uri='urn:family' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#family'>
@@ -1132,6 +1214,14 @@ BOLD: None provided.]]>
 "Family" = BOLD,
 Others in the series may be title case]]></synonyms>
 			<dataFormat><![CDATA[If provided, select from lookup list. Otherwise a valid family name or "Unknown"]]></dataFormat>
+</attribute>
+		<attribute column='Subgenus' uri='urn:subgenus' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#subgenus'>
+			<![CDATA[DwC: The full scientific name of the subgenus in which the taxon is classified. Values should include the genus to avoid homonym confusion. Example: "Strobus (Pinus)", "Puma (Puma)" "Loligo (Amerigo)", "Hieracium subgen. Pilosella". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/subgenus]]>
+			<synonyms><![CDATA["subgenus" = DwC,
+"Subgenus" = Biocode.specimen,
+"subgenus" = Biocode.Taxonomy,
+"DarSubgenus" = EMuDwC,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Genus' uri='urn:genus' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#genus'>
 			<![CDATA[DwC: The full scientific name of the genus in which the taxon is classified. Example: "Puma", "Monoclea". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/genus
@@ -1159,86 +1249,11 @@ BOLD: None provided.]]>
 "DarGenus" = EMuDwC,]]></synonyms>
 			<dataFormat><![CDATA[If provided, select from lookup list. Otherwise a valid genus name or "Unknown"]]></dataFormat>
 </attribute>
-		<attribute column='Hybrid Rank' uri='urn:hybridRank' group='Taxonomy' defined_by='urn:hybridRank'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["genus_hybrid" = Plantbarcodes.individual,
-"Genus Hybrid" = Plantbarcodes Coll'n SS,
-"Genus Hybrid" = Kress Coll'n DB,
-"species_hybrid" = Plantbarcodes.individual,
-"Species Hybrid" = Plantbarcodes Coll'n SS,
-"Species Hybrid" = Kress Coll'n DB,]]></synonyms>
-			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
-</attribute>
-		<attribute column='Epithet below Subspecies' uri='urn:infraspecificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#infraspecificEpithet'>
-			<![CDATA[DwC: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation. Example: "concolor", "oxyadenia", "sayi". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/infraspecificEpithet
-
-ABCDDNA: no definition provided]]>
-			<synonyms><![CDATA["infraspecificEpithet" = DwC,
-"DarInfraspecificEpithet" = EMuDwC,
-"BelowSpeciesEpithet" = Kress Coll DB tbl KresFile,
-"Below Species Epithet" = Kress Plant Barcodes Collection SS,
-"below_species_epithet" = Plantbarcodes.individual,
-"Identification/ScientificName/NameAtomised/InfraspecificEpithet" = ABCDDNA, ]]></synonyms>
+		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'>
+			<![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]>
+			<synonyms><![CDATA["subspecies" = Biocode.Taxonomy,
+"subSpecies" = IndoPacific Template v7,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Kingdom' uri='urn:kingdom' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#kingdom'>
-			<![CDATA[DwC: The full scientific name of the kingdom in which the taxon is classified. Example: "Animalia", "Plantae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/kingdom]]>
-			<synonyms><![CDATA["DarKingdom" = EMuDwC,
-"kingdom" = DwC,
-"Kingdom" = Biocode.specimen, 
-"kingdom" = Biocode.Taxonomy,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Order' uri='urn:order' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#order'>
-			<![CDATA[DwC: The full scientific name of the order in which the taxon is classified. Example: "Carnivora", "Monocleales". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/order
-
-BOLD: None provided.]]>
-			<synonyms><![CDATA["order" = DwC,
-"order" = IndoPacific Template v7,
-"Ordr" = Biocode.specimen, 
-"ordr" = Biocode.Taxonomy,
-"Order" = Kress PB Collect'n Spreadsheet,
-"order" = Kress Plantbarcodes DB,
-"Order" = BOLD,
-"Order" = Entomology - Ted Schultz,
-"Order" = Biocode Search Screen,
-"Order" = LAB Field Coll'n SS,
-"Order" = BOLD Batch Upload (Amy's),
-"Order" = BOLD Batch Upload,
-"Order" = Fishes,
-"Order" = Entomology - Sean Brady,
-"Order" = Birds,
-"DarOrder" = EMuDwC,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Phylum' uri='urn:phylum' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#phylum'>
-			<![CDATA[DwC: The full scientific name of the phylum or division in which the taxon is classified. Example: "Chordata" (phylum), "Bryophyta" (division). For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/phylum
-
-BOLD: None provided.]]>
-			<synonyms><![CDATA["phylum" = DwC,
-"phylum" = IndoPacific Template v7,
-"Phylum" = Biocode. Specimen, 
-"phylum" = Biocode.Taxonomy,
-"Phylum" = BOLD,
-"Phylum" = Kress Plantbarcodes,
-"Phylum" = Biocode Backend,
-"Phylum" = LAB Field Coll'n SS,
-"Phylum" = BOLD Batch Upload (Amy's),
-"Phylum" = BOLD Batch Upload,
-"Phylum" = DwC 1.4,
-"Phylum" = Fishes,
-"DarPhylum" = EMuDwC,]]></synonyms>
-			<dataFormat><![CDATA[If provided, select from lookup list. Otherwise a valid phylum name or "Unknown"]]></dataFormat>
-</attribute>
-		<attribute column='Authors' uri='urn:scientificNameAuthorship' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#scientificNameAuthorship'>
-			<![CDATA[DwC: The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode. Example: "(Torr.) J.T. Howell", "(Martinovský) Tzvelev", "(Györfi, 1952)". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/scientificNameAuthorship]]>
-			<synonyms><![CDATA["scientificNameAuthorship" = DwC,
-"ScientificNameAuthor" = Biocode Backend,
-"DarScientificNameAuthor" = EMuDwC,
-"author" = Biocode.Taxonomy,
-"Author" = Kress PB Collect'n Spreadsheet, 
-"author" = Kress Plantbarcodes.individual,]]></synonyms>
-			<dataFormat><![CDATA[Lastname. Or the standard scientific name Author format used by your department  Ex.: Johnson]]></dataFormat>
 </attribute>
 		<attribute column='Species' uri='urn:specificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#specificEpithet'>
 			<![CDATA[DwC: The name of the first or species epithet of the scientificName. Example: "concolor", "gottschei". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/specificEpithet
@@ -1260,46 +1275,6 @@ BOLD: None provided]]>
 Unsure of case on remaining systems]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Subclass' uri='urn:subclass' group='Taxonomy' defined_by='urn:subclass'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["Subclass" = Biocode.specimen, 
-"subclass" = Biocode.Taxonomy,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Subfamily' uri='urn:subfamily' group='Taxonomy' defined_by='urn:subfamily'>
-			<![CDATA[BOLD: None provided.]]>
-			<synonyms><![CDATA["Subfamily" = Biocode.specimen,
-"subfamily" = Biocode.Taxonomy,
-"subfamily" = Plantbarcodes.individual,
-"Sub-family" = BOLD,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Subgenus' uri='urn:subgenus' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#subgenus'>
-			<![CDATA[DwC: The full scientific name of the subgenus in which the taxon is classified. Values should include the genus to avoid homonym confusion. Example: "Strobus (Pinus)", "Puma (Puma)" "Loligo (Amerigo)", "Hieracium subgen. Pilosella". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/subgenus]]>
-			<synonyms><![CDATA["subgenus" = DwC,
-"Subgenus" = Biocode.specimen,
-"subgenus" = Biocode.Taxonomy,
-"DarSubgenus" = EMuDwC,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Suborder' uri='urn:suborder' group='Taxonomy' defined_by='urn:suborder'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["Suborder" = Biocode.specimen, 
-"suborder" = Biocode.Taxonomy,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Subphylum' uri='urn:subphylum' group='Taxonomy' defined_by='urn:subphylum'>
-			<![CDATA[]]>
-			<synonyms><![CDATA["Subphylum" = Biocode.specimen, 
-"subphylum" = Biocode.Taxonomy,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
-		<attribute column='Subspecies' uri='urn:subspecies' group='Taxonomy' defined_by='urn:subspecies'>
-			<![CDATA[IndoPacific: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]>
-			<synonyms><![CDATA["subspecies" = Biocode.Taxonomy,
-"subSpecies" = IndoPacific Template v7,]]></synonyms>
-			<dataFormat><![CDATA[Free text]]></dataFormat>
-</attribute>
 		<attribute column='Rank Below Subspecies' uri='urn:taxonRank' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRank'>
 			<![CDATA[DwC: The taxonomic rank of the most specific name in the scientificName. Recommended best practice is to use a controlled vocabulary. Examples: "subspecies", "varietas", "forma", "species", "genus". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRank
 
@@ -1311,6 +1286,15 @@ ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends o
 "below_species_rank" = Plantbarcodes.individual,
 "Identification/ScientificName/NameAtomised/Rank" = ABCDDNA,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. Required if Epithet below Subspecies is entered]]></dataFormat>
+</attribute>
+		<attribute column='Common Name' uri='urn:vernacularName' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#vernacularName'>
+			<![CDATA[DwC: A common or vernacular name. Example: "Andean Condor", "Condor Andino", "American Eagle", "Gänsegeier". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/vernacularName]]>
+			<synonyms><![CDATA["vernacularName" = DwC,
+"vernacularName" = IndoPacific Template v7,
+"Common Name" = Plantbarcodes Coll'n SS,
+"common_name" = Plantbarcodes.individual,
+"ColloquialName" = Biocode.specimen,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Taxon Notes' uri='urn:taxonRemarks' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#taxonRemarks'>
 			<![CDATA[DwC: Comments or notes about the taxon or name. Example: "this name is a misspelling in common use". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/taxonRemarks]]>
@@ -1324,20 +1308,56 @@ ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends o
 "Taxonomic Notes/Other Specimen Details" = Bold (Kress collection sheet?),]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Tribe' uri='urn:tribe' group='Taxonomy' defined_by='urn:tribe'>
+		<attribute column='Authors' uri='urn:scientificNameAuthorship' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#scientificNameAuthorship'>
+			<![CDATA[DwC: The authorship information for the scientificName formatted according to the conventions of the applicable nomenclaturalCode. Example: "(Torr.) J.T. Howell", "(Martinovský) Tzvelev", "(Györfi, 1952)". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/scientificNameAuthorship]]>
+			<synonyms><![CDATA["scientificNameAuthorship" = DwC,
+"ScientificNameAuthor" = Biocode Backend,
+"DarScientificNameAuthor" = EMuDwC,
+"author" = Biocode.Taxonomy,
+"Author" = Kress PB Collect'n Spreadsheet, 
+"author" = Kress Plantbarcodes.individual,]]></synonyms>
+			<dataFormat><![CDATA[Lastname. Or the standard scientific name Author format used by your department  Ex.: Johnson]]></dataFormat>
+</attribute>
+		<attribute column='Cultivar Name' uri='urn:cultivatedName' group='Taxonomy' defined_by='urn:cultivatedName'>
 			<![CDATA[]]>
-			<synonyms><![CDATA["Tribe" = Biocode.specimen, 
-"tribe" = Biocode.Taxonomy,
-"Tribe" = Entomology - Sean Brady,]]></synonyms>
+			<synonyms><![CDATA["cultivated_name" = Plantbarcodes.individual,
+"Cultivated Name" = Plantbarcodes Coll'n SS, 
+"Cultivated Name" = Kress Coll'n DB,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Common Name' uri='urn:vernacularName' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#vernacularName'>
-			<![CDATA[DwC: A common or vernacular name. Example: "Andean Condor", "Condor Andino", "American Eagle", "Gänsegeier". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/vernacularName]]>
-			<synonyms><![CDATA["vernacularName" = DwC,
-"vernacularName" = IndoPacific Template v7,
-"Common Name" = Plantbarcodes Coll'n SS,
-"common_name" = Plantbarcodes.individual,
-"ColloquialName" = Biocode.specimen,]]></synonyms>
+		<attribute column='Epithet below Subspecies' uri='urn:infraspecificEpithet' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#infraspecificEpithet'>
+			<![CDATA[DwC: The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation. Example: "concolor", "oxyadenia", "sayi". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/infraspecificEpithet
+
+ABCDDNA: no definition provided]]>
+			<synonyms><![CDATA["infraspecificEpithet" = DwC,
+"DarInfraspecificEpithet" = EMuDwC,
+"BelowSpeciesEpithet" = Kress Coll DB tbl KresFile,
+"Below Species Epithet" = Kress Plant Barcodes Collection SS,
+"below_species_epithet" = Plantbarcodes.individual,
+"Identification/ScientificName/NameAtomised/InfraspecificEpithet" = ABCDDNA, ]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Hybrid Rank' uri='urn:hybridRank' group='Taxonomy' defined_by='urn:hybridRank'>
+			<![CDATA[]]>
+			<synonyms><![CDATA["genus_hybrid" = Plantbarcodes.individual,
+"Genus Hybrid" = Plantbarcodes Coll'n SS,
+"Genus Hybrid" = Kress Coll'n DB,
+"species_hybrid" = Plantbarcodes.individual,
+"Species Hybrid" = Plantbarcodes Coll'n SS,
+"Species Hybrid" = Kress Coll'n DB,]]></synonyms>
+			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
+</attribute>
+		<attribute column='Sample Field ID' uri='urn:sampleID' group='Tissue' defined_by='urn:sampleID'>
+			<![CDATA[Biocode: (integer) unique ID = bnhm_id.tissue_num.
+
+BOLD: ID associated with the sample being sequenced (often identical to or an extension of Field or Museum ID.]]>
+			<synonyms><![CDATA["tissue_num" = Biocode Backend.Tissues,
+"Sample ID" = BOLD,]]></synonyms>
+			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
+</attribute>
+		<attribute column='Project/Unit ID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'>
@@ -1352,6 +1372,14 @@ ABCDDNA: Please note: ABCD has several containers for NameAtomised, it depends o
 "molecular_id" = Biocode Backend.Extract,
 "molecular_id" = Biocode Backend.Sequence,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Extraction Date (Tissue)' uri='urn:extractionDate' group='Tissue' defined_by='urn:extractionDate'>
+			<![CDATA[ABCDDNA: date of DNA extraction
+
+DwC_Ext: Date of DNA extraction (DNA only)]]>
+			<synonyms><![CDATA["extractionDate" = DwC_Ext,
+"ExtractionDate" = ABCDDNA,]]></synonyms>
+			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
 		<attribute column='Genetic Sample Notes' uri='urn:geneticSampleNotes' group='Tissue' defined_by='urn:geneticSampleNotes'>
 			<![CDATA[]]>
@@ -1435,7 +1463,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
 </attribute>
-		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
+		<attribute column='Plate ID' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
 "Plate" = LAB Field Collection Spreadsheet,
@@ -1444,6 +1472,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "plate_no" = Plantbarcodes.tissue,
 "Plate No." = Plantbarcodes Coll'n SS,
 "plateID" = IndoPacific Template v7,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Plate Buffer' uri='urn:plateBuffer' group='Tissue' defined_by='urn:plateBuffer'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Genetic Sample Preservation Date' uri='urn:preservationDate' group='Tissue' defined_by='urn:preservationDate'>
@@ -1509,10 +1542,11 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field>Province/State/Territory</field>
 			<field>Microhabitat Description</field>
 			<field>Specimen/Lot Description</field>
+			<field>Voucher Field ID</field>
+			<field>Voucher Type</field>
 			<field>Biorepository ID</field>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
-			<field>Parent ID</field>
 		</rule>
 		<rule type='controlledVocabulary' column='Publish on Internet' list='yesNo' level='warning'></rule>
 		<rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters' level='warning'></rule>
@@ -1545,6 +1579,7 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='controlledVocabulary' column='Continent' list='continent' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Country' list='country' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Ocean' list='ocean' level='error'></rule>
+		<rule type='validateNumeric' column='Height' level='error' value='%3E0'></rule>
 		<rule type='controlledVocabulary' column='Measurement 1 Unit' list='measurementUnit' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Measurement 1 Unit' level='warning' otherColumn='Measurement 1 Value'></rule>
 		<rule type='isNumber' column='Measurement 1 Value' level='error'></rule>
@@ -1556,15 +1591,22 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='controlledVocabulary' column='Establishment Means' list='establishmentMeans' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Exudate' list='exudate' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Habit' list='habit' level='warning'></rule>
-		<rule type='validateNumeric' column='Height' level='error' value='%3E0'></rule>
 		<rule type='validateNumeric' column='Specimen Count' level='warning' value='%3E0'></rule>
 		<rule type='uniqueValue' column='Primary Collector Number' level='error'></rule>
 		<rule type='validateNumeric' column='Sheets Per Specimen' level='warning' value='%3E0'></rule>
+		<rule type='controlledVocabulary' column='Voucher Type' list='voucherType' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Family' list='family' level='warning'></rule>
-		<rule type='controlledVocabulary' column='Hybrid Rank' list='hybridRank' level='warning'></rule>
-		<rule type='requiredValueFromOtherColumn' column='Epithet below Subspecies' level='warning' otherColumn='Rank Below Subspecies'></rule>
 		<rule type='controlledVocabulary' column='Rank Below Subspecies' list='taxonRank' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Rank Below Subspecies' level='warning' otherColumn='Epithet below Subspecies'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Epithet below Subspecies' level='warning' otherColumn='Rank Below Subspecies'></rule>
+		<rule type='controlledVocabulary' column='Hybrid Rank' list='hybridRank' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Sample Field ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='uniqueValue' column='' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Project/Unit ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -1575,12 +1617,10 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
@@ -1593,7 +1633,7 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Plate ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
@@ -1671,6 +1711,12 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[year]]></field>
 			<field><![CDATA[years]]></field>
 		</list>
+		<list alias='phylum' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='Specimen Count Modifier' caseInsensitive='true'>
 			<field><![CDATA[ca.]]></field>
 			<field><![CDATA[Count Not Recorded]]></field>
@@ -1705,6 +1751,9 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Tree]]></field>
 			<field><![CDATA[Treelet]]></field>
 		</list>
+		<list alias='order' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
@@ -1715,8 +1764,8 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[WGS84]]></field>
 		</list>
 		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[??]]></field>
-			<field><![CDATA[1 - Europe]]></field>
 			<field><![CDATA[10 - Northern Europe]]></field>
 			<field><![CDATA[10 - Northern Europe / 13 - Southeastern Europe]]></field>
 			<field><![CDATA[11 - Middle Europe]]></field>
@@ -1724,10 +1773,10 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[12 - Southwestern Europe]]></field>
 			<field><![CDATA[12 - Southwestern Europe / 11 - Middle Europe]]></field>
 			<field><![CDATA[12 - Southwestern Europe / 13 - Southeastern Europe]]></field>
+			<field><![CDATA[13]]></field>
 			<field><![CDATA[13 - Southeastern Europe]]></field>
 			<field><![CDATA[13 - Southeastern Europe / 11 - Middle Europe]]></field>
 			<field><![CDATA[14 - Eastern Europe]]></field>
-			<field><![CDATA[2 - Africa]]></field>
 			<field><![CDATA[20 - Northern Africa]]></field>
 			<field><![CDATA[20 - Northern Africa / 24 - Northeast Tropical Africa]]></field>
 			<field><![CDATA[21 - Macaronesia]]></field>
@@ -1743,9 +1792,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[26 - South Tropical Africa / 27 - Southern Africa]]></field>
 			<field><![CDATA[27 - Southern Africa]]></field>
 			<field><![CDATA[28 - Middle Atlantic Ocean]]></field>
-			<field><![CDATA[29 - West Indian Ocean]]></field>
 			<field><![CDATA[29 - Western Indian Ocean]]></field>
-			<field><![CDATA[3 - Asia-Temperate]]></field>
 			<field><![CDATA[30 - Siberia]]></field>
 			<field><![CDATA[30 - Siberia / 31 - Russian Far East]]></field>
 			<field><![CDATA[31 - Russian Far East]]></field>
@@ -1756,10 +1803,10 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[34 - Western Asia / 35 - Arabian Peninsula]]></field>
 			<field><![CDATA[34 - Western Asia / 40 - Indian Subcontinent]]></field>
 			<field><![CDATA[35 - Arabian Peninsula]]></field>
+			<field><![CDATA[36]]></field>
 			<field><![CDATA[36 - China]]></field>
 			<field><![CDATA[36 - China / 38 - Eastern Asia]]></field>
 			<field><![CDATA[36 - China / 41 - Indo-China]]></field>
-			<field><![CDATA[36 - China Hainan]]></field>
 			<field><![CDATA[36 - China North-Central]]></field>
 			<field><![CDATA[36 - China South-Central]]></field>
 			<field><![CDATA[36 - China South-Central / 36 - Tibet-Qinghai]]></field>
@@ -1774,26 +1821,19 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[36 - Xinjiang]]></field>
 			<field><![CDATA[37 - Mongolia]]></field>
 			<field><![CDATA[38 - Eastern Asia]]></field>
-			<field><![CDATA[4 - Asia-Tropical]]></field>
 			<field><![CDATA[40 - Indian Subcontinent]]></field>
 			<field><![CDATA[40 - Indian Subcontinent / 41 - Indo-China]]></field>
 			<field><![CDATA[40 - Indian Subcontinent / 42 - Malesia]]></field>
 			<field><![CDATA[41 - Indo-China]]></field>
 			<field><![CDATA[41 - Indo-China / 42 - Malesia]]></field>
 			<field><![CDATA[42 - Malesia]]></field>
-			<field><![CDATA[42 - Malesia / 41 - Indo-China]]></field>
 			<field><![CDATA[43 - Papuasia]]></field>
-			<field><![CDATA[50 - Australasia]]></field>
 			<field><![CDATA[50 - Australia]]></field>
 			<field><![CDATA[51 - New Zealand]]></field>
-			<field><![CDATA[6 - Pacific Islands]]></field>
 			<field><![CDATA[60 - Southwestern Pacific]]></field>
 			<field><![CDATA[61 - South-Central Pacific]]></field>
-			<field><![CDATA[62 - Northwestern Pacfic]]></field>
 			<field><![CDATA[62 - Northwestern Pacific]]></field>
-			<field><![CDATA[62 - South-Central Pacific]]></field>
 			<field><![CDATA[63 - North-Central Pacific]]></field>
-			<field><![CDATA[63 - Northwestern Pacific]]></field>
 			<field><![CDATA[70 - Subarctic America]]></field>
 			<field><![CDATA[71 - Western Canada]]></field>
 			<field><![CDATA[71 - Western Canada / 72 - Eastern Canada]]></field>
@@ -1819,7 +1859,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[79 - Mexico Southeast]]></field>
 			<field><![CDATA[79 - Mexico Southeast / 79 - Mexico Southwest]]></field>
 			<field><![CDATA[79 - Mexico Southwest]]></field>
-			<field><![CDATA[8 - South America]]></field>
 			<field><![CDATA[80 - Central America]]></field>
 			<field><![CDATA[80 - Central America / 79 - Mexico]]></field>
 			<field><![CDATA[80 - Central America / 83 - Western South America]]></field>
@@ -1830,6 +1869,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[83 - Western South America / 80 - Central America]]></field>
 			<field><![CDATA[83 - Western South America / 82 - Northern South America]]></field>
 			<field><![CDATA[84 - Brazil]]></field>
+			<field><![CDATA[84 - Brazil Norrth]]></field>
 			<field><![CDATA[84 - Brazil North]]></field>
 			<field><![CDATA[84 - Brazil North / 82 - Northern South America]]></field>
 			<field><![CDATA[84 - Brazil North / 83 - Western South America]]></field>
@@ -1948,7 +1988,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Anarthriaceae]]></field>
 			<field><![CDATA[Ancistrocladaceae]]></field>
 			<field><![CDATA[Andreaeaceae]]></field>
-			<field><![CDATA[Andreaeceae]]></field>
 			<field><![CDATA[Aneuraceae]]></field>
 			<field><![CDATA[Angiopteridaceae]]></field>
 			<field><![CDATA[Anisophylleaceae]]></field>
@@ -2303,6 +2342,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Geraniaceae]]></field>
 			<field><![CDATA[Gesneriaceae]]></field>
 			<field><![CDATA[Gigartinaceae]]></field>
+			<field><![CDATA[Gigaspermaceae]]></field>
 			<field><![CDATA[Ginkgoaceae]]></field>
 			<field><![CDATA[Giraudiaceae]]></field>
 			<field><![CDATA[Gleicheniaceae]]></field>
@@ -2397,7 +2437,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Inkyuleeaceae]]></field>
 			<field><![CDATA[Iridaceae]]></field>
 			<field><![CDATA[Ishigeaceae]]></field>
-			<field><![CDATA[Isoδtaceae]]></field>
+			<field><![CDATA[Isoëtaceae]]></field>
 			<field><![CDATA[Ixonanthaceae]]></field>
 			<field><![CDATA[Joinvilleaceae]]></field>
 			<field><![CDATA[Juglandaceae]]></field>
@@ -2579,6 +2619,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Ostreopsidaceae]]></field>
 			<field><![CDATA[Ostropales]]></field>
 			<field><![CDATA[Oxalidaceae]]></field>
+			<field><![CDATA[Oxyrrhinaceae]]></field>
 			<field><![CDATA[Pallaviciniaceae]]></field>
 			<field><![CDATA[Palmellaceae]]></field>
 			<field><![CDATA[Palmellopsidaceae]]></field>
@@ -2931,6 +2972,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Zingiberaceae]]></field>
 			<field><![CDATA[Zygnemataceae]]></field>
 			<field><![CDATA[Zygophyllaceae]]></field>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -2976,6 +3018,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Wood]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[forma]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[not specified]]></field>
@@ -4205,7 +4248,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Clone]]></field>
 			<field><![CDATA[DNA, RNA, Proteins]]></field>
 			<field><![CDATA[Environmental Sample]]></field>
-			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Excretion & Secretion]]></field>
 			<field><![CDATA[Germplasm]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
@@ -4251,11 +4294,12 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[pouch young]]></field>
 			<field><![CDATA[young]]></field>
 		</list>
+		<list alias='genus' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='country' caseInsensitive='true'>
 			<field><![CDATA[Afghanistan]]></field>
-			<field><![CDATA[Africa]]></field>
 			<field><![CDATA[Albania]]></field>
-			<field><![CDATA[Aldabra Islands]]></field>
 			<field><![CDATA[Algeria]]></field>
 			<field><![CDATA[American Samoa]]></field>
 			<field><![CDATA[Andaman]]></field>
@@ -4271,7 +4315,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Armenia]]></field>
 			<field><![CDATA[Armeniya]]></field>
 			<field><![CDATA[Aruba]]></field>
-			<field><![CDATA[Astove Island]]></field>
 			<field><![CDATA[Auckland]]></field>
 			<field><![CDATA[Australia]]></field>
 			<field><![CDATA[Austria]]></field>
@@ -4309,14 +4352,12 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Brunei]]></field>
 			<field><![CDATA[Bruneo]]></field>
 			<field><![CDATA[Bulgaria]]></field>
-			<field><![CDATA[Burkina]]></field>
 			<field><![CDATA[Burkina Faso]]></field>
 			<field><![CDATA[Burma]]></field>
 			<field><![CDATA[Burundi]]></field>
 			<field><![CDATA[Cambodia]]></field>
 			<field><![CDATA[Cameroon]]></field>
 			<field><![CDATA[Camerooon]]></field>
-			<field><![CDATA[Camoro Islands]]></field>
 			<field><![CDATA[Canada]]></field>
 			<field><![CDATA[Canary Islands]]></field>
 			<field><![CDATA[Cape Verde]]></field>
@@ -4332,7 +4373,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Central American Pacific Islands]]></field>
 			<field><![CDATA[Ceylon]]></field>
 			<field><![CDATA[Chad]]></field>
-			<field><![CDATA[Chagos Archipelago]]></field>
 			<field><![CDATA[Chile]]></field>
 			<field><![CDATA[China]]></field>
 			<field><![CDATA[Clipperton Island]]></field>
@@ -4342,7 +4382,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Comoros]]></field>
 			<field><![CDATA[Congo]]></field>
 			<field><![CDATA[Congo Belge]]></field>
-			<field><![CDATA[Congo, Democratic Republic of the]]></field>
 			<field><![CDATA[Congo, Republic of]]></field>
 			<field><![CDATA[Cook Islands]]></field>
 			<field><![CDATA[Corse]]></field>
@@ -4356,7 +4395,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Cyprus]]></field>
 			<field><![CDATA[Czech Republic]]></field>
 			<field><![CDATA[Czechoslovakia]]></field>
-			<field><![CDATA[Democratic Republic of the Congo]]></field>
 			<field><![CDATA[Denmark]]></field>
 			<field><![CDATA[Djibouti]]></field>
 			<field><![CDATA[Dominica]]></field>
@@ -4368,9 +4406,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Egypt]]></field>
 			<field><![CDATA[El Salvador]]></field>
 			<field><![CDATA[England]]></field>
-			<field><![CDATA[Equatceorial Guinea]]></field>
 			<field><![CDATA[Equatorial Guinea]]></field>
-			<field><![CDATA[Equatorial Guineal]]></field>
 			<field><![CDATA[Eritrea]]></field>
 			<field><![CDATA[Estonia]]></field>
 			<field><![CDATA[Ethiopia]]></field>
@@ -4386,7 +4422,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[France and Germany]]></field>
 			<field><![CDATA[French]]></field>
 			<field><![CDATA[French Antilles]]></field>
-			<field><![CDATA[French Equatorial Africa]]></field>
 			<field><![CDATA[French Guiana]]></field>
 			<field><![CDATA[French Overseas Territory]]></field>
 			<field><![CDATA[French Polynesia]]></field>
@@ -4487,6 +4522,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Martinique]]></field>
 			<field><![CDATA[Mauritania]]></field>
 			<field><![CDATA[Mauritius]]></field>
+			<field><![CDATA[Mayanmar]]></field>
 			<field><![CDATA[Mayenezuela]]></field>
 			<field><![CDATA[Mexico]]></field>
 			<field><![CDATA[México]]></field>
@@ -4519,7 +4555,6 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Nevis]]></field>
 			<field><![CDATA[New Britain]]></field>
 			<field><![CDATA[New Caledonia]]></field>
-			<field><![CDATA[New Grenada]]></field>
 			<field><![CDATA[New Guinea]]></field>
 			<field><![CDATA[New Hebrides]]></field>
 			<field><![CDATA[New Zealand]]></field>
@@ -4552,6 +4587,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Pitcairn Islands]]></field>
 			<field><![CDATA[Pitcarn Islands]]></field>
 			<field><![CDATA[Poland]]></field>
+			<field><![CDATA[Polynesia]]></field>
 			<field><![CDATA[Portugal]]></field>
 			<field><![CDATA[Puerto Rico]]></field>
 			<field><![CDATA[Qatar]]></field>
@@ -4661,6 +4697,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[United S2007812s]]></field>
 			<field><![CDATA[United States]]></field>
 			<field><![CDATA[United States Minor Outlying Islands]]></field>
+			<field><![CDATA[United States of America]]></field>
 			<field><![CDATA[Urubamba]]></field>
 			<field><![CDATA[Uruguay]]></field>
 			<field><![CDATA[USA]]></field>
@@ -4686,6 +4723,11 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Zaire]]></field>
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
+		</list>
+		<list alias='voucherType' caseInsensitive='true'>
+			<field><![CDATA[Voucher]]></field>
+			<field><![CDATA[Exemplar]]></field>
+			<field><![CDATA[e-Voucher]]></field>
 		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[aff.]]></field>

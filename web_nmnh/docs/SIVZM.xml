@@ -316,14 +316,6 @@ BOLD: Elevation of sampling site. Measured in meters relative to sea level. Nega
 "Elev Lat Long Label Text" = Entomology - Ted Schultz (in part),]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Extraction Date (Tissue)' uri='urn:extractionDate' group='Tissue' defined_by='urn:extractionDate'>
-			<![CDATA[ABCDDNA: date of DNA extraction
-
-DwC_Ext: Date of DNA extraction (DNA only)]]>
-			<synonyms><![CDATA["extractionDate" = DwC_Ext,
-"ExtractionDate" = ABCDDNA,]]></synonyms>
-			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
-</attribute>
 		<attribute column='Coordinate Radius (m)' uri='urn:coordinateUncertaintyInMeters' group='Georeference' defined_by='http://rs.tdwg.org/dwc/terms/#coordinateUncertaintyInMeters'>
 			<![CDATA[DwC: The horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location. Leave the value empty if the uncertainty is unknown, cannot be estimated, or is not applicable (be Example: "30" (reasonable lower limit of a GPS reading under good conditions if the actual precision was not recorded at the time), "71" (uncertainty for a UTM coordinate having 100 meter precision and a known spatial reference system). For discus http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters]]>
 			<synonyms><![CDATA["coordinateUncertaintyInMeters" = DwC,
@@ -1015,6 +1007,11 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "ObjectNature" = Botany - Acevedo,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. Required]]></dataFormat>
 </attribute>
+		<attribute column='Image' uri='urn:Image' group='Specimen' defined_by='urn:Image'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[]]></dataFormat>
+</attribute>
 		<attribute column='Specimen Count' uri='urn:individualCount' group='Specimen' defined_by='http://rs.tdwg.org/dwc/terms/#individualCount'>
 			<![CDATA[DwC: The number of individuals represented present at the time of the Occurrence. Examples: "1", "25". For discussion see http://code.google.com/p/darwincore/wiki/Occurrence http://rs.tdwg.org/dwc/terms/individualCount]]>
 			<synonyms><![CDATA["individualCount" = DwC,
@@ -1255,6 +1252,16 @@ BOLD: Male/female/hermaphrodite only.]]>
 "LifeStageSex" = Entomology - Sean Brady (part),]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
+		<attribute column='Voucher Field ID' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Voucher Type' uri='urn:VoucherType' group='Specimen' defined_by='urn:VoucherType'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Select from look-up list.]]></dataFormat>
+</attribute>
 		<attribute column='Family' uri='urn:family' group='Taxonomy' defined_by='http://rs.tdwg.org/dwc/terms/#family'>
 			<![CDATA[DwC: The full scientific name of the family in which the taxon is classified. Example: "Felidae", "Monocleaceae". For discussion see http://code.google.com/p/darwincore/wiki/Taxon http://rs.tdwg.org/dwc/terms/family
 
@@ -1316,10 +1323,31 @@ BOLD: None provided]]>
 Unsure of case on remaining systems]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
+		<attribute column='Sample Field ID' uri='urn:sampleID' group='Tissue' defined_by='urn:sampleID'>
+			<![CDATA[Biocode: (integer) unique ID = bnhm_id.tissue_num.
+
+BOLD: ID associated with the sample being sequenced (often identical to or an extension of Field or Museum ID.]]>
+			<synonyms><![CDATA["tissue_num" = Biocode Backend.Tissues,
+"Sample ID" = BOLD,]]></synonyms>
+			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
+</attribute>
+		<attribute column='Project/Unit ID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
 		<attribute column='Biorepository ID' uri='urn:biorepositoryID' group='Tissue' defined_by='urn: biorepositoryID'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Value on Biorepository ID label only]]></dataFormat>
+</attribute>
+		<attribute column='Extraction Date (Tissue)' uri='urn:extractionDate' group='Tissue' defined_by='urn:extractionDate'>
+			<![CDATA[ABCDDNA: date of DNA extraction
+
+DwC_Ext: Date of DNA extraction (DNA only)]]>
+			<synonyms><![CDATA["extractionDate" = DwC_Ext,
+"ExtractionDate" = ABCDDNA,]]></synonyms>
+			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
 		<attribute column='Genetic Sample Notes' uri='urn:geneticSampleNotes' group='Tissue' defined_by='urn:geneticSampleNotes'>
 			<![CDATA[]]>
@@ -1403,7 +1431,7 @@ MIxS: The environmental material level refers to the matter that was displaced b
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
 </attribute>
-		<attribute column='Plate' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
+		<attribute column='Plate ID' uri='urn:plateID' group='Tissue' defined_by='urn:plateID'>
 			<![CDATA[IndoPacific: A platename where the DNA extract is stored]]>
 			<synonyms><![CDATA["Plate" = Fishes,
 "Plate" = LAB Field Collection Spreadsheet,
@@ -1412,6 +1440,11 @@ MIxS: The environmental material level refers to the matter that was displaced b
 "plate_no" = Plantbarcodes.tissue,
 "Plate No." = Plantbarcodes Coll'n SS,
 "plateID" = IndoPacific Template v7,]]></synonyms>
+			<dataFormat><![CDATA[Free text]]></dataFormat>
+</attribute>
+		<attribute column='Plate Buffer' uri='urn:plateBuffer' group='Tissue' defined_by='urn:plateBuffer'>
+			<![CDATA[]]>
+			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
 		<attribute column='Genetic Sample Preservation Date' uri='urn:preservationDate' group='Tissue' defined_by='urn:preservationDate'>
@@ -1462,7 +1495,6 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='RequiredColumns' column='RequiredColumns' level='warning'>
 			<field>Genetic Sample Type Primary</field>
 			<field>Genetic Sample Type Secondary</field>
-			<field>Parent ID</field>
 			<field>Genetic Sample Preservation Medium</field>
 			<field>Genetic Sample Quality</field>
 		</rule>
@@ -1555,7 +1587,15 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='validateNumeric' column='Reproductive Part 4 Width' level='warning' value='%3E0'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Reproductive Part 4 Width' level='warning' otherColumn='Reproductive Part 4 Unit'></rule>
 		<rule type='controlledVocabulary' column='Sex' list='sex' level='warning'></rule>
+		<rule type='controlledVocabulary' column='Voucher Type' list='voucherType' level='warning'></rule>
 		<rule type='controlledVocabulary' column='Genus' list='genus' level='warning'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Sample Field ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
+		<rule type='uniqueValue' column='' level='error'></rule>
+		<rule type='requiredValueFromOtherColumn' column='Project/Unit ID' level='warning' otherColumn='Kind of Object'>
+			<field>Genetic Sample</field>
+		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Biorepository ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
@@ -1566,12 +1606,10 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Primary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Primary' list='Genetic Sample Type Primary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Secondary' level='warning' otherColumn='Parent ID'></rule>
 		<rule type='controlledVocabulary' column='Genetic Sample Type Secondary' list='Genetic Sample Type Secondary' level='warning'></rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Type Tertiary' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
@@ -1584,7 +1622,7 @@ DwC_Ext: used for both DNA and tissue]]>
 		<rule type='requiredValueFromOtherColumn' column='Parent ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
-		<rule type='requiredValueFromOtherColumn' column='Plate' level='warning' otherColumn='Kind of Object'>
+		<rule type='requiredValueFromOtherColumn' column='Plate ID' level='warning' otherColumn='Kind of Object'>
 			<field>Genetic Sample</field>
 		</rule>
 		<rule type='requiredValueFromOtherColumn' column='Genetic Sample Preservation Date' level='warning' otherColumn='Kind of Object'>
@@ -1658,6 +1696,12 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[year]]></field>
 			<field><![CDATA[years]]></field>
 		</list>
+		<list alias='phylum' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='collector' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='Specimen Count Modifier' caseInsensitive='true'>
 			<field><![CDATA[ca.]]></field>
 			<field><![CDATA[Count Not Recorded]]></field>
@@ -1671,6 +1715,9 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Valve ca.]]></field>
 			<field><![CDATA[Valve Fragment]]></field>
 		</list>
+		<list alias='order' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
 		<list alias='geodeticDatum' caseInsensitive='true'>
 			<field><![CDATA[NAD27]]></field>
 			<field><![CDATA[NAD83]]></field>
@@ -1679,6 +1726,12 @@ DwC_Ext: used for both DNA and tissue]]>
 		<list alias='latitudeNorthSouth' caseInsensitive='true'>
 			<field><![CDATA[N]]></field>
 			<field><![CDATA[S]]></field>
+		</list>
+		<list alias='Biogeography Region' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
+		</list>
+		<list alias='family' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 		</list>
 		<list alias='longitudeEastWest' caseInsensitive='true'>
 			<field><![CDATA[E]]></field>
@@ -1746,6 +1799,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Yolk]]></field>
 		</list>
 		<list alias='Identification Qualifier Rank' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Genus]]></field>
 			<field><![CDATA[Species]]></field>
 			<field><![CDATA[Subspecies]]></field>
@@ -2971,7 +3025,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Clone]]></field>
 			<field><![CDATA[DNA, RNA, Proteins]]></field>
 			<field><![CDATA[Environmental Sample]]></field>
-			<field><![CDATA[Excretion/Secretion]]></field>
+			<field><![CDATA[Excretion & Secretion]]></field>
 			<field><![CDATA[Germplasm]]></field>
 			<field><![CDATA[Tissue & Parts]]></field>
 			<field><![CDATA[Whole Organism]]></field>
@@ -3023,6 +3077,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[ton]]></field>
 		</list>
 		<list alias='Life Stage' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Adolescent]]></field>
 			<field><![CDATA[Adult]]></field>
 			<field><![CDATA[Adult/fetus]]></field>
@@ -3078,6 +3133,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Stillborn twin]]></field>
 			<field><![CDATA[Subadult]]></field>
 			<field><![CDATA[Suckling]]></field>
+			<field><![CDATA[Unknown]]></field>
 			<field><![CDATA[Yearling]]></field>
 			<field><![CDATA[Young]]></field>
 			<field><![CDATA[Young adult]]></field>
@@ -3094,6 +3150,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[young]]></field>
 		</list>
 		<list alias='genus' caseInsensitive='true'>
+			<field><![CDATA[]]></field>
 			<field><![CDATA[Abditomys]]></field>
 			<field><![CDATA[Abrawayaomys]]></field>
 			<field><![CDATA[Abrocoma]]></field>
@@ -4460,6 +4517,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Need]]></field>
 			<field><![CDATA[Neonate]]></field>
 			<field><![CDATA[Pregnant]]></field>
+			<field><![CDATA[Pregnant/Lactating]]></field>
 			<field><![CDATA[Resting]]></field>
 			<field><![CDATA[Stillborn]]></field>
 			<field><![CDATA[Subadult]]></field>
@@ -4737,6 +4795,11 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Zambia]]></field>
 			<field><![CDATA[Zimbabwe]]></field>
 		</list>
+		<list alias='voucherType' caseInsensitive='true'>
+			<field><![CDATA[Voucher]]></field>
+			<field><![CDATA[Exemplar]]></field>
+			<field><![CDATA[e-Voucher]]></field>
+		</list>
 		<list alias='identificationQualifier' caseInsensitive='true'>
 			<field><![CDATA[aff.]]></field>
 			<field><![CDATA[cf.]]></field>
@@ -4772,6 +4835,7 @@ DwC_Ext: used for both DNA and tissue]]>
 		</list>
 		<list alias='Genetic Sample Type Secondary' caseInsensitive='true'>
 			<field><![CDATA[Abdomen]]></field>
+			<field><![CDATA[Adrenal]]></field>
 			<field><![CDATA[Aerosol]]></field>
 			<field><![CDATA[Air]]></field>
 			<field><![CDATA[Anterior piece]]></field>
@@ -4791,6 +4855,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Egg]]></field>
 			<field><![CDATA[Embryo]]></field>
 			<field><![CDATA[Emulsion]]></field>
+			<field><![CDATA[Epaxial]]></field>
 			<field><![CDATA[Estuarine]]></field>
 			<field><![CDATA[Eye]]></field>
 			<field><![CDATA[Fat]]></field>
@@ -4817,11 +4882,13 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Ice]]></field>
 			<field><![CDATA[Intestine]]></field>
 			<field><![CDATA[Kidney]]></field>
+			<field><![CDATA[Larynx]]></field>
 			<field><![CDATA[Lateral piece]]></field>
 			<field><![CDATA[Leg]]></field>
 			<field><![CDATA[Liver]]></field>
 			<field><![CDATA[Lung]]></field>
 			<field><![CDATA[Lymph]]></field>
+			<field><![CDATA[Mammary]]></field>
 			<field><![CDATA[Marine benthic]]></field>
 			<field><![CDATA[Marine pelagic]]></field>
 			<field><![CDATA[Melon]]></field>
@@ -4838,6 +4905,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[nDNA]]></field>
 			<field><![CDATA[Oil]]></field>
 			<field><![CDATA[Ovaries]]></field>
+			<field><![CDATA[Pancreas]]></field>
 			<field><![CDATA[PCR amplicon]]></field>
 			<field><![CDATA[Placenta]]></field>
 			<field><![CDATA[Plant-Associated]]></field>
@@ -4859,6 +4927,7 @@ DwC_Ext: used for both DNA and tissue]]>
 			<field><![CDATA[Skin]]></field>
 			<field><![CDATA[Snow]]></field>
 			<field><![CDATA[Soil]]></field>
+			<field><![CDATA[Spermacete]]></field>
 			<field><![CDATA[Spleen]]></field>
 			<field><![CDATA[Stem cells]]></field>
 			<field><![CDATA[Stomach]]></field>
