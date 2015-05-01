@@ -5,13 +5,19 @@ import digester.Mapping;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
 import org.apache.commons.digester3.Digester;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.configurationFileFetcher;
 import run.process;
 import settings.FIMSRuntimeException;
+import settings.bcidConnector;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
@@ -27,6 +33,8 @@ import java.util.*;
 public class query {
     private static Logger logger = LoggerFactory.getLogger(query.class);
 
+    @Context
+    static HttpServletRequest request;
     @Context
     static ServletContext context;
 
@@ -289,6 +297,10 @@ public class query {
             throw new FIMSRuntimeException("ERROR: incomplete arguments", 400);
         }
 
+        if (graphs[0].equalsIgnoreCase("all")) {
+            graphs = getAllGraphs(project_id);
+        }
+
         // Create a process object here so we can look at uri/column values
         process process = getProcess(project_id);
 
@@ -323,11 +335,18 @@ public class query {
      */
     private File GETQueryResult(String graphs, Integer project_id, String filter, String format) {
         java.net.URLDecoder decoder = new java.net.URLDecoder();
+        String[] graphsArray;
 
         try {
             graphs = URLDecoder.decode(graphs, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             logger.warn("UnsupportedEncodingException", e);
+        }
+
+        if (graphs.equalsIgnoreCase("all")) {
+            graphsArray = getAllGraphs(project_id);
+        } else {
+            graphsArray = graphs.split(",");
         }
 
         process p = getProcess(project_id);
@@ -341,10 +360,29 @@ public class query {
             arrayList.add(filterCondition);
 
             // Run the query
-            return new File(p.query(graphs, format, arrayList));
+            return new File(p.query(graphsArray, format, arrayList));
         } else {
-            return new File(p.query(graphs, format, null));
+            return new File(p.query(graphsArray, format, null));
         }
+    }
+
+    private String[] getAllGraphs(Integer project_id) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+        List<String> graphs = new ArrayList<String>();
+
+        JSONObject response = ((JSONObject) JSONValue.parse(bcidConnector.getGraphs(project_id)));
+        JSONArray jArray = ((JSONArray) response.get("data"));
+        Iterator it = jArray.iterator();
+
+        while (it.hasNext()) {
+            JSONObject obj = (JSONObject) it.next();
+            graphs.add((String) obj.get("graph"));
+        }
+
+        return graphs.toArray(new String[graphs.size()]);
     }
 
     private process getProcess(Integer project_id) {

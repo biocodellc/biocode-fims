@@ -361,9 +361,9 @@ public class process {
      * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
      * fetching results
      */
-    public String query(String graphs, String format, ArrayList<fimsFilterCondition> filter) {
+    public String query(String[] graphs, String format, ArrayList<fimsFilterCondition> filter) {
         // Build the Query Object by passing this object and an array of graph objects, separated by commas
-        fimsQueryBuilder q = new fimsQueryBuilder(this, graphs.split(","), outputFolder);
+        fimsQueryBuilder q = new fimsQueryBuilder(this, graphs, outputFolder);
         // Add our filter conditions
         q.addFilter(filter);
         // Run the query, passing in a format and returning the location of the output file
@@ -665,7 +665,7 @@ public class process {
 
                 //p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
                 // TODO: construct filter statements from arguments passed in on command-line
-                System.out.println(p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), null));
+                System.out.println(p.query(cl.getOptionValue("q").split(","), cl.getOptionValue("f"), null));
 
             }
             /*
