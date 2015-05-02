@@ -39,9 +39,9 @@ public class query {
     static ServletContext context;
 
     /**
-     * Return JSON for a graph query
+     * Return JSON for a graph query.
      *
-     * @param graphs indicate a comma-separated list of graphs
+     * @param graphs indicate a comma-separated list of graphs, or all
      * @return
      */
     @GET
@@ -100,7 +100,7 @@ public class query {
      * Return KML for a graph query using POST
      * filter is just a single value to filter the entire dataset
      *
-     * @param graphs indicate a comma-separated list of graphs
+     * @param graphs indicate a comma-separated list of graphs, or all
      * @return
      */
     @GET
@@ -166,7 +166,7 @@ public class query {
      * Return KML for a graph query using POST
      * filter is just a single value to filter the entire dataset
      *
-     * @param graphs indicate a comma-separated list of graphs
+     * @param graphs indicate a comma-separated list of graphs, or all
      * @return
      */
     @GET
@@ -198,7 +198,7 @@ public class query {
     /**
      * Return Excel for a graph query.  The GET query runs a simple FILTER query for any term
      *
-     * @param graphs indicate a comma-separated list of graphs
+     * @param graphs indicate a comma-separated list of graphs, or all
      * @return
      */
     @GET
@@ -230,6 +230,7 @@ public class query {
      * filter parameters are of the form:
      * name={URI} value={filter value}
      *
+     * 
      * @return
      */
     @POST
