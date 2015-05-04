@@ -40,7 +40,7 @@
                                 <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
                                 <li><a id="logout" href="/biocode-fims/rest/authenticationService/logout/">Logout</a></li>
                         </c:if>
-                        <li><a href="https://code.google.com/p/biocode-fims/">Help</a></li>
+                        <li><a href="https://github.com/biocodellc/biocode-fims/wiki/WebVersion">Help</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>

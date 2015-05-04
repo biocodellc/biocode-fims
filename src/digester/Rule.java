@@ -1530,7 +1530,8 @@ public class Rule {
 
         if (it != null) {
             while (it.hasNext()) {
-                String field = (String) it.next();
+                String field = ((Field) it.next()).getValue();
+                //String field = (String) it.next();
                 output.append("\t\t\t<li>" + field + "</li>\n");
             }
         }
