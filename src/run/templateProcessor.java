@@ -642,7 +642,8 @@ public class templateProcessor {
                     System.out.println("dataFormat: " + a.getDataFormat());
                     */
 
-                    if (a.getColumn().equals(columnName)) {
+                    if (a.getColumn().replace("_"," ").equals(columnName) ||
+                            a.getColumn().equals(columnName)) {
                         row = dataFieldsSheet.createRow(rowNum++);
 
                         // Column Name
@@ -1029,7 +1030,8 @@ public class templateProcessor {
      */
     public static void main(String[] args) {
         // File configFile = new configurationFileFetcher(1, "tripleOutput", false).getOutputFile();
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml");
+        //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml");
+        File file = new File("/Users/jdeck/Downloads/ucjeps_fims.xml");
         //templateProcessor t1 = new templateProcessor(file,"tripleOutput",false,12345,"DEMO4","ark:/99999/fk2");
 
         //System.out.println(t1.definition("hdimNumber"));
@@ -1046,17 +1048,9 @@ public class templateProcessor {
         //System.out.println(t.printCheckboxes());
 
         ArrayList<String> a = new ArrayList<String>();
-        a.add("Phase");
-        a.add("Cultivated");
-        a.add("Continent");
-        a.add("Habit");
-        a.add("Family");
-        a.add("Kind of Object");
-        a.add("Genetic Sample Type Primary");
-        a.add("Measurement 1 Unit");
-        a.add("Associated Multimedia");
-        a.add("Collector 1 (Primary)");
-
+        a.add("Locality");
+        a.add("ScientificName");
+        a.add("Coll_Num");
 
         File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
         System.out.println(outputFile.getAbsoluteFile().toString());
