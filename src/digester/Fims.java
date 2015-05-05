@@ -68,9 +68,9 @@ public class Fims implements RendererInterface {
 
         bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID());
         // Create the BCID to use for upload service
-        String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
-        status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";
-        status1 += "\tDataset resolution at http://n2t.net/" + bcid + "\n";
+        //String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
+        //status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";
+        String status1 = "\n\nDataset Identifier: http://n2t.net/" + bcid + " (wait 15 minutes for resolution to become active)\n";
 
         processController.appendStatus(status1);
         // Inform cmd line users

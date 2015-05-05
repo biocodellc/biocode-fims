@@ -617,9 +617,9 @@ public class templateProcessor {
         cell.setCellStyle(headingStyle);
         cell.setCellValue("Synonyms");
 
-
         // Must loop entities first
         while (fieldsIt.hasNext()) {
+            // Generally, treat column Names with underscores or not, replacing spaces
             String columnName = fieldsIt.next().toString().replace("_", " ");
             LinkedList<Entity> entities = mapping.getEntities();
             Iterator entitiesIt = entities.iterator();
@@ -634,14 +634,8 @@ public class templateProcessor {
 
                     Attribute a = (Attribute) attributesIt.next();
 
-                    /*    System.out.println("************************************");
-                    System.out.println(a.getColumn());
-                    System.out.println("************************************");
-                    System.out.println("definition: " + a.getDefinition());
-                    System.out.println("synonyms: " + a.getSynonyms());
-                    System.out.println("dataFormat: " + a.getDataFormat());
-                    */
-
+                    // Some XML configuration files allow spaces in column Names... here we search for
+                    // matching column names with or without spaces, replaced by underscores
                     if (a.getColumn().replace("_"," ").equals(columnName) ||
                             a.getColumn().equals(columnName)) {
                         row = dataFieldsSheet.createRow(rowNum++);
