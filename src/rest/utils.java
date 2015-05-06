@@ -239,8 +239,15 @@ public class utils {
                 .build();
     }
 
-    static String uploadpath() {
-        return context.getRealPath("tripleOutput") + File.separator;
+    @GET
+    @Path("/getNAAN")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNAAN() {
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+        String naan = sm.retrieveValue("naan");
+
+        return Response.ok("{\"naan\": \"" + naan + "\"}").build();
     }
 }
 
