@@ -1,6 +1,3 @@
-// Must set global variable naan here to check a spreadsheet's naan
-var naan = 21547
-
 // Function to display a simple list in a message
 function list(url) {
     $.ajax({
@@ -561,6 +558,25 @@ function uploadResults(data) {
     }
 }
 
+// function to verify naan's
+function checkNAAN(spreadsheetNaan, naan) {
+    if (spreadsheetNaan != naan) {
+        var buttons = {
+            "Ok": function() {
+            $("#dialogContainer").removeClass("error");
+            $(this).dialog("close");
+            }
+        }
+        var message = "Spreadsheet appears to have been created using a different FIMS/BCID system.<br>";
+        message += "Spreadsheet says NAAN = " + spreadsheetNaan + "<br>";
+        message += "System says NAAN = " + naan + "<br>";
+        message += "Proceed only if you are SURE that this spreadsheet is being called.<br>";
+        message += "Otherwise, re-load the proper FIMS system or re-generate your spreadsheet template.";
+
+        dialog(message, "NAAN check", buttons);
+    }
+}
+
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
@@ -570,21 +586,10 @@ function validationFormToggle() {
         // Check NAAN
         $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
-                if (spreadsheetNaan != naan) {
-			    var buttons = {
-            			"Ok": function() {
-                		$("#dialogContainer").removeClass("error");
-                		$(this).dialog("close");
-            			}
-        		}
-			    var message = "Spreadsheet appears to have been created using a different FIMS/BCID system.<br>";
-			    message += "Spreadsheet says NAAN = " + spreadsheetNaan + "<br>";
-			    message += "System says NAAN = " + naan + "<br>";
-			    message += "Proceed only if you are SURE that this spreadsheet is being called.<br>";
-			    message += "Otherwise, re-load the proper FIMS system or re-generate your spreadsheet template.";
-
-                dialog(message, "NAAN check", buttons);
-                }
+                $.getJSON("rest/utils/getNAAN")
+                        .done(function(data) {
+                    checkNAAN(spreadsheetNaan, data.naan);
+                });
             }
         });
 
