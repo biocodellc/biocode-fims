@@ -9,7 +9,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/fims/index.jsp">NMNH Field Information Management System (FIMS)</a>
+                <a class="navbar-brand" href="/fims/index.jsp">NMNH Field Information Management System (FIMS)
+		<% if ((request.getLocalAddr().equals("160.111.247.228"))) { %>
+			<% if ((request.getLocalPort == 8179)) { %>
+ 				- <b>DEVELOPMENT ENVIRONMENT</b>
+			<% } else { %>
+ 				- <b>TRAINING ENVIRONMENT</b>
+			<% } %>
+		<% } %>
+		</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
