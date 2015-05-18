@@ -14,6 +14,7 @@ public class Attribute implements Comparable {
 
     private String group;
     private String column;
+    private String column_internal;
     private String uri;
     private String defined_by;
     private String datatype = "string";  // string is default type
@@ -29,6 +30,14 @@ public class Attribute implements Comparable {
 
     public void setColumn(String column) {
         this.column = column;
+    }
+
+    public String getColumn_internal() {
+        return column_internal;
+    }
+
+    public void setColumn_internal(String column) {
+        this.column_internal = column_internal;
     }
 
     public String getDelimited_by() {
