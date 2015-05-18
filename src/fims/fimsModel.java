@@ -1,22 +1,31 @@
 package fims;
 
 import com.hp.hpl.jena.rdf.model.*;
+import digester.Attribute;
+import digester.Mapping;
 import digester.QueryWriter;
 import digester.Validation;
 import org.apache.poi.ss.usermodel.Row;
 import run.processController;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
- * Model representing FIMS
+ * Model representing FIMS object.
+ * The model is refined somewhat by ONLY the currently definated attributes in the XML configuration file that
+ * is defined.  That is, anything previously defined and then NOT defined will not be displayed here.
+ * Understanding this is CRUCIALLY important and stated elsewhere in the documentation that one should never toss,
+ * change, or otherwise muck with URIs
  */
 public class fimsModel {
+    // A list of the Attribute URIs contained in the configuration file
+    ArrayList<String> configurationFileAttributeURIs;
+
     Model model;
-    //Property rowLabelProperty;
-    //String rowLabelProperty = "rdfs:Label";
-    //String rowClass = "http://www.w3.org/2000/01/rdf-schema#Resource";
+
 
     String type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
     String depends_on = "http://biscicol.org/terms/index.html#depends_on";
@@ -28,9 +37,16 @@ public class fimsModel {
 
     StringBuilder stringBuilder = new StringBuilder();
 
-    public fimsModel(Model model, QueryWriter queryWriter) {
+    public fimsModel(Model model, QueryWriter queryWriter, Mapping mapping) {
         this.model = model;
         this.queryWriter = queryWriter;
+
+        Iterator attributesIt = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
+        configurationFileAttributeURIs = new ArrayList<String>();
+        while (attributesIt.hasNext()) {
+            Attribute a = (Attribute) attributesIt.next();
+            configurationFileAttributeURIs.add(a.getUri());
+        }
 
     }
 
@@ -53,12 +69,18 @@ public class fimsModel {
     public void readRows(String resource) {
         RDFNode n = model.createResource(model.expandPrefix(resource));
         SimpleSelector selector = new SimpleSelector(null, null, n);
+
+
         StmtIterator i = model.listStatements(selector);
         while (i.hasNext()) {
             Statement s = i.next();
             // Create a row object here, so when we related objects, properties below we can write it out
             row = queryWriter.createRow(countRows);
+
             listProperties(s.getSubject());
+
+            //System.out.println(s.getPredicate() + s.getObject().toString() + " " + s.getSubject());
+
             // Loop each subject, TODO: expand to all BiSciCol relations
             loopObjects(getRelations(s.getSubject()));
             countRows++;
@@ -107,7 +129,7 @@ public class fimsModel {
     }
 
     /**
-     * List the properties we want to display
+     * List the properties for display, based on the properties as defined in the configuration XML file
      *
      * @param resource
      */
@@ -120,19 +142,22 @@ public class fimsModel {
             if (count == 0) {
                      queryWriter.createCell(row, "BCID", s.getSubject().toString());
             }
+
+           // System.out.println(s.getSubject() + " "  + s.getPredicate().toString() + " " + s.getObject());
+
             // Print just the predicates we care about
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {
                 // Don't want local name to be null
                 if (s.getPredicate().getLocalName() != null &&
-                      !s.getPredicate().getLocalName().equals("null")  ) {
-                    queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+                      !s.getPredicate().getLocalName().equals("null")
+                        ) {
+
+                    // Filter predicates based on Attributes contained in the Configuration File
+                    if (    configurationFileAttributeURIs.contains(s.getPredicate().toString())) {
+                        queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+                    }
                 }
             }
-            /*
-             if (s.getPredicate().equals(getProperty("urn:basisOfIdentification"))) {
-                queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
-            }
-            */
         }
         stmtIterator.close();
     }
@@ -146,7 +171,9 @@ public class fimsModel {
     public StmtIterator getRelations(Resource subject) {
         RDFNode node = model.createResource(model.expandPrefix(subject.asNode().toString()));
         SimpleSelector selector = new SimpleSelector(null, null, node);
+
         return model.listStatements(selector);
+
     }
 
     /**

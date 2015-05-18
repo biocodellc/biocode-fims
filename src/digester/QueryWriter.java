@@ -155,6 +155,9 @@ public class QueryWriter {
                 // For now, do nothing.
             }
         }
+
+
+
         Cell cell = row.createCell(getColumnPosition(colName));
 
         // Set the value conditionally, we can specify datatypes in the configuration file so interpret them

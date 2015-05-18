@@ -139,7 +139,8 @@ public class Fims implements RendererInterface {
         // Construct the FIMS model
         fimsModel fimsModel = new fimsModel(
                 model,
-                queryWriter);
+                queryWriter,
+                mapping);
 
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");

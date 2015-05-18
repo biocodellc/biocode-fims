@@ -8,11 +8,15 @@ import digester.Mapping;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import run.configurationFileFetcher;
 import run.process;
 import run.processController;
 import settings.FIMSException;
 import settings.PathManager;
+import settings.bcidConnector;
 
 import java.io.File;
 import java.net.URI;
@@ -51,7 +55,7 @@ public class fimsQueryBuilder {
         process.addValidationRules(new Digester(), validation);
 
         // Build FIMS object
-        fims = new Fims(mapping,validation);
+        fims = new Fims(mapping, validation);
         process.addFimsRules(new Digester(), fims);
 
         // Build the "query" location for SPARQL queries
@@ -95,8 +99,17 @@ public class fimsQueryBuilder {
                 "WHERE {\n" +
                 //" { SELECT ?p WHERE {?s ?p ?o FILTER (?p = <urn:geneticTissueType>)}} \n" +
                 "   ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> . \n" +
-                "   ?s ?p ?o .\n" +
+                "   ?s ?p ?o;\n" +
+                //"      <urn:family> ?o2 .\n" +
+                //"      <urn:genus> ?o3 . \n" +
+
+                // buildPropertiesListUsing UNIONS
+                // This next step is SLOW for many graphs (approach being many unions)
+                //buildPropertyLists() +
+
                 //"   ?s <urn:geneticTissueType> ?o . \n" +
+
+                // This next step is SLOW for many graphs
                 buildFilterStatements() +
                 //"   FILTER (?p = <urn:geneticTissueType>)\n" +
                 "}";
@@ -125,6 +138,24 @@ public class fimsQueryBuilder {
     }
 
     /**
+     * Build a list of properties that match the declared syntax in the current XML configuration file
+     * @return
+     */
+    private String buildPropertyLists() {
+        ArrayList<Attribute> attributes = mapping.getAllAttributes(mapping.getDefaultSheetName());
+        Iterator attributesIt = attributes.iterator();
+        StringBuilder sb = new StringBuilder();
+        while (attributesIt.hasNext()) {
+            Attribute attribute = (Attribute)attributesIt.next();
+            sb.append("{?s <" + attribute.getUri() + "> ?o }");
+            if (attributesIt.hasNext()) {
+                sb.append (" UNION ");
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
      * Take the filter statements that the user has specified and put them together to form the portion of the SPARQL
      * statement that asks particular questions of the data.
      *
@@ -138,10 +169,10 @@ public class fimsQueryBuilder {
 
             // The fimsFilterCondition uriProperty corresponds to the uri value in the configuration file
             if (f.uriProperty == null) {
-                 if (f.value != null) {
-                     sb.append("\t?s ?propertyFilter ?objectFilter . \n");
+                if (f.value != null) {
+                    sb.append("\t?s ?propertyFilter ?objectFilter . \n");
                     sb.append("\tFILTER regex(?objectFilter,\"" + f.value + "\") . \n");
-                 }
+                }
             } else {
                 if (f.value != null) {
                     sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
@@ -203,6 +234,7 @@ public class fimsQueryBuilder {
      * formats.
      *
      * @param format
+     *
      * @return
      */
     public String run(String format) {
@@ -253,20 +285,39 @@ public class fimsQueryBuilder {
                 file
         );
 
+        /*
+        SELECT ?s ?p ?o
+         FROM <urn:uuid:e22c08ae-1da5-44e9-8d43-674b5dbd3897>
+         FROM <urn:uuid:be684543-fac4-4cb3-b831-0347809d1a32>
+        WHERE {
+           ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> .
+           ?s ?p ?o .
+          {?s <urn:collectedBy> ?o }
+          UNION
+          {?s <urn:genus> ?o }
+        UNION
+          {?s <urn:family> ?o }
+         */
         // Construct an array of graphs
-        String[] graphArray = new String[2];
+        /*String[] graphArray = new String[2];
         //graphArray[0] = "urn:uuid:c4cc9f83-5338-48d7-8f92-9bd23802ae7f";
         //graphArray[1] = "urn:uuid:0fe114da-07c9-4f50-8a0d-743b7d456dfc";
         //graphArray[0] = "urn:uuid:ded8e057-75b9-4e42-a74d-c711762d757b";
         graphArray[0] = "urn:uuid:70c8f3b9-e3e7-4c02-92d3-b1577b422bc5";
+        */
 
         // Build the query Object
-        fimsQueryBuilder q = new fimsQueryBuilder(p, graphArray, output_directory);
+        // fimsQueryBuilder q = new fimsQueryBuilder(p, graphArray, output_directory);
+
+        fimsQueryBuilder q = new fimsQueryBuilder(p, getAllGraphs(5), output_directory);
 
         // Add filter conditions to the object
         //q.addFilter(new fimsFilterCondition(new URI("urn:phylum"), "Echinodermata", fimsFilterCondition.AND));
         //q.addFilter(new fimsFilterCondition(new URI("urn:materialSampleID"), "IN0123.01", fimsFilterCondition.AND));
-        q.addFilter(new fimsFilterCondition(null, "IN0123.01", fimsFilterCondition.AND));
+
+
+        //q.addFilter(new fimsFilterCondition(null, "IN0123.01", fimsFilterCondition.AND));
+
         // TODO: clean up the filter conditions here to handle all cases
         //q.addFilter(new fimsFilterCondition(null, "10", fimsFilterCondition.AND));
 
@@ -276,6 +327,26 @@ public class fimsQueryBuilder {
 
         // Print out the file location
         System.out.println("File location: " + outputFileLocation);
+    }
+
+    /**
+     * Get a list of all graphs
+     * @param project_id
+     * @return
+     */
+    private static String[] getAllGraphs(int project_id) {
+        bcidConnector connector = new bcidConnector();
+        ArrayList<String> graphs = new ArrayList<String>();
+        JSONObject response = ((JSONObject) JSONValue.parse(connector.getGraphs(project_id)));
+        JSONArray jArray = ((JSONArray) response.get("data"));
+        Iterator it = jArray.iterator();
+
+        while (it.hasNext()) {
+            JSONObject obj = (JSONObject) it.next();
+            graphs.add((String) obj.get("graph"));
+        }
+
+        return graphs.toArray(new String[graphs.size()]);
     }
 
 
