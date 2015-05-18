@@ -24,7 +24,7 @@ public class siConverter {
     static Sheet ListsSheet;
     static Sheet PreparationsSheet;
 
-
+    static Integer columnInternalIndex;
     static Integer columnIndex;
     static Integer definitionIndex;
     static Integer validationFormatAndValuesIndex;
@@ -137,6 +137,7 @@ public class siConverter {
                             value.equalsIgnoreCase("d"))) {
 
                 String column = row.getCell(columnIndex).toString();
+                String columnInternal = row.getCell(columnInternalIndex).toString();
                 String definition = row.getCell(definitionIndex).toString();
                 String synonyms = row.getCell(synonymIndex).toString();
                 String dataFormat = row.getCell(validationFormatAndValuesIndex).toString();
@@ -173,6 +174,7 @@ public class siConverter {
 
                 sb.append("\t\t<attribute ");
                 sb.append("column='" + column + "' ");
+                sb.append("column_internal='" + columnInternal + "' ");
                 sb.append("uri='" + uri + "' ");
                 sb.append("group='" + group + "' ");
                 sb.append("defined_by='" + defined_by + "'>\n");
@@ -366,6 +368,7 @@ public class siConverter {
         System.err.println("Need to reed entityWorksheetKey from spreadsheet itself (it is hardcoded here)");
         init();
 
+        columnInternalIndex = getColumnIndex("Primary Field Name");
         columnIndex = getColumnIndex("EMu Field Label (Vernacular)");
         definitionIndex = getColumnIndex("Definitions");
         synonymIndex = getColumnIndex("Synonyms");
