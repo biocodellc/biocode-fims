@@ -55,6 +55,9 @@ public class templateProcessor {
     String dataFieldsSheetName = "Data Fields";
     String listsSheetName = "Lists";
 
+    private static String warningMsg = "The value you entered is not from the recommended list. This will create a warning upon validation.";
+    private static String errorMsg = "The value you entered is not from the recommended list. This will create an error upon validation.";
+
     static File configFile = null;
     Integer project_id;
     private String username = null;
@@ -508,6 +511,21 @@ public class templateProcessor {
                 // An arrayList of columnNames in the default sheet that this list should be applied to
                 ArrayList<String> columnNames = validationWorksheet.getColumnsForList(list.getAlias());
 
+                // Determine if the list will throw a warning or an error message upon validation
+                List<Rule> rules = validationWorksheet.getRules();
+                Boolean errorLevel = false;
+                Iterator rulesIt = rules.iterator();
+
+                while (rulesIt.hasNext()) {
+                    Rule r = (Rule) rulesIt.next();
+                    if (r.getList() != null && r.getList().equalsIgnoreCase(list.getAlias())) {
+                        if (r.getLevel().equalsIgnoreCase("warning")) {
+                            errorLevel = true;
+                        }
+                    }
+                }
+
+
                 Iterator columnNamesIt = columnNames.iterator();
                 // Loop all of the columnNames
                 while (columnNamesIt.hasNext()) {
@@ -538,6 +556,15 @@ public class templateProcessor {
                         // Data validation styling
                         dataValidation.setSuppressDropDownArrow(true);
                         dataValidation.setShowErrorBox(true);
+
+                        // Give the user the appropriate data validation error msg, depending upon the rules error level
+                        if (errorLevel) {
+                            dataValidation.createErrorBox("Data Validation Error", errorMsg);
+                            dataValidation.setErrorStyle(DataValidation.ErrorStyle.WARNING);
+                        } else {
+                            dataValidation.createErrorBox("Data Validation Warning", warningMsg);
+                            dataValidation.setErrorStyle(DataValidation.ErrorStyle.INFO);
+                        }
 
                         // Add the validation to the defaultsheet
                         defaultSheet.addValidationData(dataValidation);
