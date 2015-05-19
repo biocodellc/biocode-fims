@@ -117,15 +117,7 @@ public class Fims implements RendererInterface {
     /**
      * Create a fimsModel to store the results from this query
      */
-    public fimsModel getFIMSModel(Model model) {
-       /*
-        com.hp.hpl.jena.rdf.model.Resource r = model.getResource("ark:/21547/Hz2F9198780");
-        StmtIterator s = r.listProperties();
-        while (s.hasNext()) {
-            Statement st = s.nextStatement();
-            System.out.println(st.getSubject().toString() + " " + st.getPredicate().toString() + " "+ st.getObject().toString());
-        }
-        */
+    public fimsModel getFIMSModel(Model model, boolean getOnlySpecifiedProperties) {
 
         // Set the default sheetname
         String sheetname = mapping.getDefaultSheetName();
@@ -140,7 +132,8 @@ public class Fims implements RendererInterface {
         fimsModel fimsModel = new fimsModel(
                 model,
                 queryWriter,
-                mapping);
+                mapping,
+                getOnlySpecifiedProperties);
 
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");

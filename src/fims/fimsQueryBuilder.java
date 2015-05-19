@@ -13,20 +13,25 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import run.configurationFileFetcher;
 import run.process;
-import run.processController;
-import settings.FIMSException;
 import settings.PathManager;
 import settings.bcidConnector;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 /**
- * Class for testing queries using ARQ/Sparql
+ * Class for building queries against FIMS database
+ *
+ * The FIMS database is a fuseki triplestore composed of many small graphs, grouped by project.
+ *
+ * The order of operations for querying the FIMS database looks like this:
+ *
+ * 1. Do a simple (?s ?p ?o) query of all graphs of a specified set and return a Model
+ * 2. Query the returned model and run filter statements on it.
+ * 3. Loop through specified properties (or not) and call the fimsModel (using Excel data structure)
+ *
+ * This approach is actually MORE efficient than using just one SPARQL query on multiple graphs.
  */
 public class fimsQueryBuilder {
     String graphArray[];
@@ -36,9 +41,11 @@ public class fimsQueryBuilder {
     run.process process;
     String sparqlServer;
     String output_directory;// = System.getProperty("user.dir") + File.separator + "tripleOutput";
+
+    // Hold all the available attributes we want to look at
     ArrayList<Attribute> attributesArrayList;
 
-
+     // ArrayList of filter conditions
     private ArrayList<fimsFilterCondition> filterArrayList = new ArrayList<fimsFilterCondition>();
 
     public fimsQueryBuilder(run.process process, String[] graphArray, String output_directory) {
@@ -86,73 +93,47 @@ public class fimsQueryBuilder {
             filterArrayList.addAll(f);
     }
 
+
     /**
-     * Build the model by using the CONSTRUCT statement.  This is the section where we put the SPARQL query
-     * together.
+     * Query a Model and  pass in Filter conditions and then return another model with those conditions applied
+     * @param model
+     * @return
+     */
+    public Model getFilteredModel(Model model) {
+        String queryString = "CONSTRUCT {?s ?p ?o} \n" +
+                        //buildFromStatement() +
+                        "WHERE {\n" +
+                        "   ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> . \n" +
+                        "   ?s ?p ?o . \n" +
+                        buildFilterStatements() +
+                        "}";
+
+                System.out.println(queryString);
+                QueryExecution qexec = QueryExecutionFactory.create(queryString, model);
+                Model outputModel = qexec.execConstruct();
+
+                qexec.close();
+                return outputModel;
+    }
+
+    /**
+     * Build the model by using the CONSTRUCT statement
      *
      * @return
      */
     public Model getModel() {
         String queryString = "CONSTRUCT {?s ?p ?o} \n" +
-                // String queryString = "DESCRIBE ?s ?p ?o \n" +
                 buildFromStatement() +
                 "WHERE {\n" +
-                //" { SELECT ?p WHERE {?s ?p ?o FILTER (?p = <urn:geneticTissueType>)}} \n" +
                 "   ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> . \n" +
-                "   ?s ?p ?o;\n" +
-                //"      <urn:family> ?o2 .\n" +
-                //"      <urn:genus> ?o3 . \n" +
-
-                // buildPropertiesListUsing UNIONS
-                // This next step is SLOW for many graphs (approach being many unions)
-                //buildPropertyLists() +
-
-                //"   ?s <urn:geneticTissueType> ?o . \n" +
-
-                // This next step is SLOW for many graphs
-                buildFilterStatements() +
-                //"   FILTER (?p = <urn:geneticTissueType>)\n" +
+                "   ?s ?p ?o . \n" +
                 "}";
 
         System.out.println(queryString);
-
         QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlServer, queryString);
-
         Model model = qexec.execConstruct();
-        /*
-        // Declare equivalencies
-        Model infModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
-        Property predicate = infModel.createProperty("http://www.w3.org/2002/07/owl#equivalentProperty");
-        Resource subject = infModel.createResource("http://rs.tdwg.org/dwc/terms/materialSampleID");
-        Resource object = ResourceFactory.createResource("http://rs.tdwg.org/dwc/terms/MaterialSampleID");
-        subject.addProperty( predicate,object);
-
-        infModel.add(model);
-        //model.add(infModel);
-
-        model = infModel;
-        */
         qexec.close();
-
         return model;
-    }
-
-    /**
-     * Build a list of properties that match the declared syntax in the current XML configuration file
-     * @return
-     */
-    private String buildPropertyLists() {
-        ArrayList<Attribute> attributes = mapping.getAllAttributes(mapping.getDefaultSheetName());
-        Iterator attributesIt = attributes.iterator();
-        StringBuilder sb = new StringBuilder();
-        while (attributesIt.hasNext()) {
-            Attribute attribute = (Attribute)attributesIt.next();
-            sb.append("{?s <" + attribute.getUri() + "> ?o }");
-            if (attributesIt.hasNext()) {
-                sb.append (" UNION ");
-            }
-        }
-        return sb.toString();
     }
 
     /**
@@ -164,21 +145,22 @@ public class fimsQueryBuilder {
     private String buildFilterStatements() {
         StringBuilder sb = new StringBuilder();
         Iterator filterArrayListIt = filterArrayList.iterator();
+        int count = 1;
         while (filterArrayListIt.hasNext()) {
             fimsFilterCondition f = (fimsFilterCondition) filterArrayListIt.next();
 
             // The fimsFilterCondition uriProperty corresponds to the uri value in the configuration file
             if (f.uriProperty == null) {
                 if (f.value != null) {
-                    sb.append("\t?s ?propertyFilter ?objectFilter . \n");
-                    sb.append("\tFILTER regex(?objectFilter,\"" + f.value + "\") . \n");
+                    sb.append("\t?s ?propertyFilter" + count + " ?objectFilter" + count + " . \n");
+                    sb.append("\tFILTER regex(?objectFilter" + count +",\"" + f.value + "\") . \n");
                 }
             } else {
                 if (f.value != null) {
                     sb.append("\t?s <" + f.uriProperty.toString() + "> \"" + f.value + "\" .\n");
                 }
             }
-
+            count++;
             // TODO: the current filter statement only builds AND conditions, need to account for OR and NOT
         }
         return sb.toString();
@@ -242,8 +224,18 @@ public class fimsQueryBuilder {
         fimsModel fimsModel = null;
         String outputPath;
 
-        // Construct a  fimsModel
-        fimsModel = fims.getFIMSModel(getModel());
+
+        /* Set the flag of whether to look at only specified properties (from configuration file)
+        when returning data or filtering */
+        boolean getOnlySpecifiedProperties = true;
+
+        // Construct a fimsModel, wrapping a filtered model around a model only when necessary
+        if (filterArrayList.size() > 0) {
+            fimsModel = fims.getFIMSModel(getFilteredModel(getModel()),getOnlySpecifiedProperties);
+        } else {
+            fimsModel = fims.getFIMSModel(getModel(),getOnlySpecifiedProperties);
+        }
+
         if (format.equals("model"))
             return fimsModel.model.toString();
         if (format == null)
@@ -285,30 +277,9 @@ public class fimsQueryBuilder {
                 file
         );
 
-        /*
-        SELECT ?s ?p ?o
-         FROM <urn:uuid:e22c08ae-1da5-44e9-8d43-674b5dbd3897>
-         FROM <urn:uuid:be684543-fac4-4cb3-b831-0347809d1a32>
-        WHERE {
-           ?s a <http://www.w3.org/2000/01/rdf-schema#Resource> .
-           ?s ?p ?o .
-          {?s <urn:collectedBy> ?o }
-          UNION
-          {?s <urn:genus> ?o }
-        UNION
-          {?s <urn:family> ?o }
-         */
-        // Construct an array of graphs
-        /*String[] graphArray = new String[2];
-        //graphArray[0] = "urn:uuid:c4cc9f83-5338-48d7-8f92-9bd23802ae7f";
-        //graphArray[1] = "urn:uuid:0fe114da-07c9-4f50-8a0d-743b7d456dfc";
-        //graphArray[0] = "urn:uuid:ded8e057-75b9-4e42-a74d-c711762d757b";
-        graphArray[0] = "urn:uuid:70c8f3b9-e3e7-4c02-92d3-b1577b422bc5";
-        */
 
         // Build the query Object
         // fimsQueryBuilder q = new fimsQueryBuilder(p, graphArray, output_directory);
-
         fimsQueryBuilder q = new fimsQueryBuilder(p, getAllGraphs(5), output_directory);
 
         // Add filter conditions to the object
@@ -316,14 +287,18 @@ public class fimsQueryBuilder {
         //q.addFilter(new fimsFilterCondition(new URI("urn:materialSampleID"), "IN0123.01", fimsFilterCondition.AND));
 
 
-        //q.addFilter(new fimsFilterCondition(null, "IN0123.01", fimsFilterCondition.AND));
+        q.addFilter(new fimsFilterCondition(null, "Magnoliophyta", fimsFilterCondition.AND));
+        //q.addFilter(new fimsFilterCondition(null, "Kimana", fimsFilterCondition.AND));
+
 
         // TODO: clean up the filter conditions here to handle all cases
         //q.addFilter(new fimsFilterCondition(null, "10", fimsFilterCondition.AND));
 
+        //fimsModel fimsModel = new fimsModel(q.getModel());
+
 
         // Run the query and specify the output format
-        String outputFileLocation = q.run("excel");
+        String outputFileLocation = q.run("json");
 
         // Print out the file location
         System.out.println("File location: " + outputFileLocation);

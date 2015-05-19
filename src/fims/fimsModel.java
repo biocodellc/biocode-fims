@@ -4,17 +4,19 @@ import com.hp.hpl.jena.rdf.model.*;
 import digester.Attribute;
 import digester.Mapping;
 import digester.QueryWriter;
-import digester.Validation;
 import org.apache.poi.ss.usermodel.Row;
-import run.processController;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
- * Model representing FIMS object.
+ * Model representing FIMS object.   The data structure we start with in fimsModel is a Jena/ARQ Model and
+ * the structure we end up with is an Apache POI sheet, useful for building other types of return statements.
+ * This is an extremely useful way of working with data and converting to other structures, but it DOES place a
+ * theoretical limit on the number of distinct records in a particular project.  Enabling much larger projects
+ * by using indexes and some kind of document storage engine is on our list of things to make happen.
+ *
  * The model is refined somewhat by ONLY the currently definated attributes in the XML configuration file that
  * is defined.  That is, anything previously defined and then NOT defined will not be displayed here.
  * Understanding this is CRUCIALLY important and stated elsewhere in the documentation that one should never toss,
@@ -26,7 +28,6 @@ public class fimsModel {
 
     Model model;
 
-
     String type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
     String depends_on = "http://biscicol.org/terms/index.html#depends_on";
     int depth = 1;
@@ -37,9 +38,19 @@ public class fimsModel {
 
     StringBuilder stringBuilder = new StringBuilder();
 
-    public fimsModel(Model model, QueryWriter queryWriter, Mapping mapping) {
+    boolean getOnlySpecifiedProperties;
+
+    /**
+     *
+     * @param model
+     * @param queryWriter
+     * @param mapping
+     * @param getOnlySpecifiedProperties  whether or not to fetch a constrained list of specified properties
+     */
+    public fimsModel(Model model, QueryWriter queryWriter, Mapping mapping, boolean getOnlySpecifiedProperties) {
         this.model = model;
         this.queryWriter = queryWriter;
+        this.getOnlySpecifiedProperties = getOnlySpecifiedProperties;
 
         Iterator attributesIt = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
         configurationFileAttributeURIs = new ArrayList<String>();
@@ -54,6 +65,7 @@ public class fimsModel {
      * Get the label for this row
      *
      * @param subject
+     *
      * @return
      */
     public String getRowLabel(Resource subject) {
@@ -61,29 +73,39 @@ public class fimsModel {
     }
 
     /**
-     * Iterate through statements with "resource" as object
+     * Iterate through statements with "resource" as object.  This is ALL
      *
      * @param resource
+     *
      * @return
      */
     public void readRows(String resource) {
         RDFNode n = model.createResource(model.expandPrefix(resource));
         SimpleSelector selector = new SimpleSelector(null, null, n);
 
-
+        // Get a list of statements for the root Resource
         StmtIterator i = model.listStatements(selector);
+
+        // Loop each resource
         while (i.hasNext()) {
+            // Statement representing a particular resource, typically with multiple properties attached to it
             Statement s = i.next();
+
             // Create a row object here, so when we related objects, properties below we can write it out
             row = queryWriter.createRow(countRows);
 
-            listProperties(s.getSubject());
+            // List all properties available for this statement and if no values found, remove it.
+            if (!createRowFromStatemenetProperties(s.getSubject())) {
+                queryWriter.removeRow(countRows);
+            } else {
+                countRows++;
+            }
 
-            //System.out.println(s.getPredicate() + s.getObject().toString() + " " + s.getSubject());
-
-            // Loop each subject, TODO: expand to all BiSciCol relations
+            // Loop each subject resource, which follows each node to any objects expressing graph type relations
+            // TODO: look at relations and directed graph relations
             loopObjects(getRelations(s.getSubject()));
-            countRows++;
+
+
             // Set depth back to 1
             depth = 1;
         }
@@ -101,7 +123,7 @@ public class fimsModel {
         depth++;
         while (stmtIterator.hasNext()) {
             Statement statement = stmtIterator.nextStatement();
-            listProperties(statement.getSubject());
+            createRowFromStatemenetProperties(statement.getSubject());
             loopObjects(getRelations(statement.getSubject()));
         }
     }
@@ -122,6 +144,7 @@ public class fimsModel {
      * get a property named by a particular string (in URI format)
      *
      * @param propertyAsString
+     *
      * @return
      */
     public Property getProperty(String propertyAsString) {
@@ -133,39 +156,55 @@ public class fimsModel {
      *
      * @param resource
      */
-    public void listProperties(Resource resource) {
+    public boolean createRowFromStatemenetProperties(Resource resource) {
+
         StmtIterator stmtIterator = resource.listProperties();
+        String BCIDString = null;
+        boolean rowWithValues = false;
         int count = 0;
         while (stmtIterator.hasNext()) {
             Statement s = stmtIterator.next();
-           // Print the BCID as a property
-            if (count == 0) {
-                     queryWriter.createCell(row, "BCID", s.getSubject().toString());
-            }
 
-           // System.out.println(s.getSubject() + " "  + s.getPredicate().toString() + " " + s.getObject());
+            // Set the BCID String
+            if (count == 0) {
+                BCIDString = s.getSubject().toString();
+            }
+            // System.out.println(s.getSubject() + " "  + s.getPredicate().toString() + " " + s.getObject());
 
             // Print just the predicates we care about
             if (!s.getPredicate().equals(getProperty(type)) && !s.getPredicate().equals(getProperty(depends_on))) {
                 // Don't want local name to be null
                 if (s.getPredicate().getLocalName() != null &&
-                      !s.getPredicate().getLocalName().equals("null")
+                        !s.getPredicate().getLocalName().equals("null")
                         ) {
 
-                    // Filter predicates based on Attributes contained in the Configuration File
-                    if (    configurationFileAttributeURIs.contains(s.getPredicate().toString())) {
+                    String predicate = s.getPredicate().toString();
+
+                    if (getOnlySpecifiedProperties &&
+                            configurationFileAttributeURIs.contains(predicate)) {
                         queryWriter.createCell(row, s.getPredicate().toString(), s.getObject().toString());
+                        rowWithValues = true;
                     }
                 }
             }
+
+
         }
+
+        // Write out the BCID String
+        if (rowWithValues) {
+            queryWriter.createCell(row, "BCID", BCIDString);
+        }
+
         stmtIterator.close();
+        return rowWithValues;
     }
 
     /**
      * Get all relations for a particular subject resource
      *
      * @param subject
+     *
      * @return
      */
     public StmtIterator getRelations(Resource subject) {
@@ -193,7 +232,8 @@ public class fimsModel {
     public String writeExcel(File file) {
         return queryWriter.writeExcel(file);
     }
-      /**
+
+    /**
      * Return output as an HTML table
      */
     public String writeHTML(File file) {
@@ -205,10 +245,11 @@ public class fimsModel {
         return queryWriter.writeKML(file);
     }
 
-     public String writeCSPACE(File file) {
+    public String writeCSPACE(File file) {
         return queryWriter.writeCSPACE(file);
     }
-    public  void close() {
+
+    public void close() {
         model.close();
     }
 }

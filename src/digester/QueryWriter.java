@@ -127,6 +127,28 @@ public class QueryWriter {
     }
 
     /**
+    * Remove a row by its index
+    * @param rowIndex a 0 based index of removing row
+    */
+   public void removeRow(int rowIndex) {
+
+       // account for header row
+       int rowtoRemove = rowIndex + 1;
+
+       int lastRowNum=sheet.getLastRowNum();
+       if(rowtoRemove>=0&&rowtoRemove<lastRowNum){
+           sheet.shiftRows(rowtoRemove+1,lastRowNum, -1);
+       }
+
+       if(rowIndex==lastRowNum){
+           org.apache.poi.ss.usermodel.Row removingRow=sheet.getRow(rowtoRemove);
+           if(removingRow!=null){
+               sheet.removeRow(removingRow);
+           }
+       }
+   }
+
+    /**
      * Write data to a particular cell given the row/column(predicate) and a value
      *
      * @param row
