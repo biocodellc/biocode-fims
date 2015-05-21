@@ -171,6 +171,9 @@ public class authenticationService {
                 "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
 
 
+        System.out.println("FIMS access_token method, getting read to send postRequest to " + url);
+        System.out.println("Post params" + postParams);
+
         JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 
         //if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
@@ -191,6 +194,7 @@ public class authenticationService {
         JSONObject profileJSON = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
 
         if (profileJSON.containsKey("usrMessage")) {
+            System.out.println("FIMS access_token method usrMessage" + profileJSON.get("usrMessage"));
             response.sendRedirect(homepage +"?error=" + profileJSON.get("usrMessage"));
             return;
         }
@@ -199,6 +203,8 @@ public class authenticationService {
         session.setAttribute("userId", profileJSON.get("user_id"));
         session.setAttribute("access_token", access_token);
         session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
+
+        System.out.println("FIMS access_token method, homepage is " + homepage);
 
         response.sendRedirect(homepage);
         return;
