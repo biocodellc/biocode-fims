@@ -50,18 +50,19 @@ public class authenticationService {
         // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
         // in the login process.
         String redirect_uri = sm.retrieveValue("redirect_uri");
-        //System.out.println("FIMS redirect_uri = " + redirect_uri);
+        System.out.println("Setting FIMS redirect_uri to " + redirect_uri);
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
         //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
         if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURL().toString());
-           // System.out.println("FIMS incomingURL = " + incomingUrl);
+            System.out.println("The FIMS incomingURL is " + incomingUrl);
             // Pattern match incomingURL to see if it contains a "www"
             //if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
             if (!incomingUrl.getHost().contains("www")) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
-               // System.out.println("FIMS Login Redirecting to " + loginRedirectURL);
+
+                System.out.println("FIMS Login Redirecting to " + loginRedirectURL);
                 response.sendRedirect(loginRedirectURL);
                 return;
             }
@@ -79,6 +80,10 @@ public class authenticationService {
         //System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
 
         // Redirect to BCID Login Service
+        System.out.println("Sending redirect to " +sm.retrieveValue("authorize_uri") +
+                        "client_id=" + sm.retrieveValue("client_id") +
+                        "&redirect_uri=" + sm.retrieveValue("redirect_uri"));
+
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
                 "&redirect_uri=" + sm.retrieveValue("redirect_uri")
