@@ -721,7 +721,7 @@ public class bcidConnector {
      */
     public String createGETConnection(URL url) {
         try {
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
 
             // default is GET
