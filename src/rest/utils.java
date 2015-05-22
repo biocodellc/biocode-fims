@@ -240,6 +240,20 @@ public class utils {
     }
 
     @GET
+    @Path("/callBCID")
+    public Response callBcid(@QueryParam("url") String url,
+                             @QueryParam("method") String method,
+                             @QueryParam("postParams") String postParams) throws Exception{
+        bcidConnector c = new bcidConnector();
+
+        if ( method.equalsIgnoreCase("get") ) {
+            return Response.ok(c.createGETConnection(new URL(url))).build();
+        } else {
+            return Response.ok(c.createPOSTConnnection(new URL(url), postParams)).build();
+        }
+    }
+
+    @GET
     @Path("/getNAAN")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNAAN() {
