@@ -9,6 +9,7 @@ import org.json.simple.JSONValue;
 import run.processController;
 import utils.SettingsManager;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
 import java.net.CookieManager;
@@ -626,7 +627,7 @@ public class bcidConnector {
     public String createPOSTConnnection(URL url, String postParams) {
 
         try {
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
             // Acts like a browser
             conn.setUseCaches(false);
