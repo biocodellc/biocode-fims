@@ -627,7 +627,7 @@ public class bcidConnector {
     public String createPOSTConnnection(URL url, String postParams) {
 
         try {
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // Acts like a browser
             conn.setUseCaches(false);
@@ -721,8 +721,7 @@ public class bcidConnector {
      */
     public String createGETConnection(URL url) {
         try {
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             // default is GET
             conn.setRequestMethod("GET");
