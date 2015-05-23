@@ -267,7 +267,7 @@ public class validate {
      * @return
      */
     @GET
-    @Path("/continue_nmnh")
+    @Path("/{a: (continue_nmnh|continue_spreadsheet) }")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
