@@ -2,10 +2,11 @@ package rest;
 
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import digester.Mapping;
 import org.json.simple.JSONObject;
 import run.configurationFileTester;
 import settings.FIMSRuntimeException;
-import run.guidify;
+import run.SIServerSideSpreadsheetTools;
 import run.process;
 import run.processController;
 import settings.bcidConnector;
@@ -265,7 +266,7 @@ public class validate {
      * @return
      */
     @GET
-    @Path("/continue_spreadsheet")
+    @Path("/continue_nmnh")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
@@ -325,6 +326,8 @@ public class validate {
 
             // Set input and output files
             File inputFile = new File(processController.getInputFilename());
+
+            // TODO: put this in props
             File outputFile = new File("/opt/jetty_files/" + inputFile.getName());
 
             // Run guidify, which adds a BCID to the spreadsheet
@@ -333,12 +336,24 @@ public class validate {
             //System.out.println("session attribute names = " + session.getAttributeNames());
             Integer userId = Integer.valueOf((String) session.getAttribute("userId"));
             //System.out.println("now userId = " + userId);
-            guidify g = new guidify(
+
+            // Get the mapping object so we can discern the column_internal fields
+            Mapping mapping = processController.getValidation().getMapping();
+
+            // Smithsonian specific GUID to be attached to Sheet
+            SIServerSideSpreadsheetTools siServerSideSpreadsheetTools = new SIServerSideSpreadsheetTools(
                     inputFile,
                     processController.getWorksheetName(),
                     userId,
                     bcidRoot);
-            g.getSpreadsheet(outputFile);
+
+            // Write GUIDs
+            siServerSideSpreadsheetTools.guidify();
+
+            // TODO: see if we can make an alias for this path on this method to also support continue_spreadsheet (OLD path name)
+            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping);
+
+            siServerSideSpreadsheetTools.write(outputFile);
 
             // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
             // gives us a way to track what spreadsheets are uploaded into the system as they can
@@ -375,7 +390,6 @@ public class validate {
                 session.setAttribute("refresh_token", connector.getRefreshToken());
             }
         }
-
     }
 
     /**

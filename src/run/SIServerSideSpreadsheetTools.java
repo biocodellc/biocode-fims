@@ -1,5 +1,6 @@
 package run;
 
+import digester.Mapping;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -10,7 +11,7 @@ import java.io.*;
 /**
  * Adds a BCID column at the end of a specified spreadsheet
  */
-public class guidify {
+public class SIServerSideSpreadsheetTools {
 
     private XSSFSheet sheet;
     private XSSFWorkbook workbook;
@@ -31,7 +32,7 @@ public class guidify {
      * @param localIDColumnName
      * @param bcidRoot
      */
-    public guidify(
+    public SIServerSideSpreadsheetTools(
             File sourceFile,
             String sheetName,
             String localIDColumnName,
@@ -63,7 +64,7 @@ public class guidify {
      * @param userID
      * @param bcidRoot
      */
-    public guidify(
+    public SIServerSideSpreadsheetTools(
             File sourceFile,
             String sheetName,
             Integer userID,
@@ -84,17 +85,17 @@ public class guidify {
     }
 
     /**
-     * Construct the output spreadsheet and then write it
+     * Write GUIDs onto last column of spreadsheet
      */
-    public void getSpreadsheet(File outputFile) {
+    public void guidify() {
         // Add the suffixPassthroughGUID (the BCID) to the end of the sheet
         if (SIMethod)
             addSuffixPassthroughGuidSIMethod();
         else
             addSuffixPassthroughGuid();
-        // Write the output
-        write(outputFile);
+
     }
+
 
     /**
      * Get the column number to use for the EZID column
@@ -201,7 +202,11 @@ public class guidify {
         return 0;
     }
 
-    private void write(File outputFile) {
+    /**
+     * Write the resulting spreadsheet
+     * @param outputFile
+     */
+    public void write(File outputFile) {
         try {
             FileOutputStream fileOut = new FileOutputStream(outputFile);
             workbook.write(fileOut);
@@ -218,17 +223,23 @@ public class guidify {
      */
     public static void main(String[] args) {
         try {
-            guidify guidIfier = new guidify(
+            SIServerSideSpreadsheetTools tools = new SIServerSideSpreadsheetTools(
                     new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014.xlsx"),
                     "Samples",
                     "Preparator Number",
                     "ark:/whosyourdaddy/"
             );
-            guidIfier.getSpreadsheet(new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014_out.xlsx"));
+            tools.guidify();
+
+            tools.write(new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014_out.xlsx"));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // TODO: make this method happen
+    public void addInternalColumnToHeader(Mapping mapping) {
+
+    }
 }
