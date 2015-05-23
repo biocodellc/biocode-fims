@@ -25,6 +25,9 @@ graphs_uri = http://www.biscicol.org/id/projectService/graphs/
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 rootName = biocode-fims
 
+# location to save spreadsheets to filesystem
+serverRoot = /opt/jetty-files/
+
 # ignore_user defaults to false. If set to true then application does not run check to see if user is unique
 # for a particular dataset.  That is, it allows users besides the dataset creator to load data to this dataset
 ignore_user = false
@@ -32,6 +35,4 @@ ignore_user = false
 # when set to true, stack traces will be returned form the server when exceptions occur.
 # should be set to false for production use.
 debug = false
-
-
 

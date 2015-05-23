@@ -10,6 +10,7 @@ import run.SIServerSideSpreadsheetTools;
 import run.process;
 import run.processController;
 import settings.bcidConnector;
+import utils.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -275,6 +276,10 @@ public class validate {
         String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
 
+        // Initialize Settings
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
         // if no processController is found, we can't do anything
         if (processController == null) {
             return "{\"error\": \"No process was detected.\"}";
@@ -327,8 +332,7 @@ public class validate {
             // Set input and output files
             File inputFile = new File(processController.getInputFilename());
 
-            // TODO: put this in props
-            File outputFile = new File("/opt/jetty_files/" + inputFile.getName());
+            File outputFile = new File(sm.retrieveValue("serverRoot") + inputFile.getName());
 
             // Run guidify, which adds a BCID to the spreadsheet
             //System.out.println("userId = " + session.getAttribute("userId"));
