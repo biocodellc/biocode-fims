@@ -466,7 +466,7 @@ function pollStatus() {
 // a new expedition
 function continueUpload(createExpedition) {
     var d = new $.Deferred();
-    var url = "/fims/rest/validate/continue_spreadsheet";
+    var url = "/fims/rest/validate/continue_nmnh";
     if (createExpedition) {
         url += "?createExpedition=true";
     }
