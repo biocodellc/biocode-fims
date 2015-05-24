@@ -259,6 +259,7 @@ public class Validation implements RendererInterface {
      */
     public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) {
         fimsPrinter.out.println("Validate ...");
+        this.mapping = mapping;
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
         this.tabularDataReader = tabularDataReader;

@@ -354,8 +354,7 @@ public class validate {
             // Write GUIDs
             siServerSideSpreadsheetTools.guidify();
 
-            // TODO: see if we can make an alias for this path on this method to also support continue_spreadsheet (OLD path name)
-            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping);
+            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
 
             siServerSideSpreadsheetTools.write(outputFile);
 

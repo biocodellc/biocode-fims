@@ -1,5 +1,6 @@
 package run;
 
+import digester.Attribute;
 import digester.Mapping;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -7,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import settings.FIMSRuntimeException;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Adds a BCID column at the end of a specified spreadsheet
@@ -223,15 +225,28 @@ public class SIServerSideSpreadsheetTools {
      */
     public static void main(String[] args) {
         try {
+            File configFile = new File("/Users/xxxx/IdeaProjects/biocode-fims/sampledata/indoPacificConfiguration_v2.xml");
+            processController pc = new processController();
+
+            process p = new process(
+                    "/Users/xxxx/Downloads/indoPacificTemplate.1.xlsx",
+                    "/Users/xxxx/jetty-files",
+                    pc,
+                    configFile
+            );
+
+            p.runValidation();
+            Mapping map = p.getProcessController().getValidation().getMapping();
+
             SIServerSideSpreadsheetTools tools = new SIServerSideSpreadsheetTools(
-                    new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014.xlsx"),
+                    new File("/Users/xxxx/Downloads/indoPacificTemplate.1.xlsx"),
                     "Samples",
                     "Preparator Number",
                     "ark:/whosyourdaddy/"
             );
-            tools.guidify();
+            tools.addInternalColumnToHeader(map, true);
 
-            tools.write(new File("/Users/jdeck/Downloads/TMO_Beliz_16Sep2014_out.xlsx"));
+            tools.write(new File("/Users/xxxx/jetty-files/indoPacificTemplate.2.xlsx"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -239,7 +254,33 @@ public class SIServerSideSpreadsheetTools {
     }
 
     // TODO: make this method happen
-    public void addInternalColumnToHeader(Mapping mapping) {
+    public void addInternalColumnToHeader(Mapping mapping, Boolean replaceHeader) {
+        Row columnInternalRow;
+        // Get the header. This should be the 1st row in the sheet and will contain the column names.
+        Row columnRow = sheet.getRow(0);
 
+        // If we aren't replacing the header, then create a new row ontop of the current header.
+        if (!replaceHeader) {
+            sheet.shiftRows(0, sheet.getLastRowNum(), 1);
+            sheet.createRow(0);
+
+            // assign the newly created row
+            columnInternalRow = sheet.getRow(0);
+
+        } else {
+            // set the columnInternalRow equal to the columnRow, since we are replacing the header
+            columnInternalRow = columnRow;
+        }
+        ArrayList<Attribute> attributeList = mapping.getAllAttributes(sheet.getSheetName());
+
+        for (Cell c : columnRow) {
+            for (Attribute attribute : attributeList) {
+                // when we find the corresponding attribute to the column, insert the column_internal prop.
+                if (c.getStringCellValue().equalsIgnoreCase(attribute.getColumn())) {
+                    Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
+                    columnInternalCell.setCellValue(attribute.getColumn_internal());
+                }
+            }
+        }
     }
 }

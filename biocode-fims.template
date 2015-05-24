@@ -36,3 +36,7 @@ ignore_user = false
 # should be set to false for production use.
 debug = false
 
+# when set to true, fims will replace the spreadsheet column header with the column_internal (specified in the project
+# config xml) when saving datasets. When set to false, fims will make a double row header placing column_internal in the
+# first row of the spreadsheet.
+replaceHeader = false

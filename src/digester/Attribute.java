@@ -36,7 +36,7 @@ public class Attribute implements Comparable {
         return column_internal;
     }
 
-    public void setColumn_internal(String column) {
+    public void setColumn_internal(String column_internal) {
         this.column_internal = column_internal;
     }
 
@@ -121,6 +121,7 @@ public class Attribute implements Comparable {
         fimsPrinter.out.println("    uri=" + uri);
         fimsPrinter.out.println("    datatype=" + datatype);
         fimsPrinter.out.println("    isDefinedBy=" + defined_by);
+        fimsPrinter.out.println("    column_internal=" + column_internal);
     }
 
     /**
