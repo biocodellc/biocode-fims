@@ -9,7 +9,6 @@ import org.json.simple.JSONValue;
 import run.processController;
 import utils.SettingsManager;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.*;
 import java.net.CookieManager;

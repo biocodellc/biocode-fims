@@ -10,6 +10,7 @@ import run.SIServerSideSpreadsheetTools;
 import run.process;
 import run.processController;
 import settings.bcidConnector;
+import utils.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -266,7 +267,7 @@ public class validate {
      * @return
      */
     @GET
-    @Path("/continue_nmnh")
+    @Path("/{a: (continue_nmnh|continue_spreadsheet) }")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
@@ -274,6 +275,10 @@ public class validate {
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
+
+        // Initialize Settings
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
 
         // if no processController is found, we can't do anything
         if (processController == null) {
@@ -327,8 +332,7 @@ public class validate {
             // Set input and output files
             File inputFile = new File(processController.getInputFilename());
 
-            // TODO: put this in props
-            File outputFile = new File("/opt/jetty_files/" + inputFile.getName());
+            File outputFile = new File(sm.retrieveValue("serverRoot") + inputFile.getName());
 
             // Run guidify, which adds a BCID to the spreadsheet
             //System.out.println("userId = " + session.getAttribute("userId"));
@@ -350,8 +354,7 @@ public class validate {
             // Write GUIDs
             siServerSideSpreadsheetTools.guidify();
 
-            // TODO: see if we can make an alias for this path on this method to also support continue_spreadsheet (OLD path name)
-            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping);
+            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
 
             siServerSideSpreadsheetTools.write(outputFile);
 
