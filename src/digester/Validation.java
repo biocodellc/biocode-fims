@@ -285,7 +285,11 @@ public class Validation implements RendererInterface {
             createSqlLite(filenamePrefix, outputFolder, mapping);
         }   catch (FIMSException e) {
             errorFree = false;
-            sheet.getMessages().addLast(new RowMessage("Unable to validate sheet due to error loading into Server-side database: " + e.getMessage(), "Initial Spreadsheet check", RowMessage.ERROR));
+            sheet.getMessages().addLast(new RowMessage(
+                    "Unable to parse spreadsheet.  This is most likely caused by having two columns with the same " +
+                    "name.  Please rename or delete the extra column to pass validation.",
+                    "Initial Spreadsheet check",
+                    RowMessage.ERROR));
             e.printStackTrace();
         }
 
