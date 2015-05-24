@@ -1,2 +1,2 @@
 To get started, read our wiki ...
-https://github.com/biscicol/biocode-fims/wiki/GettingStarted
+https://github.com/biocodellc/biocode-fims/wiki/GettingStarted
