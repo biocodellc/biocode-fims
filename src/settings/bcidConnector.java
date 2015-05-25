@@ -53,6 +53,7 @@ public class bcidConnector {
     private String project_service_uri;
     private String expedition_public_status_uri;
     private String graphs_uri;
+    private String my_graphs_uri;
     private Integer naan;
     private Boolean ignore_user;
 
@@ -150,6 +151,7 @@ public class bcidConnector {
         available_projects_uri = sm.retrieveValue("available_projects_uri");
         project_service_uri = sm.retrieveValue("project_service_uri");
         graphs_uri = sm.retrieveValue("graphs_uri");
+        my_graphs_uri = sm.retrieveValue("my_graphs_uri");
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
@@ -489,6 +491,33 @@ public class bcidConnector {
             throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
         }
     }
+
+    /**
+     * get the JSON list of graphs that belong to a user
+     * @return
+     */
+    public String getMyGraphs() {
+        String urlString = my_graphs_uri;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
+
+        try {
+            URL url = new URL(urlString);
+            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
+
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException(response);
+            } else {
+                return response.toJSONString();
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
+
     /**
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
      * unique within

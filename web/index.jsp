@@ -2,7 +2,7 @@
 
 <div id="validation" class="section">
     <div id="warning"></div>
-    <div class="sectioncontent">
+    <div class="sectioncontent" id="mainpage">
 
         A Field Information Management System (FIMS) enables data collection at the source (in the field) by
         generating spreadsheet templates, validating data, and assigning persistent identifiers for every unique biological sample.
@@ -16,6 +16,7 @@
         <!--<img id='workflowImage' src='docs/Workflow_simple.jpeg'>
         <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
     </div>
+    <div class="sectioncontent" id="dashboard"></div>
 </div>
 
 <script>
@@ -35,6 +36,10 @@ window.onload = function checkForFailMessageInURL(){
 <script>
     $(document).ready(function() {
        fimsBrowserCheck($('#warning'));
+       if ("${user}") {
+           $("#mainpage").hide();
+           getDatasetDashboard();
+       }
     });
 </script>
 

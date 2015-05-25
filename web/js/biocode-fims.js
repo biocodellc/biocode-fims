@@ -731,3 +731,12 @@ function getQueryPostParams() {
 
     return params;
 }
+
+function getDatasetDashboard() {
+    theUrl = "rest/utils/getDatasetDashboard";
+    var jqxhr = $.getJSON( theUrl, function(data) {
+        $("#dashboard").html(data.dashboard);
+    }).fail(function() {
+        $("#mainpage").show();
+    });
+}

@@ -21,6 +21,7 @@ project_service_uri = http://www.biscicol.org/id/projectService/list
 expedition_list_uri = http://www.biscicol.org/id/expeditionService/list/
 expedition_public_status_uri = http://www.biscicol.org/id/expeditionService/publicExpedition/
 graphs_uri = http://www.biscicol.org/id/projectService/graphs/
+my_graphs_uri = http://www.biscicol.org/id/projectService/myGraphs/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 rootName = biocode-fims

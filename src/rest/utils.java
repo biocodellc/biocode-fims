@@ -9,6 +9,7 @@ import run.processController;
 import settings.FIMSRuntimeException;
 import settings.bcidConnector;
 import utils.SettingsManager;
+import utils.dashboardGenerator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -262,6 +263,24 @@ public class utils {
         String naan = sm.retrieveValue("naan");
 
         return Response.ok("{\"naan\": \"" + naan + "\"}").build();
+    }
+
+    @GET
+    @Path("/getDatasetDashboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDatasetDashboard(@Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+
+        if (accessToken == null) {
+            return Response.status(401).build();
+        }
+
+        dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
+        String dashboard = dashboardGenerator.getDashboard();
+
+        return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
     }
 }
 
