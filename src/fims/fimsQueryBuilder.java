@@ -257,8 +257,8 @@ public class fimsQueryBuilder {
                 e.printStackTrace();
             }
 
-            templateProcessor t = new templateProcessor(1, "tripleOutput", false, justData);
-            outputPath = t.createExcelFileFromExistingSources("Samples", "tripleOutput").getAbsolutePath();
+            templateProcessor t = new templateProcessor(1, output_directory, false, justData);
+            outputPath = t.createExcelFileFromExistingSources("Samples", output_directory).getAbsolutePath();
         }
         else if (format.equals("html"))
             outputPath = fimsModel.writeHTML(PathManager.createUniqueFile("output.html", output_directory));
