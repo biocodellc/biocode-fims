@@ -7,8 +7,11 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import run.templateProcessor;
 import settings.FIMSRuntimeException;
 
 import java.io.File;
@@ -29,7 +32,7 @@ public class QueryWriter {
     ArrayList extraColumns;
     Integer totalColumns;
     String sheetName;
-    Workbook wb = new HSSFWorkbook();
+    XSSFWorkbook wb = new XSSFWorkbook();
     Sheet sheet;
     private static Logger logger = LoggerFactory.getLogger(QueryWriter.class);
 
@@ -187,7 +190,7 @@ public class QueryWriter {
         if (datatype != null && datatype.equals("integer")) {
             //fimsPrinter.out.println("value = " + value);
             //Its a number(int or float).. Excel treats both as numeric
-            HSSFCellStyle style = (HSSFCellStyle) wb.createCellStyle();
+            XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
             style.setDataFormat(HSSFDataFormat.getBuiltinFormat("0"));
             cell.setCellStyle(style);
             cell.setCellValue(Float.parseFloat(value));
@@ -235,6 +238,7 @@ public class QueryWriter {
             e.printStackTrace();
         }
         */
+
     }
 
     /**
@@ -322,6 +326,14 @@ public class QueryWriter {
 
         // Get the JSON text.
         return writeFile(json.toString(), file);
+    }
+
+    /**
+     * Return the default sheet used for processing
+     * @return
+     */
+    public XSSFWorkbook getWorkbook() {
+        return wb;
     }
 
     public String writeHTML(File file) {

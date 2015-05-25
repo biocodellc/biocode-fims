@@ -354,7 +354,7 @@ public class validate {
             // Write GUIDs
             siServerSideSpreadsheetTools.guidify();
 
-            siServerSideSpreadsheetTools.addInternalColumnToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
+            siServerSideSpreadsheetTools.addInternalRowToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
 
             siServerSideSpreadsheetTools.write(outputFile);
 
