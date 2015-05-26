@@ -8,15 +8,19 @@ import digester.Mapping;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import run.configurationFileFetcher;
 import run.process;
+import run.templateProcessor;
 import settings.PathManager;
 import settings.bcidConnector;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -241,8 +245,21 @@ public class fimsQueryBuilder {
         if (format == null)
             format = "json";
 
-        if (format.equals("excel"))
+        if (format.equals("excel")) {
             outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xls", output_directory));
+
+            // Here we attach the other components of the excel sheet found with
+            // TODO: finish this part up
+            XSSFWorkbook justData = null;
+            try {
+                 justData = new XSSFWorkbook(new FileInputStream(outputPath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            templateProcessor t = new templateProcessor(1, output_directory, false, justData);
+            outputPath = t.createExcelFileFromExistingSources("Samples", output_directory).getAbsolutePath();
+        }
         else if (format.equals("html"))
             outputPath = fimsModel.writeHTML(PathManager.createUniqueFile("output.html", output_directory));
         else if (format.equals("kml"))

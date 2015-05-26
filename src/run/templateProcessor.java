@@ -2,6 +2,7 @@ package run;
 
 import digester.*;
 import org.apache.commons.digester3.Digester;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
@@ -61,6 +62,47 @@ public class templateProcessor {
     static File configFile = null;
     Integer project_id;
     private String username = null;
+
+    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache, XSSFWorkbook workbook) {
+        this.project_id = project_id;
+        configurationFileFetcher configFile = new configurationFileFetcher(project_id, outputFolder, useCache);
+        bcidConnector bcidConnector = new bcidConnector();
+        naan = bcidConnector.getNAAN();
+
+        // Instantiate the project output Folder
+        this.p = new process(outputFolder, configFile.getOutputFile());
+        mapping = new Mapping();
+        p.addMappingRules(new Digester(), mapping);
+
+        fims = new Fims(mapping, null);
+        p.addFimsRules(new Digester(), fims);
+
+        validation = new Validation();
+        p.addValidationRules(new Digester(), validation);
+        this.workbook = (XSSFWorkbook) workbook;
+        // Set the default heading style
+        headingStyle = workbook.createCellStyle();
+        XSSFFont bold = workbook.createFont();
+        bold.setFontHeightInPoints((short) 14);
+        bold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+        headingStyle.setFont(bold);
+
+
+        requiredStyle = workbook.createCellStyle();
+        XSSFFont redBold = workbook.createFont();
+        redBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+        redBold.setFontHeightInPoints((short) 14);
+        redBold.setColor(XSSFFont.COLOR_RED);
+        requiredStyle.setFont(redBold);
+
+        wrapStyle = workbook.createCellStyle();
+        wrapStyle.setWrapText(true);
+        wrapStyle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+
+        // Set the style for all other cells
+        regularStyle = workbook.createCellStyle();
+
+    }
 
     /**
      * Instantiate tempalateProcessor using a pre-defined configurationFile (don't fetch using projectID)
@@ -663,7 +705,7 @@ public class templateProcessor {
 
                     // Some XML configuration files allow spaces in column Names... here we search for
                     // matching column names with or without spaces, replaced by underscores
-                    if (a.getColumn().replace("_"," ").equals(columnName) ||
+                    if (a.getColumn().replace("_", " ").equals(columnName) ||
                             a.getColumn().equals(columnName)) {
                         row = dataFieldsSheet.createRow(rowNum++);
 
@@ -1004,7 +1046,65 @@ public class templateProcessor {
             FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
             out.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+
+        return file;
+    }
+
+    /**
+     * Create an Excel File for output using a pre-uploaded workbook containing a worksheet with data
+     * This method assumes the appropriate constructor was called.
+     *
+     * @param defaultSheetname
+     * @param uploadPath
+     *
+     * @return
+     */
+    public File createExcelFileFromExistingSources(String defaultSheetname, String uploadPath) {
+
+        // Create each of the sheets
+        createInstructions(defaultSheetname);
+
+        // Set the defaultSheet to be the default sheet of the workbook
+        defaultSheet = this.workbook.getSheet(defaultSheetname);
+
+        // Getting list of field names...
+        // I'm not sure if i should get ALL from mapping file or just the ones specified on the spreadsheet template
+        // This method fetches all from mapping file
+        XSSFRow row = workbook.getSheet(defaultSheetname).getRow(0);
+        ArrayList<String> fields = new ArrayList<String>();
+        Iterator it = row.iterator();
+        while (it.hasNext()) {
+            String fieldName = ((Cell) it.next()).toString();
+            // TODO: test implications of adding or NOT adding BCID column at this point
+            if (!fieldName.equalsIgnoreCase("BCID")) {
+                fields.add(fieldName);
+            }
+        }
+
+        createDataFields(fields);
+        createListsSheetAndValidations(fields);
+
+        // Create the output Filename and Write Excel File
+        String filename = null;
+        if (this.datasetCode != null && !this.datasetCode.equals("")) {
+            filename = this.datasetCode;
+        } else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
+            filename = getFims().getMetadata().getShortname().replace(" ", "_");
+        } else {
+            filename = "output";
+        }
+
+        // Create the file: NOTE: this application ALWAYS should create XLSX files as this format is the only one
+        // which will pass compatibility checks in data validation
+        File file = PathManager.createUniqueFile(filename + ".xlsx", uploadPath);
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            workbook.write(out);
+            out.close();
+        } catch (IOException e) {
             throw new FIMSRuntimeException(500, e);
         }
 
@@ -1058,27 +1158,17 @@ public class templateProcessor {
         //System.out.println(t1.definition("hdimNumber"));
 
 
+        /*
         templateProcessor t = new templateProcessor(file, "tripleOutput", false, 12345, "DEMO4", "ark:/21547/VR2");
-
-
-        //System.out.println(t.definition("materialSampleID"));
-
-
-//        System.out.println(t.definition("Depth Modifier"));
-
-        //System.out.println(t.printCheckboxes());
-
         ArrayList<String> a = new ArrayList<String>();
-        a.add("Locality");
-        a.add("ScientificName");
-        a.add("Coll_Num");
+               a.add("Locality");
+               a.add("ScientificName");
+               a.add("Coll_Num");
 
-        File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
-        System.out.println(outputFile.getAbsoluteFile().toString());
+               File outputFile = t.createExcelFile("Samples", "tripleOutput", a);
+               System.out.println(outputFile.getAbsoluteFile().toString());
+        */
 
-        //t.getRequiredColumns();
-
-        //System.out.println(t.printCheckboxes());
 
     }
 

@@ -244,7 +244,7 @@ public class SIServerSideSpreadsheetTools {
                     "Preparator Number",
                     "ark:/whosyourdaddy/"
             );
-            tools.addInternalColumnToHeader(map, true);
+            tools.addInternalRowToHeader(map, true);
 
             tools.write(new File("/Users/xxxx/jetty-files/indoPacificTemplate.2.xlsx"));
 
@@ -253,8 +253,12 @@ public class SIServerSideSpreadsheetTools {
         }
     }
 
-    // TODO: make this method happen
-    public void addInternalColumnToHeader(Mapping mapping, Boolean replaceHeader) {
+    /**
+     * Add a row to header that gets written internally
+     * @param mapping
+     * @param replaceHeader
+     */
+    public void addInternalRowToHeader(Mapping mapping, Boolean replaceHeader) {
         Row columnInternalRow;
         // Get the header. This should be the 1st row in the sheet and will contain the column names.
         Row columnRow = sheet.getRow(0);
