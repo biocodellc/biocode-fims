@@ -29,12 +29,13 @@ import java.util.ArrayList;
 public class process {
 
     public File configFile;
+
     Mapping mapping;
+
     String outputFolder;
     String outputPrefix;
     bcidConnector connector;
     private processController processController;
-
     private static Logger logger = LoggerFactory.getLogger(process.class);
 
     /**
@@ -152,6 +153,10 @@ public class process {
      */
     public processController getProcessController() {
         return processController;
+    }
+
+    public Mapping getMapping() {
+        return mapping;
     }
 
 

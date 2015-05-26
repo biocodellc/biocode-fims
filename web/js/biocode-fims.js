@@ -577,6 +577,56 @@ function checkNAAN(spreadsheetNaan, naan) {
     }
 }
 
+// function to parse the sample coordinates from the spreadsheet
+function getSampleCoordinates(configData) {
+    try {
+        var reader = new FileReader();
+    } catch(err) {
+        return -1
+    }
+
+    // older browsers don't have a FileReader
+    if (f != null) {
+        var deferred = new $.Deferred();
+        var inputFile= $('#dataset')[0].files[0];
+        var featureTemplate = {
+                                "type": "Feature",
+                                "geometry": {"type": "Point", "coordinates": []},
+                                "properties": {}
+                               }
+        var geoJSONData = {"type": "FeatureCollection",
+                           "features": []}
+
+        XLSXReader(inputFile, true, false, function(reader) {
+            // get the data from the sample collection sheet
+            var data  = reader.sheets[configData.data_sheet].data;
+
+            // find the index of the lat and long columns
+            var latColumn = data[0].indexOf(configData.lat_column);
+            var longColumn = data[0].indexOf(configData.long_column);
+
+            data.forEach(function(element, index, array) {
+                // 0 index is the column headers, so skip
+                if (index != 0) {
+                    f = $.extend(true, {}, featureTemplate);
+
+                    // add the coordinates to the feature object
+                    f.geometry.coordinates.push(element[longColumn]);
+                    f.geometry.coordinates.push(element[latColumn]);
+
+                    // add feature object to feature collection object
+                    geoJSONData.features.push(f);
+                }
+            });
+
+            // return the geoJSON data
+            deferred.resolve(geoJSONData);
+        })
+        return deferred.promise();
+    }
+    return -1;
+}
+
 // function to toggle the project_id and expedition_code inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
@@ -608,6 +658,7 @@ function validationFormToggle() {
                 }
             }
         });
+
     });
     $('#upload').change(function() {
         if ($('.toggle-content#expedition_code_toggle').is(':hidden') && $('#upload').is(":checked")) {
@@ -622,6 +673,16 @@ function validationFormToggle() {
         }
     });
     $("#projects").change(function() {
+        // generate a map with markers for all sample points
+        $.getJSON("rest/utils/getLatLongColumns/" + this.value
+            ).done(function(data) {
+                getSampleCoordinates(data).done(function(geoJSONData) {
+                    //TODO now we have the marker points in geoJSON format, get a map
+                });
+            }).fail(function(jqXHR) {
+                //TODO
+            });
+
         // only get expedition codes if a user is logged in
         if ($('*:contains("Logout")').length > 0) {
             $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
