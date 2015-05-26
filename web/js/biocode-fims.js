@@ -732,11 +732,74 @@ function getQueryPostParams() {
     return params;
 }
 
+// function to retrieve the user's datasets
 function getDatasetDashboard() {
     theUrl = "rest/utils/getDatasetDashboard";
     var jqxhr = $.getJSON( theUrl, function(data) {
         $("#dashboard").html(data.dashboard);
+        // attach toggle function to each project
+        $(".expand-content").click(function() {
+            projectToggle(this.id)
+        });
     }).fail(function() {
         $("#mainpage").show();
     });
+}
+
+// function to apply the jquery slideToggle effect.
+function projectToggle(id) {
+    if ($('.toggle-content#'+id).is(':hidden')) {
+        $('.img-arrow', '#'+id).attr("src","images/down-arrow.png");
+    } else {
+        $('.img-arrow', '#'+id).attr("src","images/right-arrow.png");
+    }
+    $('.toggle-content#'+id).slideToggle('slow');
+}
+
+// function to edit a dataset
+function editDataset(project_id, expedition_code, e) {
+    var currentPublic;
+    var title = "Editing " + $(e.parentElement).siblings()[0].textContent;
+
+    if ($(e.parentElement).siblings()[1].textContent == "yes") {
+        currentPublic = true;
+    } else {
+        currentPublic = false;
+    }
+
+    var message = "<table><tr><td>Public:</td><td><input type='checkbox' name='public'";
+    if (currentPublic) {
+        message += " checked='checked'";
+    }
+    message += "></td></tr></table>";
+
+    var buttons = {
+        "Update": function() {
+            var public = $("[name='public']")[0].checked;
+
+            $.post("rest/utils/updatePublicStatus", { project_id: project_id, expedition_code: expedition_code, public: public}
+            ).done(function() {
+                var b = {
+                    "Ok": function() {
+                        $(this).dialog("close");
+                        location.reload();
+                    }
+                }
+                dialog("Successfully updated the public status.", "Success!", b);
+            }).fail(function(jqXHR) {
+                $("#dialogContainer").addClass("error");
+                var b= {
+                    "Ok": function() {
+                    $("#dialogContainer").removeClass("error");
+                    $(this).dialog("close");
+                    }
+                }
+                dialog("Error updating dataset public status!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
+            });
+        },
+        "Cancel": function() {
+            $(this).dialog("close");
+        }
+    }
+    dialog(message, title, buttons);
 }

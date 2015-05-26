@@ -276,11 +276,34 @@ public class utils {
         if (accessToken == null) {
             return Response.status(401).build();
         }
+        String username = (String) session.getAttribute("user");
 
         dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
-        String dashboard = dashboardGenerator.getDashboard();
+        String dashboard = dashboardGenerator.getDashboard(username);
 
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
+    }
+
+    @POST
+    @Path("/updatePublicStatus")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePublicStatus(@FormParam("expedition_code") String expedition_code,
+                                       @FormParam("project_id") int project_id,
+                                       @FormParam("public") Boolean p,
+                                       @Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+
+        if (accessToken == null) {
+            return  Response.status(401).build();
+        }
+
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        bcidConnector.setExpeditionPublicStatus(p, project_id, expedition_code);
+
+        return Response.ok("{\"status\": \"success\"}").build();
     }
 }
 
