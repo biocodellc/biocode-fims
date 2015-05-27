@@ -1,8 +1,12 @@
 package rest;
 
+import digester.Attribute;
 import digester.Field;
+import digester.Mapping;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
+import org.apache.poi.ss.usermodel.Cell;
+import org.json.simple.JSONObject;
 import run.configurationFileFetcher;
 import run.process;
 import run.processController;
@@ -23,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -276,11 +281,63 @@ public class utils {
         if (accessToken == null) {
             return Response.status(401).build();
         }
+        String username = (String) session.getAttribute("user");
 
         dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
-        String dashboard = dashboardGenerator.getDashboard();
+        String dashboard = dashboardGenerator.getDashboard(username);
 
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
+    }
+
+    @POST
+    @Path("/updatePublicStatus")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePublicStatus(@FormParam("expedition_code") String expedition_code,
+                                       @FormParam("project_id") int project_id,
+                                       @FormParam("public") Boolean p,
+                                       @Context HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+
+        if (accessToken == null) {
+            return  Response.status(401).build();
+        }
+
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        bcidConnector.setExpeditionPublicStatus(p, project_id, expedition_code);
+
+        return Response.ok("{\"status\": \"success\"}").build();
+    }
+
+    @GET
+    @Path("/getLatLongColumns/{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLatLongColumns(@PathParam("project_id") int projectId) {
+        String decimalLatDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLatitude";
+        String decimalLongDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLongitude";
+        JSONObject response = new JSONObject();
+
+        processController pc = new processController(projectId, null);
+        process p = new process(null, uploadPath(), new bcidConnector(), pc);
+
+        Mapping mapping = p.getMapping();
+        String defaultSheet = mapping.getDefaultSheetName();
+        ArrayList<Attribute> attributeList = mapping.getAllAttributes(defaultSheet);
+
+        response.put("data_sheet", defaultSheet);
+
+        for (Attribute attribute : attributeList) {
+            // when we find the column corresponding to the definedBy for lat and long, add them to the response
+            if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
+                response.put("lat_column", attribute.getColumn());
+            } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
+                response.put("long_column", attribute.getColumn());
+            }
+        }
+
+        return Response.ok(response.toJSONString()).build();
     }
 }
 

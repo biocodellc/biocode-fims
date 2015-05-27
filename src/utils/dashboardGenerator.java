@@ -74,13 +74,6 @@ public class dashboardGenerator {
             sb.append("&project_id=");
             sb.append((String) obj.get("project_id"));
             sb.append("'>.xlsx</a>");
-
-            sb.append("&nbsp;&nbsp;");
-
-            sb.append("<a href='");
-            sb.append((String) obj.get("webaddress"));
-            sb.append("'>n3</a>");
-
             sb.append("</td>\\n");
 
             sb.append("\\t</tr>\\n");

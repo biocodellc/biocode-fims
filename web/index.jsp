@@ -17,6 +17,7 @@
         <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
     </div>
     <div class="sectioncontent" id="dashboard"></div>
+    <div id=dialogContainer></div>
 </div>
 
 <script>

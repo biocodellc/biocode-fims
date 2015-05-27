@@ -16,6 +16,9 @@
     <script type="text/javascript" src="/biocode-fims/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/BrowserDetect.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/lodash.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/xlsx.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/xlsx-reader.js"></script>
 
     <script type="text/javascript" src="/biocode-fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/bootstrap.min.js"></script>
