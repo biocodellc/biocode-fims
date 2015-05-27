@@ -98,7 +98,7 @@ public class dashboardGenerator {
 
                 sb.append("&nbsp;&nbsp;");
                 sb.append("<a href='");
-                sb.append((String) dataset.get("webaddress"));
+                sb.append("http://n2t.net/" +  dataset.get("ark"));
                 sb.append("'>n3</a>");
 
                 sb.append("</td>\\n");
