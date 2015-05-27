@@ -284,7 +284,7 @@ public class utils {
         String username = (String) session.getAttribute("user");
 
         dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
-        String dashboard = dashboardGenerator.getDashboard(username);
+        String dashboard = dashboardGenerator.getDashboard();
 
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
     }
