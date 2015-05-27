@@ -246,7 +246,7 @@ public class fimsQueryBuilder {
             format = "json";
 
         if (format.equals("excel")) {
-            outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xls", output_directory));
+            outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xlsx", output_directory));
 
             // Here we attach the other components of the excel sheet found with
             // TODO: finish this part up

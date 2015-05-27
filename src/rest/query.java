@@ -214,7 +214,7 @@ public class query {
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
-                "attachment; filename=biocode-fims-output.xls");
+                "attachment; filename=biocode-fims-output.xlsx");
 
         // Return response
         if (response == null) {
