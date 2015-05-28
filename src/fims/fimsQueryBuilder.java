@@ -249,7 +249,6 @@ public class fimsQueryBuilder {
             outputPath = fimsModel.writeExcel(PathManager.createUniqueFile("output.xlsx", output_directory));
 
             // Here we attach the other components of the excel sheet found with
-            // TODO: finish this part up
             XSSFWorkbook justData = null;
             try {
                  justData = new XSSFWorkbook(new FileInputStream(outputPath));

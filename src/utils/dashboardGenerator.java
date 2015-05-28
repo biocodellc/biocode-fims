@@ -96,10 +96,20 @@ public class dashboardGenerator {
                 sb.append((String) dataset.get("project_id"));
                 sb.append("'>.xlsx</a>");
 
+
                 sb.append("&nbsp;&nbsp;");
-                sb.append("<a href='");
-                sb.append("http://n2t.net/" +  (String) dataset.get("ark"));
-                sb.append("'>n3</a>");
+
+                // Demo user should have direct link to webaddress
+                if (username.equalsIgnoreCase("demo")) {
+                    sb.append("<a href='");
+                    sb.append((String) dataset.get("webaddress"));
+                    sb.append("'>n3</a>");
+                // All other users will have ark
+                } else {
+                    sb.append("<a href='");
+                    sb.append("http://n2t.net/" + (String) dataset.get("ark"));
+                    sb.append("'>" + dataset.get("ark") + "</a>");
+                }
 
                 sb.append("</td>\\n");
 
