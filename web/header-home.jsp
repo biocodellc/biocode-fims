@@ -20,6 +20,14 @@
     <script type="text/javascript" src="/biocode-fims/js/xlsx.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/xlsx-reader.js"></script>
 
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+    <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+    <script type-"text/javascript" src="/biocode-fims/js/biocode-fims-mapping.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/bootstrap.min.js"></script>
 

@@ -66,9 +66,9 @@
 
         <div id=dialogContainer></div>
 
-        <div id=resultsContainer style='overflow:auto; display:none;'>
-        </div>
+        <div id=resultsContainer style='overflow:auto; display:none;'></div>
 
+        <div id='map' style="height:400px;width:600px;"></div>
     </div>
 </div>
 
