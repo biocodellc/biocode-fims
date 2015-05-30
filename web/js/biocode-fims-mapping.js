@@ -53,13 +53,16 @@ function getSampleCoordinates(configData) {
                 if (index != 0) {
                     f = $.extend(true, {}, featureTemplate);
 
-                    // add the coordinates to the feature object
-                    f.geometry.coordinates.push(element[longColumn]);
-                    f.geometry.coordinates.push(element[latColumn]);
+                    // only add coordinates if we find them
+                    if ((element[longColumn] != null) && (element[latColumn] != null) ) {
+                        // add the coordinates to the feature object
+                        f.geometry.coordinates.push(element[longColumn]);
+                        f.geometry.coordinates.push(element[latColumn]);
 
-                    // add feature object to feature collection object only if a feature doesn't already exist
-                    if (!duplicateFeature(f, geoJSONData.features)) {
-                        geoJSONData.features.push(f);
+                        // add feature object to feature collection object only if a feature doesn't already exist
+                        if (!duplicateFeature(f, geoJSONData.features)) {
+                            geoJSONData.features.push(f);
+                        }
                     }
                 }
             });
