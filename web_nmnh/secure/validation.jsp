@@ -50,7 +50,7 @@
                 <tr>
                     <td align="right">Final Copy&nbsp;&nbsp;</td>
                     <td style="font-size:11px;">
-                            <input type="checkbox" id="publicStatus" name="publicStatus" />
+                            <input type="checkbox" id="publicStatus" name="public_status" />
                     </td>
                 </tr>
 
