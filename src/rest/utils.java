@@ -339,5 +339,16 @@ public class utils {
 
         return Response.ok(response.toJSONString()).build();
     }
+
+    @GET
+    @Path("/getMapboxToken")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMapboxToken() {
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+        String token = sm.retrieveValue("mapboxAccessToken");
+
+        return Response.ok("{\"accessToken\": \"" + token + "\"}").build();
+    }
 }
 

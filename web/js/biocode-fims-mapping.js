@@ -1,6 +1,3 @@
-// get you're access token by visiting https://www.mapbox.com/account/apps/
-L.mapbox.accessToken = '<your-access-token>'
-
 (function(undefined) {
     'use strict';
     // Check if dependecies are available.
@@ -18,6 +15,12 @@ L.mapbox.accessToken = '<your-access-token>'
         console.log('leaflet.markercluster.js is required. Get it from https://www.mapbox.com/mapbox.js/plugins/#leaflet-markercluster');
         return;
     }
+
+    $.getJSON("rest/utils/getMapboxToken", function(data) {
+        L.mapbox.accessToken = data.accessToken;
+    }).fail(function() {
+        console.log("Failed to retrieve mapbox accessToken. Mapping features will not work.");
+    });
 }).call(this);
 
 // function to parse the sample coordinates from the spreadsheet
