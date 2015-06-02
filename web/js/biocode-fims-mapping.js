@@ -1,5 +1,5 @@
 // get you're access token by visiting https://www.mapbox.com/account/apps/
-L.mapbox.accessToken = '<your-access-token>'
+L.mapbox.accessToken = 'pk.eyJ1IjoiamRlY2s4OCIsImEiOiJlZTBlYzM2ZmZjYTExNjFhYzA3YWU2YjlkMmI1NTc1OSJ9.eq6lSPDxP9DO2Dl71FXgNA'
 
 (function(undefined) {
     'use strict';

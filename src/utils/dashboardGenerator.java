@@ -104,11 +104,11 @@ public class dashboardGenerator {
                     sb.append("<a href='");
                     sb.append((String) dataset.get("webaddress"));
                     sb.append("'>n3</a>");
-                // All other users will have ark
+                // All other users will have ark which can redirect
                 } else {
                     sb.append("<a href='");
                     sb.append("http://n2t.net/" + (String) dataset.get("ark"));
-                    sb.append("'>" + dataset.get("ark") + "</a>");
+                    sb.append("'>n3</a>");
                 }
 
                 sb.append("</td>\\n");
