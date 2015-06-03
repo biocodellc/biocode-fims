@@ -820,7 +820,7 @@ function parseSpreadsheet(regExpression, sheetName) {
     try {
         f = new FileReader();
     } catch(err) {
-        return -1;
+        return null;
     }
     // older browsers don't have a FileReader
     if (f != null) {
@@ -831,11 +831,11 @@ function parseSpreadsheet(regExpression, sheetName) {
             if (match) {
                 deferred.resolve(match.toString().split('=')[1].slice(0, -1));
             } else {
-                deferred.resolve(-1);
+                deferred.resolve(null);
             }
         });
         return deferred.promise();
     }
-    return -1;
+    return null;
 
 }

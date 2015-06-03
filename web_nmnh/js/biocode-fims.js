@@ -575,7 +575,7 @@ function validationFormToggle() {
     $('#dataset').change(function() {
 
         // Check NAAN
-        $.when(parseSpreadsheet("~naan=[0-9]+~"), "Instructions").done(function(spreadsheetNaan) {
+        $.when(parseSpreadsheet("~naan=[0-9]+~", "Instructions")).done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 $.getJSON("/fims/rest/utils/getNAAN/")
                         .done(function(data) {
@@ -584,7 +584,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(parseSpreadsheet("~project_id=[0-9]+~"), "Instructions").done(function(project_id) {
+        $.when(parseSpreadsheet("~project_id=[0-9]+~", "Instructions")).done(function(project_id) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
@@ -614,14 +614,14 @@ function validationFormToggle() {
             if(oldBrowser) {
                     getExpeditionCodes();
             } else {
-                $.when(parseSpreadsheet("~dataset_code=[a-zA-Z0-9-_]{8,50}~")).done(function(dataset_code) {
+                $.when(parseSpreadsheet("~dataset_code=[a-zA-Z0-9-_]{8,50}~", "Instructions")).done(function(dataset_code) {
                     if (dataset_code != null) {
                         //$("#expedition_code").replaceWith('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                         $("#expedition_code_container").html('<input type="hidden" name="expedition_code" id="expedition_code">' + dataset_code);
                         $("#expedition_code").val(dataset_code);
                     } else {
                         // getExpeditionCodes();
-                        alert("Problem reading dataset code from spreadsheet");
+                        alert("Problem reading dataset code from spreadsheet. Is the dataset code embeded in the spreadsheet?");
                     }
                 });
             }
@@ -714,7 +714,7 @@ function parseSpreadsheet(regExpression, sheetName) {
     try {
         f = new FileReader();
     } catch(err) {
-        return -1;
+        return null;
     }
     // older browsers don't have a FileReader
     if (f != null) {
@@ -725,11 +725,11 @@ function parseSpreadsheet(regExpression, sheetName) {
             if (match) {
                 deferred.resolve(match.toString().split('=')[1].slice(0, -1));
             } else {
-                deferred.resolve(-1);
+                deferred.resolve(null);
             }
         });
         return deferred.promise();
     }
-    return -1;
+    return null;
 
 }

@@ -121,13 +121,13 @@
                 });
 
                 var sheet = workbook.Sheets[sheetName];
-                var range = XLSX.utils.decode_range(sheet['!ref']);
 
                 if (!sheet) {
                     console.log("Workbook doesn't contain sheet: " + sheetName);
-                    deferred.resolve(null);
+                    return deferred.resolve(null);
                 }
 
+                var range = XLSX.utils.decode_range(sheet['!ref']);
                 var match;
                 _.range(range.s.r, range.e.r + 1).some(function(row) {
                     _.range(range.s.c, range.e.c + 1).some(function(column) {
