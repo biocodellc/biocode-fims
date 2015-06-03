@@ -98,7 +98,4 @@
 
 </script>
 
-<script type="text/javascript" src="/biocode-fims/js/zipcontroller.js"></script>
-<script type="text/javascript" src="/biocode-fims/js/zip.js"></script>
-
 <%@ include file="footer.jsp" %>

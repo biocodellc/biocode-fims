@@ -109,6 +109,49 @@
                 }
             });
             return result;
+        },
+        'findCell': function(file, regEx, sheetName) {
+            var deferred = $.Deferred();
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+
+                var sheet = workbook.Sheets[sheetName];
+                var range = XLSX.utils.decode_range(sheet['!ref']);
+
+                if (!sheet) {
+                    console.log("Workbook doesn't contain sheet: " + sheetName);
+                    deferred.resolve(null);
+                }
+
+                var match;
+                _.range(range.s.r, range.e.r + 1).some(function(row) {
+                    _.range(range.s.c, range.e.c + 1).some(function(column) {
+                        var cellIndex = XLSX.utils.encode_cell({
+                            'c': column,
+                            'r': row
+                        });
+
+                        var cell = sheet[cellIndex];
+
+                        if (cell && cell.v.match(regEx)) {
+                            match = cell.v;
+                            return true;
+                        }
+                    });
+                    if (match) {
+                        return true;
+                    }
+                });
+
+                deferred.resolve(match);
+            }
+            reader.readAsBinaryString(file);
+            return deferred.promise();
         }
     }
 }).call(this);

@@ -20,6 +20,9 @@
     <script type="text/javascript" src="/fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/fims/js/BrowserDetect.js"></script>
 
+    <script type="text/javascript" src="/fims/js/lodash.js"></script>
+    <script type="text/javascript" src="/fims/js/xlsx.js"></script>
+    <script type="text/javascript" src="/fims/js/biocode-fims-xlsx-reader.js"></script>
     <script type="text/javascript" src="/fims/js/biocode-fims.js"></script>
     <script type="text/javascript" src="/fims/js/bootstrap.min.js"></script>
 

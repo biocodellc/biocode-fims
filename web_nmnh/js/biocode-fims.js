@@ -575,7 +575,7 @@ function validationFormToggle() {
     $('#dataset').change(function() {
 
         // Check NAAN
-        $.when(parseSpreadsheet("~naan=[0-9]+~")).done(function(spreadsheetNaan) {
+        $.when(parseSpreadsheet("~naan=[0-9]+~"), "Instructions").done(function(spreadsheetNaan) {
             if (spreadsheetNaan > 0) {
                 $.getJSON("/fims/rest/utils/getNAAN/")
                         .done(function(data) {
@@ -584,7 +584,7 @@ function validationFormToggle() {
             }
         });
 
-        $.when(parseSpreadsheet("~project_id=[0-9]+~")).done(function(project_id) {
+        $.when(parseSpreadsheet("~project_id=[0-9]+~"), "Instructions").done(function(project_id) {
             if (project_id > 0) {
                 $('#projects').val(project_id);
                 $('#projects').prop('disabled', true);
@@ -708,4 +708,28 @@ function getQueryPostParams() {
     });
 
     return params;
+}
+
+function parseSpreadsheet(regExpression, sheetName) {
+    try {
+        f = new FileReader();
+    } catch(err) {
+        return -1;
+    }
+    // older browsers don't have a FileReader
+    if (f != null) {
+        var deferred = new $.Deferred();
+        var inputFile= $('#dataset')[0].files[0];
+
+        $.when(XLSXReader.utils.findCell(inputFile, regExpression, sheetName)).done(function(match) {
+            if (match) {
+                deferred.resolve(match.toString().split('=')[1].slice(0, -1));
+            } else {
+                deferred.resolve(-1);
+            }
+        });
+        return deferred.promise();
+    }
+    return -1;
+
 }
