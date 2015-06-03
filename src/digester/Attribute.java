@@ -28,8 +28,12 @@ public class Attribute implements Comparable {
         return column;
     }
 
+    /**
+     * set the Column name. Here we normalize column names to replace spaces with underscore and remove an forward /'s
+     * @param column
+     */
     public void setColumn(String column) {
-        this.column = column;
+        this.column = column.replace(" ","_").replace("/","");
     }
 
     public String getColumn_internal() {

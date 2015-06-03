@@ -60,7 +60,7 @@ public class Entity {
     }
 
     public void setConceptAlias(String conceptAlias) {
-        this.conceptAlias = conceptAlias;
+        this.conceptAlias = conceptAlias.replace(" ","_");
     }
 
     public String getConceptURI() {
@@ -134,10 +134,18 @@ public class Entity {
 
         // Get a list of colNames that we know are good from the spreadsheet
         java.util.List<String> colNames = ((Mapping) parent).getColNames();
+        // Normalize the column names so they can be mapped according to how they appear in SQLite
+        ArrayList<String> normalizedColNames = new ArrayList<String>();
+        Iterator it = colNames.iterator();
+        while (it.hasNext()) {
+            String colName = (String)it.next();
+            normalizedColNames.add(colName.replace(" ","_").replace("/",""));
+        }
+
         // Loop through attributes associated with this Entity
         if (attributes.size() > 0) {
             for (Attribute attribute : attributes)
-                attribute.printD2RQ(pw, this, colNames);
+                attribute.printD2RQ(pw, this, normalizedColNames);
         }
     }
 

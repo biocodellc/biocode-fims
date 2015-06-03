@@ -31,7 +31,7 @@ public class uploader {
     private static Logger logger = LoggerFactory.getLogger(uploader.class);
 
     public String getConnectionPoint() {
-        return this.getService() + "?graph="+graphID;
+        return this.getService() + "?graph=" + graphID;
     }
 
     /**
@@ -138,16 +138,18 @@ public class uploader {
      * A convenient place to upload n-triple files to the data.biscicol.org database... this was
      * started as a temporary back-end to load data files coming from the triplifier project into the
      * biscicol database.
+     *
      * @param args
      */
-    public static void main (String[] args) {
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/test.n3");
+    public static void main(String[] args) {
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/test.6.n3");
         //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/DEMOH_output.31.n3");
         //http://data.biscicol.org/ds/data?graph=urn%3Auuid%3A37797bda-7602-42af-82a5-c8a3827d1c61
         //String uuid = "urn%3Auuid%3A2eddf62e-a58a-11e3-aae7-d4c45d837ce1";
         //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
-        uploader u = new uploader("http://data.biscicol.org/ds/data",file);
-       System.out.println( u.execute());
+        //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
+        uploader u = new uploader("http://localhost:3030/ds/data", file);
+        System.out.println(u.execute());
     }
 }
 
