@@ -1,11 +1,13 @@
 package tools;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.FIMSRuntimeException;
+import utils.encodeURIcomponent;
 
 import java.io.*;
 import java.util.*;
@@ -89,6 +91,7 @@ public class siConverter {
 
         TreeMap treeMap = fieldMapping(p);
 
+        encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
         // Write the mapping element
         sb.append("<mapping>\n" +
                 "\t<entity " +
@@ -137,7 +140,7 @@ public class siConverter {
                             value.equalsIgnoreCase("d"))) {
 
                 String column = row.getCell(columnIndex).toString();
-                String columnInternal = row.getCell(columnInternalIndex).toString();
+                String columnInternal = StringEscapeUtils.escapeXml(row.getCell(columnInternalIndex).toString());
                 String definition = row.getCell(definitionIndex).toString();
                 String synonyms = row.getCell(synonymIndex).toString();
                 String dataFormat = row.getCell(validationFormatAndValuesIndex).toString();
@@ -368,7 +371,7 @@ public class siConverter {
         System.err.println("Need to reed entityWorksheetKey from spreadsheet itself (it is hardcoded here)");
         init();
 
-        columnInternalIndex = getColumnIndex("Primary Field Name");
+        columnInternalIndex = getColumnIndex("EMu Mapping");
         columnIndex = getColumnIndex("EMu Field Label (Vernacular)");
         definitionIndex = getColumnIndex("Definitions");
         synonymIndex = getColumnIndex("Synonyms");

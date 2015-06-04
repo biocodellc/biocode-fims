@@ -2,6 +2,7 @@ package run;
 
 import digester.Attribute;
 import digester.Mapping;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -282,7 +283,7 @@ public class SIServerSideSpreadsheetTools {
                 // when we find the corresponding attribute to the column, insert the column_internal prop.
                 if (c.getStringCellValue().equalsIgnoreCase(attribute.getColumn())) {
                     Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
-                    columnInternalCell.setCellValue(attribute.getColumn_internal());
+                    columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumn_internal()));
                 }
             }
         }
