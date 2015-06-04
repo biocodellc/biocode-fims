@@ -225,13 +225,19 @@ public class SIServerSideSpreadsheetTools {
      * @param args
      */
     public static void main(String[] args) {
+        String inputConfigFile = "/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/SIENT.xml"; //"/Users/xxxx/Downloads/indoPacificTemplate.1.xlsx"
+        String inputSpreadsheet = "/Users/jdeck/IdeaProjects/biocode-fims/sampledata/TestWriteEMUHeader.xlsx";
+        String outputDir = "/Users/jdeck/Downloads/"; //"/Users/xxxx/jetty-files"
+        String outputFile = "/Users/jdeck/Downloads/output.xlsx";  //"/Users/xxxx/jetty-files/indoPacificTemplate.2.xlsx"
+
+
         try {
-            File configFile = new File("/Users/xxxx/IdeaProjects/biocode-fims/sampledata/indoPacificConfiguration_v2.xml");
+            File configFile = new File(inputConfigFile);
             processController pc = new processController();
 
             process p = new process(
-                    "/Users/xxxx/Downloads/indoPacificTemplate.1.xlsx",
-                    "/Users/xxxx/jetty-files",
+                    inputSpreadsheet,
+                    outputDir,
                     pc,
                     configFile
             );
@@ -240,14 +246,14 @@ public class SIServerSideSpreadsheetTools {
             Mapping map = p.getProcessController().getValidation().getMapping();
 
             SIServerSideSpreadsheetTools tools = new SIServerSideSpreadsheetTools(
-                    new File("/Users/xxxx/Downloads/indoPacificTemplate.1.xlsx"),
+                    new File(inputSpreadsheet),
                     "Samples",
                     "Preparator Number",
                     "ark:/whosyourdaddy/"
             );
-            tools.addInternalRowToHeader(map, true);
+            tools.addInternalRowToHeader(map, false);
 
-            tools.write(new File("/Users/xxxx/jetty-files/indoPacificTemplate.2.xlsx"));
+            tools.write(new File(outputFile));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,9 +286,12 @@ public class SIServerSideSpreadsheetTools {
 
         for (Cell c : columnRow) {
             for (Attribute attribute : attributeList) {
+                //System.out.println(c.getStringCellValue() +  " " + attribute.getColumn());
                 // when we find the corresponding attribute to the column, insert the column_internal prop.
-                if (c.getStringCellValue().equalsIgnoreCase(attribute.getColumn())) {
+                // We have to normalize some values found in attribute columns
+                if (c.getStringCellValue().replace("/","").equalsIgnoreCase(attribute.getColumn().replace("_"," "))) {
                     Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
+                    //System.out.println("       :" + attribute.getColumn_internal());
                     columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumn_internal()));
                 }
             }
