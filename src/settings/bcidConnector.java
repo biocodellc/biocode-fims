@@ -251,12 +251,13 @@ public class bcidConnector {
      *
      * @return
      */
-    public String createDatasetBCID(String webaddress, String graph) {
+    public String createDatasetBCID(String webaddress, String graph, Boolean finalCopy) {
         String createBCIDDatasetPostParams =
                 "title=Loaded Dataset from Biocode-FIMS&" +
                         "resourceTypesMinusDataset=1&" +
                         "suffixPassThrough=false&" +
-                        "webaddress=" + webaddress;
+                        "webaddress=" + webaddress +
+                        "&finalCopy=" + finalCopy;
 
         if (graph != null)
             createBCIDDatasetPostParams += "&graph=" + graph;

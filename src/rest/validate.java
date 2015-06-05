@@ -48,6 +48,7 @@ public class validate {
                            @FormDataParam("expedition_code") String expedition_code,
                            @FormDataParam("upload") String upload,
                            @FormDataParam("public_status") String publicStatus,
+                           @FormDataParam("final_copy") String finalCopy,
                            @FormDataParam("dataset") InputStream is,
                            @FormDataParam("dataset") FormDataContentDisposition fileData,
                            @Context HttpServletRequest request) {
@@ -136,6 +137,11 @@ public class validate {
                 // set public status to true in processController if user wants it on
                 if (publicStatus != null && publicStatus.equals("on")) {
                        processController.setPublicStatus(true);
+                }
+
+                // set final copy to true in processController if user wants it on
+                if (finalCopy != null && finalCopy.equals("on")) {
+                    processController.setFinalCopy(true);
                 }
 
                 // if there were vaildation warnings and user would like to upload, we need to ask the user to continue
@@ -363,7 +369,7 @@ public class validate {
             // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
             String datasetArk = null;
             // Create a dataset BCID
-            datasetArk = connector.createDatasetBCID(null, inputFile.getName());
+            datasetArk = connector.createDatasetBCID(null, inputFile.getName(), processController.getFinalCopy());
             // associate the BCID
             connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
             // Set the public status if relevant

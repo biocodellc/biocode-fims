@@ -33,6 +33,7 @@ public class processController {
     private Integer accessionNumber;
     private String defaultSheetUniqueKey;
     private Boolean publicStatus = false;   // default to false
+    private Boolean finalCopy = false;
 
     private static Logger logger = LoggerFactory.getLogger(processController.class);
 
@@ -257,5 +258,13 @@ public class processController {
     }
     public StringBuilder getCommandLineSB() {
         return commandLineWarningsSB;
+    }
+
+    public void setFinalCopy(Boolean finalCopy) {
+        this.finalCopy = finalCopy;
+    }
+
+    public boolean getFinalCopy() {
+        return finalCopy;
     }
 }
