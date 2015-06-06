@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <session-config>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
 
     <servlet>
         <servlet-name>Jersey Web Application</servlet-name>
@@ -24,4 +30,34 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <filter>
+        <filter-name>ClickjackFilterDeny</filter-name>
+        <filter-class>utils.ClickJackFilter</filter-class>
+        <init-param>
+            <param-name>mode</param-name>
+            <param-value>DENY</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>ClickjackFilterSameOrigin</filter-name>
+        <filter-class>utils.ClickJackFilter</filter-class>
+        <init-param>
+            <param-name>mode</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+    </filter>
+
+    <!--  use the Deny version to prevent anyone, including yourself, from framing the page -->
+    <filter-mapping>
+        <filter-name>ClickjackFilterDeny</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- use the SameOrigin version to allow your application to frame, but nobody else
+    <filter-mapping>
+        <filter-name>ClickjackFilterSameOrigin</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
 </web-app>
