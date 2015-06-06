@@ -55,14 +55,17 @@ public class bcidConnector {
     private String graphs_uri;
     private String my_graphs_uri;
     private Integer naan;
-    private Boolean ignore_user;
+    private String save_template_config_uri;
+    private String get_template_configs_uri;
+    private String get_template_config_uri;
 
+    private Boolean ignore_user;
     private Integer responseCode;
     private String accessToken;
     private String refreshToken;
     private Boolean refreshedToken = false;
-    private Boolean triedToRefreshToken = false;
 
+    private Boolean triedToRefreshToken = false;
     private String connectionPoint;
     private String username;
     private String password;
@@ -152,6 +155,9 @@ public class bcidConnector {
         project_service_uri = sm.retrieveValue("project_service_uri");
         graphs_uri = sm.retrieveValue("graphs_uri");
         my_graphs_uri = sm.retrieveValue("my_graphs_uri");
+        save_template_config_uri = sm.retrieveValue("save_template_config_uri");
+        get_template_config_uri = sm.retrieveValue("get_template_config_uri");
+        get_template_configs_uri = sm.retrieveValue("get_template_configs_uri");
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
         refresh_uri = sm.retrieveValue("refresh_uri");
@@ -864,4 +870,88 @@ public class bcidConnector {
         return json;
     }
 
+    /**
+     * method for saving a template generator configuration
+     * @param configName
+     * @param checkedOptions
+     * @param projectId
+     * @return
+     */
+    public String saveTemplateConfig(String configName, List<String> checkedOptions, Integer projectId) {
+        String urlString = save_template_config_uri;
+        String postParams = "configName=" + configName + "&projectId=" + projectId;
+
+        for (String opt: checkedOptions) {
+            postParams += "&checkedOptions=" + opt;
+        }
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
+
+        try {
+            URL url = new URL(urlString);
+
+            String response = createPOSTConnnection(url, postParams);
+
+            // Some error message was returned from the expedition validation service
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
+            } else {
+                return response;
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
+
+    /**
+     * method for retrieving the template generator configurations for a project
+     * @param projectId
+     * @return
+     */
+    public String getTemplateConfigs(Integer projectId) {
+        String urlString = get_template_configs_uri + projectId;
+
+        try {
+            URL url = new URL(urlString);
+
+            String response = createGETConnection(url);
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
+            } else {
+                return response;
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
+
+    /**
+     * method for retrieving a specific template generator configuration
+     * @param projectId
+     * @param configName
+     * @return
+     */
+    public String getTemplateConfig(Integer projectId, String configName) {
+
+        try {
+            String urlString = get_template_config_uri + projectId + "/" + URLEncoder.encode(configName, "UTF-8"
+                                                                                            ).replaceAll("\\+", "%20");
+            URL url = new URL(urlString);
+
+            String response = createGETConnection(url);
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
+            } else {
+                return response;
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+    }
 }

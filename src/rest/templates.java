@@ -12,8 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -55,6 +54,72 @@ public class templates {
         } else {
             return Response.ok(response).build();
         }
+    }
+
+    /**
+     * get a specific template generator configuration
+     * @param configName
+     * @return
+     */
+    @GET
+    @Path("/getConfig/{project_id}/{config_name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getConfig(@PathParam("config_name") String configName,
+                              @PathParam("project_id") Integer projectId) {
+        bcidConnector bcidConnector = new bcidConnector();
+        String response = bcidConnector.getTemplateConfig(projectId, configName);
+
+        return Response.status(bcidConnector.getResponseCode())
+                .entity(response)
+                .build();
+    }
+
+    /**
+     * Get the template generator configurations for a given project
+     * @param projectId
+     * @return
+     */
+    @GET
+    @Path("/getConfigs/{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getConfigs(@PathParam("project_id") Integer projectId) {
+        bcidConnector bcidConnector = new bcidConnector();
+        String response = bcidConnector.getTemplateConfigs(projectId);
+
+        return Response.status(bcidConnector.getResponseCode())
+                .entity(response)
+                .build();
+    }
+
+    /**
+     * Save a template generator configuration
+     * @param configName
+     * @param checkedOptions
+     * @param projectId
+     * @param request
+     * @return
+     */
+    @POST
+    @Path("/saveConfig/{project_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response saveConfig(@FormParam("configName") String configName,
+                               @FormParam("checkedOptions") List<String> checkedOptions,
+                               @PathParam("project_id") Integer projectId,
+                               @Context HttpServletRequest request) {
+        if (configName.equalsIgnoreCase("default")) {
+            return Response.ok("{\"error\": \"To change the default config, talk to the project admin.\"}").build();
+        }
+
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        String response = bcidConnector.saveTemplateConfig(configName, checkedOptions, projectId);
+
+        return Response.status(bcidConnector.getResponseCode())
+                .entity(response)
+                .build();
     }
 
     /**

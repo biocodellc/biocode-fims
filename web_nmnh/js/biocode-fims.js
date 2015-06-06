@@ -40,25 +40,27 @@ function populateColumns(targetDivId) {
     var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "/fims/rest/templates/attributes/?project_id=" + project_id;
+    if (project_id != 0) {
+        theUrl = "/fims/rest/templates/attributes/?project_id=" + project_id;
 
-    var jqxhr = $.ajax( {
-        url: theUrl,
-        async: false,
-        dataType : 'html'
-    }).done(function(data) {
-        $(targetDivId).html(data);
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
-                showMessage ("Timed out, waiting for response!");
-        } else {
-                showMessage ("Error completing request!" );
-        }
-    });
+        var jqxhr = $.ajax( {
+            url: theUrl,
+            async: false,
+            dataType : 'html'
+        }).done(function(data) {
+            $(targetDivId).html(data);
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
+                    showMessage ("Timed out, waiting for response!");
+            } else {
+                    showMessage ("Error completing request!" );
+            }
+        });
 
-     $(".def_link").click(function () {
-        populateDefinitions($(this).attr('name'));
-     });
+         $(".def_link").click(function () {
+            populateDefinitions($(this).attr('name'));
+         });
+     }
 }
 function populateAbstract(targetDivId) {
     $(targetDivId).html("Loading ...");
@@ -66,21 +68,23 @@ function populateAbstract(targetDivId) {
     var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "/fims/rest/templates/abstract/?project_id=" + project_id;
+    if (project_id != 0) {
+        theUrl = "/fims/rest/templates/abstract/?project_id=" + project_id;
 
-    var jqxhr = $.ajax( {
-        url: theUrl,
-        async: false,
-        dataType : 'html'
-    }).done(function(data) {
-        $(targetDivId).html(data +"<p>");
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
-                showMessage ("Timed out, waiting for response!");
-        } else {
-                showMessage ("Error completing request!" );
-        }
-    });
+        var jqxhr = $.ajax( {
+            url: theUrl,
+            async: false,
+            dataType : 'html'
+        }).done(function(data) {
+            $(targetDivId).html(data +"<p>");
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
+                    showMessage ("Timed out, waiting for response!");
+            } else {
+                    showMessage ("Error completing request!" );
+            }
+        });
+    }
 }
 
 function populateProjects() {
@@ -97,6 +101,11 @@ function populateProjects() {
         $("#projects").html(listItems);
         // Set to the first value in the list which should be "select one..."
         $("#projects").val($("#projects option:first").val());
+        $("#projects").on("change", function() {
+            if ($('.toggle-content#config_toggle').is(':hidden')) {
+                $('.toggle-content#config_toggle').show(400);
+            }
+        });
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
 	        showMessage ("Timed out, waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -732,4 +741,114 @@ function parseSpreadsheet(regExpression, sheetName) {
     }
     return null;
 
+}
+
+
+var savedConfig;
+function saveTemplateConfig() {
+    var message = "<table><tr><td>Configuration Name:</td><td><input type='text' name='config_name' /></td></tr></table>";
+    var title = "Save Template Generator Configuration";
+    var buttons = {
+        "Save": function() {
+            var checked = [];
+            var configName = $("input[name='config_name']").val();
+
+            if (configName.toUpperCase() == "Default".toUpperCase()) {
+                $("#dialogContainer").addClass("error");
+                dialog("Talk to the project admin to change the default configuration.<br><br>" + message, title, buttons);
+                return;
+            }
+
+            $("#cat1 input[type='checkbox']:checked").each(function() {
+                checked.push($(this).data().uri);
+            });
+
+            savedConfig = configName;
+            $.post("/fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
+                                                            {"configName": configName, "checkedOptions": checked}, true)
+            ).done(function(data) {
+                if (data.error != null) {
+                    $("#dialogContainer").addClass("error");
+                    var m = data.error + "<br><br>" + message;
+                    dialog(m, title, buttons);
+                } else {
+                    $("#dialogContainer").removeClass("error");
+                    populateConfigs();
+                    var b = {
+                        "Ok": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                    dialog(data.success + "<br><br>", "Success!", b);
+                }
+            }).fail(function(jqXHR) {
+                failError(jqXHR);
+            });
+        },
+        "Cancel": function() {
+            $("#dialogContainer").removeClass("error");
+            $(this).dialog("close");
+        }
+    }
+
+    dialog(message, title, buttons);
+}
+
+function populateConfigs() {
+    var project_id = $("#projects").val();
+    if (project_id == 0) {
+        $("#configs").html("<option value=0>Select a Project</option>");
+    } else {
+        previousConfig = $("#configs").val();
+        previousLength = $("#configs").length;
+        $("#configs").html("<option value=0>Loading configs...</option>");
+        $.getJSON("/fims/rest/templates/getConfigs/" + project_id).done(function(data) {
+            var listItems = "";
+
+            data.configNames.forEach(function(configName) {
+                listItems+= "<option value='" + configName + "'>" + configName + "</option>";
+            });
+
+            $("#configs").html(listItems);
+
+            if (savedConfig != null) {
+                $("#configs").val(savedConfig);
+            }
+
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+            } else {
+                showMessage ("Error fetching template configurations!");
+            }
+        });
+    }
+}
+
+function updateCheckedBoxes() {
+    var configName = $("#configs").val();
+    if (configName == "Default") {
+        populateColumns("#cat1");
+    } else {
+        $.getJSON("/fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName).done(function(data) {
+            if (data.error != null) {
+                showMessage(data.error);
+                return;
+            }
+            // deselect all unrequired columns
+            $(':checkbox').not(":disabled").each(function() {
+                this.checked = false;
+            });
+
+            data.checkedOptions.forEach(function(uri) {
+                $(':checkbox[data-uri="' + uri + '"]')[0].checked = true;
+            });
+        }).fail(function(jqXHR, textStatus) {
+            if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+            } else {
+                showMessage ("Error fetching template configuration!");
+            }
+        });
+    }
 }

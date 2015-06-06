@@ -2,7 +2,6 @@ package run;
 
 import digester.*;
 import org.apache.commons.digester3.Digester;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
@@ -352,6 +351,7 @@ public class templateProcessor {
             // Set the column name
             String column = a.getColumn();
             String group = a.getGroup();
+            String uri = a.getUri();
 
             // Check that this name hasn't been read already.  This is necessary in some situations where
             // column names are repeated for different entities in the configuration file
@@ -371,7 +371,9 @@ public class templateProcessor {
 
 
                 // Construct the checkbox text
-                thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "'");
+                thisOutput.append("<input type='checkbox' class='check_boxes' value='" + column + "' data-uri='");
+                thisOutput.append(uri);
+                thisOutput.append("'");
 
                 // If this is a required column then make it checked (and immutable)
                 if (aRequiredColumn)
@@ -413,7 +415,8 @@ public class templateProcessor {
         Iterator it = groups.entrySet().iterator();
         StringBuilder output = new StringBuilder();
         output.append("<a href='#' id='select_all'>Select ALL</a> | ");
-        output.append("<a href='#' id='select_none'>Select NONE</div>");
+        output.append("<a href='#' id='select_none'>Select NONE</a> | ");
+        output.append("<a href='#' onclick='saveTemplateConfig()'>Save</a>");
         output.append("<script>" +
                 "$('#select_all').click(function(event) {\n" +
                 "      // Iterate each checkbox\n" +
