@@ -38,7 +38,9 @@ function getSampleCoordinates(configData) {
         var featureTemplate = {
                                 "type": "Feature",
                                 "geometry": {"type": "Point", "coordinates": []},
-                                "properties": {}
+                                "properties": {
+                                                "description": "",
+                                               }
                                }
         var geoJSONData = {"type": "FeatureCollection",
                            "features": []}
@@ -62,9 +64,15 @@ function getSampleCoordinates(configData) {
                         f.geometry.coordinates.push(element[longColumn]);
                         f.geometry.coordinates.push(element[latColumn]);
 
+                        var featureIndex = findFeature(f, geoJSONData.features);
+
                         // add feature object to feature collection object only if a feature doesn't already exist
-                        if (!duplicateFeature(f, geoJSONData.features)) {
+                        if (featureIndex == -1) {
+                            f.properties.description = "Sample ID: " + element[0] + " (Row " + (index + 1) + ")";
                             geoJSONData.features.push(f);
+                        } else {
+                            geoJSONData.features[featureIndex].properties.description += ", Sample ID: " + element[0] +
+                                                                                         " (Row " + (index + 1) + ")";
                         }
                     }
                 }
@@ -78,11 +86,17 @@ function getSampleCoordinates(configData) {
     return -1;
 }
 
-// function to check if the feature already exists in the array
-function duplicateFeature(feature, featuresArray) {
-    return featuresArray.some(function(element) {
-        return JSON.stringify(feature) === JSON.stringify(element)
+// function to check if the feature with the same coordinates already exists in the array
+function findFeature(feature, featuresArray) {
+    var index = -1;
+    featuresArray.some(function(element, i) {
+        if (element.geometry.coordinates.toString() == feature.geometry.coordinates.toString()) {
+            index = i;
+            return true;
+        }
     });
+
+    return index;
 }
 
 var map;
@@ -93,11 +107,20 @@ function displayMap(id, geoJSONData) {
     map = L.mapbox.map(id, 'mapbox.streets');
 
     // create the data points
-    var geoJSONLayer = L.geoJson(geoJSONData);
+    var geoJSONLayer = L.geoJson(geoJSONData, {
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(L.mapbox.sanitize(feature.properties.description),{maxHeight: 175});
+        }
+    });
 
-    var markers = new L.MarkerClusterGroup()
-    markers.addLayer(geoJSONLayer);
-    map.addLayer(markers);
+    // use marker clusters if there are more then 1000 different points
+    if (geoJSONData.features.length > 1000) {
+        var markers = new L.MarkerClusterGroup()
+        markers.addLayer(geoJSONLayer);
+        map.addLayer(markers);
+    } else {
+        map.addLayer(geoJSONLayer);
+    }
 
     // zoom the map to the data points
     map.fitBounds(geoJSONLayer.getBounds());
