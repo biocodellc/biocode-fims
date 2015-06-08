@@ -374,17 +374,17 @@ BOLD: The source of the latitude and longitude.]]>
 			<synonyms><![CDATA["LatD" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <=90]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Minutes' column_internal='' uri='urn:latitudeMinutes' group='Georeference' defined_by='urn:latitudeMinutes'>
+		<attribute column='Latitude Minutes' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeMinutes' group='Georeference' defined_by='urn:latitudeMinutes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatM" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Direction' column_internal='' uri='urn:latitudeNorthSouth' group='Georeference' defined_by='urn:latitudeNorthSouth'>
+		<attribute column='Latitude Direction' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeNorthSouth' group='Georeference' defined_by='urn:latitudeNorthSouth'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatNS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. N or S]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Seconds' column_internal='' uri='urn:latitudeSeconds' group='Georeference' defined_by='urn:latitudeSeconds'>
+		<attribute column='Latitude Seconds' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeSeconds' group='Georeference' defined_by='urn:latitudeSeconds'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
@@ -394,17 +394,17 @@ BOLD: The source of the latitude and longitude.]]>
 			<synonyms><![CDATA["LongD" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <=180]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Direction' column_internal='' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'>
+		<attribute column='Longitude Direction' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongEW" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. E or W]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Minutes' column_internal='' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'>
+		<attribute column='Longitude Minutes' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongM" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Seconds' column_internal='' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'>
+		<attribute column='Longitude Seconds' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
@@ -731,7 +731,7 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "Record Creation Date" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
-		<attribute column='Image File Name(s)' column_internal='' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
+		<attribute column='Image File Name(s)' column_internal='MulMultiMediaRef_tab(+).Multimedia' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
@@ -860,7 +860,7 @@ BOLD: Male/female/hermaphrodite only.]]>
 "LifeStageSex" = Entomology - Sean Brady (part),]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Voucher Field ID' column_internal='' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+		<attribute column='Voucher Field ID' column_internal='GSVoucherRef.BioPrimaryCollNumber' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
 			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -1052,7 +1052,7 @@ BOLD: ID associated with the sample being sequenced (often identical to or an ex
 "Sample ID" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
 </attribute>
-		<attribute column='Project/Unit ID' column_internal='' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+		<attribute column='Project/Unit ID' column_internal='GSProjectUnitID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>

@@ -30,7 +30,7 @@ ABCDDNA: in case the DNA sample is blocked until a specific date it's neverthele
 			<synonyms><![CDATA["Landowner" = Biocode,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Name' column_internal='' uri='urn:permitInformation' group='Access Benefit Sharing' defined_by='urn:permitInformation'>
+		<attribute column='Agreement Name' column_internal='AgrAgreementRef_tab.RigName' uri='urn:permitInformation' group='Access Benefit Sharing' defined_by='urn:permitInformation'>
 			<![CDATA[IndoPacific: Please include any permit information (agency, permit#, etc) as a text string]]>
 			<synonyms><![CDATA["permitInformation" = IndoPacific Template v7,
 "Permit_Info" = Biocode Backend,
@@ -39,13 +39,13 @@ ABCDDNA: in case the DNA sample is blocked until a specific date it's neverthele
 "permit_info" = Plantbarcodes.individual,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Description' column_internal='' uri='urn:permitNotes' group='Access Benefit Sharing' defined_by='urn:permitNotes'>
+		<attribute column='Agreement Description' column_internal='AgrAgreementRef_tab.RigConditions' uri='urn:permitNotes' group='Access Benefit Sharing' defined_by='urn:permitNotes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["permit_notes" = Plantbarcodes.plot,
 "Restrictions" = Birds,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Number' column_internal='' uri='urn:permitNumber' group='Access Benefit Sharing' defined_by='urn:permitNumber'>
+		<attribute column='Agreement Number' column_internal='AgrAgreementRef_tab.RigNumber' uri='urn:permitNumber' group='Access Benefit Sharing' defined_by='urn:permitNumber'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["permit_no" = Plantbarcodes.plot,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -730,7 +730,7 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "ObjectNature" = Botany - Acevedo,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. Required]]></dataFormat>
 </attribute>
-		<attribute column='Image File Name(s)' column_internal='' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
+		<attribute column='Image File Name(s)' column_internal='MulMultiMediaRef_tab(+).Multimedia' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
@@ -844,7 +844,7 @@ BOLD: Male/female/hermaphrodite only.]]>
 "LifeStageSex" = Entomology - Sean Brady (part),]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Voucher Field ID' column_internal='' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+		<attribute column='Voucher Field ID' column_internal='GSVoucherRef.BioPrimaryCollNumber' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
 			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -957,7 +957,7 @@ BOLD: ID associated with the sample being sequenced (often identical to or an ex
 "Sample ID" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
 </attribute>
-		<attribute column='Project/Unit ID' column_internal='' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+		<attribute column='Project/Unit ID' column_internal='GSProjectUnitID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>

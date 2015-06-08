@@ -30,7 +30,7 @@ ABCDDNA: in case the DNA sample is blocked until a specific date it's neverthele
 			<synonyms><![CDATA["Landowner" = Biocode,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Name' column_internal='' uri='urn:permitInformation' group='Access Benefit Sharing' defined_by='urn:permitInformation'>
+		<attribute column='Agreement Name' column_internal='AgrAgreementRef_tab.RigName' uri='urn:permitInformation' group='Access Benefit Sharing' defined_by='urn:permitInformation'>
 			<![CDATA[IndoPacific: Please include any permit information (agency, permit#, etc) as a text string]]>
 			<synonyms><![CDATA["permitInformation" = IndoPacific Template v7,
 "Permit_Info" = Biocode Backend,
@@ -39,13 +39,13 @@ ABCDDNA: in case the DNA sample is blocked until a specific date it's neverthele
 "permit_info" = Plantbarcodes.individual,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Description' column_internal='' uri='urn:permitNotes' group='Access Benefit Sharing' defined_by='urn:permitNotes'>
+		<attribute column='Agreement Description' column_internal='AgrAgreementRef_tab.RigConditions' uri='urn:permitNotes' group='Access Benefit Sharing' defined_by='urn:permitNotes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["permit_notes" = Plantbarcodes.plot,
 "Restrictions" = Birds,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Agreement Number' column_internal='' uri='urn:permitNumber' group='Access Benefit Sharing' defined_by='urn:permitNumber'>
+		<attribute column='Agreement Number' column_internal='AgrAgreementRef_tab.RigNumber' uri='urn:permitNumber' group='Access Benefit Sharing' defined_by='urn:permitNumber'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["permit_no" = Plantbarcodes.plot,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -468,17 +468,17 @@ BOLD: The source of the latitude and longitude.]]>
 			<synonyms><![CDATA["LatD" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <=90]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Minutes' column_internal='' uri='urn:latitudeMinutes' group='Georeference' defined_by='urn:latitudeMinutes'>
+		<attribute column='Latitude Minutes' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeMinutes' group='Georeference' defined_by='urn:latitudeMinutes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatM" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Direction' column_internal='' uri='urn:latitudeNorthSouth' group='Georeference' defined_by='urn:latitudeNorthSouth'>
+		<attribute column='Latitude Direction' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeNorthSouth' group='Georeference' defined_by='urn:latitudeNorthSouth'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatNS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. N or S]]></dataFormat>
 </attribute>
-		<attribute column='Latitude Seconds' column_internal='' uri='urn:latitudeSeconds' group='Georeference' defined_by='urn:latitudeSeconds'>
+		<attribute column='Latitude Seconds' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:latitudeSeconds' group='Georeference' defined_by='urn:latitudeSeconds'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LatS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
@@ -488,17 +488,17 @@ BOLD: The source of the latitude and longitude.]]>
 			<synonyms><![CDATA["LongD" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <=180]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Direction' column_internal='' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'>
+		<attribute column='Longitude Direction' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeEastWest' group='Georeference' defined_by='urn:longitudeEastWest'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongEW" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list. E or W]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Minutes' column_internal='' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'>
+		<attribute column='Longitude Minutes' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeMinutes' group='Georeference' defined_by='urn:longitudeMinutes'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongM" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
 </attribute>
-		<attribute column='Longitude Seconds' column_internal='' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'>
+		<attribute column='Longitude Seconds' column_internal='BioEventSiteRef.LatLatitude_nesttab' uri='urn:longitudeSeconds' group='Georeference' defined_by='urn:longitudeSeconds'>
 			<![CDATA[]]>
 			<synonyms><![CDATA["LongS" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[>=0 <60]]></dataFormat>
@@ -662,12 +662,12 @@ Schultz: A political or geographic unit (above the level of a specific Locality)
 			<synonyms><![CDATA["cur_vegetation" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Fire' column_internal='' uri='urn:fire' group='Locality' defined_by='urn:fire'>
+		<attribute column='Fire' column_internal='Mapping unresolved' uri='urn:fire' group='Locality' defined_by='urn:fire'>
 			<![CDATA[MIxS: historical and/or physical evidence of fire]]>
 			<synonyms><![CDATA["fire" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Flooding' column_internal='' uri='urn:flooding' group='Locality' defined_by='urn:flooding'>
+		<attribute column='Flooding' column_internal='Mapping unresolved' uri='urn:flooding' group='Locality' defined_by='urn:flooding'>
 			<![CDATA[MIxS: historical and/or physical evidence of flooding]]>
 			<synonyms><![CDATA["flooding" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -697,7 +697,7 @@ IndoPacific: Habitat from which the sample was collected. Please pick from the l
 "feature" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Soil Horizon' column_internal='' uri='urn:horizon' group='Locality' defined_by='urn:horizon'>
+		<attribute column='Soil Horizon' column_internal='Mapping unresolved' uri='urn:horizon' group='Locality' defined_by='urn:horizon'>
 			<![CDATA[MIxS: specific layer in the land area which measures parallel to the soil surface and possesses physical characteristics which differ from the layers above and beneath. values are; O horizon, A horizon, E horizon, B horizon, C horizon, R layer, Permafrost]]>
 			<synonyms><![CDATA["horizon" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -772,12 +772,12 @@ Kress PB Database: usda_site]]>
 "DarContinentOcean" = EMuDwC,]]></synonyms>
 			<dataFormat><![CDATA[Select from lookup list]]></dataFormat>
 </attribute>
-		<attribute column='Perturbation' column_internal='' uri='urn:perturbation' group='Locality' defined_by='urn:perturbation'>
+		<attribute column='Perturbation' column_internal='Mapping unresolved' uri='urn:perturbation' group='Locality' defined_by='urn:perturbation'>
 			<![CDATA[MIxS: type of perturbation, e.g. chemical administration, physical disturbance, etc., coupled with time that perturbation occurred; can include multiple perturbation types]]>
 			<synonyms><![CDATA["perturbation" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Previous Land Use' column_internal='' uri='urn:previousLandUse' group='Locality' defined_by='urn:previousLandUse'>
+		<attribute column='Previous Land Use' column_internal='Mapping unresolved' uri='urn:previousLandUse' group='Locality' defined_by='urn:previousLandUse'>
 			<![CDATA[MIxS: previous land use and dates]]>
 			<synonyms><![CDATA["previous_land_use" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -826,7 +826,7 @@ IndoPacific: The state or province where the sample was found.]]>
 			<synonyms><![CDATA["substratum" = IndoPacific Template v7,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Soil Texture' column_internal='' uri='urn:texture' group='Locality' defined_by='urn:texture'>
+		<attribute column='Soil Texture' column_internal='Mapping unresolved' uri='urn:texture' group='Locality' defined_by='urn:texture'>
 			<![CDATA[MIxS: the relative proportion of different grain sizes of mineral particles in a soil, as described using a standard system; express as % sand (50 um to 2 mm), silt (2 um to 50 um), and clay (<2 um) with textural name (e.g., silty clay loam) optional.]]>
 			<synonyms><![CDATA["texture" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -1130,12 +1130,12 @@ ABCDDNA: must be "OtherSpecimen"]]>
 "Record Creation Date" = Entomology - Ted Schultz,]]></synonyms>
 			<dataFormat><![CDATA[YYYY MM DD ex. 2014 08 26]]></dataFormat>
 </attribute>
-		<attribute column='Extreme Event' column_internal='' uri='urn:extremeEvent' group='Specimen' defined_by='urn:extremeEvent'>
+		<attribute column='Extreme Event' column_internal='Mapping unresolved' uri='urn:extremeEvent' group='Specimen' defined_by='urn:extremeEvent'>
 			<![CDATA[MIxS: unusual physical events that may have affected microbial populations]]>
 			<synonyms><![CDATA["extreme_event" = MIxS,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Image File Name(s)' column_internal='' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
+		<attribute column='Image File Name(s)' column_internal='MulMultiMediaRef_tab(+).Multimedia' uri='urn:imageFileName' group='Specimen' defined_by='urn:imageFileName'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[]]></dataFormat>
@@ -1239,7 +1239,7 @@ not in Zoology; map it if you have content (e.g. 765/10)]]>
 "description" = Botany - Acevedo,]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
 </attribute>
-		<attribute column='Voucher Field ID' column_internal='' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
+		<attribute column='Voucher Field ID' column_internal='GSVoucherRef.BioPrimaryCollNumber' uri='urn:VoucherFieldID' group='Specimen' defined_by='urn:voucherFieldID'>
 			<![CDATA[Field ID of the voucher specimen. When the voucher is or is not the parent (or source) of the sample.]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
@@ -1257,7 +1257,7 @@ BOLD: ID associated with the sample being sequenced (often identical to or an ex
 "Sample ID" = BOLD,]]></synonyms>
 			<dataFormat><![CDATA[Free text, must be unique]]></dataFormat>
 </attribute>
-		<attribute column='Project/Unit ID' column_internal='' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
+		<attribute column='Project/Unit ID' column_internal='GSProjectUnitID' uri='urn:sampleSetID' group='Tissue' defined_by='urn:sampleSetID'>
 			<![CDATA[]]>
 			<synonyms><![CDATA[]]></synonyms>
 			<dataFormat><![CDATA[Free text]]></dataFormat>
