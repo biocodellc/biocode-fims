@@ -1,12 +1,6 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 65665
 
-function htmlEncode(value){
-  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
-  //then grab the encoded contents back out.  The div never exists on the page.
-  return $('<div/>').text(value).html();
-}
-
 function list(url) {
     $.ajax({
         type: "GET",
