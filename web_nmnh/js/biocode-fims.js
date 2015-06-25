@@ -1,6 +1,12 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 65665
 
+function htmlEncode(value){
+  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+  //then grab the encoded contents back out.  The div never exists on the page.
+  return $('<div/>').text(value).html();
+}
+
 function list(url) {
     $.ajax({
         type: "GET",
@@ -799,17 +805,17 @@ function populateConfigs() {
     if (project_id == 0) {
         $("#configs").html("<option value=0>Select a Project</option>");
     } else {
-        previousConfig = $("#configs").val();
-        previousLength = $("#configs").length;
-        $("#configs").html("<option value=0>Loading configs...</option>");
+        var el = $("#configs");
+        el.empty();
+        el.append($("<option></option>").attr("value", 0).text("Loading configs..."));
         $.getJSON("/fims/rest/templates/getConfigs/" + project_id).done(function(data) {
             var listItems = "";
 
+            el.empty();
             data.configNames.forEach(function(configName) {
-                listItems+= "<option value='" + configName + "'>" + configName + "</option>";
+                el.append($("<option></option>").
+                    attr("value", configName).text(configName));
             });
-
-            $("#configs").html(listItems);
 
             if (savedConfig != null) {
                 $("#configs").val(savedConfig);
@@ -830,7 +836,7 @@ function updateCheckedBoxes() {
     if (configName == "Default") {
         populateColumns("#cat1");
     } else {
-        $.getJSON("/fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName).done(function(data) {
+        $.getJSON("/fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
             if (data.error != null) {
                 showMessage(data.error);
                 return;
