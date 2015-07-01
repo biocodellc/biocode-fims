@@ -33,7 +33,11 @@ public class Attribute implements Comparable {
      * @param column
      */
     public void setColumn(String column) {
-        this.column = column.replace(" ","_").replace("/","");
+        // NOTE: do NOT use this syntax here, it will mess with application funcationality
+        //this.column = column.replace(" ","_").replace("/","");
+        // INSTEAD: use THIS syntax and handle replacements elsewhere.
+        this.column = column;
+
     }
 
     public String getColumn_internal() {

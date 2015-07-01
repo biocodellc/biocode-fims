@@ -22,7 +22,7 @@ public class SIServerSideSpreadsheetTools {
     private String localIDColumnName;
     private Integer userID;
     private Boolean SIMethod = false; // default SIMethod to false
-    private String ezidColumnName = "BCID";
+    private String ezidColumnName = "EZID";
 
     /**
      * Create the guidIfier with everything it needs to accomplish its mission:
