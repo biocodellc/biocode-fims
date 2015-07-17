@@ -134,85 +134,268 @@
             </list>
 
             <list alias='country' caseInsensitive='true'>
-                <field>American Samoa</field>
-                <field>Australia</field>
-                <field>Bahrain</field>
-                <field>Bangladesh</field>
-                <field>British Indian Ocean Territory</field>
-                <field>Brunei</field>
-                <field>Burma</field>
-                <field>Cambodia</field>
-                <field>Canada</field>
-                <field>Chile</field>
-                <field>China</field>
-                <field>Christmas Island</field>
-                <field>Cocos (Keeling) Islands</field>
-                <field>Colombia</field>
-                <field>Comoros</field>
-                <field>Costa Rica</field>
-                <field>Djibouti</field>
-                <field>Ecuador</field>
-                <field>Egypt</field>
-                <field>El Salvador</field>
-                <field>Eritrea</field>
-                <field>Fiji</field>
-                <field>French Polynesia</field>
-                <field>Guatemala</field>
-                <field>Honduras</field>
-                <field>India</field>
-                <field>Indonesia</field>
-                <field>Iran</field>
-                <field>Iraq</field>
-                <field>Israel</field>
-                <field>Japan</field>
-                <field>Jordan</field>
-                <field>Kenya</field>
-                <field>Kiribati</field>
-                <field>Kuwait</field>
-                <field>Madagascar</field>
-                <field>Malaysia</field>
-                <field>Maldives</field>
-                <field>Marshall Islands</field>
-                <field>Mauritius</field>
-                <field>Mayotte</field>
-                <field>Mexico</field>
-                <field>Micronesia</field>
-                <field>Mozambique</field>
-                <field>Nauru</field>
-                <field>New Zealand</field>
-                <field>Nicaragua</field>
-                <field>North Korea</field>
-                <field>Oman</field>
-                <field>Pakistan</field>
-                <field>Palau</field>
-                <field>Panama</field>
-                <field>Papua New Guinea</field>
-                <field>Peru</field>
-                <field>Philippines</field>
-                <field>Qatar</field>
-                <field>Reunion</field>
-                <field>Russia</field>
-                <field>Samoa</field>
-                <field>Saudi Arabia</field>
-                <field>Seychelles</field>
-                <field>Singapore</field>
-                <field>Solomon Islands</field>
-                <field>Somalia</field>
-                <field>South Africa</field>
-                <field>South Korea</field>
-                <field>Sri Lanka</field>
-                <field>Sudan</field>
-                <field>Taiwan</field>
-                <field>Tanzania</field>
-                <field>Thailand</field>
-                <field>Timor L'este</field>
-                <field>Tonga</field>
-                <field>Tuvalu</field>
-                <field>United Arab Emirates</field>
-                <field>United States of America</field>
-                <field>Vanuatu</field>
-                <field>Vietnam</field>
-                <field>Yemen</field>
+                 <field>Afghanistan, Islamic Republic of</field>
+                 <field>Albania, Republic of</field>
+                 <field>Antarctica (the territory South of 60 deg S)</field>
+                 <field>Algeria, People's Democratic Republic of</field>
+                 <field>American Samoa</field>
+                 <field>Andorra, Principality of</field>
+                 <field>Angola, Republic of</field>
+                 <field>Antigua and Barbuda</field>
+                 <field>Azerbaijan, Republic of</field>
+                 <field>Azerbaijan, Republic of</field>
+                 <field>Argentina, Argentine Republic</field>
+                 <field>Australia, Commonwealth of</field>
+                 <field>Austria, Republic of</field>
+                 <field>Bahamas, Commonwealth of the</field>
+                 <field>Bahrain, Kingdom of</field>
+                 <field>Bangladesh, People's Republic of</field>
+                 <field>Armenia, Republic of</field>
+                 <field>Armenia, Republic of</field>
+                 <field>Barbados</field>
+                 <field>Belgium, Kingdom of</field>
+                 <field>Bermuda</field>
+                 <field>Bhutan, Kingdom of</field>
+                 <field>Bolivia, Republic of</field>
+                 <field>Bosnia and Herzegovina</field>
+                 <field>Botswana, Republic of</field>
+                 <field>Bouvet Island (Bouvetoya)</field>
+                 <field>Brazil, Federative Republic of</field>
+                 <field>Belize</field>
+                 <field>British Indian Ocean Territory (Chagos Archipelago)</field>
+                 <field>Solomon Islands</field>
+                 <field>British Virgin Islands</field>
+                 <field>Brunei Darussalam</field>
+                 <field>Bulgaria, Republic of</field>
+                 <field>Myanmar, Union of</field>
+                 <field>Burundi, Republic of</field>
+                 <field>Belarus, Republic of</field>
+                 <field>Cambodia, Kingdom of</field>
+                 <field>Cameroon, Republic of</field>
+                 <field>Canada</field>
+                 <field>Cape Verde, Republic of</field>
+                 <field>Cayman Islands</field>
+                 <field>Central African Republic</field>
+                 <field>Sri Lanka, Democratic Socialist Republic of</field>
+                 <field>Chad, Republic of</field>
+                 <field>Chile, Republic of</field>
+                 <field>China, People's Republic of</field>
+                 <field>Taiwan</field>
+                 <field>Christmas Island</field>
+                 <field>Cocos (Keeling) Islands</field>
+                 <field>Colombia, Republic of</field>
+                 <field>Comoros, Union of the</field>
+                 <field>Mayotte</field>
+                 <field>Congo, Republic of the</field>
+                 <field>Congo, Democratic Republic of the</field>
+                 <field>Cook Islands</field>
+                 <field>Costa Rica, Republic of</field>
+                 <field>Croatia, Republic of</field>
+                 <field>Cuba, Republic of</field>
+                 <field>Cyprus, Republic of</field>
+                 <field>Cyprus, Republic of</field>
+                 <field>Czech Republic</field>
+                 <field>Benin, Republic of</field>
+                 <field>Denmark, Kingdom of</field>
+                 <field>Dominica, Commonwealth of</field>
+                 <field>Dominican Republic</field>
+                 <field>Ecuador, Republic of</field>
+                 <field>El Salvador, Republic of</field>
+                 <field>Equatorial Guinea, Republic of</field>
+                 <field>Ethiopia, Federal Democratic Republic of</field>
+                 <field>Eritrea, State of</field>
+                 <field>Estonia, Republic of</field>
+                 <field>Faroe Islands</field>
+                 <field>Falkland Islands (Malvinas)</field>
+                 <field>South Georgia and the South Sandwich Islands</field>
+                 <field>Fiji, Republic of the Fiji Islands</field>
+                 <field>Finland, Republic of</field>
+                 <field>Åland Islands</field>
+                 <field>France, French Republic</field>
+                 <field>French Guiana</field>
+                 <field>French Polynesia</field>
+                 <field>French Southern Territories</field>
+                 <field>Djibouti, Republic of</field>
+                 <field>Gabon, Gabonese Republic</field>
+                 <field>Georgia</field>
+                 <field>Georgia</field>
+                 <field>Gambia, Republic of the</field>
+                 <field>Palestinian Territory, Occupied</field>
+                 <field>Germany, Federal Republic of</field>
+                 <field>Ghana, Republic of</field>
+                 <field>Gibraltar</field>
+                 <field>Kiribati, Republic of</field>
+                 <field>Greece, Hellenic Republic</field>
+                 <field>Greenland</field>
+                 <field>Grenada</field>
+                 <field>Guadeloupe</field>
+                 <field>Guam</field>
+                 <field>Guatemala, Republic of</field>
+                 <field>Guinea, Republic of</field>
+                 <field>Guyana, Co-operative Republic of</field>
+                 <field>Haiti, Republic of</field>
+                 <field>Heard Island and McDonald Islands</field>
+                 <field>Holy See (Vatican City State)</field>
+                 <field>Honduras, Republic of</field>
+                 <field>Hong Kong, Special Administrative Region of China</field>
+                 <field>Hungary, Republic of</field>
+                 <field>Iceland, Republic of</field>
+                 <field>India, Republic of</field>
+                 <field>Indonesia, Republic of</field>
+                 <field>Iran, Islamic Republic of</field>
+                 <field>Iraq, Republic of</field>
+                 <field>Ireland</field>
+                 <field>Israel, State of</field>
+                 <field>Italy, Italian Republic</field>
+                 <field>Cote d'Ivoire, Republic of</field>
+                 <field>Jamaica</field>
+                 <field>Japan</field>
+                 <field>Kazakhstan, Republic of</field>
+                 <field>Kazakhstan, Republic of</field>
+                 <field>Jordan, Hashemite Kingdom of</field>
+                 <field>Kenya, Republic of</field>
+                 <field>Korea, Democratic People's Republic of</field>
+                 <field>Korea, Republic of</field>
+                 <field>Kuwait, State of</field>
+                 <field>Kyrgyz Republic</field>
+                 <field>Lao People's Democratic Republic</field>
+                 <field>Lebanon, Lebanese Republic</field>
+                 <field>Lesotho, Kingdom of</field>
+                 <field>Latvia, Republic of</field>
+                 <field>Liberia, Republic of</field>
+                 <field>Libyan Arab Jamahiriya</field>
+                 <field>Liechtenstein, Principality of</field>
+                 <field>Lithuania, Republic of</field>
+                 <field>Luxembourg, Grand Duchy of</field>
+                 <field>Macao, Special Administrative Region of China</field>
+                 <field>Madagascar, Republic of</field>
+                 <field>Malawi, Republic of</field>
+                 <field>Malaysia</field>
+                 <field>Maldives, Republic of</field>
+                 <field>Mali, Republic of</field>
+                 <field>Malta, Republic of</field>
+                 <field>Martinique</field>
+                 <field>Mauritania, Islamic Republic of</field>
+                 <field>Mauritius, Republic of</field>
+                 <field>Mexico, United Mexican States</field>
+                 <field>Monaco, Principality of</field>
+                 <field>Mongolia</field>
+                 <field>Moldova, Republic of</field>
+                 <field>Montenegro, Republic of</field>
+                 <field>Montserrat</field>
+                 <field>Morocco, Kingdom of</field>
+                 <field>Mozambique, Republic of</field>
+                 <field>Oman, Sultanate of</field>
+                 <field>Namibia, Republic of</field>
+                 <field>Nauru, Republic of</field>
+                 <field>Nepal, State of</field>
+                 <field>Netherlands, Kingdom of the</field>
+                 <field>Netherlands Antilles</field>
+                 <field>Curaçao</field>
+                 <field>Aruba</field>
+                 <field>Sint Maarten (Netherlands)</field>
+                 <field>Bonaire, Sint Eustatius and Saba</field>
+                 <field>New Caledonia</field>
+                 <field>Vanuatu, Republic of</field>
+                 <field>New Zealand</field>
+                 <field>Nicaragua, Republic of</field>
+                 <field>Niger, Republic of</field>
+                 <field>Nigeria, Federal Republic of</field>
+                 <field>Niue</field>
+                 <field>Norfolk Island</field>
+                 <field>Norway, Kingdom of</field>
+                 <field>Northern Mariana Islands, Commonwealth of the</field>
+                 <field>United States Minor Outlying Islands</field>
+                 <field>United States Minor Outlying Islands</field>
+                 <field>Micronesia, Federated States of</field>
+                 <field>Marshall Islands, Republic of the</field>
+                 <field>Palau, Republic of</field>
+                 <field>Pakistan, Islamic Republic of</field>
+                 <field>Panama, Republic of</field>
+                 <field>Papua New Guinea, Independent State of</field>
+                 <field>Paraguay, Republic of</field>
+                 <field>Peru, Republic of</field>
+                 <field>Philippines, Republic of the</field>
+                 <field>Pitcairn Islands</field>
+                 <field>Poland, Republic of</field>
+                 <field>Portugal, Portuguese Republic</field>
+                 <field>Guinea-Bissau, Republic of</field>
+                 <field>Timor-Leste, Democratic Republic of</field>
+                 <field>Puerto Rico, Commonwealth of</field>
+                 <field>Qatar, State of</field>
+                 <field>Reunion</field>
+                 <field>Romania</field>
+                 <field>Russian Federation</field>
+                 <field>Russian Federation</field>
+                 <field>Rwanda, Republic of</field>
+                 <field>Saint Barthelemy</field>
+                 <field>Saint Helena</field>
+                 <field>Saint Kitts and Nevis, Federation of</field>
+                 <field>Anguilla</field>
+                 <field>Saint Lucia</field>
+                 <field>Saint Martin</field>
+                 <field>Saint Pierre and Miquelon</field>
+                 <field>Saint Vincent and the Grenadines</field>
+                 <field>San Marino, Republic of</field>
+                 <field>Sao Tome and Principe, Democratic Republic of</field>
+                 <field>Saudi Arabia, Kingdom of</field>
+                 <field>Senegal, Republic of</field>
+                 <field>Serbia, Republic of</field>
+                 <field>Seychelles, Republic of</field>
+                 <field>Sierra Leone, Republic of</field>
+                 <field>Singapore, Republic of</field>
+                 <field>Slovakia (Slovak Republic)</field>
+                 <field>Vietnam, Socialist Republic of</field>
+                 <field>Slovenia, Republic of</field>
+                 <field>Somalia, Somali Republic</field>
+                 <field>South Africa, Republic of</field>
+                 <field>Zimbabwe, Republic of</field>
+                 <field>Spain, Kingdom of</field>
+                 <field>South Sudan</field>
+                 <field>Western Sahara</field>
+                 <field>Sudan, Republic of</field>
+                 <field>Suriname, Republic of</field>
+                 <field>Svalbard slands</field>
+                 <field>Swaziland, Kingdom of</field>
+                 <field>Sweden, Kingdom of</field>
+                 <field>Switzerland, Swiss Confederation</field>
+                 <field>Syrian Arab Republic</field>
+                 <field>Tajikistan, Republic of</field>
+                 <field>Thailand, Kingdom of</field>
+                 <field>Togo, Togolese Republic</field>
+                 <field>Tokelau</field>
+                 <field>Tonga, Kingdom of</field>
+                 <field>Trinidad and Tobago, Republic of</field>
+                 <field>United Arab Emirates</field>
+                 <field>Tunisia, Tunisian Republic</field>
+                 <field>Turkey, Republic of</field>
+                 <field>Turkey, Republic of</field>
+                 <field>Turkmenistan</field>
+                 <field>Turks and Caicos Islands</field>
+                 <field>Tuvalu</field>
+                 <field>Uganda, Republic of</field>
+                 <field>Ukraine</field>
+                 <field>Macedonia, The Republic of</field>
+                 <field>Egypt, Arab Republic of</field>
+                 <field>United Kingdom of Great Britain eland</field>
+                 <field>Guernsey, Bailiwick of</field>
+                 <field>Jersey, Bailiwick of</field>
+                 <field>Isle of Man</field>
+                 <field>Tanzania, United Republic of</field>
+                 <field>United States of America</field>
+                 <field>United States Virgin Islands</field>
+                 <field>Burkina Faso</field>
+                 <field>Uruguay, Eastern Republic of</field>
+                 <field>Uzbekistan, Republic of</field>
+                 <field>Venezuela, Bolivarian Republic of</field>
+                 <field>Wallis and Futuna</field>
+                 <field>Samoa, Independent State of</field>
+                 <field>Yemen</field>
+                 <field>Zambia, Republic of</field>
+                 <field>Disputed Territory</field>
+                 <field>Iraq-Saudi Arabia Neutral Zone</field>
+                 <field>United Nations Neutral Zone</field>
+                 <field>Spratly Islands</field>
             </list>
         </lists>
 
