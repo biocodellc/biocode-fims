@@ -59,6 +59,7 @@
 
             <list alias='habitat' caseInsensitive='true'>
                 <field>Coral Reef</field>
+                <field>Estuary</field>
                 <field>Intertidal</field>
                 <field>Fouling</field>
                 <field>Macroalgae</field>
@@ -67,6 +68,7 @@
                 <field>Continental shelf</field>
                 <field>Pelagic</field>
                 <field>Planktonic</field>
+                 <field>River</field>
                 <field>Rock</field>
                 <field>Sand</field>
                 <field>Seagrass</field>
@@ -138,7 +140,7 @@
                 <field>Afghanistan</field>
                 <field>Angola</field>
                 <field>Anguilla</field>
-                <field>Åland Islands</field>
+                <field>Aland Islands</field>
                 <field>Albania</field>
                 <field>Andorra</field>
                 <field>United Arab Emirates</field>
@@ -178,7 +180,7 @@
                 <field>Switzerland</field>
                 <field>Chile</field>
                 <field>China</field>
-                <field>Côte d'Ivoire</field>
+                <field>Cote d'Ivoire</field>
                 <field>Cameroon</field>
                 <field>Congo, the Democratic Republic of the</field>
                 <field>Congo</field>
@@ -188,7 +190,7 @@
                 <field>Cabo Verde</field>
                 <field>Costa Rica</field>
                 <field>Cuba</field>
-                <field>Curaçao</field>
+                <field>Curacao</field>
                 <field>Christmas Island</field>
                 <field>Cayman Islands</field>
                 <field>Cyprus</field>
