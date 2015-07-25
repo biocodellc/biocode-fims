@@ -1240,7 +1240,7 @@ public class Rule {
             while (resultSet.next()) {
                 String value = resultSet.getString(getColumn()).trim();
                 int rowNum = resultSet.getInt("rowid");
-                // Only display messages for items that exist, that is empty cell contents are an approved value
+                // Only display messages for items that exist or na, that is empty cell contents are an approved value
                 if (!value.equals("")) {
                     //msg = "\"" + resultSet.getString(getColumn()) + "\" not an approved " + getColumn() + ", see list";
 

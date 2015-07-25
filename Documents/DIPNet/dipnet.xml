@@ -1,0 +1,556 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="DIPNet"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+        <![CDATA[Although there are a lot of fields, we are only requiring that you fill out four or five of them: materialSampleID, principalInvestigator, phylum and EITHER (decimalLatitude AND decimalLongitude) OR locality (lat/longs are preferred). Nine additional fields are recommended, and thus automatically checked.]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='materialSampleID' level='error'></rule>
+            <rule type='validForURI' column='materialSampleID' level='error'></rule>
+
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>materialSampleID</field>
+                <field>principalInvestigator</field>
+                <field>phylum</field>
+            </rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+                <field>yearCollected</field>
+                <field>permitInformation</field>
+                <field>locality</field>
+                <field>decimalLatitude</field>
+                <field>decimalLongitude</field>
+                <field>coordinateUncertaintyInMeters</field>
+                <field>georeferenceProtocol</field>
+                <field>basisOfIdentification</field>
+                <field>genus</field>
+                <field>species</field>
+            </rule>
+
+            <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
+                  level='error'></rule>
+            <rule type='minimumMaximumNumberCheck'
+                  column='minimumDistanceAboveSurfaceInMeters,maximumDistanceAboveSurfaceInMeters' level='error'></rule>
+
+            <rule type='isNumber' column='weight' level='error'></rule>
+            <rule type='isNumber' column='length' level='error'></rule>
+
+            <rule type='checkInXMLFields' column='phylum' list='phylum' level='error'></rule>
+            <rule type='checkInXMLFields' column='habitat' list='habitat' level='warning'></rule>
+            <rule type='checkInXMLFields' column='basisOfIdentification' list='basisOfIdentification'
+                  level='warning'></rule>
+            <rule type='checkInXMLFields' column='sex' list='sex' level='warning'></rule>
+            <rule type='checkInXMLFields' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
+            <rule type='checkInXMLFields' column='lifeStage' list='lifeStage' level='warning'></rule>
+            <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
+        </worksheet>
+
+        <lists>
+
+            <list alias='habitat' caseInsensitive='true'>
+                <field>Coral Reef</field>
+                <field>Estuary</field>
+                <field>Intertidal</field>
+                <field>Fouling</field>
+                <field>Macroalgae</field>
+                <field>Mangrove</field>
+                <field>Mud</field>
+                <field>Continental shelf</field>
+                <field>Pelagic</field>
+                <field>Planktonic</field>
+                 <field>River</field>
+                <field>Rock</field>
+                <field>Sand</field>
+                <field>Seagrass</field>
+            </list>
+            <list alias='basisOfIdentification' caseInsensitive='true'>
+                <field>Genetics</field>
+                <field>Morphology</field>
+                <field>Other</field>
+            </list>
+            <list alias='sex' caseInsensitive='true'>
+                <field>Male</field>
+                <field>Female</field>
+                <field>Simultaneous Hermaphrodite</field>
+                <field>Protogynous</field>
+                <field>Protandrous</field>
+            </list>
+            <list alias='establishmentMeans' caseInsensitive="true">
+                <field>native</field>
+                <field>introduced</field>
+                <field>naturalized</field>
+                <field>invasive</field>
+                <field>managed</field>
+            </list>
+
+            <list alias='lifeStage' caseInsensitive='true'>
+                <field>larva</field>
+                <field>juvenile</field>
+                <field>adult</field>
+            </list>
+            <list alias='phylum' caseInsensitive='true'>
+                <field>Acoelomorpha</field>
+                <field>Annelida</field>
+                <field>Arthropoda</field>
+                <field>Brachiopoda</field>
+                <field>Bryozoa</field>
+                <field>Chaetognatha</field>
+                <field>Chordata</field>
+                <field>Cnidaria</field>
+                <field>Ctenophora</field>
+                <field>Cycliophora</field>
+                <field>Echinodermata</field>
+                <field>Entoprocta</field>
+                <field>Gastrotricha</field>
+                <field>Gnathostomulida</field>
+                <field>Hemichordata</field>
+                <field>Kinorhyncha</field>
+                <field>Loricifera</field>
+                <field>Micrognathozoa</field>
+                <field>Mollusca</field>
+                <field>Nematoda</field>
+                <field>Nematomorpha</field>
+                <field>Nemertea</field>
+                <field>Onychophora</field>
+                <field>Orthonectida</field>
+                <field>Phoronida</field>
+                <field>Placozoa</field>
+                <field>Platyhelminthes</field>
+                <field>Porifera</field>
+                <field>Priapulida</field>
+                <field>Rhombozoa</field>
+                <field>Rotifera</field>
+                <field>Sipuncula</field>
+                <field>Tardigrada</field>
+                <field>Xenoturbellida</field>
+            </list>
+
+            <list alias='country' caseInsensitive='true'>
+                <field>Aruba</field>
+                <field>Afghanistan</field>
+                <field>Angola</field>
+                <field>Anguilla</field>
+                <field>Aland Islands</field>
+                <field>Albania</field>
+                <field>Andorra</field>
+                <field>United Arab Emirates</field>
+                <field>Argentina</field>
+                <field>Armenia</field>
+                <field>American Samoa</field>
+                <field>Antarctica</field>
+                <field>French Southern Territories</field>
+                <field>Antigua and Barbuda</field>
+                <field>Australia</field>
+                <field>Austria</field>
+                <field>Azerbaijan</field>
+                <field>Burundi</field>
+                <field>Belgium</field>
+                <field>Benin</field>
+                <field>Bonaire, Sint Eustatius and Saba</field>
+                <field>Burkina Faso</field>
+                <field>Bangladesh</field>
+                <field>Bulgaria</field>
+                <field>Bahrain</field>
+                <field>Bahamas</field>
+                <field>Bosnia and Herzegovina</field>
+                <field>Saint Barthélemy</field>
+                <field>Belarus</field>
+                <field>Belize</field>
+                <field>Bermuda</field>
+                <field>Bolivia, Plurinational State of</field>
+                <field>Brazil</field>
+                <field>Barbados</field>
+                <field>Brunei Darussalam</field>
+                <field>Bhutan</field>
+                <field>Bouvet Island</field>
+                <field>Botswana</field>
+                <field>Central African Republic</field>
+                <field>Canada</field>
+                <field>Cocos (Keeling) Islands</field>
+                <field>Switzerland</field>
+                <field>Chile</field>
+                <field>China</field>
+                <field>Cote d'Ivoire</field>
+                <field>Cameroon</field>
+                <field>Congo, the Democratic Republic of the</field>
+                <field>Congo</field>
+                <field>Cook Islands</field>
+                <field>Colombia</field>
+                <field>Comoros</field>
+                <field>Cabo Verde</field>
+                <field>Costa Rica</field>
+                <field>Cuba</field>
+                <field>Curacao</field>
+                <field>Christmas Island</field>
+                <field>Cayman Islands</field>
+                <field>Cyprus</field>
+                <field>Czech Republic</field>
+                <field>Germany</field>
+                <field>Djibouti</field>
+                <field>Dominica</field>
+                <field>Denmark</field>
+                <field>Dominican Republic</field>
+                <field>Algeria</field>
+                <field>Ecuador</field>
+                <field>Egypt</field>
+                <field>Eritrea</field>
+                <field>Western Sahara</field>
+                <field>Spain</field>
+                <field>Estonia</field>
+                <field>Ethiopia</field>
+                <field>Finland</field>
+                <field>Fiji</field>
+                <field>Falkland Islands (Malvinas)</field>
+                <field>France</field>
+                <field>Faroe Islands</field>
+                <field>Micronesia</field>
+                <field>Gabon</field>
+                <field>United Kingdom</field>
+                <field>Georgia</field>
+                <field>Guernsey</field>
+                <field>Ghana</field>
+                <field>Gibraltar</field>
+                <field>Guinea</field>
+                <field>Guadeloupe</field>
+                <field>Gambia</field>
+                <field>Guinea-Bissau</field>
+                <field>Equatorial Guinea</field>
+                <field>Greece</field>
+                <field>Grenada</field>
+                <field>Greenland</field>
+                <field>Guatemala</field>
+                <field>French Guiana</field>
+                <field>Guam</field>
+                <field>Guyana</field>
+                <field>Hong Kong</field>
+                <field>Heard Island and McDonald Islands</field>
+                <field>Honduras</field>
+                <field>Croatia</field>
+                <field>Haiti</field>
+                <field>Hungary</field>
+                <field>Indonesia</field>
+                <field>Isle of Man</field>
+                <field>India</field>
+                <field>British Indian Ocean Territory</field>
+                <field>Ireland</field>
+                <field>Iran, Islamic Republic of</field>
+                <field>Iraq</field>
+                <field>Iceland</field>
+                <field>Israel</field>
+                <field>Italy</field>
+                <field>Jamaica</field>
+                <field>Jersey</field>
+                <field>Jordan</field>
+                <field>Japan</field>
+                <field>Kazakhstan</field>
+                <field>Kenya</field>
+                <field>Kyrgyzstan</field>
+                <field>Cambodia</field>
+                <field>Kiribati</field>
+                <field>Saint Kitts and Nevis</field>
+                <field>Korea, Republic of</field>
+                <field>Kuwait</field>
+                <field>Lao People's Democratic Republic</field>
+                <field>Lebanon</field>
+                <field>Liberia</field>
+                <field>Libya</field>
+                <field>Saint Lucia</field>
+                <field>Liechtenstein</field>
+                <field>Sri Lanka</field>
+                <field>Lesotho</field>
+                <field>Lithuania</field>
+                <field>Luxembourg</field>
+                <field>Latvia</field>
+                <field>Macao</field>
+                <field>Saint Martin (French part)</field>
+                <field>Morocco</field>
+                <field>Monaco</field>
+                <field>Moldova, Republic of</field>
+                <field>Madagascar</field>
+                <field>Maldives</field>
+                <field>Mexico</field>
+                <field>Marshall Islands</field>
+                <field>Macedonia, the former Yugoslav Republic of</field>
+                <field>Mali</field>
+                <field>Malta</field>
+                <field>Myanmar</field>
+                <field>Montenegro</field>
+                <field>Mongolia</field>
+                <field>Northern Mariana Islands</field>
+                <field>Mozambique</field>
+                <field>Mauritania</field>
+                <field>Montserrat</field>
+                <field>Martinique</field>
+                <field>Mauritius</field>
+                <field>Malawi</field>
+                <field>Malaysia</field>
+                <field>Mayotte</field>
+                <field>Namibia</field>
+                <field>New Caledonia</field>
+                <field>Niger</field>
+                <field>Norfolk Island</field>
+                <field>Nigeria</field>
+                <field>Nicaragua</field>
+                <field>Niue</field>
+                <field>Netherlands</field>
+                <field>Norway</field>
+                <field>Nepal</field>
+                <field>Nauru</field>
+                <field>New Zealand</field>
+                <field>Oman</field>
+                <field>Pakistan</field>
+                <field>Panama</field>
+                <field>Pitcairn</field>
+                <field>Peru</field>
+                <field>Philippines</field>
+                <field>Palau</field>
+                <field>Papua New Guinea</field>
+                <field>Poland</field>
+                <field>Puerto Rico</field>
+                <field>Korea, Democratic People's Republic of</field>
+                <field>Portugal</field>
+                <field>Paraguay</field>
+                <field>Palestine, State of</field>
+                <field>French Polynesia</field>
+                <field>Qatar</field>
+                <field>Reunion</field>
+                <field>Romania</field>
+                <field>Russian Federation</field>
+                <field>Rwanda</field>
+                <field>Saudi Arabia</field>
+                <field>Sudan</field>
+                <field>Senegal</field>
+                <field>Singapore</field>
+                <field>South Georgia and the South Sandwich Islands</field>
+                <field>Saint Helena, Ascension and Tristan da Cunha</field>
+                <field>Svalbard and Jan Mayen</field>
+                <field>Solomon Islands</field>
+                <field>Sierra Leone</field>
+                <field>El Salvador</field>
+                <field>San Marino</field>
+                <field>Somalia</field>
+                <field>Saint Pierre and Miquelon</field>
+                <field>Serbia</field>
+                <field>South Sudan</field>
+                <field>Sao Tome and Principe</field>
+                <field>Suriname</field>
+                <field>Slovakia</field>
+                <field>Slovenia</field>
+                <field>Sweden</field>
+                <field>Swaziland</field>
+                <field>Sint Maarten (Dutch part)</field>
+                <field>Seychelles</field>
+                <field>Syrian Arab Republic</field>
+                <field>Turks and Caicos Islands</field>
+                <field>Chad</field>
+                <field>Togo</field>
+                <field>Thailand</field>
+                <field>Tajikistan</field>
+                <field>Tokelau</field>
+                <field>Turkmenistan</field>
+                <field>Timor L'este</field>
+                <field>Tonga</field>
+                <field>Trinidad and Tobago</field>
+                <field>Tunisia</field>
+                <field>Turkey</field>
+                <field>Tuvalu</field>
+                <field>Taiwan</field>
+                <field>Tanzania</field>
+                <field>Uganda</field>
+                <field>Ukraine</field>
+                <field>United States Minor Outlying Islands</field>
+                <field>Uruguay</field>
+                <field>United States of America</field>
+                <field>Uzbekistan</field>
+                <field>Holy See (Vatican City State)</field>
+                <field>Saint Vincent and the Grenadines</field>
+                <field>Venezuela, Bolivarian Republic of</field>
+                <field>Virgin Islands, British</field>
+                <field>Virgin Islands, U.S.</field>
+                <field>Vietnam</field>
+                <field>Vanuatu</field>
+                <field>Wallis and Futuna</field>
+                <field>Samoa</field>
+                <field>Yemen</field>
+                <field>South Africa</field>
+                <field>Zambia</field>
+                <field>Zimbabwe</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSampleID"
+                conceptAlias="Resource"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+            <attribute column='materialSampleID' uri='urn:materialSampleID'
+                       defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
+                <![CDATA[The "local" accession number that you use for your laboratory's database. This number should link EXACTLY to the genetic data you are providing for this sample. It must be unique among the numbers that your lab is providing.]]></attribute>
+            <attribute column='principalInvestigator' uri='urn:principalInvestigator'
+                       defined_by='urn:PrincipalInvestigator'>
+                <![CDATA[Firstname Lastname (the PI on the grant that generated this data)]]></attribute>
+            <attribute column='locality' uri='urn:locality' defined_by='http://rs.tdwg.org/dwc/terms/locality'>
+                <![CDATA[Local name of site. Something that could be found by Google, e.g. city, town, ocean, etc. You must enter a value for this to the best level of precision that you are confident about. A site name like "Sanur" is good. "Indonesia" is fine if that is all you know, or "The Pacific Ocean". If you have no idea where the sample came from, please enter "Earth". Required.]]></attribute>
+            <attribute column='phylum' uri='urn:phylum' defined_by='http://rs.tdwg.org/dwc/terms/phylum'>
+                <![CDATA[The full scientific name of the phylum in which the taxon is classified. Required.]]></attribute>
+            <attribute column='decimalLatitude' uri='urn:decimalLatitude'
+                       defined_by='http://rs.tdwg.org/dwc/terms/decimalLatitude'>
+                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
+            <attribute column='decimalLongitude' uri='urn:decimalLongitude'
+                       defined_by='http://rs.tdwg.org/dwc/terms/decimalLongitude'>
+                <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
+            <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters'
+                       defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
+                <![CDATA[In meters.]]></attribute>
+            <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
+                       defined_by='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
+                <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
+            <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected'>
+                <![CDATA[YYYY (the year collected)]]></attribute>
+            <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'>
+                <![CDATA[MM (the month collected)]]></attribute>
+            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected'>
+                <![CDATA[DD (the day collected)]]></attribute>
+            <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>
+                <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
+            <attribute column='species' uri='urn:species' defined_by='http://rs.tdwg.org/dwc/terms/specificEpithet'>
+                <![CDATA[The name of the first or species epithet of the scientificName.]]></attribute>
+            <attribute column='permitInformation' uri='urn:permitInformation' defined_by='urn:permitInformation'>
+                <![CDATA[Please include any permit information (agency, permit#, etc) as a text string]]></attribute>
+            <attribute column='basisOfIdentification' uri='urn:basisOfIdentification' defined_by='urn:basisOfID'>
+                <![CDATA[Morphology, Genetic, Other.]]></attribute>
+            <attribute column='wormsID' uri='urn:wormsID' defined_by='urn:wormsID'>
+                <![CDATA[Identification # (AphiaID) for Worms database (http://www.marinespecies.org/). Please try to provide this or the genus/species.]]></attribute>
+            <attribute column='country' uri='urn:country' defined_by='http://rs.tdwg.org/dwc/terms/country'>
+                <![CDATA[The country where the sample was found. Must be found in associated list in "lists" tab.]]></attribute>
+            <attribute column='stateProvince' uri='urn:stateProvince'
+                       defined_by='http://rs.tdwg.org/dwc/terms/stateProvince'>
+                <![CDATA[The state or province where the sample was found.]]></attribute>
+            <attribute column='island' uri='urn:island' defined_by='http://rs.tdwg.org/dwc/terms/island'>
+                <![CDATA[The island where the sample was found.]]></attribute>
+            <attribute column='islandGroup' uri='urn:islandGroup' defined_by='http://rs.tdwg.org/dwc/terms/islandGroup'>
+                <![CDATA[The island group or archipelago where the sample was found.]]></attribute>
+            <attribute column='sampleOwnerInstitutionCode' uri='urn:sampleOwnerInstitutionCode'
+                       defined_by='http://rs.tdwg.org/dwc/terms/ownerInstitutionCode'>
+                <![CDATA[Most commonly used acronym for your university, agency or institution]]></attribute>
+            <attribute column='fundingSource' uri='urn:fundingSource' defined_by='urn:fundingSource'>
+                <![CDATA[Granting body and grant number, can be in a delimited list.]]></attribute>
+            <attribute column='occurrenceID' uri='urn:occurrenceID'
+                       defined_by='http://rs.tdwg.org/dwc/terms/occurrenceID'>
+                <![CDATA[Specimen voucher ID]]></attribute>
+            <attribute column='associatedMedia' uri='urn:associatedMedia'
+                       defined_by='http://rs.tdwg.org/dwc/terms/associatedMedia'>
+                <![CDATA[Photos, videos etc of the individual. From Darwincore: A list (concatenated and separated) of identifiers (publication, global unique identifier, URI,DOI) of media associated with the Occurrence.]]></attribute>
+            <attribute column='associatedReferences' uri='urn:associatedReferences'
+                       defined_by='http://rs.tdwg.org/dwc/terms/associatedReferences'>
+                <![CDATA[Any associated publications/references pertaining to this individual or its derivative tissues or sequences. The first place it was published is particularly relevant. From Darwincore: A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with the Occurrence.]]></attribute>
+            <attribute column='preservative' uri='urn:preservative'
+                       defined_by='http://rs.tdwg.org/dwc/terms/preparations'>
+                <![CDATA[A list (concatenated and separated) of preparations and preservation methods for a specimen. Example: "95% EtOH"; "Frozen"]]></attribute>
+            <attribute column='previousIdentifications' uri='urn:previousIdentifications'
+                       defined_by='http://rs.tdwg.org/dwc/terms/previousIdentifications'>
+                <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
+            <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
+                <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
+            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128'>
+                <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
+            <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122'>
+                <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
+            <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>
+                <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
+            <attribute column='establishmentMeans' uri='urn:establishmentMeans'
+                       defined_by='http://rs.tdwg.org/dwc/terms/establishmentMeans'>
+                <![CDATA[The process by which the biological individual(s) represented in the Occurrence became established at the location. Recommended best practice is to use a controlled vocabulary. See associated list in "lists" tab.]]></attribute>
+            <attribute column='associatedSequences' uri='urn:associatedSequences'
+                       defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>
+                <![CDATA[A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of genetic sequence information associated with the Occurrence. Links to Genbank or DRYAD entries.]]></attribute>
+            <attribute column='occurrenceRemarks' uri='urn:occurrenceRemarks'
+                       defined_by='http://rs.tdwg.org/dwc/terms/occurrenceRemarks'>
+                <![CDATA[Any other relevant comments or notes about the sample itself.]]></attribute>
+            <attribute column='habitat' uri='urn:habitat' defined_by='http://purl.obolibrary.org/obo/ENVO_00002036'>
+                <![CDATA[Habitat from which the sample was collected. Please pick from the associated list in "lists" tab.]]></attribute>
+            <attribute column='microHabitat' uri='urn:microHabitat' defined_by='urn:microHabitat'>
+                <![CDATA[Information about the microhabitat from which the sample was collected. E.g. Forereef, coral head]]></attribute>
+            <attribute column='substratum' uri='urn:substratum'
+                       defined_by='http://purl.obolibrary.org/obo/ENVO_00010483'>
+                <![CDATA[Substrate from which the individual was sampled. This could be abiotic or biotic (host organism).]]></attribute>
+            <attribute column='samplingProtocol' uri='urn:samplingProtocol'
+                       defined_by='http://rs.tdwg.org/dwc/terms/samplingProtocol'>
+                <![CDATA[Brief description of how the sample was taken. From Darwincore: The name of, reference to, or description of the method or protocol used during an Event.]]></attribute>
+            <attribute column='minimumDepthInMeters' uri='urn:minimumDepthInMeters'
+                       defined_by='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'>
+                <![CDATA[In Meters. Use with maximum depth to bracket the range of depth at which the sample was taken. In meters (positive values below surface)]]></attribute>
+            <attribute column='maximumDepthInMeters' uri='urn:maximumDepthInMeters'
+                       defined_by='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'>
+                <![CDATA[In Meters. Use with minimum depth to bracket the range of depth at which the sample was taken. In meters (positive values below surface)]]></attribute>
+            <attribute column='minimumDistanceAboveSurfaceInMeters' uri='urn:minimumDistanceAboveSurfaceInMeters'
+                       defined_by='http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters'>
+                <![CDATA[In Meters. Use with maximum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
+            <attribute column='maximumDistanceAboveSurfaceInMeters' uri='urn:maximumDistanceAboveSurfaceInMeters'
+                       defined_by='http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters'>
+                <![CDATA[In Meters. Use with minimum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
+            <attribute column='associatedTaxa' uri='urn:associatedTaxa'
+                       defined_by='http://rs.tdwg.org/dwc/terms/associatedTaxa'>
+                <![CDATA[A list (concatenated and separated) of hosts/parasites/symbionts of the sampled individual.]]></attribute>
+            <attribute column='fieldNotes' uri='urn:fieldNotes' defined_by='http://rs.tdwg.org/dwc/terms/fieldNotes'>
+                <![CDATA[Any notes taken in the field, or a link to those notes: population size, ecological info, etc.]]></attribute>
+            <attribute column='eventRemarks' uri='urn:eventRemarks'
+                       defined_by='http://rs.tdwg.org/dwc/terms/eventRemarks'>
+                <![CDATA[A text string for notes that were written on the original label during collection]]></attribute>
+            <attribute column='recordedBy' uri='urn:recordedBy' defined_by='http://rs.tdwg.org/dwc/terms/recordedBy'>
+                <![CDATA[Full Name (can be list -- primary collector first, separate list by semicolons)]]></attribute>
+            <attribute column='identifiedBy' uri='urn:identifiedBy'
+                       defined_by='http://rs.tdwg.org/dwc/terms/identifiedBy'>
+                <![CDATA[Full Name (A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject.)]]></attribute>
+            <attribute column='yearIdentified' uri='urn:yearIdentified' defined_by='urn:yearIdentified'>
+                <![CDATA[YYYY]]></attribute>
+            <attribute column='monthIdentified' uri='urn:monthIdentified' defined_by='urn:monthIdentified'>
+                <![CDATA[MM]]></attribute>
+            <attribute column='dayIdentified' uri='urn:dayIdentified' defined_by='urn:dayIdentified'>
+                <![CDATA[DD]]></attribute>
+            <attribute column='class' uri='urn:class' defined_by='http://rs.tdwg.org/dwc/terms/class'>
+                <![CDATA[The full scientific name of the class in which the taxon is classified.]]></attribute>
+            <attribute column='order' uri='urn:order' defined_by='http://rs.tdwg.org/dwc/terms/order'>
+                <![CDATA[The full scientific name of the order in which the taxon is classified.]]></attribute>
+            <attribute column='family' uri='urn:family' defined_by='http://rs.tdwg.org/dwc/terms/family'>
+                <![CDATA[The full scientific name of the family in which the taxon is classified.]]></attribute>
+            <attribute column='subSpecies' uri='urn:subSpecies'
+                       defined_by='http://rs.tdwg.org/dwc/terms/infraspecificEpithet'>
+                <![CDATA[The name of the lowest or terminal infraspecific epithet of the scientificName, excluding any rank designation.]]></attribute>
+            <attribute column='vernacularName' uri='urn:vernacularName'
+                       defined_by='http://rs.tdwg.org/dwc/terms/vernacularName'>
+                <![CDATA[Common name and/or native name]]></attribute>
+            <attribute column='taxonRemarks' uri='urn:taxonRemarks'
+                       defined_by='http://rs.tdwg.org/dwc/terms/taxonRemarks'>
+                <![CDATA[Comments or notes about the taxon or name.]]></attribute>
+            <attribute column='geneticTissueType' uri='urn:geneticTissueType' defined_by='urn:geneticTissueType'>
+                <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
+            <attribute column='plateID' uri='urn:plateID' defined_by='urn:plateID'>
+                <![CDATA[A platename where the DNA extract is stored]]></attribute>
+            <attribute column='wellID' uri='urn:wellID' defined_by='urn:wellID'>
+                <![CDATA[The well on the plate where the DNA extract is stored]]></attribute>
+            <attribute column='extractionID' uri='urn:extractionID' defined_by='urn:extractionID'>
+                <![CDATA[A unique identifier for the extraction (other than plate or well)]]></attribute>
+            <attribute column='previousTissueID' uri='urn:previousTissueID' defined_by='urn:previousTissueID'>
+                <![CDATA[Other identifiers for this tissue.  E.g. tissue originated in another institution.]]></attribute>
+            <attribute column='tissueStorageID' uri='urn:tissueStorageID' defined_by='urn:tissueStorageID'>
+                <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
+        </entity>
+    </mapping>
+
+</fims>
+

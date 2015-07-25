@@ -311,7 +311,9 @@ public final class TabularDataConverter {
                 cnt = 0;
                 StringBuilder sb = new StringBuilder();
                 for (String dataval : source.tableGetNextRow()) {
-                    //fimsPrinter.out.println(dataval);
+                    // Ignore any data that is NA or na by setting it to blank
+                    if (dataval.equalsIgnoreCase("na"))
+                        dataval="";
                     sb.append(dataval);
                     insstmt.setString(++cnt, dataval);
                 }
