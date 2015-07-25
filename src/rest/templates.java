@@ -92,6 +92,33 @@ public class templates {
     }
 
     /**
+     * Remove the template generator configuration
+     * @param projectId
+     * @return
+     */
+    @GET
+    @Path("/removeConfig/{project_id}/{config_name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeConfig(@PathParam("project_id") Integer projectId,
+                                 @PathParam("config_name") String configName,
+                                 @Context HttpServletRequest request) {
+        if (configName.equalsIgnoreCase("default")) {
+            return Response.ok("{\"error\": \"To remove the default config, talk to the project admin.\"}").build();
+        }
+
+        HttpSession session = request.getSession();
+        String accessToken = (String) session.getAttribute("access_token");
+        String refreshToken = (String) session.getAttribute("refresh_token");
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+
+        String response = bcidConnector.removeTemplateConfig(projectId, configName);
+
+        return Response.status(bcidConnector.getResponseCode())
+                .entity(response)
+                .build();
+    }
+
+    /**
      * Save a template generator configuration
      * @param configName
      * @param checkedOptions

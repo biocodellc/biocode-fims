@@ -58,6 +58,7 @@ public class bcidConnector {
     private String save_template_config_uri;
     private String get_template_configs_uri;
     private String get_template_config_uri;
+    private String remove_template_config_uri;
 
     private Boolean ignore_user;
     private Integer responseCode;
@@ -157,6 +158,7 @@ public class bcidConnector {
         my_graphs_uri = sm.retrieveValue("my_graphs_uri");
         save_template_config_uri = sm.retrieveValue("save_template_config_uri");
         get_template_config_uri = sm.retrieveValue("get_template_config_uri");
+        remove_template_config_uri = sm.retrieveValue("remove_template_config_uri");
         get_template_configs_uri = sm.retrieveValue("get_template_configs_uri");
         client_id = sm.retrieveValue("client_id");
         client_secret = sm.retrieveValue("client_secret");
@@ -939,6 +941,38 @@ public class bcidConnector {
         try {
             String urlString = get_template_config_uri + projectId + "/" + URLEncoder.encode(configName, "UTF-8"
                                                                                             ).replaceAll("\\+", "%20");
+            URL url = new URL(urlString);
+
+            String response = createGETConnection(url);
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
+            } else {
+                return response;
+            }
+        } catch (UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+    }
+
+    /**
+     * method for removing a specific template generator configuration
+     * @param projectId
+     * @param configName
+     * @return
+     */
+    public String removeTemplateConfig(Integer projectId, String configName) {
+
+        try {
+            String urlString = remove_template_config_uri + projectId + "/" + URLEncoder.encode(configName, "UTF-8"
+                                                                                            ).replaceAll("\\+", "%20");
+
+            if (accessToken != null) {
+                urlString += "?access_token=" + accessToken;
+            }
+
             URL url = new URL(urlString);
 
             String response = createGETConnection(url);

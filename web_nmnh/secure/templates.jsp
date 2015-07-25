@@ -26,6 +26,7 @@
                 <select width=20 id="configs" onChange="updateCheckedBoxes();">
                         <option value=0>Select a Project</option>
                 </select>
+                <a class="toggle-content" id="remove_config_toggle" href="#" onclick="removeConfig();">remove</a>
                 </td>
             </tr>
 

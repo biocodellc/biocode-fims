@@ -25,6 +25,7 @@ my_graphs_uri = http://www.biscicol.org/id/projectService/myGraphs/
 save_template_config_uri = http://www.biscicol.org/id/projectService/saveTemplateConfig/
 get_template_config_uri = http://www.biscicol.org/id/projectService/getTemplateConfig/
 get_template_configs_uri = http://www.biscicol.org/id/projectService/getTemplateConfigs/
+remove_template_config_uri = http://www.biscicol.org/id/projectService/removeTemplateConfig/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 rootName = biocode-fims

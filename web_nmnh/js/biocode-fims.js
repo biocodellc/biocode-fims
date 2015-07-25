@@ -815,6 +815,17 @@ function populateConfigs() {
                 $("#configs").val(savedConfig);
             }
 
+            // if there are more then the default config, show the remove link
+            if (data.configNames.length > 1) {
+                if ($('.toggle-content#remove_config_toggle').is(':hidden')) {
+                    $('.toggle-content#remove_config_toggle').show(400);
+                }
+            } else {
+                if (!$('.toggle-content#remove_config_toggle').is(':hidden')) {
+                    $('.toggle-content#remove_config_toggle').hide();
+                }
+            }
+
         }).fail(function(jqXHR,textStatus) {
             if (textStatus == "timeout") {
                 showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -849,6 +860,29 @@ function updateCheckedBoxes() {
             } else {
                 showMessage ("Error fetching template configuration!");
             }
+        });
+    }
+}
+
+function removeConfig() {
+    var configName = $("#configs").val();
+    var buttons = {
+        "Ok": function() {
+            $(this).dialog("close");
+        }
+    }
+    var title = "Remove Template Generator Configuration";
+    if (configName == "Default") {
+        dialog("You can not remove the Default configuration", title, buttons);
+    } else {
+        $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+            if (data.error != null) {
+                showMessage(data.error);
+                return;
+            }
+
+            populateConfigs();
+            dialog(data.success, title, buttons);
         });
     }
 }
