@@ -551,8 +551,5 @@
                 <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
         </entity>
     </mapping>
-
-</fims>
-
 </fims>
 
