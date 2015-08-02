@@ -31,15 +31,15 @@ public class dipnetLoad {
     static String password;
 
     static boolean triplify = false;
-    static boolean upload = false;
+    static boolean upload = true;
     static boolean expeditioncheck = true;
-    static boolean forceLoad = false;
+    static boolean forceAll = true;  // force loading, no questions
 
     public static void main(String[] args) throws FileNotFoundException {
 
         // Redirect output to file
-        //PrintStream out = new PrintStream(new FileOutputStream(output_directory + File.separator + "dipnetloading_output.txt"));
-        //System.setOut(out);
+        PrintStream out = new PrintStream(new FileOutputStream(output_directory + File.separator + "dipnetloading_output.txt"));
+        System.setOut(out);
 
         // only argument is password
         password = args[0];
@@ -47,10 +47,10 @@ public class dipnetLoad {
         // Call the connection with password as single argument
         connector = process.createConnection("dipnetCurator", password);
 
-        // Run the dataset Loader
-        loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
+        // ONE-OFF Run the dataset Loader
+        //loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
 
-        /*
+
         // Loop all the files in the input directory
         Iterator it = FileUtils.iterateFiles(new File(input_directory), null, false);
         while (it.hasNext()) {
@@ -58,14 +58,17 @@ public class dipnetLoad {
             String fileAbsolutePath = file.getAbsolutePath();
             String fileName = file.getName();
             String datasetCode;
-            if (fileName.contains(".txt")) {
-                datasetCode = fileName.replaceAll(".txt", "").replaceAll("mdfastaQC2_", "");
+            //Don't attempt to load conflicted files
+            if (!fileName.contains("Conflict")) {
+                if (fileName.contains(".txt")) {
+                    datasetCode = fileName.replaceAll(".txt", "").replaceAll("mdfastaQC2_", "");
 
-                // Run the dataset Loader
-                loadDataset(datasetCode, fileAbsolutePath);
+                    // Run the dataset Loader
+                    loadDataset(datasetCode, fileAbsolutePath);
+                }
             }
         }
-        */
+
     }
 
     /**
@@ -99,7 +102,7 @@ public class dipnetLoad {
 
         // Check for warnings
         // first part is see if want to just force it, bypassing any warning messages
-        if (forceLoad) {
+        if (forceAll) {
             fimsPrinter.out.println("NOT CHECKING FOR WARNINGS");
             readyToLoad = true;
             // Check for warnings if not forceload
@@ -110,7 +113,7 @@ public class dipnetLoad {
 
         // Run the loader
         if (readyToLoad) {
-            p.runAllLocally(triplify, upload, expeditioncheck);
+            p.runAllLocally(triplify, upload, expeditioncheck, forceAll);
         }
     }
 
