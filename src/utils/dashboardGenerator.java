@@ -57,7 +57,7 @@ public class dashboardGenerator {
             sb.append("\\t\\t<th>Public</th>\\n");
             sb.append("\\t\\t<th class='align_center'>Date</th>\\n");
             sb.append("\\t\\t<th>Download</th>\\n");
-            sb.append("\\t\\t<th>Direct Link</th>\\n");
+            sb.append("\\t\\t<th>Direct Link  (add header 'Accept: application/rdf+xml' for RDF\"</th>\\n");
             sb.append("\\t</tr>\\n");
 
             // inform the user that there is no datasets in the project
@@ -135,11 +135,11 @@ public class dashboardGenerator {
                 sb.append("', this)\\\">edit</a></td>");
 
                 // Direct Link
-                sb.append("<a href='");
+                sb.append("<td><a href='");
                 sb.append("http://n2t.net/" + (String) dataset.get("ark"));
                 sb.append("'>");
                 sb.append("http://n2t.net/" + (String) dataset.get("ark"));
-                sb.append("</a> (use 'Accept: application/rdf+xml' for RDF");
+                sb.append("</a></td>");
 
                 sb.append("\\t</tr>\\n");
             }
