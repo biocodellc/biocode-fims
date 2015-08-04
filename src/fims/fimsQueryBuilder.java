@@ -265,6 +265,8 @@ public class fimsQueryBuilder {
             outputPath = fimsModel.writeKML(PathManager.createUniqueFile("output.kml", output_directory));
         else if (format.equals("cspace"))
             outputPath = fimsModel.writeCSPACE(PathManager.createUniqueFile("output.cspace.xml", output_directory));
+        else if (format.equals("tab"))
+                   outputPath = fimsModel.writeTAB(PathManager.createUniqueFile("output.txt", output_directory));
         else
             outputPath = fimsModel.writeJSON(PathManager.createUniqueFile("output.json", output_directory));
 

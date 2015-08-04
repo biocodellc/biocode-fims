@@ -130,26 +130,27 @@ public class QueryWriter {
     }
 
     /**
-    * Remove a row by its index
-    * @param rowIndex a 0 based index of removing row
-    */
-   public void removeRow(int rowIndex) {
+     * Remove a row by its index
+     *
+     * @param rowIndex a 0 based index of removing row
+     */
+    public void removeRow(int rowIndex) {
 
-       // account for header row
-       int rowtoRemove = rowIndex + 1;
+        // account for header row
+        int rowtoRemove = rowIndex + 1;
 
-       int lastRowNum=sheet.getLastRowNum();
-       if(rowtoRemove>=0&&rowtoRemove<lastRowNum){
-           sheet.shiftRows(rowtoRemove+1,lastRowNum, -1);
-       }
+        int lastRowNum = sheet.getLastRowNum();
+        if (rowtoRemove >= 0 && rowtoRemove < lastRowNum) {
+            sheet.shiftRows(rowtoRemove + 1, lastRowNum, -1);
+        }
 
-       if(rowIndex==lastRowNum){
-           org.apache.poi.ss.usermodel.Row removingRow=sheet.getRow(rowtoRemove);
-           if(removingRow!=null){
-               sheet.removeRow(removingRow);
-           }
-       }
-   }
+        if (rowIndex == lastRowNum) {
+            org.apache.poi.ss.usermodel.Row removingRow = sheet.getRow(rowtoRemove);
+            if (removingRow != null) {
+                sheet.removeRow(removingRow);
+            }
+        }
+    }
 
     /**
      * Write data to a particular cell given the row/column(predicate) and a value
@@ -182,7 +183,6 @@ public class QueryWriter {
         }
 
 
-
         Cell cell = row.createCell(getColumnPosition(colName));
 
         // Set the value conditionally, we can specify datatypes in the configuration file so interpret them
@@ -205,7 +205,7 @@ public class QueryWriter {
      * @param args
      */
     public static void main(String[] args) {
-        /*
+
         // Setup columns -- construct these in XML and use Digester to populate
         ArrayList attributes = new ArrayList();
         Attribute a = new Attribute();
@@ -220,11 +220,9 @@ public class QueryWriter {
 
         // Data Values
         QueryWriter queryWriter = null;
-        try {
-            queryWriter = new QueryWriter(attributes, "myworksheet", "tripleOutput/workbook.xls");
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+
+        queryWriter = new QueryWriter(attributes, "myworksheet", null);
+
         Row r = queryWriter.createRow(1);
         queryWriter.createCell(r, "Specimen_num_collector", "MBIO57");
         queryWriter.createCell(r, "Phylum", "Chordata");
@@ -233,11 +231,11 @@ public class QueryWriter {
 
 
         try {
-            fimsPrinter.out.println("file output : " + queryWriter.write());
+            System.out.println("file output : " + queryWriter.writeTAB(new File("tripleOutput/output.tab")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        */
+
 
     }
 
@@ -330,6 +328,7 @@ public class QueryWriter {
 
     /**
      * Return the default sheet used for processing
+     *
      * @return
      */
     public XSSFWorkbook getWorkbook() {
@@ -547,7 +546,9 @@ public class QueryWriter {
     /**
      * A special method for writing output to CSPACE...
      * TODO: Make the writeCSPACE function general purpose using a library (apache?) for variable substitution
+     *
      * @param file
+     *
      * @return
      */
     public String writeCSPACE(File file) {
@@ -638,7 +639,7 @@ public class QueryWriter {
                     } else if (fieldName.equals("Main_Collector")) {
                         naturalhistory.append("\t" + writeXMLValue("fieldCollectionNumberAssignor", fieldURILookup("Collector", value)) + "\n");
                     } else if (fieldName.equals("ScientificName")) {
-                        taxon = writeXMLValue("taxon",fieldURILookup("ScientificName", value));
+                        taxon = writeXMLValue("taxon", fieldURILookup("ScientificName", value));
                     } else if (fieldName.equals("DeterminedBy")) {
                         identBy = writeXMLValue("identBy", fieldURILookup("DeterminedBy", value));
                     } else if (fieldName.equals("Comments")) {
@@ -781,5 +782,42 @@ public class QueryWriter {
             return "<" + field + ">" + value + "</" + field + ">";
         }
 
+    }
+
+    /**
+     * Write a tab delimited output
+     *
+     * @param file
+     *
+     * @return
+     */
+    public String writeTAB(File file) {
+        // Header Row
+        createHeaderRow(sheet);
+        // Write the output to a file
+        FileOutputStream fileOut = null;
+        try {
+            //File file = new File(fileLocation);
+            fileOut = new FileOutputStream(file);
+
+            Iterator rowIt = sheet.rowIterator();
+            while (rowIt.hasNext()) {
+                Row row = (Row) rowIt.next();
+                Iterator cellIt = row.cellIterator();
+                while (cellIt.hasNext()) {
+                    Cell cell = (Cell) cellIt.next();
+                    byte[] contentInBytes = cell.getStringCellValue().getBytes();
+                    fileOut.write(contentInBytes);
+                    fileOut.write(("\t").getBytes());
+                }
+                fileOut.write(("\n").getBytes());
+            }
+            fileOut.close();
+            return file.getAbsolutePath();
+        } catch (FileNotFoundException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
     }
 }
