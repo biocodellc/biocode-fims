@@ -87,6 +87,7 @@ public class dashboardGenerator {
                 sb.append((String) dataset.get("ts"));
                 sb.append("</td>\\n");
 
+                // Excel option
                 sb.append("\\t\\t<td class='align_center'>");
                 sb.append("<a href='");
                 sb.append(serviceRoot);
@@ -96,6 +97,16 @@ public class dashboardGenerator {
                 sb.append((String) dataset.get("project_id"));
                 sb.append("'>.xlsx</a>");
 
+                sb.append("&nbsp;&nbsp;");
+
+                // TAB delimited option
+                sb.append("<a href='");
+                sb.append(serviceRoot);
+                sb.append("query/tab?graphs=");
+                sb.append((String) dataset.get("graph"));
+                sb.append("&project_id=");
+                sb.append((String) dataset.get("project_id"));
+                sb.append("'>.txt</a>");
 
                 sb.append("&nbsp;&nbsp;");
 
@@ -104,7 +115,7 @@ public class dashboardGenerator {
                     sb.append("<a href='");
                     sb.append((String) dataset.get("webaddress"));
                     sb.append("'>n3</a>");
-                // All other users will have ark which can redirect
+                    // All other users will have ark which can redirect
                 } else {
                     sb.append("<a href='");
                     sb.append("http://n2t.net/" + (String) dataset.get("ark"));
