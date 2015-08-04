@@ -247,8 +247,8 @@ public class query {
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
-        //response.header("Content-Disposition",
-                //"attachment; filename=biocode-fims-output.xls");
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.txt");
 
         // Return response
         if (response == null) {
@@ -274,8 +274,8 @@ public class query {
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
-        //response.header("Content-Disposition",
-          //      "attachment; filename=biocode-fims-output.xlsx");
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.txt");
 
         // Return response
         if (response == null) {
