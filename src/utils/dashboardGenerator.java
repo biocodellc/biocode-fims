@@ -57,7 +57,7 @@ public class dashboardGenerator {
             sb.append("\\t\\t<th>Public</th>\\n");
             sb.append("\\t\\t<th class='align_center'>Date</th>\\n");
             sb.append("\\t\\t<th>Download</th>\\n");
-            sb.append("\\t\\t<th>Direct Link  (add header 'Accept: application/rdf+xml' for RDF\"</th>\\n");
+            sb.append("\\t\\t<th>Direct Link (add header rdf+xml for RDF</th>\\n");
             sb.append("\\t</tr>\\n");
 
             // inform the user that there is no datasets in the project
