@@ -803,6 +803,19 @@ public class QueryWriter {
             Iterator rowIt = sheet.rowIterator();
             while (rowIt.hasNext()) {
                 Row row = (Row) rowIt.next();
+
+                for (int cn = 0; cn < row.getLastCellNum(); cn++) {
+                    Cell cell = row.getCell(cn, Row.CREATE_NULL_AS_BLANK);
+                    if (cell == null) {
+                        fileOut.write(("\t").getBytes());
+                    } else {
+                        byte[] contentInBytes = cell.getStringCellValue().getBytes();
+                        fileOut.write(contentInBytes);
+                        fileOut.write(("\t").getBytes());
+                    }
+                }
+
+                 /*
                 Iterator cellIt = row.cellIterator();
                 while (cellIt.hasNext()) {
                     Cell cell = (Cell) cellIt.next();
@@ -810,6 +823,7 @@ public class QueryWriter {
                     fileOut.write(contentInBytes);
                     fileOut.write(("\t").getBytes());
                 }
+                */
                 fileOut.write(("\n").getBytes());
             }
             fileOut.close();
