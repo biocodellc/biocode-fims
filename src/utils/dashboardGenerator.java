@@ -137,8 +137,8 @@ public class dashboardGenerator {
 
                 // Direct Link
                 String ark = (String) dataset.get("ark");
-                if (ark.contains("99999")) {
-                    sb.append("not available for demonstration server or demo account");
+                if (ark.contains("99999") || username.equalsIgnoreCase("demo")) {
+                    sb.append("<td>not available for demonstration server or demo account</td>");
                 } else {
                     sb.append("<td><a href='");
                     sb.append("http://n2t.net/" + (String) dataset.get("ark"));
