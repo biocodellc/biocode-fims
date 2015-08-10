@@ -220,11 +220,12 @@ public class process {
     /**
      * runAll method is designed to go through the FIMS process for a local application.  The REST services
      * would handle user input/output differently
+     *
      * @param triplifier
      * @param upload
-     * @param expeditionCheck  -- only set to FALSE for testing and debugging usually, or local triplify usage.
+     * @param expeditionCheck -- only set to FALSE for testing and debugging usually, or local triplify usage.
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck) {
+    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll) {
         // Set whether this is a NMNH project or not
         Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
@@ -243,13 +244,16 @@ public class process {
         }
         // Run the validation step
         if (!processController.isValidated() && processController.getHasWarnings()) {
-
-            String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getCommandLineSB().toString();
-            // In LOCAL version convert HTML tags to readable Text
-            // the fimsInputter isn't working correctly, just using the standardInputter for now
-            //Boolean continueOperation = fimsInputter.in.continueOperation(message);
-            Boolean continueOperation = new standardInputter().continueOperation(message);
-
+            Boolean continueOperation = false;
+            if (forceAll) {
+                continueOperation = true;
+            } else {
+                String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getCommandLineSB().toString();
+                // In LOCAL version convert HTML tags to readable Text
+                // the fimsInputter isn't working correctly, just using the standardInputter for now
+                //Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                continueOperation = new standardInputter().continueOperation(message);
+            }
             if (!continueOperation)
                 return;
             processController.setClearedOfWarnings(true);
@@ -263,17 +267,21 @@ public class process {
                 // Expedition Check Step
                 if (!processController.isExpeditionAssignedToUserAndExists())
                     runExpeditionCheck(false);
-
                 // if an expedition creation is required, get feedback from user
                 if (processController.isExpeditionCreateRequired()) {
-                    String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
-                            "Do you wish to create it now?" +
-                            "\nIf you choose to continue, your data will be associated with this new dataset code.";
-                    Boolean continueOperation = fimsInputter.in.continueOperation(message);
-                    if (!continueOperation)
-                        return;
-                    else
+                    if (forceAll) {
                         runExpeditionCreate();
+                    } else {
+                        String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                                "Do you wish to create it now?" +
+                                "\nIf you choose to continue, your data will be associated with this new dataset code.";
+                        Boolean continueOperation = fimsInputter.in.continueOperation(message);
+                        if (!continueOperation)
+                            return;
+                        else
+                            runExpeditionCreate();
+                    }
+
                 }
 
                 // Triplify OR Upload -- not ever both
@@ -281,7 +289,7 @@ public class process {
                     runTriplifier();
                 else if (upload)
                     runUpload();
-            // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
+                // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
                 // In other, words, this is typically used for local debug & test modes
             } else {
                 triplifier t = new triplifier("test", this.outputFolder);
@@ -684,7 +692,7 @@ public class process {
                     pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
 
                     process p = new process(input_file, output_directory, pc, new File(cl.getOptionValue("configFile")));
-                    p.runAllLocally(true, false, false);
+                    p.runAllLocally(true, false, false, false);
                     /*p.runValidation();
                     triplifier t = new triplifier("test", output_directory);
                     p.mapping.run(t, pc);
@@ -737,7 +745,7 @@ public class process {
                         fimsPrinter.out.println("\tinputFilename = " + input_file);
 
                         // Run the processor
-                        p.runAllLocally(triplify, upload, true);
+                        p.runAllLocally(triplify, upload, true, false);
                     }
                 }
 

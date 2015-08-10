@@ -252,4 +252,9 @@ public class fimsModel {
     public void close() {
         model.close();
     }
+
+
+    public String writeTAB(File file) {
+        return queryWriter.writeTAB(file);
+    }
 }

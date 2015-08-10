@@ -57,6 +57,8 @@ public class dashboardGenerator {
             sb.append("\\t\\t<th>Public</th>\\n");
             sb.append("\\t\\t<th class='align_center'>Date</th>\\n");
             sb.append("\\t\\t<th>Download</th>\\n");
+            sb.append("\\t\\t<th>Edit</th>\\n");
+            sb.append("\\t\\t<th>Dataset Persistent Identifier (add header rdf+xml for RDF)</th>\\n");
             sb.append("\\t</tr>\\n");
 
             // inform the user that there is no datasets in the project
@@ -87,6 +89,7 @@ public class dashboardGenerator {
                 sb.append((String) dataset.get("ts"));
                 sb.append("</td>\\n");
 
+                // Excel option
                 sb.append("\\t\\t<td class='align_center'>");
                 sb.append("<a href='");
                 sb.append(serviceRoot);
@@ -96,20 +99,33 @@ public class dashboardGenerator {
                 sb.append((String) dataset.get("project_id"));
                 sb.append("'>.xlsx</a>");
 
+                sb.append("&nbsp;&nbsp;");
+
+                // TAB delimited option
+                sb.append("<a href='");
+                sb.append(serviceRoot);
+                sb.append("query/tab?graphs=");
+                sb.append((String) dataset.get("graph"));
+                sb.append("&project_id=");
+                sb.append((String) dataset.get("project_id"));
+                sb.append("'>.txt</a>");
 
                 sb.append("&nbsp;&nbsp;");
 
+                /*
                 // Demo user should have direct link to webaddress
                 if (username.equalsIgnoreCase("demo")) {
                     sb.append("<a href='");
                     sb.append((String) dataset.get("webaddress"));
                     sb.append("'>n3</a>");
-                // All other users will have ark which can redirect
+                    // All other users will have ark which can redirect
                 } else {
                     sb.append("<a href='");
                     sb.append("http://n2t.net/" + (String) dataset.get("ark"));
                     sb.append("'>n3</a>");
-                }
+                }  */
+
+                sb.append("&nbsp;&nbsp;");
 
                 sb.append("</td>\\n");
 
@@ -118,6 +134,18 @@ public class dashboardGenerator {
                 sb.append("', '");
                 sb.append(dataset.get("expedition_code"));
                 sb.append("', this)\\\">edit</a></td>");
+
+                // Direct Link
+                String ark = (String) dataset.get("ark");
+                if (ark.contains("99999") || username.equalsIgnoreCase("demo")) {
+                    sb.append("<td>not available for demonstration server or demo account</td>");
+                } else {
+                    sb.append("<td><a href='");
+                    sb.append("http://n2t.net/" + (String) dataset.get("ark"));
+                    sb.append("'>");
+                    sb.append("http://n2t.net/" + (String) dataset.get("ark"));
+                    sb.append("</a></td>");
+                }
 
                 sb.append("\\t</tr>\\n");
             }

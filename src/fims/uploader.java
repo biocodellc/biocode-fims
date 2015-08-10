@@ -1,5 +1,16 @@
 package fims;
 
+import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.ReadWrite;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.sparql.core.DatasetGraph;
+import com.hp.hpl.jena.sparql.modify.UpdateProcessRemote;
+import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.tdb.base.file.Location;
+import com.hp.hpl.jena.update.*;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.openjena.atlas.lib.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.FIMSRuntimeException;
@@ -67,6 +78,9 @@ public class uploader {
     }
 
     /**
+     * Execute the data update.  This method is NOT transaction safe and if it is used, reccomend backing up loaded data
+     * in case of data corruption
+     *
      * @method execute the update
      */
     public String execute() {
@@ -96,6 +110,48 @@ public class uploader {
             throw new FIMSRuntimeException(500, e);
         } catch (IOException e) {
             throw new FIMSRuntimeException(500, e);
+        }
+        return graphID;
+    }
+
+    /**
+     * This is a Transaction-Safe execute that updates data using Write-Ahead-Logging on
+     * Fuseki system.  This will prevent corruption in dataset if server goes down during aload.
+     *
+     * @return
+     */
+    public String safeExecute()  {
+        // Dummy insert statement
+        String insert =
+                //"INSERT DATA INTO <" + this.getGraphID() + "> {  <http://example/book3> <http://example/book4> \"newValue1\"}\n";
+                null;
+        try {
+            insert = //"PREFIX ark: <http://n2t.net/ark:> \n" +
+                    "INSERT DATA INTO <" + this.getGraphID() + "> {  " + readFile(file.getAbsolutePath()) + "}\n";
+        } catch (IOException e) {
+            throw new FIMSRuntimeException(500,e);
+        }
+
+        Dataset dataset = TDBFactory.createDataset();
+
+        try {
+            dataset.begin(ReadWrite.WRITE);
+
+            String sparqlUpdateString = StrUtils.strjoinNL(insert);
+            UpdateRequest request = UpdateFactory.create(sparqlUpdateString);
+
+            // Specify Update service.  Swaps "data" with "update" so we can maintain code consistency until we can
+            // refactor later, after we implement this in production
+            String updateService =  this.getService().replace("data","update");
+            UpdateProcessor proc = UpdateExecutionFactory.createRemote(request,updateService);
+
+            proc.execute();
+
+            // Finally, commit the transaction.
+            dataset.commit();
+            // Or call .abort()
+        } finally {
+            dataset.end();
         }
         return graphID;
     }
@@ -142,14 +198,35 @@ public class uploader {
      * @param args
      */
     public static void main(String[] args) {
-        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/test.6.n3");
+        File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/acapla_CR_all_output.n3");
         //File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput/DEMOH_output.31.n3");
         //http://data.biscicol.org/ds/data?graph=urn%3Auuid%3A37797bda-7602-42af-82a5-c8a3827d1c61
         //String uuid = "urn%3Auuid%3A2eddf62e-a58a-11e3-aae7-d4c45d837ce1";
         //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
         //uploader u = new uploader("http://data.biscicol.org/ds/data",file);
         uploader u = new uploader("http://localhost:3030/ds/data", file);
-        System.out.println(u.execute());
+        long startTime = System.currentTimeMillis();
+
+        u.safeExecute();
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("That took " + (endTime - startTime) + " milliseconds");
+
+        System.out.println(u.getService() + "?graph="+ u.getGraphID());
+    }
+    private String readFile( String file ) throws IOException {
+        BufferedReader reader = new BufferedReader( new FileReader (file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        while( ( line = reader.readLine() ) != null ) {
+            stringBuilder.append( line );
+            stringBuilder.append( ls );
+        }
+
+        return stringBuilder.toString();
     }
 }
 

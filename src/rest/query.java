@@ -225,6 +225,67 @@ public class query {
     }
 
     /**
+     * Return Tab delimited data for a graph query using POST
+     * * <p/>
+     * filter parameters are of the form:
+     * name={URI} value={filter value}
+     *
+     *
+     * @return
+     */
+    @POST
+    @Path("/tab/")
+    @Consumes("application/x-www-form-urlencoded")
+    public Response queryTab(
+            MultivaluedMap<String, String> form) {
+
+        // Build the query, etc..
+        fimsQueryBuilder q = POSTQueryResult(form);
+
+        // Run the query, passing in a format and returning the location of the output file
+        File file = new File(q.run("tab"));
+
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.txt");
+
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
+        }
+    }
+    /**
+     * Return Tab delimited data for a graph query.  The GET query runs a simple FILTER query for any term
+     *
+     * @param graphs indicate a comma-separated list of graphs, or all
+     * @return
+     */
+    @GET
+    @Path("/tab/")
+    public Response queryTab(
+            @QueryParam("graphs") String graphs,
+            @QueryParam("project_id") Integer project_id,
+            @QueryParam("filter") String filter) {
+
+        File file = GETQueryResult(graphs, project_id, filter, "tab");
+
+        // Return file to client
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename=biocode-fims-output.txt");
+
+        // Return response
+        if (response == null) {
+            return Response.status(204).build();
+        } else {
+            return response.build();
+        }
+    }
+
+    /**
      * Return Excel for a graph query using POST
      * * <p/>
      * filter parameters are of the form:
