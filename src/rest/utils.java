@@ -154,8 +154,8 @@ public class utils {
         String response = bcidConnector.createGETConnection(url);
 
         // Debugging
-        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode());
-        System.out.println("FIMS validateExpedition response = " + response);
+//        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode());
+//        System.out.println("FIMS validateExpedition response = " + response);
 
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }

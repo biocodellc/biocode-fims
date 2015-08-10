@@ -50,19 +50,19 @@ public class authenticationService {
         // which consequently means sessions are not recognized across redirects, and creating unusual behaviour
         // in the login process.
         String redirect_uri = sm.retrieveValue("redirect_uri");
-        System.out.println("Setting FIMS redirect_uri to " + redirect_uri);
+//        System.out.println("Setting FIMS redirect_uri to " + redirect_uri);
         // Pattern match on the redirect_uri to see if it contains a "www", and if so, then we need to check incomingURL
         //if (Pattern.compile(Pattern.quote(redirect_uri), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
         if (redirect_uri.contains("www")) {
             // This is the current incomingUrl
             URL incomingUrl = new URL(request.getRequestURL().toString());
-            System.out.println("The FIMS incomingURL is " + incomingUrl);
+//            System.out.println("The FIMS incomingURL is " + incomingUrl);
             // Pattern match incomingURL to see if it contains a "www"
             //if (!Pattern.compile(Pattern.quote(incomingUrl.getHost()), Pattern.CASE_INSENSITIVE).matcher("www").find()) {
             if (!incomingUrl.getHost().contains("www")) {
                 String loginRedirectURL = "http://www." + incomingUrl.getHost() + incomingUrl.getPath();
 
-                System.out.println("FIMS Login Redirecting to " + loginRedirectURL);
+//                System.out.println("FIMS Login Redirecting to " + loginRedirectURL);
                 response.sendRedirect(loginRedirectURL);
                 return;
             }
@@ -80,9 +80,9 @@ public class authenticationService {
         //System.out.println("FIMS SESS_DEBUG login: sessionid=" + session.getId() + ";state=" + URLEncoder.encode(state,"utf-8"));
 
         // Redirect to BCID Login Service
-        System.out.println("Sending redirect to " +sm.retrieveValue("authorize_uri") +
-                        "client_id=" + sm.retrieveValue("client_id") +
-                        "&redirect_uri=" + sm.retrieveValue("redirect_uri"));
+//        System.out.println("Sending redirect to " +sm.retrieveValue("authorize_uri") +
+//                        "client_id=" + sm.retrieveValue("client_id") +
+//                        "&redirect_uri=" + sm.retrieveValue("redirect_uri"));
 
         response.sendRedirect(sm.retrieveValue("authorize_uri") +
                 "client_id=" + sm.retrieveValue("client_id") +
@@ -162,7 +162,7 @@ public class authenticationService {
         //if (code == null || state == null || !state.equals(oauthState)) {
         if (code == null ) {
             //System.out.println("Authentication Error, code or state is null");
-            System.out.println("Authentication Error, code is null");
+//            System.out.println("Authentication Error, code is null");
             response.sendRedirect(homepage +"?error=Code is null.");
             return;
         }
@@ -171,14 +171,14 @@ public class authenticationService {
                 "&code=" + code + "&redirect_uri=" + sm.retrieveValue("redirect_uri");
 
 
-        System.out.println("FIMS access_token method, getting read to send postRequest to " + url);
-        System.out.println("Post params" + postParams);
+//        System.out.println("FIMS access_token method, getting read to send postRequest to " + url);
+//        System.out.println("Post params" + postParams);
 
         JSONObject tokenJSON = (JSONObject) JSONValue.parse(bcidConnector.createPOSTConnnection(url, postParams));
 
         //if (tokenJSON.containsKey("error") || (tokenJSON.containsKey("state") && !tokenJSON.get("state").equals(oauthState))) {
         if (tokenJSON.containsKey("usrMessage")) {
-            System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
+//            System.out.println("Authentication Error, here is the returned token string = " + tokenJSON.toString());
             if (tokenJSON.containsKey("usrMessage")) {
                 response.sendRedirect(homepage +"?error=" + tokenJSON.get("usrMessage"));
                 return;
@@ -194,7 +194,7 @@ public class authenticationService {
         JSONObject profileJSON = (JSONObject) JSONValue.parse(bcidConnector.createGETConnection(new URL(profileURL + access_token)));
 
         if (profileJSON.containsKey("usrMessage")) {
-            System.out.println("FIMS access_token method usrMessage" + profileJSON.get("usrMessage"));
+//            System.out.println("FIMS access_token method usrMessage" + profileJSON.get("usrMessage"));
             response.sendRedirect(homepage +"?error=" + profileJSON.get("usrMessage"));
             return;
         }
@@ -204,7 +204,7 @@ public class authenticationService {
         session.setAttribute("access_token", access_token);
         session.setAttribute("refresh_token", tokenJSON.get("refresh_token").toString());
 
-        System.out.println("FIMS access_token method, homepage is " + homepage);
+//        System.out.println("FIMS access_token method, homepage is " + homepage);
 
         response.sendRedirect(homepage);
         return;
