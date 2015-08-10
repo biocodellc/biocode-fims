@@ -20,6 +20,7 @@
     <script type="text/javascript" src="/fims/js/jquery.form.js"></script>
     <script type="text/javascript" src="/fims/js/BrowserDetect.js"></script>
 
+    <script>var sessionMaxInactiveInterval = ${pageContext.session.maxInactiveInterval}</script>
     <script type="text/javascript" src="/fims/js/lodash.js"></script>
     <script type="text/javascript" src="/fims/js/xlsx.js"></script>
     <script type="text/javascript" src="/fims/js/biocode-fims-xlsx-reader.js"></script>

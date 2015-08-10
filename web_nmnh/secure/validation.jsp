@@ -66,8 +66,6 @@
             </table>
         </form>
 
-        <div id=dialogContainer></div>
-
         <div id=resultsContainer style='overflow:auto; display:none;'>
         </div>
 

@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/fims/css/alerts.css"/>
     <link rel="stylesheet" type="text/css" href="/fims/css/biscicol.css"/>
 
+    <script>var sessionMaxInactiveInterval = ${pageContext.session.maxInactiveInterval}</script>
     <script type="text/javascript" src="/fims/js/jquery.js"></script>
     <script type="text/javascript" src="/fims/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/fims/js/jquery.form.js"></script>

@@ -1,5 +1,6 @@
 // Must set global variable naan here to check a spreadsheet's naan
 var naan = 65665
+var sessionTimeout;
 
 function list(url) {
     $.ajax({
@@ -276,7 +277,7 @@ function graphsMessage(message) {
 }
 
 // function to open an new or update an already open jquery ui dialog box
-function dialog(msg, title, buttons) {
+function dialog(msg, title, buttons, opts) {
     var dialogContainer = $("#dialogContainer");
     if (dialogContainer.html() != msg) {
         dialogContainer.html(msg);
@@ -284,7 +285,7 @@ function dialog(msg, title, buttons) {
 
     if (!$(".ui-dialog").is(":visible") || (dialogContainer.dialog("option", "title") != title ||
         dialogContainer.dialog("option" , "buttons") != buttons)) {
-        dialogContainer.dialog({
+        dialogContainer.dialog($.extend({
             modal: true,
             autoOpen: true,
             title: title,
@@ -293,7 +294,7 @@ function dialog(msg, title, buttons) {
             draggable: false,
             buttons: buttons,
             position: { my: "center top", at: "top", of: window}
-        });
+        }, opts));
     }
 
     return;
@@ -886,3 +887,34 @@ function removeConfig() {
         });
     }
 }
+
+function sessionCountdown() {
+    // only invoke inactivateSession if the user is logged in
+    if ($("#logout").length) {
+        //  convert seconds to milliseconds
+        sessionTimeout = setTimeout(inactivateSession, sessionMaxInactiveInterval * 1000);
+    }
+}
+
+function inactivateSession() {
+    var buttons = {
+        "OK": function() {
+            window.location.href = "/fims";
+        }
+    }
+    var title = "Login Expired";
+    var msg = "You're login session has expired. Please re-login.";
+    dialog(msg, title, buttons, {closeOnEscape: false});
+}
+
+(function(undefined) {
+    $(document).ready(function() {
+        $(document).ajaxStop(function() {
+            // session was refreshed, so cancel the existing inactivateSession and recall sessionCountdown();
+            clearTimeout(sessionTimeout);
+            sessionCountdown();
+        });
+
+        sessionCountdown();
+    });
+}).call(this);
