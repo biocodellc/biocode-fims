@@ -28,8 +28,7 @@ public class dashboardGenerator {
 
         String serviceRoot = sm.retrieveValue("fims_service_root");
 
-        JSONObject response = ((JSONObject) JSONValue.parse(bcidConnector.getMyGraphs()));
-        JSONObject projects = ((JSONObject) response.get("data"));
+        JSONObject projects = ((JSONObject) JSONValue.parse(bcidConnector.getMyGraphs()));
 
         sb.append("<h1>");
         sb.append(username);
@@ -40,7 +39,7 @@ public class dashboardGenerator {
             String project_title = (String) it.next();
             JSONArray projectDatasets = (JSONArray) projects.get(project_title);
             sb.append("<br>\\n<a class='expand-content' id='");
-            sb.append(project_title.replace(" ", "_"));
+            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='images/right-arrow.png' id='arrow' class='img-arrow'>");
             sb.append(project_title);
@@ -49,7 +48,7 @@ public class dashboardGenerator {
 //            sb.append(project_title);
 //            sb.append("</h2>\\n");
             sb.append("<div class='toggle-content' id='");
-            sb.append(project_title.replace(" ", "_"));
+            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
             sb.append("'>");
             sb.append("<table>\\n");
             sb.append("\\t<tr>\\n");
@@ -157,8 +156,91 @@ public class dashboardGenerator {
         return sb.toString();
     }
 
+    public String getNMNHDashboard(String username) {
+        StringBuilder sb = new StringBuilder();
+        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
+        JSONObject projects = ((JSONObject) JSONValue.parse(bcidConnector.getMyDatasets()));
+
+        sb.append("<h1>");
+        sb.append(username);
+        sb.append("'s Datasets</h1>\\n");
+
+        // iterate over each project
+        for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
+            String project_title = (String) it.next();
+            sb.append("<br>\\n<a class='expand-content' id='");
+            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("' href='javascript:void(0);'>\\n");
+            sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
+            sb.append(project_title);
+            sb.append("</a>\\n");
+            sb.append("<div class='toggle-content' id='");
+            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("'>");
+
+            // iterate over each expedition
+            for (Iterator it2 = ((JSONObject) projects.get(project_title)).keySet().iterator(); it2.hasNext(); ) {
+                String expedition_title = (String) it2.next();
+                JSONArray expeditionDatasets = (JSONArray) ((JSONObject) projects.get(project_title)).get(expedition_title);
+                sb.append("<br>\\n<a class='expand-content' id='");
+                sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+                sb.append("' href='javascript:void(0);'>\\n");
+                sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
+                sb.append(expedition_title);
+                sb.append("</a>\\n");
+                sb.append("<div class='toggle-content' id='");
+                sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+                sb.append("'>");
+                sb.append("<table>\\n");
+                sb.append("\\t<tr>\\n");
+                sb.append("\\t\\t<th class='align_center'>Date</th>\\n");
+                sb.append("\\t\\t<th>finalCopy</th>\\n");
+                sb.append("\\t</tr>\\n");
+
+                // inform the user that there is no datasets in the project
+                if (expeditionDatasets.isEmpty()) {
+                    sb.append("\\t<tr>\\n");
+                    sb.append("\\t\\t<td colspan='4'>You have no datasets in this project.</td>\\n");
+                    sb.append("\\t</tr>\\n");
+                } else {
+
+                    // iterate over the expeditions's datasets
+                    for (Object d : expeditionDatasets) {
+                        JSONObject dataset = (JSONObject) d;
+                        sb.append("\\t<tr>\\n");
+
+                        sb.append("\\t\\t<td>");
+                        sb.append((String) dataset.get("ts"));
+                        sb.append("</td>\\n");
+
+                        sb.append("\\t\\t<td class='align_center'>");
+                        if (dataset.get("finalCopy").equals("1")) {
+                            sb.append("yes");
+                        } else {
+                            sb.append("no");
+                        }
+                        sb.append("</td>\\n");
+
+                        sb.append("\\t</tr>\\n");
+                    }
+                }
+//                sb.append("<br>");
+                sb.append("</table>\\n");
+                sb.append("</div>\\n");
+            }
+
+            sb.append("</div>\\n");
+//            sb.append("<br>");
+        }
+
+        return sb.toString();
+    }
+
     public static void main(String args[]) {
-        dashboardGenerator dg = new dashboardGenerator("w82j3W6uGQE-ny2_Y-7B", "Bjdb-8SbDUVTvKxFNJ6B");
-        System.out.println(dg.getDashboard("demo"));
+        dashboardGenerator dg = new dashboardGenerator("WdqS_BTeSE-gxkSJ-D6c", "v5VUgUB6jUV_YvKNpyH8");
+        System.out.println(dg.getNMNHDashboard("demo"));
     }
 }

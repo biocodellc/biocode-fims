@@ -54,6 +54,7 @@ public class bcidConnector {
     private String expedition_public_status_uri;
     private String graphs_uri;
     private String my_graphs_uri;
+    private String my_datasets_uri;
     private Integer naan;
     private String save_template_config_uri;
     private String get_template_configs_uri;
@@ -156,6 +157,7 @@ public class bcidConnector {
         project_service_uri = sm.retrieveValue("project_service_uri");
         graphs_uri = sm.retrieveValue("graphs_uri");
         my_graphs_uri = sm.retrieveValue("my_graphs_uri");
+        my_datasets_uri = sm.retrieveValue("my_datasets_uri");
         save_template_config_uri = sm.retrieveValue("save_template_config_uri");
         get_template_config_uri = sm.retrieveValue("get_template_config_uri");
         remove_template_config_uri = sm.retrieveValue("remove_template_config_uri");
@@ -507,6 +509,32 @@ public class bcidConnector {
      */
     public String getMyGraphs() {
         String urlString = my_graphs_uri;
+
+        if (accessToken != null) {
+            urlString += "?access_token=" + accessToken;
+        }
+
+        try {
+            URL url = new URL(urlString);
+            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
+
+            // Some error message was returned
+            if (getResponseCode() != 200) {
+                throw new FIMSRuntimeException(response);
+            } else {
+                return response.toJSONString();
+            }
+        } catch (MalformedURLException e) {
+            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
+        }
+    }
+
+     /**
+     * get the JSON list of datasets that belong to a user
+     * @return
+     */
+    public String getMyDatasets() {
+        String urlString = my_datasets_uri;
 
         if (accessToken != null) {
             urlString += "?access_token=" + accessToken;

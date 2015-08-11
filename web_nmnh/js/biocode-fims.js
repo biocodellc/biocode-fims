@@ -907,6 +907,30 @@ function inactivateSession() {
     dialog(msg, title, buttons, {closeOnEscape: false});
 }
 
+// function to retrieve the user's datasets
+function getDatasetDashboard() {
+    theUrl = "/fims/rest/utils/getDatasetDashboard?isNMNH=true";
+    var jqxhr = $.getJSON( theUrl, function(data) {
+        $("#dashboard").html(data.dashboard);
+        // attach toggle function to each project
+        $(".expand-content").click(function() {
+            projectToggle(this.id)
+        });
+    }).fail(function() {
+        $("#dashboard").html("Failed to load datasets from server.");
+    });
+}
+
+// function to apply the jquery slideToggle effect.
+function projectToggle(id) {
+    if ($('.toggle-content#'+id).is(':hidden')) {
+        $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+    } else {
+        $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+    }
+    $('.toggle-content#'+id).slideToggle('slow');
+}
+
 (function(undefined) {
     $(document).ready(function() {
         $(document).ajaxStop(function() {

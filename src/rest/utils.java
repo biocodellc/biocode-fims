@@ -273,10 +273,12 @@ public class utils {
     @GET
     @Path("/getDatasetDashboard")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasetDashboard(@Context HttpServletRequest request) {
+    public Response getDatasetDashboard(@Context HttpServletRequest request,
+                                        @QueryParam("isNMNH") Boolean isNMNH) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
+        String dashboard;
 
         if (accessToken == null) {
             return Response.status(401).build();
@@ -284,7 +286,11 @@ public class utils {
         String username = (String) session.getAttribute("user");
 
         dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
-        String dashboard = dashboardGenerator.getDashboard(username);
+        if (isNMNH) {
+            dashboard = dashboardGenerator.getNMNHDashboard(username);
+        } else {
+            dashboard = dashboardGenerator.getDashboard(username);
+        }
 
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
     }
