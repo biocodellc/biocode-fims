@@ -274,7 +274,7 @@ public class utils {
     @Path("/getDatasetDashboard")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDatasetDashboard(@Context HttpServletRequest request,
-                                        @QueryParam("isNMNH") Boolean isNMNH) {
+                                        @QueryParam("isNMNH") @DefaultValue("false") Boolean isNMNH) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
