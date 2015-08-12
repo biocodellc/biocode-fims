@@ -926,7 +926,7 @@ function projectToggle(id) {
     // escape special characters in id field
     id = id.replace(/([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/g, "\\$1");
     // store the element value in a field
-    var idElement = $('.toggle-content#id'+id);
+    var idElement = $('.toggle-content#'+id);
     if (idElement.is(':hidden')) {
         $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
     } else {
