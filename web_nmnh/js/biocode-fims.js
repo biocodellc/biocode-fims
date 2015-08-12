@@ -923,12 +923,16 @@ function getDatasetDashboard() {
 
 // function to apply the jquery slideToggle effect.
 function projectToggle(id) {
-    if ($('.toggle-content#'+id).is(':hidden')) {
+    // escape special characters in id field
+    id = id.replace(/([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/g, "\\$1");
+    // store the element value in a field
+    var idElement = $('.toggle-content#id'+id);
+    if (idElement.is(':hidden')) {
         $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
     } else {
         $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
     }
-    $('.toggle-content#'+id).slideToggle('slow');
+    $(idElement).slideToggle('slow');
 }
 
 (function(undefined) {
