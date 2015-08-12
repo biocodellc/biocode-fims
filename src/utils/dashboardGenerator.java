@@ -171,13 +171,13 @@ public class dashboardGenerator {
         // iterate over each project
         for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
             String project_title = (String) it.next();
-            sb.append("<br>\\n<a class='expand-content' id='id");
+            sb.append("<br>\\n<a class='expand-content' id='");
             sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
             sb.append(project_title);
             sb.append("</a>\\n");
-            sb.append("<div class='toggle-content' id='id");
+            sb.append("<div class='toggle-content' id='");
             sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
             sb.append("'>");
 
@@ -185,14 +185,13 @@ public class dashboardGenerator {
             for (Iterator it2 = ((JSONObject) projects.get(project_title)).keySet().iterator(); it2.hasNext(); ) {
                 String expedition_title = (String) it2.next();
                 JSONArray expeditionDatasets = (JSONArray) ((JSONObject) projects.get(project_title)).get(expedition_title);
-                // NOTE, being ID field with "id" so it doesn't begin with a number, fouling javascript, see other instances
-                sb.append("<br>\\n<a class='expand-content' id='id");
+                sb.append("<br>\\n<a class='expand-content' id='");
                 sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
                 sb.append("' href='javascript:void(0);'>\\n");
                 sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
                 sb.append(expedition_title);
                 sb.append("</a>\\n");
-                sb.append("<div class='toggle-content' id='id");
+                sb.append("<div class='toggle-content' id='");
                 sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
                 sb.append("'>");
                 sb.append("<table>\\n");
