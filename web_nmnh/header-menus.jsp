@@ -31,7 +31,7 @@
                                 <ul>
                                     <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
                                     <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
-                                    <!--<li><a href='/fims/secure/datasets.jsp' class='enabled'>My Datasets</a></li>-->
+                                    <li><a href='/fims/secure/datasets.jsp' class='enabled'>My Datasets</a></li>
                                 </ul>
                             </c:if>
 
@@ -39,7 +39,7 @@
                                 <ul>
                                     <li><div class='disabled' style='font-size: 80%;'>Generate Template (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>Validation (login required)</div></li>
-                                    <!--<li><div class='disabled' style='font-size: 80%;'>My Datasets (login required)</div></li>-->
+                                    <li><div class='disabled' style='font-size: 80%;'>My Datasets (login required)</div></li>
                                 </ul>
                             </c:if>
                         </ul>
