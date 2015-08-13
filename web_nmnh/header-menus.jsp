@@ -39,7 +39,7 @@
                                 <ul>
                                     <li><div class='disabled' style='font-size: 80%;'>Generate Template (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>Validation (login required)</div></li>
-                                    <li><div class='disabled' style='font-size: 80%;'>My Datasets (login required)</div></li>
+                                    <!--<li><div class='disabled' style='font-size: 80%;'>My Datasets (login required)</div></li>-->
                                 </ul>
                             </c:if>
                         </ul>
