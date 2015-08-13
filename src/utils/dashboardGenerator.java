@@ -25,6 +25,7 @@ public class dashboardGenerator {
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
+        int projectCounter = 1;
 
         String serviceRoot = sm.retrieveValue("fims_service_root");
 
@@ -39,16 +40,13 @@ public class dashboardGenerator {
             String project_title = (String) it.next();
             JSONArray projectDatasets = (JSONArray) projects.get(project_title);
             sb.append("<br>\\n<a class='expand-content' id='");
-            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("project" + projectCounter);
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='images/right-arrow.png' id='arrow' class='img-arrow'>");
             sb.append(project_title);
             sb.append("</a>\\n");
-//            sb.append("<h2>");
-//            sb.append(project_title);
-//            sb.append("</h2>\\n");
             sb.append("<div class='toggle-content' id='");
-            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("project" + projectCounter);
             sb.append("'>");
             sb.append("<table>\\n");
             sb.append("\\t<tr>\\n");
@@ -151,6 +149,7 @@ public class dashboardGenerator {
 
             sb.append("</table>\\n");
             sb.append("</div>\\n");
+            projectCounter ++;
         }
 
         return sb.toString();
@@ -161,6 +160,8 @@ public class dashboardGenerator {
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
+        int projectCounter = 1;
+        int datasetCounter = 1;
 
         JSONObject projects = ((JSONObject) JSONValue.parse(bcidConnector.getMyDatasets()));
 
@@ -172,13 +173,13 @@ public class dashboardGenerator {
         for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
             String project_title = (String) it.next();
             sb.append("<br>\\n<a class='expand-content' id='");
-            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("project" + projectCounter);
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
             sb.append(project_title);
             sb.append("</a>\\n");
             sb.append("<div class='toggle-content' id='");
-            sb.append(project_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+            sb.append("project" + projectCounter);
             sb.append("'>");
 
             // iterate over each expedition
@@ -186,13 +187,13 @@ public class dashboardGenerator {
                 String expedition_title = (String) it2.next();
                 JSONArray expeditionDatasets = (JSONArray) ((JSONObject) projects.get(project_title)).get(expedition_title);
                 sb.append("<br>\\n<a class='expand-content' id='");
-                sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+                sb.append("dataset" + datasetCounter);
                 sb.append("' href='javascript:void(0);'>\\n");
                 sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
                 sb.append(expedition_title);
                 sb.append("</a>\\n");
                 sb.append("<div class='toggle-content' id='");
-                sb.append(expedition_title.replace(" ", "_").replace(".", "_").replace("#","_"));
+                sb.append("dataset" + datasetCounter);
                 sb.append("'>");
                 sb.append("<table>\\n");
                 sb.append("\\t<tr>\\n");
@@ -227,13 +228,13 @@ public class dashboardGenerator {
                         sb.append("\\t</tr>\\n");
                     }
                 }
-//                sb.append("<br>");
                 sb.append("</table>\\n");
                 sb.append("</div>\\n");
+                datasetCounter ++;
             }
 
             sb.append("</div>\\n");
-//            sb.append("<br>");
+            projectCounter ++;
         }
 
         return sb.toString();
