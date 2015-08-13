@@ -31,7 +31,7 @@
                                 <ul>
                                     <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
                                     <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
-                                    <li><a href='/fims/secure/datasets.jsp' class='enabled'>My Datasets</a></li>
+                                    <!--<li><a href='/fims/secure/datasets.jsp' class='enabled'>My Datasets</a></li>-->
                                 </ul>
                             </c:if>
 
