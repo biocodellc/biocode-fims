@@ -167,7 +167,7 @@ public class dashboardGenerator {
 
         sb.append("<h1>");
         sb.append(username);
-        sb.append("'s Datasets</h1>\\n");
+        sb.append("'s Templates and Datasets</h1>\\n");
 
         // iterate over each project
         for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
@@ -199,6 +199,7 @@ public class dashboardGenerator {
                 sb.append("\\t<tr>\\n");
                 sb.append("\\t\\t<th class='align_center'>Date</th>\\n");
                 sb.append("\\t\\t<th>finalCopy</th>\\n");
+                sb.append("\\t\\t<th class='align_center'>Dataset ARK</th>\\n");
                 sb.append("\\t</tr>\\n");
 
                 // inform the user that there is no datasets in the project
@@ -224,6 +225,18 @@ public class dashboardGenerator {
                             sb.append("no");
                         }
                         sb.append("</td>\\n");
+
+                        // Direct Link
+                        String ark = (String) dataset.get("ark");
+                        if (ark.contains("99999") || username.equalsIgnoreCase("demo")) {
+                            sb.append("<td>not available for demonstration server or demo account</td>");
+                        } else {
+                            sb.append("<td><a href='");
+                            sb.append("http://cdlib.org/id/" + (String) dataset.get("ark"));
+                            sb.append("'>");
+                            sb.append("http://cdlib.org/id/" + (String) dataset.get("ark"));
+                            sb.append("</a></td>");
+                        }
 
                         sb.append("\\t</tr>\\n");
                     }
