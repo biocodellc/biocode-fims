@@ -48,9 +48,9 @@ public class dipnetLoad {
         connector = process.createConnection("dipnetCurator", password);
 
         // ONE-OFF Run the dataset Loader
-        //loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
-
-
+        loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
+        loadDataset("QC2_Eucmet_C01_HL_all","/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_Eucmet_CO1_HL.txt");
+         /*
         // Loop all the files in the input directory
         Iterator it = FileUtils.iterateFiles(new File(input_directory), null, false);
         while (it.hasNext()) {
@@ -67,7 +67,7 @@ public class dipnetLoad {
                     loadDataset(datasetCode, fileAbsolutePath);
                 }
             }
-        }
+        }  */
 
     }
 

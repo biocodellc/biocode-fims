@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.SystemOutLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reader.characterCleaner;
 import settings.FIMSRuntimeException;
 import settings.PathManager;
 
@@ -124,6 +125,8 @@ public class TabReader extends ExcelReader {
 
             String line;
             while ((line = br.readLine()) != null) {
+                // Clean input according to rules in the characterCleaner class
+                line = characterCleaner.getOnlyGoodChars(line);
                 row = sheet1.createRow(rowNum);
                 String[] vals = line.split("\t");
                 for (int j = 0; j < vals.length; j++) {
