@@ -18,6 +18,7 @@
     <script type="text/javascript" src="/biocode-fims/js/BrowserDetect.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/lodash.js"></script>
     <script type="text/javascript" src="/biocode-fims/js/xlsx.js"></script>
+    <script type="text/javascript" src="/biocode-fims/js/papaparse.min.js"></script>
 
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
