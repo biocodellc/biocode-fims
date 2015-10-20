@@ -44,6 +44,9 @@
     // Current version.
     XLSXReader.VERSION = '0.0.1';
 
+    // Supported Extensions
+    XLSXReader.exts = ['xls', 'xlsx', 'xlsxm', 'xlsb', 'ods'];
+
     XLSXReader.utils = {
         'intializeFromFile': function(obj, file, readCells, toJSON, handler) {
             var reader = new FileReader();

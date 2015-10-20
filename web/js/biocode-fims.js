@@ -605,7 +605,7 @@ function validationFormToggle() {
                 var p = $("#projects");
                 // add a refresh map link incase the new dataset has the same project as the previous dataset. In that
                 // case, the user won't change projects and needs to manually refresh the map
-                if (p.value != 0) {
+                if (p.val() != 0) {
                     p.parent().append("<a id='refresh_map' href='#' onclick=\"generateMap('map', " + p.val() + ")\">Refresh Map</a>");
                 }
                 p.prop('disabled', false);
@@ -822,21 +822,25 @@ function parseSpreadsheet(regExpression, sheetName) {
     } catch(err) {
         return null;
     }
+    var deferred = new $.Deferred();
     // older browsers don't have a FileReader
     if (f != null) {
-        var deferred = new $.Deferred();
         var inputFile= $('#dataset')[0].files[0];
 
-        $.when(XLSXReader.utils.findCell(inputFile, regExpression, sheetName)).done(function(match) {
-            if (match) {
-                deferred.resolve(match.toString().split('=')[1].slice(0, -1));
-            } else {
-                deferred.resolve(null);
-            }
-        });
-        return deferred.promise();
+        var splitFileName = $('#dataset').val().split('.');
+        if ($.inArray(splitFileName[splitFileName.length - 1], XLSXReader.exts) > -1) {
+            $.when(XLSXReader.utils.findCell(inputFile, regExpression, sheetName)).done(function(match) {
+                if (match) {
+                    deferred.resolve(match.toString().split('=')[1].slice(0, -1));
+                } else {
+                    deferred.resolve(null);
+                }
+            });
+            return deferred.promise();
+        }
     }
-    return null;
+    setTimeout(function(){deferred.resolve(null)}, 100);
+    return deferred.promise();
 
 }
 
