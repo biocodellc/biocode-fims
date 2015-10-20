@@ -10,7 +10,7 @@
             <tr>
                 <td align=right>&nbsp;&nbsp;Choose Project&nbsp;&nbsp;</td>
                 <td align=left>
-                <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');">
+                <select width=20 id=projects onChange="populateColumns('#cat1');populateAbstract('#abstract');populateConfigs();">
                         <option value=0>Loading projects ...</option>
                 </select>
 
