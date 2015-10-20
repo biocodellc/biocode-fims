@@ -52,9 +52,9 @@ function populateColumns(targetDivId) {
             $(targetDivId).html(data);
         }).fail(function(jqXHR,textStatus) {
             if (textStatus == "timeout") {
-                    showMessage ("Timed out, waiting for response!");
+                showMessage ("Timed out, waiting for response!");
             } else {
-                    showMessage ("Error completing request!" );
+                showMessage ("Error completing request!" );
             }
         });
 
@@ -63,6 +63,7 @@ function populateColumns(targetDivId) {
          });
      }
 }
+
 function populateAbstract(targetDivId) {
     $(targetDivId).html("Loading ...");
 

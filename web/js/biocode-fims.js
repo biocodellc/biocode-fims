@@ -20,7 +20,7 @@ function populateDefinitions(column) {
  var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
+    theUrl = "/biocode-fims/rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
 
     $.ajax({
         type: "GET",
@@ -38,26 +38,29 @@ function populateColumns(targetDivId) {
     var e = document.getElementById('projects');
     var project_id = e.options[e.selectedIndex].value;
 
-    theUrl = "rest/templates/attributes/?project_id=" + project_id;
+    if (project_id != 0) {
+        theUrl = "/biocode-fims/rest/templates/attributes/?project_id=" + project_id;
 
-    var jqxhr = $.ajax( {
-        url: theUrl,
-        async: false,
-        dataType : 'html'
-    }).done(function(data) {
-        $(targetDivId).html(data);
-    }).fail(function(jqXHR,textStatus) {
-        if (textStatus == "timeout") {
+        var jqxhr = $.ajax( {
+            url: theUrl,
+            async: false,
+            dataType : 'html'
+        }).done(function(data) {
+            $(targetDivId).html(data);
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
                 showMessage ("Timed out waiting for response!");
-        } else {
+            } else {
                 showMessage ("Error completing request!" );
-        }
-    });
+            }
+        });
 
-     $(".def_link").click(function () {
-        populateDefinitions($(this).attr('name'));
-     });
+        $(".def_link").click(function () {
+            populateDefinitions($(this).attr('name'));
+        });
+     }
 }
+
 function populateAbstract(targetDivId) {
     $(targetDivId).html("Loading ...");
 
@@ -1008,6 +1011,11 @@ function removeConfig() {
 function removeConfig() {
     var configName = $("#configs").val();
     if (configName == "Default") {
+        var buttons = {
+            "Ok": function() {
+                $(this).dialog("close");
+            }
+        }
         dialog("You can not remove the Default configuration", title, buttons);
         return;
     }
