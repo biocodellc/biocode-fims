@@ -17,6 +17,15 @@
                 </td>
             </tr>
 
+            <tr  class="toggle-content" id="config_toggle">
+                            <td align=right>&nbsp;&nbsp;Choose Template Config&nbsp;&nbsp;</td>
+                            <td align=left id="config_container">
+                            <select width=20 id="configs" onChange="updateCheckedBoxes();">
+                                    <option value=0>Select a Project</option>
+                            </select>
+                            <a class="toggle-content" id="remove_config_toggle" href="#" onclick="removeConfig();">remove</a>
+                            </td>
+            </tr>
         </table>
     </form>
 
