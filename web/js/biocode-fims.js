@@ -839,3 +839,148 @@ function parseSpreadsheet(regExpression, sheetName) {
     return null;
 
 }
+
+var savedConfig;
+function saveTemplateConfig() {
+    var message = "<table><tr><td>Configuration Name:</td><td><input type='text' name='config_name' /></td></tr></table>";
+    var title = "Save Template Generator Configuration";
+    var buttons = {
+        "Save": function() {
+            var checked = [];
+            var configName = $("input[name='config_name']").val();
+
+            if (configName.toUpperCase() == "Default".toUpperCase()) {
+                $("#dialogContainer").addClass("error");
+                dialog("Talk to the project admin to change the default configuration.<br><br>" + message, title, buttons);
+                return;
+            }
+
+            $("#cat1 input[type='checkbox']:checked").each(function() {
+                checked.push($(this).data().uri);
+            });
+
+            savedConfig = configName;
+            $.post("/fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
+                                                            {"configName": configName, "checkedOptions": checked}, true)
+            ).done(function(data) {
+                if (data.error != null) {
+                    $("#dialogContainer").addClass("error");
+                    var m = data.error + "<br><br>" + message;
+                    dialog(m, title, buttons);
+                } else {
+                    $("#dialogContainer").removeClass("error");
+                    populateConfigs();
+                    var b = {
+                        "Ok": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                    dialog(data.success + "<br><br>", "Success!", b);
+                }
+            }).fail(function(jqXHR) {
+                failError(jqXHR);
+            });
+        },
+        "Cancel": function() {
+            $("#dialogContainer").removeClass("error");
+            $(this).dialog("close");
+        }
+    }
+
+    dialog(message, title, buttons);
+}
+
+function populateConfigs() {
+    var project_id = $("#projects").val();
+    if (project_id == 0) {
+        $("#configs").html("<option value=0>Select a Project</option>");
+    } else {
+        var el = $("#configs");
+        el.empty();
+        el.append($("<option></option>").attr("value", 0).text("Loading configs..."));
+        $.getJSON("/fims/rest/templates/getConfigs/" + project_id).done(function(data) {
+            var listItems = "";
+
+            el.empty();
+            data.configNames.forEach(function(configName) {
+                el.append($("<option></option>").
+                    attr("value", configName).text(configName));
+            });
+
+            if (savedConfig != null) {
+                $("#configs").val(savedConfig);
+            }
+
+            // if there are more then the default config, show the remove link
+            if (data.configNames.length > 1) {
+                if ($('.toggle-content#remove_config_toggle').is(':hidden')) {
+                    $('.toggle-content#remove_config_toggle').show(400);
+                }
+            } else {
+                if (!$('.toggle-content#remove_config_toggle').is(':hidden')) {
+                    $('.toggle-content#remove_config_toggle').hide();
+                }
+            }
+
+        }).fail(function(jqXHR,textStatus) {
+            if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+            } else {
+                showMessage ("Error fetching template configurations!");
+            }
+        });
+    }
+}
+
+function updateCheckedBoxes() {
+    var configName = $("#configs").val();
+    if (configName == "Default") {
+        populateColumns("#cat1");
+    } else {
+        $.getJSON("/fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+            if (data.error != null) {
+                showMessage(data.error);
+                return;
+            }
+            // deselect all unrequired columns
+            $(':checkbox').not(":disabled").each(function() {
+                this.checked = false;
+            });
+
+            data.checkedOptions.forEach(function(uri) {
+                $(':checkbox[data-uri="' + uri + '"]')[0].checked = true;
+            });
+        }).fail(function(jqXHR, textStatus) {
+            if (textStatus == "timeout") {
+                showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
+            } else {
+                showMessage ("Error fetching template configuration!");
+            }
+        });
+    }
+}
+
+function removeConfig() {
+    var configName = $("#configs").val();
+    var buttons = {
+        "Ok": function() {
+            $(this).dialog("close");
+        }
+    }
+    var title = "Remove Template Generator Configuration";
+    if (configName == "Default") {
+        dialog("You can not remove the Default configuration", title, buttons);
+    } else {
+        $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+            if (data.error != null) {
+                showMessage(data.error);
+                return;
+            }
+
+            populateConfigs();
+            dialog(data.success, title, buttons);
+        });
+    }
+}
+
+
