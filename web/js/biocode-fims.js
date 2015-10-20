@@ -94,6 +94,11 @@ function populateProjects() {
         $("#projects").val($("#projects option:first").val());
         $('.toggle-content#projects_toggle').show(400);
 
+        $("#projects").on("change", function() {
+            if ($('.toggle-content#config_toggle').is(':hidden')) {
+                $('.toggle-content#config_toggle').show(400);
+            }
+        });
     }).fail(function(jqXHR,textStatus) {
         if (textStatus == "timeout") {
 	        showMessage ("Timed out waiting for response! Try again later or reduce the number of graphs you are querying. If the problem persists, contact the System Administrator.");
@@ -760,12 +765,22 @@ function getDatasetDashboard() {
 
 // function to apply the jquery slideToggle effect.
 function projectToggle(id) {
-    if ($('.toggle-content#'+id).is(':hidden')) {
+    /*if ($('.toggle-content#'+id).is(':hidden')) {
         $('.img-arrow', '#'+id).attr("src","images/down-arrow.png");
     } else {
         $('.img-arrow', '#'+id).attr("src","images/right-arrow.png");
     }
-    $('.toggle-content#'+id).slideToggle('slow');
+    $('.toggle-content#'+id).slideToggle('slow');   */
+     // escape special characters in id field
+        id = id.replace(/([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/g, "\\$1");
+        // store the element value in a field
+        var idElement = $('.toggle-content#'+id);
+        if (idElement.is(':hidden')) {
+            $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+        } else {
+            $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+        }
+        $(idElement).slideToggle('slow');
 }
 
 // function to edit a dataset
@@ -985,6 +1000,20 @@ function removeConfig() {
             dialog(data.success, title, buttons);
         });
     }
+}
+
+// function to apply the jquery slideToggle effect.
+function projectToggle(id) {
+    // escape special characters in id field
+    id = id.replace(/([!@#$%^&*()+=\[\]\\';,./{}|":<>?~_-])/g, "\\$1");
+    // store the element value in a field
+    var idElement = $('.toggle-content#'+id);
+    if (idElement.is(':hidden')) {
+        $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+    } else {
+        $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+    }
+    $(idElement).slideToggle('slow');
 }
 
 

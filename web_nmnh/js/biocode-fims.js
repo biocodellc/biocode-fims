@@ -102,6 +102,7 @@ function populateProjects() {
         $("#projects").html(listItems);
         // Set to the first value in the list which should be "select one..."
         $("#projects").val($("#projects option:first").val());
+
         $("#projects").on("change", function() {
             if ($('.toggle-content#config_toggle').is(':hidden')) {
                 $('.toggle-content#config_toggle').show(400);
