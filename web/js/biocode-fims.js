@@ -864,7 +864,7 @@ function saveTemplateConfig() {
             });
 
             savedConfig = configName;
-            $.post("/fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
+            $.post("/biocode-fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
                                                             {"configName": configName, "checkedOptions": checked}, true)
             ).done(function(data) {
                 if (data.error != null) {
@@ -902,7 +902,7 @@ function populateConfigs() {
         var el = $("#configs");
         el.empty();
         el.append($("<option></option>").attr("value", 0).text("Loading configs..."));
-        $.getJSON("/fims/rest/templates/getConfigs/" + project_id).done(function(data) {
+        $.getJSON("/biocode-fims/rest/templates/getConfigs/" + project_id).done(function(data) {
             var listItems = "";
 
             el.empty();
@@ -941,7 +941,7 @@ function updateCheckedBoxes() {
     if (configName == "Default") {
         populateColumns("#cat1");
     } else {
-        $.getJSON("/fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+        $.getJSON("/biocode-fims/rest/templates/getConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
             if (data.error != null) {
                 showMessage(data.error);
                 return;
@@ -975,7 +975,7 @@ function removeConfig() {
     if (configName == "Default") {
         dialog("You can not remove the Default configuration", title, buttons);
     } else {
-        $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+        $.getJSON("/biocode-fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
             if (data.error != null) {
                 showMessage(data.error);
                 return;
