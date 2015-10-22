@@ -354,7 +354,7 @@ public class validate {
             SIServerSideSpreadsheetTools siServerSideSpreadsheetTools = new SIServerSideSpreadsheetTools(
                     inputFile,
                     processController.getWorksheetName(),
-                    userId,
+                    p.getMapping().getDefaultSheetUniqueKey(),
                     bcidRoot);
 
             // Write GUIDs
