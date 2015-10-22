@@ -984,30 +984,6 @@ function updateCheckedBoxes() {
     }
 }
 
-/*
-function removeConfig() {
-    var configName = $("#configs").val();
-    var buttons = {
-        "Ok": function() {
-            $(this).dialog("close");
-        }
-    }
-    var title = "Remove Template Generator Configuration";
-    if (configName == "Default") {
-        dialog("You can not remove the Default configuration", title, buttons);
-    } else {
-        $.getJSON("/biocode-fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
-            if (data.error != null) {
-                showMessage(data.error);
-                return;
-            }
-
-            populateConfigs();
-            dialog(data.success, title, buttons);
-        });
-    }
-}
-*/
 function removeConfig() {
     var configName = $("#configs").val();
     if (configName == "Default") {

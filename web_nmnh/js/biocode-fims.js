@@ -868,27 +868,46 @@ function updateCheckedBoxes() {
 }
 
 function removeConfig() {
-    var configName = $("#configs").val();
-    var buttons = {
-        "Ok": function() {
-            $(this).dialog("close");
-        }
-    }
-    var title = "Remove Template Generator Configuration";
-    if (configName == "Default") {
-        dialog("You can not remove the Default configuration", title, buttons);
-    } else {
-        $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
-            if (data.error != null) {
-                showMessage(data.error);
-                return;
-            }
+      var configName = $("#configs").val();
+      if (configName == "Default") {
+          var buttons = {
+              "Ok": function() {
+                  $(this).dialog("close");
+              }
+          }
+          dialog("You can not remove the Default configuration", title, buttons);
+          return;
+      }
 
-            populateConfigs();
-            dialog(data.success, title, buttons);
-        });
-    }
-}
+      var message = "Are you sure you want to remove "+ configName + " configuration?";
+      var title = "Warning";
+      var buttons = {
+          "OK": function() {
+              var buttons = {
+                  "Ok": function() {
+                      $(this).dialog("close");
+                  }
+              }
+              var title = "Remove Template Generator Configuration";
+
+              $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+                  if (data.error != null) {
+                      showMessage(data.error);
+                      return;
+                  }
+
+                  populateConfigs();
+                  dialog(data.success, title, buttons);
+              });
+          },
+          "Cancel": function() {
+              $("#dialogContainer").removeClass("error");
+              $(this).dialog("close");
+          }
+      }
+
+      dialog(message, title, buttons);
+  }
 
 function sessionCountdown() {
     // only invoke inactivateSession if the user is logged in
