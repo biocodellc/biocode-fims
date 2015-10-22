@@ -41,7 +41,7 @@ public class SIServerSideSpreadsheetTools {
             String localIDColumnName,
             String bcidRoot) {
         // Assign class level variables
-       try {
+        try {
             FileInputStream fis = new FileInputStream(sourceFile);
             this.workbook = new XSSFWorkbook(fis);
         } catch (FileNotFoundException e) {
@@ -92,10 +92,11 @@ public class SIServerSideSpreadsheetTools {
      */
     public void guidify() {
         // Add the suffixPassthroughGUID (the BCID) to the end of the sheet
-        if (SIMethod)
-            addSuffixPassthroughGuidSIMethod();
-        else
-            addSuffixPassthroughGuid();
+        // The SI Method is deprecated now in favor of the FIMS standard method.
+        //if (SIMethod)
+        //    addSuffixPassthroughGuidSIMethod();
+        //else
+        addSuffixPassthroughGuid();
 
     }
 
@@ -122,6 +123,7 @@ public class SIServerSideSpreadsheetTools {
 
     /**
      * ONLY use this method for SI cases... it is specifically only to their implementation
+     * Per discussion captured in Google Doc, we are now deprecating this method in favor of the standard method
      */
     private void addSuffixPassthroughGuidSIMethod() {
         int ezidColumnNum = getEZIDColumnNum();
@@ -207,6 +209,7 @@ public class SIServerSideSpreadsheetTools {
 
     /**
      * Write the resulting spreadsheet
+     *
      * @param outputFile
      */
     public void write(File outputFile) {
@@ -262,6 +265,7 @@ public class SIServerSideSpreadsheetTools {
 
     /**
      * Add a row to header that gets written internally
+     *
      * @param mapping
      * @param replaceHeader
      */
@@ -289,7 +293,7 @@ public class SIServerSideSpreadsheetTools {
                 //System.out.println(c.getStringCellValue() +  " " + attribute.getColumn());
                 // when we find the corresponding attribute to the column, insert the column_internal prop.
                 // We have to normalize some values found in attribute columns
-                if (c.getStringCellValue().replace("/","").equalsIgnoreCase(attribute.getColumn().replace("_"," "))) {
+                if (c.getStringCellValue().replace("/", "").equalsIgnoreCase(attribute.getColumn().replace("_", " "))) {
                     Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
                     //System.out.println("       :" + attribute.getColumn_internal());
                     columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumn_internal()));
