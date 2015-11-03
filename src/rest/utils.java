@@ -80,13 +80,18 @@ public class utils {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getExpeditionCodes(@PathParam("project_id") Integer projectId,
                                        @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+        bcidConnector bcidConnector = null;
+        String response= null;
+        try {
+            HttpSession session = request.getSession();
+            String accessToken = (String) session.getAttribute("access_token");
+            String refreshToken = (String) session.getAttribute("refresh_token");
+            bcidConnector = new bcidConnector(accessToken, refreshToken);
 
-        String response = bcidConnector.getExpeditionCodes(projectId);
-
+            response = bcidConnector.getExpeditionCodes(projectId);
+        } catch (Exception e) {
+            throw new FIMSRuntimeException(500, e);
+        }
         return Response.status(bcidConnector.getResponseCode()).entity(response).build();
     }
 
@@ -325,24 +330,29 @@ public class utils {
         String decimalLongDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLongitude";
         JSONObject response = new JSONObject();
 
-        processController pc = new processController(projectId, null);
-        process p = new process(null, uploadPath(), new bcidConnector(), pc);
+        try {
+            processController pc = new processController(projectId, null);
+            process p = new process(null, uploadPath(), new bcidConnector(), pc);
 
-        Mapping mapping = p.getMapping();
-        String defaultSheet = mapping.getDefaultSheetName();
-        ArrayList<Attribute> attributeList = mapping.getAllAttributes(defaultSheet);
+            Mapping mapping = p.getMapping();
+            String defaultSheet = mapping.getDefaultSheetName();
+            ArrayList<Attribute> attributeList = mapping.getAllAttributes(defaultSheet);
 
-        response.put("data_sheet", defaultSheet);
+            response.put("data_sheet", defaultSheet);
 
-        for (Attribute attribute : attributeList) {
-            // when we find the column corresponding to the definedBy for lat and long, add them to the response
-            if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
-                response.put("lat_column", attribute.getColumn());
-            } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
-                response.put("long_column", attribute.getColumn());
+            for (Attribute attribute : attributeList) {
+                // when we find the column corresponding to the definedBy for lat and long, add them to the response
+                if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
+                    response.put("lat_column", attribute.getColumn());
+                } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
+                    response.put("long_column", attribute.getColumn());
+                }
             }
-        }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FIMSRuntimeException(500, e);
+        }
         return Response.ok(response.toJSONString()).build();
     }
 

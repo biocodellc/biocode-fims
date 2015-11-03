@@ -693,7 +693,7 @@ function getExpeditionCodes() {
                 $(this).dialog("close");
                 }
             }
-            dialog("Error fetching expeditions!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
+            dialog("Error fetching datasets!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
         });
 }
 
