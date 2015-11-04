@@ -37,6 +37,7 @@ public class process {
     bcidConnector connector;
     private processController processController;
     private static Logger logger = LoggerFactory.getLogger(process.class);
+    protected int project_id;
 
     /**
      * Setup class variables for processing FIMS data.
@@ -114,8 +115,10 @@ public class process {
      * @param configFile
      */
     public process(
+            int project_id,
             String outputFolder,
             File configFile) {
+        this.project_id = project_id;
         this.outputFolder = outputFolder;
         this.configFile = configFile;
         this.outputPrefix = "output";
@@ -159,6 +162,9 @@ public class process {
         return mapping;
     }
 
+    public int getProject_id() {
+        return project_id;
+    }
 
     /**
      * Check if this is a NMNH project
@@ -672,6 +678,7 @@ public class process {
                 File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
 
                 process p = new process(
+                        project_id,
                         output_directory,
                         file
                 );
@@ -679,7 +686,6 @@ public class process {
                 //p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
                 // TODO: construct filter statements from arguments passed in on command-line
                 System.out.println(p.query(cl.getOptionValue("q").split(","), cl.getOptionValue("f"), null));
-
             }
             /*
            Run the validator

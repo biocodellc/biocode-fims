@@ -69,7 +69,7 @@ public class templateProcessor {
         naan = bcidConnector.getNAAN();
 
         // Instantiate the project output Folder
-        this.p = new process(outputFolder, configFile.getOutputFile());
+        this.p = new process(project_id,outputFolder, configFile.getOutputFile());
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);
 
@@ -119,7 +119,7 @@ public class templateProcessor {
         naan = bcidConnector.getNAAN();
 
         // Instantiate the project output Folder
-        this.p = new process(outputFolder, configFile);
+        this.p = new process(project_id,outputFolder, configFile);
 
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);

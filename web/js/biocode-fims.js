@@ -219,8 +219,6 @@ function getFilterKeyValue() {
     return "";
 }
 
-
-
 // Get the projectID
 function getProjectID() {
     var e = document.getElementById('projects');

@@ -256,7 +256,8 @@ public class fimsQueryBuilder {
                 e.printStackTrace();
             }
 
-            templateProcessor t = new templateProcessor(1, output_directory, false, justData);
+            // SPECIFY PROJECT_ID HERE!!
+            templateProcessor t = new templateProcessor(this.process.getProject_id(), output_directory, false, justData);
             outputPath = t.createExcelFileFromExistingSources("Samples", output_directory).getAbsolutePath();
         }
         else if (format.equals("html"))
@@ -283,14 +284,15 @@ public class fimsQueryBuilder {
     public static void main(String[] args) {
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
         String output_directory = System.getProperty("user.dir") + File.separator + "tripleOutput";
-
+         int project_id = 1;
         ArrayList<fimsFilterCondition> filters = new ArrayList<fimsFilterCondition>();
         //String graphs;
 
         // configuration file
-        File file = new configurationFileFetcher(1, output_directory, false).getOutputFile();
+        File file = new configurationFileFetcher(project_id, output_directory, false).getOutputFile();
 
         run.process p = new process(
+                project_id,
                 output_directory,
                 file
         );

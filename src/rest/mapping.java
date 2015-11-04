@@ -35,6 +35,7 @@ public class mapping {
 
         // Create a process object
         process p = new process(
+                projectID,
                 uploadPath(),
                 configFile
         );

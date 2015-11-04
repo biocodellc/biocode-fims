@@ -186,6 +186,7 @@ public class utils {
 
         // Create a process object
         process p = new process(
+                projectId,
                 uploadPath(),
                 configFile
         );

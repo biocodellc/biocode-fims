@@ -343,6 +343,8 @@ public class query {
                 graphs = Arrays.copyOf(valueArray, valueArray.length, String[].class);
             } else if (key.equalsIgnoreCase("project_id")) {
                 project_id = Integer.parseInt((String) value.get(0));
+                System.out.println("project_id_val=" + (String)value.get(0) );
+                System.out.println("project_id_int=" + project_id );
             } else if (key.equalsIgnoreCase("boolean")) {
                 /// AND|OR
                 //project_id = Integer.parseInt((String) value.get(0));
@@ -452,6 +454,7 @@ public class query {
 
         // Create a process object
         process p = new process(
+                project_id,
                 uploadPath(),
                 configFile
         );
