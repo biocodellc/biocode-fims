@@ -1147,7 +1147,7 @@ public class Rule {
     }
 
     /**
-     * Checks for valid lat/lng values and warns about maxerrorinmeters and horizontaldatum values.
+     * Checks for valid lat/lng values
      * <p></p>
      * Example:
      * <br></br>
