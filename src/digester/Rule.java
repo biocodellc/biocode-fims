@@ -322,9 +322,9 @@ public class Rule {
      * This is necessary for cases where data is being triplified and constructed as a URI
      * One approach is to encode all characters, however, this creates a mis-leading identifier
      * and if used as part of a URI should be only valid characters.
-     *
+     * <p/>
      * Characters that are disallowed are: %$&+,/:;=?@<>#%\
-     *
+     * <p/>
      * Note that this rule does not check if this a valid URI in its entirety, only that the portion of
      * the string, when appended onto other valid URI syntax, will not break the URI itself
      */
@@ -953,7 +953,7 @@ public class Rule {
                     } catch (Exception e) {
                         //TODO should we be catching Exception?
                         logger.warn("Exception", e);
-                        addMessage("Bad Well Number " + well_number96Value, groupMessage,j);
+                        addMessage("Bad Well Number " + well_number96Value, groupMessage, j);
                     } finally {
                         if (intNumber <= 12 && intNumber >= 1) {
                             // ok
@@ -982,23 +982,24 @@ public class Rule {
         ResultSet resultSet;
         String thisColumn = getColumn();
         String msg = null;
+        String sql = "";
         try {
             Statement statement = connection.createStatement();
 
             // Split the value according to our convention
-            String[] values = value.split("=");
+            String[] values = value.split("=|and");
 
             // Construct sql for
-            String sql = "SELECT " + thisColumn +
+            sql = "SELECT " + thisColumn +
                     " FROM " + digesterWorksheet.getSheetname() +
                     " WHERE " +
                     "   abs(" + thisColumn + ") " + URLDecoder.decode(values[0], "utf-8");
 
             if (values.length > 1) {
-                sql += "   abs(" + thisColumn + ") " + URLDecoder.decode(values[1], "utf-8");
+                sql += " and abs(" + thisColumn + ") " + URLDecoder.decode(values[1], "utf-8");
             }
 
-            sql += thisColumn + " != \"\";";
+            sql += " and " + thisColumn + " != \"\";";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 msg = "Value out of range " + resultSet.getString(thisColumn) + " for \"" + getColumnWorksheetName() + "\" using range validation = " + value;
@@ -1097,8 +1098,8 @@ public class Rule {
      * type="DwCLatLngChecker"
      * decimalLatitude="DecimalLatitude"
      * decimalLongitude="DecimalLongitude"
-     * maxErrorInMeters="MaxErrorInMeters" h
-     * orizontalDatum="HorizontalDatum"
+     * maxErrorInMeters="MaxErrorInMeters"
+     * horizontalDatum="HorizontalDatum"
      * level="warning"/>
      * }
      */
@@ -1146,11 +1147,58 @@ public class Rule {
     }
 
     /**
+     * Checks for valid lat/lng values and warns about maxerrorinmeters and horizontaldatum values.
+     * <p></p>
+     * Example:
+     * <br></br>
+     * {@code
+     * <rule
+     * type="latLngChecker"
+     * decimalLatitude="DecimalLatitude"
+     * decimalLongitude="DecimalLongitude"
+     * level="warning"/>
+     * }
+     */
+    public void latLngChecker() {
+        String msg = "";
+        String groupMessage = "Invalid latitude / longitude";
+        String sql = null;
+        ResultSet rs = null;
+
+        try {
+            Statement statement = connection.createStatement();
+
+            // Construct sql for
+            sql = "SELECT " + getDecimalLatitude() + "," + getDecimalLongitude() +
+                    " FROM " + digesterWorksheet.getSheetname() +
+                    " WHERE " +
+                    " abs(" + getDecimalLatitude() + ") " + URLDecoder.decode("<=90", "utf-8") +
+                    " AND abs(" + getDecimalLatitude() + ") " + URLDecoder.decode(">=-90", "utf-8") +
+                    " AND abs(" + getDecimalLongitude() + ") " + URLDecoder.decode("<=180", "utf-8") +
+                    " AND abs(" + getDecimalLongitude() + ") " + URLDecoder.decode(">=-180", "utf-8") +
+                    " AND " + getDecimalLatitude() + " != \"\"" +
+                    " AND " + getDecimalLongitude() + " != \"\"";
+
+
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                msg = "Bad Latitude/Longitude Value " + rs.getString(getDecimalLatitude()) + "/" + rs.getString(getDecimalLongitude());
+                addMessage(msg, groupMessage);
+            }
+
+        } catch (SQLException e) {
+            throw new FIMSRuntimeException(500, e);
+        } catch (UnsupportedEncodingException e) {
+            throw new FIMSRuntimeException(500, e);
+        }
+    }
+
+    /**
      * Duplicate of checkInXMLFields
      */
-     public void controlledVocabulary() {
-         checkInXMLFields();
-     }
+    public void controlledVocabulary() {
+        checkInXMLFields();
+    }
 
     /**
      * checkInXMLFields specifies lookup list values.  There are two ways of referring to lookup, lists:
@@ -1262,17 +1310,17 @@ public class Rule {
             throw new FIMSRuntimeException("SQL exception processing checkInXMLFields rule", 500, e);
         } catch (MalformedURLException e) {
             throw new FIMSRuntimeException(500, e);
-        } catch(UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new FIMSRuntimeException(500, e);
         } finally {
-                try {
-                    if (statement != null)
-                        statement.close();
-                    if (resultSet != null)
-                        resultSet.close();
-                } catch (SQLException e) {
-                    logger.warn("SQLException", e);
-                }
+            try {
+                if (statement != null)
+                    statement.close();
+                if (resultSet != null)
+                    resultSet.close();
+            } catch (SQLException e) {
+                logger.warn("SQLException", e);
+            }
         }
     }
 
