@@ -81,7 +81,7 @@ public class bcidConnector {
                 "&" +
                 "code=!9M-KGU-UCwtuUKKhPJz" +
                 "&" +
-                "redirect_uri=http://biscicol.org/biocode-fims/rest/authenticationService/access_token/";
+                "redirect_uri=http://biscicol.org/biocode-fims/id/authenticationService/access_token/";
         bcidConnector bcid = new bcidConnector();
         try {
             //http://biscicol.org/id/authenticationService/oauth/access_token

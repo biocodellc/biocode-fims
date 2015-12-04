@@ -546,7 +546,7 @@ public class process {
         options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
         options.addOption("configFile", true, "Use a local config file instead of getting from server");
 
-        options.addOption("t", "triplify", false, "Triplify only (upload process triplifies)");
+        options.addOption("bcid", "triplify", false, "Triplify only (upload process triplifies)");
         options.addOption("l", "local", false, "Local option operates purely locally and does not create proper globally unique identifiers.  Running the local option means you don't need a username and password.");
 
         options.addOption("u", "upload", false, "Upload");
@@ -640,7 +640,7 @@ public class process {
             dataset_code = cl.getOptionValue("e");
 
         // Set triplify option
-        if (cl.hasOption("t"))
+        if (cl.hasOption("bcid"))
             triplify = true;
 
         // Set the "local" option

@@ -32,7 +32,7 @@ public class secureFilter implements Filter {
         HttpSession session = request.getSession();
         //System.out.println("here: " + session.getAttribute("user") + " that should be a user");
         if (session.getAttribute("user") == null) {
-            response.sendRedirect("/fims/rest/authenticationService/login");
+            response.sendRedirect("/fims/id/authenticationService/login");
         }
         filterchain.doFilter(req, res);
     }
