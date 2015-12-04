@@ -2,6 +2,7 @@ package util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.SettingsManager;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

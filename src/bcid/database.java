@@ -3,13 +3,13 @@ package bcid;
 import bcidExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import java.sql.*;
 
 /**
  * Creates the connection for the backend bcid database.
- * Settings come from the util.SettingsManager/Property file defining the user/password/url/class
+ * Settings come from the utils.SettingsManager/Property file defining the user/password/url/class
  * for the mysql database where the data lives.
  */
 public class database {

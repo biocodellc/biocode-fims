@@ -11,7 +11,7 @@ import bcidExceptions.ForbiddenRequestException;
 import bcidExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

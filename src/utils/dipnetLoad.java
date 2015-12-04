@@ -1,18 +1,14 @@
 package utils;
 
-import org.apache.commons.io.FileUtils;
-import rest.mapping;
 import run.process;
 import run.processController;
 import settings.bcidConnector;
 import settings.fimsPrinter;
-import settings.standardInputter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.Iterator;
 
 /**
  * Special purpose class for loading DIPNet data initially

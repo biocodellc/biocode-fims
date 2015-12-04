@@ -5,7 +5,7 @@ import bcid.Renderer.Renderer;
 import bcidExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
-import util.SettingsManager;
+import utils.SettingsManager;
 import util.timer;
 
 import java.math.BigInteger;

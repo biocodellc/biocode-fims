@@ -3,7 +3,7 @@ package services.id;
 import bcid.Renderer.*;
 import bcid.resolver;
 import com.sun.jersey.api.view.Viewable;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;

@@ -2,6 +2,7 @@ package util;
 
 import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
+import utils.SettingsManager;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -8,7 +8,7 @@ import com.entrust.identityGuard.common.ws.TimeInterval;
 import com.entrust.identityGuard.common.ws.URIFailoverFactory;
 import com.entrust.identityGuard.failover.wsv9.AuthenticationFailoverService_ServiceLocator;
 import com.entrust.identityGuard.failover.wsv9.FailoverCallConfigurator;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import javax.xml.rpc.ServiceException;
 import java.rmi.RemoteException;

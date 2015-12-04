@@ -9,7 +9,7 @@ import bcidExceptions.OAUTHException;
 import bcidExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.SettingsManager;
+import utils.SettingsManager;
 import util.errorInfo;
 import util.queryParams;
 
@@ -38,6 +38,7 @@ public class authenticationService {
     static SettingsManager sm;
     @Context
     static ServletContext context;
+    private static String rootName;
 
     /**
      * Load settings manager
@@ -46,6 +47,8 @@ public class authenticationService {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
         sm.loadProperties();
+
+        rootName = sm.retrieveValue("rootName");
     }
 
     /**
@@ -94,7 +97,7 @@ public class authenticationService {
                     // don't need authenticator anymore
                     authenticator.close();
 
-                    return Response.ok("{\"url\": \"/bcid/secure/profile.jsp?error=Update Your Password" +
+                    return Response.ok("{\"url\": \"secure/profile.jsp?error=Update Your Password" +
                                     new queryParams().getQueryParams(request.getParameterMap(), false) + "\"}")
                                     .build();
                 } else {
@@ -287,7 +290,7 @@ public class authenticationService {
         } else {
             try {
                 return Response.status(307)
-                        .location(new URI("..index.jsp"))
+                        .location(new URI("../" + rootName + "/index.jsp"))
                         .build();
             } catch (URISyntaxException e) {
                 throw new ServerErrorException(e);
@@ -359,7 +362,7 @@ public class authenticationService {
             try {
                 p.close();
                 return Response.status(Response.Status.TEMPORARY_REDIRECT)
-                        .location(new URI("..login.jsp?return_to=/id/authenticationService/oauth/authorize?"
+                        .location(new URI("../" + rootName + "/login.jsp?return_to=/id/authenticationService/oauth/authorize?"
                                     + request.getQueryString()))
                         .build();
             } catch (URISyntaxException e) {
@@ -500,12 +503,12 @@ public class authenticationService {
                               @Context HttpServletResponse response)
         throws IOException {
         if (token == null) {
-            response.sendRedirect("resetPass.jsp?error=Invalid Reset Token");
+            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Invalid Reset Token");
             return;
         }
 
         if (password.isEmpty()) {
-            response.sendRedirect("resetPass.jsp?error=Invalid Password");
+            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Invalid Password");
             return;
         }
 
@@ -513,7 +516,7 @@ public class authenticationService {
         authenticator authenticator = new authenticator();
 
         if (!authorizer.validResetToken(token)) {
-            response.sendRedirect("resetPass.jsp?error=Expired Reset Token");
+            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Expired Reset Token");
             authenticator.close();
             authorizer.close();
             return;
@@ -521,7 +524,7 @@ public class authenticationService {
         authorizer.close();
 
         if (authenticator.resetPass(token, password)) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("../" + rootName + "/login.jsp");
             authenticator.close();
             return;
         }

@@ -2,7 +2,7 @@ package bcid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;

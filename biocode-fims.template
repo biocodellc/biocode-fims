@@ -49,3 +49,73 @@ replaceHeader = false
 
 # get you're access token by visiting https://www.mapbox.com/account/apps/
 mapboxAccessToken = your_access_token
+
+# RDF Terms to use -- Be Careful modifying these terms!
+type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+geo = http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing
+datelastmodified = http://purl.org/dc/terms/modified
+relativeOf = http://biscicol.org/biscicol.rdf#relativeOf
+hasSource = http://www.w3.org/ns/ma-ont#hasSource
+isSourceOf = http://www.w3.org/ns/ma-ont#isSourceOf
+isRelatedTo = http://www.w3.org/ns/ma-ont#isRelatedTo
+
+#EZID credentials under bcid sub-account to UCB Library
+eziduser = user
+ezidpass = pass
+bcidNAAN = 1234
+doiShoulder = doi:10.1234/FK2
+bcidTemporaryNAAN = ark:/99999/fk4
+
+# BCID settings
+bcidUser = user
+bcidPassword = pass
+bcidUrl = jdbc:mysql://host:3306/mydb
+bcidClass = com.mysql.jdbc.Driver
+bcidStartingNumber = 100
+creatorLimit = 50000
+
+# Mail settings
+mailUser = someone@gmail.com
+mailFrom = someone@gmail.com
+mailPassword = mypassword
+mailTo = someone@somedomain.com
+
+# The divider to use that separates the ARK portion and the Suffix Portion
+divider = _
+
+rights = http://creativecommons.org/licenses/by/3.0/
+resolverTargetPrefix = http://biscicol.org/id/
+resolverMetadataPrefix = http://biscicol.org/id/metadata/
+
+# path to use for reseting password token
+resetToken = http://biscicol.org/bcid/resetPass.jsp?token=
+
+# optional
+ldapServers = mysecureLDAPserver.net:636,myfailoverLDAPServer.net:636
+defaultLdapDomain = myDomain.com
+# number of unsuccessful login attempts allow before user account is lock
+ldapAttempts = 5
+# length of time (minutes) ldap user account is locked due to failed login attempts
+ldapLockedAccountTimeout = 10
+
+# optional: Identity Guard Servers separated by ","
+igServers = https://yourdomain:port/your/service,https://yourdomain:port/your/service
+# length of time (minutes) ldap user account is locked due to failed login attempts
+entrustLockout = 10
+
+
+# turn on or off ezid request mechanism (the part that actually creates the EZID)
+ezidRequests = true
+
+# when set to true, stack traces will be returned form the server when exceptions occur.
+# should be set to false for production use.
+debug = false
+
+# This is the publisher that shows up in Dublin Core metadata profile for EZIDs
+publisher = Biocode FIMS System
+
+# Set the following only if you want a default creator to override system settings (based on user name)
+# creator = SI-NMNH Field Information Management System
+
+# web root for negotiating different types of content resolution
+contentResolutionRoot = http://biscicol.org:8179/biocode-fims/idRest/query/

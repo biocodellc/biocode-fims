@@ -1,7 +1,6 @@
 package bcid;
 
-import util.SettingsManager;
-
+import utils.SettingsManager;
 import java.net.URI;
 import java.net.URISyntaxException;
 

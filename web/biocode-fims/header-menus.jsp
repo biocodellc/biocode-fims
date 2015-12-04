@@ -38,7 +38,7 @@
                         </c:if>
                         <c:if test="${user != null}">
                                 <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
-                                <li><a id="logout" href="/biocode-fims/id/authenticationService/logout/">Logout</a></li>
+                                <li><a id="logout" href="/id/authenticationService/logout/">Logout</a></li>
                         </c:if>
                         <li><a href="https://github.com/biocodellc/biocode-fims/wiki/WebVersion">Help</a></li>
                 </ul>

@@ -9,10 +9,10 @@ import java.util.Properties;
 
 
 /**
- * util.SettingsManager provides a generic way to configure BiSciCol core classes
+ * utils.SettingsManager provides a generic way to configure BiSciCol core classes
  * from a properties file.  The basic idea is that any object that supports
- * the Configurable interface can be passed a util.SettingsManager, and it will then
- * use the util.SettingsManager to configure itself.  util.SettingsManager is implemented
+ * the Configurable interface can be passed a utils.SettingsManager, and it will then
+ * use the utils.SettingsManager to configure itself.  utils.SettingsManager is implemented
  * as a singleton to ensure that all BiSciCol objects use common configuration
  * information.
  */
@@ -27,13 +27,13 @@ public class SettingsManager {
     }
 
     /**
-     * Get a reference to the global util.SettingsManager instance.  If this is the
-     * first request for a util.SettingsManager instance, then a new util.SettingsManager
+     * Get a reference to the global utils.SettingsManager instance.  If this is the
+     * first request for a utils.SettingsManager instance, then a new utils.SettingsManager
      * object will be created using the default properties file, which is
      * expected to be located in the "classes" directory of the expedition build
      * directory.
      *
-     * @return A reference to the global util.SettingsManager object.
+     * @return A reference to the global utils.SettingsManager object.
      */
     public static SettingsManager getInstance() {
         /*String filename = "biocode-fims.props";
@@ -57,17 +57,17 @@ public class SettingsManager {
     }
 
     /**
-     * Get a reference to the global util.SettingsManager object, specifying a
+     * Get a reference to the global utils.SettingsManager object, specifying a
      * properties file to use.  If this is the first request for a
-     * util.SettingsManager instance, then a new util.SettingsManager object will be
+     * utils.SettingsManager instance, then a new utils.SettingsManager object will be
      * created using the specified properties file.  Otherwise, the existing
-     * util.SettingsManager will be returned and the specified properties file is
+     * utils.SettingsManager will be returned and the specified properties file is
      * ignored.
      *
      * @param propsfile A properties file to use in initializing the
-     *                  util.SettingsManager.
+     *                  utils.SettingsManager.
      *
-     * @return A reference to the global util.SettingsManager object.
+     * @return A reference to the global utils.SettingsManager object.
      */
     public static SettingsManager getInstance(String propsfile) {
         if (instance == null)
@@ -77,16 +77,16 @@ public class SettingsManager {
     }
 
     /**
-     * Get the path of the properties file associated with this util.SettingsManager.
+     * Get the path of the properties file associated with this utils.SettingsManager.
      *
-     * @return The path of the properties file used by this util.SettingsManager.
+     * @return The path of the properties file used by this utils.SettingsManager.
      */
     public String getPropertiesFile() {
         return propsfile;
     }
 
     /**
-     * Specify a properties file for this util.SettingsManager to use.
+     * Specify a properties file for this utils.SettingsManager to use.
      *
      * @param propsfile The path to a properties file.
      */
@@ -95,8 +95,8 @@ public class SettingsManager {
     }
 
     /**
-     * Attempt to load the properties file associated with this util.SettingsManager.
-     * This method must be called to properly initialize the util.SettingsManager
+     * Attempt to load the properties file associated with this utils.SettingsManager.
+     * This method must be called to properly initialize the utils.SettingsManager
      * before it can be used by Configurable classes.
      */
     public void loadProperties() {

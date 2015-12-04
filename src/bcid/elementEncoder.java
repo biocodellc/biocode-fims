@@ -2,7 +2,7 @@ package bcid;
 
 import bcidExceptions.BCIDException;
 import org.apache.commons.codec.binary.Base64;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import java.math.BigInteger;
 

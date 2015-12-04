@@ -5,7 +5,7 @@ import org.tinyradius.packet.AccessRequest;
 import org.tinyradius.packet.RadiusPacket;
 import org.tinyradius.util.RadiusClient;
 import org.tinyradius.util.RadiusException;
-import util.SettingsManager;
+import utils.SettingsManager;
 
 import java.io.IOException;
 

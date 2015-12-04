@@ -1,0 +1,421 @@
+/**
+ * Document-wide styles.
+ **/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    //background: #f6f7b4;
+}
+
+a {
+	text-decoration: none;
+	color: #00A;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4 {
+	margin: 0;
+}
+
+h1 {
+	font-size: 180%;
+	text-align: left;
+	margin: 0;
+}
+
+h2 {
+	font-size: 130%;
+}
+
+table {
+	border-spacing: 0;
+}
+
+/**
+ * The header and footer.
+ **/
+#header {
+	color: #333;
+	margin: 4px 6px;
+	margin-bottom: 0;
+	padding: 4px 22px;
+	border: solid 1px #888;
+	border-radius: 4px;
+	background: #c8c8c8;
+	background: -webkit-linear-gradient(top, #eee, #bbb);
+	background: -moz-linear-gradient(top, #eee, #bbb);
+	background: linear-gradient(to bottom, #eee, #bbb);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, .3);
+}
+
+#footer {
+	font-size: 90%;
+	padding: 6px 10px;
+	margin-top: 18px;
+	border-top: solid 1px #888;
+	border-bottom: solid 1px #888;
+	background: #c8c8c8;
+	background: -webkit-linear-gradient(top, #eee, #bbb);
+	background: -moz-linear-gradient(top, #eee, #bbb);
+	background: linear-gradient(to bottom, #eee, #bbb);
+}
+
+#header a.help {
+	font-size: 90%;
+	float: right;
+	margin-left: 10px;
+}
+
+/**
+ * Styles for the expedition manager UI.
+ **/
+#expeditions {
+	clear: both;
+	margin: 2px 6px 18px 6px;
+	padding: 8px;
+	border: solid 1px #888;
+	border-radius: 4px;
+    background: #eee;
+    border-bottom: 1px solid gray;
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, .3);
+}
+
+#expeditions h3 {
+	margin-bottom: 10px;
+}
+
+#expeditions div.expedition {
+	display: inline;
+	margin: 0 8px 0 0;
+}
+
+#expeditions div.expedition input:checked + label {
+	color: crimson;
+	font-weight: bold;
+}
+
+#expeditions div.functions {
+	float: right;
+	margin: 0 0 8px 16px;
+}
+
+#expeditions div.functions form {
+	display: inline;
+}
+
+#expeditions form.new, #expeditions input.import {
+	margin-right: 24px;
+}
+
+#expeditions input.importFile {
+	display: none;
+}
+
+#dbForm {
+	float: left;
+	margin: 0 50px 8px 0;
+}
+
+#dbForm td{
+	padding: 4px;
+}
+
+#uploadForm input, #uploadForm span{
+	margin: 5px;
+}
+
+#dsDescription {
+	margin-top: 8px;
+	clear: both;
+}
+
+/**
+ * Popup help.
+ **/
+div#helpmsg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	display: none;
+	width: 360px;
+	background: #fff;
+	background: rgba(255, 255, 255, .88);
+	border: solid 1px gray;
+	border-radius: 5px;
+	padding: 10px 16px;
+	font-size: 72%;
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, .5);
+}
+
+div#helpmsg > a {
+	font-weight: bold;
+	color: #22c;
+}
+
+div#helpmsg p {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+/**
+ * The main expedition sections.
+ **/
+div.link {
+    display:inline-block;
+    margin:4px;
+	text-decoration: none;
+	color: #00A;
+
+}
+div.link:hover {
+	text-decoration: underline;
+}
+
+div.separator {
+    display:inline-block;
+    margin:4px;
+}
+
+div.section {
+	margin: 10px 2em;
+	border: solid #555 1px;
+	border-width: 3px 1px 2px 1px;
+	border-radius: 8px;
+	background: #ebebeb;
+	box-shadow: 2px 2px 10px rgba(0, 0, 0, .4);
+}
+
+div.section h2 {
+	border-radius: 8px 8px 0 0;
+	border-bottom: solid 1px #aaa;
+	padding: 6px 10px;
+	font-size: 120%;
+	color: #222;
+	background: #ccc;
+	background: -webkit-linear-gradient(top, #eee, #bbb);
+	background: -moz-linear-gradient(top, #eee, #bbb);
+	background: linear-gradient(to bottom, #eee, #bbb);
+	text-align:center;
+}
+
+/* The links for opening a section. */
+div.section > h2 > a {
+	color: #222;
+	padding: 0 4px;
+}
+
+div.section.active > h2 > a {
+	color: crimson;
+}
+
+div.section > h2 > a:hover {
+	text-decoration: none;
+	border-radius: 4px;
+	background: #999;
+	background: -webkit-linear-gradient(top, #ccc, #999);
+	background: -moz-linear-gradient(top, #ccc, #999);
+	background: linear-gradient(to bottom, #ccc, #999);
+}
+
+div.section > h2 > a.disabled {
+	color: #888;
+}
+
+div.section > h2 > a.disabled:hover {
+	background: none;
+}
+
+.contexthelp {
+	font-size: 80%;
+}
+
+.contexthelp > a {
+	color: #22c;
+	padding-left: 2px;
+}
+
+div.sectioncontent {
+	padding: 4px 2em;
+	background: #eee;
+	background: -webkit-linear-gradient(top, #fff, #ddd);
+	background: -moz-linear-gradient(top, #fff, #ddd);
+	background: linear-gradient(to bottom, #fff, #ddd);
+	border-radius: 0 0 8px 8px;
+	font-size: 90%;
+}
+
+.sectioncontent table {
+	margin: 10px 0;
+	border: solid 1px #888;
+	border-width: 2px 1px 2px 1px;
+	border-radius: 6px;
+	background: #eee;
+	/*font-size: 90%;*/
+	color: #000;
+}
+
+div.sectioncontent > table th {
+	text-align: center;
+	padding: 4px 8px;
+	background: #ddd;
+	background: -webkit-linear-gradient(top, #fff, #ccc);
+	background: -moz-linear-gradient(top, #fff, #ccc);
+	background: linear-gradient(to bottom, #fff, #ccc);
+}
+
+div.sectioncontent > table th:first-child {
+	border-radius: 6px 0 0 0;
+}
+
+div.sectioncontent > table th:last-child {
+	border-radius: 0 6px 0 0;
+}
+
+/*div.sectioncontent > table tr:last-of-type > th:first-child {
+	color: red;
+	border-radius: 0 6px 0 0;
+}*/
+
+div.sectioncontent > table td {
+	padding: 4px 8px;
+	border-top: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+}
+
+div.sectioncontent > table td:first-child {
+	border-left: none;
+}
+
+div.sectioncontent.flexTable > table td:last-child {
+	border-left: none;
+}
+
+div.sectioncontent.flexTable > table td:nth-child(2) {
+	border-left: none;
+}
+
+div.sectioncontent.flexTable, #systemExpeditions  {
+	/*padding: 10px;*/
+}
+
+div.section.active > h2 {
+	color: crimson;
+}
+
+div.section.active > div.sectioncontent > table {
+	border: 2px solid crimson;
+}
+
+div.sectioncontent > input {
+	margin: 8px 4px;
+}
+
+div.sectioncontent.flexTable > table .edit td {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+div.sectioncontentflexTable > table .editData+.edit td {
+	padding-top: 0;
+	border-top: none;
+}
+
+/**
+ * Miscellaneous styles.
+ **/
+
+/* Buttons that require network connection */
+.external {
+    color: blue;
+}
+
+#joinDiv td:first-child+td+td, #joinDiv tr:first-child > th:first-child+th , #joinDiv tr+tr > th:first-child+th+th {
+	border-right: 1px solid #bbb;
+}
+
+.editData td, .editData th, .edit td {
+    z-index: 1;
+    position: relative;
+}
+
+#simpleDiv {
+   /*float:center;*/
+   padding:20px;
+   margin-top:40px;
+   margin-bottom:40px;
+}
+
+#vocabularies {
+	float: right;
+	padding: 8px;
+	margin: 0 0 10px 0;
+    background-color: #eee;
+    border: 2px solid blue;
+    z-index: 1;
+	position: relative;
+}
+
+#vocabularies div.vocabulary {
+	margin-top: 4px;
+}
+
+#vocabularyUpload {
+    position: fixed;
+	width: 364px;
+	margin-left: -182px;
+    top: 30%;
+	left: 50%;
+    padding: 10px;
+    z-index: 3;
+	border: 2px solid blue;
+    background-color: white;
+}
+
+#vocabularyUpload h3 {
+	margin-bottom: 8px;
+}
+
+#vocabularyUpload hr {
+	margin: 14px 0 10px 0;
+}
+
+#vocabularyUpload input {
+	margin-top: 4px;
+}
+
+#status {
+    position: fixed;
+	width: 300px;
+	margin-left: -150px;
+    top: 48%;
+	left: 50%;
+    padding: 10px;
+    z-index: 4;
+	border: 2px solid crimson;
+    background-color: white;
+	font-size: 120%;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ddd;
+    opacity: 0.75;
+}
+
+#uploadTarget {
+	display: none;
+}
+
+
+#advancedDiv {
+    display:none;
+}
