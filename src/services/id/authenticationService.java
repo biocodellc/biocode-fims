@@ -503,12 +503,12 @@ public class authenticationService {
                               @Context HttpServletResponse response)
         throws IOException {
         if (token == null) {
-            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Invalid Reset Token");
+            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Invalid Reset Token");
             return;
         }
 
         if (password.isEmpty()) {
-            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Invalid Password");
+            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Invalid Password");
             return;
         }
 
@@ -516,7 +516,7 @@ public class authenticationService {
         authenticator authenticator = new authenticator();
 
         if (!authorizer.validResetToken(token)) {
-            response.sendRedirect("../" + rootName + "/resetPass.jsp?error=Expired Reset Token");
+            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Expired Reset Token");
             authenticator.close();
             authorizer.close();
             return;
@@ -524,7 +524,7 @@ public class authenticationService {
         authorizer.close();
 
         if (authenticator.resetPass(token, password)) {
-            response.sendRedirect("../" + rootName + "/login.jsp");
+            response.sendRedirect("/" + rootName + "/login.jsp");
             authenticator.close();
             return;
         }

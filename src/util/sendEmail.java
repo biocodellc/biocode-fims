@@ -104,7 +104,7 @@ public class sendEmail extends Thread {
 
             message.setRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
-            message.setSubject("[BCID Application]" + subject);
+            message.setSubject("[Biocode-Fims Application]" + subject);
             message.setText(text);
 
             //

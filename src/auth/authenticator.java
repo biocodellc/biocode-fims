@@ -451,7 +451,7 @@ public class authenticator {
                 // Reset token path
                 String resetToken = sm.retrieveValue("resetToken") + token;
 
-                String emailBody = "You requested a password reset for your BCID account.\n\n" +
+                String emailBody = "You requested a password reset for your Biocode-Fims account.\n\n" +
                         "Use the following link within the next 24 hrs to reset your password.\n\n" +
                         resetToken + "\n\n" +
                         "Thanks";
