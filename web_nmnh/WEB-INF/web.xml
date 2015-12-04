@@ -22,13 +22,13 @@
     </session-config>
 
     <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-name>Jersey Web Application 1</servlet-name>
 
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>rest</param-value>
+            <param-value>services/rest</param-value>
         </init-param>
 
         <init-param>
@@ -45,12 +45,30 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <servlet-name>Jersey Web Application 1</servlet-name>
+        <url-pattern>/fims/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Jersey Web Application 2</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>services/id</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Jersey Web Application 2</servlet-name>
+        <url-pattern>/id/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <filter>
