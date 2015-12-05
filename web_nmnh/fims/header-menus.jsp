@@ -47,6 +47,16 @@
                         </ul>
                     </li>
 
+                    <c:if test="${projectAdmin != null}">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href='/fims/secure/projects.jsp' class='enabled'>Manage Projects</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+
                     <c:if test="${user == null}">
                         <li><a id="login" href="login.jsp">Login</a></li>
                     </c:if>

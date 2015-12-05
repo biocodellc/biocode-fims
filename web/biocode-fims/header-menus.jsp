@@ -35,14 +35,25 @@
                         </c:if>
                         </ul>
                     </li>
-                        <c:if test="${user == null}">
-                                <li><a id="login" href="login.jsp">Login</a></li>
-                        </c:if>
-                        <c:if test="${user != null}">
-                                <li><a href="/bcid/secure/profile.jsp">${user}</a></li>
-                                <li><a id="logout" href="/id/authenticationService/logout/">Logout</a></li>
-                        </c:if>
-                        <li><a href="https://github.com/biocodellc/biocode-fims/wiki/WebVersion">Help</a></li>
+
+                    <c:if test="${projectAdmin != null}">
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href='/biocode-fims/secure/projects.jsp' class='enabled'>Manage Projects</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${user == null}">
+                            <li><a id="login" href="login.jsp">Login</a></li>
+                    </c:if>
+                    <c:if test="${user != null}">
+                            <li><a href="/biocode-fims/secure/profile.jsp">${user}</a></li>
+                            <li><a id="logout" href="/id/authenticationService/logout/">Logout</a></li>
+                    </c:if>
+                    <li><a href="https://github.com/biocodellc/biocode-fims/wiki/WebVersion">Help</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
