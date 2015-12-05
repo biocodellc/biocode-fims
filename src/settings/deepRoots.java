@@ -1,5 +1,6 @@
 package settings;
 
+import bcid.expeditionMinter;
 import digester.Entity;
 import org.jsoup.Jsoup;
 
@@ -147,7 +148,9 @@ public class deepRoots {
         // Create the entity BCID
          bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
         // Associate this identifier with this expedition
-        bcidConnector.associateBCID(project_id, expedition_code, bcid);
+        expeditionMinter expedition = new expeditionMinter();
+        expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);
+        expedition.close();
 
         // Add this element to the data string so we don't keep trying to add it in the loop above
         //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());

@@ -1,6 +1,7 @@
 package services.rest;
 
 import bcid.dataGroupMinter;
+import bcid.expeditionMinter;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import digester.Mapping;
@@ -380,7 +381,9 @@ public class validate {
             String datasetArk = dataGroupMinter.getPrefix();
             dataGroupMinter.close();
             // associate the BCID
-            connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
+            expeditionMinter expedition = new expeditionMinter();
+            expedition.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
+            expedition.close();
             // Set the public status if relevant
             if (processController.getPublicStatus()) {
                 connector.setExpeditionPublicStatus(true, processController.getProject_id(), processController.getExpeditionCode());

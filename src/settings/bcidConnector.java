@@ -1,5 +1,6 @@
 package settings;
 
+import bcid.expeditionMinter;
 import digester.Entity;
 import digester.Mapping;
 import net.sf.json.JSONException;
@@ -254,28 +255,6 @@ public class bcidConnector {
         JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
 
         return response.get("prefix").toString();
-    }
-
-    /**
-     * Asscociate a expedition_code to a BCID
-     *
-     * @return
-     */
-    public String associateBCID(Integer project_id, String expedition_code, String bcid) {
-        String createPostParams =
-                "expedition_code=" + expedition_code + "&" +
-                        "project_id=" + project_id + "&" +
-                        "bcid=" + bcid;
-
-        URL url;
-        try {
-            url = new URL(associate_uri);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createPostParams));
-
-        return response.get("success").toString();
     }
 
     /**
@@ -583,7 +562,9 @@ public class bcidConnector {
                 // Create the entity BCID
                 String bcid = createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
                 // Associate this identifier with this expedition
-                associateBCID(processController.getProject_id(), processController.getExpeditionCode(), bcid);
+                expeditionMinter expedition = new expeditionMinter();
+                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), bcid, processController.getProject_id());
+                expedition.close();
 
             }
         }

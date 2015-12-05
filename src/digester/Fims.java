@@ -1,6 +1,7 @@
 package digester;
 
 import bcid.dataGroupMinter;
+import bcid.expeditionMinter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.*;
@@ -80,7 +81,10 @@ public class Fims implements RendererInterface {
         // Inform cmd line users
         fimsPrinter.out.println(status1);
         // Associate the expedition_code with this bcid
-        String status2 = "\t" + bcidConnector.associateBCID(project_id, expedition_code, bcid);
+        expeditionMinter expedition = new expeditionMinter();
+        expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);
+        expedition.close();
+        String status2 = "\t" + "Data Elements Root: " + expedition_code;
         processController.appendStatus(status2);
         // Inform cmd line users
         fimsPrinter.out.println(status2);
