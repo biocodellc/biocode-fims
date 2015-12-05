@@ -229,39 +229,6 @@ public class bcidConnector {
     }
 
     /**
-     * Create a Dataset BCID.  Uses cookies sent during authentication method, or OAuth access tokens if accessToken !=
-     * null
-     * suffixPassthrough is set to False since we only want to represent a single entity here
-     *
-     * @return
-     */
-    public String createDatasetBCID(String webaddress, String graph, Boolean finalCopy) {
-        String createBCIDDatasetPostParams =
-                "title=Loaded Dataset from Biocode-FIMS&" +
-                        "resourceTypesMinusDataset=1&" +
-                        "suffixPassThrough=false&" +
-                        "webaddress=" + webaddress +
-                        "&finalCopy=" + finalCopy;
-
-        if (graph != null)
-            createBCIDDatasetPostParams += "&graph=" + graph;
-
-        URL url;
-        try {
-            if (accessToken != null) {
-                url = new URL(ark_creation_uri + "?access_token=" + accessToken);
-            } else {
-                url = new URL(ark_creation_uri);
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-        JSONObject response = (JSONObject) JSONValue.parse(createPOSTConnnection(url, createBCIDDatasetPostParams));
-
-        return response.get("prefix").toString();
-    }
-
-    /**
      * Create BCIDs corresponding to expedition entities
      *
      * @return

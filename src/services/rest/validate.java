@@ -1,5 +1,6 @@
 package services.rest;
 
+import bcid.dataGroupMinter;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import digester.Mapping;
@@ -201,6 +202,7 @@ public class validate {
     public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("user");
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
@@ -208,6 +210,11 @@ public class validate {
         // if no processController is found, we can't do anything
         if (processController == null) {
             return "{\"error\": \"No process was detected.\"}";
+        }
+
+        // check if user is logged in
+        if (username == null) {
+            return "{\"error\": \"You must be logged in to upload.\"}";
         }
 
         // if the process controller was stored in the session, then the user wants to continue, set warning cleared
@@ -244,7 +251,7 @@ public class validate {
             }
 
             // upload the dataset
-            p.runUpload();
+            p.runUpload(username);
 
             // delete the temporary file now that it has been uploaded
             new File(processController.getInputFilename()).delete();
@@ -367,9 +374,11 @@ public class validate {
             // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
             // gives us a way to track what spreadsheets are uploaded into the system as they can
             // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
-            String datasetArk = null;
             // Create a dataset BCID
-            datasetArk = connector.createDatasetBCID(null, inputFile.getName(), processController.getFinalCopy());
+            dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
+            dataGroupMinter.createDatasetBCID(userId, "1", null, inputFile.getName(), processController.getFinalCopy());
+            String datasetArk = dataGroupMinter.getPrefix();
+            dataGroupMinter.close();
             // associate the BCID
             connector.associateBCID(p.getProcessController().getProject_id(), p.getProcessController().getExpeditionCode(), datasetArk);
             // Set the public status if relevant

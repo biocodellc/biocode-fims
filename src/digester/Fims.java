@@ -1,5 +1,6 @@
 package digester;
 
+import bcid.dataGroupMinter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.*;
@@ -56,7 +57,7 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public void run(bcidConnector bcidConnector, processController processController) {
+    public void run(bcidConnector bcidConnector, processController processController, int userId) {
         Integer project_id = processController.getProject_id();
         String expedition_code = processController.getExpeditionCode();
 
@@ -66,7 +67,10 @@ public class Fims implements RendererInterface {
 
         uploader.execute();
 
-        bcid = bcidConnector.createDatasetBCID(uploader.getEndpoint(),uploader.getGraphID(), false);
+        dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
+        dataGroupMinter.createDatasetBCID(userId, "1", uploader.getEndpoint(), uploader.getGraphID(), false);
+        bcid = dataGroupMinter.getPrefix();
+        dataGroupMinter.close();
         // Create the BCID to use for upload service
         //String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
         //status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";

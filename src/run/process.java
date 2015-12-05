@@ -1,6 +1,7 @@
 package run;
 
 import auth.authenticator;
+import bcid.database;
 import digester.*;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
@@ -18,6 +19,7 @@ import triplify.triplifier;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.sql.Connection;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -39,6 +41,8 @@ public class process {
     private processController processController;
     private static Logger logger = LoggerFactory.getLogger(process.class);
     protected int project_id;
+    private database db;
+    protected Connection conn;
 
     /**
      * Setup class variables for processing FIMS data.
@@ -72,6 +76,10 @@ public class process {
         // Parse the Mapping object (this object is used extensively in downstream functions!)
         mapping = new Mapping();
         addMappingRules(new Digester(), mapping);
+
+        // Initialize database
+        this.db = new database();
+        this.conn = db.getConn();
     }
 
     /**
@@ -232,8 +240,9 @@ public class process {
      * @param triplifier
      * @param upload
      * @param expeditionCheck -- only set to FALSE for testing and debugging usually, or local triplify usage.
+     * @param username -- only needed if upload is true
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll) {
+    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll, String username) {
         // Set whether this is a NMNH project or not
         Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
@@ -296,7 +305,7 @@ public class process {
                 if (triplifier)
                     runTriplifier();
                 else if (upload)
-                    runUpload();
+                    runUpload(username);
                 // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
                 // In other, words, this is typically used for local debug & test modes
             } else {
@@ -359,13 +368,14 @@ public class process {
         return triplifyGood;
     }
 
-    public void runUpload() {
+    public void runUpload(String username) {
         // If the triplification was good and the user wants to upload, then proceed
         if (processController.isReadyToUpload() &&
                 runTriplifier()) {
             Fims fims = new Fims(mapping, null);
             addFimsRules(new Digester(), fims);
-            fims.run(connector, processController);
+            int userId = db.getUserId(username);
+            fims.run(connector, processController, userId);
             String results = fims.results();
             processController.appendStatus("<br>" + results);
             // Set the public status
@@ -700,7 +710,7 @@ public class process {
                     pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
 
                     process p = new process(input_file, output_directory, pc, new File(cl.getOptionValue("configFile")));
-                    p.runAllLocally(true, false, false, false);
+                    p.runAllLocally(true, false, false, false, username);
                     /*p.runValidation();
                     triplifier t = new triplifier("test", output_directory);
                     p.mapping.run(t, pc);
@@ -753,7 +763,7 @@ public class process {
                         fimsPrinter.out.println("\tinputFilename = " + input_file);
 
                         // Run the processor
-                        p.runAllLocally(triplify, upload, true, false);
+                        p.runAllLocally(triplify, upload, true, false, username);
                     }
                 }
 

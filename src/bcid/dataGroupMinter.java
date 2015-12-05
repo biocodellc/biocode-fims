@@ -4,6 +4,8 @@ import bcidExceptions.BadRequestException;
 import bcidExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ezid.EZIDService;
+import ezid.EZIDException;
 
 import java.math.BigInteger;
 import java.net.URI;
@@ -71,15 +73,38 @@ public class dataGroupMinter extends dataGroupEncoder {
      * the mint method.
      */
     public dataGroupMinter(boolean ezidRequest, Boolean suffixPassThrough) {
+        dataGroupMinterSetup(suffixPassThrough, null, 99999);
+        this.ezidRequest = ezidRequest;
+    }
+
+    /**
+     * general dataGroupMinter setup used by the constructors
+     * @param suffixPassThrough
+     */
+    private void dataGroupMinterSetup(Boolean suffixPassThrough, String shoulder, Integer NAAN) {
         db = new database();
         conn = db.getConn();
         // Generate defaults in constructor, these will be overridden later
-        shoulder = "fk4";
-        setBow(99999);
+        if (shoulder == null) {
+            this.shoulder = "fk4";
+        } else {
+            this.shoulder = shoulder;
+        }
+        setBow(NAAN);
         prefix = bow + shoulder;
         datasets_id = this.getDatasetId(prefix);
-        this.ezidRequest = ezidRequest;
         this.suffixPassThrough = suffixPassThrough;
+    }
+
+    public dataGroupMinter(Boolean suffixPassThrough) {
+
+        if (sm.retrieveValue("ezidRequests").equalsIgnoreCase("false")) {
+            ezidRequest = false;
+        } else {
+            ezidRequest = true;
+        }
+
+        dataGroupMinterSetup(suffixPassThrough, null, 99999);
     }
 
     /**
@@ -90,14 +115,8 @@ public class dataGroupMinter extends dataGroupEncoder {
      * @param ezidRequest
      */
     public dataGroupMinter(Integer NAAN, String shoulder, boolean ezidRequest, Boolean suffixPassThrough) {
-        db = new database();
-        conn = db.getConn();
-        setBow(NAAN);
-        prefix = bow + shoulder;
-        this.shoulder = shoulder;
+        dataGroupMinterSetup(suffixPassThrough, shoulder, NAAN);
         this.ezidRequest = ezidRequest;
-        this.suffixPassThrough = suffixPassThrough;
-        datasets_id = this.getDatasetId(prefix);
     }
 
 
@@ -781,5 +800,43 @@ public class dataGroupMinter extends dataGroupEncoder {
         sb.append("</form>\n");
 
         return sb.toString();
+    }
+
+    public void createDatasetBCID(int user_id, String resourceTypeString, String webaddress, String graph, Boolean finalCopy) {
+
+        mint(
+                new Integer(sm.retrieveValue("bcidNAAN")),
+                user_id,
+                resourceTypeString,
+                doi,
+                webaddress,
+                graph,
+                title,
+                finalCopy
+        );
+
+        // Create EZIDs right away for Dataset level Identifiers
+        // Initialize ezid account
+        // NOTE: On any type of EZID error, we DON'T want to fail the process.. This means we need
+        // a separate mechanism on the server side to check creation of EZIDs.  This is easy enough to do
+        // in the database.
+        // Never request EZID for user=demo
+        if (db.getUserName(user_id).equalsIgnoreCase("demo")) {
+            ezidRequest = false;
+        }
+
+        if (ezidRequest) {
+            manageEZID creator = new manageEZID();
+            try {
+                EZIDService ezidAccount = new EZIDService();
+                // Setup EZID account/login information
+                ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
+                creator.createDatasetsEZIDs(ezidAccount);
+            } catch (EZIDException e) {
+                logger.warn("EZID NOT CREATED FOR DATASET = " + getPrefix(), e);
+            } finally {
+                creator.close();
+            }
+        }
     }
 }

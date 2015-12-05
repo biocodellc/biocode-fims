@@ -30,6 +30,7 @@ public class dipnetLoad {
     static boolean upload = true;
     static boolean expeditioncheck = true;
     static boolean forceAll = true;  // force loading, no questions
+    private static String username = "dipnetCurator";
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -41,7 +42,7 @@ public class dipnetLoad {
         password = args[0];
 
         // Call the connection with password as single argument
-        connector = process.createConnection("dipnetCurator", password);
+        connector = process.createConnection(username, password);
 
         // ONE-OFF Run the dataset Loader
         loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
@@ -109,7 +110,7 @@ public class dipnetLoad {
 
         // Run the loader
         if (readyToLoad) {
-            p.runAllLocally(triplify, upload, expeditioncheck, forceAll);
+            p.runAllLocally(triplify, upload, expeditioncheck, forceAll, username);
         }
     }
 

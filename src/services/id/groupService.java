@@ -7,13 +7,10 @@ import bcid.Renderer.Renderer;
 import bcid.ResourceTypes;
 import bcid.dataGroupMinter;
 import bcid.database;
-import bcid.manageEZID;
 import bcid.expeditionMinter;
 import bcid.GenericIdentifier;
 import bcidExceptions.BadRequestException;
 import bcidExceptions.UnauthorizedRequestException;
-import ezid.EZIDException;
-import ezid.EZIDService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -41,7 +38,6 @@ public class groupService {
     static String bcidShoulder;
     static String doiShoulder;
     //static SettingsManager sm;
-    private static EZIDService ezidAccount;
 
     /**
      * Load settings manager, set ontModelSpec.
@@ -113,48 +109,13 @@ public class groupService {
         Integer user_id = db.getUserId(username);
         db.close();
 
-        // Detect if this is user=demo or not.  If this is "demo" then do not request EZIDs.
-        // User account Demo can still create Data Groups, but they just don't get registered and will be purged periodically
-        boolean ezidRequest = true;
-        if (username.equals("demo")) {
-            ezidRequest = false;
-        }
-        if (sm.retrieveValue("ezidRequests").equalsIgnoreCase("false")) {
-            ezidRequest = false;
-        }
-
         // Mint the data group
-        dataGroupMinter minterDataset = new dataGroupMinter(ezidRequest, suffixPassthrough);
-        minterDataset.mint(
-                new Integer(sm.retrieveValue("bcidNAAN")),
-                user_id,
-                resourceTypeString,
-                doi,
-                webaddress,
-                graph,
-                title,
-                finalCopy);
-        minterDataset.close();
-        String datasetPrefix = minterDataset.getPrefix();
+        dataGroupMinter minterDataset = new dataGroupMinter(suffixPassthrough);
 
-        // Create EZIDs right away for Dataset level Identifiers
-        // Initialize ezid account
-        // NOTE: On any type of EZID error, we DON'T want to fail the process.. This means we need
-        // a separate mechanism on the server side to check creation of EZIDs.  This is easy enough to do
-        // in the database.
-        if (ezidRequest) {
-            manageEZID creator = new manageEZID();
-            try {
-                ezidAccount = new EZIDService();
-                // Setup EZID account/login information
-                ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
-                creator.createDatasetsEZIDs(ezidAccount);
-            } catch (EZIDException e) {
-                logger.warn("EZID NOT CREATED FOR DATASET = " + minterDataset.getPrefix(), e);
-            } finally {
-                creator.close();
-            }
-        }
+        minterDataset.createDatasetBCID(user_id, resourceTypeString, webaddress, graph, finalCopy);
+
+        String datasetPrefix = minterDataset.getPrefix();
+        minterDataset.close();
 
         return Response.ok("{\"prefix\": \"" + datasetPrefix + "\"}").build();
     }
