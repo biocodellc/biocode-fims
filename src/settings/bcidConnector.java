@@ -319,33 +319,6 @@ public class bcidConnector {
     }
 
     /**
-     * get the JSON list of graphs that belong to a project
-     * @param projectId
-     * @return
-     */
-    public String getGraphs(Integer projectId) {
-        String urlString = graphs_uri + projectId;
-
-        if (accessToken != null) {
-            urlString += "?access_token=" + accessToken;
-        }
-
-        try {
-            URL url = new URL(urlString);
-            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
-
-            // Some error message was returned
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException(response);
-            } else {
-                return response.toJSONString();
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
-    }
-
-    /**
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
      * unique within
      * a particular project

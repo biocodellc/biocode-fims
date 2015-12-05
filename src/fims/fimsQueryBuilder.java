@@ -1,5 +1,6 @@
 package fims;
 
+import bcid.projectMinter;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.*;
 import digester.Attribute;
@@ -330,9 +331,11 @@ public class fimsQueryBuilder {
      * @return
      */
     private static String[] getAllGraphs(int project_id) {
-        bcidConnector connector = new bcidConnector();
         ArrayList<String> graphs = new ArrayList<String>();
-        JSONObject response = ((JSONObject) JSONValue.parse(connector.getGraphs(project_id)));
+        projectMinter project= new projectMinter();
+
+        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(project_id, null)));
+        project.close();
         JSONArray jArray = ((JSONArray) response.get("data"));
         Iterator it = jArray.iterator();
 

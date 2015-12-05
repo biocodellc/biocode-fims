@@ -1,5 +1,6 @@
 package services.rest;
 
+import bcid.projectMinter;
 import digester.Attribute;
 import digester.Mapping;
 import fims.fimsFilterCondition;
@@ -432,12 +433,13 @@ public class query {
 
     private String[] getAllGraphs(Integer project_id) {
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+        String username = (String) session.getAttribute("user");
         List<String> graphs = new ArrayList<String>();
 
-        JSONObject response = ((JSONObject) JSONValue.parse(bcidConnector.getGraphs(project_id)));
+        projectMinter project= new projectMinter();
+
+        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(project_id, username)));
+        project.close();
         JSONArray jArray = ((JSONArray) response.get("data"));
         Iterator it = jArray.iterator();
 
