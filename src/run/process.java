@@ -1,5 +1,6 @@
 package run;
 
+import auth.authenticator;
 import digester.*;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
@@ -184,11 +185,12 @@ public class process {
 
     public static bcidConnector createConnection(String username, String password) {
         bcidConnector bcidConnector = new bcidConnector();
+        authenticator authenticator = new auth.authenticator();
 
         // Authenticate all the time, even if not uploading
         fimsPrinter.out.println("Authenticating ...");
 
-        boolean authenticationSuccess = bcidConnector.authenticate(username, password);
+        boolean authenticationSuccess = authenticator.login(username, password);
 
         if (!authenticationSuccess) {
             String message = "Unable to authenticate " + username + " using the supplied credentials!";

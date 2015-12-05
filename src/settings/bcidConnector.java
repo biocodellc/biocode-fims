@@ -190,32 +190,6 @@ public class bcidConnector {
         return naan;
     }
 
-    /**
-     * Authenticate against BCID system.  This is done first to set cookies in this class in the cookies class
-     * variable,
-     * unless the user authenticated via OAuth, then this method is not needed.
-     *
-     * @param username
-     * @param password
-     *
-     * @return
-     */
-    public boolean authenticate(String username, String password) {
-        this.username = username;
-        this.password = password;
-        String postParams = "username=" + username + "&password=" + password;
-        try {
-            URL url = new URL(authentication_uri);
-            createPOSTConnnection(url, postParams);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed url: " + authentication_uri, 500, e);
-        } catch (BCIDConnectorException e) {
-            return false;
-        }
-
-        return true;
-    }
-
     public Boolean getRefreshedToken() {
         return this.refreshedToken;
     }
