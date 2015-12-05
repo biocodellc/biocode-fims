@@ -2,6 +2,7 @@ package run;
 
 import auth.authenticator;
 import bcid.database;
+import bcid.expeditionMinter;
 import digester.*;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
@@ -379,8 +380,10 @@ public class process {
             String results = fims.results();
             processController.appendStatus("<br>" + results);
             // Set the public status
-            connector.setExpeditionPublicStatus(processController.getPublicStatus(), processController.getProject_id(),
-                    processController.getExpeditionCode());
+            expeditionMinter expeditionMinter = new expeditionMinter();
+            expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
+                    processController.getProject_id(), processController.getPublicStatus());
+            expeditionMinter.close();
             //Html2Text parser = new Html2Text();
             //fimsPrinter.out.println(parser.convert(results));
             fimsPrinter.out.println(results);

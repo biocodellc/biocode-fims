@@ -385,16 +385,14 @@ public class validate {
             dataGroupMinter.createDatasetBCID(userId, "1", null, inputFile.getName(), processController.getFinalCopy());
             String datasetArk = dataGroupMinter.getPrefix();
             dataGroupMinter.close();
+
             // associate the BCID
-            expeditionMinter expedition = new expeditionMinter();
-            expedition.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
-            expedition.close();
-            // Set the public status if relevant
-            if (processController.getPublicStatus()) {
-                connector.setExpeditionPublicStatus(true, processController.getProject_id(), processController.getExpeditionCode());
-            } else {
-                connector.setExpeditionPublicStatus(false, processController.getProject_id(), processController.getExpeditionCode());
-            }
+            expeditionMinter expeditionMinter = new expeditionMinter();
+            expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
+            // Set the public status
+            expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
+                        processController.getProject_id(), processController.getPublicStatus());
+            expeditionMinter.close();
 
             // Remove the processController from the session
             session.removeAttribute("processController");

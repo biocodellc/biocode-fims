@@ -1004,7 +1004,12 @@ public class expeditionMinter {
     /**
      * Update the public status of a specific expedition
      */
-    public Boolean updateExpeditionPublicStatus(String expeditionCode, Integer projectId, Boolean publicStatus) {
+    public Boolean updateExpeditionPublicStatus(Integer userId, String expeditionCode, Integer projectId, Boolean publicStatus) {
+        // Check to see that this user owns this expedition
+        if (!userOwnsExpedition(userId, expeditionCode, projectId)) {
+            throw new ForbiddenRequestException("You must be the owner of this expedition to update the public status.");
+        }
+
         PreparedStatement updateStatement = null;
 
         try {

@@ -286,39 +286,6 @@ public class bcidConnector {
     }
 
     /**
-     * Call service to make this expedition public if the user wants it public
-     *
-     * @param publicStatus
-     * @param project_id
-     * @param expedition_code
-     *
-     * @return
-     */
-    public boolean setExpeditionPublicStatus(Boolean publicStatus, Integer project_id, String expedition_code) {
-
-        String urlString = expedition_public_status_uri + project_id + "/" + expedition_code + "/" + publicStatus;
-
-        if (accessToken != null) {
-            urlString += "?access_token=" + accessToken;
-        }
-
-        try {
-            URL url = new URL(urlString);
-
-            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
-
-            // Some error message was returned from the expedition validation service
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException(response);
-            } else {
-                return true;
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
-    }
-
-    /**
      * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
      * unique within
      * a particular project

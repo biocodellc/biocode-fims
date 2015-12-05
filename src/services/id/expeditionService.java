@@ -489,20 +489,15 @@ public class expeditionService {
             throw new UnauthorizedRequestException("You must be logged in to view your datasets.");
         }
 
-        // Check to see that this user belongs to this project
         database db = new database();
-
         expeditionMinter e = new expeditionMinter();
 
         Integer userId = db.getUserId(username.toString());
 
-        if (!e.userOwnsExpedition(userId, expeditionCode, projectId)) {
-            throw new ForbiddenRequestException("You must be the owner of this expedition to update the public status.");
-        }
 
         // Update the expedition public status for what was just passed in
 
-        if (e.updateExpeditionPublicStatus(expeditionCode, projectId, publicStatus)) {
+        if (e.updateExpeditionPublicStatus(userId, expeditionCode, projectId, publicStatus)) {
             //System.out.println("successs!");
             e.close();
             return Response.ok("{\"success\": \"successfully updated.\"}").build();
