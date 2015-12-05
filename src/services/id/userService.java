@@ -10,6 +10,7 @@ import bcidExceptions.ServerErrorException;
 import bcidExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,19 @@ public class userService {
     static HttpServletRequest request;
 
     private static Logger logger = LoggerFactory.getLogger(userService.class);
+    private static SettingsManager sm;
+    private static String rootName;
+
+    /**
+     * Load settings manager
+     */
+    static {
+        // Initialize settings manager
+        sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
+        rootName = sm.retrieveValue("rootName");
+    }
 
     /**
      * Service to create a new user.
@@ -278,7 +292,7 @@ public class userService {
             if (return_to != null) {
                 return Response.ok("{\"success\": \"" + return_to + "\"}").build();
             } else {
-                return Response.ok("{\"success\": \"/bcid/secure/profile.jsp\"}").build();
+                return Response.ok("{\"success\": \"/" + rootName + "/secure/profile.jsp\"}").build();
             }
         } finally {
             u.close();

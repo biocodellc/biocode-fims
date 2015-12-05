@@ -23,6 +23,7 @@
                             <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
                             <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
                             <li><a href='http://biscicol.org/bcid' class='enabled'>Manage Projects (BCID)</a></li>
+                            <li><a href='/biocode-fims/secure/profile.jsp' class='enabled'>User Profile</a></li>
                         </c:if>
 
                         <c:if test="${user == null}">
@@ -30,6 +31,7 @@
                             <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
                             <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
                             <li><a href='http://biscicol.org/bcid' class='enabled'>Manage Projects (BCID)</a></li>
+                            <li><a href='#' class='disabled'>User Profile</a></li>
                         </c:if>
                         </ul>
                     </li>

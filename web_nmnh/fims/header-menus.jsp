@@ -32,6 +32,7 @@
                                     <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
                                     <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
                                     <li><a href='/fims/secure/datasets.jsp' class='enabled'>My Templates and Datasets</a></li>
+                                    <li><a href='/fims/secure/profile.jsp' class='enabled'>User Profile</a></li>
                                 </ul>
                             </c:if>
 
@@ -40,6 +41,7 @@
                                     <li><div class='disabled' style='font-size: 80%;'>Generate Template (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>Validation (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>My Templates and Datasets (login required)</div></li>
+                                    <li><div class='disabled' style='font-size: 80%;'>User Profile (login required)</div></li>
                                 </ul>
                             </c:if>
                         </ul>

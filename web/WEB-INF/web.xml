@@ -79,4 +79,13 @@
     </filter-mapping>
     -->
 
+    <filter>
+        <filter-name>secureFilter</filter-name>
+        <filter-class>auth.secureFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>secureFilter</filter-name>
+        <url-pattern>/biocode-fims/secure/*</url-pattern>
+    </filter-mapping>
+
 </web-app>
