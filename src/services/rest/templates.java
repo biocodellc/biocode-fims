@@ -1,5 +1,6 @@
 package services.rest;
 
+import bcid.resolver;
 import run.process;
 import run.processController;
 import run.templateProcessor;
@@ -238,12 +239,9 @@ public class templates {
         if (accessionNumber != null) {
             // Get the ARK associated with this dataset code
             // TODO: Resource may change in future... better to figure this out programatically at some point
-            String ark;
-            try {
-              ark = bcidConnector.getArkFromDataset(project_id, URLEncoder.encode(datasetCode,"utf-8"),"Resource");
-            } catch (UnsupportedEncodingException e) {
-                throw new FIMSRuntimeException(500, e);
-            }
+            resolver r = new resolver(datasetCode, project_id, "Resource");
+            String ark = r.getArk();
+            r.close();
 
             String username = session.getAttribute("user").toString();
 

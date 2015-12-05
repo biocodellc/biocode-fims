@@ -258,57 +258,6 @@ public class bcidConnector {
     }
 
     /**
-     * List the available projects by User
-     *
-     * @return
-     */
-    public ArrayList<availableProject> listAvailableProjects() {
-        ArrayList<availableProject> availableProjects = new ArrayList<availableProject>();
-
-        String url = available_projects_uri;
-        if (accessToken != null) {
-            url += "?access_token=" + accessToken;
-        }
-        try {
-            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(new URL(url)));
-
-            // loop array
-            JSONArray msg = (JSONArray) response.get("projects");
-            Iterator<JSONObject> iterator = msg.iterator();
-            while (iterator.hasNext()) {
-                availableProjects.add(new availableProject(iterator.next()));
-            }
-
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-
-        return availableProjects;
-    }
-
-    /**
-     * Given a project_id, dataset_code, and a resource give me an ARK
-     *
-     * @param project_id
-     * @param dataset_code
-     * @param resource
-     *
-     * @return
-     */
-    public String getArkFromDataset(Integer project_id, String dataset_code, String resource) {
-        //http://localhost:8080/id/expeditionService/18/DEMO4/Resource
-        try {
-            URL url = new URL(expedition_creation_uri + "/" + project_id + "/" + dataset_code + "/" + resource);
-            JSONObject response = (JSONObject) JSONValue.parse(createGETConnection(url));
-            //System.out.println("FIMS response = " + response.toString() );
-            //System.out.println("ark = " + response.get("ark").toString() );
-            return response.get("ark").toString();
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-    }
-
-    /**
      * create a expedition
      *
      * @return

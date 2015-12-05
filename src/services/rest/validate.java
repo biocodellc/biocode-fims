@@ -2,6 +2,8 @@ package services.rest;
 
 import bcid.dataGroupMinter;
 import bcid.expeditionMinter;
+import bcid.resolver;
+import bcidExceptions.UnauthorizedRequestException;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import digester.Mapping;
@@ -288,6 +290,7 @@ public class validate {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
+        String username = (String) session.getAttribute("user");
         processController processController = (processController) session.getAttribute("processController");
 
         // Initialize Settings
@@ -297,6 +300,10 @@ public class validate {
         // if no processController is found, we can't do anything
         if (processController == null) {
             return "{\"error\": \"No process was detected.\"}";
+        }
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("User is not authorized to create a new expedition.");
         }
 
         // if the process controller was stored in the session, then the user wants to continue, set warning cleared
@@ -337,11 +344,9 @@ public class validate {
             * Copy Spreadsheet to a standard location
             */
             // Get the BCID Root
-            String bcidRoot = null;
-            bcidRoot = connector.getArkFromDataset(
-                    processController.getProject_id(),
-                    processController.getExpeditionCode(),
-                    "Resource");
+            resolver r = new resolver(processController.getExpeditionCode(), processController.getProject_id(), "Resource");
+            String bcidRoot = r.getArk();
+            r.close();
 
             // Set input and output files
             File inputFile = new File(processController.getInputFilename());
