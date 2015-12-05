@@ -1,5 +1,6 @@
 package services.rest;
 
+import bcidExceptions.UnauthorizedRequestException;
 import digester.Attribute;
 import digester.Field;
 import digester.Mapping;
@@ -245,20 +246,18 @@ public class utils {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDatasetDashboard(@QueryParam("isNMNH") @DefaultValue("false") Boolean isNMNH) {
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
+        String username = (String) session.getAttribute("user");
         String dashboard;
 
-        if (accessToken == null) {
-            return Response.status(401).build();
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to view your dashboard.");
         }
-        String username = (String) session.getAttribute("user");
 
-        dashboardGenerator dashboardGenerator = new dashboardGenerator(accessToken, refreshToken);
+        dashboardGenerator dashboardGenerator = new dashboardGenerator(username);
         if (isNMNH) {
-            dashboard = dashboardGenerator.getNMNHDashboard(username);
+            dashboard = dashboardGenerator.getNMNHDashboard();
         } else {
-            dashboard = dashboardGenerator.getDashboard(username);
+            dashboard = dashboardGenerator.getDashboard();
         }
 
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();

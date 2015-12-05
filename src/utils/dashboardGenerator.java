@@ -1,9 +1,9 @@
 package utils;
 
+import bcid.projectMinter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import settings.bcidConnector;
 
 import java.util.Iterator;
 
@@ -12,24 +12,23 @@ import java.util.Iterator;
  * class to generate the users dashboard
  */
 public class dashboardGenerator {
-    private String accessToken;
-    private String refreshToken;
+    private String username;
 
-    public dashboardGenerator(String accessToken, String refreshToken) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
+    public dashboardGenerator(String username) {
+        this.username = username;
     }
 
-    public String getDashboard(String username) {
+    public String getDashboard() {
         StringBuilder sb = new StringBuilder();
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
         int projectCounter = 1;
 
         String serviceRoot = sm.retrieveValue("fims_service_root");
 
-        JSONObject projects = ((JSONObject) JSONValue.parse(bcidConnector.getMyGraphs()));
+        projectMinter projectMinter = new projectMinter();
+        JSONObject projects = (JSONObject) JSONValue.parse(projectMinter.getMyLatestGraphs(username));
+        projectMinter.close();
 
         sb.append("<h1>");
         sb.append(username);
@@ -155,15 +154,14 @@ public class dashboardGenerator {
         return sb.toString();
     }
 
-    public String getNMNHDashboard(String username) {
+    public String getNMNHDashboard() {
         StringBuilder sb = new StringBuilder();
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
         int projectCounter = 1;
         int datasetCounter = 1;
 
-        JSONObject projects = ((JSONObject) JSONValue.parse(bcidConnector.getMyDatasets()));
+        projectMinter projectMinter = new projectMinter();
+        JSONObject projects = (JSONObject) JSONValue.parse(projectMinter.getMyTemplatesAndDatasets(username));
+        projectMinter.close();
 
         sb.append("<h1>");
         sb.append(username);
@@ -254,7 +252,7 @@ public class dashboardGenerator {
     }
 
     public static void main(String args[]) {
-        dashboardGenerator dg = new dashboardGenerator("WdqS_BTeSE-gxkSJ-D6c", "v5VUgUB6jUV_YvKNpyH8");
-        System.out.println(dg.getNMNHDashboard("demo"));
+        dashboardGenerator dg = new dashboardGenerator("demo");
+        System.out.println(dg.getNMNHDashboard());
     }
 }
