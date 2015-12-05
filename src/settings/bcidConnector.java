@@ -319,33 +319,6 @@ public class bcidConnector {
     }
 
     /**
-     * get the JSON list of expeditions that belong to a project
-     * @param projectId
-     * @return
-     */
-    public String getExpeditionCodes(Integer projectId) {
-        String urlString = expedition_list_uri + projectId;
-
-        if (accessToken != null) {
-            urlString += "?access_token=" + accessToken;
-        }
-
-        try {
-            URL url = new URL(urlString);
-            JSONObject response = ((JSONObject) JSONValue.parse(createGETConnection(url)));
-
-            // Some error message was returned
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException(response);
-            } else {
-                return response.toJSONString();
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
-    }
-
-    /**
      * get the JSON list of graphs that belong to a project
      * @param projectId
      * @return
@@ -520,35 +493,6 @@ public class bcidConnector {
 
         return true;
 
-
-    }
-
-    /**
-     * method for fetching public and current user member project's from bcid system
-     * @return
-     */
-    public String fetchProjects() {
-
-        String urlString = project_service_uri;
-
-        if (accessToken != null) {
-            urlString += "?access_token=" + accessToken;
-        }
-
-        try {
-            URL url = new URL(urlString);
-
-            String response = createGETConnection(url);
-
-            // Some error message was returned from the expedition validation service
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
-            } else {
-                return response;
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
 
     }
 
@@ -740,15 +684,6 @@ public class bcidConnector {
     }
 
     /**
-     * Return Cookies
-     *
-     * @return
-     */
-    public List<String> getCookies() {
-        return cookies;
-    }
-
-    /**
      * Set Cookies
      *
      * @param cookies
@@ -759,132 +694,5 @@ public class bcidConnector {
 
     public Integer getResponseCode() {
         return responseCode;
-    }
-
-    private static String readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-        String json = org.apache.commons.io.IOUtils.toString(br);
-
-        is.close();
-        return json;
-    }
-
-    /**
-     * method for saving a template generator configuration
-     * @param configName
-     * @param checkedOptions
-     * @param projectId
-     * @return
-     */
-    public String saveTemplateConfig(String configName, List<String> checkedOptions, Integer projectId) {
-        String urlString = save_template_config_uri;
-        String postParams = "configName=" + configName + "&projectId=" + projectId;
-
-        for (String opt: checkedOptions) {
-            postParams += "&checkedOptions=" + opt;
-        }
-
-        if (accessToken != null) {
-            urlString += "?access_token=" + accessToken;
-        }
-
-        try {
-            URL url = new URL(urlString);
-
-            String response = createPOSTConnnection(url, postParams);
-
-            // Some error message was returned from the expedition validation service
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
-            } else {
-                return response;
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
-    }
-
-    /**
-     * method for retrieving the template generator configurations for a project
-     * @param projectId
-     * @return
-     */
-    public String getTemplateConfigs(Integer projectId) {
-        String urlString = get_template_configs_uri + projectId;
-
-        try {
-            URL url = new URL(urlString);
-
-            String response = createGETConnection(url);
-            // Some error message was returned
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
-            } else {
-                return response;
-            }
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException("malformed uri: " + urlString, 500, e);
-        }
-    }
-
-    /**
-     * method for retrieving a specific template generator configuration
-     * @param projectId
-     * @param configName
-     * @return
-     */
-    public String getTemplateConfig(Integer projectId, String configName) {
-
-        try {
-            String urlString = get_template_config_uri + projectId + "/" + URLEncoder.encode(configName, "UTF-8"
-                                                                                            ).replaceAll("\\+", "%20");
-            URL url = new URL(urlString);
-
-            String response = createGETConnection(url);
-            // Some error message was returned
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
-            } else {
-                return response;
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new FIMSRuntimeException(500, e);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-    }
-
-    /**
-     * method for removing a specific template generator configuration
-     * @param projectId
-     * @param configName
-     * @return
-     */
-    public String removeTemplateConfig(Integer projectId, String configName) {
-
-        try {
-            String urlString = remove_template_config_uri + projectId + "/" + URLEncoder.encode(configName, "UTF-8"
-                                                                                            ).replaceAll("\\+", "%20");
-
-            if (accessToken != null) {
-                urlString += "?access_token=" + accessToken;
-            }
-
-            URL url = new URL(urlString);
-
-            String response = createGETConnection(url);
-            // Some error message was returned
-            if (getResponseCode() != 200) {
-                throw new FIMSRuntimeException((JSONObject) JSONValue.parse(response));
-            } else {
-                return response;
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new FIMSRuntimeException(500, e);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
     }
 }

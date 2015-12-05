@@ -60,16 +60,24 @@ public class projectService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchList(@QueryParam("access_token") String accessToken) {
         Integer userId = null;
+        String username;
+
         // if accessToken != null, then OAuth client is accessing on behalf of a user
         if (accessToken != null) {
             provider p = new provider();
-            String username = p.validateToken(accessToken);
+            username = p.validateToken(accessToken);
             p.close();
+        } else {
+            HttpSession session = request.getSession();
+            username = (String) session.getAttribute("user");
+        }
+
+        if (username != null) {
             database db = new database();
             userId = db.getUserId(username);
             db.close();
         }
-        
+
         projectMinter project = new projectMinter();
         String response = project.listProjects(userId);
         project.close();
@@ -439,7 +447,7 @@ public class projectService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveTemplateConfig(@FormParam("checkedOptions") List<String> checkedOptions,
                                        @FormParam("configName") String configName,
-                                       @FormParam("projectId") Integer projectId,
+                                       @FormParam("project_id") Integer projectId,
                                        @QueryParam("access_token") String accessToken) {
 
         if (configName.equalsIgnoreCase("default")) {

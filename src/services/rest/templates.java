@@ -7,8 +7,11 @@ import run.templateProcessor;
 import settings.FIMSRuntimeException;
 import settings.bcidConnector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,6 +30,10 @@ import javax.ws.rs.core.Context;
 public class templates {
     @Context
     static ServletContext context;
+    @Context
+    static HttpServletResponse response;
+    @Context
+    static HttpServletRequest request;
 
     /**
      * Return the available attributes for a particular graph
@@ -65,14 +72,14 @@ public class templates {
     @GET
     @Path("/getConfig/{project_id}/{config_name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getConfig(@PathParam("config_name") String configName,
-                              @PathParam("project_id") Integer projectId) {
-        bcidConnector bcidConnector = new bcidConnector();
-        String response = bcidConnector.getTemplateConfig(projectId, configName);
+    public void getConfig(@PathParam("config_name") String configName,
+                          @PathParam("project_id") Integer projectId)
+        throws IOException, ServletException {
 
-        return Response.status(bcidConnector.getResponseCode())
-                .entity(response)
-                .build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfig/" +
+                projectId + "/" + configName);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**
@@ -83,13 +90,12 @@ public class templates {
     @GET
     @Path("/getConfigs/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getConfigs(@PathParam("project_id") Integer projectId) {
-        bcidConnector bcidConnector = new bcidConnector();
-        String response = bcidConnector.getTemplateConfigs(projectId);
+    public void getConfigs(@PathParam("project_id") Integer projectId)
+        throws IOException, ServletException {
 
-        return Response.status(bcidConnector.getResponseCode())
-                .entity(response)
-                .build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfigs/" + projectId);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**
@@ -100,23 +106,14 @@ public class templates {
     @GET
     @Path("/removeConfig/{project_id}/{config_name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeConfig(@PathParam("project_id") Integer projectId,
-                                 @PathParam("config_name") String configName,
-                                 @Context HttpServletRequest request) {
-        if (configName.equalsIgnoreCase("default")) {
-            return Response.ok("{\"error\": \"To remove the default config, talk to the project admin.\"}").build();
-        }
+    public void removeConfig(@PathParam("project_id") Integer projectId,
+                             @PathParam("config_name") String configName)
+        throws IOException, ServletException {
 
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-
-        String response = bcidConnector.removeTemplateConfig(projectId, configName);
-
-        return Response.status(bcidConnector.getResponseCode())
-                .entity(response)
-                .build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/removeTemplateConfig/" +
+                projectId + "/" + configName);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**
@@ -124,30 +121,20 @@ public class templates {
      * @param configName
      * @param checkedOptions
      * @param projectId
-     * @param request
      * @return
      */
     @POST
     @Path("/saveConfig/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveConfig(@FormParam("configName") String configName,
+    public void saveConfig(@FormParam("configName") String configName,
                                @FormParam("checkedOptions") List<String> checkedOptions,
-                               @PathParam("project_id") Integer projectId,
-                               @Context HttpServletRequest request) {
-        if (configName.equalsIgnoreCase("default")) {
-            return Response.ok("{\"error\": \"To change the default config, talk to the project admin.\"}").build();
-        }
+                               @PathParam("project_id") Integer projectId)
+        throws IOException, ServletException {
 
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-
-        String response = bcidConnector.saveTemplateConfig(configName, checkedOptions, projectId);
-
-        return Response.status(bcidConnector.getResponseCode())
-                .entity(response)
-                .build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/saveTemplateConfig/" +
+                projectId + "/" + configName);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**

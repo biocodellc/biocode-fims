@@ -14,16 +14,19 @@ import settings.bcidConnector;
 import utils.SettingsManager;
 import utils.dashboardGenerator;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -37,6 +40,10 @@ import java.util.Iterator;
 public class utils {
     @Context
     static ServletContext context;
+    @Context
+    static HttpServletResponse response;
+    @Context
+    static HttpServletRequest request;
 
     /**
      * Refresh the configuration File cache
@@ -77,21 +84,12 @@ public class utils {
     @GET
     @Path("/expeditionCodes/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpeditionCodes(@PathParam("project_id") Integer projectId,
-                                       @Context HttpServletRequest request) {
-        bcidConnector bcidConnector = null;
-        String response= null;
-        try {
-            HttpSession session = request.getSession();
-            String accessToken = (String) session.getAttribute("access_token");
-            String refreshToken = (String) session.getAttribute("refresh_token");
-            bcidConnector = new bcidConnector(accessToken, refreshToken);
+    public void getExpeditionCodes(@PathParam("project_id") Integer projectId)
+                               throws IOException, ServletException {
 
-            response = bcidConnector.getExpeditionCodes(projectId);
-        } catch (Exception e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-        return Response.status(bcidConnector.getResponseCode()).entity(response).build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/list/" + projectId);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**
@@ -105,16 +103,12 @@ public class utils {
     @GET
     @Path("/graphs/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGraphs(@PathParam("project_id") Integer projectId,
-                              @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+    public void getGraphs(@PathParam("project_id") Integer projectId)
+                      throws IOException, ServletException {
 
-        String response = bcidConnector.getGraphs(projectId);
-
-        return Response.status(bcidConnector.getResponseCode()).entity(response).build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/graphs/" + projectId);
+        dispatcher.forward(request, response);
+        return;
     }
 
     /**
@@ -124,44 +118,20 @@ public class utils {
      *
      * @param projectId
      * @param expeditionCode
-     * @param request
      *
      * @return
      */
     @GET
     @Path("/validateExpedition/{project_id}/{expedition_code}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response validateExpedition(@PathParam("project_id") Integer projectId,
-                                       @PathParam("expedition_code") String expeditionCode,
-                                       @Context HttpServletRequest request) {
+    public void validateExpedition(@PathParam("project_id") Integer projectId,
+                                   @PathParam("expedition_code") String expeditionCode)
+        throws IOException, ServletException {
 
-
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
-        String expedition_list_uri = sm.retrieveValue("expedition_validation_uri");
-
-        URL url;
-        try {
-            url = new URL(expedition_list_uri +
-                    projectId + "/" +
-                    expeditionCode +
-                    "?access_token=" + accessToken);
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-
-        String response = bcidConnector.createGETConnection(url);
-
-        // Debugging
-//        System.out.println("FIMS validateExpedition code = " + bcidConnector.getResponseCode());
-//        System.out.println("FIMS validateExpedition response = " + response);
-
-        return Response.status(bcidConnector.getResponseCode()).entity(response).build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/list/" +
+                projectId + "/" + expeditionCode);
+        dispatcher.forward(request, response);
+        return;
     }
 
 
@@ -237,17 +207,12 @@ public class utils {
     @GET
     @Path("/listProjects")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listProjects(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
+    public void listProjects()
+        throws IOException, ServletException {
 
-        String response = bcidConnector.fetchProjects();
-
-        return Response.status(bcidConnector.getResponseCode())
-                .entity(response)
-                .build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/list/");
+        dispatcher.forward(request, response);
+        return;
     }
 
     @GET
@@ -278,8 +243,7 @@ public class utils {
     @GET
     @Path("/getDatasetDashboard")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasetDashboard(@Context HttpServletRequest request,
-                                        @QueryParam("isNMNH") @DefaultValue("false") Boolean isNMNH) {
+    public Response getDatasetDashboard(@QueryParam("isNMNH") @DefaultValue("false") Boolean isNMNH) {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
@@ -303,23 +267,15 @@ public class utils {
     @POST
     @Path("/updatePublicStatus")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePublicStatus(@FormParam("expedition_code") String expedition_code,
+    public void updatePublicStatus(@FormParam("expedition_code") String expedition_code,
                                        @FormParam("project_id") int project_id,
-                                       @FormParam("public") Boolean p,
-                                       @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
+                                       @FormParam("public") Boolean p)
+        throws IOException, ServletException {
 
-        if (accessToken == null) {
-            return  Response.status(401).build();
-        }
-
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
-
-        bcidConnector.setExpeditionPublicStatus(p, project_id, expedition_code);
-
-        return Response.ok("{\"status\": \"success\"}").build();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/publicExpedition/" +
+                project_id + "/" + expedition_code + "/" + p);
+        dispatcher.forward(request, response);
+        return;
     }
 
     @GET
