@@ -3,6 +3,7 @@ package settings;
 import bcid.expeditionMinter;
 import digester.Entity;
 import org.jsoup.Jsoup;
+import run.process;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,11 +25,11 @@ public class deepRoots {
     private String date;
     private Integer project_id;
     private  String expedition_code;
-    private bcidConnector bcidConnector;
-    public deepRoots(bcidConnector bcidConnector, Integer project_id, String expedition_code) {
+    private Integer user_id;
+    public deepRoots(Integer user_id, Integer project_id, String expedition_code) {
         this.project_id = project_id;
         this.expedition_code = expedition_code;
-        this.bcidConnector = bcidConnector;
+        this.user_id = user_id;
     }
 
     /**
@@ -146,7 +147,8 @@ public class deepRoots {
         // Create a mapping in the deeproots system for this URI
         fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
         // Create the entity BCID
-         bcid = bcidConnector.createEntityBCID("", entity.getConceptAlias(), entity.getConceptURI());
+        process p = new process();
+        bcid = p.createEntityBCID("", entity.getConceptAlias(), user_id);
         // Associate this identifier with this expedition
         expeditionMinter expedition = new expeditionMinter();
         expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);

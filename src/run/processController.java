@@ -2,6 +2,8 @@ package run;
 
 //import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 
+import bcid.database;
+import bcidExceptions.ServerErrorException;
 import digester.Validation;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ public class processController {
     private String inputFilename;
     private String expeditionCode;
     private Integer project_id;
+    private Integer user_id;
     private Validation validation;
     private String worksheetName;
     private StringBuilder statusSB = new StringBuilder();
@@ -266,5 +269,26 @@ public class processController {
 
     public boolean getFinalCopy() {
         return finalCopy;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    /**
+     * method for setting the userId when given a username
+     * @param username
+     */
+    public void setUser_id(String username) {
+        database db = new database();
+        Integer userId = db.getUserId(username);
+        if (userId == null) {
+            throw new ServerErrorException("invalid username");
+        }
+        this.user_id = userId;
     }
 }

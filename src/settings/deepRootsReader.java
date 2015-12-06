@@ -30,7 +30,7 @@ public class deepRootsReader {
 
     private static Logger logger = LoggerFactory.getLogger(deepRootsReader.class);
 
-    public deepRoots createRootData(bcidConnector bcidConnector, Integer project_id, String expedition_code) {
+    public deepRoots createRootData(Integer user_id, Integer project_id, String expedition_code) {
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
         String deeproots_uri = sm.retrieveValue("deeproots_uri");
@@ -42,7 +42,7 @@ public class deepRootsReader {
             // Read file into String variable
             String json = readFile(new URL(url));
             // Create the deepLinks.rootData Class
-            deepRoots rootData = new deepRoots(bcidConnector, project_id, expedition_code);
+            deepRoots rootData = new deepRoots(user_id, project_id, expedition_code);
             // Create the Hashmap to store in the deepLinks.rootData class
             //HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
             HashMap<String, String> data = new HashMap<String, String>();

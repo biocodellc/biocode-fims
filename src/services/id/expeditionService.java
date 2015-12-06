@@ -76,12 +76,6 @@ public class expeditionService {
                          @QueryParam("ignore_user") Boolean ignore_user) {
         String username;
 
-        // Default the lIgnore_user variable to false.  Set if true only if user specified it
-        Boolean lIgnore_user = false;
-        if (ignore_user != null && ignore_user) {
-            lIgnore_user = true;
-        }
-
         // Decipher the expedition code
         try {
             expedition_code = URLDecoder.decode(expedition_code, "utf-8");
@@ -111,41 +105,7 @@ public class expeditionService {
         // Create the expeditionMinter object so we can test and validate it
         expeditionMinter expedition = new expeditionMinter();
 
-        //Check that the user exists in this project
-        if (!expedition.userExistsInProject(user_id, project_id)) {
-            // If the user isn't in the project, then we can't update or create a new expedition
-            expedition.close();
-            throw new ForbiddenRequestException("User is not authorized to update/create expeditions in this project.");
-        }
-
-        // If specified, ignore the user.. simply figure out whether we're updating or inserting
-        if (lIgnore_user) {
-            if (expedition.expeditionExistsInProject(expedition_code, project_id)) {
-                expedition.close();
-                return Response.ok("{\"update\": \"update this expedition\"}").build();
-            } else {
-                expedition.close();
-                return Response.ok("{\"insert\": \"insert new expedition\"}").build();
-            }
-        }
-
-        // Else, pay attention to what user owns the initial project
-        else {
-            if (expedition.userOwnsExpedition(user_id, expedition_code, project_id)) {
-                // If the user already owns the expedition, then great--- this is an update
-                expedition.close();
-                return Response.ok("{\"update\": \"user owns this expedition\"}").build();
-                // If the expedition exists in the project but the user does not own the expedition then this means we can't
-            } else if (expedition.expeditionExistsInProject(expedition_code, project_id)) {
-                expedition.close();
-                throw new ForbiddenRequestException("The dataset code '" + expedition_code +
-                        "' exists in this project already and is owned by another user. " +
-                        "Please choose another dataset code.");
-            } else {
-                expedition.close();
-                return Response.ok("{\"insert\": \"the dataset does not exist with project and nobody owns it\"}").build();
-            }
-        }
+        return Response.ok(expedition.validateExpedition(expedition_code, project_id, ignore_user, user_id)).build();
     }
 
     /**

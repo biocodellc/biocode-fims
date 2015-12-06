@@ -1,14 +1,20 @@
 package run;
 
 import auth.authenticator;
+import bcid.dataGroupMinter;
 import bcid.database;
 import bcid.expeditionMinter;
+import bcidExceptions.BCIDException;
+import bcidExceptions.BadRequestException;
+import bcidExceptions.UnauthorizedRequestException;
 import digester.*;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
 import org.apache.commons.cli.*;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -16,11 +22,14 @@ import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.triplifier;
+import utils.SettingsManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.sql.Connection;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
@@ -160,6 +169,11 @@ public class process {
     }
 
     /**
+     * a constructor for deepRoots lookupPrefix method
+     */
+    public process() {}
+
+    /**
      * Always use this method to fetch the process Controller from the process class as it has the current status
      *
      * @return
@@ -215,7 +229,7 @@ public class process {
      * Check the status of this expedition
      */
     public void runExpeditionCheck(boolean ignore_user) {
-        Boolean checkExpedition = connector.checkExpedition(processController);
+        Boolean checkExpedition = checkExpedition(ignore_user);
         processController.setExpeditionCreateRequired(checkExpedition);
         if (!checkExpedition) {
             processController.setExpeditionAssignedToUserAndExists(true);
@@ -223,15 +237,138 @@ public class process {
     }
 
     /**
+     * validateExpedition ensures that this user is associated with this expedition and that the expedition code is
+     * unique within
+     * a particular project
+     *
+     * @return true if we need to insert a new expedition
+     */
+
+    public boolean checkExpedition(Boolean ignore_user) {
+        // if the expedition code isn't set we can just immediately return true which is
+        if (processController.getExpeditionCode() == null || processController.getExpeditionCode() == "") {
+            return true;
+        }
+
+        if (processController.getUser_id() == null) {
+            throw new UnauthorizedRequestException("You must be logged in to check an expedition status");
+        }
+
+        expeditionMinter expeditionMinter = new expeditionMinter();
+
+        String response = expeditionMinter.validateExpedition(processController.getExpeditionCode(), processController.getProject_id(),
+                ignore_user, processController.getUser_id());
+
+        JSONObject r = (JSONObject) JSONValue.parse(response);
+       if (r.containsKey("update")) {
+            return false;
+       } else if (r.containsKey("insert")) {
+            return true;
+            /*String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                    "Do you wish to create it now?" +
+                    "\nIf you choose to continue, your data will be associated with this new expedition code.";
+            Boolean continueOperation = fimsInputter.in.continueOperation(message);
+            return continueOperation;
+            */
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Create an expedition
      */
     public void runExpeditionCreate() {
-        if (connector.checkExpedition(processController)) {
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
+        Boolean ignore_user = Boolean.parseBoolean(sm.retrieveValue("ignore_user"));
+
+        if (checkExpedition(ignore_user)) {
             System.out.println("Creating expedition " + processController.getExpeditionCode() + "...");
-            connector.createExpedition(processController, mapping);
+            createExpedition(processController, mapping);
         }
         processController.setExpeditionCreateRequired(false);
         processController.setExpeditionAssignedToUserAndExists(true);
+    }
+
+    private boolean createExpedition(processController processController, Mapping mapping) {
+        String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
+                "before loading each spreadsheet and may take a minute...\n";
+        processController.appendStatus(status);
+        fimsPrinter.out.println(status);
+        String expedition_title = processController.getExpeditionCode() + " spreadsheet";
+        if (processController.getAccessionNumber() != null) {
+            expedition_title += " (accession " + processController.getAccessionNumber() + ")";
+        }
+        expeditionMinter expedition = new expeditionMinter();
+        try {
+            // Mint a expedition
+            expedition.mint(
+                    processController.getExpeditionCode(),
+                    expedition_title,
+                    processController.getUser_id(),
+                    project_id,
+                    processController.getPublicStatus()
+            );
+        } catch (BCIDException e) {
+            expedition.close();
+            throw new BadRequestException(e.getMessage());
+        }
+        //fimsPrinter.out.println("\t" + output);
+
+        // Loop the mapping file and create a BCID for every entity that we specified there!
+        if (mapping != null) {
+            LinkedList<Entity> entities = mapping.getEntities();
+            Iterator it = entities.iterator();
+            while (it.hasNext()) {
+                Entity entity = (Entity) it.next();
+
+                String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
+                processController.appendStatus(s);
+                fimsPrinter.out.println(s);
+                // Create the entity BCID
+                String bcid = createEntityBCID("", entity.getConceptAlias());
+                // Associate this identifier with this expedition
+                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), bcid, processController.getProject_id());
+
+            }
+        }
+        expedition.close();
+
+        return true;
+
+
+    }
+
+    /**
+     * convience method for calling createEntityBCID when the user_id is stored in the process controller
+      * @param webaddress
+     * @param resourceAlias
+     * @return
+     */
+    public String createEntityBCID(String webaddress, String resourceAlias) {
+        return createEntityBCID(webaddress, resourceAlias, processController.getUser_id());
+    }
+
+    /**
+     * Create BCIDs corresponding to expedition entities
+     *
+     * @return
+     */
+    public String createEntityBCID(String webaddress, String resourceAlias, Integer user_id) {
+        if (user_id == null) {
+            throw new UnauthorizedRequestException("You must be logged in to create a bcid");
+        }
+
+        // Mint the data group
+        dataGroupMinter minterDataset = new dataGroupMinter(true);
+
+        minterDataset.createDatasetBCID(user_id, resourceAlias, webaddress, null, false);
+        String prefix = minterDataset.getPrefix();
+        minterDataset.close();
+
+        return prefix;
     }
 
     /**
@@ -241,9 +378,8 @@ public class process {
      * @param triplifier
      * @param upload
      * @param expeditionCheck -- only set to FALSE for testing and debugging usually, or local triplify usage.
-     * @param username -- only needed if upload is true
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll, String username) {
+    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll) {
         // Set whether this is a NMNH project or not
         Fims fims = new Fims(mapping, null);
         addFimsRules(new Digester(), fims);
@@ -282,6 +418,10 @@ public class process {
         if (triplifier || upload) {
 
             if (expeditionCheck) {
+                // make sure that the user is logged in and set the user_id in the process
+                if (processController.getUser_id() == null) {
+                    throw new UnauthorizedRequestException("You must be logged in to continue");
+                }
                 // Expedition Check Step
                 if (!processController.isExpeditionAssignedToUserAndExists())
                     runExpeditionCheck(false);
@@ -306,7 +446,7 @@ public class process {
                 if (triplifier)
                     runTriplifier();
                 else if (upload)
-                    runUpload(username);
+                    runUpload();
                 // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
                 // In other, words, this is typically used for local debug & test modes
             } else {
@@ -369,19 +509,18 @@ public class process {
         return triplifyGood;
     }
 
-    public void runUpload(String username) {
+    public void runUpload() {
         // If the triplification was good and the user wants to upload, then proceed
         if (processController.isReadyToUpload() &&
                 runTriplifier()) {
             Fims fims = new Fims(mapping, null);
             addFimsRules(new Digester(), fims);
-            int userId = db.getUserId(username);
-            fims.run(connector, processController, userId);
+            fims.run(connector, processController);
             String results = fims.results();
             processController.appendStatus("<br>" + results);
             // Set the public status
             expeditionMinter expeditionMinter = new expeditionMinter();
-            expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
+            expeditionMinter.updateExpeditionPublicStatus(processController.getUser_id(), processController.getExpeditionCode(),
                     processController.getProject_id(), processController.getPublicStatus());
             expeditionMinter.close();
             //Html2Text parser = new Html2Text();
@@ -713,7 +852,7 @@ public class process {
                     pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
 
                     process p = new process(input_file, output_directory, pc, new File(cl.getOptionValue("configFile")));
-                    p.runAllLocally(true, false, false, false, username);
+                    p.runAllLocally(true, false, false, false);
                     /*p.runValidation();
                     triplifier t = new triplifier("test", output_directory);
                     p.mapping.run(t, pc);
@@ -744,6 +883,9 @@ public class process {
                     // Now run the process
                     if (connector != null) {
                         process p;
+                        processController processController = new processController(project_id, dataset_code);
+                        processController.setUser_id(username);
+
                         // use local configFile if specified
                         if (cl.hasOption("configFile")) {
                             System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
@@ -751,14 +893,14 @@ public class process {
                                     input_file,
                                     output_directory,
                                     connector,
-                                    new processController(project_id, dataset_code),
+                                    processController,
                                     new File(cl.getOptionValue("configFile")));
                         } else {
                             p = new process(
                                     input_file,
                                     output_directory,
                                     connector,
-                                    new processController(project_id, dataset_code)
+                                    processController
                             );
                         }
 
@@ -766,7 +908,7 @@ public class process {
                         fimsPrinter.out.println("\tinputFilename = " + input_file);
 
                         // Run the processor
-                        p.runAllLocally(triplify, upload, true, false, username);
+                        p.runAllLocally(triplify, upload, true, false);
                     }
                 }
 

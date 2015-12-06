@@ -75,6 +75,7 @@ public class dipnetLoad {
         boolean readyToLoad = false;
         // Create the process controller object
         processController pc = new processController(project_id, dataset_code);
+        pc.setUser_id(username);
 
         System.out.println("Initializing ...");
 
@@ -110,7 +111,7 @@ public class dipnetLoad {
 
         // Run the loader
         if (readyToLoad) {
-            p.runAllLocally(triplify, upload, expeditioncheck, forceAll, username);
+            p.runAllLocally(triplify, upload, expeditioncheck, forceAll);
         }
     }
 

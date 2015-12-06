@@ -1,6 +1,7 @@
 package services.rest;
 
 import bcid.resolver;
+import bcidExceptions.UnauthorizedRequestException;
 import run.process;
 import run.processController;
 import run.templateProcessor;
@@ -200,6 +201,7 @@ public class templates {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
+        String username = (String) session.getAttribute("user");
         bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
         process p = new process(
                 null,
@@ -217,6 +219,10 @@ public class templates {
 
                 // Only create expedition if necessary
                 if (operation.equalsIgnoreCase("insert")) {
+                    if (username == null) {
+                        throw new UnauthorizedRequestException("You must be logged in to create a new expedition.");
+                    }
+                    processController.setUser_id(username);
                     p.runExpeditionCreate();
                 }
             }
@@ -229,8 +235,6 @@ public class templates {
             resolver r = new resolver(datasetCode, project_id, "Resource");
             String ark = r.getArk();
             r.close();
-
-            String username = session.getAttribute("user").toString();
 
             // Construct the new templateProcessor
             t = new templateProcessor(

@@ -58,7 +58,7 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public void run(bcidConnector bcidConnector, processController processController, int userId) {
+    public void run(bcidConnector bcidConnector, processController processController) {
         Integer project_id = processController.getProject_id();
         String expedition_code = processController.getExpeditionCode();
 
@@ -69,7 +69,8 @@ public class Fims implements RendererInterface {
         uploader.execute();
 
         dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-        dataGroupMinter.createDatasetBCID(userId, "1", uploader.getEndpoint(), uploader.getGraphID(), false);
+        dataGroupMinter.createDatasetBCID(processController.getUser_id(), "1", uploader.getEndpoint(),
+                uploader.getGraphID(), false);
         bcid = dataGroupMinter.getPrefix();
         dataGroupMinter.close();
         // Create the BCID to use for upload service

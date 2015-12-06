@@ -62,8 +62,7 @@ public class validate {
         String input_file;
 
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
+        String username = (String) session.getAttribute("user");
 
         // create a new processController
         processController processController = new processController(project_id, expedition_code);
@@ -93,7 +92,7 @@ public class validate {
             throw new FIMSRuntimeException("Server error saving file.", 500);
         }
 
-        bcidConnector connector = new bcidConnector(accessToken, refreshToken);
+        bcidConnector connector = new bcidConnector();
 
         // Create the process object --- this is done each time to orient the application
         process p = null;
@@ -138,6 +137,11 @@ public class validate {
 
             } else if (upload != null && upload.equals("on")) {
 
+                // verify that the user has logged in
+                if (username == null) {
+                    throw new UnauthorizedRequestException("You must be logged in to upload.");
+                }
+                processController.setUser_id(username);
                 // set public status to true in processController if user wants it on
                 if (publicStatus != null && publicStatus.equals("on")) {
                        processController.setPublicStatus(true);
@@ -205,7 +209,6 @@ public class validate {
     public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
@@ -216,7 +219,7 @@ public class validate {
         }
 
         // check if user is logged in
-        if (username == null) {
+        if (processController.getUser_id() == null) {
             return "{\"error\": \"You must be logged in to upload.\"}";
         }
 
@@ -254,7 +257,7 @@ public class validate {
             }
 
             // upload the dataset
-            p.runUpload(username);
+            p.runUpload();
 
             // delete the temporary file now that it has been uploaded
             new File(processController.getInputFilename()).delete();
@@ -290,7 +293,6 @@ public class validate {
         HttpSession session = request.getSession();
         String accessToken = (String) session.getAttribute("access_token");
         String refreshToken = (String) session.getAttribute("refresh_token");
-        String username = (String) session.getAttribute("user");
         processController processController = (processController) session.getAttribute("processController");
 
         // Initialize Settings
@@ -302,7 +304,7 @@ public class validate {
             return "{\"error\": \"No process was detected.\"}";
         }
 
-        if (username == null) {
+        if (processController.getUser_id() == null) {
             throw new UnauthorizedRequestException("User is not authorized to create a new expedition.");
         }
 

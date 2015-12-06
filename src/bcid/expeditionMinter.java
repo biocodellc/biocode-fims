@@ -1078,4 +1078,53 @@ public class expeditionMinter {
             db.close(stmt, rs);
         }
     }
+
+    /**
+     * checks the status of a new expedition code on the server and directing consuming
+     * applications on whether this user owns the expedition and if it exists within an project or not.
+     * Responses are error, update, or insert
+     *
+     * @param expeditionCode
+     * @param projectId
+     * @param ignoreUser
+     * @param userId
+     * @return
+     */
+    public String validateExpedition(String expeditionCode, Integer projectId, Boolean ignoreUser, Integer userId) {
+        // Default the lIgnore_user variable to false.  Set if true only if user specified it
+        Boolean lIgnore_user = false;
+        if (ignoreUser != null && ignoreUser) {
+            lIgnore_user = true;
+        }
+
+        //Check that the user exists in this project
+        if (!userExistsInProject(userId, projectId)) {
+            // If the user isn't in the project, then we can't update or create a new expedition
+            throw new ForbiddenRequestException("User is not authorized to update/create expeditions in this project.");
+        }
+
+        // If specified, ignore the user.. simply figure out whether we're updating or inserting
+        if (lIgnore_user) {
+            if (expeditionExistsInProject(expeditionCode, projectId)) {
+                return "{\"update\": \"update this expedition\"}";
+            } else {
+                return "{\"insert\": \"insert new expedition\"}";
+            }
+        }
+
+        // Else, pay attention to what user owns the initial project
+        else {
+            if (userOwnsExpedition(userId, expeditionCode, projectId)) {
+                // If the user already owns the expedition, then great--- this is an update
+                return "{\"update\": \"user owns this expedition\"}";
+                // If the expedition exists in the project but the user does not own the expedition then this means we can't
+            } else if (expeditionExistsInProject(expeditionCode, projectId)) {
+                throw new ForbiddenRequestException("The dataset code '" + expeditionCode +
+                        "' exists in this project already and is owned by another user. " +
+                        "Please choose another dataset code.");
+            } else {
+                return "{\"insert\": \"the dataset does not exist with project and nobody owns it\"}";
+            }
+        }
+    }
 }
