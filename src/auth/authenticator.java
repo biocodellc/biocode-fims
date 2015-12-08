@@ -2,7 +2,7 @@ package auth;
 
 import bcid.database;
 import bcid.projectMinter;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

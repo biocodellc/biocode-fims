@@ -1,11 +1,11 @@
-package bcidExceptions;
+package fimsExceptions;
 
 import javax.ws.rs.core.Response;
 
 /**
  * An exception that encapsulates unauthorized requests
  */
-public class UnauthorizedRequestException extends BCIDAbstractException {
+public class UnauthorizedRequestException extends FIMSAbstractException {
     private static Integer httpStatusCode = Response.Status.UNAUTHORIZED.getStatusCode();
 
     public UnauthorizedRequestException(String usrMessage) {

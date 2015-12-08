@@ -1,8 +1,8 @@
 package bcid;
 
-import bcidExceptions.BCIDException;
-import bcidExceptions.ForbiddenRequestException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.ForbiddenRequestException;
+import fimsExceptions.ServerErrorException;
 import ezid.EZIDService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,13 +64,13 @@ public class expeditionMinter {
             String expedition_title,
             Integer users_id,
             Integer project_id,
-            Boolean isPublic) throws BCIDException {
+            Boolean isPublic) throws FIMSException {
 
         Integer expedition_id = null;
 
         //TODO this doesn't allow the HttpStatusCode to be correctly set should be a 403
         if (!userExistsInProject(users_id, project_id)) {
-            throw new BCIDException("User ID " + users_id + " is not authorized to create datasets in this project");
+            throw new FIMSException("User ID " + users_id + " is not authorized to create datasets in this project");
         }
 
         /**
@@ -78,7 +78,7 @@ public class expeditionMinter {
          */
         checkExpeditionCodeValid(expedition_code);
         if (!isExpeditionCodeAvailable(expedition_code, project_id)) {
-            throw new BCIDException("Expedition Code already exists");
+            throw new FIMSException("Expedition Code already exists");
         }
 
         // Generate an internal ID to track this submission
@@ -676,17 +676,17 @@ public class expeditionMinter {
      *
      * @return
      */
-    private void checkExpeditionCodeValid(String expedition_code) throws BCIDException {
+    private void checkExpeditionCodeValid(String expedition_code) throws FIMSException {
         // Check expedition_code length
         if (expedition_code.length() < 4 || expedition_code.length() > 50) {
             // System.out.println("invalid length for dataset = " + expedition_code);
-            throw new BCIDException("Dataset code " + expedition_code + " must be between 4 and 50 characters long");
+            throw new FIMSException("Dataset code " + expedition_code + " must be between 4 and 50 characters long");
         }
 
         // Check to make sure characters are normal!
         if (!expedition_code.matches("[a-zA-Z0-9_-]*")) {
             //System.out.println("invalid characters in dataset = " + expedition_code);
-            throw new BCIDException("Dataset code " + expedition_code + " contains one or more invalid characters. " +
+            throw new FIMSException("Dataset code " + expedition_code + " contains one or more invalid characters. " +
                     "Dataset code characters must be in one of the these ranges: [a-Z][0-9][-][_]");
         }
     }

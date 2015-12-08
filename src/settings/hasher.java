@@ -1,6 +1,6 @@
 package settings;
 
-import digester.Fims;
+import fimsExceptions.FIMSRuntimeException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -5,7 +5,7 @@ import org.apache.commons.collections.MultiMap;
 import org.apache.commons.io.input.BOMInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 import java.io.*;
 import java.util.*;

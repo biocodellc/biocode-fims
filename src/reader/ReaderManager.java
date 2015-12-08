@@ -11,7 +11,7 @@ import java.util.zip.ZipInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 
 /**

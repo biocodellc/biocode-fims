@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 
 import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.io.FastaReaderHelper;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.fimsPrinter;
 
 public class FastaReader {

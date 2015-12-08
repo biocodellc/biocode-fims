@@ -1,6 +1,6 @@
 package bcid;
 
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;

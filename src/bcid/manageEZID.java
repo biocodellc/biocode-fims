@@ -1,7 +1,7 @@
 package bcid;
 
-import bcidExceptions.BCIDException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
 import org.slf4j.Logger;
@@ -260,10 +260,10 @@ public class manageEZID extends elementMinter {
                 if (rs.getBoolean("suffixPassthrough")) {
                     try {
                         myIdentifier = this.createUUIDARK(rs.getString("localID"));
-                    } catch (BCIDException e) {
+                    } catch (FIMSException e) {
                         // TODO: special exception to handle for unable to create this identifier
                         //TODO should we silence this exception?
-                        logger.warn("BCIDException thrown.", e);
+                        logger.warn("FIMSException thrown.", e);
                     }
                     // If this is not tagged as a uuid
                 } else {

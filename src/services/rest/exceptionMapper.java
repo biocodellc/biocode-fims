@@ -4,7 +4,7 @@ import com.sun.jersey.api.core.ExtendedUriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.processController;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.errorInfo;
 
 import javax.servlet.http.HttpServletRequest;

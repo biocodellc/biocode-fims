@@ -1,9 +1,8 @@
 package utils;
 
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 import java.io.*;
-import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.*;
 import javax.swing.text.html.parser.*;
 

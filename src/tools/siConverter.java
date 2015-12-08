@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import utils.encodeURIcomponent;
 
 import java.io.*;

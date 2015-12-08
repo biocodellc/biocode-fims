@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 import java.io.*;
 import java.util.ArrayList;

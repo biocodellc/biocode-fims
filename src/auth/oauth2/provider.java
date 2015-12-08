@@ -1,8 +1,8 @@
 package auth.oauth2;
 
 import bcid.database;
-import bcidExceptions.OAUTHException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.OAUTHException;
+import fimsExceptions.ServerErrorException;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

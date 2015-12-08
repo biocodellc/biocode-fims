@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,8 +16,8 @@ import org.apache.poi.ss.util.CellReference;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.FIMSException;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.FIMSRuntimeException;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003

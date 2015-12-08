@@ -1,6 +1,6 @@
 package bcid;
 
-import bcidExceptions.BCIDException;
+import fimsExceptions.FIMSException;
 import org.apache.commons.codec.binary.Base64;
 import utils.SettingsManager;
 
@@ -79,7 +79,7 @@ public class elementEncoder implements encoder {
      * @param entireString
      * @return a BigIntgeger representation of this BCID
      */
-    public BigInteger decode(String entireString) throws BCIDException {
+    public BigInteger decode(String entireString) throws FIMSException {
         CheckDigit checkDigit = new CheckDigit();
 
         // Pull off potential last piece of string which would represent the local Identifier
@@ -102,7 +102,7 @@ public class elementEncoder implements encoder {
 
         // Validate using CheckDigit
         if (!checkDigit.verify(encodedString)) {
-            throw new BCIDException(entireString + " does not verify");
+            throw new FIMSException(entireString + " does not verify");
         }
         // Get just the encoded portion of the string minus the prefix
         String encodedPiece = encodedString.replaceFirst(prefix, "").replaceFirst(sm.retrieveValue("divider"), "");

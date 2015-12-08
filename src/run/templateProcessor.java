@@ -8,7 +8,7 @@ import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.PathManager;
 import utils.SettingsManager;
 

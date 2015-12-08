@@ -1,7 +1,7 @@
 package auth;
 
 import bcid.database;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import com.unboundid.ldap.sdk.*;
 import com.unboundid.util.ssl.SSLUtil;
 import com.unboundid.util.ssl.TrustAllTrustManager;

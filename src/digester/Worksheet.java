@@ -1,11 +1,9 @@
 package digester;
 
-import com.hp.hpl.jena.graph.query.PatternStageBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import renderers.Message;
 import renderers.RowMessage;
-import settings.FIMSRuntimeException;
 import settings.fimsPrinter;
 import utils.SettingsManager;
 

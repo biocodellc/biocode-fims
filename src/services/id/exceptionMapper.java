@@ -1,9 +1,9 @@
 package services.id;
 
-import bcidExceptions.BCIDAbstractException;
-import bcidExceptions.BadRequestException;
-import bcidExceptions.ForbiddenRequestException;
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.FIMSAbstractException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.ForbiddenRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 import com.sun.jersey.api.core.ExtendedUriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,9 +91,9 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
         String developerMessage = null;
         Integer httpStatusCode = getHttpStatus(e);
 
-        if (e instanceof BCIDAbstractException) {
-            usrMessage = ((BCIDAbstractException) e).getUsrMessage();
-            developerMessage = ((BCIDAbstractException) e).getDeveloperMessage();
+        if (e instanceof FIMSAbstractException) {
+            usrMessage = ((FIMSAbstractException) e).getUsrMessage();
+            developerMessage = ((FIMSAbstractException) e).getDeveloperMessage();
         } else {
             usrMessage = "Server Error";
         }
@@ -106,8 +106,8 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
         // if the throwable is an instance of WebApplicationException, get the status code
         if (e instanceof WebApplicationException) {
             return ((WebApplicationException) e).getResponse().getStatus();
-        } else if (e instanceof BCIDAbstractException) {
-            return ((BCIDAbstractException) e).getHttpStatusCode();
+        } else if (e instanceof FIMSAbstractException) {
+            return ((FIMSAbstractException) e).getHttpStatusCode();
         } else {
             return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
         }

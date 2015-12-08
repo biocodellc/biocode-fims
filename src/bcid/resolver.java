@@ -2,7 +2,7 @@ package bcid;
 
 import bcid.Renderer.JSONRenderer;
 import bcid.Renderer.Renderer;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
 import utils.SettingsManager;

@@ -1,5 +1,7 @@
 package settings;
 
+import fimsExceptions.FIMSRuntimeException;
+
 import java.io.File;
 
 /**

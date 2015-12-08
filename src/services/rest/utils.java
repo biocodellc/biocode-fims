@@ -1,6 +1,6 @@
 package services.rest;
 
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 import digester.Attribute;
 import digester.Field;
 import digester.Mapping;
@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
 import run.configurationFileFetcher;
 import run.process;
 import run.processController;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import utils.SettingsManager;
 import utils.dashboardGenerator;
 
@@ -27,7 +27,6 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;

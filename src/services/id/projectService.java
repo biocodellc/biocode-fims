@@ -3,9 +3,9 @@ package services.id;
 import auth.oauth2.provider;
 import bcid.database;
 import bcid.projectMinter;
-import bcidExceptions.BadRequestException;
-import bcidExceptions.ForbiddenRequestException;
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.ForbiddenRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

@@ -3,6 +3,8 @@ package digester;
 import static ch.lambdaj.Lambda.*;
 
 import ch.lambdaj.group.Group;
+import fimsExceptions.FIMSException;
+import fimsExceptions.FIMSRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.TabularDataConverter;
@@ -14,7 +16,6 @@ import settings.*;
 import utils.Html2Text;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 

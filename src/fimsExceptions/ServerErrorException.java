@@ -1,11 +1,11 @@
-package bcidExceptions;
+package fimsExceptions;
 
 import javax.ws.rs.core.Response;
 
 /**
  * An exception that encapsulates server errors
  */
-public class ServerErrorException extends BCIDAbstractException {
+public class ServerErrorException extends FIMSAbstractException {
     private static Integer httpStatusCode = Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
 
     public ServerErrorException(String usrMessage, Throwable cause) {

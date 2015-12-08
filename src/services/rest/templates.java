@@ -1,7 +1,7 @@
 package services.rest;
 
 import bcid.resolver;
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 import run.process;
 import run.processController;
 import run.templateProcessor;

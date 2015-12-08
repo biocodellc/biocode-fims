@@ -1,11 +1,11 @@
-package bcidExceptions;
+package fimsExceptions;
 
 import javax.ws.rs.core.Response;
 
 /**
  * An exception that encapsulates bad requests
  */
-public class BadRequestException extends BCIDAbstractException {
+public class BadRequestException extends FIMSAbstractException {
     private static Integer httpStatusCode = Response.Status.BAD_REQUEST.getStatusCode();
 
     public BadRequestException(String usrMessage) {

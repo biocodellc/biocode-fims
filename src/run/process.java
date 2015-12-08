@@ -4,9 +4,10 @@ import auth.authenticator;
 import bcid.dataGroupMinter;
 import bcid.database;
 import bcid.expeditionMinter;
-import bcidExceptions.BCIDException;
-import bcidExceptions.BadRequestException;
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.UnauthorizedRequestException;
 import digester.*;
 import fims.fimsFilterCondition;
 import fims.fimsQueryBuilder;
@@ -262,7 +263,7 @@ public class process {
                     project_id,
                     processController.getPublicStatus()
             );
-        } catch (BCIDException e) {
+        } catch (FIMSException e) {
             expedition.close();
             throw new BadRequestException(e.getMessage());
         }

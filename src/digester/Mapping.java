@@ -2,17 +2,14 @@ package digester;
 
 import java.net.URI;
 
-import org.jdom.Document;
-import org.jsoup.Jsoup;
+import fimsExceptions.FIMSRuntimeException;
 import renderers.RendererInterface;
 import run.processController;
 import settings.*;
 import triplify.triplifier;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 

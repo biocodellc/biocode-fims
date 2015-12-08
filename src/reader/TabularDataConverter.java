@@ -5,14 +5,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-import de.fuberlin.wiwiss.d2rq.sql.SQL;
 import digester.Attribute;
 import digester.Entity;
-import digester.Fims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.hasher;
 import utils.sqlLiteNameCleaner;
 

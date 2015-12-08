@@ -1,5 +1,6 @@
 package settings;
 
+import fimsExceptions.FIMSRuntimeException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;

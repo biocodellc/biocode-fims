@@ -1,6 +1,6 @@
 package bcid;
 
-import bcidExceptions.BCIDException;
+import fimsExceptions.FIMSException;
 
 import java.math.BigInteger;
 
@@ -11,5 +11,5 @@ public interface encoder {
     static char[] chars = null;
     static  byte[] codes = new byte[256];
     public String encode(BigInteger identifier);
-    public BigInteger decode(String identifier) throws BCIDException;
+    public BigInteger decode(String identifier) throws FIMSException;
 }

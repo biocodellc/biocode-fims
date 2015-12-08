@@ -1,7 +1,7 @@
 package bcid;
 
-import bcidExceptions.BadRequestException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ezid.EZIDService;

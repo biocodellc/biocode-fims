@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.configurationFileFetcher;
 import run.process;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

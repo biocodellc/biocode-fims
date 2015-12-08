@@ -5,10 +5,10 @@ import bcid.database;
 import bcid.expeditionMinter;
 import bcid.projectMinter;
 import bcid.resolver;
-import bcidExceptions.BCIDException;
-import bcidExceptions.BadRequestException;
-import bcidExceptions.ForbiddenRequestException;
-import bcidExceptions.UnauthorizedRequestException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.ForbiddenRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -185,7 +185,7 @@ public class expeditionService {
 
             return Response.ok("{\"success\": \"Succesfully created dataset:<br>" +
                     expedition.printMetadataHTML(expedition_id) + "\"}").build();
-        } catch (BCIDException e) {
+        } catch (FIMSException e) {
             throw new BadRequestException(e.getMessage());
         } finally {
             expedition.close();

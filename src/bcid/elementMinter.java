@@ -1,7 +1,7 @@
 package bcid;
 
-import bcidExceptions.BCIDException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.FIMSException;
+import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -320,9 +320,9 @@ public class elementMinter extends dataGroupMinter {
      *
      * @return
      *
-     * @throws BCIDException
+     * @throws FIMSException
      */
-    private BigInteger start() throws BCIDException {
+    private BigInteger start() throws FIMSException {
         BigInteger big = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -342,7 +342,7 @@ public class elementMinter extends dataGroupMinter {
                 }
 
             } else {
-                throw new BCIDException();
+                throw new FIMSException();
             }
 
             // Add 1 to the start value
@@ -435,12 +435,12 @@ public class elementMinter extends dataGroupMinter {
      *
      * @return A full ARK representation of this ID
      *
-     * @throws BCIDException
+     * @throws FIMSException
      */
-    public String createUUIDARK(String uuidAsString) throws BCIDException {
+    public String createUUIDARK(String uuidAsString) throws FIMSException {
         // Validate this UUID
         if (!validateUUID(uuidAsString)) {
-            throw new BCIDException("Invalid uuid: " + uuidAsString);
+            throw new FIMSException("Invalid uuid: " + uuidAsString);
         }
         return prefix + sm.retrieveValue("divider") + UUID.fromString(uuidAsString).toString();
     }

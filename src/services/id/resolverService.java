@@ -1,7 +1,7 @@
 package services.id;
 
 import bcid.resolver;
-import bcidExceptions.BadRequestException;
+import fimsExceptions.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

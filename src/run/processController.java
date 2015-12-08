@@ -3,7 +3,7 @@ package run;
 //import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 
 import bcid.database;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import digester.Validation;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

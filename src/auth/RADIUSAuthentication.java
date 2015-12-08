@@ -1,6 +1,6 @@
 package auth;
 
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.ServerErrorException;
 import org.tinyradius.packet.AccessRequest;
 import org.tinyradius.packet.RadiusPacket;
 import org.tinyradius.util.RadiusClient;

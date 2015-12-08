@@ -2,18 +2,12 @@ package fims;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.ReadWrite;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.core.DatasetGraph;
-import com.hp.hpl.jena.sparql.modify.UpdateProcessRemote;
 import com.hp.hpl.jena.tdb.TDBFactory;
-import com.hp.hpl.jena.tdb.base.file.Location;
 import com.hp.hpl.jena.update.*;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 import org.openjena.atlas.lib.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 
 import java.io.*;
 import java.net.HttpURLConnection;

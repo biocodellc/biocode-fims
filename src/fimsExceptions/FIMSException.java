@@ -1,4 +1,4 @@
-package settings;
+package fimsExceptions;
 
 /**
 * Exception class for handling FIMS Exceptions, which will be bubbled up to the calling classes and
@@ -6,6 +6,8 @@ package settings;
  *
  */
 public class FIMSException extends Exception {
+    public FIMSException() {}
+    
     public FIMSException(String s) {
         super(s);
     }

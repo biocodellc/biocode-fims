@@ -1,20 +1,10 @@
 package unit_tests;
 
-import com.hp.hpl.jena.tdb.migrate.A2;
-import org.junit.Test;
-import org.w3c.dom.*;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import run.*;
-import settings.FIMSException;
+import fimsExceptions.FIMSException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The publicly accessible tests return or true or false, with true indicating success and false indicating that

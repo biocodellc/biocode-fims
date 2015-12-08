@@ -73,7 +73,7 @@
 
     <filter>
         <filter-name>secureFilter</filter-name>
-        <filter-class>settings.secureFilter</filter-class>
+        <filter-class>auth.secureFilter</filter-class>
     </filter>
 
     <filter-mapping>

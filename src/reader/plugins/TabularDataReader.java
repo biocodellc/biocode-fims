@@ -2,10 +2,9 @@ package reader.plugins;
 
 
 import org.apache.poi.ss.usermodel.Sheet;
-import settings.FIMSException;
+import fimsExceptions.FIMSException;
 
 import java.io.File;
-import java.sql.SQLException;
 
 /**
  * The interface for data reader plugins in the triplifier system.  This

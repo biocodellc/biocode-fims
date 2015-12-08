@@ -2,15 +2,13 @@ package reader.plugins;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.util.SystemOutLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.characterCleaner;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.PathManager;
 
 import java.io.*;
-import java.util.*;
 
 
 import java.io.File;
@@ -19,7 +17,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 
 /**

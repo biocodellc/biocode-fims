@@ -7,7 +7,7 @@ import digester.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.processController;
-import settings.FIMSRuntimeException;
+import fimsExceptions.FIMSRuntimeException;
 import settings.PathManager;
 import settings.fimsPrinter;
 

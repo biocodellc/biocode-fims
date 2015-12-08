@@ -1,7 +1,7 @@
 package bcid;
 
-import bcidExceptions.BadRequestException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.ServerErrorException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

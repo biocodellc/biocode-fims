@@ -1,7 +1,7 @@
 package auth;
 
-import bcidExceptions.BCIDRuntimeException;
-import bcidExceptions.ServerErrorException;
+import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.ServerErrorException;
 import com.entrust.identityGuard.authenticationManagement.wsv9.*;
 import com.entrust.identityGuard.common.ws.TestConnectionImpl;
 import com.entrust.identityGuard.common.ws.TimeInterval;
@@ -100,7 +100,7 @@ public class EntrustIGAuthentication {
             }
         } catch (AuthenticationFault ex) {
             if (ex.getErrorCode() == ErrorCode.USER_LOCKED) {
-                throw new BCIDRuntimeException("User account is locked. Please try again later", "user account is locked", 401, ex);
+                throw new FIMSRuntimeException("User account is locked. Please try again later", "user account is locked", 401, ex);
             } else {
                 // TODO: this throws "Server Error" if user actually doesn't exist it should say something like "Invalid User/Password Combination"
                 throw new ServerErrorException("Server Error","Either user doesn't exist or there was a problem connecting to the server", ex);
@@ -132,7 +132,7 @@ public class EntrustIGAuthentication {
 
         } catch (AuthenticationFault ex) {
             if (ex.getErrorCode() == ErrorCode.USER_NO_CHALLENGE) {
-                throw new BCIDRuntimeException("Error while logging in. Please try again.", null, 400, ex);
+                throw new FIMSRuntimeException("Error while logging in. Please try again.", null, 400, ex);
             } else if (ex.getErrorCode() == ErrorCode.USER_LOCKED || ex.getErrorCode() == ErrorCode.AUTH_FAILED_USER_LOCKED) {
                 String msg;
                 Integer entrustLockout = Integer.parseInt(sm.retrieveValue("entrustLockout"));
@@ -141,11 +141,11 @@ public class EntrustIGAuthentication {
                 } else {
                     msg = "User account is locked. You account will unlock in " + entrustLockout + "mins.";
                 }
-                throw new BCIDRuntimeException(msg, "user account is locked", 401, ex);
+                throw new FIMSRuntimeException(msg, "user account is locked", 401, ex);
             } else if (ex.getErrorCode() == ErrorCode.INVALID_RESPONSE) {
                 // Parse remaining attempts from exception message
                 String remainingAttempts =  ex.getMessage().split("Invalid response to a challenge. ")[1].substring(0, 1);
-                throw new BCIDRuntimeException("One or more answers are incorrect. " + remainingAttempts + " attempts remaining.",
+                throw new FIMSRuntimeException("One or more answers are incorrect. " + remainingAttempts + " attempts remaining.",
                                                 "Invalid Challenge Response", 401, ex);
             } else {
                 throw new ServerErrorException(ex);
