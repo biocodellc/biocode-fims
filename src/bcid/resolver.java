@@ -6,7 +6,7 @@ import bcidExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
 import utils.SettingsManager;
-import util.timer;
+import utils.timer;
 
 import java.math.BigInteger;
 import java.net.URI;

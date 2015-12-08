@@ -7,8 +7,8 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
-import util.sendEmail;
-import util.stringGenerator;
+import utils.sendEmail;
+import utils.stringGenerator;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

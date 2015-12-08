@@ -7,7 +7,7 @@ import bcidExceptions.UnauthorizedRequestException;
 import com.sun.jersey.api.core.ExtendedUriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.errorInfo;
+import utils.errorInfo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;

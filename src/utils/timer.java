@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 /**
 * Utility class to help time events easily

@@ -10,8 +10,8 @@ import bcidExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
-import util.errorInfo;
-import util.queryParams;
+import utils.errorInfo;
+import utils.queryParams;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

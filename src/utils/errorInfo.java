@@ -1,4 +1,4 @@
-package util;
+package utils;
 
 import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;

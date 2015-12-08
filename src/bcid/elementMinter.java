@@ -5,7 +5,7 @@ import bcidExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
-import util.timer;
+import utils.timer;
 
 import java.math.BigInteger;
 import java.net.URI;
