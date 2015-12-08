@@ -11,7 +11,6 @@ import run.configurationFileFetcher;
 import run.process;
 import run.processController;
 import settings.FIMSRuntimeException;
-import settings.bcidConnector;
 import utils.SettingsManager;
 import utils.dashboardGenerator;
 
@@ -199,7 +198,6 @@ public class utils {
         process p = new process(
                 null,
                 uploadPath(),
-                null,
                 processController);
 
         return Response.ok("{\"isNMNHProject\": \"" + p.isNMNHProject() + "\"}").build();
@@ -214,20 +212,6 @@ public class utils {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/list/");
         dispatcher.forward(request, response);
         return;
-    }
-
-    @GET
-    @Path("/callBCID")
-    public Response callBcid(@QueryParam("url") String url,
-                             @QueryParam("method") String method,
-                             @QueryParam("postParams") String postParams) throws Exception{
-        bcidConnector c = new bcidConnector();
-
-        if ( method.equalsIgnoreCase("get") ) {
-            return Response.ok(c.createGETConnection(new URL(url))).build();
-        } else {
-            return Response.ok(c.createPOSTConnnection(new URL(url), postParams)).build();
-        }
     }
 
     @GET
@@ -287,7 +271,7 @@ public class utils {
 
         try {
             processController pc = new processController(projectId, null);
-            process p = new process(null, uploadPath(), new bcidConnector(), pc);
+            process p = new process(null, uploadPath(), pc);
 
             Mapping mapping = p.getMapping();
             String defaultSheet = mapping.getDefaultSheetName();

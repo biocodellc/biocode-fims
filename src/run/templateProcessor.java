@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.FIMSRuntimeException;
 import settings.PathManager;
-import settings.bcidConnector;
+import utils.SettingsManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -65,8 +65,8 @@ public class templateProcessor {
     public templateProcessor(Integer project_id, String outputFolder, Boolean useCache, XSSFWorkbook workbook) {
         this.project_id = project_id;
         configurationFileFetcher configFile = new configurationFileFetcher(project_id, outputFolder, useCache);
-        bcidConnector bcidConnector = new bcidConnector();
-        naan = bcidConnector.getNAAN();
+        SettingsManager sm = SettingsManager.getInstance();
+        naan = Integer.parseInt(sm.retrieveValue("naan"));
 
         // Instantiate the project output Folder
         this.p = new process(project_id,outputFolder, configFile.getOutputFile());
@@ -115,8 +115,8 @@ public class templateProcessor {
     private void instantiateTemplateProcessor(File file, String outputFolder, Boolean useCache) {
         configFile = file;
 
-        bcidConnector bcidConnector = new bcidConnector();
-        naan = bcidConnector.getNAAN();
+        SettingsManager sm = SettingsManager.getInstance();
+        naan = Integer.parseInt(sm.retrieveValue("naan"));
 
         // Instantiate the project output Folder
         this.p = new process(project_id,outputFolder, configFile);

@@ -17,7 +17,6 @@ import run.configurationFileFetcher;
 import run.process;
 import run.templateProcessor;
 import settings.PathManager;
-import settings.bcidConnector;
 
 import java.io.File;
 import java.io.FileInputStream;

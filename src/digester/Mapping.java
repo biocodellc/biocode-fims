@@ -183,7 +183,7 @@ public class Mapping implements RendererInterface {
      * Run the triplifier using this class
      *
      */
-    public boolean run(bcidConnector bcidConnector, triplifier t, processController processController) {
+    public boolean run(triplifier t, processController processController, Boolean runDeepRoots) {
 
         String status = "Converting Data Format ...";
         processController.appendStatus(status + "<br>");
@@ -194,29 +194,9 @@ public class Mapping implements RendererInterface {
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
-        dRoots = new deepRootsReader().createRootData(processController.getUser_id(), processController.getProject_id(), expedition_code);
-
-        // Create a connection to a SQL Lite Instance
-        this.connection = new Connection(processController.getValidation().getSqliteFile());
-        triplifier.getTriples(this, processController);
-        return true;
-    }
-       /**
-     * Run the triplifier using this class without dRoots function
-     *
-     */
-    public boolean run(triplifier t, processController processController) {
-
-        String status = "Converting Data Format ...";
-        processController.appendStatus(status + "<br>");
-        fimsPrinter.out.println(status);
-        this.expedition_code = processController.getExpeditionCode();
-        this.colNames = processController.getValidation().getTabularDataReader().getColNames();
-        triplifier = t;
-
-        // Create a deepRoots object based on results returned from the BCID deepRoots service
-        // TODO: put this into a settings file
-        //dRoots = new deepRootsReader().createRootData(bcidConnector, processController.getProject_id(), expedition_code);
+        if (runDeepRoots) {
+            dRoots = new deepRootsReader().createRootData(processController.getUser_id(), processController.getProject_id(), expedition_code);
+        }
 
         // Create a connection to a SQL Lite Instance
         this.connection = new Connection(processController.getValidation().getSqliteFile());

@@ -1,8 +1,8 @@
 package utils;
 
+import auth.authenticator;
 import run.process;
 import run.processController;
-import settings.bcidConnector;
 import settings.fimsPrinter;
 
 import java.io.File;
@@ -17,8 +17,6 @@ import java.io.PrintStream;
 public class dipnetLoad {
     // output directory for processing and temp files
     static String output_directory = "/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput";
-    // maintain connector across all connections, authenticate just once
-    static bcidConnector connector = null;
     // Project_id
     static Integer project_id = 25;
     // Input directory storing all the loaded files
@@ -42,7 +40,14 @@ public class dipnetLoad {
         password = args[0];
 
         // Call the connection with password as single argument
-        connector = process.createConnection(username, password);
+        authenticator authenticator = new auth.authenticator();
+        fimsPrinter.out.println("Authenticating ...");
+
+        if (!authenticator.login(username, password)) {
+            fimsPrinter.out.println("Unable to authenticate " + username +
+                    " using the supplied credentials!");
+            return;
+        }
 
         // ONE-OFF Run the dataset Loader
         loadDataset("C2_acapla_CO1_all", "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files/mdfastaQC2_acapla_CO1_all.txt");
@@ -83,7 +88,6 @@ public class dipnetLoad {
         process p = new process(
                 input_file,
                 output_directory,
-                connector,
                 pc
         );
 

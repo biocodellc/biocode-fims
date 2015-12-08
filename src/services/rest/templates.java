@@ -5,8 +5,6 @@ import bcidExceptions.UnauthorizedRequestException;
 import run.process;
 import run.processController;
 import run.templateProcessor;
-import settings.FIMSRuntimeException;
-import settings.bcidConnector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,7 +16,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.ws.rs.core.Context;
@@ -199,14 +196,10 @@ public class templates {
 
 
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
         String username = (String) session.getAttribute("user");
-        bcidConnector bcidConnector = new bcidConnector(accessToken, refreshToken);
         process p = new process(
                 null,
                 uploadPath(),
-                bcidConnector,
                 processController);
 
         // Handle creating an expedition on template generation

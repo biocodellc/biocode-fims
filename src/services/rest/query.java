@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import run.configurationFileFetcher;
 import run.process;
 import settings.FIMSRuntimeException;
-import settings.bcidConnector;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

@@ -7,7 +7,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import run.*;
 import settings.FIMSException;
-import settings.bcidConnector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,7 +44,6 @@ public class SIValidationTester {
         process p = new process(
                 inputFile,
                 output_directory,
-                new bcidConnector(),
                 processController,
                 configFile);
 

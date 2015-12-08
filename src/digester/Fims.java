@@ -11,7 +11,6 @@ import org.apache.log4j.Level;
 import renderers.RendererInterface;
 import fims.uploader;
 import run.processController;
-import settings.bcidConnector;
 import settings.fimsPrinter;
 
 import java.io.File;
@@ -58,7 +57,7 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public void run(bcidConnector bcidConnector, processController processController) {
+    public void run(processController processController) {
         Integer project_id = processController.getProject_id();
         String expedition_code = processController.getExpeditionCode();
 

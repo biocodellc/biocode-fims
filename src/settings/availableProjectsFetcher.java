@@ -22,7 +22,7 @@ public class availableProjectsFetcher {
     /**
      * Constructor parses the projectServiceURL and builds an array of availableProjects
      */
-    public availableProjectsFetcher(bcidConnector connector) {
+    public availableProjectsFetcher() {
         JSONParser parser = new JSONParser();
         try {
             SettingsManager sm = SettingsManager.getInstance();
@@ -42,13 +42,6 @@ public class availableProjectsFetcher {
         } catch (ParseException e) {
             throw new FIMSRuntimeException(500, e);
         }
-    }
-
-    /**
-     * Here is a constructor for when we have no login information
-     */
-    public availableProjectsFetcher() {
-        this(null);
     }
 
     public availableProject getProject(Integer project_id) {

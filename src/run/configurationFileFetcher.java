@@ -1,10 +1,8 @@
 package run;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import bcid.projectMinter;
 import settings.FIMSRuntimeException;
 import settings.PathManager;
-import settings.bcidConnector;
 import utils.SettingsManager;
 import utils.urlFreshener;
 import java.io.*;
@@ -75,27 +73,17 @@ public class configurationFileFetcher {
 
         // get a fresh copy if the useCacheResults is false
         if (!useCacheResults) {
-            // Get the URL for this configuration File by fetching it from the project service
-            bcidConnector bcidConnector = new bcidConnector();
-
+            // Get the URL for this configuration File
+            projectMinter project = new projectMinter();
+            String urlString = project.getValidationXML(project_id);
+            project.close();
             try {
-                String strResponse = bcidConnector.createGETConnection(new URL(projectServiceString));
-                /**
-                 * This section no longer works here when running from command-line
-                 */
-                JSONObject response = (JSONObject) JSONValue.parse(strResponse);
-                String urlString = (String) response.get("url");
-                try {
-                    // Initialize the connection
-                    init(new URL(urlString), defaultOutputDirectory);
-                } catch (MalformedURLException e) {
-                    throw new FIMSRuntimeException("configuration file url: " + strResponse + " returned from bcid system for project id: " +
-                            project_id + " is malformed.", 500, e);
-                }
+                // Initialize the connection
+                init(new URL(urlString), defaultOutputDirectory);
             } catch (MalformedURLException e) {
-                throw new FIMSRuntimeException(500, e);
+                throw new FIMSRuntimeException("configuration file url: " + urlString + " returned from bcid system for project id: " +
+                        project_id + " is malformed.", 500, e);
             }
-
         }
     }
 

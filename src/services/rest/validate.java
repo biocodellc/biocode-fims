@@ -13,7 +13,6 @@ import settings.FIMSRuntimeException;
 import run.SIServerSideSpreadsheetTools;
 import run.process;
 import run.processController;
-import settings.bcidConnector;
 import utils.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,14 +91,11 @@ public class validate {
             throw new FIMSRuntimeException("Server error saving file.", 500);
         }
 
-        bcidConnector connector = new bcidConnector();
-
         // Create the process object --- this is done each time to orient the application
         process p = null;
         p = new process(
                 input_file,
                 uploadpath(),
-                connector,
                 processController
         );
 
@@ -209,8 +205,6 @@ public class validate {
     public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                          @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
 
         // if no processController is found, we can't do anything
@@ -227,54 +221,44 @@ public class validate {
         processController.setClearedOfWarnings(true);
         processController.setValidated(true);
 
-        bcidConnector connector = new bcidConnector(accessToken, refreshToken);
 
-        try {
-            // Create the process object --- this is done each time to orient the application
-            process p = null;
-            p = new process(
-                    processController.getInputFilename(),
-                    uploadpath(),
-                    connector,
-                    processController
-            );
+        // Create the process object --- this is done each time to orient the application
+        process p = null;
+        p = new process(
+                processController.getInputFilename(),
+                uploadpath(),
+                processController
+        );
 
-            // create this expedition if the user wants to
-            if (createExpedition) {
-                p.runExpeditionCreate();
-            }
-
-            if (!processController.isExpeditionAssignedToUserAndExists()) {
-                p.runExpeditionCheck(false);
-            }
-
-            if (processController.isExpeditionCreateRequired()) {
-                // ask the user if they want to create this expedition
-                return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
-                        "\\\" does not exist.  " +
-                        "Do you wish to create it now?<br><br>" +
-                        "If you choose to continue, your data will be associated with this new dataset code.\"}";
-            }
-
-            // upload the dataset
-            p.runUpload();
-
-            // delete the temporary file now that it has been uploaded
-            new File(processController.getInputFilename()).delete();
-
-            // remove the processController from the session
-            session.removeAttribute("processController");
-
-            processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
-
-            return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
-        } finally {
-            // if a new access token was issued, update the session variables
-            if (connector.getRefreshedToken()) {
-                session.setAttribute("access_token", connector.getAccessToken());
-                session.setAttribute("refresh_token", connector.getRefreshToken());
-            }
+        // create this expedition if the user wants to
+        if (createExpedition) {
+            p.runExpeditionCreate();
         }
+
+        if (!processController.isExpeditionAssignedToUserAndExists()) {
+            p.runExpeditionCheck(false);
+        }
+
+        if (processController.isExpeditionCreateRequired()) {
+            // ask the user if they want to create this expedition
+            return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                    "\\\" does not exist.  " +
+                    "Do you wish to create it now?<br><br>" +
+                    "If you choose to continue, your data will be associated with this new dataset code.\"}";
+        }
+
+        // upload the dataset
+        p.runUpload();
+
+        // delete the temporary file now that it has been uploaded
+        new File(processController.getInputFilename()).delete();
+
+        // remove the processController from the session
+        session.removeAttribute("processController");
+
+        processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
+
+        return "{\"done\": \"" + processController.getStatusSB().toString() + "\"}";
     }
 
     /**
@@ -291,8 +275,6 @@ public class validate {
     public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
                                      @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String accessToken = (String) session.getAttribute("access_token");
-        String refreshToken = (String) session.getAttribute("refresh_token");
         processController processController = (processController) session.getAttribute("processController");
 
         // Initialize Settings
@@ -312,110 +294,98 @@ public class validate {
         processController.setClearedOfWarnings(true);
         processController.setValidated(true);
 
-        bcidConnector connector = new bcidConnector(accessToken, refreshToken);
+        // Create the process object --- this is done each time to orient the application
+        process p = new process(
+                processController.getInputFilename(),
+                uploadpath(),
+                processController
+        );
 
-        try {
-            // Create the process object --- this is done each time to orient the application
-            process p = null;
-            p = new process(
-                    processController.getInputFilename(),
-                    uploadpath(),
-                    connector,
-                    processController
-            );
-
-            // create this expedition if the user wants to
-            if (createExpedition) {
-                p.runExpeditionCreate();
-            }
-
-            if (!processController.isExpeditionAssignedToUserAndExists()) {
-                p.runExpeditionCheck(true);
-            }
-
-            // Check to see if we need to create a new Expedition, if so we make a slight diversition
-            if (processController.isExpeditionCreateRequired()) {
-                // Ask the user if they want to create this expedition
-                return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
-                        "\\\" does not exist.  " +
-                        "Do you wish to create it now?<br><br>" +
-                        "If you choose to continue, your data will be associated with this new dataset code.\"}";
-            }
-
-            /*
-            * Copy Spreadsheet to a standard location
-            */
-            // Get the BCID Root
-            resolver r = new resolver(processController.getExpeditionCode(), processController.getProject_id(), "Resource");
-            String bcidRoot = r.getArk();
-            r.close();
-
-            // Set input and output files
-            File inputFile = new File(processController.getInputFilename());
-
-            File outputFile = new File(sm.retrieveValue("serverRoot") + inputFile.getName());
-
-            // Run guidify, which adds a BCID to the spreadsheet
-            //System.out.println("userId = " + session.getAttribute("userId"));
-            //System.out.println("Session string = " + session.toString());
-            //System.out.println("session attribute names = " + session.getAttributeNames());
-            Integer userId = Integer.valueOf((String) session.getAttribute("userId"));
-            //System.out.println("now userId = " + userId);
-
-            // Get the mapping object so we can discern the column_internal fields
-            Mapping mapping = processController.getValidation().getMapping();
-
-            // Smithsonian specific GUID to be attached to Sheet
-            SIServerSideSpreadsheetTools siServerSideSpreadsheetTools = new SIServerSideSpreadsheetTools(
-                    inputFile,
-                    processController.getWorksheetName(),
-                    p.getMapping().getDefaultSheetUniqueKey(),
-                    bcidRoot);
-
-            // Write GUIDs
-            siServerSideSpreadsheetTools.guidify();
-
-            siServerSideSpreadsheetTools.addInternalRowToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
-
-            siServerSideSpreadsheetTools.write(outputFile);
-
-            // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
-            // gives us a way to track what spreadsheets are uploaded into the system as they can
-            // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
-            // Create a dataset BCID
-            dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-            dataGroupMinter.createDatasetBCID(userId, "1", null, inputFile.getName(), processController.getFinalCopy());
-            String datasetArk = dataGroupMinter.getPrefix();
-            dataGroupMinter.close();
-
-            // associate the BCID
-            expeditionMinter expeditionMinter = new expeditionMinter();
-            expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
-            // Set the public status
-            expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
-                        processController.getProject_id(), processController.getPublicStatus());
-            expeditionMinter.close();
-
-            // Remove the processController from the session
-            session.removeAttribute("processController");
-
-            processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
-
-            // This is the message the user sees after succesfully uploading a spreadsheet to the server
-            return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
-                    //"server filename = " + outputFile.getName() + "<br>" +  \
-                    "dataset code = " + processController.getExpeditionCode() + "<br>" +
-                    "dataset ARK = " + datasetArk + "<br>" +
-                    "resource ARK = " + bcidRoot + "<br>" +
-                    "Please maintain a local copy of your File!<br>" +
-                    "Your file will be processed soon for ingestion into RCIS.\"}";
-        } finally {
-            // if a new access token was issued, update the session variables
-            if (connector.getRefreshedToken()) {
-                session.setAttribute("access_token", connector.getAccessToken());
-                session.setAttribute("refresh_token", connector.getRefreshToken());
-            }
+        // create this expedition if the user wants to
+        if (createExpedition) {
+            p.runExpeditionCreate();
         }
+
+        if (!processController.isExpeditionAssignedToUserAndExists()) {
+            p.runExpeditionCheck(true);
+        }
+
+        // Check to see if we need to create a new Expedition, if so we make a slight diversition
+        if (processController.isExpeditionCreateRequired()) {
+            // Ask the user if they want to create this expedition
+            return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+                    "\\\" does not exist.  " +
+                    "Do you wish to create it now?<br><br>" +
+                    "If you choose to continue, your data will be associated with this new dataset code.\"}";
+        }
+
+        /*
+        * Copy Spreadsheet to a standard location
+        */
+        // Get the BCID Root
+        resolver r = new resolver(processController.getExpeditionCode(), processController.getProject_id(), "Resource");
+        String bcidRoot = r.getArk();
+        r.close();
+
+        // Set input and output files
+        File inputFile = new File(processController.getInputFilename());
+
+        File outputFile = new File(sm.retrieveValue("serverRoot") + inputFile.getName());
+
+        // Run guidify, which adds a BCID to the spreadsheet
+        //System.out.println("userId = " + session.getAttribute("userId"));
+        //System.out.println("Session string = " + session.toString());
+        //System.out.println("session attribute names = " + session.getAttributeNames());
+        Integer userId = Integer.valueOf((String) session.getAttribute("userId"));
+        //System.out.println("now userId = " + userId);
+
+        // Get the mapping object so we can discern the column_internal fields
+        Mapping mapping = processController.getValidation().getMapping();
+
+        // Smithsonian specific GUID to be attached to Sheet
+        SIServerSideSpreadsheetTools siServerSideSpreadsheetTools = new SIServerSideSpreadsheetTools(
+                inputFile,
+                processController.getWorksheetName(),
+                p.getMapping().getDefaultSheetUniqueKey(),
+                bcidRoot);
+
+        // Write GUIDs
+        siServerSideSpreadsheetTools.guidify();
+
+        siServerSideSpreadsheetTools.addInternalRowToHeader(mapping, Boolean.valueOf(sm.retrieveValue("replaceHeader")));
+
+        siServerSideSpreadsheetTools.write(outputFile);
+
+        // Represent the dataset by an ARK... In the Spreadsheet Uploader option this
+        // gives us a way to track what spreadsheets are uploaded into the system as they can
+        // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
+        // Create a dataset BCID
+        dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
+        dataGroupMinter.createDatasetBCID(userId, "1", null, inputFile.getName(), processController.getFinalCopy());
+        String datasetArk = dataGroupMinter.getPrefix();
+        dataGroupMinter.close();
+
+        // associate the BCID
+        expeditionMinter expeditionMinter = new expeditionMinter();
+        expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
+        // Set the public status
+        expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
+                    processController.getProject_id(), processController.getPublicStatus());
+        expeditionMinter.close();
+
+        // Remove the processController from the session
+        session.removeAttribute("processController");
+
+        processController.appendStatus("<br><font color=#188B00>Successfully Uploaded!</font>");
+
+        // This is the message the user sees after succesfully uploading a spreadsheet to the server
+        return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
+                //"server filename = " + outputFile.getName() + "<br>" +  \
+                "dataset code = " + processController.getExpeditionCode() + "<br>" +
+                "dataset ARK = " + datasetArk + "<br>" +
+                "resource ARK = " + bcidRoot + "<br>" +
+                "Please maintain a local copy of your File!<br>" +
+                "Your file will be processed soon for ingestion into RCIS.\"}";
     }
 
     /**

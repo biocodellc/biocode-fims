@@ -47,7 +47,6 @@ public class process {
 
     String outputFolder;
     String outputPrefix;
-    bcidConnector connector;
     private processController processController;
     private static Logger logger = LoggerFactory.getLogger(process.class);
     protected int project_id;
@@ -63,7 +62,6 @@ public class process {
     public process(
             String inputFilename,
             String outputFolder,
-            bcidConnector connector,
             processController processController) {
 
         // Setup
@@ -77,7 +75,6 @@ public class process {
 
         // Control the file outputPrefix... set them here to expedition codes.
         this.outputPrefix = processController.getExpeditionCode() + "_output";
-        this.connector = connector;
 
         // Read the Configuration File
         configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
@@ -101,7 +98,6 @@ public class process {
     public process(
             String inputFilename,
             String outputFolder,
-            bcidConnector connector,
             processController processController,
             File configFile) {
 
@@ -116,7 +112,6 @@ public class process {
 
         // Control the file outputPrefix... set them here to expedition codes.
         this.outputPrefix = processController.getExpeditionCode() + "_output";
-        this.connector = connector;
 
         // Read the Configuration File
         this.configFile = configFile;
@@ -141,31 +136,6 @@ public class process {
         this.outputFolder = outputFolder;
         this.configFile = configFile;
         this.outputPrefix = "output";
-    }
-
-    /**
-     * A constructor for running the triplifier locally
-     *
-     * @param outputFolder
-     * @param configFile
-     */
-    public process(
-            String inputFilename,
-            String outputFolder,
-            processController processController,
-            File configFile) {
-        this.outputFolder = outputFolder;
-        this.configFile = configFile;
-        this.outputPrefix = "output";
-        // Update the processController Settings
-        this.processController = processController;
-
-        this.processController = processController;
-
-        processController.setInputFilename(inputFilename);
-        // Parse the Mapping object (this object is used extensively in downstream functions!)
-        mapping = new Mapping();
-        addMappingRules(new Digester(), mapping);
     }
 
     /**
@@ -204,25 +174,6 @@ public class process {
             return false;
         else
             return true;
-    }
-
-    public static bcidConnector createConnection(String username, String password) {
-        bcidConnector bcidConnector = new bcidConnector();
-        authenticator authenticator = new auth.authenticator();
-
-        // Authenticate all the time, even if not uploading
-        fimsPrinter.out.println("Authenticating ...");
-
-        boolean authenticationSuccess = authenticator.login(username, password);
-
-        if (!authenticationSuccess) {
-            String message = "Unable to authenticate " + username + " using the supplied credentials!";
-            fimsInputter.in.haltOperation(message);
-            return null;
-        }
-
-
-        return bcidConnector;
     }
 
     /**
@@ -451,7 +402,7 @@ public class process {
                 // In other, words, this is typically used for local debug & test modes
             } else {
                 triplifier t = new triplifier("test", this.outputFolder);
-                mapping.run(t, processController);
+                mapping.run(t, processController, false);
                 mapping.print();
             }
 
@@ -498,9 +449,9 @@ public class process {
         Boolean triplifyGood = false;
         if (processController.isValidated()) {
             triplifyGood = mapping.run(
-                    connector,
                     new triplifier(outputPrefix, outputFolder),
-                    processController
+                    processController,
+                    true
             );
 
             mapping.print();
@@ -515,7 +466,7 @@ public class process {
                 runTriplifier()) {
             Fims fims = new Fims(mapping, null);
             addFimsRules(new Digester(), fims);
-            fims.run(connector, processController);
+            fims.run(processController);
             String results = fims.results();
             processController.appendStatus("<br>" + results);
             // Set the public status
@@ -860,14 +811,21 @@ public class process {
 
                 } else {
                     // Create the appropritate connection string depending on options
-                    bcidConnector connector = null;
                     if (triplify || upload) {
                         if (username == null || username.equals("") || password == null || password.equals("")) {
                             fimsPrinter.out.println("Need valid username / password for uploading");
                             helpf.printHelp("fims ", options, true);
                             return;
                         } else {
-                            connector = createConnection(username, password);
+                            authenticator authenticator = new auth.authenticator();
+                            fimsPrinter.out.println("Authenticating ...");
+
+                            if (!authenticator.login(username, password)) {
+                                fimsPrinter.out.println("Unable to authenticate " + username +
+                                        " using the supplied credentials!");
+                                return;
+                            }
+
                             // Check that a dataset code has been entered
                             if (!cl.hasOption("e")) {
                                 fimsPrinter.out.println("Need to enter a dataset code before  uploading");
@@ -875,13 +833,8 @@ public class process {
                                 return;
                             }
                         }
-                    } else {
-                        connector = new bcidConnector();
-                    }
 
-
-                    // Now run the process
-                    if (connector != null) {
+                        // Now run the process
                         process p;
                         processController processController = new processController(project_id, dataset_code);
                         processController.setUser_id(username);
@@ -892,14 +845,12 @@ public class process {
                             p = new process(
                                     input_file,
                                     output_directory,
-                                    connector,
                                     processController,
                                     new File(cl.getOptionValue("configFile")));
                         } else {
                             p = new process(
                                     input_file,
                                     output_directory,
-                                    connector,
                                     processController
                             );
                         }
