@@ -1,10 +1,13 @@
-package services.rest;
+package services.exceptionMapper;
 
 import com.sun.jersey.api.core.ExtendedUriInfo;
+import fimsExceptions.BadRequestException;
+import fimsExceptions.FIMSAbstractException;
+import fimsExceptions.ForbiddenRequestException;
+import fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.processController;
-import fimsExceptions.FIMSRuntimeException;
 import settings.errorInfo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,9 +39,8 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
     private static Logger logger = LoggerFactory.getLogger(exceptionMapper.class);
 
     @Override
-    public Response toResponse( Exception e) {
-        e.printStackTrace();
-        logger.error(null, e);
+    public Response toResponse(Exception e) {
+        logException(e);
         errorInfo errorInfo = getErrorInfo(e);
         String mediaType;
 
@@ -102,9 +104,9 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
         String developerMessage = null;
         Integer httpStatusCode = getHttpStatus(e);
 
-        if (e instanceof FIMSRuntimeException) {
-            usrMessage = ((FIMSRuntimeException) e).getUsrMessage();
-            developerMessage = ((FIMSRuntimeException) e).getDeveloperMessage();
+        if (e instanceof FIMSAbstractException) {
+            usrMessage = ((FIMSAbstractException) e).getUsrMessage();
+            developerMessage = ((FIMSAbstractException) e).getDeveloperMessage();
         } else {
             usrMessage = "Server Error";
         }
@@ -117,11 +119,19 @@ public class exceptionMapper implements ExceptionMapper<Exception> {
         // if the throwable is an instance of WebApplicationException, get the status code
         if (e instanceof WebApplicationException) {
             return ((WebApplicationException) e).getResponse().getStatus();
-        } else if (e instanceof FIMSRuntimeException) {
-            return ((FIMSRuntimeException) e).getHttpStatusCode();
+        } else if (e instanceof FIMSAbstractException) {
+            return ((FIMSAbstractException) e).getHttpStatusCode();
         } else {
             return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
         }
     }
 
+    private void logException(Exception e) {
+        e.printStackTrace();
+        // don't log BadRequestexceptions or UnauthorizedRequestExceptions or ForbiddenRequestExceptions
+        if (!(e instanceof BadRequestException || e instanceof UnauthorizedRequestException ||
+                e instanceof ForbiddenRequestException)) {
+            logger.error("{} thrown.", e.getClass().toString(), e);
+        }
+    }
 }
