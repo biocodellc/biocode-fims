@@ -382,8 +382,9 @@ function failError(jqxhr) {
     $("#dialogContainer").addClass("error");
 
     var message;
-    var message = jqxhr.responseJSON.usrMessage;
-    if (message == null) {
+    if (jqxhr.responseJSON) {
+        message = jqxhr.responseJSON.usrMessage;
+    } else {
         message = "Server Error!";
     }
     dialog(message, "Error", buttons);

@@ -91,7 +91,7 @@ public class dataGroupMinter extends dataGroupEncoder {
             this.shoulder = shoulder;
         }
         setBow(NAAN);
-        prefix = bow + shoulder;
+        prefix = bow + this.shoulder;
         datasets_id = this.getDatasetId(prefix);
         this.suffixPassThrough = suffixPassThrough;
     }

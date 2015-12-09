@@ -1,32 +1,4 @@
-# OAuth settings
-client_id = public_client_id
-client_secret = super_secret_code
-redirect_uri = http://biscicol.org/biocode-fims/rest/authenticationService/access_token/
-authorize_uri = http://biscicol.org/id/authenticationService/oauth/authorize?
-access_token_uri = http://www.biscicol.org/id/authenticationService/oauth/access_token
-profile_uri = http://www.biscicol.org/id/userService/oauth?access_token=
-refresh_uri = http://biscicol.org/id/authenticationService/oauth/refresh
-
-# BCID URI's
 naan = 21547
-authentication_uri = http://www.biscicol.org/id/authenticationService/login
-ark_creation_uri = http://www.biscicol.org/id/groupService
-associate_uri = http://www.biscicol.org/id/expeditionService/associate
-expedition_creation_uri = http://www.biscicol.org/id/expeditionService
-expedition_validation_uri = http://www.biscicol.org/id/expeditionService/validateExpedition/
-available_projects_uri = http://www.biscicol.org/id/projectService/listUserProjects
-project_lookup_uri = http://www.biscicol.org/id/projectService/validation/
-deeproots_uri = http://www.biscicol.org/id/expeditionService/deepRoots/
-project_service_uri = http://www.biscicol.org/id/projectService/list
-expedition_list_uri = http://www.biscicol.org/id/expeditionService/list/
-expedition_public_status_uri = http://www.biscicol.org/id/expeditionService/publicExpedition/
-graphs_uri = http://www.biscicol.org/id/projectService/graphs/
-my_graphs_uri = http://www.biscicol.org/id/projectService/myGraphs/
-my_datasets_uri = http://www.biscicol.org/id/projectService/myDatasets/
-save_template_config_uri = http://www.biscicol.org/id/projectService/saveTemplateConfig/
-get_template_config_uri = http://www.biscicol.org/id/projectService/getTemplateConfig/
-get_template_configs_uri = http://www.biscicol.org/id/projectService/getTemplateConfigs/
-remove_template_config_uri = http://www.biscicol.org/id/projectService/removeTemplateConfig/
 
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 rootName = biocode-fims
@@ -103,13 +75,8 @@ igServers = https://yourdomain:port/your/service,https://yourdomain:port/your/se
 # length of time (minutes) ldap user account is locked due to failed login attempts
 entrustLockout = 10
 
-
 # turn on or off ezid request mechanism (the part that actually creates the EZID)
 ezidRequests = true
-
-# when set to true, stack traces will be returned form the server when exceptions occur.
-# should be set to false for production use.
-debug = false
 
 # This is the publisher that shows up in Dublin Core metadata profile for EZIDs
 publisher = Biocode FIMS System
