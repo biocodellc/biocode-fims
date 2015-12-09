@@ -1,6 +1,6 @@
 <%@ include file="header-home.jsp" %>
 
-div class="section">
+<div class="section">
     <div class="sectioncontent" id="login">
         <h2>Login</h2>
         <form method="POST" autocomplete="off">

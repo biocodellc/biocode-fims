@@ -1,4 +1,4 @@
-<%@ include file="../header-menus.jsp" %>
+<%@ include file="../header-home.jsp" %>
 
 <div id="user" class="section">
 

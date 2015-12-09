@@ -201,7 +201,7 @@ function listProjects(username, url, expedition) {
             var html = '<h2>Manage Datasets (' + username + ')</h2>\n';
         }
         var expandTemplate = '<br>\n<a class="expand-content" id="{project}-{section}" href="javascript:void(0);">\n'
-                            + '\t <img src="../images/right-arrow.png" id="arrow" class="img-arrow">{text}'
+                            + '\t <img src="/biocode-fims/images/right-arrow.png" id="arrow" class="img-arrow">{text}'
                             + '</a>\n';
         $.each(data.projects, function(index, element) {
             key=element.project_id;
@@ -258,9 +258,9 @@ function listProjects(username, url, expedition) {
 // function to apply the jquery slideToggle effect.
 function projectToggle(id) {
     if ($('.toggle-content#'+id).is(':hidden')) {
-        $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/down-arrow.png");
     } else {
-        $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/right-arrow.png");
     }
     // check if we've loaded this section, if not, load from service
     var divId = 'div#' + id
@@ -559,9 +559,9 @@ function populateExpeditionPage(username) {
 // function to load the expeditions.jsp subsections
 function loadExpeditions(id) {
     if ($('.toggle-content#'+id).is(':hidden')) {
-        $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/down-arrow.png");
     } else {
-        $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/right-arrow.png");
     }
     // check if we've loaded this section, if not, load from service
     var divId = 'div#' + id
@@ -580,7 +580,7 @@ function listExpeditions(divId) {
         .done(function(data) {
             var html = '';
             var expandTemplate = '<br>\n<a class="expand-content" id="{expedition}-{section}" href="javascript:void(0);">\n'
-                                + '\t <img src="../images/right-arrow.png" id="arrow" class="img-arrow">{text}'
+                                + '\t <img src="/biocode-fims/images/right-arrow.png" id="arrow" class="img-arrow">{text}'
                                 + '</a>\n';
             $.each(data['expeditions'], function(index, e) {
                 var expedition = e.expedition_title.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expedition_id;

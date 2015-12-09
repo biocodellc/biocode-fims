@@ -775,9 +775,9 @@ function projectToggle(id) {
         // store the element value in a field
         var idElement = $('.toggle-content#'+id);
         if (idElement.is(':hidden')) {
-            $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+            $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/down-arrow.png");
         } else {
-            $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+            $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/right-arrow.png");
         }
         $(idElement).slideToggle('slow');
 }
@@ -1034,9 +1034,9 @@ function projectToggle(id) {
     // store the element value in a field
     var idElement = $('.toggle-content#'+id);
     if (idElement.is(':hidden')) {
-        $('.img-arrow', '#'+id).attr("src","../images/down-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/down-arrow.png");
     } else {
-        $('.img-arrow', '#'+id).attr("src","../images/right-arrow.png");
+        $('.img-arrow', '#'+id).attr("src","/biocode-fims/images/right-arrow.png");
     }
     $(idElement).slideToggle('slow');
 }

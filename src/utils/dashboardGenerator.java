@@ -41,7 +41,7 @@ public class dashboardGenerator {
             sb.append("<br>\\n<a class='expand-content' id='");
             sb.append("project" + projectCounter);
             sb.append("' href='javascript:void(0);'>\\n");
-            sb.append("\\t <img src='images/right-arrow.png' id='arrow' class='img-arrow'>");
+            sb.append("\\t <img src='/biocode-fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
             sb.append(project_title);
             sb.append("</a>\\n");
             sb.append("<div class='toggle-content' id='");
