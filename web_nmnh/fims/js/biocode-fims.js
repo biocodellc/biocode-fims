@@ -382,9 +382,8 @@ function failError(jqxhr) {
     $("#dialogContainer").addClass("error");
 
     var message;
-    if (jqxhr.responseText != null) {
-        message = JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage);
-    } else {
+    var message = jqxhr.responseJSON.usrMessage;
+    if (message == null) {
         message = "Server Error!";
     }
     dialog(message, "Error", buttons);
@@ -767,8 +766,11 @@ function saveTemplateConfig() {
             });
 
             savedConfig = configName;
-            $.post("/fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
-                                                            {"configName": configName, "checkedOptions": checked}, true)
+            $.post("/id/projectService/saveTemplateConfig/", $.param(
+                                                            {"configName": configName,
+                                                            "checkedOptions": checked,
+                                                            "project_id": $("#projects").val()
+                                                            }, true)
             ).done(function(data) {
                 if (data.error != null) {
                     $("#dialogContainer").addClass("error");
@@ -890,7 +892,7 @@ function removeConfig() {
               }
               var title = "Remove Template Generator Configuration";
 
-              $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+              $.getJSON("/fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace("/\//g", "%2F")).done(function(data) {
                   if (data.error != null) {
                       showMessage(data.error);
                       return;
@@ -898,6 +900,8 @@ function removeConfig() {
 
                   populateConfigs();
                   dialog(data.success, title, buttons);
+              }).fail(function(jqXHR) {
+                  failError(jqXHR);
               });
           },
           "Cancel": function() {

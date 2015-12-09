@@ -115,27 +115,6 @@ public class templates {
     }
 
     /**
-     * Save a template generator configuration
-     * @param configName
-     * @param checkedOptions
-     * @param projectId
-     * @return
-     */
-    @POST
-    @Path("/saveConfig/{project_id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void saveConfig(@FormParam("configName") String configName,
-                               @FormParam("checkedOptions") List<String> checkedOptions,
-                               @PathParam("project_id") Integer projectId)
-        throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/saveTemplateConfig/" +
-                projectId + "/" + configName);
-        dispatcher.forward(request, response);
-        return;
-    }
-
-    /**
      * Return the abstract for a particular graph
      *
      * @return

@@ -362,7 +362,6 @@ public class projectService {
             throw new BadRequestException("invalid userId");
         }
 
-
         if (username == null) {
             throw new UnauthorizedRequestException("You must login to access this service.");
         }
@@ -454,18 +453,22 @@ public class projectService {
             return Response.ok("{\"error\": \"To change the default config, talk to the project admin.\"}").build();
         }
 
-        Integer userId = null;
+        String username;
         // if accessToken != null, then OAuth client is accessing on behalf of a user
         if (accessToken != null) {
             provider p = new provider();
-            String username = p.validateToken(accessToken);
+            username = p.validateToken(accessToken);
             p.close();
-            database db = new database();
-            userId = db.getUserId(username);
-            db.close();        }
+        } else {
+            HttpSession session = request.getSession();
+            username = (String) session.getAttribute("user");
+        }
+        database db = new database();
+        Integer userId = db.getUserId(username);
+        db.close();
 
         if (userId == null) {
-            throw new UnauthorizedRequestException("authorization_error");
+            throw new UnauthorizedRequestException("You must be logged in to save a configuration.");
         }
 
         projectMinter p = new projectMinter();
@@ -533,18 +536,22 @@ public class projectService {
             return Response.ok("{\"error\": \"To remove the default config, talk to the project admin.\"}").build();
         }
 
-        Integer userId = null;
+        String username;
         // if accessToken != null, then OAuth client is accessing on behalf of a user
         if (accessToken != null) {
             provider p = new provider();
-            String username = p.validateToken(accessToken);
+            username = p.validateToken(accessToken);
             p.close();
-            database db = new database();
-            userId = db.getUserId(username);
-            db.close();        }
+        } else {
+            HttpSession session = request.getSession();
+            username = (String) session.getAttribute("user");
+        }
+        database db = new database();
+        Integer userId = db.getUserId(username);
+        db.close();
 
         if (userId == null) {
-            throw new UnauthorizedRequestException("authorization_error");
+            throw new UnauthorizedRequestException("Only the owners of a configuration can remove the configuration");
         }
 
         projectMinter p = new projectMinter();

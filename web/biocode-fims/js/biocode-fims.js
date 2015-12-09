@@ -377,10 +377,8 @@ function failError(jqxhr) {
     }
     $("#dialogContainer").addClass("error");
 
-    var message;
-    if (jqxhr.responseText != null) {
-        message = JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage);
-    } else {
+    var message = jqxhr.responseJSON.usrMessage;
+    if (message == null) {
         message = "Server Error!";
     }
     dialog(message, "Error", buttons);
@@ -805,7 +803,7 @@ function editDataset(project_id, expedition_code, e) {
         "Update": function() {
             var public = $("[name='public']")[0].checked;
 
-            $.post("rest/utils/updatePublicStatus", { project_id: project_id, expedition_code: expedition_code, public: public}
+            $.get("/id/expeditionService/publicExpedition/" + project_id + "/" + expedition_code + "/" + public
             ).done(function() {
                 var b = {
                     "Ok": function() {
@@ -880,8 +878,11 @@ function saveTemplateConfig() {
             });
 
             savedConfig = configName;
-            $.post("/biocode-fims/rest/templates/saveConfig/" + $("#projects").val(), $.param(
-                                                            {"configName": configName, "checkedOptions": checked}, true)
+            $.post("/id/projectService/saveTemplateConfig/", $.param(
+                                                            {"configName": configName,
+                                                            "checkedOptions": checked,
+                                                            "project_id": $("#projects").val()
+                                                            }, true)
             ).done(function(data) {
                 if (data.error != null) {
                     $("#dialogContainer").addClass("error");
@@ -1005,7 +1006,7 @@ function removeConfig() {
             }
             var title = "Remove Template Generator Configuration";
 
-            $.getJSON("/biocode-fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace(/\//g, "%2F")).done(function(data) {
+            $.getJSON("/biocode-fims/rest/templates/removeConfig/" + $("#projects").val() + "/" + configName.replace("/\//g", "%2F")).done(function(data) {
                 if (data.error != null) {
                     showMessage(data.error);
                     return;
@@ -1013,6 +1014,8 @@ function removeConfig() {
 
                 populateConfigs();
                 dialog(data.success, title, buttons);
+            }).fail(function(jqXHR) {
+                failError(jqXHR);
             });
         },
         "Cancel": function() {

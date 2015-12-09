@@ -246,20 +246,6 @@ public class utils {
         return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
     }
 
-    @POST
-    @Path("/updatePublicStatus")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void updatePublicStatus(@FormParam("expedition_code") String expedition_code,
-                                       @FormParam("project_id") int project_id,
-                                       @FormParam("public") Boolean p)
-        throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/publicExpedition/" +
-                project_id + "/" + expedition_code + "/" + p);
-        dispatcher.forward(request, response);
-        return;
-    }
-
     @GET
     @Path("/getLatLongColumns/{project_id}")
     @Produces(MediaType.APPLICATION_JSON)
