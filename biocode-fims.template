@@ -85,4 +85,4 @@ publisher = Biocode FIMS System
 # creator = SI-NMNH Field Information Management System
 
 # web root for negotiating different types of content resolution
-contentResolutionRoot = http://biscicol.org:8179/biocode-fims/idRest/query/
+contentResolutionRoot = http://biscicol.org:8179/biocode-fims/rest/query/
