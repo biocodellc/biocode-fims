@@ -32,7 +32,6 @@
                                     <li><a href='/fims/secure/templates.jsp' class='enabled'>Generate Template</a></li>
                                     <li><a href='/fims/secure/validation.jsp' class='enabled'>Validation</a></li>
                                     <li><a href='/fims/secure/datasets.jsp' class='enabled'>My Templates and Datasets</a></li>
-                                    <li><a href='/fims/secure/profile.jsp' class='enabled'>User Profile</a></li>
                                 </ul>
                             </c:if>
 
@@ -41,21 +40,10 @@
                                     <li><div class='disabled' style='font-size: 80%;'>Generate Template (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>Validation (login required)</div></li>
                                     <li><div class='disabled' style='font-size: 80%;'>My Templates and Datasets (login required)</div></li>
-                                    <li><div class='disabled' style='font-size: 80%;'>User Profile (login required)</div></li>
                                 </ul>
                             </c:if>
                         </ul>
                     </li>
-
-                    <c:if test="${projectAdmin != null}">
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
-
-                            <ul class="dropdown-menu">
-                                <li><a href='/fims/secure/projects.jsp' class='enabled'>Manage Projects</a></li>
-                            </ul>
-                        </li>
-                    </c:if>
 
                     <c:if test="${user == null}">
                         <li><a id="login" href="login.jsp">Login</a></li>
