@@ -18,28 +18,25 @@
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tools<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        <c:if test="${user != null}">
-                            <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
+                            <li><a href='/biocode-fims/templates.jsp' class='enabled'>Template</a></li>
                             <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
                             <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
-                            <li><a href='/biocode-fims/secure/profile.jsp' class='enabled'>User Profile</a></li>
-                        </c:if>
-
-                        <c:if test="${user == null}">
-                            <li><a href='/biocode-fims/templates.jsp' class='enabled'>Generate Template</a></li>
-                            <li><a href='/biocode-fims/validation.jsp' class='enabled'>Validation</a></li>
-                            <li><a href='/biocode-fims/query.jsp' class='enabled'>Query</a></li>
-                            <li><a href='#' class='disabled'>User Profile</a></li>
-                        </c:if>
+                            <li><a href='/biocode-fims/lookup.jsp' class='enabled'>ID Lookup</a></li>
                         </ul>
                     </li>
 
-                    <c:if test="${projectAdmin != null}">
+                    <c:if test="${user != null}">
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
-
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Management<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href='/biocode-fims/secure/projects.jsp' class='enabled'>Manage Projects</a></li>
+                                <li><a href='/biocode-fims/secure/expeditions.jsp' class='enabled'>Expedition</a></li>
+                                <c:if test="${projectAdmin != null}">
+                                    <li><a href='/biocode-fims/secure/projects.jsp' class='enabled'>Project</a></li>
+                                </c:if>
+                                <c:if test="${projectAdmin == null}">
+                                    <li><a href='#' class='disabled'>Project</a></li>
+                                </c:if>
+                                <li><a href='/biocode-fims/secure/profile.jsp' class='enabled'>User Profile</a></li>
                             </ul>
                         </li>
                     </c:if>
