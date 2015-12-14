@@ -196,9 +196,9 @@ function listProjects(username, url, expedition) {
     var jqxhr = $.getJSON(url
     ).done(function(data) {
         if (!expedition) {
-            var html = '<h2>Manage Projects (' + username + ')</h2>\n';
+            var html = '<h1>Project Manager (' + username + ')</h2>\n';
         } else {
-            var html = '<h2>Manage Datasets (' + username + ')</h2>\n';
+            var html = '<h1>Expedition Manager (' + username + ')</h2>\n';
         }
         var expandTemplate = '<br>\n<a class="expand-content" id="{project}-{section}" href="javascript:void(0);">\n'
                             + '\t <img src="/biocode-fims/images/right-arrow.png" id="arrow" class="img-arrow">{text}'
@@ -565,8 +565,9 @@ function loadExpeditions(id) {
     }
     // check if we've loaded this section, if not, load from service
     var divId = 'div#' + id
-    if ((id.indexOf("resources") != -1 || id.indexOf("datasets") != -1) && ($(divId).children().length == 0)) {
-        populateResourcesOrDatasets(divId);
+    if ((id.indexOf("resources") != -1 || id.indexOf("datasets") != -1 || id.indexOf("configuration") != -1) &&
+            ($(divId).children().length == 0)) {
+        populateExpeditionSubsections(divId);
     } else if ($(divId).children().length == 0) {
         listExpeditions(divId);
     }
@@ -585,13 +586,16 @@ function listExpeditions(divId) {
             $.each(data['expeditions'], function(index, e) {
                 var expedition = e.expedition_title.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expedition_id;
 
-                if (e.public == "true") {
-                    html += expandTemplate.replace('{text}', e.expedition_title + ' (public)').replace('-{section}', '');
-                } else {
-                    html += expandTemplate.replace('{text}', e.expedition_title + ' (private)').replace('-{section}', '');
-                }
+                html += expandTemplate.replace('{text}', e.expedition_title).replace('-{section}', '');
+//                if (e.public == "true") {
+//                    html += expandTemplate.replace('{text}', e.expedition_title + ' (public)').replace('-{section}', '');
+//                } else {
+//                    html += expandTemplate.replace('{text}', e.expedition_title + ' (private)').replace('-{section}', '');
+//                }
                 html += '<div id="{expedition}" class="toggle-content">';
-                html += expandTemplate.replace('{text}', 'Resources').replace('{section}', 'resources').replace('<br>\n', '');
+                html += expandTemplate.replace('{text}', 'Configuration').replace('{section}', 'configuration').replace('<br>\n', '');
+                html += '<div id="{expedition}-configuration" class="toggle-content">Loading Expedition Configuration...</div>';
+                html += expandTemplate.replace('{text}', 'Resources').replace('{section}', 'resources');
                 html += '<div id="{expedition}-resources" class="toggle-content">Loading Expedition Resources...</div>';
                 html +=  expandTemplate.replace('{text}', 'Datasets').replace('{section}', 'datasets');
                 html += '<div id="{expedition}-datasets" class="toggle-content">Loading Expedition Datasets...</div>';
@@ -608,6 +612,7 @@ function listExpeditions(divId) {
             $.each(data['expeditions'], function(index, e) {
                 var expedition = e.expedition_title.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expedition_id;
 
+                $('div#' + expedition +'-configuration').data('expedition_id', e.expedition_id);
                 $('div#' + expedition +'-resources').data('expedition_id', e.expedition_id);
                 $('div#' + expedition +'-datasets').data('expedition_id', e.expedition_id);
             });
@@ -623,8 +628,8 @@ function listExpeditions(divId) {
     loadingDialog(jqxhr);
 }
 
-// function to populate the expedition resources or datasets subsection of expeditions.jsp
-function populateResourcesOrDatasets(divId) {
+// function to populate the expedition resources, datasets, or configuration subsection of expeditions.jsp
+function populateExpeditionSubsections(divId) {
     // load config table from REST service
     var expeditionId= $(divId).data('expedition_id');
     if (divId.indexOf("resources") != -1) {
@@ -633,11 +638,17 @@ function populateResourcesOrDatasets(divId) {
             divId,
             'Unable to load this expedition\'s resources from server.');
         loadingDialog(jqxhr);
-    } else {
+    } else if (divId.indexOf("datasets") != -1) {
         var jqxhr = populateDivFromService(
             '/id/expeditionService/datasetsAsTable/' + expeditionId,
             divId,
             'Unable to load this expedition\'s datasets from server.');
+        loadingDialog(jqxhr);
+    } else {
+        var jqxhr = populateDivFromService(
+            '/id/expeditionService/configurationAsTable/' + expeditionId,
+            divId,
+            'Unable to load this expedition\'s configuration from server.');
         loadingDialog(jqxhr);
     }
 }

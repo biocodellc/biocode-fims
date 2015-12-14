@@ -625,7 +625,8 @@ public class expeditionMinter {
             expeditionMinter expedition = new expeditionMinter();
             //System.out.println(expedition.getGraphMetadata("_qNK_fuHVbRSTNvA_8pG.xlsx"));
            System.out.println("starting ...");
-            System.out.println(expedition.listExpeditionsAsTable(9,"trizna"));
+//            System.out.println(expedition.listExpeditionsAsTable(9,"trizna"));
+            System.out.println(expedition.listExpeditionDatasetsAsTable(30));
             System.out.println("ending ...");
             //System.out.println(expedition.listExpeditions(8,"mwangiwangui25@gmail.com"));
             //expedition.checkExpeditionCodeValid("JBD_foo-))");
@@ -779,6 +780,72 @@ public class expeditionMinter {
         return sb.toString();
     }
 
+   /**
+     * Return an HTML table of an expedition's configuration
+     *
+     * @param expeditionId
+     *
+     * @return
+     */
+    public String listExpeditionConfigurationAsTable(Integer expeditionId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<table>\n");
+        sb.append("\t<tbody>\n");
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT max(d.ts), d.prefix, e.public, e.expedition_code, e.project_id " +
+                    "FROM datasets d, expeditionsBCIDs eB, expeditions e " +
+                    "WHERE d.datasets_id = eB.datasets_id && eB.expedition_id = e.expedition_id && e.expedition_id = ? and " +
+                    "d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, expeditionId);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+
+                sb.append("\t<tr>\n");
+                sb.append("\t\t<td>");
+                sb.append("Persistent Identifier:");
+                sb.append("\t\t</td>\n");
+                sb.append("\t\t<td>");
+                sb.append(rs.getString("d.prefix"));
+                sb.append("\t\t</td>\n");
+                sb.append("\t</tr>\n");
+
+                sb.append("\t<tr>\n");
+                sb.append("\t\t<td>");
+                sb.append("Public Expedition:");
+                sb.append("\t\t</td>");
+                sb.append("\t\t<td>");
+                if (rs.getBoolean("e.public")) {
+                    sb.append("yes");
+                } else {
+                    sb.append("no");
+                }
+                sb.append("&nbsp;&nbsp;");
+                sb.append("<a href='#' onclick=\"editDataset('");
+                sb.append(rs.getInt("e.project_id"));
+                sb.append("', '");
+                sb.append(rs.getString("e.expedition_code"));
+                sb.append("', this)\">edit</a>");
+                sb.append("\t\t</td>");
+                sb.append("\t</tr>\n");
+            }
+        } catch (SQLException e) {
+            throw new ServerErrorException(e);
+        } finally {
+            db.close(stmt, rs);
+        }
+
+        sb.append("\t</tbody>\n");
+        sb.append("</table>\n");
+        return sb.toString();
+    }
+
     /**
      * Return an HTML table of an expedition's resources
      *
@@ -789,8 +856,9 @@ public class expeditionMinter {
     public String listExpeditionResourcesAsTable(Integer expeditionId) {
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n");
+        sb.append("\t<tbody>\n");
         sb.append("\t<tr>\n");
-        sb.append("\t\t<th>BCID</th>\n");
+        sb.append("\t\t<th>Resource ID</th>\n");
         sb.append("\t\t<th>Resource Type</th>\n");
         sb.append("\t</tr>\n");
 
@@ -842,6 +910,7 @@ public class expeditionMinter {
             db.close(stmt, rs);
         }
 
+        sb.append("\t</tbody>\n");
         sb.append("</table>\n");
         return sb.toString();
     }
@@ -854,52 +923,68 @@ public class expeditionMinter {
      * @return
      */
     public String listExpeditionDatasetsAsTable(Integer expeditionId) {
+        String serviceRoot = sm.retrieveValue("fims_service_root");
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n");
         sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Web Address</th>\n");
-        sb.append("\t\t<th>Timestamp</th>\n");
+        sb.append("\t\t<th>Date</th>\n");
+        sb.append("\t\t<th>Download</th>\n");
         sb.append("\t</tr>\n");
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT d.ts, d.webaddress, d.resourceType " +
-                    "FROM datasets d, expeditionsBCIDs e " +
-                    "WHERE d.datasets_id = e.datasets_id && e.expedition_id = ? " +
+            String sql = "SELECT d.ts, d.webaddress, d.graph, e.project_id " +
+                    "FROM datasets d, expeditionsBCIDs eB, expeditions e " +
+                    "WHERE d.datasets_id = eB.datasets_id && eB.expedition_id = ? && e.expedition_id = eB.expedition_id " +
+                    "AND d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
                     "ORDER BY d.ts DESC";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, expeditionId);
 
-            ResourceTypes rt = new ResourceTypes();
-
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String rtString;
-                ResourceType resourceType = rt.get(rs.getString("d.resourceType"));
-                if (resourceType != null) {
-                    rtString = resourceType.string;
-                } else {
-                    rtString = rs.getString("d.resourceType");
-                }
+                String webaddress = rs.getString("d.webaddress");
 
-                // if the resourceType is a dataset, add it to the table
-                if (rtString.toLowerCase().contains("dataset")) {
+                sb.append("\t<tr>\n");
+                sb.append("\t\t<td>");
+                sb.append(rs.getTimestamp("d.ts").toString());
+                sb.append("\t\t</td>");
 
-                    String webaddress = rs.getString("d.webaddress");
+                // Excel option
+                sb.append("\t\t<td class='align_center'>");
+                sb.append("<a href='");
+                sb.append(serviceRoot);
+                sb.append("query/excel?graphs=");
+                sb.append(rs.getString("graph"));
+                sb.append("&project_id=");
+                sb.append(rs.getString("project_id"));
+                sb.append("'>.xlsx</a>");
 
-                    sb.append("\t<tr>\n");
-                    sb.append("\t\t<td><a href=\"");
-                    sb.append(webaddress);
-                    sb.append("\">");
-                    sb.append(webaddress);
-                    sb.append("</a></td>\n");
-                    sb.append("</td>\n");
-                    sb.append("\t\t<td>");
-                    sb.append(rs.getTimestamp("d.ts").toString());
-                    sb.append("\t</tr>\n");
-                }
+                sb.append("&nbsp;&nbsp;");
+
+                // TAB delimited option
+                sb.append("<a href='");
+                sb.append(serviceRoot);
+                sb.append("query/tab?graphs=");
+                sb.append(rs.getString("graph"));
+                sb.append("&project_id=");
+                sb.append(rs.getString("project_id"));
+                sb.append("'>.txt</a>");
+
+                sb.append("&nbsp;&nbsp;");
+
+                // n3 option
+                sb.append("<a href='");
+                sb.append(webaddress);
+                sb.append("'>n3</a>");
+
+                sb.append("&nbsp;&nbsp;");
+                sb.append("&nbsp;&nbsp;");
+
+                sb.append("\t\t</td>");
+                sb.append("\t</tr>\n");
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);

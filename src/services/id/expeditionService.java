@@ -323,6 +323,30 @@ public class expeditionService {
         return Response.ok(response).build();
     }
 
+   /**
+     * Service to retrieve an expedition's configuration as an HTML table.
+     *
+     * @param expeditionId
+     *
+     * @return
+     */
+    @GET
+    @Path("configurationAsTable/{expedition_id}")
+    @Produces(MediaType.TEXT_HTML)
+    public Response listConfigurationAsTable(@PathParam("expedition_id") Integer expeditionId) {
+        HttpSession session = request.getSession();
+        Object username = session.getAttribute("user");
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to view this expedition's datasets.");
+        }
+
+        expeditionMinter e = new expeditionMinter();
+        String results = e.listExpeditionConfigurationAsTable(expeditionId);
+        e.close();
+        return Response.ok(results).build();
+    }
+
     /**
      * Service to retrieve an expedition's datasets as an HTML table.
      *

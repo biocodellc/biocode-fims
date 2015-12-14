@@ -787,9 +787,10 @@ function projectToggle(id) {
 // function to edit a dataset
 function editDataset(project_id, expedition_code, e) {
     var currentPublic;
-    var title = "Editing " + $(e.parentElement).siblings()[0].textContent;
+    var searchId = $(e).closest("div")[0].id.replace("-configuration", "");
+    var title = "Editing " + $("a#" + searchId)[0].textContent.trim();
 
-    if ($(e.parentElement).siblings()[1].textContent == "yes") {
+    if (e.parentElement.textContent.startsWith("yes")) {
         currentPublic = true;
     } else {
         currentPublic = false;

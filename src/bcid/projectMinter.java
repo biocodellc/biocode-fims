@@ -247,7 +247,8 @@ public class projectMinter {
         // See if the user owns this expedition or no
         projectMinter project = new projectMinter();
         //System.out.println(project.listProjects());
-        System.out.println("datasets = \n" + project.getMyTemplatesAndDatasets("demo"));
+//        System.out.println("datasets = \n" + project.getMyTemplatesAndDatasets("demo"));
+        System.out.println("datasets = \n" + project.getMyLatestGraphs("demo"));
         project.close();
     }
 
