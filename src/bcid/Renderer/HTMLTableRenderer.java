@@ -6,7 +6,7 @@ package bcid.Renderer;
 public class HTMLTableRenderer extends Renderer {
 
     public void enter() {
-        outputSB.append("<h2>" + identifier.identifier + "</h2>\n\n");
+        outputSB.append("<h1>" + identifier.identifier + "</h1>\n\n");
         outputSB.append("<table>\n");
         outputSB.append("\t<tr>\n" +
                 "\t\t<th>Description</th>\n" +
@@ -36,7 +36,7 @@ public class HTMLTableRenderer extends Renderer {
 
     public boolean validIdentifier() {
         if (identifier == null) {
-            outputSB.append("<h2>Unable to find identifier</h2>");
+            outputSB.append("<h1>Unable to find identifier</h1>");
             return false;
         } else {
             return true;

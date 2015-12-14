@@ -21,7 +21,7 @@
         return;
     }
 
-    $.getJSON("rest/utils/getMapboxToken", function(data) {
+    $.getJSON("/biocode-fims/rest/utils/getMapboxToken", function(data) {
         L.mapbox.accessToken = data.accessToken;
     }).fail(function() {
         console.log("Failed to retrieve mapbox accessToken. Mapping features will not work.");
