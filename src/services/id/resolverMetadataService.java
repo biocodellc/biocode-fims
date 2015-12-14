@@ -86,12 +86,9 @@ public class resolverMetadataService {
             // This next section uses the Jersey Viewable class, which is a type of Model, View, Controller
             // construct, enabling us to pass content JSP code to a JSP template.  We do this in this section
             // so we can have a REST style call and provide human readable content with BCID header/footer
-            Map<String, Object> map = new HashMap<String, Object>();
             String response = r.printMetadata(new HTMLTableRenderer());
             r.close();
-            map.put("response", response);
-            return Response.ok(new Viewable("/index", map)).build();
-            //return Response.ok(response).build();
+            return Response.ok(response).build();
         }
     }
 }

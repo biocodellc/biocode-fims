@@ -160,7 +160,12 @@ function populateSelect(a) {
 
 // Take the resolver results and populate a table
 function resolverResults() {
-    window.location.replace("/id/" + $("#identifier").val());
+    $.get("/id/" + $("#identifier").val()).done(function(data) {
+        $("#results").html(data);
+    }).fail(function(jqxhr) {
+//        if (jqxhr.statusCode)
+        $("#results").html("Failed to retrieve identifier information.");
+    });
 }
 
 function getQueryParam(sParam) {

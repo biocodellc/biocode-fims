@@ -141,5 +141,17 @@ public class BCIDMetadataSchema {
             tempKey = tempKey.replace("bsc:", "http://biscicol.org/terms/index.html#");
             return tempKey;
         }
+
+        /**
+         * Return the human readable name of the uri if possible
+         * @return
+         */
+        public String getShortValue() {
+            String[] splitValue = value.split("/");
+            if (splitValue.length > 0) {
+                return splitValue[splitValue.length - 1];
+            }
+            return value;
+        }
     }
 }

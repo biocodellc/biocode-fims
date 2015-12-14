@@ -341,3 +341,21 @@ dd { margin: 0; padding: 0; display: none }
 .align_center {
   text-align: center;
 }
+
+div.sectioncontent.row {
+    padding-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+/*
+* table styling
+*/
+
+td {
+    padding: 2px 8px;
+}
+
+th {
+    padding: 2px 8px;
+    text-align: center;
+}

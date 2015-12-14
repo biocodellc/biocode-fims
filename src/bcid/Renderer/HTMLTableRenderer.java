@@ -6,7 +6,8 @@ package bcid.Renderer;
 public class HTMLTableRenderer extends Renderer {
 
     public void enter() {
-        outputSB.append("<h1>" + identifier.identifier + "</h1>\n\n");
+        outputSB.append("<h1>" + identifier.identifier + " is a <a href=\"" + resource.getValue() + "\">" +
+                resource.getShortValue() + "</a></h1>\n\n");
         outputSB.append("<table>\n");
         outputSB.append("\t<tr>\n" +
                 "\t\t<th>Description</th>\n" +

@@ -1,25 +1,24 @@
 <%@ include file="header-home.jsp" %>
 
 <div id="resolver" class="section">
-    <div class="sectioncontent">
+    <div class="sectioncontent row">
 
         <h1>Lookup</h1>
 
         <form>
             <table border=0>
             <tr>
-                <td align=right>Identifier</td>
-                <td align=left>
+                <td>Identifier</td>
+                <td>
                     <input
                         type=text
                         name="identifier"
                         id="identifier"
+                        placeholder="ark:/21547/R2MBIO56"
                         size="40"
-                        onkeypress="if(event.keyCode==13) {resolverResults(); return false;}" />  (e.g. ark:/21547/R2MBIO56)
+                        onkeypress="if(event.keyCode==13) {resolverResults(); return false;}" />
                 </td>
-            </tr>
-            <tr>
-                <td colspan=2>
+                <td>
                     <input
                         type="button"
                         onclick="resolverResults();"
@@ -31,6 +30,7 @@
         </form>
 
     </div>
+    <div class="sectioncontent row" id="results"></div>
 </div>
 
 <script>
