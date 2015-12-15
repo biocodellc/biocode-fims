@@ -280,7 +280,13 @@ public class process {
                 processController.appendStatus(s);
                 fimsPrinter.out.println(s);
                 // Create the entity BCID
-                String bcid = createEntityBCID("", entity.getConceptAlias());
+
+                // Mint the data group
+                dataGroupMinter minterDataset = new dataGroupMinter(true);
+
+                minterDataset.createEntityBCID(processController.getUser_id(), entity.getConceptAlias(), "", null, false);
+                String bcid = minterDataset.getPrefix();
+                minterDataset.close();
                 // Associate this identifier with this expedition
                 expedition.attachReferenceToExpedition(processController.getExpeditionCode(), bcid, processController.getProject_id());
 
@@ -291,36 +297,6 @@ public class process {
         return true;
 
 
-    }
-
-    /**
-     * convience method for calling createEntityBCID when the user_id is stored in the process controller
-      * @param webaddress
-     * @param resourceAlias
-     * @return
-     */
-    public String createEntityBCID(String webaddress, String resourceAlias) {
-        return createEntityBCID(webaddress, resourceAlias, processController.getUser_id());
-    }
-
-    /**
-     * Create BCIDs corresponding to expedition entities
-     *
-     * @return
-     */
-    public String createEntityBCID(String webaddress, String resourceAlias, Integer user_id) {
-        if (user_id == null) {
-            throw new UnauthorizedRequestException("You must be logged in to create a bcid");
-        }
-
-        // Mint the data group
-        dataGroupMinter minterDataset = new dataGroupMinter(true);
-
-        minterDataset.createDatasetBCID(user_id, resourceAlias, webaddress, null, false);
-        String prefix = minterDataset.getPrefix();
-        minterDataset.close();
-
-        return prefix;
     }
 
     /**

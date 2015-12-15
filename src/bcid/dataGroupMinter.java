@@ -802,7 +802,15 @@ public class dataGroupMinter extends dataGroupEncoder {
         return sb.toString();
     }
 
-    public void createDatasetBCID(int user_id, String resourceTypeString, String webaddress, String graph, Boolean finalCopy) {
+    /**
+     * create bcid's corresponding to expeditions
+     * @param user_id
+     * @param resourceTypeString
+     * @param webaddress
+     * @param graph
+     * @param finalCopy
+     */
+    public void createEntityBCID(int user_id, String resourceTypeString, String webaddress, String graph, Boolean finalCopy) {
 
         mint(
                 new Integer(sm.retrieveValue("bcidNAAN")),

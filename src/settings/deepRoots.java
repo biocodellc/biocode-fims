@@ -1,12 +1,10 @@
 package settings;
 
+import bcid.dataGroupMinter;
 import bcid.expeditionMinter;
 import digester.Entity;
-import org.jsoup.Jsoup;
 import run.process;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -148,7 +146,13 @@ public class deepRoots {
         fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
         // Create the entity BCID
         process p = new process();
-        bcid = p.createEntityBCID("", entity.getConceptAlias(), user_id);
+
+        // Mint the data group
+        dataGroupMinter minterDataset = new dataGroupMinter(true);
+
+        minterDataset.createEntityBCID(user_id, entity.getConceptAlias(), "", null, false);
+        bcid = minterDataset.getPrefix();
+        minterDataset.close();
         // Associate this identifier with this expedition
         expeditionMinter expedition = new expeditionMinter();
         expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);

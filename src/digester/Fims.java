@@ -3,9 +3,6 @@ package digester;
 import bcid.dataGroupMinter;
 import bcid.expeditionMinter;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.rdf.model.*;
-//import com.sun.javaws.security.Resource;
 import fims.fimsModel;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
@@ -68,8 +65,8 @@ public class Fims implements RendererInterface {
         uploader.execute();
 
         dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-        dataGroupMinter.createDatasetBCID(processController.getUser_id(), "1", uploader.getEndpoint(),
-                uploader.getGraphID(), false);
+        dataGroupMinter.createEntityBCID(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
+                uploader.getEndpoint(), uploader.getGraphID(), false);
         bcid = dataGroupMinter.getPrefix();
         dataGroupMinter.close();
         // Create the BCID to use for upload service

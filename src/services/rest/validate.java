@@ -361,7 +361,8 @@ public class validate {
         // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
         // Create a dataset BCID
         dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-        dataGroupMinter.createDatasetBCID(userId, "1", null, inputFile.getName(), processController.getFinalCopy());
+        dataGroupMinter.createEntityBCID(userId, "http://purl.org/dc/dcmitype/Dataset", null, inputFile.getName(),
+                processController.getFinalCopy());
         String datasetArk = dataGroupMinter.getPrefix();
         dataGroupMinter.close();
 
