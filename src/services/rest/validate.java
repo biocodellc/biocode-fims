@@ -362,7 +362,7 @@ public class validate {
         // Create a dataset BCID
         dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
         dataGroupMinter.createEntityBCID(userId, "http://purl.org/dc/dcmitype/Dataset", null, inputFile.getName(),
-                processController.getFinalCopy());
+                null, processController.getFinalCopy());
         String datasetArk = dataGroupMinter.getPrefix();
         dataGroupMinter.close();
 

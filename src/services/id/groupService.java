@@ -112,7 +112,7 @@ public class groupService {
         // Mint the data group
         dataGroupMinter minterDataset = new dataGroupMinter(suffixPassthrough);
 
-        minterDataset.createEntityBCID(user_id, resourceTypeString, webaddress, graph, finalCopy);
+        minterDataset.createEntityBCID(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
 
         String datasetPrefix = minterDataset.getPrefix();
         minterDataset.close();

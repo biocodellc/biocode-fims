@@ -150,7 +150,7 @@ public class deepRoots {
         // Mint the data group
         dataGroupMinter minterDataset = new dataGroupMinter(true);
 
-        minterDataset.createEntityBCID(user_id, entity.getConceptAlias(), "", null, false);
+        minterDataset.createEntityBCID(user_id, entity.getConceptAlias(), "", null, null, false);
         bcid = minterDataset.getPrefix();
         minterDataset.close();
         // Associate this identifier with this expedition

@@ -810,7 +810,8 @@ public class dataGroupMinter extends dataGroupEncoder {
      * @param graph
      * @param finalCopy
      */
-    public void createEntityBCID(int user_id, String resourceTypeString, String webaddress, String graph, Boolean finalCopy) {
+    public void createEntityBCID(int user_id, String resourceTypeString, String webaddress, String graph, String doi,
+                                 Boolean finalCopy) {
 
         mint(
                 new Integer(sm.retrieveValue("bcidNAAN")),
@@ -819,7 +820,7 @@ public class dataGroupMinter extends dataGroupEncoder {
                 doi,
                 webaddress,
                 graph,
-                title,
+                resourceTypeString,
                 finalCopy
         );
 

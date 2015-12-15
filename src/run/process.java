@@ -284,7 +284,7 @@ public class process {
                 // Mint the data group
                 dataGroupMinter minterDataset = new dataGroupMinter(true);
 
-                minterDataset.createEntityBCID(processController.getUser_id(), entity.getConceptAlias(), "", null, false);
+                minterDataset.createEntityBCID(processController.getUser_id(), entity.getConceptAlias(), "", null, null, false);
                 String bcid = minterDataset.getPrefix();
                 minterDataset.close();
                 // Associate this identifier with this expedition

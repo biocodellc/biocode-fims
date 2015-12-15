@@ -66,7 +66,7 @@ public class Fims implements RendererInterface {
 
         dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
         dataGroupMinter.createEntityBCID(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
-                uploader.getEndpoint(), uploader.getGraphID(), false);
+                uploader.getEndpoint(), uploader.getGraphID(), null, false);
         bcid = dataGroupMinter.getPrefix();
         dataGroupMinter.close();
         // Create the BCID to use for upload service

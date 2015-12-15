@@ -101,8 +101,17 @@ public class expeditionMinter {
 
             insertStatement.execute();
 
-            // Get the datasets_id that was assigned
+            // Get the expedition_id that was assigned
             expedition_id = getExpeditionIdentifier(internalID);
+
+            // upon successful expedition creation, create the expedition bcid
+            dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
+            dataGroupMinter.createEntityBCID(users_id, "http://purl.org/dc/dcmitype/Collection", null, null, null, false);
+
+            // Associate this identifier with this expedition
+            expeditionMinter expedition = new expeditionMinter();
+            expedition.attachReferenceToExpedition(expedition_id, dataGroupMinter.getPrefix());
+            dataGroupMinter.close();
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
@@ -125,6 +134,11 @@ public class expeditionMinter {
         Integer datasetsId = r.getDataGroupID();
         r.close();
 
+        attachReferenceToExpedition(expedition_id, datasetsId);
+    }
+
+    private void attachReferenceToExpedition(Integer expedition_id, Integer datasetsId) {
+
         String insertString = "INSERT INTO expeditionsBCIDs " +
                 "(expedition_id, datasets_id) " +
                 "values (?,?)";
@@ -140,6 +154,20 @@ public class expeditionMinter {
         } finally {
             db.close(insertStatement, null);
         }
+    }
+
+    /**
+     * Attach an individual URI reference to a expedition
+     *
+     * @param expedition_id
+     * @param bcid
+     */
+    public void attachReferenceToExpedition(Integer expedition_id, String bcid) {
+        resolver r = new resolver(bcid);
+        Integer datasetsId = r.getDataGroupID();
+        r.close();
+
+        attachReferenceToExpedition(expedition_id, datasetsId);
     }
 
     /**
