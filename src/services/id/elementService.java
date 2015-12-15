@@ -68,12 +68,11 @@ public class elementService {
     @Path("/select/{select}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response jsonSelectOptions(@PathParam("select") String select) {
+        ResourceTypes rts = new ResourceTypes();
 
         if (select.equalsIgnoreCase("resourceTypes")) {
-            ResourceTypes rts = new ResourceTypes();
             return Response.ok(rts.getAllAsJSON()).build();
         } else if (select.equalsIgnoreCase("resourceTypesMinusDataset")) {
-            ResourceTypes rts = new ResourceTypes();
             return Response.ok(rts.getAllButDatasetAsJSON()).build();
         } else {
             throw new BadRequestException("Invalid value. Must be either resourceTypes or resourceTypesMinusDataset");

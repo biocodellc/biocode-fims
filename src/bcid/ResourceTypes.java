@@ -78,6 +78,8 @@ public class ResourceTypes {
     public static int NUCLEICACIDSEQUENCESOURCE = 36;
     public static int SEQUENCING = 37;
 
+    public static int COLLECTION = 38;
+
 
     public ResourceTypes() {
         list.clear();
@@ -138,6 +140,9 @@ public class ResourceTypes {
         // Sequencing Terms
         list.add(new ResourceType(this.NUCLEICACIDSEQUENCESOURCE, "mixs:NucleicAcidSequenceSource", "http://gensc.org/ns/mixs/NucleicAcidSequenceSource", "The category of information pertaining to nucleic acid sequence source."));
         list.add(new ResourceType(this.SEQUENCING, "mixs:Sequencing", "http://gensc.org/ns/mixs/Sequencing", "The category of information pertaining to sequencing."));
+
+        // Additional DCMI Resource Type
+        list.add(new ResourceType(this.COLLECTION, "dctype:Dataset", "http://purl.org/dc/dcmitype/Collection", "An aggregation of resources."));
 
 
     }
