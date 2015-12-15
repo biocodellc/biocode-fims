@@ -1,5 +1,6 @@
 package settings;
 
+import bcid.expeditionMinter;
 import fimsExceptions.FIMSRuntimeException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -32,16 +33,11 @@ public class deepRootsReader {
     private static Logger logger = LoggerFactory.getLogger(deepRootsReader.class);
 
     public deepRoots createRootData(Integer user_id, Integer project_id, String expedition_code) {
-        SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
-        String deeproots_uri = sm.retrieveValue("deeproots_uri");
-
-//        String url = "http://biscicol.org:8080/id/expeditionService/deepRoots/" + project_id + "/" + expedition_code;
-        String url = deeproots_uri + project_id + "/" + expedition_code;
-
         try {
-            // Read file into String variable
-            String json = readFile(new URL(url));
+            // Get deepLinks json object
+            expeditionMinter expeditionMinter = new expeditionMinter();
+            String json = expeditionMinter.getDeepRoots(expedition_code, project_id);
+            expeditionMinter.close();
             // Create the deepLinks.rootData Class
             deepRoots rootData = new deepRoots(user_id, project_id, expedition_code);
             // Create the Hashmap to store in the deepLinks.rootData class
@@ -79,51 +75,9 @@ public class deepRootsReader {
             // Assign the actual data to the deepLinks.rootData element
 
             return rootData;
-        } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
         } catch (URISyntaxException e) {
             throw new FIMSRuntimeException(500, e);
         }
-    }
-
-    /**
-     * Read the file and return as a String representation
-     *
-     * @param url
-     * @return
-     */
-    protected String readFile(URL url) {
-        String everything;
-        InputStream is = null;
-        try {
-            is = url.openStream();
-        } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
-        }
-
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(is));
-        try {
-
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append('\n');
-                line = br.readLine();
-            }
-            everything = sb.toString();
-        } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
-        } finally {
-            try {
-                br.close();
-            } catch (IOException e) {
-                logger.warn("IOException", e);
-            }
-        }
-        return everything;
     }
 
     /**
