@@ -24,14 +24,6 @@ function expeditionCreatorSubmit() {
     results(posting,"#expeditionCreatorResults");
 }
 
-/** Process submit button for Creator **/
-function creatorSubmit() {
-    $( "#creatorResults" ).html( "Processing ..." );
-    /* Send the data using post */
-    var posting = $.post( "/id/elementService/creator", $("#localIDMinterForm").serialize() );
-    results(posting, "#creatorResults");
-}
-
 /** Generic way to display results from creator functions, relies on standardized JSON **/
 function results(posting, a) {
     // Put the results in a div

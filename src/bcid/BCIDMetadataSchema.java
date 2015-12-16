@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Metadata Schema for Describing an identifier --
- * These are the metadata elements building blocks that we can use to express this identifier either via RDF or HTML
- * and consequently forms the basis of what the "outside" world sees about the identifiers.
+ * Metadata Schema for Describing a bcid--
+ * These are the metadata elements building blocks that we can use to express this bcid either via RDF or HTML
+ * and consequently forms the basis of what the "outside" world sees about the bcids.
  * This class is used by Renderers to structure content.
  */
 public class BCIDMetadataSchema {

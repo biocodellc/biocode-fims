@@ -1,29 +1,18 @@
 package services.id;
 
 import bcid.ResourceTypes;
-import bcid.dataGroupMinter;
-import bcid.database;
-import bcid.elementMinter;
-import bcid.inputFileParser;
 import fimsExceptions.BadRequestException;
-import fimsExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
-import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 /**
  * REST interface for creating elements, to be called from the interface or other consuming applications.
@@ -33,8 +22,6 @@ public class elementService {
 
     @Context
     static ServletContext context;
-    static String bcidShoulder;
-    static String doiShoulder;
     static SettingsManager sm;
     private static Logger logger = LoggerFactory.getLogger(elementService.class);
 
@@ -105,7 +92,7 @@ public class elementService {
      * @param request
      * @return
      */
-    @POST
+   /* @POST
     @Path("/creator")
     @Produces(MediaType.APPLICATION_JSON)
     public Response creator(@FormParam("datasetList") Integer dataset_id,
@@ -202,7 +189,7 @@ public class elementService {
                     "New Elements From " + username,
                     returnVal);
             sendEmail.start();
-            */
+
             dataset.close();
             minter.close();
             return Response.ok(returnVal).build();
@@ -215,5 +202,5 @@ public class elementService {
             minter.close();
             throw new ServerErrorException("Server Error", "IOException while parsing input file: " + data, e);
         }
-    }
+    }*/
 }

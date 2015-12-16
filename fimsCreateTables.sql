@@ -55,27 +55,6 @@ CREATE TABLE `datasets` (
   CONSTRAINT `FK_dataset_users`  FOREIGN KEY (`users_id`) REFERENCES `users` (`USER_ID`)
 ) ENGINE=Innodb DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `identifiers`;
-
-CREATE TABLE `identifiers` (
-  `identifiers_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Internal ID assigned to all BCIDs whether they are UUIDs, new IDs, or non-EZID requests',
-  `ezidMade` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indicates if EZID has been made',
-  `ezidRequest` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'indicates if we want system to request EZID to be made here',
-  `localid` varchar(255) COMMENT 'localID -- user specified (can be a UUID)',
-  `webaddress` text  COLLATE utf8_bin COMMENT 'the target URL -- user specified',
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'timestamp of insertion',
-  `loadedSetUUID` char(36) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'a UUID that is common to all of the identifiers loaded at one time',
-  `datasets_id` int NOT NULL COMMENT 'The set of data that this identifier belongs to',
-  UNIQUE KEY `identifiers_identifiers_id_idx` (`identifiers_id`),
-  KEY `identifiers_loadedSetUUID_idx` (`loadedSetUUID`),
-  KEY `identifiers_datasets_idx` (`datasets_id`),
-  -- COMMENT 'make sure that localid columns are unique within a dataset'
-  UNIQUE   `identifiers_localid_datasets_id_idx` (`localid`,`datasets_id`),
-  CONSTRAINT `FK_identifiers_datasets` FOREIGN KEY(`datasets_id`) REFERENCES `datasets` (`datasets_id`)
-) ENGINE=Innodb DEFAULT CHARSET=utf8;
-
-
-
 DROP TABLE IF EXISTS `expeditions`;
 
 CREATE TABLE `expeditions` (

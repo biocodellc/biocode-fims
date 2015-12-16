@@ -1,13 +1,12 @@
 package bcid;
 
-import fimsExceptions.FIMSException;
 import fimsExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.SettingsManager;
 
-import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.PreparedStatement;
@@ -21,12 +20,26 @@ import java.util.Iterator;
  * Class to work with EZID creation from the bcid database.  requests to this class are controlled by
  * switches in the database indicating whether the intention is to create EZIDS for particular identifiers.
  */
-public class manageEZID extends elementMinter {
+public class manageEZID extends dataGroupMinter {
 
+    private String publisher;
+    private String creator;
     private static Logger logger = LoggerFactory.getLogger(manageEZID.class);
 
     public manageEZID() {
         super();
+        SettingsManager sm = SettingsManager.getInstance();
+        sm.loadProperties();
+
+        publisher = sm.retrieveValue("publisher");
+        if (publisher == null || publisher.trim().equalsIgnoreCase("")) {
+            publisher = "Biocode FIMS System";
+        }
+
+        creator = sm.retrieveValue("creator");
+        if (creator.trim().equalsIgnoreCase("")) {
+            creator = null;
+        }
     }
 
     public HashMap<String, String> ercMap(String target, String what, String who, String when) {
@@ -84,9 +97,8 @@ public class manageEZID extends elementMinter {
             rs.next();
 
             // Get creator, using any system defined creator to override the default which is based on user data
-            String creator = rs.getString("creator");
-            if (this.getCreator() != null) {
-                creator = this.getCreator();
+            if (creator == null) {
+                creator = rs.getString("creator");
             }
 
             // Build the hashmap to pass to ezid
@@ -94,7 +106,7 @@ public class manageEZID extends elementMinter {
                     resolverTargetPrefix + rs.getString("prefix"),
                     creator,
                     rs.getString("title"),
-                    this.getPublisher(),
+                    publisher,
                     rs.getString("ts"),
                     rs.getString("type"));
             map.put("_profile", "dc");
@@ -153,9 +165,8 @@ public class manageEZID extends elementMinter {
                 URI identifier = null;
 
                 // Get creator, using any system defined creator to override the default which is based on user data
-                String creator = rs.getString("creator");
-                if (this.getCreator() != null) {
-                    creator = this.getCreator();
+                if (creator == null) {
+                    creator = rs.getString("creator");
                 }
 
                 // Dublin Core metadata profile element
@@ -163,7 +174,7 @@ public class manageEZID extends elementMinter {
                         resolverTargetPrefix + rs.getString("prefix"),
                         creator,
                         rs.getString("title"),
-                        this.getPublisher(),
+                        publisher,
                         rs.getString("ts"),
                         rs.getString("type"));
                 map.put("_profile", "dc");
@@ -204,97 +215,9 @@ public class manageEZID extends elementMinter {
             updateEZIDMadeField(idSuccessList, "datasets");
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "It appears we have created " + idSuccessList.size() +
-                    " EZIDs but not able to update the identifiers table", e);
+                    " EZIDs but not able to update the datasets table", e);
         }
 
-    }
-
-    /**
-     * Go through identifier table and create any ezid fields that have yet to be created.
-     * This method is meant to be called via a cronjob on the backend.
-     * <p/>
-     * In cases where suffixPassthrough = false then use the "id" field of the table itself to generate the identifier
-     * In cases where suffixPassthrough = true then just pass the uuid that is stored to generate the identifier
-     * TODO: throw a special exception on this method so we can follow up why EZIDs are not being made if that is the
-     * case
-     *
-     * @param ezid
-     *
-     * @throws java.net.URISyntaxException
-     */
-    public void createIdentifiersEZIDs(EZIDService ezid) throws URISyntaxException {
-        // Grab a row where ezid is false
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        ArrayList<String> idSuccessList = new ArrayList();
-        try {
-            String sql = "SELECT identifiers_id,webaddress,localid,what,suffixPassthrough " +
-                    "FROM identifiers " +
-                    "WHERE !ezidMade && ezidRequest " +
-                    "LIMIT 1000";
-            stmt = conn.prepareStatement(sql);
-            rs = stmt.executeQuery();
-
-            // Attempt to create an EZID for this row
-            while (rs.next()) {
-                URI identifier = null;
-                HashMap<String, String> map = new HashMap<String, String>();
-                map.put("_profile", "erc");
-
-                if (rs.getString("webaddress") == null) {
-                    map.put("_target", "");
-                } else {
-                    map.put("_target", rs.getString("webaddress"));
-                }
-                map.put("erc.what", rs.getString("what"));
-                //TODO: put the correct who here
-                //map.put("erc.who", who.toString());
-                // when here is very confusing
-                //map.put("erc.when", new dates().now());
-                String idString = rs.getString("id");
-                idSuccessList.add(idString);
-
-
-                String myIdentifier = "";
-                // If this is the uuid case
-                if (rs.getBoolean("suffixPassthrough")) {
-                    try {
-                        myIdentifier = this.createUUIDARK(rs.getString("localID"));
-                    } catch (FIMSException e) {
-                        // TODO: special exception to handle for unable to create this identifier
-                        //TODO should we silence this exception?
-                        logger.warn("FIMSException thrown.", e);
-                    }
-                    // If this is not tagged as a uuid
-                } else {
-                    myIdentifier = new elementEncoder(prefix).encode(new BigInteger(idString));
-                }
-                System.out.println("here is the ID being created ... " + myIdentifier);
-                identifier = new URI(ezid.createIdentifier(myIdentifier, map));
-
-                // This is just for printing out stuff, probably not necessary
-                if (identifier != null) {
-                    idSuccessList.add(idString);
-                    System.out.println("  " + identifier.toString());
-                } else {
-                    // Send email, or notify somehow in logs that this threw an error
-                    System.out.println("Something happened in creating the EZID identifier, it appears to be null");
-                }
-
-            }
-        } catch (SQLException e) {
-            throw new ServerErrorException(e);
-        } catch (EZIDException e) {
-            throw new URISyntaxException("trouble minting identifier with EZID service", null);
-        } finally {
-            db.close(stmt, rs);
-            try {
-                updateEZIDMadeField(idSuccessList, "identifiers");
-            } catch (SQLException e) {
-                throw new ServerErrorException("Server Error", "It appears we have created " + idSuccessList.size() +
-                        " EZIDs but not able to update the identifiers table");
-            }
-        }
     }
 
     /**

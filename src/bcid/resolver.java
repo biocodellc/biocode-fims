@@ -232,27 +232,6 @@ public class resolver extends database {
     }
 
     /**
-     * Determine if this ARK has a matching localID
-     *
-     * @return
-     */
-    /* private boolean isLocalID() {
-     String select = "SELECT identifiers_id FROM identifiers " +
-             "where i.localid = " + ark;
-     Statement stmt = null;
-     try {
-         stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(select);
-         rs.next();
-         // TODO: enable returning multiple possible identifiers here
-         element_id = new BigInteger(rs.getString("identifiers_id"));
-         return true;
-     } catch (SQLException e) {
-         return false;
-     }
- }   */
-
-    /**
      * Resolve an EZID version of this ARK
      *
      * @param ezidService
@@ -377,93 +356,6 @@ public class resolver extends database {
         }
         return project_id;
     }
-
-    /**
-     * Tell us if this ARK is a BCID that has an individually resolvable suffix.  This means that the user has
-     * registered the identifier and provided a specific target URL
-     *
-     * @return
-     */
-    private boolean isResolvableSuffix(Integer d) {
-        // Only attempt this method if the suffix has some content, else we know there is no suffix
-        if (suffix != null && !suffix.equals("")) {
-            // Establish database connection so we can lookup suffixes here
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            try {
-                String select = "SELECT identifiers_id FROM identifiers where datasets_id = " + d + " && localid = ?";
-                stmt = conn.prepareStatement(select);
-                stmt.setString(1, suffix);
-                rs = stmt.executeQuery();
-                rs.next();
-                element_id = new BigInteger(rs.getString("identifiers_id"));
-            } catch (SQLException e) {
-                throw new ServerErrorException(e);
-            } finally {
-                close(stmt, rs);
-            }
-        }
-        if (element_id == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Tell us if this ARK is a BCID by decoding the ARK itself and determining if we can
-     * assign an integer to it.  This then is a native BCID that uses character encoding.
-     *
-     * @return
-     */
-    /*  private boolean isElement(int datasets_id) {
-
-         String bow = scheme + "/" + naan + "/";
-         String prefix = bow + shoulder;
-         // if prefix and ark the same then just return false!
-         if (prefix.equals(ark)) {
-             return false;
-         }
-         BigInteger bigInt = null;
-
-         // Look at Check Digit, a BCID should validate here... if the check-digit doesn't work its not a BCID
-         // We do the check-digit function first since this is faster than looking it up in the database and
-         // if it is bad, we will know right away.
-         try {
-             bigInt = new elementEncoder(prefix).decode(ark);
-         } catch (Exception e) {
-             return false;
-         }
-
-         // Now, see if this exists in the database
-         try {
-             element_id = bigInt;
-             // First test is to see if this is a valid number
-             if (bigInt.signum() == 1) {
-                 // Now test to see if this actually exists in the database.
-                 try {
-                     String select = "SELECT count(*) as count FROM identifiers where identifiers_id = " + bigInt +
-                             " && datasets_id = " + datasets_id;
-                     Statement stmt = conn.createStatement();
-                     ResultSet rs = stmt.executeQuery(select);
-                     rs.next();
-                     if (rs.getInt("count") > 0)
-                         return true;
-                     else
-                         return false;
-                 } catch (Exception e) {
-                     return false;
-                 }
-
-             } else {
-                 return false;
-             }
-         } catch (Exception e) {
-             e.printStackTrace();
-             return false;
-         }
-     }
-    */
 
     /**
      * Main function for testing.
