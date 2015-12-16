@@ -2,6 +2,7 @@ package bcid;
 
 import bcid.Renderer.JSONRenderer;
 import bcid.Renderer.Renderer;
+import fimsExceptions.BadRequestException;
 import fimsExceptions.ServerErrorException;
 import ezid.EZIDException;
 import ezid.EZIDService;
@@ -164,69 +165,35 @@ public class resolver extends database {
     }
 
     /**
-     * Attempt to resolve a particular ARK.  If there is no webaddress defined for resolution then
-     * it points to the biscicol.org/bcid homepage.
+     * Attempt to resolve a particular ARK.
      *
-     * @return JSON String with content for the interface
+     * @return URI content location URL
      */
     public URI resolveARK() throws URISyntaxException {
-        bcid bcid = null;
-        URI resolution = null;
+        bcid bcid;
+        URI resolution;
 
         // First  option is check if dataset, then look at other options after this is determined
-        if (isValidBCID()) {
-            bcid = new bcid(suffix, datagroup_id);
-
-            String resolutionTarget = "";
-            if (bcid.getResolutionTarget() != null) {
-                resolutionTarget = bcid.getResolutionTarget().toString().trim();
-            }
-
-            // Group has a specified resolution target
-            if (bcid.getResolutionTarget() != null && !resolutionTarget.equals("")) {
-                // A resolution target is specified AND there is a suffix
-                if (suffix != null && bcid.getResolutionTarget() != null && !suffix.trim().equals("") && !bcid.getResolutionTarget().equals("")) {
-                    forwardingResolution = true;
-
-                    // Immediately return resolution result
-                    return new URI(bcid.getResolutionTarget() + suffix);
-                }
-                // If the database indicates this is a suffixPassthrough dataset then return the MetadataTarget
-                else if (bcid.getDatasetsSuffixPassthrough()) {
-                    resolution = bcid.getMetadataTarget();
-                }
-                // If there is some resolution target then return that
-                else if (bcid.getResolutionTarget() != null && !bcid.getResolutionTarget().toString().equalsIgnoreCase("null")) {
-                    forwardingResolution = true;
-                    return bcid.getResolutionTarget();
-                }
-                // All other cases just return metadata
-                else {
-                    resolution = bcid.getMetadataTarget();
-                }
-            }
-            // This is a group and no resolution target is specified then just return metadata.
-            else {
-                resolution = bcid.getMetadataTarget();
-            }
-
+        if (!isValidBCID()) {
+            throw new BadRequestException("Invalid identifier.");
         }
 
-        // Set the graph variable
-        this.graph = bcid.getGraph();
+        bcid = new bcid(suffix, datagroup_id);
 
-        // Debugging:
-        //System.out.println("datagroup_id = " + datagroup_id);
+        // A resolution target is specified AND there is a suffix AND suffixPassThrough
+        if (bcid.getResolutionTarget() != null && !bcid.getResolutionTarget().equals("") &&
+            suffix != null && !suffix.trim().equals("") && bcid.getDatasetsSuffixPassthrough()) {
+            forwardingResolution = true;
 
-       // There are cases where project can be null, don't get caught on exception
-        try {
+            // Immediately return resolution result
+            resolution = new URI(bcid.getResolutionTarget() + suffix);
+        } else {
+            resolution = bcid.getMetadataTarget();
+
+            // Set the graph variable
+            this.graph = bcid.getGraph();
             this.project = getProjectID(datagroup_id);
-        } catch (Exception e) {
-            // do nothing, project is just null?
         }
-
-        // Project is empty after this call!
-        //System.out.println("project = " + this.project);
 
         return resolution;
     }
@@ -387,13 +354,11 @@ public class resolver extends database {
      *
      * @param datasets_id
      */
-    public String getProjectID(Integer datasets_id) throws Exception {
+    public String getProjectID(Integer datasets_id) {
         String project_id = "";
         String sql = "select p.project_id from projects p, expeditionsBCIDs eb, expeditions e, " +
                 "datasets d where d.datasets_id = eb.datasets_id and e.expedition_id=eb.`expedition_id` " +
                 "and e.`project_id`=p.`project_id` and d.datasets_id= ?";
-
-        System.out.println("sql = " + sql + "    datasets_id = " + datasets_id);
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -404,15 +369,12 @@ public class resolver extends database {
             rs.next();
             project_id = rs.getString("project_id");
 
-
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error",
-                    "Exception retrieving projectCode for dataset: " + datasets_id, e);
+            // catch the exception and log it
+            logger.warn("Exception retrieving projectCode for dataset: " + datasets_id, e);
         } finally {
             close(stmt, rs);
         }
-
-        System.out.println(project_id);
         return project_id;
     }
 

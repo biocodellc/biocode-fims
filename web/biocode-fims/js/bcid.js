@@ -163,8 +163,13 @@ function resolverResults() {
     $.get("/id/" + $("#identifier").val()).done(function(data) {
         $("#results").html(data);
     }).fail(function(jqxhr) {
-//        if (jqxhr.statusCode)
-        $("#results").html("Failed to retrieve identifier information.");
+        var html;
+        if (jqxhr.status == 400) {
+            html = "Invalid identifier.";
+        } else {
+            html = "Failed to retrieve identifier information.";
+        }
+        $("#results").html(html);
     });
 }
 
