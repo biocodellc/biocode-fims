@@ -1,0 +1,17 @@
+Specifications for FASTA file upload functionality
+
+Allow user to upload FASTA files through the validation page.  This will be just like uploading spreadsheet (and in fact use the same box?) 
+but the main difference is that you cannot create an expedition during this step if it is a FASTA file, the expedition must have been
+created during a metadata file upload.  So:
+1) Indicate file for upload
+   a) Is Metadata?  -- proceed w/ metadata loader/validator as is.
+   b) Is FASTA file? (create rules for checking fasta file structure) --
+      i ) ask user to specify an ALREADY created expedition
+      ii ) validate that FASTA IDs match metadata IDs
+
+FASTA files will be added as a line in the BCID table with resourceType = XXXXXX. (DCMI does not have a term for sequence data, closest 
+match is Dataset but we're using that already-- need a term that indicates this is an assembled sequence) and stored as its own n3 data in 
+the database.   Another option is to keep as Dataset and indicate a new field that has the Dataset type (ResourceSubType), and we can fetch each new dataset type
+as needed (e.g. dataset, sequence, image reference, etc.)
+
+Query will lookup all associated resourceTypes/resourceSubType and union them together.
