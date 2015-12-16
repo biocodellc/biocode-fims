@@ -16,7 +16,6 @@
         <!--<img id='workflowImage' src='docs/Workflow_simple.jpeg'>
         <br><a id='workflowControl' onclick='workflowImageSwap();'>Details</a>-->
     </div>
-    <div class="sectioncontent" id="dashboard"></div>
     <div id=dialogContainer></div>
 </div>
 
@@ -37,10 +36,9 @@ window.onload = function checkForFailMessageInURL(){
 <script>
     $(document).ready(function() {
        fimsBrowserCheck($('#warning'));
-       <!--if ("${user}") {
-           $("#mainpage").hide();
-           getDatasetDashboard();
-       }-->
+       if ("${user}") {
+           populateExpeditionPage("${user}");
+       }
     });
 </script>
 
