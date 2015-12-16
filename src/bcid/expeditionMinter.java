@@ -816,6 +816,7 @@ public class expeditionMinter {
      * @return
      */
     public String listExpeditionConfigurationAsTable(Integer expeditionId) {
+        String rootName = sm.retrieveValue("rootName");
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n");
         sb.append("\t<tbody>\n");
@@ -824,10 +825,10 @@ public class expeditionMinter {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT max(d.ts), d.prefix, e.public, e.expedition_code, e.project_id " +
+            String sql = "SELECT d.prefix, e.public, e.expedition_code, e.project_id " +
                     "FROM datasets d, expeditionsBCIDs eB, expeditions e " +
                     "WHERE d.datasets_id = eB.datasets_id && eB.expedition_id = e.expedition_id && e.expedition_id = ? and " +
-                    "d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"";
+                    "d.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
             stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, expeditionId);
@@ -840,7 +841,11 @@ public class expeditionMinter {
                 sb.append("Persistent Identifier:");
                 sb.append("\t\t</td>\n");
                 sb.append("\t\t<td>");
+                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
                 sb.append(rs.getString("d.prefix"));
+                sb.append("\">");
+                sb.append(rs.getString("d.prefix"));
+                sb.append("</a>");
                 sb.append("\t\t</td>\n");
                 sb.append("\t</tr>\n");
 
@@ -882,6 +887,7 @@ public class expeditionMinter {
      * @return
      */
     public String listExpeditionResourcesAsTable(Integer expeditionId) {
+        String rootName = sm.retrieveValue("rootName");
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n");
         sb.append("\t<tbody>\n");
@@ -920,7 +926,11 @@ public class expeditionMinter {
 
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
+                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
                 sb.append(rs.getString("d.prefix"));
+                sb.append("\">");
+                sb.append(rs.getString("d.prefix"));
+                sb.append("</a>");
                 sb.append("</td>\n");
                 sb.append("\t\t<td>");
                 // only display a hyperlink if http: is specified under resource type
@@ -951,19 +961,19 @@ public class expeditionMinter {
      * @return
      */
     public String listExpeditionDatasetsAsTable(Integer expeditionId) {
-        String serviceRoot = sm.retrieveValue("fims_service_root");
+        String rootName = sm.retrieveValue("rootName");
         StringBuilder sb = new StringBuilder();
         sb.append("<table>\n");
         sb.append("\t<tr>\n");
         sb.append("\t\t<th>Date</th>\n");
-        sb.append("\t\t<th>Download</th>\n");
+        sb.append("\t\t<th>Persistent Id</th>\n");
         sb.append("\t</tr>\n");
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT d.ts, d.webaddress, d.graph, e.project_id " +
+            String sql = "SELECT d.ts, d.prefix, d.webaddress, d.graph, e.project_id " +
                     "FROM datasets d, expeditionsBCIDs eB, expeditions e " +
                     "WHERE d.datasets_id = eB.datasets_id && eB.expedition_id = ? && e.expedition_id = eB.expedition_id " +
                     "AND d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
@@ -973,14 +983,23 @@ public class expeditionMinter {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String webaddress = rs.getString("d.webaddress");
+//                String webaddress = rs.getString("d.webaddress");
 
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
                 sb.append(rs.getTimestamp("d.ts").toString());
                 sb.append("\t\t</td>");
 
-                // Excel option
+                sb.append("\t\t<td>");
+                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
+                sb.append(rs.getString("d.prefix"));
+                sb.append("\">");
+                sb.append(rs.getString("d.prefix"));
+                sb.append("</a>");
+                sb.append("\t\t</td>");
+                sb.append("\t</tr>\n");
+
+                /*// Excel option
                 sb.append("\t\t<td class='align_center'>");
                 sb.append("<a href='");
                 sb.append(serviceRoot);
@@ -1013,6 +1032,7 @@ public class expeditionMinter {
 
                 sb.append("\t\t</td>");
                 sb.append("\t</tr>\n");
+                */
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
