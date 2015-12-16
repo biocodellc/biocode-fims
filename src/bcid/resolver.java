@@ -181,12 +181,12 @@ public class resolver extends database {
         bcid = new bcid(suffix, datagroup_id);
 
         // A resolution target is specified AND there is a suffix AND suffixPassThrough
-        if (bcid.getResolutionTarget() != null && !bcid.getResolutionTarget().equals("") &&
+        if (bcid.getWebAddress() != null && !bcid.getWebAddress().equals("") &&
             suffix != null && !suffix.trim().equals("") && bcid.getDatasetsSuffixPassthrough()) {
             forwardingResolution = true;
 
             // Immediately return resolution result
-            resolution = new URI(bcid.getResolutionTarget() + suffix);
+            resolution = new URI(bcid.getWebAddress() + suffix);
         } else {
             resolution = bcid.getMetadataTarget();
 
@@ -218,8 +218,8 @@ public class resolver extends database {
             // Has a suffix, but not resolvable
             //else {
             try {
-                if (suffix != null && bcid.getResolutionTarget() != null) {
-                    bcid = new bcid(suffix, bcid.getResolutionTarget(), datagroup_id);
+                if (suffix != null && bcid.getWebAddress() != null) {
+                    bcid = new bcid(suffix, bcid.getWebAddress(), datagroup_id);
                 }
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?

@@ -33,7 +33,7 @@ public abstract class GenericIdentifier implements GenericIdentifierInterface {
      * @return
      * @throws java.net.URISyntaxException
      */
-    public URI getResolutionTarget() throws URISyntaxException {
+    public URI getWebAddress() throws URISyntaxException {
         return new URI(resolverTargetPrefix);
     }
 

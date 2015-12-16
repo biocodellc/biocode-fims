@@ -28,7 +28,7 @@ public class RedirectRenderer extends TextRenderer {
             }
         }
         try {
-            outputSB.append(identifier.getResolutionTarget());
+            outputSB.append(identifier.getWebAddress());
         } catch (URISyntaxException e) {
             //TODO should we silence this exception?
             logger.warn("URISyntaxException thrown", e);

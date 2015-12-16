@@ -312,7 +312,7 @@ public class bcid extends GenericIdentifier {
         return map;
     }
 
-    public URI getResolutionTarget() {
+    public URI getWebAddress() {
         return webAddress;
     }
 
