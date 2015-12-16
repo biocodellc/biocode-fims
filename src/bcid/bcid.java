@@ -62,7 +62,6 @@ public class bcid extends GenericIdentifier {
      */
     public bcid(Integer datasets_id) {
         dataGroupMinter dataset = setDatasets_id(datasets_id);
-        projectCode = dataset.getProject(dataset_id);
 
         dataset.close();
     }
@@ -75,17 +74,8 @@ public class bcid extends GenericIdentifier {
      * @param dataset_id
      */
     public bcid(String sourceID, Integer dataset_id) {
+        this.sourceID = sourceID;
         dataGroupMinter dataset = setDatasets_id(dataset_id);
-        try {
-            if (sourceID != null && !sourceID.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + sourceID);
-            } else {
-                identifier = dataset.identifier;
-            }
-        } catch (URISyntaxException e) {
-            //TODO should we silence this exception?
-            logger.warn("URISyntaxException thrown", e);
-        }
         projectCode = dataset.getProject(dataset_id);
         dataset.close();
     }
@@ -99,20 +89,10 @@ public class bcid extends GenericIdentifier {
      * @param dataset_id
      */
     public bcid(String sourceID, URI webAddress, Integer dataset_id) {
+        this.sourceID = sourceID;
         dataGroupMinter dataset = setDatasets_id(dataset_id);
         this.webAddress = webAddress;
 
-        try {
-            if (sourceID != null && !sourceID.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + sourceID);
-            } else {
-                identifier = dataset.identifier;
-            }
-            projectCode = dataset.getProject(dataset_id);
-        } catch (URISyntaxException e) {
-            //TODO should we silence this exception?
-            logger.warn("URISyntaxException for uri: {}", dataset.identifier + sm.retrieveValue("divider") + sourceID, e);
-        }
         // Reformat webAddress in this constructor if there is a sourceID
         if (sourceID != null && webAddress != null && !sourceID.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
             //System.out.println("HERE" + webAddress);
@@ -288,6 +268,18 @@ public class bcid extends GenericIdentifier {
         datasetsEzidMade = dataset.ezidMade;
         datasetsEzidRequest = dataset.ezidRequest;
         datasetsSuffixPassthrough = dataset.getSuffixPassThrough();
+
+        try {
+            if (sourceID != null && !sourceID.equals("")) {
+                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + sourceID);
+            } else {
+                identifier = dataset.identifier;
+            }
+            projectCode = dataset.getProject(dataset_id);
+        } catch (URISyntaxException e) {
+            //TODO should we silence this exception?
+            logger.warn("URISyntaxException for uri: {}", dataset.identifier + sm.retrieveValue("divider") + sourceID, e);
+        }
 
         return dataset;
 
