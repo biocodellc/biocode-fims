@@ -44,7 +44,7 @@ public class inputFileParser {
         Iterator pi = parse.iterator();
         while (pi.hasNext()) {
             element b = (element)pi.next();
-             System.out.println("sourceid = " + b.sourceID + ";webaddres = " + b.webAddress );
+             System.out.println("suffix = " + b.suffix + ";webaddres = " + b.webAddress );
         }
         */
 
@@ -64,7 +64,7 @@ public class inputFileParser {
         BufferedReader readbuffer = new BufferedReader(new StringReader(inputString));
         String strRead;
         while ((strRead = readbuffer.readLine()) != null) {
-            String sourceID = null;
+            String suffix = null;
             URI webAddress = null;
 
             // Break string up into tokens, using pipe as the delimiter
@@ -72,7 +72,7 @@ public class inputFileParser {
             int count = 0;
             while (st.hasMoreTokens()) {
                 if (count == 0) {
-                    sourceID = st.nextToken();
+                    suffix = st.nextToken();
                 } else if (count == 1) {
                     try {
                         webAddress = new URI(st.nextToken());
@@ -85,7 +85,7 @@ public class inputFileParser {
                 count++;
             }
 
-            elementArrayList.add(new bcid(sourceID, webAddress, dataset.getDatasets_id()));
+            elementArrayList.add(new bcid(suffix, webAddress, dataset.getDatasets_id()));
         }
     }
 

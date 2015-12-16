@@ -162,7 +162,7 @@ public class elementMinter extends dataGroupMinter {
     /**
      * Mint a Single element
      * Takes an element object and inserts these objects into database.
-     * Inserts element class members: DOI, webAddress, sourceID, resourceType
+     * Inserts element class members: DOI, webAddress, suffix, resourceType
      *
      * @param b
      */
@@ -192,8 +192,8 @@ public class elementMinter extends dataGroupMinter {
             while (validateIds.hasNext()) {
                 bcid id = (bcid) validateIds.next();
                 // TODO: add back in validation of UUIDs, for now, this issue presents problems in determing what is a UUID or not!
-                //if (!validateUUID(id.sourceID)) {
-                //    throw new Exception("One or more invalid Identifiers, violating either checksum, uuid construction, or Uniqueness of uuid rules: " + id.sourceID);
+                //if (!validateUUID(id.suffix)) {
+                //    throw new Exception("One or more invalid Identifiers, violating either checksum, uuid construction, or Uniqueness of uuid rules: " + id.suffix);
                 //}
             }
         }
@@ -224,7 +224,7 @@ public class elementMinter extends dataGroupMinter {
                 else
                     insertStatement.setString(paramcount++, null);
 
-                insertStatement.setString(paramcount++, id.sourceID);
+                insertStatement.setString(paramcount++, id.suffix);
                 insertStatement.setString(paramcount++, loadedSetUUID.toString());
                 insertStatement.setInt(paramcount++, id.dataset_id);
 

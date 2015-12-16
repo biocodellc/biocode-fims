@@ -25,7 +25,7 @@ public class resolver extends database {
     String scheme = "ark:";
     String naan = null;
     String shoulder = null;     // The data group
-    String sourceID = null;        // The local identifier
+    String suffix = null;        // The local identifier
     BigInteger element_id = null;
     Integer datagroup_id = null;
     public boolean forwardingResolution = false;
@@ -60,8 +60,8 @@ public class resolver extends database {
         String bits[] = ark.split("/", 3);
         // just want the first chunk between the "/"'s
         naan = bits[1];
-        // Now decipher the shoulder and sourceID in the next bit
-        setShoulderAndSourceID(bits[2]);
+        // Now decipher the shoulder and suffix in the next bit
+        setShoulderAndSuffix(bits[2]);
         // Call setDataGroup() to set datagroup_id
         setDataGroup();
     }
@@ -134,31 +134,31 @@ public class resolver extends database {
     }
 
     /**
-     * Set the shoulder and sourceID variables for this ARK
+     * Set the shoulder and suffix variables for this ARK
      *
      * @param a
      */
-    private void setShoulderAndSourceID(String a) {
+    private void setShoulderAndSuffix (String a) {
         boolean reachedShoulder = false;
         StringBuilder sbShoulder = new StringBuilder();
-        StringBuilder sbSourceID = new StringBuilder();
+        StringBuilder sbSuffix = new StringBuilder();
 
         for (int i = 0; i < a.length(); i++) {
             char c = a.charAt(i);
             if (!reachedShoulder)
                 sbShoulder.append(c);
             else
-                sbSourceID.append(c);
+                sbSuffix.append(c);
             if (Character.isDigit(c))
                 reachedShoulder = true;
         }
         shoulder = sbShoulder.toString();
-        sourceID = sbSourceID.toString();
+        suffix = sbSuffix.toString();
 
-        // String the slash between the shoulder and the sourceID
+        // String the slash between the shoulder and the suffix
         if (!sm.retrieveValue("divider").equals("")) {
-            if (sourceID.startsWith(sm.retrieveValue("divider"))) {
-                sourceID = sourceID.substring(1);
+            if (suffix.startsWith(sm.retrieveValue("divider"))) {
+                suffix = suffix.substring(1);
             }
         }
     }
@@ -174,8 +174,8 @@ public class resolver extends database {
         URI resolution = null;
 
         // First  option is check if dataset, then look at other options after this is determined
-        if (isDataGroup()) {
-            bcid = new bcid(sourceID, datagroup_id);
+        if (isValidBCID()) {
+            bcid = new bcid(suffix, datagroup_id);
 
             String resolutionTarget = "";
             if (bcid.getResolutionTarget() != null) {
@@ -184,12 +184,12 @@ public class resolver extends database {
 
             // Group has a specified resolution target
             if (bcid.getResolutionTarget() != null && !resolutionTarget.equals("")) {
-                // A resolution target is specified AND there is a sourceID
-                if (sourceID != null && bcid.getResolutionTarget() != null && !sourceID.trim().equals("") && !bcid.getResolutionTarget().equals("")) {
+                // A resolution target is specified AND there is a suffix
+                if (suffix != null && bcid.getResolutionTarget() != null && !suffix.trim().equals("") && !bcid.getResolutionTarget().equals("")) {
                     forwardingResolution = true;
 
                     // Immediately return resolution result
-                    return new URI(bcid.getResolutionTarget() + sourceID);
+                    return new URI(bcid.getResolutionTarget() + suffix);
                 }
                 // If the database indicates this is a suffixPassthrough dataset then return the MetadataTarget
                 else if (bcid.getDatasetsSuffixPassthrough()) {
@@ -251,8 +251,8 @@ public class resolver extends database {
             // Has a suffix, but not resolvable
             //else {
             try {
-                if (sourceID != null && bcid.getResolutionTarget() != null) {
-                    bcid = new bcid(sourceID, bcid.getResolutionTarget(), datagroup_id);
+                if (suffix != null && bcid.getResolutionTarget() != null) {
+                    bcid = new bcid(suffix, bcid.getResolutionTarget(), datagroup_id);
                 }
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?
@@ -333,7 +333,7 @@ public class resolver extends database {
         return sb.toString();
     }
 
-    private boolean isDataGroup() {
+    private boolean isValidBCID() {
         if (datagroup_id != null)
             return true;
         else
@@ -423,15 +423,15 @@ public class resolver extends database {
      * @return
      */
     private boolean isResolvableSuffix(Integer d) {
-        // Only attempt this method if the sourceID has some content, else we know there is no suffix
-        if (sourceID != null && !sourceID.equals("")) {
+        // Only attempt this method if the suffix has some content, else we know there is no suffix
+        if (suffix != null && !suffix.equals("")) {
             // Establish database connection so we can lookup suffixes here
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {
                 String select = "SELECT identifiers_id FROM identifiers where datasets_id = " + d + " && localid = ?";
                 stmt = conn.prepareStatement(select);
-                stmt.setString(1, sourceID);
+                stmt.setString(1, suffix);
                 rs = stmt.executeQuery();
                 rs.next();
                 element_id = new BigInteger(rs.getString("identifiers_id"));
@@ -537,12 +537,12 @@ public class resolver extends database {
 
         try {
             String expected = "";
-            // suffixpassthrough = 1; no webAddress specified; has a SourceID
+            // suffixpassthrough = 1; no webAddress specified; has a Suffix
             /*r = new resolver("ark:/87286/U264c82d19-6562-4174-a5ea-e342eae353e8");
             expected = "http://biscicol.org/id/metadata/ark:/21547/U264c82d19-6562-4174-a5ea-e342eae353e8";
             System.out.println(r.resolveARK());
                   */
-            // suffixPassthrough = 1; webaddress specified; has a SourceID
+            // suffixPassthrough = 1; webaddress specified; has a Suffix
             //r = new resolver("ark:/21547/R2");
             //System.out.println(r.printMetadata(new RDFRenderer()));
             //System.out.println(r.resolveARK());
@@ -556,22 +556,22 @@ public class resolver extends database {
            System.out.println(r.getArk());
            */
                  /*
-            // suffixPassthrough = 1; webaddress specified; no SourceID
+            // suffixPassthrough = 1; webaddress specified; no Suffix
             r = new resolver("ark:/21547/R2");
             expected = "http://biscicol.org/id/metadata/ark:/21547/R2";
             System.out.println(r.resolveARK());
 
-            // suffixPassthrough = 0; no webaddress specified; no SourceID
+            // suffixPassthrough = 0; no webaddress specified; no Suffix
             r = new resolver("ark:/21547/W2");
             expected = "http://biscicol.org/id/metadata/ark:/21547/W2";
             System.out.println(r.resolveARK());
 
-            // suffixPassthrough = 0; webaddress specified; no SourceID
+            // suffixPassthrough = 0; webaddress specified; no Suffix
             r = new resolver("ark:/21547/Gk2");
             expected =  "http://biscicol.org:3030/ds?graph=urn:uuid:77806834-a34f-499a-a29f-aaac51e6c9f8";
             System.out.println(r.resolveARK());
 
-               // suffixPassthrough = 0; webaddress specified;  sourceID specified (still pass it through
+               // suffixPassthrough = 0; webaddress specified;  suffix specified (still pass it through
             r = new resolver("ark:/21547/Gk2FOO");
             expected =  "http://biscicol.org:3030/ds?graph=urn:uuid:77806834-a34f-499a-a29f-aaac51e6c9f8FOO";
             System.out.println(r.resolveARK());

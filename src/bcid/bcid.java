@@ -18,7 +18,7 @@ import java.util.HashMap;
  */
 public class bcid extends GenericIdentifier {
     protected URI webAddress = null;        // URI for the webAddress, EZID calls this _target (e.g. http://biocode.berkeley.edu/specimens/MBIO56)
-    protected String sourceID = null;       // Source or local identifier (e.g. MBIO056)
+    protected String suffix = null;       // Source or local identifier (e.g. MBIO056)
     protected String what = null;           // erc.what
     protected String when = null;           // erc.when
     protected String who = null;            // erc.who
@@ -70,11 +70,11 @@ public class bcid extends GenericIdentifier {
     /**
      * Create an element given a source identifier, and a resource type identifier
      *
-     * @param sourceID
+     * @param suffix
      * @param dataset_id
      */
-    public bcid(String sourceID, Integer dataset_id) {
-        this.sourceID = sourceID;
+    public bcid(String suffix, Integer dataset_id) {
+        this.suffix = suffix;
         dataGroupMinter dataset = setDatasets_id(dataset_id);
         projectCode = dataset.getProject(dataset_id);
         dataset.close();
@@ -84,23 +84,23 @@ public class bcid extends GenericIdentifier {
      * Create an element given a source identifier, web address for resolution, and a dataset_id
      * This method is meant for CREATING bcids.
      *
-     * @param sourceID
+     * @param suffix
      * @param webAddress
      * @param dataset_id
      */
-    public bcid(String sourceID, URI webAddress, Integer dataset_id) {
-        this.sourceID = sourceID;
+    public bcid(String suffix, URI webAddress, Integer dataset_id) {
+        this.suffix = suffix;
         dataGroupMinter dataset = setDatasets_id(dataset_id);
         this.webAddress = webAddress;
 
-        // Reformat webAddress in this constructor if there is a sourceID
-        if (sourceID != null && webAddress != null && !sourceID.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
+        // Reformat webAddress in this constructor if there is a suffix
+        if (suffix != null && webAddress != null && !suffix.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
             //System.out.println("HERE" + webAddress);
             try {
-                this.webAddress = new URI(webAddress + sourceID);
+                this.webAddress = new URI(webAddress + suffix);
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?
-                logger.warn("URISyntaxException for uri: {}", webAddress + sourceID, e);
+                logger.warn("URISyntaxException for uri: {}", webAddress + suffix, e);
             }
         }
         dataset.close();
@@ -149,7 +149,7 @@ public class bcid extends GenericIdentifier {
            identifiersEzidMade = rs.getBoolean(count++);
            identifiersEzidRequest = rs.getBoolean(count++);
            datasetsSuffixPassthrough = rs.getBoolean(count++);
-           sourceID = rs.getString(count++);
+           suffix = rs.getString(count++);
            String webaddress = rs.getString(count++);
            if (webaddress != null) {
                webAddress = new URI(webaddress);
@@ -169,12 +169,12 @@ public class bcid extends GenericIdentifier {
     /**
      * Internal function for setting the source ID (local identifier that has been passed in)
      *
-     * @param sourceID
+     * @param suffix
      */
-    private void setSourceID(String sourceID, dataGroupMinter dataset) {
+    private void setSuffix(String suffix, dataGroupMinter dataset) {
         try {
-            if (sourceID != null && !sourceID.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + sourceID);
+            if (suffix != null && !suffix.equals("")) {
+                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + suffix);
             } else {
                 identifier = dataset.identifier;
             }
@@ -183,11 +183,11 @@ public class bcid extends GenericIdentifier {
             logger.warn("URISyntaxException thrown", e);
         }
 
-        // Reformat webAddress in this constructor if there is a sourceID
-        if (sourceID != null && webAddress != null && !sourceID.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
+        // Reformat webAddress in this constructor if there is a suffix
+        if (suffix != null && webAddress != null && !suffix.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
             //System.out.println("HERE" + webAddress);
             try {
-                this.webAddress = new URI(webAddress + sourceID);
+                this.webAddress = new URI(webAddress + suffix);
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?
                 logger.warn("URISyntaxException thrown", e);
@@ -270,15 +270,15 @@ public class bcid extends GenericIdentifier {
         datasetsSuffixPassthrough = dataset.getSuffixPassThrough();
 
         try {
-            if (sourceID != null && !sourceID.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + sourceID);
+            if (suffix != null && !suffix.equals("")) {
+                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + suffix);
             } else {
                 identifier = dataset.identifier;
             }
             projectCode = dataset.getProject(dataset_id);
         } catch (URISyntaxException e) {
             //TODO should we silence this exception?
-            logger.warn("URISyntaxException for uri: {}", dataset.identifier + sm.retrieveValue("divider") + sourceID, e);
+            logger.warn("URISyntaxException for uri: {}", dataset.identifier + sm.retrieveValue("divider") + suffix, e);
         }
 
         return dataset;
@@ -299,7 +299,7 @@ public class bcid extends GenericIdentifier {
         put("level", level);
         put("title", title);
         put("projectCode", projectCode);
-        put("sourceID", sourceID);
+        put("suffix", suffix);
         put("doi", doi);
         put("datasetsEzidMade", datasetsEzidMade);
         put("datasetsSuffixPassThrough", datasetsSuffixPassthrough);
@@ -317,8 +317,8 @@ public class bcid extends GenericIdentifier {
     }
 
     public URI getMetadataTarget() throws URISyntaxException {
-        // if (sourceID != null)
-        //     return new URI(resolverMetadataPrefix + identifier + sourceID);
+        // if (suffix != null)
+        //     return new URI(resolverMetadataPrefix + identifier + suffix);
         // else
         return new URI(resolverMetadataPrefix + identifier);
 

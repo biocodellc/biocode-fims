@@ -59,7 +59,7 @@ public class BCIDMetadataSchema {
                     dcCreator = new metadataElement("dc:creator", pairs.getValue().toString(), "Who created the group definition.");
                 } else if (bcidKey.equalsIgnoreCase("title")) {
                     dcTitle = new metadataElement("dc:title", pairs.getValue().toString(), "Title");
-                } else if (bcidKey.equalsIgnoreCase("sourceID")) {
+                } else if (bcidKey.equalsIgnoreCase("suffix")) {
                     dcSource = new metadataElement("dc:source", pairs.getValue().toString(), "The locally-unique identifier.");
                 } else if (bcidKey.equalsIgnoreCase("rights")) {
                     dcRights = new metadataElement("dcterms:rights", pairs.getValue().toString(), "Rights applied to the metadata content describing this identifier.");
