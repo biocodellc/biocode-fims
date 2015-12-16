@@ -36,9 +36,6 @@ window.onload = function checkForFailMessageInURL(){
 <script>
     $(document).ready(function() {
        fimsBrowserCheck($('#warning'));
-       if ("${user}") {
-           populateExpeditionPage("${user}");
-       }
     });
 </script>
 
