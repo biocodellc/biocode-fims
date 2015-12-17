@@ -125,7 +125,7 @@ public class dashboardGenerator {
 
                 sb.append("</td>\\n");
 
-                sb.append("<td><a href='#' onclick=\\\"editDataset('");
+                sb.append("<td><a href='#' onclick=\\\"editExpedition('");
                 sb.append(dataset.get("project_id"));
                 sb.append("', '");
                 sb.append(dataset.get("expedition_code"));

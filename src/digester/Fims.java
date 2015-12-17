@@ -1,6 +1,6 @@
 package digester;
 
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.expeditionMinter;
 import com.hp.hpl.jena.rdf.model.Model;
 import fims.fimsModel;
@@ -64,13 +64,13 @@ public class Fims implements RendererInterface {
 
         uploader.execute();
 
-        dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-        dataGroupMinter.createEntityBCID(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
+        bcidMinter bcidMinter = new bcidMinter(false);
+        bcidMinter.createEntityBcid(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
                 uploader.getEndpoint(), uploader.getGraphID(), null, false);
-        bcid = dataGroupMinter.getPrefix();
-        dataGroupMinter.close();
+        bcid = bcidMinter.getPrefix();
+        bcidMinter.close();
         // Create the BCID to use for upload service
-        //String status1 = "\tCreated dataset ID " + bcid + " to represent your uploaded dataset\n";
+        //String status1 = "\tCreated BCID " + bcid + " to represent your uploaded dataset\n";
         //status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";
         String status1 = "\n\nDataset Identifier: http://n2t.net/" + bcid + " (wait 15 minutes for resolution to become active)\n";
 

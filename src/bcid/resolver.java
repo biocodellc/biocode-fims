@@ -28,7 +28,7 @@ public class resolver extends database {
     String shoulder = null;     // The data group
     String suffix = null;        // The local identifier
     BigInteger element_id = null;
-    Integer datagroup_id = null;
+    Integer bcidsId = null;
     public boolean forwardingResolution = false;
     public String graph = null;
     static SettingsManager sm;
@@ -63,8 +63,8 @@ public class resolver extends database {
         naan = bits[1];
         // Now decipher the shoulder and suffix in the next bit
         setShoulderAndSuffix(bits[2]);
-        // Call setDataGroup() to set datagroup_id
-        setDataGroup();
+        // Call setBcid() to set bcidsId
+        setBcid();
     }
 
     /**
@@ -83,15 +83,15 @@ public class resolver extends database {
         ResultSet rs = null;
         try {
             String query = "select \n" +
-                    "d.prefix as prefix \n" +
+                    "b.prefix as prefix \n" +
                     "from \n" +
-                    "datasets d, expeditionsBCIDs pb, expeditions p \n" +
+                    "bcids b, expeditionsBCIDs eb, expeditions p \n" +
                     "where \n" +
-                    "d.datasets_id=pb.datasets_id && \n" +
-                    "pb.expedition_id=p.expedition_id && \n" +
+                    "b.bcids_id=eb.bcids_id&& \n" +
+                    "eb.expedition_id=p.expedition_id && \n" +
                     "p.expedition_code= ? && \n" +
                     "p.project_id = ? && \n" +
-                    "(d.resourceType=? || d.resourceType= ?)";
+                    "(b.resourceType=? || b.resourceType= ?)";
             stmt = conn.prepareStatement(query);
 
             stmt.setString(1, expedition_code);
@@ -121,8 +121,8 @@ public class resolver extends database {
      *
      * @return
      */
-    public Integer getDataGroupID() {
-        return datagroup_id;
+    public Integer getBcidId () {
+        return bcidsId;
     }
 
     /**
@@ -173,16 +173,16 @@ public class resolver extends database {
         bcid bcid;
         URI resolution;
 
-        // First  option is check if dataset, then look at other options after this is determined
+        // First  option is check if bcid, then look at other options after this is determined
         if (!isValidBCID()) {
             throw new BadRequestException("Invalid identifier.");
         }
 
-        bcid = new bcid(suffix, datagroup_id);
+        bcid = new bcid(suffix, bcidsId);
 
         // A resolution target is specified AND there is a suffix AND suffixPassThrough
         if (bcid.getWebAddress() != null && !bcid.getWebAddress().equals("") &&
-            suffix != null && !suffix.trim().equals("") && bcid.getDatasetsSuffixPassthrough()) {
+            suffix != null && !suffix.trim().equals("") && bcid.getBcidsSuffixPassthrough()) {
             forwardingResolution = true;
 
             // Immediately return resolution result
@@ -192,7 +192,7 @@ public class resolver extends database {
 
             // Set the graph variable
             this.graph = bcid.getGraph();
-            this.project = getProjectID(datagroup_id);
+            this.project = getProjectID(bcidsId);
         }
 
         return resolution;
@@ -206,20 +206,20 @@ public class resolver extends database {
     public String printMetadata(Renderer renderer) {
         GenericIdentifier bcid = null;
 
-        // First  option is check if dataset, then look at other options after this is determined
-        if (setDataGroup()) {
+        // First  option is check if bcid, then look at other options after this is determined
+        if (setBcid()) {
 
-            bcid = new bcid(datagroup_id);
+            bcid = new bcid(bcidsId);
 
             // Has a registered, resolvable suffix
-            //if (isResolvableSuffix(datagroup_id)) {
+            //if (isResolvableSuffix(bcidsId)) {
             //    bcid = new bcid(element_id, ark);
             //}
             // Has a suffix, but not resolvable
             //else {
             try {
                 if (suffix != null && bcid.getWebAddress() != null) {
-                    bcid = new bcid(suffix, bcid.getWebAddress(), datagroup_id);
+                    bcid = new bcid(suffix, bcid.getWebAddress(), bcidsId);
                 }
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?
@@ -280,42 +280,42 @@ public class resolver extends database {
     }
 
     private boolean isValidBCID() {
-        if (datagroup_id != null)
+        if (bcidsId != null)
             return true;
         else
             return false;
     }
 
     /**
-     * Check if this is a dataset and set the datasets_id
+     * Check if this is a bcid and set the bcidsId
      *
      * @return
      */
-    private boolean setDataGroup() {
-        // Test Dataset is #1
+    private boolean setBcid() {
+        // Test bcid is #1
         if (shoulder.equals("fk4") && naan.equals("99999")) {
-            datagroup_id = 1;
+            bcidsId = 1;
             return true;
         }
 
-        // Decode a typical dataset
-        datagroup_id = new dataGroupEncoder().decode(shoulder).intValue();
+        // Decode a typical bcid
+        bcidsId = new bcidEncoder().decode(shoulder).intValue();
 
-        if (datagroup_id == null) {
+        if (bcidsId == null) {
             return false;
         } else {
-            // Now we need to figure out if this datasets_id exists or not in the database
-            String select = "SELECT count(*) as count FROM datasets where datasets_id = ?";
+            // Now we need to figure out if this bcids_id exists or not in the database
+            String select = "SELECT count(*) as count FROM bcids where bcids_id = ?";
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {
                 stmt = conn.prepareStatement(select);
-                stmt.setInt(1, datagroup_id);
+                stmt.setInt(1, bcidsId);
                 rs = stmt.executeQuery();
                 rs.next();
                 int count = rs.getInt("count");
                 if (count < 1) {
-                    datagroup_id = null;
+                    bcidsId = null;
                     return false;
                 } else {
                     return true;
@@ -329,28 +329,28 @@ public class resolver extends database {
     }
 
     /**
-     * Get the projectId given a dataset_id
+     * Get the projectId given a bcidsId
      *
-     * @param datasets_id
+     * @param bcidsId
      */
-    public String getProjectID(Integer datasets_id) {
+    public String getProjectID(Integer bcidsId) {
         String project_id = "";
         String sql = "select p.project_id from projects p, expeditionsBCIDs eb, expeditions e, " +
-                "datasets d where d.datasets_id = eb.datasets_id and e.expedition_id=eb.`expedition_id` " +
-                "and e.`project_id`=p.`project_id` and d.datasets_id= ?";
+                "bcids b where b.bcids_id = eb.bcids_id and e.expedition_id=eb.`expedition_id` " +
+                "and e.`project_id`=p.`project_id` and b.bcids_id = ?";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, datasets_id);
+            stmt.setInt(1, bcidsId);
             rs = stmt.executeQuery();
             rs.next();
             project_id = rs.getString("project_id");
 
         } catch (SQLException e) {
             // catch the exception and log it
-            logger.warn("Exception retrieving projectCode for dataset: " + datasets_id, e);
+            logger.warn("Exception retrieving projectCode for bcid: " + bcidsId, e);
         } finally {
             close(stmt, rs);
         }

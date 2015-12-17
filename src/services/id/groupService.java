@@ -5,7 +5,7 @@ import bcid.bcid;
 import bcid.Renderer.JSONRenderer;
 import bcid.Renderer.Renderer;
 import bcid.ResourceTypes;
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.database;
 import bcid.expeditionMinter;
 import bcid.GenericIdentifier;
@@ -103,35 +103,35 @@ public class groupService {
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
 
-        // Create a Dataset
+        // Create a Bcid
         database db = new database();
         // Check for remote-user
         Integer user_id = db.getUserId(username);
         db.close();
 
         // Mint the data group
-        dataGroupMinter minterDataset = new dataGroupMinter(suffixPassthrough);
+        bcidMinter bcidMinter = new bcidMinter(suffixPassthrough);
 
-        minterDataset.createEntityBCID(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
+        bcidMinter.createEntityBcid(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
 
-        String datasetPrefix = minterDataset.getPrefix();
-        minterDataset.close();
+        String bcidPrefix = bcidMinter.getPrefix();
+        bcidMinter.close();
 
-        return Response.ok("{\"prefix\": \"" + datasetPrefix + "\"}").build();
+        return Response.ok("{\"prefix\": \"" + bcidPrefix + "\"}").build();
     }
 
     /**
-     * Return a JSON representation of dataset metadata
+     * Return a JSON representation of bcids metadata
      *
-     * @param dataset_id
+     * @param bcid_id
      *
      * @return
      */
     @GET
-    @Path("/metadata/{dataset_id}")
+    @Path("/metadata/{bcid_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String run(@PathParam("dataset_id") Integer dataset_id) {
-        GenericIdentifier bcid = new bcid(dataset_id);
+    public String run(@PathParam("bcid_id") Integer bcid_id) {
+        GenericIdentifier bcid = new bcid(bcid_id);
         Renderer renderer = new JSONRenderer();
 
         return "[" + renderer.render(bcid) + "]";
@@ -145,7 +145,7 @@ public class groupService {
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response datasetList(@Context HttpServletRequest request) {
+    public Response bcidList(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
 
@@ -153,8 +153,8 @@ public class groupService {
             throw new UnauthorizedRequestException("You must be logged in to view your data groups.");
         }
 
-        dataGroupMinter d = new dataGroupMinter();
-        String response = d.datasetList(username);
+        bcidMinter d = new bcidMinter();
+        String response = d.bcidList(username);
         d.close();
 
         return Response.ok(response).build();
@@ -176,8 +176,8 @@ public class groupService {
             throw new UnauthorizedRequestException("You must be logged in to view your BCIDs.");
         }
 
-        dataGroupMinter d = new dataGroupMinter();
-        String response = d.datasetTable(username);
+        bcidMinter d = new bcidMinter();
+        String response = d.bcidTable(username);
         d.close();
 
         return Response.ok(response).build();
@@ -215,8 +215,8 @@ public class groupService {
     @GET
     @Path("/dataGroupEditorAsTable")
     @Produces(MediaType.TEXT_HTML)
-    public Response dataGroupEditorAsTable(@QueryParam("ark") String prefix,
-                                           @Context HttpServletRequest request) {
+    public Response bcidEditorAsTable(@QueryParam("ark") String prefix,
+                                      @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
 
@@ -228,7 +228,7 @@ public class groupService {
             throw new BadRequestException("You must provide an \"ark\" query parameter.");
         }
 
-        dataGroupMinter d = new dataGroupMinter();
+        bcidMinter d = new bcidMinter();
         String response = d.bcidEditorAsTable(username, prefix);
         d.close();
         return Response.ok(response).build();
@@ -251,14 +251,14 @@ public class groupService {
     @Path("/dataGroup/update")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response dataGroupUpdate(@FormParam("doi") String doi,
-                                    @FormParam("webaddress") String webaddress,
-                                    @FormParam("title") String title,
-                                    @FormParam("resourceType") String resourceTypeString,
-                                    @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
-                                    @FormParam("suffixPassThrough") String stringSuffixPassThrough,
-                                    @FormParam("prefix") String prefix,
-                                    @Context HttpServletRequest request) {
+    public Response bcidUpdate(@FormParam("doi") String doi,
+                               @FormParam("webaddress") String webaddress,
+                               @FormParam("title") String title,
+                               @FormParam("resourceType") String resourceTypeString,
+                               @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
+                               @FormParam("suffixPassThrough") String stringSuffixPassThrough,
+                               @FormParam("prefix") String prefix,
+                               @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
         Hashtable<String, String> config;
@@ -270,8 +270,8 @@ public class groupService {
 
         // get this BCID's config
 
-        dataGroupMinter d = new dataGroupMinter();
-        config = d.getDataGroupConfig(prefix, username.toString());
+        bcidMinter b = new bcidMinter();
+        config = b.getBcidConfig(prefix, username.toString());
 
         if (resourceTypesMinusDataset != null && resourceTypesMinusDataset > 0) {
             resourceTypeString = new ResourceTypes().get(resourceTypesMinusDataset).string;
@@ -300,16 +300,16 @@ public class groupService {
         }
 
         if (update.isEmpty()) {
-            d.close();
+            b.close();
             return Response.ok("{\"success\": \"Nothing needed to be updated.\"}").build();
-        // try to update the config by calling d.updateDataGroupConfig
-        } else if (d.updateDataGroupConfig(update, prefix, username.toString())) {
-            d.close();
+        // try to update the config by calling d.updateBcidConfig
+        } else if (b.updateBcidConfig(update, prefix, username.toString())) {
+            b.close();
             return Response.ok("{\"success\": \"BCID successfully updated.\"}").build();
         } else {
-            d.close();
-            // if we are here, the dataset wasn't found
-            throw new BadRequestException("Dataset wasn't found");
+            b.close();
+            // if we are here, the bcid wasn't found
+            throw new BadRequestException("Bcid wasn't found");
         }
 
     }

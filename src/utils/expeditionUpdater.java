@@ -1,6 +1,6 @@
 package utils;
 
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.database;
 import bcid.expeditionMinter;
 import fimsExceptions.ServerErrorException;
@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.HashMap;
 
 /**
- * helper class to update existing expeditions to include a Collection dataset for the expedition
+ * helper class to update existing expeditions to include a Collection bcid for the expedition
  */
 public class expeditionUpdater {
 
@@ -60,14 +60,14 @@ public class expeditionUpdater {
             if (!expeditionUpdater.expeditionHasBCID((Integer) expedition_id)) {
                 // if the collection bcid doesn't exist for the expedition, create it
                 System.out.println("Creating bcid for expedition id: " + expedition_id);
-                dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-                dataGroupMinter.createEntityBCID((Integer) expeditions.get(expedition_id), "http://purl.org/dc/dcmitype/Collection",
+                bcidMinter bcidMinter = new bcidMinter(false);
+                bcidMinter.createEntityBcid((Integer) expeditions.get(expedition_id), "http://purl.org/dc/dcmitype/Collection",
                         null, null, null, false);
 
                 // Associate this identifier with this expedition
                 expeditionMinter expedition = new expeditionMinter();
-                expedition.attachReferenceToExpedition((Integer) expedition_id, dataGroupMinter.getPrefix());
-                dataGroupMinter.close();
+                expedition.attachReferenceToExpedition((Integer) expedition_id, bcidMinter.getPrefix());
+                bcidMinter.close();
                 expedition.close();
 
             }
@@ -79,8 +79,8 @@ public class expeditionUpdater {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT count(*) FROM datasets d, expeditionsBCIDs e " +
-                    "WHERE e.expedition_id = " + expedition_id + " AND d.datasets_id = e.datasets_id AND d.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
+            String sql = "SELECT count(*) FROM bcids b, expeditionsBCIDs eB " +
+                    "WHERE e.expedition_id = " + expedition_id + " AND b.bcids_id = eB.bcids_idAND b.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();

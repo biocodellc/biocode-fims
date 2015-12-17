@@ -57,9 +57,9 @@ public class inputFileParser {
      * @throws java.io.IOException
      * @throws java.net.URISyntaxException
      */
-    public inputFileParser(String inputString, dataGroupMinter  dataset ) throws IOException, URISyntaxException {
+    public inputFileParser(String inputString, bcidMinter bcidMinter ) throws IOException, URISyntaxException {
 
-        // TODO: check that user_id can write to dataset_id
+        // TODO: check that user_id can write to bcids_id
 
         BufferedReader readbuffer = new BufferedReader(new StringReader(inputString));
         String strRead;
@@ -85,7 +85,7 @@ public class inputFileParser {
                 count++;
             }
 
-            elementArrayList.add(new bcid(suffix, webAddress, dataset.getDatasets_id()));
+            elementArrayList.add(new bcid(suffix, webAddress, bcidMinter.getBcidsId()));
         }
     }
 

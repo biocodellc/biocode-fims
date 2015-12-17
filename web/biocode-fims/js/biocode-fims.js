@@ -322,7 +322,7 @@ function createExpedition() {
             $(this).dialog("close");
         }
     }
-    dialog(message, "Dataset Code", buttons);
+    dialog(message, "Expedition Code", buttons);
     return d.promise();
 }
 
@@ -387,7 +387,7 @@ function failError(jqxhr) {
 }
 
 // Check that the validation form has a project id and if uploading, has an expedition code
-function validForm(dataset_code) {
+function validForm(expedition_code) {
     if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
         var error = false;
@@ -400,8 +400,8 @@ function validForm(dataset_code) {
             // get the dataset code value
             //var datasetcodeval = $("#expedition_code").val();
             // if it doesn't pass the regexp test, then set error message and set error to true
-            if (!dRE.test(dataset_code)) {
-                message = "<b>Dataset Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
+            if (!dRE.test(expedition_code)) {
+                message = "<b>Expedition Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
                 error = true;
             }
         }
@@ -674,7 +674,7 @@ function getExpeditionCodes() {
     $.getJSON("rest/utils/expeditionCodes/" + projectID)
         .done(function(data) {
             var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
-                "<option value='0'>Create New Dataset</option>";
+                "<option value='0'>Create New Expedition</option>";
             $.each(data.expeditions, function(key, e) {
                 select += "<option value=" + e.expedition_code + ">" + e.expedition_code + " (" + e.expedition_title + ")</option>";
             });
@@ -691,7 +691,7 @@ function getExpeditionCodes() {
                 $(this).dialog("close");
                 }
             }
-            dialog("Error fetching datasets!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
+            dialog("Error fetching expeditions!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
         });
 }
 
@@ -784,8 +784,8 @@ function projectToggle(id) {
         $(idElement).slideToggle('slow');
 }
 
-// function to edit a dataset
-function editDataset(project_id, expedition_code, e) {
+// function to edit an expedition
+function editExpedition(project_id, expedition_code, e) {
     var currentPublic;
     var searchId = $(e).closest("div")[0].id.replace("-configuration", "");
     var title = "Editing " + $("a#" + searchId)[0].textContent.trim();
@@ -823,7 +823,7 @@ function editDataset(project_id, expedition_code, e) {
                     $(this).dialog("close");
                     }
                 }
-                dialog("Error updating dataset public status!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
+                dialog("Error updating expedition's public status!<br><br>" + JSON.stringify($.parseJSON(jqxhr.responseText).usrMessage), "Error!", buttons)
             });
         },
         "Cancel": function() {

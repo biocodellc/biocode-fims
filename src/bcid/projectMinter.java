@@ -182,23 +182,23 @@ public class projectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select p.expedition_code as expedition_code,p.expedition_title,d1.graph as graph,d1.ts as ts, d1.webaddress as webaddress, d1.prefix as ark, d1.datasets_id as id, p.project_id as project_id \n" +
-                    "from datasets as d1, \n" +
-                    "(select p.expedition_code as expedition_code,d.graph as graph,max(d.ts) as maxts, d.webaddress as webaddress, d.prefix as ark, d.datasets_id as id, p.project_id as project_id \n" +
-                    "    \tfrom datasets d,expeditions p, expeditionsBCIDs pB\n" +
-                    "    \twhere pB.datasets_id=d.datasets_id\n" +
-                    "    \tand pB.expedition_id=p.expedition_id\n" +
-                    " and d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+            String sql = "select p.expedition_code as expedition_code,p.expedition_title,b1.graph as graph,b1.ts as ts, b1.webaddress as webaddress, b1.prefix as ark, b1.bcids_id as id, p.project_id as project_id \n" +
+                    "from bcids as b1, \n" +
+                    "(select p.expedition_code as expedition_code,b.graph as graph,max(b.ts) as maxts, b.webaddress as webaddress, b.prefix as ark, b.bcids_id as id, p.project_id as project_id \n" +
+                    "    \tfrom bcids b,expeditions p, expeditionsBCIDs eB\n" +
+                    "    \twhere eB.bcids_id=b.bcids_id\n" +
+                    "    \tand eB.expedition_id=p.expedition_id\n" +
+                    " and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
                     "    and p.project_id = ?\n" +
-                    "    \tgroup by p.expedition_code) as  d2,\n" +
-                    "expeditions p,  expeditionsBCIDs pB\n" +
-                    "where p.expedition_code = d2.expedition_code and d1.ts = d2.maxts\n" +
-                    " and pB.datasets_id=d1.datasets_id \n" +
-                    " and pB.expedition_id=p.expedition_id\n" +
-                    " and d1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+                    "    \tgroup by p.expedition_code) as  b2,\n" +
+                    "expeditions p,  expeditionsBCIDs eB\n" +
+                    "where p.expedition_code = b2.expedition_code and b1.ts = b2.maxts\n" +
+                    " and eB.bcids_id=b1.bcids_id\n" +
+                    " and eB.expedition_id=p.expedition_id\n" +
+                    " and b1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
                     "    and p.project_id =?";
 
-            // Enforce restriction on viewing particular datasets -- this is important for protected datasets
+            // Enforce restriction on viewing particular bcids -- this is important for protected bcids
             if (username != null) {
                 sql += "    and (p.public = 1 or p.users_id = ?)";
             } else {
@@ -209,7 +209,7 @@ public class projectMinter {
             stmt.setInt(1, project_id);
             stmt.setInt(2, project_id);
 
-            // Enforce restriction on viewing particular datasets -- this is important for protected datasets
+            // Enforce restriction on viewing particular bcids -- this is important for protected bcids
             if (username != null) {
                 Integer userId = db.getUserId(username);
                 stmt.setInt(3, userId);
@@ -224,7 +224,7 @@ public class projectMinter {
                 sb.append("\t\t\t\"expedition_title\":\"" + rs.getString("expedition_title") + "\",\n");
                 sb.append("\t\t\t\"ts\":\"" + rs.getString("ts") + "\",\n");
                 sb.append("\t\t\t\"ark\":\"" + rs.getString("ark") + "\",\n");
-                sb.append("\t\t\t\"dataset_id\":\"" + rs.getString("id") + "\",\n");
+                sb.append("\t\t\t\"bcids_id\":\"" + rs.getString("id") + "\",\n");
                 sb.append("\t\t\t\"project_id\":\"" + rs.getString("project_id") + "\",\n");
                 sb.append("\t\t\t\"webaddress\":\"" + rs.getString("webaddress") + "\",\n");
                 sb.append("\t\t\t\"graph\":\"" + rs.getString("graph") + "\"\n");
@@ -755,11 +755,11 @@ public class projectMinter {
 
             }
 
-            String sql2 = "select e.expedition_code, e.expedition_title, d.ts, d.prefix as ark, d.datasets_id as id, d.finalCopy, e.project_id, p.project_title\n" +
-                    "from datasets d, expeditions e,  expeditionsBCIDs pB, projects p\n" +
-                    "where d.users_id = ? and d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    " and pB.datasets_id=d.datasets_id \n" +
-                    " and e.expedition_id=pB.expedition_id\n" +
+            String sql2 = "select e.expedition_code, e.expedition_title, b.ts, b.prefix as ark, b.bcids_id as id, b.finalCopy, e.project_id, p.project_title\n" +
+                    "from bcids b, expeditions e,  expeditionsBCIDs eB, projects p\n" +
+                    "where b.users_id = ? and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+                    " and eB.bcids_id=b.bcids_id\n" +
+                    " and e.expedition_id=eB.expedition_id\n" +
                     " and p.project_id=e.project_id\n" +
                     " order by project_id, expedition_code, ts desc";
 
@@ -774,7 +774,7 @@ public class projectMinter {
 
                 // Grap the prefixes and concepts associated with this
                 dataset.put("ts", rs.getString("ts"));
-                dataset.put("dataset_id", rs.getString("id"));
+                dataset.put("bcidsId", rs.getString("id"));
                 dataset.put("ark", rs.getString("ark"));
                 dataset.put("finalCopy", rs.getString("finalCopy"));
 
@@ -820,20 +820,20 @@ public class projectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select e.expedition_code, e.expedition_title, d1.graph, d1.ts, d1.datasets_id as id, d1.webaddress as webaddress, d1.prefix as ark, e.project_id, e.public, p.project_title\n" +
-                    "from datasets as d1, \n" +
-                    "(select e.expedition_code as expedition_code,d.graph as graph,max(d.ts) as maxts, d.webaddress as webaddress, d.prefix as ark, d.datasets_id as id, e.project_id as project_id \n" +
-                    "    \tfrom datasets d,expeditions e, expeditionsBCIDs pB\n" +
-                    "    \twhere pB.datasets_id=d.datasets_id\n" +
-                    "    \tand pB.expedition_id=e.expedition_id\n" +
-                    " and d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    "    \tgroup by e.expedition_code) as  d2,\n" +
-                    "expeditions e,  expeditionsBCIDs pB, projects p\n" +
-                    "where e.expedition_code = d2.expedition_code and d1.ts = d2.maxts\n" +
-                    " and pB.datasets_id=d1.datasets_id \n" +
-                    " and pB.expedition_id=e.expedition_id\n" +
+            String sql = "select e.expedition_code, e.expedition_title, b1.graph, b1.ts, b1.bcids_id as id, b1.webaddress as webaddress, b1.prefix as ark, e.project_id, e.public, p.project_title\n" +
+                    "from bcids as b1, \n" +
+                    "(select e.expedition_code as expedition_code,b.graph as graph,max(b.ts) as maxts, b.webaddress as webaddress, b.prefix as ark, b.bcids_id as id, e.project_id as project_id \n" +
+                    "    \tfrom bcids b,expeditions e, expeditionsBCIDs eB\n" +
+                    "    \twhere eB.bcids_id=b.bcids_id\n" +
+                    "    \tand eB.expedition_id=e.expedition_id\n" +
+                    " and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+                    "    \tgroup by e.expedition_code) as  b2,\n" +
+                    "expeditions e,  expeditionsBCIDs eB, projects p\n" +
+                    "where e.expedition_code = b2.expedition_code and b1.ts = b2.maxts\n" +
+                    " and eB.bcids_id=b1.bcids_id\n" +
+                    " and eB.expedition_id=e.expedition_id\n" +
                     " and p.project_id=e.project_id\n" +
-                    " and d1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+                    " and b1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
                     "    and e.users_id = ?";
 
             stmt = conn.prepareStatement(sql);
@@ -849,7 +849,7 @@ public class projectMinter {
                 dataset.put("expedition_code", rs.getString("expedition_code"));
                 dataset.put("expedition_title", rs.getString("expedition_title"));
                 dataset.put("ts", rs.getString("ts"));
-                dataset.put("dataset_id", rs.getString("id"));
+                dataset.put("bcidsId", rs.getString("id"));
                 dataset.put("project_id", rs.getString("project_id"));
                 dataset.put("graph", rs.getString("graph"));
                 dataset.put("public", rs.getString("public"));

@@ -9,14 +9,11 @@ import utils.SettingsManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.UUID;
 
 
 /**
@@ -32,8 +29,8 @@ public class run {
 
     }
 
-    public run(String path, dataGroupMinter dataset) {
-        // Set this to the TEST dataset
+    public run(String path, bcidMinter bcidMinter) {
+        // Set this to the TEST bcid
 
         // Create test data
         System.out.println("\nReading input file = " + path + " ...");
@@ -45,7 +42,7 @@ public class run {
           */
 
         try {
-            testDatafile = new inputFileParser(readFile(path), dataset).elementArrayList;
+            testDatafile = new inputFileParser(readFile(path), bcidMinter).elementArrayList;
         } catch (IOException e) {
             //TODO should we silence this exception?
             logger.warn("IOException thrown", e);
@@ -53,7 +50,7 @@ public class run {
             //TODO should we silence this exception?
             logger.warn("URISyntaxException thrown", e);
         }
-        System.out.println("  Successfully created test dataset");
+        System.out.println("  Successfully created test bcid");
     }
 
     private static void resolverResults(EZIDService ezidService, String identifier) {
@@ -81,7 +78,7 @@ public class run {
     private void runBCIDCreatorService(){
 
         // Initialize variables
-        dataGroupMinter dataset = null;
+        bcidMinter bcidMinter;
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
 
@@ -93,11 +90,11 @@ public class run {
         String webaddress = null;
         String title = "TEST Load from Java";
 
-        // Create a new dataset
-        System.out.println("\nCreating a new dataset");
-        dataset = new dataGroupMinter(true, true);
-        dataset.mint(NAAN, user_id, new ResourceTypes().get(ResourceType).uri, doi, webaddress, null, title, false);
-        dataset.close();
+        // Create a new bcid
+        System.out.println("\nCreating a new bcid");
+        bcidMinter = new bcidMinter(true, true);
+        bcidMinter.mint(NAAN, user_id, new ResourceTypes().get(ResourceType).uri, doi, webaddress, null, title, false);
+        bcidMinter.close();
 
         /*
          // Create test data by using input file
@@ -157,16 +154,16 @@ public class run {
         try {
             // Create EZID metadata for all Outstanding Identifiers.
             manageEZID creator = new manageEZID();
-            creator.createDatasetsEZIDs(ezidAccount);
+            creator.createBcidsEZIDs(ezidAccount);
             creator.close();
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
         /*
-        dataGroupMinter d = null;
+        bcidMinter d = null;
         try {
-            d = new dataGroupMinter();
+            d = new bcidMinter();
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

@@ -33,12 +33,12 @@ CREATE TABLE authorities (
       constraint fk_authorities_users foreign key(username) references users(username));
       create unique index ix_auth_username on authorities (username,authority);
 
-DROP TABLE IF EXISTS `datasets`;
+DROP TABLE IF EXISTS `bcids`;
 
-CREATE TABLE `datasets` (
-  `datasets_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `bcids` (
+  `bcids_id` int(11) NOT NULL AUTO_INCREMENT,
   `ezidMade` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indicates if EZID has been made',
-  `ezidRequest` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'indicates if we want system to request EZID, all datasets by default get an EZID request',
+  `ezidRequest` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'indicates if we want system to request EZID, all bcids by default get an EZID request',
   `suffixPassthrough` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indicates if we want to use suffixPassthrough for this identifier',
   `finalCopy` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'indicates if this is the final copy of a particular dataset for nmnh projects',
   `internalID` char(36) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'The internal ID for this dataset',
@@ -50,8 +50,8 @@ CREATE TABLE `datasets` (
   `graph` text  COMMENT 'A reference to a graph, used by the biocode-fims expedition for storing graph references for a particular dataset',
   `resourceType` text NOT NULL COMMENT 'default resource type for this dataset, stored as a URI',
   `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'timestamp of insertion',
-  PRIMARY KEY `datasets_datasets_id` (`datasets_id`),
-  KEY `datasets_users_id` (`users_id`),
+  PRIMARY KEY `bcids_bcids_id` (`bcids_id`),
+  KEY `bcids_users_id` (`users_id`),
   CONSTRAINT `FK_dataset_users`  FOREIGN KEY (`users_id`) REFERENCES `users` (`USER_ID`)
 ) ENGINE=Innodb DEFAULT CHARSET=utf8;
 
@@ -77,11 +77,11 @@ DROP TABLE IF EXISTS `expeditionsBCIDs`;
 CREATE TABLE `expeditionsBCIDs` (
   `expeditionsBCIDs_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'The unique, internal key for this element',
   `expedition_id` int(11) NOT NULL COMMENT 'The expedition_id',
-  `datasets_id` int NOT NULL COMMENT 'The dataset_id',
+  `bcids_id` int NOT NULL COMMENT 'The bcids_id',
   UNIQUE KEY `expeditionsBCIDs_expeditionsBCIDs_id` (`expeditionsBCIDs_id`),
   KEY `expeditionsBCIDs_expedition_id` (`expedition_id`),
-  KEY `datasets_id` (`datasets_id`),
-  CONSTRAINT `FK_expeditionsBCIDs_datasets` FOREIGN KEY(`datasets_id`) REFERENCES `datasets` (`datasets_id`),
+  KEY `bcids_id` (`bcids_id`),
+  CONSTRAINT `FK_expeditionsBCIDs_bcids` FOREIGN KEY(`bcids_id`) REFERENCES `bcids` (`bcids_id`),
   CONSTRAINT `FK_expeditionsBCIDs_expedition` FOREIGN KEY(`expedition_id`) REFERENCES `expeditions` (`expedition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

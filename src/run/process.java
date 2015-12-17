@@ -1,7 +1,7 @@
 package run;
 
 import auth.authenticator;
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.database;
 import bcid.expeditionMinter;
 import fimsExceptions.FIMSException;
@@ -245,7 +245,7 @@ public class process {
     }
 
     private boolean createExpedition(processController processController, Mapping mapping) {
-        String status = "\tCreating dataset " + processController.getExpeditionCode() + " ... this is a one time process " +
+        String status = "\tCreating expedition " + processController.getExpeditionCode() + " ... this is a one time process " +
                 "before loading each spreadsheet and may take a minute...\n";
         processController.appendStatus(status);
         fimsPrinter.out.println(status);
@@ -282,11 +282,11 @@ public class process {
                 // Create the entity BCID
 
                 // Mint the data group
-                dataGroupMinter minterDataset = new dataGroupMinter(true);
+                bcidMinter bcidMinter = new bcidMinter(true);
 
-                minterDataset.createEntityBCID(processController.getUser_id(), entity.getConceptAlias(), "", null, null, false);
-                String bcid = minterDataset.getPrefix();
-                minterDataset.close();
+                bcidMinter.createEntityBcid(processController.getUser_id(), entity.getConceptAlias(), "", null, null, false);
+                String bcid = bcidMinter.getPrefix();
+                bcidMinter.close();
                 // Associate this identifier with this expedition
                 expedition.attachReferenceToExpedition(processController.getExpeditionCode(), bcid, processController.getProject_id());
 
@@ -358,9 +358,9 @@ public class process {
                     if (forceAll) {
                         runExpeditionCreate();
                     } else {
-                        String message = "\nThe dataset code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
+                        String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
                                 "Do you wish to create it now?" +
-                                "\nIf you choose to continue, your data will be associated with this new dataset code.";
+                                "\nIf you choose to continue, your data will be associated with this new expedition code.";
                         Boolean continueOperation = fimsInputter.in.continueOperation(message);
                         if (!continueOperation)
                             return;
@@ -601,7 +601,7 @@ public class process {
         CommandLine cl;
 
         // The expedition code corresponds to a expedition recognized by BCID
-        String dataset_code = "";
+        String expedition_code = "";
         // The configuration template
         //String configuration = "";
         // The input file
@@ -621,7 +621,7 @@ public class process {
         options.addOption("f", "format", true, "excel|html|json|cspace  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
-        options.addOption("e", "dataset_code", true, "Dataset code.  You will need to obtain a data code before " +
+        options.addOption("e", "expedition_code", true, "Expedition code.  You will need to obtain a data code before " +
                 "loading data");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
@@ -717,9 +717,9 @@ public class process {
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
 
-        // Set dataset_code
+        // Set expedition_code
         if (cl.hasOption("e"))
-            dataset_code = cl.getOptionValue("e");
+            expedition_code = cl.getOptionValue("e");
 
         // Set triplify option
         if (cl.hasOption("bcid"))
@@ -803,9 +803,9 @@ public class process {
                                 return;
                             }
 
-                            // Check that a dataset code has been entered
+                            // Check that a expedition code has been entered
                             if (!cl.hasOption("e")) {
-                                fimsPrinter.out.println("Need to enter a dataset code before  uploading");
+                                fimsPrinter.out.println("Need to enter a expedition code before  uploading");
                                 helpf.printHelp("fims ", options, true);
                                 return;
                             }
@@ -813,7 +813,7 @@ public class process {
 
                         // Now run the process
                         process p;
-                        processController processController = new processController(project_id, dataset_code);
+                        processController processController = new processController(project_id, expedition_code);
                         processController.setUser_id(username);
 
                         // use local configFile if specified

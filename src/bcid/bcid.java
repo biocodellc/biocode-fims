@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * The bcid class encapsulates all of the information we know about a BCID.
  * This includes data such as the
- * status of EZID creation, associated dataset calls, and any metadata.
+ * status of EZID creation, associated bcid calls, and any metadata.
  * It can include a data element or a data group.
  * There are several ways to construct an element, including creating it from scratch, or instantiating by looking
  * up an existing identifier from the database.
@@ -24,17 +24,17 @@ public class bcid extends GenericIdentifier {
     protected String who = null;            // erc.who
     protected String title = null;            // erc.who\
     public String projectCode = null;
-    protected Boolean datasetsEzidMade;
-    protected Boolean datasetsEzidRequest;
-    protected String datasetsPrefix;
-    protected String datasetsTs;
+    protected Boolean bcidsEzidMade;
+    protected Boolean bcidsEzidRequest;
+    protected String bcidsPrefix;
+    protected String bcidsTs;
     protected Boolean identifiersEzidRequest;
     protected Boolean identifiersEzidMade;
-    protected Boolean datasetsSuffixPassthrough;
+    protected Boolean bcidsSuffixPassthrough;
     protected String identifiersTs;
     //protected String ark;
     protected String doi;
-    protected Integer dataset_id;
+    protected Integer bcidsId;
     protected String graph = null;
 
     protected String level;
@@ -58,12 +58,12 @@ public class bcid extends GenericIdentifier {
     /**
      * Create data group
      *
-     * @param datasets_id
+     * @param bcidsId
      */
-    public bcid(Integer datasets_id) {
-        dataGroupMinter dataset = setDatasets_id(datasets_id);
+    public bcid(Integer bcidsId) {
+        bcidMinter bcidMinter = setBcidsId(bcidsId);
 
-        dataset.close();
+        bcidMinter.close();
     }
 
 
@@ -71,26 +71,26 @@ public class bcid extends GenericIdentifier {
      * Create an element given a source identifier, and a resource type identifier
      *
      * @param suffix
-     * @param dataset_id
+     * @param bcidsId
      */
-    public bcid(String suffix, Integer dataset_id) {
+    public bcid(String suffix, Integer bcidsId) {
         this.suffix = suffix;
-        dataGroupMinter dataset = setDatasets_id(dataset_id);
-        projectCode = dataset.getProject(dataset_id);
-        dataset.close();
+        bcidMinter bcidMinter = setBcidsId(bcidsId);
+        projectCode = bcidMinter.getProject(bcidsId);
+        bcidMinter.close();
     }
 
     /**
-     * Create an element given a source identifier, web address for resolution, and a dataset_id
+     * Create an element given a source identifier, web address for resolution, and a bcidsId
      * This method is meant for CREATING bcids.
      *
      * @param suffix
      * @param webAddress
-     * @param dataset_id
+     * @param bcidsId
      */
-    public bcid(String suffix, URI webAddress, Integer dataset_id) {
+    public bcid(String suffix, URI webAddress, Integer bcidsId) {
         this.suffix = suffix;
-        dataGroupMinter dataset = setDatasets_id(dataset_id);
+        bcidMinter bcidMinter = setBcidsId(bcidsId);
         this.webAddress = webAddress;
 
         // Reformat webAddress in this constructor if there is a suffix
@@ -103,7 +103,7 @@ public class bcid extends GenericIdentifier {
                 logger.warn("URISyntaxException for uri: {}", webAddress + suffix, e);
             }
         }
-        dataset.close();
+        bcidMinter.close();
     }
 
 
@@ -112,12 +112,12 @@ public class bcid extends GenericIdentifier {
      *
      * @param suffix
      */
-    private void setSuffix(String suffix, dataGroupMinter dataset) {
+    private void setSuffix(String suffix, bcidMinter bcidMinter) {
         try {
             if (suffix != null && !suffix.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + suffix);
+                identifier = new URI(bcidMinter.identifier + sm.retrieveValue("divider") + suffix);
             } else {
-                identifier = dataset.identifier;
+                identifier = bcidMinter.identifier;
             }
         } catch (URISyntaxException e) {
             //TODO should we silence this exception?
@@ -137,92 +137,47 @@ public class bcid extends GenericIdentifier {
     }
 
     /**
-     * Internal functional for setting the datasets_id that has been passed in
+     * Internal functional for setting the bcids_id that has been passed in
      *
-     * @param pDatasets_id
+     * @param pBcidsId
      */
-    private dataGroupMinter setDatasets_id(Integer pDatasets_id) {
-        /*  try {
-          database db = new database();
-          Statement stmt = db.conn.createStatement();
-          String datasets = "SELECT d.ezidMade," +
-                  "   d.ezidRequest," +
-                  "   d.prefix," +
-                  "   d.ts," +
-                  "   d.title," +
-                  "   d.resourceType," +
-                  "   d.suffixPassthrough," +
-                  "   d.doi," +
-                  "   d.webAddress," +
-                  //"   concat_ws('',u.fullname,' &lt;',u.email,'&gt;') as username " +
-                  "   CONCAT_WS(' ',u.firstName, u.lastName) " +
-                  " FROM datasets d, users u " +
-                  " WHERE " +
-                  " d.datasets_id = " + datasets_id + " && " +
-                  " d.users_id = u.user_id";
+    private bcidMinter setBcidsId (Integer pBcidsId) {
 
-          ResultSet rs = stmt.executeQuery(datasets);
-          rs.next();
-          int count = 1;
-          datasetsEzidMade = rs.getBoolean(count++);
-          datasetsEzidRequest = rs.getBoolean(count++);
-          datasetsPrefix = rs.getString(count++);
-          datasetsTs = rs.getString(count++);
-          title = rs.getString(count++);
-          what = rs.getString(count++);
-          datasetsSuffixPassthrough = rs.getBoolean(count++);
-          doi = rs.getString(count++);
-          try {
-              webAddress = new URI(rs.getString(count++));
-          } catch (NullPointerException e) {
-              webAddress = null;
-          }
-          who = rs.getString(count++);
-          identifier = new URI(datasetsPrefix);
-          //what = new ResourceTypes().get(ResourceTypes.DATASET).uri;
-          when = datasetsTs;
-          level = this.GROUP;
-
-      } catch (Exception e) {
-          e.printStackTrace();
-      }  */
-
-
-        // Create a dataset representation based on the dataset_id
-        dataGroupMinter dataset = new dataGroupMinter(pDatasets_id);
+        // Create a bcid representation based on the bcidsId
+        bcidMinter bcidMinter = new bcidMinter(pBcidsId);
         //when =  new dates().now();
-        when = dataset.ts;
+        when = bcidMinter.ts;
 
-        this.graph = dataset.getGraph();
-        this.webAddress = dataset.getWebAddress();
-        this.dataset_id = pDatasets_id;
-        this.what = dataset.getResourceType();
-        this.title = dataset.title;
-        this.projectCode = dataset.projectCode;
-        this.datasetsTs = dataset.ts;
-        this.datasetsPrefix = dataset.getPrefix();
-        this.doi = dataset.doi;
+        this.graph = bcidMinter.getGraph();
+        this.webAddress = bcidMinter.getWebAddress();
+        this.bcidsId = pBcidsId;
+        this.what = bcidMinter.getResourceType();
+        this.title = bcidMinter.title;
+        this.projectCode = bcidMinter.projectCode;
+        this.bcidsTs = bcidMinter.ts;
+        this.bcidsPrefix = bcidMinter.getPrefix();
+        this.doi = bcidMinter.doi;
         this.level = this.UNREGISTERED_ELEMENT;
-        this.who = dataset.who;
+        this.who = bcidMinter.who;
         identifiersEzidRequest = false;
         identifiersEzidMade = false;
-        datasetsEzidMade = dataset.ezidMade;
-        datasetsEzidRequest = dataset.ezidRequest;
-        datasetsSuffixPassthrough = dataset.getSuffixPassThrough();
+        bcidsEzidMade = bcidMinter.ezidMade;
+        bcidsEzidRequest = bcidMinter.ezidRequest;
+        bcidsSuffixPassthrough = bcidMinter.getSuffixPassThrough();
 
         try {
             if (suffix != null && !suffix.equals("")) {
-                identifier = new URI(dataset.identifier + sm.retrieveValue("divider") + suffix);
+                identifier = new URI(bcidMinter.identifier + sm.retrieveValue("divider") + suffix);
             } else {
-                identifier = dataset.identifier;
+                identifier = bcidMinter.identifier;
             }
-            projectCode = dataset.getProject(dataset_id);
+            projectCode = bcidMinter.getProject(bcidsId);
         } catch (URISyntaxException e) {
             //TODO should we silence this exception?
-            logger.warn("URISyntaxException for uri: {}", dataset.identifier + sm.retrieveValue("divider") + suffix, e);
+            logger.warn("URISyntaxException for uri: {}", bcidMinter.identifier + sm.retrieveValue("divider") + suffix, e);
         }
 
-        return dataset;
+        return bcidMinter;
 
     }
 
@@ -242,11 +197,11 @@ public class bcid extends GenericIdentifier {
         put("projectCode", projectCode);
         put("suffix", suffix);
         put("doi", doi);
-        put("datasetsEzidMade", datasetsEzidMade);
-        put("datasetsSuffixPassThrough", datasetsSuffixPassthrough);
-        put("datasetsEzidRequest", datasetsEzidRequest);
-        put("datasetsPrefix", datasetsPrefix);
-        put("datasetsTs", datasetsTs);
+        put("bcidsEzidMade", bcidsEzidMade);
+        put("bcidsSuffixPassThrough", bcidsSuffixPassthrough);
+        put("bcidsEzidRequest", bcidsEzidRequest);
+        put("bcidsPrefix", bcidsPrefix);
+        put("bcidsTs", bcidsTs);
         put("identifiersEzidMade", identifiersEzidMade);
         put("identifiersTs", identifiersTs);
         put("rights", rights);
@@ -284,8 +239,8 @@ public class bcid extends GenericIdentifier {
     public String getGraph() {
         return graph;
     }
-    public Boolean getDatasetsSuffixPassthrough() {
-        return datasetsSuffixPassthrough;
+    public Boolean getBcidsSuffixPassthrough() {
+        return bcidsSuffixPassthrough;
     }
 }
 

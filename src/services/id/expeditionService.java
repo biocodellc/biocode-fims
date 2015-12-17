@@ -62,7 +62,7 @@ public class expeditionService {
      * @param expedition_code
      * @param project_id
      * @param accessToken
-     * @param ignore_user     if specified as true then we don't perform a check on what user owns the dataset
+     * @param ignore_user     if specified as true then we don't perform a check on what user owns the expedition
      *
      * @return
      */
@@ -183,7 +183,7 @@ public class expeditionService {
             sendEmail.start();
             */
 
-            return Response.ok("{\"success\": \"Succesfully created dataset:<br>" +
+            return Response.ok("{\"success\": \"Succesfully created expedition:<br>" +
                     expedition.printMetadataHTML(expedition_id) + "\"}").build();
         } catch (FIMSException e) {
             throw new BadRequestException(e.getMessage());
@@ -286,7 +286,7 @@ public class expeditionService {
         }
 
         if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view your datasets.");
+            throw new UnauthorizedRequestException("You must be logged in to view your expeditions.");
         }
 
         expeditionMinter e = new expeditionMinter();
@@ -338,7 +338,7 @@ public class expeditionService {
         Object username = session.getAttribute("user");
 
         if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view this expedition's datasets.");
+            throw new UnauthorizedRequestException("You must be logged in to view this expedition's configuration.");
         }
 
         expeditionMinter e = new expeditionMinter();
@@ -387,10 +387,10 @@ public class expeditionService {
         Object username = session.getAttribute("user");
 
         if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view this project's datasets.");
+            throw new UnauthorizedRequestException("You must be logged in to view this project's expeditions.");
         }
         if (admin == null) {
-            throw new ForbiddenRequestException("You must be this project's admin in order to view its datasets.");
+            throw new ForbiddenRequestException("You must be this project's admin in order to view its expeditions.");
         }
 
         expeditionMinter e = new expeditionMinter();
@@ -418,7 +418,7 @@ public class expeditionService {
         Integer projectId = new Integer(data.remove("project_id").get(0));
 
         if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to update an datasets public status.");
+            throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
         }
 
         database db = new database();
@@ -429,7 +429,7 @@ public class expeditionService {
         p.close();
 
         if (!projectAdmin) {
-            throw new ForbiddenRequestException("You must be this project's admin in order to update a project dataset's public status.");
+            throw new ForbiddenRequestException("You must be this project's admin in order to update a project expedition's public status.");
         }
         expeditionMinter e = new expeditionMinter();
 
@@ -470,7 +470,7 @@ public class expeditionService {
         }
 
         if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view your datasets.");
+            throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
         }
 
         database db = new database();
@@ -482,12 +482,10 @@ public class expeditionService {
         // Update the expedition public status for what was just passed in
 
         if (e.updateExpeditionPublicStatus(userId, expeditionCode, projectId, publicStatus)) {
-            //System.out.println("successs!");
             e.close();
             return Response.ok("{\"success\": \"successfully updated.\"}").build();
         } else {
             e.close();
-            //System.out.println("not successs!");
             return Response.ok("{\"success\": \"nothing to update.\"}").build();
         }
     }

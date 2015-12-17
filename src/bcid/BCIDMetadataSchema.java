@@ -63,7 +63,7 @@ public class BCIDMetadataSchema {
                     dcSource = new metadataElement("dc:source", pairs.getValue().toString(), "The locally-unique identifier.");
                 } else if (bcidKey.equalsIgnoreCase("rights")) {
                     dcRights = new metadataElement("dcterms:rights", pairs.getValue().toString(), "Rights applied to the metadata content describing this identifier.");
-                } else if (bcidKey.equalsIgnoreCase("datasetsPrefix")) {
+                } else if (bcidKey.equalsIgnoreCase("bcidsPrefix")) {
                     //Don't print this line for the Test Account
                     if (!identifier.getMetadata().get("who").equals("Test Account")) {
                         dcIsReferencedBy = new metadataElement("dcterms:isReferencedBy", "http://n2t.net/" + pairs.getValue().toString(), "The group level identifier, registered with EZID.");

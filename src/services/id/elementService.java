@@ -83,7 +83,7 @@ public class elementService {
     /**
      * Create a bunch of BCIDs
      *
-     * @param dataset_id
+     * @param bcidsId
      * @param title
      * @param resourceType
      * @param data
@@ -95,7 +95,7 @@ public class elementService {
    /* @POST
     @Path("/creator")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response creator(@FormParam("datasetList") Integer dataset_id,
+    public Response creator(@FormParam("datasetList") Integer bcidsId,
                             @FormParam("title") String title,
                             @FormParam("resourceTypesMinusDataset") Integer resourceType,
                             @FormParam("data") String data,
@@ -105,7 +105,7 @@ public class elementService {
                             @FormParam("suffixPassThrough") String stringSuffixPassThrough,
                             @Context HttpServletRequest request) {
 
-        dataGroupMinter dataset;
+        bcidMinter dataset;
         database db;
         Boolean suffixPassthrough = false;
         HttpSession session = request.getSession();
@@ -121,7 +121,7 @@ public class elementService {
         db.close();
 
         // Request creation of new dataset
-        if (dataset_id == 0) {
+        if (bcidsId == 0) {
 
             // Format Input variables
             if (!stringSuffixPassThrough.isEmpty() &&
@@ -145,7 +145,7 @@ public class elementService {
             // TODO: check for valid local ID's, no reserved characters
 
             // Create a new dataset
-            dataset = new dataGroupMinter(true, suffixPassthrough);
+            dataset = new bcidMinter(true, suffixPassthrough);
             // we don't know DOI or webaddress from this call, so we set them to NULL
             dataset.mint(
                     new Integer(sm.retrieveValue("bcidNAAN")),
@@ -158,7 +158,7 @@ public class elementService {
                     false);
             // Load an existing dataset we've made already
         } else {
-            dataset = new dataGroupMinter(dataset_id);
+            dataset = new bcidMinter(bcidsId);
 
             // TODO: check that dataset.users_id matches the user that is logged in!
 
@@ -166,7 +166,7 @@ public class elementService {
 
         // Create a bcid Minter instance
         elementMinter minter = null;
-        minter = new elementMinter(dataset.getDatasets_id());
+        minter = new elementMinter(dataset.getBcidsId());
 
         try {
             // Parse input file

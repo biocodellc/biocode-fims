@@ -1,6 +1,6 @@
 package settings;
 
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.expeditionMinter;
 import digester.Entity;
 import run.process;
@@ -148,11 +148,11 @@ public class deepRoots {
         process p = new process();
 
         // Mint the data group
-        dataGroupMinter minterDataset = new dataGroupMinter(true);
+        bcidMinter bcidMinter = new bcidMinter(true);
 
-        minterDataset.createEntityBCID(user_id, entity.getConceptAlias(), "", null, null, false);
-        bcid = minterDataset.getPrefix();
-        minterDataset.close();
+        bcidMinter.createEntityBcid(user_id, entity.getConceptAlias(), "", null, null, false);
+        bcid = bcidMinter.getPrefix();
+        bcidMinter.close();
         // Associate this identifier with this expedition
         expeditionMinter expedition = new expeditionMinter();
         expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);

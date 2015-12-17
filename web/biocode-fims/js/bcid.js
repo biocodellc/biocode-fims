@@ -6,8 +6,8 @@ function dataGroupCreatorSubmit() {
     results(posting,"#dataGroupCreatorResults");
 }
 
-function dataGroupEditorSubmit() {
-    var posting = $.post( "/id/groupService/dataGroup/update", $("#dataGroupEditForm").serialize())
+function bcidEditorSubmit() {
+    var posting = $.post( "/id/groupService/dataGroup/update", $("#bcidEditForm").serialize())
         .done(function(data) {
             populateBCIDPage();
         }).fail(function(jqxhr) {

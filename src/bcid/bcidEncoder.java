@@ -8,8 +8,8 @@ import java.math.BigInteger;
 import java.util.HashMap;
 
 /**
- * The purpsose of the datasetEncoder is to encode very short identifiers for EZID shoulders to represent
- * unique datasets.  These encoded numbers correspond to integers in the database and
+ * The purpsose of the bcidEncoder is to encode very short identifiers for EZID shoulders to represent
+ * unique bcids.  These encoded numbers correspond to integers in the database and
  * conform to the EZID shoulder specification, namely letters up to and including the first
  * digit. E.g. aB1 or abcdefg1
  * <p/>
@@ -18,11 +18,11 @@ import java.util.HashMap;
  * If we have 3 letters in the shoulder including 1 digit this gives 1,217,727 possible permutations.
  * 4 letters and 1 digit will give 74,549,800 possible permutations.
  */
-public class dataGroupEncoder extends GenericIdentifier implements encoder {
+public class bcidEncoder extends GenericIdentifier implements encoder {
     private boolean debug = false;
     int[] endDigits = {1};
 
-    private static Logger logger = LoggerFactory.getLogger(dataGroupEncoder.class);
+    private static Logger logger = LoggerFactory.getLogger(bcidEncoder.class);
 
     /**
      * Tell if DEBUG mode is on or off
@@ -43,14 +43,14 @@ public class dataGroupEncoder extends GenericIdentifier implements encoder {
     }
 
     /**
-     * Encode a dataset value
+     * Encode a bcid value
      *
      * @param i pass in a BigInteger
      * @return returns the encoded String
      */
     public String encode(BigInteger i) {
 
-        // First spot is test dataset!
+        // First spot is test bcid!
         if (i.intValue() == 1) {
             return "fk4";
         }
@@ -117,7 +117,7 @@ public class dataGroupEncoder extends GenericIdentifier implements encoder {
                 naan = strArray[1];
                 shoulder = strArray[2];
 
-                // Look and see if this is the test dataset
+                // Look and see if this is the test bcid
                 try {
                     if (naan.equals("99999") && shoulder.equals("fk4")) {
                         return new BigInteger("1");
@@ -282,7 +282,7 @@ public class dataGroupEncoder extends GenericIdentifier implements encoder {
      */
     public static void main(String args[]) {
 
-        dataGroupEncoder shoulderEncoder = new dataGroupEncoder();
+        bcidEncoder shoulderEncoder = new bcidEncoder();
         shoulderEncoder.setDebug(true);
 
         BigInteger i = new BigInteger("10000000");

@@ -76,10 +76,10 @@ public class dipnetLoad {
     /**
      * Load dataset
      */
-    public static void loadDataset(String dataset_code, String input_file) {
+    public static void loadDataset(String expedition_code, String input_file) {
         boolean readyToLoad = false;
         // Create the process controller object
-        processController pc = new processController(project_id, dataset_code);
+        processController pc = new processController(project_id, expedition_code);
         pc.setUser_id(username);
 
         System.out.println("Initializing ...");

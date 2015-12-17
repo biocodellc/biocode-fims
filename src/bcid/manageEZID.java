@@ -20,7 +20,7 @@ import java.util.Iterator;
  * Class to work with EZID creation from the bcid database.  requests to this class are controlled by
  * switches in the database indicating whether the intention is to create EZIDS for particular identifiers.
  */
-public class manageEZID extends dataGroupMinter {
+public class manageEZID extends bcidMinter {
 
     private String publisher;
     private String creator;
@@ -71,27 +71,27 @@ public class manageEZID extends dataGroupMinter {
     }
 
     /**
-     * Update EZID dataset metadata for this particular ID
+     * Update EZID bcid metadata for this particular ID
      */
-    public void updateDatasetsEZID(EZIDService ezid, int datasets_id) throws EZIDException {
+    public void updateBcidsEZID(EZIDService ezid, int bcids_id) throws EZIDException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
 
             String sql = "SELECT " +
-                    "d.datasets_id as datasets_id," +
-                    "d.prefix as prefix," +
-                    "d.title as title," +
-                    "d.ts as ts," +
-                    "d.resourceType as type," +
+                    "b.bcids_id as bcids_id," +
+                    "b.prefix as prefix," +
+                    "b.title as title," +
+                    "b.ts as ts," +
+                    "b.resourceType as type," +
                     "concat_ws('',CONCAT_WS(' ',u.firstName, u.lastName),' <',u.email,'>') as creator " +
-                    "FROM datasets d,users u " +
-                    "WHERE ezidMade && d.users_id=u.USER_ID " +
-                    "AND d.datasets_id = ? " +
+                    "FROM bcids b,users u " +
+                    "WHERE ezidMade && b.users_id=u.USER_ID " +
+                    "AND b.bcids_id = ? " +
                     "LIMIT 1000";
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, datasets_id);
+            stmt.setInt(1, bcids_id);
             rs = stmt.executeQuery();
 
             rs.next();
@@ -132,7 +132,7 @@ public class manageEZID extends dataGroupMinter {
     }
 
     /**
-     * Go through datasets table and create any ezid fields that have yet to be created.
+     * Go through bcids table and create any ezid fields that have yet to be created.
      * This method is meant to be called via a cronjob on the backend.
      * <p/>
      * TODO: throw a special exception on this method so we can follow up why EZIDs are not being made if that is the
@@ -142,20 +142,20 @@ public class manageEZID extends dataGroupMinter {
      *
      * @throws java.net.URISyntaxException
      */
-    public void createDatasetsEZIDs(EZIDService ezid) throws EZIDException {
+    public void createBcidsEZIDs(EZIDService ezid) throws EZIDException {
         // Grab a row where ezid is false
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<String> idSuccessList = new ArrayList();
         try {
-            String sql = "SELECT d.datasets_id as datasets_id," +
-                    "d.prefix as prefix," +
-                    "d.ts as ts," +
-                    "d.resourceType as type," +
-                    "d.title as title," +
+            String sql = "SELECT b.bcids_id as bcids_id," +
+                    "b.prefix as prefix," +
+                    "b.ts as ts," +
+                    "b.resourceType as type," +
+                    "b.title as title," +
                     "concat_ws('',CONCAT_WS(' ',u.firstName, u.lastName),' <',u.email,'>') as creator " +
-                    "FROM datasets d,users u " +
-                    "WHERE !ezidMade && ezidRequest && d.users_id=u.USER_ID && u.username != 'demo'" +
+                    "FROM bcids b,users u " +
+                    "WHERE !ezidMade && ezidRequest && b.users_id=u.USER_ID && u.username != 'demo'" +
                     "LIMIT 1000";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
@@ -185,7 +185,7 @@ public class manageEZID extends dataGroupMinter {
                 // Register this as an EZID
                 try {
                     identifier = new URI(ezid.createIdentifier(myIdentifier, map));
-                    idSuccessList.add(rs.getString("datasets_id"));
+                    idSuccessList.add(rs.getString("bcids_id"));
                     logger.info("{}", identifier.toString());
                 } catch (EZIDException e) {
                     // Adding this for debugging
@@ -193,7 +193,7 @@ public class manageEZID extends dataGroupMinter {
                     // Attempt to set Metadata if this is an Exception
                     try {
                         ezid.setMetadata(myIdentifier, map);
-                        idSuccessList.add(rs.getString("datasets_id"));
+                        idSuccessList.add(rs.getString("bcids_id"));
                     } catch (EZIDException e1) {
                         //TODO should we silence this exception?
                         logger.warn("Exception thrown in attempting to create OR update EZID {}, a permission issue?", myIdentifier, e1);
@@ -212,23 +212,23 @@ public class manageEZID extends dataGroupMinter {
 
         // Update the Identifiers Table and let it know that we've created the EZID
         try {
-            updateEZIDMadeField(idSuccessList, "datasets");
+            updateEZIDMadeField(idSuccessList);
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "It appears we have created " + idSuccessList.size() +
-                    " EZIDs but not able to update the datasets table", e);
+                    " EZIDs but not able to update the bcids table", e);
         }
 
     }
 
     /**
      * Go through database, search for requests to make EZIDs and update the ezidMade (boolean) to true
-     * This function works for both Datasets and Identifiers table
+     * This function works for bcids
      *
      * @param idSuccessList
      *
      * @throws java.sql.SQLException
      */
-    private void updateEZIDMadeField(ArrayList idSuccessList, String table) throws SQLException {
+    private void updateEZIDMadeField(ArrayList idSuccessList) throws SQLException {
 
         // Turn off autocommits at beginning of the next block
         conn.setAutoCommit(false);
@@ -237,9 +237,9 @@ public class manageEZID extends dataGroupMinter {
         // Loop and update
         try {
             String updateString = "" +
-                    "UPDATE " + table + " " +
+                    "UPDATE bcids " +
                     "SET ezidMade=true " +
-                    "WHERE " + table + "_id=? && !ezidMade";
+                    "WHERE bcids_id=? && !ezidMade";
             updateStatement = conn.prepareStatement(updateString);
             Iterator ids = idSuccessList.iterator();
             int count = 0;

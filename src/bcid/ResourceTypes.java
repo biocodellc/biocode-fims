@@ -235,7 +235,7 @@ public class ResourceTypes {
 
     /**
      * Its often beneficial to return all options EXCEPT dataset, since providing Dataset as
-     * an option technically means a "dataset of datasets" but this is most likely never desirable
+     * an option technically means a "dataset of bcids" but this is most likely never desirable
      * for the purposes of this application.
      *
      * @return

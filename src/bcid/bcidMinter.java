@@ -20,9 +20,9 @@ import java.util.UUID;
  * Minting data groups are important in establishing the ownership of particular data
  * elements.
  */
-public class dataGroupMinter extends dataGroupEncoder {
+public class bcidMinter extends bcidEncoder {
 
-    final static Logger logger = LoggerFactory.getLogger(dataGroupMinter.class);
+    final static Logger logger = LoggerFactory.getLogger(bcidMinter.class);
 
     // Mysql Connection
     protected Connection conn;
@@ -35,7 +35,7 @@ public class dataGroupMinter extends dataGroupEncoder {
     protected String title = "";
     protected String ts = "";
     private Boolean suffixPassThrough = false;
-    private Integer datasets_id = null;
+    private Integer bcidsId = null;
     protected boolean ezidRequest;
     protected boolean ezidMade;
     protected String who = "";
@@ -51,12 +51,12 @@ public class dataGroupMinter extends dataGroupEncoder {
     /**
      * Default to ezidRequest = false using default Constructor
      */
-    public dataGroupMinter() {
+    public bcidMinter() {
         this(false, false);
     }
 
-    public Integer getDatasets_id() {
-        return datasets_id;
+    public Integer getBcidsId() {
+        return bcidsId;
     }
 
     public Boolean getSuffixPassThrough() {
@@ -72,16 +72,16 @@ public class dataGroupMinter extends dataGroupEncoder {
      * Default constructor for data group uses the temporary ARK ark:/99999/fk4.  Values can be overridden in
      * the mint method.
      */
-    public dataGroupMinter(boolean ezidRequest, Boolean suffixPassThrough) {
-        dataGroupMinterSetup(suffixPassThrough, null, 99999);
+    public bcidMinter(boolean ezidRequest, Boolean suffixPassThrough) {
+        bcidMinterSetup(suffixPassThrough, null, 99999);
         this.ezidRequest = ezidRequest;
     }
 
     /**
-     * general dataGroupMinter setup used by the constructors
+     * general bcidMinter setup used by the constructors
      * @param suffixPassThrough
      */
-    private void dataGroupMinterSetup(Boolean suffixPassThrough, String shoulder, Integer NAAN) {
+    private void bcidMinterSetup (Boolean suffixPassThrough, String shoulder, Integer NAAN) {
         db = new database();
         conn = db.getConn();
         // Generate defaults in constructor, these will be overridden later
@@ -92,11 +92,11 @@ public class dataGroupMinter extends dataGroupEncoder {
         }
         setBow(NAAN);
         prefix = bow + this.shoulder;
-        datasets_id = this.getDatasetId(prefix);
+        bcidsId = this.getBcidsId(prefix);
         this.suffixPassThrough = suffixPassThrough;
     }
 
-    public dataGroupMinter(Boolean suffixPassThrough) {
+    public bcidMinter(Boolean suffixPassThrough) {
 
         if (sm.retrieveValue("ezidRequests").equalsIgnoreCase("false")) {
             ezidRequest = false;
@@ -104,51 +104,51 @@ public class dataGroupMinter extends dataGroupEncoder {
             ezidRequest = true;
         }
 
-        dataGroupMinterSetup(suffixPassThrough, null, 99999);
+        bcidMinterSetup(suffixPassThrough, null, 99999);
     }
 
     /**
-     * Constructor for a dataset value that already exists in database, used to setup element minting
+     * Constructor for a bcid value that already exists in database, used to setup element minting
      *
      * @param NAAN
      * @param shoulder
      * @param ezidRequest
      */
-    public dataGroupMinter(Integer NAAN, String shoulder, boolean ezidRequest, Boolean suffixPassThrough) {
-        dataGroupMinterSetup(suffixPassThrough, shoulder, NAAN);
+    public bcidMinter(Integer NAAN, String shoulder, boolean ezidRequest, Boolean suffixPassThrough) {
+        bcidMinterSetup(suffixPassThrough, shoulder, NAAN);
         this.ezidRequest = ezidRequest;
     }
 
 
     /**
-     * create a minterDataset object by passing in a datasets_id.  An integer database value that we get immediately
+     * create a bcidMinter object by passing in a bcidsId.  An integer database value that we get immediately
      * after minting.
      *
-     * @param datasets_id
+     * @param bcidsId
      */
-    public dataGroupMinter(Integer datasets_id) {
+    public bcidMinter(Integer bcidsId) {
         db = new database();
         conn = db.getConn();
         String sql = "SELECT " +
-                "d.prefix as prefix," +
-                "d.ezidRequest as ezidRequest," +
-                "d.ezidMade as ezidMade," +
-                "d.suffixPassthrough as suffixPassthrough," +
-                "d.doi as doi," +
-                "d.title as title," +
-                "d.ts as ts, " +
+                "b.prefix as prefix," +
+                "b.ezidRequest as ezidRequest," +
+                "b.ezidMade as ezidMade," +
+                "b.suffixPassthrough as suffixPassthrough," +
+                "b.doi as doi," +
+                "b.title as title," +
+                "b.ts as ts, " +
                 "CONCAT_WS(' ',u.firstName, u.lastName) as who, " +
-                "d.webAddress as webAddress," +
-                "d.graph as graph" +
-                // NOTE: the projectCode query here fails if dataset has not been associated yet.
-                // I removed the reference here so we can return just information on the datagroup and
+                "b.webAddress as webAddress," +
+                "b.graph as graph" +
+                // NOTE: the projectCode query here fails if bcid has not been associated yet.
+                // I removed the reference here so we can return just information on the bcids and
                 // not rely on any other dependencies.
                 //"p.project_code as projectCode" +
-                //" FROM datasets d, users u, projects p,expeditions e, expeditionsBCIDs eb " +
-                " FROM datasets d, users u " +
-                " WHERE d.datasets_id = ?" +
-                " AND d.users_id = u.user_id ";
-        //" AND d.`datasets_id`=eb.datasets_id " +
+                //" FROM bcids b, users u, projects p,expeditions e, expeditionsBCIDs eb " +
+                " FROM bcids b, users u " +
+                " WHERE b.bcids_id = ?" +
+                " AND b.users_id = u.user_id ";
+        //" AND b.`bcids_id`=eb.bcids_id " +
         //" AND eb.expedition_id=e.expedition_id " +
         //" AND e.project_id=p.project_id";
 
@@ -156,7 +156,7 @@ public class dataGroupMinter extends dataGroupEncoder {
         ResultSet rs = null;
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, datasets_id);
+            stmt.setInt(1, bcidsId);
 
             rs = stmt.executeQuery();
             rs.next();
@@ -164,19 +164,19 @@ public class dataGroupMinter extends dataGroupEncoder {
             try {
                 identifier = new URI(prefix);
             } catch (URISyntaxException e) {
-                throw new ServerErrorException("Server Error","URISyntaxException from prefix: " + prefix + " from datasetId: " + datasets_id, e);
+                throw new ServerErrorException("Server Error","URISyntaxException from prefix: " + prefix + " from bcidsId: " + bcidsId, e);
 
             }
             ezidRequest = rs.getBoolean("ezidRequest");
             ezidMade = rs.getBoolean("ezidMade");
-            shoulder = encode(new BigInteger(datasets_id.toString()));
+            shoulder = encode(new BigInteger(this.bcidsId.toString()));
             this.doi = rs.getString("doi");
             this.title = rs.getString("title");
             //this.projectCode = rs.getString("projectCode");
             this.ts = rs.getString("ts");
             this.who = rs.getString("who");
             Integer naan = new Integer(prefix.split("/")[1]);
-            this.datasets_id = datasets_id;
+            this.bcidsId = this.bcidsId;
             this.suffixPassThrough = rs.getBoolean("suffixPassthrough");
             setBow(naan);
 
@@ -189,10 +189,10 @@ public class dataGroupMinter extends dataGroupEncoder {
             try {
                 this.webAddress = new URI(rs.getString("webAddress"));
             } catch (NullPointerException e) {
-                logger.info("webAddress doesn't exist for datasetId: {}", datasets_id, e);
+                logger.info("webAddress doesn't exist for bcidsId: {}", this.bcidsId, e);
             }catch (URISyntaxException e) {
-                logger.warn("URISyntaxException with uri: {} and datasetId: {}", rs.getString("webAddress"),
-                        datasets_id, e);
+                logger.warn("URISyntaxException with uri: {} and bcidsId: {}", rs.getString("webAddress"),
+                        this.bcidsId, e);
             } finally {
                // This was set to NULL-- very strange, should not be like this, i don't think
                // this.webAddress = null;
@@ -206,23 +206,23 @@ public class dataGroupMinter extends dataGroupEncoder {
 
 
     /**
-     * Get the projectCode given a datasets_id
+     * Get the projectCode given a bcidsId
      *
-     * @param datasets_id
+     * @param bcids_id
      */
-    public String getProject(Integer datasets_id) {
+    public String getProject(Integer bcids_id) {
         String project_code = "";
         String sql = "select p.project_code from projects p, expeditionsBCIDs eb, expeditions e, " +
-                "datasets d where d.datasets_id = eb.datasets_id and e.expedition_id=eb.`expedition_id` " +
-                "and e.`project_id`=p.`project_id` and d.datasets_id= ?";
+                "bcids b where b.bcids_id = eb.bcids_id and e.expedition_id=eb.`expedition_id` " +
+                "and e.`project_id`=p.`project_id` and b.bcids_id= ?";
 
-        System.out.println("sql = " + sql + "    datasets_id = " + datasets_id);
+        System.out.println("sql = " + sql + "    bcidsId = " + bcids_id);
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, datasets_id);
+            stmt.setInt(1, bcids_id);
             rs = stmt.executeQuery();
             if (rs.isLast())
             if (rs.next()) {
@@ -230,7 +230,7 @@ public class dataGroupMinter extends dataGroupEncoder {
             }
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error",
-                    "Exception retrieving projectCode for dataset: " + datasets_id, e);
+                    "Exception retrieving projectCode for bcidsId: " + bcids_id, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -258,7 +258,7 @@ public class dataGroupMinter extends dataGroupEncoder {
     }
 
     /**
-     * Mint a dataset, providing information to insert into database
+     * Mint a bcid, providing information to insert into database
      *
      * @param NAAN
      * @param who
@@ -283,7 +283,7 @@ public class dataGroupMinter extends dataGroupEncoder {
         PreparedStatement updateStatement = null;
         try {
             // Use auto increment in database to assign the actual identifier.. this is threadsafe this way
-            String insertString = "INSERT INTO datasets (users_id, resourceType, doi, webaddress, graph, title, internalID, ezidRequest, suffixPassThrough, finalCopy) " +
+            String insertString = "INSERT INTO bcids (users_id, resourceType, doi, webaddress, graph, title, internalID, ezidRequest, suffixPassThrough, finalCopy) " +
                     "values (?,?,?,?,?,?,?,?,?,?)";
 
             insertStatement = conn.prepareStatement(insertString);
@@ -299,85 +299,85 @@ public class dataGroupMinter extends dataGroupEncoder {
             insertStatement.setBoolean(10, finalCopy);
             insertStatement.execute();
 
-            // Get the datasets_id that was assigned
-            datasets_id = getDatasetIdentifier(internalID);
+            // Get the bcidsId that was assigned
+            bcidsId = getBcidIdentifier(internalID);
 
-            // Update the shoulder, and hence prefix, now that we know the datasets_id
-            String updateString = "UPDATE datasets" +
+            // Update the shoulder, and hence prefix, now that we know the bcidsId
+            String updateString = "UPDATE bcids" +
                     " SET prefix = ?" +
-                    " WHERE datasets_id = ?";
+                    " WHERE bcids_id = ?";
             updateStatement = conn.prepareStatement(updateString);
 
-            updateStatement.setString(1, bow.toString() + encode(new BigInteger(datasets_id.toString())));
-            updateStatement.setInt(2, datasets_id);
+            updateStatement.setString(1, bow.toString() + encode(new BigInteger(bcidsId.toString())));
+            updateStatement.setInt(2, bcidsId);
 
             updateStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error", "SQLException while creating a dataset for user: " + who, e);
+            throw new ServerErrorException("Server Error", "SQLException while creating a bcid for user: " + who, e);
         } finally {
             db.close(insertStatement, null);
             db.close(updateStatement, null);
         }
 
-        // Create the shoulder identifier (String dataset identifier)
-        shoulder = encode(new BigInteger(datasets_id.toString()));
+        // Create the shoulder identifier (String bcid identifier)
+        shoulder = encode(new BigInteger(bcidsId.toString()));
 
         // Create the prefix
         prefix = bow + shoulder;
 
-        return datasets_id;
+        return bcidsId;
     }
 
     /**
-     * Return the dataset identifier  given the internalID
+     * Return the bcid identifier given the internalID
      *
-     * @param datasetUUID
+     * @param bcidUUID
      *
      * @return
      *
      * @throws java.sql.SQLException
      */
-    private Integer getDatasetIdentifier(UUID datasetUUID) throws SQLException {
+    private Integer getBcidIdentifier(UUID bcidUUID) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select datasets_id from datasets where internalID = ?";
+            String sql = "select bcids_id from bcids where internalID = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, datasetUUID.toString());
+            stmt.setString(1, bcidUUID.toString());
             rs = stmt.executeQuery();
             rs.next();
-            return rs.getInt("datasets_id");
+            return rs.getInt("bcids_id");
         } finally {
             db.close(stmt, rs);
         }
     }
 
     /**
-     * Check to see if a dataset exists or not
+     * Check to see if a bcid exists or not
      *
      * @param prefix
      *
-     * @return An Integer representing a dataset
+     * @return An Integer representing a bcid
      */
-    public Integer getDatasetId(String prefix) {
-        Integer datasetId = null;
+    public Integer getBcidsId(String prefix) {
+        Integer bcidsId = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select datasets_id from datasets where prefix = ?";
+            String sql = "select bcids_id from bcids where prefix = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, prefix);
             rs = stmt.executeQuery();
             rs.next();
-            datasetId = rs.getInt("datasets_id");
+            bcidsId = rs.getInt("bcids_id");
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error",
-                    "Exception retrieving datasetId for dataset with prefix: " + prefix, e);
+                    "Exception retrieving bcidsId for bcid with prefix: " + prefix, e);
         } finally {
             db.close(stmt, rs);
         }
-        return datasetId;
+        return bcidsId;
     }
 
     public String getPrefix() {
@@ -392,7 +392,7 @@ public class dataGroupMinter extends dataGroupEncoder {
     }
 
     /**
-     * Get the resourcetype defined for a particular dataset
+     * Get the resourcetype defined for a particular bcid
      *
      * @return
      */
@@ -400,30 +400,30 @@ public class dataGroupMinter extends dataGroupEncoder {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select d.resourceType as resourceType from datasets d where d.datasets_id = ?";
+            String sql = "select b.resourceType as resourceType from bcids b where b.bcids_id = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, datasets_id);
+            stmt.setInt(1, bcidsId);
 
             rs = stmt.executeQuery();
             rs.next();
             return rs.getString("resourceType");
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error",
-                    "Error retrieving resourceType for datasetID: " + datasets_id, e);
+                    "Error retrieving resourceType for bcidsId: " + bcidsId, e);
         } finally {
             db.close(stmt, rs);
         }
     }
 
     /**
-     * Return a JSON representation of a datasetList
+     * Return a JSON representation of a bcidList
      * TODO: find a more appropriate spot for this
      *
      * @param username
      *
      * @return
      */
-    public String datasetList(String username) {
+    public String bcidList(String username) {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
         sb.append("\"0\":\"Create new group\"");
@@ -431,19 +431,19 @@ public class dataGroupMinter extends dataGroupEncoder {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select d.datasets_id as datasets_id,concat_ws(' ',prefix,title) as prefix from datasets d, users u where u.username = ? && " +
-                    "d.users_id=u.user_id";
+            String sql = "select b.bcids_id as bcids_id, concat_ws(' ',prefix,title) as prefix from bcids b, users u where u.username = ? && " +
+                    "b.users_id=u.user_id";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, username);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                sb.append(",\"" + rs.getInt("datasets_id") + "\":\"" + rs.getString("prefix") + "\"");
+                sb.append(",\"" + rs.getInt("bcids_id") + "\":\"" + rs.getString("prefix") + "\"");
             }
             sb.append("}");
 
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error", "Exception retrieving datasets for user " + username, e);
+            throw new ServerErrorException("Server Error", "Exception retrieving bcids for user " + username, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -451,14 +451,14 @@ public class dataGroupMinter extends dataGroupEncoder {
     }
 
     /**
-     * Return an HTML table of datasets owned by a particular user
+     * Return an HTML table of bcids owned by a particular user
      * TODO: find a more appropriate spot for this
      *
      * @param username
      *
      * @return
      */
-    public String datasetTable(String username) {
+    public String bcidTable(String username) {
         ResourceTypes rts = new ResourceTypes();
 
         StringBuilder sb = new StringBuilder();
@@ -466,7 +466,7 @@ public class dataGroupMinter extends dataGroupEncoder {
         ResultSet rs = null;
         try {
             String sql = "SELECT \n\t" +
-                    "d.datasets_id as datasets_id," +
+                    "b.bcids_id as bcids_id," +
                     "prefix," +
                     "ifnull(title,'') as title," +
                     "ifnull(doi,'') as doi," +
@@ -474,10 +474,10 @@ public class dataGroupMinter extends dataGroupEncoder {
                     "ifnull(resourceType,'') as resourceType," +
                     "suffixPassthrough as suffixPassthrough " +
                     "\nFROM\n\t" +
-                    "datasets d, users u " +
+                    "bcids b, users u " +
                     "\nWHERE\n\t" +
                     "u.username = ? && " +
-                    "d.users_id=u.user_id";
+                    "b.users_id=u.user_id";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
 
@@ -590,13 +590,13 @@ public class dataGroupMinter extends dataGroupEncoder {
     }
 
     public static void main(String args[]) {
-        dataGroupMinter d = new dataGroupMinter(913);
+        bcidMinter b = new bcidMinter(913);
         try {
-            //dataGroupMinter d = new dataGroupMinter();
-            //System.out.println(d.datasetTable("biocode"));
-            System.out.println(d.projectCode);
+            //bcidMinter d = new bcidMinter();
+            //System.out.println(d.bcidTable("biocode"));
+            System.out.println(b.projectCode);
         } catch (Exception e) {
-            d.close();
+            b.close();
             e.printStackTrace();
         }
 
@@ -611,7 +611,7 @@ public class dataGroupMinter extends dataGroupEncoder {
      *
      * @return
      */
-    public Hashtable<String, String> getDataGroupConfig(String prefix, String username) {
+    public Hashtable<String, String> getBcidConfig (String prefix, String username) {
         Hashtable<String, String> config = new Hashtable<String, String>();
         ResourceTypes rts = new ResourceTypes();
         Integer userId = db.getUserId(username);
@@ -620,7 +620,7 @@ public class dataGroupMinter extends dataGroupEncoder {
         ResultSet rs = null;
         try {
             String sql = "SELECT suffixPassThrough as suffix, doi, title, webaddress, resourceType " +
-                    "FROM datasets WHERE BINARY prefix = ? AND users_id = \"" + userId + "\"";
+                    "FROM bcids WHERE BINARY prefix = ? AND users_id = \"" + userId + "\"";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, prefix);
@@ -646,11 +646,11 @@ public class dataGroupMinter extends dataGroupEncoder {
                 }
 
             } else {
-                throw new BadRequestException("Dataset not found. Are you the owner of this dataset?");
+                throw new BadRequestException("BCIDs not found. Are you the owner of this bcid?");
             }
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error", "SQLException while retrieving dataGroup configuration for " +
-                    "dataset with prefix: " + prefix + " and userId: " + userId, e);
+            throw new ServerErrorException("Server Error", "SQLException while retrieving configuration for " +
+                    "bcid with prefix: " + prefix + " and userId: " + userId, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -658,19 +658,19 @@ public class dataGroupMinter extends dataGroupEncoder {
     }
 
     /**
-     * update a BCID's configuration
+     * update a Bcid's configuration
      *
-     * @param config a Hashtable<String, String> which has the datasets table fields to be updated as key, new value
+     * @param config a Hashtable<String, String> which has the bcids table fields to be updated as key, new value
      *               pairs
      * @param prefix the ark:// for the BICD
      *
      * @return
      */
-    public Boolean updateDataGroupConfig(Hashtable<String, String> config, String prefix, String username) {
+    public Boolean updateBcidConfig (Hashtable<String, String> config, String prefix, String username) {
         PreparedStatement stmt = null;
         try {
             Integer userId = db.getUserId(username);
-            String sql = "UPDATE datasets SET ";
+            String sql = "UPDATE bcids SET ";
 
             // update resourceTypeString to the correct uri
             if (config.containsKey("resourceTypeString")) {
@@ -717,12 +717,12 @@ public class dataGroupMinter extends dataGroupEncoder {
             if (result >= 1) {
                 return true;
             } else {
-                // if here, then nothing was updated due to the dataset not being found
+                // if here, then nothing was updated due to the bcid not being found
                 return false;
             }
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "SQLException while updating configuration for " +
-                    "dataset with prefix: " + prefix + " and user: " + username, e);
+                    "bcid with prefix: " + prefix + " and user: " + username, e);
         } finally {
             db.close(stmt, null);
         }
@@ -738,9 +738,9 @@ public class dataGroupMinter extends dataGroupEncoder {
      */
     public String bcidEditorAsTable(String username, String prefix) {
         StringBuilder sb = new StringBuilder();
-        Hashtable<String, String> config = getDataGroupConfig(prefix, username);
+        Hashtable<String, String> config = getBcidConfig(prefix, username);
 
-        sb.append("<form method=\"POST\" id=\"dataGroupEditForm\">\n");
+        sb.append("<form method=\"POST\" id=\"bcidEditForm\">\n");
         sb.append("\t<input type=hidden name=resourceTypes id=resourceTypes value=\"Dataset\">\n");
         sb.append("\t<table>\n");
 
@@ -793,7 +793,7 @@ public class dataGroupMinter extends dataGroupEncoder {
 
         sb.append("\t\t<tr>\n");
         sb.append("\t\t\t<td><input type=\"hidden\" name=\"prefix\" value=\"" + prefix + "\"></td>\n");
-        sb.append("\t\t\t<td><input type=\"button\" value=\"Submit\" onclick=\"dataGroupEditorSubmit();\" /><input type=\"button\" id=\"cancelButton\" value=\"Cancel\" /></td>\n");
+        sb.append("\t\t\t<td><input type=\"button\" value=\"Submit\" onclick=\"bcidEditorSubmit();\" /><input type=\"button\" id=\"cancelButton\" value=\"Cancel\" /></td>\n");
         sb.append("\t\t</tr>\n");
 
         sb.append("\t</table>\n");
@@ -810,7 +810,7 @@ public class dataGroupMinter extends dataGroupEncoder {
      * @param graph
      * @param finalCopy
      */
-    public void createEntityBCID(int user_id, String resourceTypeString, String webaddress, String graph, String doi,
+    public void createEntityBcid(int user_id, String resourceTypeString, String webaddress, String graph, String doi,
                                  Boolean finalCopy) {
 
         mint(
@@ -824,7 +824,7 @@ public class dataGroupMinter extends dataGroupEncoder {
                 finalCopy
         );
 
-        // Create EZIDs right away for Dataset level Identifiers
+        // Create EZIDs right away for bcid level Identifiers
         // Initialize ezid account
         // NOTE: On any type of EZID error, we DON'T want to fail the process.. This means we need
         // a separate mechanism on the server side to check creation of EZIDs.  This is easy enough to do
@@ -840,9 +840,9 @@ public class dataGroupMinter extends dataGroupEncoder {
                 EZIDService ezidAccount = new EZIDService();
                 // Setup EZID account/login information
                 ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
-                creator.createDatasetsEZIDs(ezidAccount);
+                creator.createBcidsEZIDs(ezidAccount);
             } catch (EZIDException e) {
-                logger.warn("EZID NOT CREATED FOR DATASET = " + getPrefix(), e);
+                logger.warn("EZID NOT CREATED FOR BCID = " + getPrefix(), e);
             } finally {
                 creator.close();
             }

@@ -146,19 +146,19 @@ public class templates {
             @FormParam("fields") List<String> fields,
             @FormParam("project_id") Integer project_id,
             @FormParam("accession_number") Integer accessionNumber,
-            @FormParam("dataset_code") String datasetCode,
+            @FormParam("dataset_code") String expeditionCode,
             @FormParam("operation") String operation,
             @Context HttpServletRequest request) {
 
         // Create the configuration file
         //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        if (accessionNumber != null || datasetCode != null) {
-            if (accessionNumber == null || datasetCode == null) {
+        if (accessionNumber != null || expeditionCode != null) {
+            if (accessionNumber == null || expeditionCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
                         " Both an Accession Number and a Dataset Code are required if this is a NMNH project.").build();
-                // only need to check that datasetCode is valid since an exception would have been thrown if accessionNumber
+                // only need to check that expeditionCode is valid since an exception would have been thrown if accessionNumber
                 // wasn't an Integer
-            } else if (!datasetCode.matches("^\\w{4,50}$")) {
+            } else if (!expeditionCode.matches("^\\w{4,50}$")) {
                 return Response.status(400).entity("{\"error\": \"The Dataset Code must be an alphanumeric between" +
                         " 4 and 50 characters.").build();
             }
@@ -170,7 +170,7 @@ public class templates {
         }
 
         // Check if the project is an NMNH project
-        processController processController = new processController(project_id, datasetCode);
+        processController processController = new processController(project_id, expeditionCode);
         processController.setAccessionNumber(accessionNumber);
 
 
@@ -184,7 +184,7 @@ public class templates {
         // Handle creating an expedition on template generation
         if (p.isNMNHProject()) {
             // Return if we don't have the necessary information
-            if (accessionNumber == null || datasetCode == null) {
+            if (accessionNumber == null || expeditionCode == null) {
                 return Response.status(400).entity("{\"error\": " +
                         "\"This is a NMNH project. Accession number and Dataset Code are required.}").build();
             } else {
@@ -202,9 +202,9 @@ public class templates {
         templateProcessor t;
         // Create the template processor which handles all functions related to the template, reading, generation
         if (accessionNumber != null) {
-            // Get the ARK associated with this dataset code
+            // Get the ARK associated with this expedition code
             // TODO: Resource may change in future... better to figure this out programatically at some point
-            resolver r = new resolver(datasetCode, project_id, "Resource");
+            resolver r = new resolver(expeditionCode, project_id, "Resource");
             String ark = r.getArk();
             r.close();
 
@@ -214,7 +214,7 @@ public class templates {
                     uploadPath(),
                     true,
                     accessionNumber,
-                    datasetCode,
+                    expeditionCode,
                     ark,
                     username);
         } else {

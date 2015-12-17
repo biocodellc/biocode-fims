@@ -1,6 +1,6 @@
 package services.rest;
 
-import bcid.dataGroupMinter;
+import bcid.bcidMinter;
 import bcid.expeditionMinter;
 import bcid.resolver;
 import fimsExceptions.UnauthorizedRequestException;
@@ -241,10 +241,10 @@ public class validate {
 
         if (processController.isExpeditionCreateRequired()) {
             // ask the user if they want to create this expedition
-            return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+            return "{\"continue_message\": \"The expedition code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                     "\\\" does not exist.  " +
                     "Do you wish to create it now?<br><br>" +
-                    "If you choose to continue, your data will be associated with this new dataset code.\"}";
+                    "If you choose to continue, your data will be associated with this new expedition code.\"}";
         }
 
         // upload the dataset
@@ -313,10 +313,10 @@ public class validate {
         // Check to see if we need to create a new Expedition, if so we make a slight diversition
         if (processController.isExpeditionCreateRequired()) {
             // Ask the user if they want to create this expedition
-            return "{\"continue_message\": \"The dataset code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
+            return "{\"continue_message\": \"The expedition code \\\"" + JSONObject.escape(processController.getExpeditionCode()) +
                     "\\\" does not exist.  " +
                     "Do you wish to create it now?<br><br>" +
-                    "If you choose to continue, your data will be associated with this new dataset code.\"}";
+                    "If you choose to continue, your data will be associated with this new expedition code.\"}";
         }
 
         /*
@@ -360,11 +360,11 @@ public class validate {
         // gives us a way to track what spreadsheets are uploaded into the system as they can
         // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
         // Create a dataset BCID
-        dataGroupMinter dataGroupMinter = new dataGroupMinter(false);
-        dataGroupMinter.createEntityBCID(userId, "http://purl.org/dc/dcmitype/Dataset", null, inputFile.getName(),
+        bcidMinter bcidMinter = new bcidMinter(false);
+        bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Dataset", null, inputFile.getName(),
                 null, processController.getFinalCopy());
-        String datasetArk = dataGroupMinter.getPrefix();
-        dataGroupMinter.close();
+        String datasetArk = bcidMinter.getPrefix();
+        bcidMinter.close();
 
         // associate the BCID
         expeditionMinter expeditionMinter = new expeditionMinter();
@@ -382,7 +382,7 @@ public class validate {
         // This is the message the user sees after succesfully uploading a spreadsheet to the server
         return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
                 //"server filename = " + outputFile.getName() + "<br>" +  \
-                "dataset code = " + processController.getExpeditionCode() + "<br>" +
+                "expedition code = " + processController.getExpeditionCode() + "<br>" +
                 "dataset ARK = " + datasetArk + "<br>" +
                 "resource ARK = " + bcidRoot + "<br>" +
                 "Please maintain a local copy of your File!<br>" +
