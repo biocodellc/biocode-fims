@@ -595,12 +595,12 @@ function listExpeditions(divId) {
 //                    html += expandTemplate.replace('{text}', e.expedition_title + ' (private)').replace('-{section}', '');
 //                }
                 html += '<div id="{expedition}" class="toggle-content">';
-                html += expandTemplate.replace('{text}', 'Configuration').replace('{section}', 'configuration').replace('<br>\n', '');
-                html += '<div id="{expedition}-configuration" class="toggle-content">Loading Expedition Configuration...</div>';
-                html += expandTemplate.replace('{text}', 'Resources').replace('{section}', 'resources');
+                html += expandTemplate.replace('{text}', 'Expedition Metadata').replace('{section}', 'configuration').replace('<br>\n', '');
+                html += '<div id="{expedition}-configuration" class="toggle-content">Loading Expedition Metadata...</div>';
+                html += expandTemplate.replace('{text}', 'Expedition Resources').replace('{section}', 'resources');
                 html += '<div id="{expedition}-resources" class="toggle-content">Loading Expedition Resources...</div>';
-                html +=  expandTemplate.replace('{text}', 'Datasets').replace('{section}', 'datasets');
-                html += '<div id="{expedition}-datasets" class="toggle-content">Loading Expedition Datasets...</div>';
+                html +=  expandTemplate.replace('{text}', 'Datasets associated with this expedition').replace('{section}', 'datasets');
+                html += '<div id="{expedition}-datasets" class="toggle-content">Loading Datasets associated wih this expedition...</div>';
                 html += '</div>\n';
 
                 // add current project to element id

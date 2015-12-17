@@ -834,7 +834,7 @@ public class expeditionMinter {
 
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
-                sb.append("Persistent Identifier:");
+                sb.append("Identifier:");
                 sb.append("\t\t</td>\n");
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
@@ -888,7 +888,7 @@ public class expeditionMinter {
         sb.append("<table>\n");
         sb.append("\t<tbody>\n");
         sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Resource ID</th>\n");
+        sb.append("\t\t<th>Identifier</th>\n");
         sb.append("\t\t<th>Resource Type</th>\n");
         sb.append("\t</tr>\n");
 
@@ -963,7 +963,7 @@ public class expeditionMinter {
         sb.append("<table>\n");
         sb.append("\t<tr>\n");
         sb.append("\t\t<th>Date</th>\n");
-        sb.append("\t\t<th>Persistent Id</th>\n");
+        sb.append("\t\t<th>Identifier</th>\n");
         sb.append("\t</tr>\n");
 
         PreparedStatement stmt = null;

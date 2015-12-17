@@ -12,7 +12,7 @@
                 </tr>
                 <tr>
                     <td align="right">Password</td>
-                    <td><input type="password" name="password" autocomplete="off"></td>
+                    <td><input type="password" name="password" autocomplete="off" onkeypress="if(event.keyCode==13) {login();}"></td>
                 </tr>
                 <tr>
                     <td></td>
