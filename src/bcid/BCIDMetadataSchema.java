@@ -77,7 +77,7 @@ public class BCIDMetadataSchema {
                  //   dcPublisher = new metadataElement("dc:publisher", pairs.getValue().toString(), "The BCID project to which this resource belongs.");
                 } else if (bcidKey.equalsIgnoreCase("webaddress")) {
                     dcHasVersion = new metadataElement("dcterms:hasVersion", pairs.getValue().toString(), "The redirection target for this identifier.");
-                } else if (bcidKey.equalsIgnoreCase("datasetsSuffixPassThrough")) {
+                } else if (bcidKey.equalsIgnoreCase("bcidsSuffixPassThrough")) {
                     bscSuffixPassthrough = new metadataElement("bsc:suffixPassthrough", pairs.getValue().toString(), "Indicates that this identifier supports suffixPassthrough.");
                 }
             } catch (NullPointerException e) {

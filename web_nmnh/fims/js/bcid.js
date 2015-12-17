@@ -67,7 +67,7 @@ function datasetListSelector() {
                         // Assign values from server to JS field names
                         if (key == "what")
                             $("#resourceTypesMinusDatasetDiv").html(val);
-                        if (key == "datasetsSuffixPassThrough")
+                        if (key == "bcidsSuffixPassThrough")
                             $("#suffixPassThroughDiv").html(val);
                         if (key == "title")
                             $("#titleDiv").html(val);
