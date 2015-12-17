@@ -142,7 +142,7 @@ public class ResourceTypes {
         list.add(new ResourceType(this.SEQUENCING, "mixs:Sequencing", "http://gensc.org/ns/mixs/Sequencing", "The category of information pertaining to sequencing."));
 
         // Additional DCMI Resource Type
-        list.add(new ResourceType(this.COLLECTION, "dctype:Dataset", "http://purl.org/dc/dcmitype/Collection", "An aggregation of resources."));
+        list.add(new ResourceType(this.COLLECTION, "dctype:Collection", "http://purl.org/dc/dcmitype/Collection", "An aggregation of resources."));
 
 
     }

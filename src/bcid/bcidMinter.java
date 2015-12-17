@@ -169,14 +169,14 @@ public class bcidMinter extends bcidEncoder {
             }
             ezidRequest = rs.getBoolean("ezidRequest");
             ezidMade = rs.getBoolean("ezidMade");
-            shoulder = encode(new BigInteger(this.bcidsId.toString()));
+            shoulder = encode(new BigInteger(bcidsId.toString()));
             this.doi = rs.getString("doi");
             this.title = rs.getString("title");
             //this.projectCode = rs.getString("projectCode");
             this.ts = rs.getString("ts");
             this.who = rs.getString("who");
             Integer naan = new Integer(prefix.split("/")[1]);
-            this.bcidsId = this.bcidsId;
+            this.bcidsId = bcidsId;
             this.suffixPassThrough = rs.getBoolean("suffixPassthrough");
             setBow(naan);
 

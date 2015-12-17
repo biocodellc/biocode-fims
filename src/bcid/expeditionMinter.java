@@ -499,7 +499,7 @@ public class expeditionMinter {
                             "FROM " +
                             " expeditions a, expeditionsBCIDs eB, bcids b, users u, users u2 " +
                             "WHERE" +
-                            " u2.user_id=d.users_id && " +
+                            " u2.user_id = b.users_id && " +
                             " u.user_id = a.users_id && " +
                             " a.expedition_id = eB.expedition_id && " +
                             " eB.bcids_id = b.bcids_id && \n" +
@@ -824,7 +824,7 @@ public class expeditionMinter {
             String sql = "SELECT b.prefix, e.public, e.expedition_code, e.project_id " +
                     "FROM bcids b, expeditionsBCIDs eB, expeditions e " +
                     "WHERE b.bcids_id = eB.bcids_id && eB.expedition_id = e.expedition_id && e.expedition_id = ? and " +
-                    "d.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
+                    "b.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
             stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, expeditionId);
@@ -838,9 +838,9 @@ public class expeditionMinter {
                 sb.append("\t\t</td>\n");
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("d.prefix"));
+                sb.append(rs.getString("b.prefix"));
                 sb.append("\">");
-                sb.append(rs.getString("d.prefix"));
+                sb.append(rs.getString("b.prefix"));
                 sb.append("</a>");
                 sb.append("\t\t</td>\n");
                 sb.append("\t</tr>\n");
@@ -894,9 +894,10 @@ public class expeditionMinter {
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        ResourceTypes rts = new ResourceTypes();
 
         try {
-            String sql = "SELECT b.prefix, d.resourceType " +
+            String sql = "SELECT b.prefix, b.resourceType " +
                     "FROM bcids b, expeditionsBCIDs eB " +
                     "WHERE b.bcids_id = eB.bcids_id && eB.expedition_id = ?";
             stmt = conn.prepareStatement(sql);
@@ -908,30 +909,30 @@ public class expeditionMinter {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 String rtString;
-                ResourceType resourceType = rt.get(rs.getString("d.resourceType"));
+                ResourceType resourceType = rt.get(rs.getString("b.resourceType"));
                 if (resourceType != null) {
                     rtString = resourceType.string;
                 } else {
-                    rtString = rs.getString("d.resourceType");
+                    rtString = rs.getString("b.resourceType");
                 }
 
-                // if the resourceType is a dataset, don't add to table
-                if (rtString.toLowerCase().contains("dataset")) {
+                // if the resourceType is a dataset or collection, don't add to table
+                if (rts.get(1).equals(resourceType) || rts.get(38).equals(resourceType)) {
                     continue;
                 }
 
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("d.prefix"));
+                sb.append(rs.getString("b.prefix"));
                 sb.append("\">");
-                sb.append(rs.getString("d.prefix"));
+                sb.append(rs.getString("b.prefix"));
                 sb.append("</a>");
                 sb.append("</td>\n");
                 sb.append("\t\t<td>");
                 // only display a hyperlink if http: is specified under resource type
-                if (rs.getString("d.resourceType").contains("http:")) {
-                    sb.append("<a href=\"" + rs.getString("d.resourceType") + "\">" + rtString + "</a>");
+                if (rs.getString("b.resourceType").contains("http:")) {
+                    sb.append("<a href=\"" + rs.getString("b.resourceType") + "\">" + rtString + "</a>");
                 } else {
                     sb.append(rtString);
                 }
@@ -972,14 +973,14 @@ public class expeditionMinter {
             String sql = "SELECT b.ts, b.prefix, b.webaddress, b.graph, e.project_id " +
                     "FROM bcids b, expeditionsBCIDs eB, expeditions e " +
                     "WHERE b.bcids_id = eB.bcids_id && eB.expedition_id = ? && e.expedition_id = eB.expedition_id " +
-                    "AND d.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
-                    "ORDER BY d.ts DESC";
+                    "AND b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
+                    "ORDER BY b.ts DESC";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, expeditionId);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-//                String webaddress = rs.getString("d.webaddress");
+//                String webaddress = rs.getString("b.webaddress");
 
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
