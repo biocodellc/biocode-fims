@@ -6,6 +6,8 @@ import com.sun.jersey.api.view.Viewable;
 import utils.SettingsManager;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -51,7 +53,8 @@ public class resolverMetadataService {
     public Response run(@PathParam("scheme") String scheme,
                         @PathParam("naan") String naan,
                         @PathParam("shoulderPlusIdentifier") String shoulderPlusIdentifier,
-                        @HeaderParam("Accept") String accept) {
+                        @HeaderParam("Accept") String accept,
+                        @Context HttpServletRequest request) {
         // Clean up input
         scheme = scheme.trim();
         shoulderPlusIdentifier = shoulderPlusIdentifier.trim();
@@ -59,21 +62,6 @@ public class resolverMetadataService {
         // Structure the identifier element from path parameters
         String element = scheme + "/" + naan + "/" + shoulderPlusIdentifier;
 
-        // Setup ezid account/login information
-       // NOTE: i don't think i need to call the EZID service function here
-       /*
-       EZIDService ezidService = new EZIDService();
-        try {
-            ezidService.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
-        } catch (EZIDException e) {
-            // For now, just print stack trace here and proceed.
-            e.printStackTrace();
-        }
-
-        System.out.println("eziduser = " + sm.retrieveValue("eziduser"));
-        System.out.println("shoulderPlusIdentifier = " + shoulderPlusIdentifier);
-
-*/
         // Return an appropriate response based on the Accepts header that was passed in.
         //
         resolver r = new resolver(element);
@@ -83,10 +71,11 @@ public class resolverMetadataService {
             r.close();
             return Response.ok(response).build();
         } else {
-            // This next section uses the Jersey Viewable class, which is a type of Model, View, Controller
-            // construct, enabling us to pass content JSP code to a JSP template.  We do this in this section
-            // so we can have a REST style call and provide human readable content with BCID header/footer
-            String response = r.printMetadata(new HTMLTableRenderer());
+            // Get the username. This is needed to display private datasets
+            HttpSession session = request.getSession();
+            String username = (String) session.getAttribute("user");
+
+            String response = r.printMetadata(new HTMLTableRenderer(username, r));
             r.close();
             return Response.ok(response).build();
         }

@@ -190,8 +190,6 @@ public class resolver extends database {
         } else {
             resolution = bcid.getMetadataTarget();
 
-            // Set the graph variable
-            this.graph = bcid.getGraph();
             this.project = getProjectID(bcidsId);
         }
 
@@ -217,6 +215,7 @@ public class resolver extends database {
             //}
             // Has a suffix, but not resolvable
             //else {
+//            graph =
             try {
                 if (suffix != null && bcid.getWebAddress() != null) {
                     bcid = new bcid(suffix, bcid.getWebAddress(), bcidsId);
@@ -478,5 +477,52 @@ public class resolver extends database {
 
         String contentResolutionRoot = sm.retrieveValue("contentResolutionRoot");
         return new URI(contentResolutionRoot + format + "?graphs=" + graph + "&project_id=" + project);
+    }
+
+    public String getExpeditionCode() {
+        String expedition_code = "";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select e.expedition_code from expeditionsBCIDs eb, expeditions e, bcids b " +
+                    "where b.bcids_id = eb.bcids_id and e.expedition_id=eb.`expedition_id` and b.bcids_id = ?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, bcidsId);
+            rs = stmt.executeQuery();
+            rs.next();
+            expedition_code = rs.getString("expedition_code");
+
+        } catch (SQLException e) {
+            // catch the exception and log it
+            logger.warn("Exception retrieving expedition_code for bcid: " + bcidsId, e);
+        } finally {
+            close(stmt, rs);
+        }
+        return expedition_code;
+    }
+
+    public Integer getExpeditionId() {
+        Integer expeditionId = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select eb.expedition_id from expeditionsBCIDs eb, bcids b " +
+                    "where b.bcids_id = eb.bcids_id and b.bcids_id = ?";
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, bcidsId);
+            rs = stmt.executeQuery();
+            rs.next();
+            expeditionId = rs.getInt("eb.expedition_id");
+
+        } catch (SQLException e) {
+            // catch the exception and log it
+            logger.warn("Exception retrieving expedition_id for bcid: " + bcidsId, e);
+        } finally {
+            close(stmt, rs);
+        }
+        return expeditionId;
     }
 }

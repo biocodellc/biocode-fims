@@ -1,5 +1,6 @@
 package bcid;
 
+import fimsExceptions.BadRequestException;
 import fimsExceptions.FIMSException;
 import fimsExceptions.ForbiddenRequestException;
 import fimsExceptions.ServerErrorException;
@@ -68,9 +69,8 @@ public class expeditionMinter {
 
         Integer expedition_id = null;
 
-        //TODO this doesn't allow the HttpStatusCode to be correctly set should be a 403
         if (!userExistsInProject(users_id, project_id)) {
-            throw new FIMSException("User ID " + users_id + " is not authorized to create expeditions in this project");
+            throw new ForbiddenRequestException("User ID " + users_id + " is not authorized to create expeditions in this project");
         }
 
         /**
@@ -78,7 +78,7 @@ public class expeditionMinter {
          */
         checkExpeditionCodeValid(expedition_code);
         if (!isExpeditionCodeAvailable(expedition_code, project_id)) {
-            throw new FIMSException("Expedition Code already exists");
+            throw new BadRequestException("Expedition Code already exists");
         }
 
         // Generate an internal ID to track this submission
@@ -980,8 +980,6 @@ public class expeditionMinter {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-//                String webaddress = rs.getString("b.webaddress");
-
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
                 sb.append(rs.getTimestamp("b.ts").toString());
@@ -995,41 +993,6 @@ public class expeditionMinter {
                 sb.append("</a>");
                 sb.append("\t\t</td>");
                 sb.append("\t</tr>\n");
-
-                /*// Excel option
-                sb.append("\t\t<td class='align_center'>");
-                sb.append("<a href='");
-                sb.append(serviceRoot);
-                sb.append("query/excel?graphs=");
-                sb.append(rs.getString("graph"));
-                sb.append("&project_id=");
-                sb.append(rs.getString("project_id"));
-                sb.append("'>.xlsx</a>");
-
-                sb.append("&nbsp;&nbsp;");
-
-                // TAB delimited option
-                sb.append("<a href='");
-                sb.append(serviceRoot);
-                sb.append("query/tab?graphs=");
-                sb.append(rs.getString("graph"));
-                sb.append("&project_id=");
-                sb.append(rs.getString("project_id"));
-                sb.append("'>.txt</a>");
-
-                sb.append("&nbsp;&nbsp;");
-
-                // n3 option
-                sb.append("<a href='");
-                sb.append(webaddress);
-                sb.append("'>n3</a>");
-
-                sb.append("&nbsp;&nbsp;");
-                sb.append("&nbsp;&nbsp;");
-
-                sb.append("\t\t</td>");
-                sb.append("\t</tr>\n");
-                */
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -1248,6 +1211,26 @@ public class expeditionMinter {
             } else {
                 return "{\"insert\": \"the expedition does not exist with project and nobody owns it\"}";
             }
+        }
+    }
+
+    public boolean isPublic(String expedition_code, Integer project_id) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT public FROM expeditions WHERE expedition_code = ? AND project_id = ?";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, expedition_code);
+            stmt.setInt(2, project_id);
+
+            rs = stmt.executeQuery();
+            rs.next();
+            return rs.getBoolean("public");
+        } catch (SQLException e) {
+            throw new ServerErrorException(e);
+        } finally {
+            db.close(stmt, rs);
         }
     }
 }

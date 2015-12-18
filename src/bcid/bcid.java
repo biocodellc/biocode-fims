@@ -208,6 +208,10 @@ public class bcid extends GenericIdentifier {
         return map;
     }
 
+    public String getWebAddressAsString() {
+        return webAddress.toString();
+    }
+
     public URI getWebAddress() {
         return webAddress;
     }

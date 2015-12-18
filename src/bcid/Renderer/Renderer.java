@@ -2,6 +2,7 @@ package bcid.Renderer;
 
 import bcid.BCIDMetadataSchema;
 import bcid.GenericIdentifier;
+import bcid.database;
 
 /**
  * Abstract class Renderer implements the visitor methods
@@ -32,6 +33,4 @@ public abstract class Renderer extends BCIDMetadataSchema implements RendererInt
             return outputSB.toString();
         }
     }
-
-
 }
