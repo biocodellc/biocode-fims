@@ -46,11 +46,11 @@ public class availableProjectsFetcher {
         }
     }
 
-    public availableProject getProject(Integer project_id) {
+    public availableProject getProject(Integer projectId) {
        Iterator it = availableProjects.iterator();
         while (it.hasNext())  {
             availableProject availableProject = (availableProject)it.next();
-            if ( Integer.parseInt(availableProject.getProject_id()) == project_id)
+            if ( Integer.parseInt(availableProject.getProject_id()) == projectId)
                 return availableProject;
         }
         return null;
@@ -84,7 +84,7 @@ public class availableProjectsFetcher {
         */
         availableProjectsFetcher fetcher = new availableProjectsFetcher();
         availableProject aP = fetcher.getProject(1);
-        System.out.println(aP.getBiovalidator_validation_xml() + "\n" +
+        System.out.println(aP.getValidationXml() + "\n" +
                 aP.getProject_title() + "\n" +
                 aP.getProject_code());
 

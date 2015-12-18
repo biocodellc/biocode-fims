@@ -27,9 +27,9 @@ public class mapping {
      * @return
      */
     @GET
-    @Path("/filterOptions/{project_id}")
+    @Path("/filterOptions/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getFilterOptions(@PathParam("project_id") Integer projectID) {
+    public String getFilterOptions(@PathParam("projectId") Integer projectID) {
 
         File configFile = new configurationFileFetcher(projectID, uploadPath(), true).getOutputFile();
 

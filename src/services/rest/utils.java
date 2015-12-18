@@ -50,12 +50,12 @@ public class utils {
      * @return
      */
     @GET
-    @Path("/refreshCache/{project_id}")
+    @Path("/refreshCache/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJson(
-            @QueryParam("project_id") Integer project_id) {
+            @QueryParam("projectId") Integer projectId) {
 
-        new configurationFileFetcher(project_id, uploadPath(), false).getOutputFile();
+        new configurationFileFetcher(projectId, uploadPath(), false).getOutputFile();
 
         return Response.ok("").build();
 
@@ -81,9 +81,9 @@ public class utils {
      * @return
      */
     @GET
-    @Path("/expeditionCodes/{project_id}")
+    @Path("/expeditionCodes/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getExpeditionCodes(@PathParam("project_id") Integer projectId)
+    public void getExpeditionCodes(@PathParam("projectId") Integer projectId)
                                throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/list/" + projectId);
@@ -100,9 +100,9 @@ public class utils {
      * @return
      */
     @GET
-    @Path("/graphs/{project_id}")
+    @Path("/graphs/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getGraphs(@PathParam("project_id") Integer projectId)
+    public void getGraphs(@PathParam("projectId") Integer projectId)
                       throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/graphs/" + projectId);
@@ -121,10 +121,10 @@ public class utils {
      * @return
      */
     @GET
-    @Path("/validateExpedition/{project_id}/{expedition_code}")
+    @Path("/validateExpedition/{projectId}/{expeditionCode}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void validateExpedition(@PathParam("project_id") Integer projectId,
-                                   @PathParam("expedition_code") String expeditionCode)
+    public void validateExpedition(@PathParam("projectId") Integer projectId,
+                                   @PathParam("expeditionCode") String expeditionCode)
         throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/expeditionService/list/" +
@@ -146,7 +146,7 @@ public class utils {
     @GET
     @Path("/getListFields/{list_name}/")
     @Produces(MediaType.TEXT_HTML)
-    public Response getListFields(@QueryParam("project_id") Integer projectId,
+    public Response getListFields(@QueryParam("projectId") Integer projectId,
                                   @PathParam("list_name") String list_name,
                                   @QueryParam("column_name") String column_name) {
 
@@ -190,9 +190,9 @@ public class utils {
     }
 
     @GET
-    @Path("/isNMNHProject/{project_id}")
+    @Path("/isNMNHProject/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isNMNHProject(@PathParam("project_id") Integer projectId) {
+    public Response isNMNHProject(@PathParam("projectId") Integer projectId) {
         processController processController = new processController(projectId, null);
         process p = new process(
                 null,
@@ -247,9 +247,9 @@ public class utils {
     }
 
     @GET
-    @Path("/getLatLongColumns/{project_id}")
+    @Path("/getLatLongColumns/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLatLongColumns(@PathParam("project_id") int projectId) {
+    public Response getLatLongColumns(@PathParam("projectId") int projectId) {
         String decimalLatDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLatitude";
         String decimalLongDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLongitude";
         JSONObject response = new JSONObject();
@@ -266,9 +266,9 @@ public class utils {
 
             for (Attribute attribute : attributeList) {
                 // when we find the column corresponding to the definedBy for lat and long, add them to the response
-                if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
+                if (attribute.getDefinedBy().equalsIgnoreCase(decimalLatDefinedBy)) {
                     response.put("lat_column", attribute.getColumn());
-                } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
+                } else if (attribute.getDefinedBy().equalsIgnoreCase(decimalLongDefinedBy)) {
                     response.put("long_column", attribute.getColumn());
                 }
             }

@@ -34,13 +34,13 @@ public class expeditionUpdater {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT expedition_id, users_id " +
+            String sql = "SELECT expeditionId, userId " +
                     "FROM expeditions";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                expeditions.put(rs.getInt("expedition_id"), rs.getInt("users_id"));
+                expeditions.put(rs.getInt("expeditionId"), rs.getInt("userId"));
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -55,32 +55,32 @@ public class expeditionUpdater {
         expeditionUpdater expeditionUpdater = new expeditionUpdater();
         HashMap expeditions = expeditionUpdater.getAllExpeditions();
 
-        for (Object expedition_id : expeditions.keySet()) {
+        for (Object expeditionId : expeditions.keySet()) {
 
-            if (!expeditionUpdater.expeditionHasBCID((Integer) expedition_id)) {
+            if (!expeditionUpdater.expeditionHasBCID((Integer) expeditionId)) {
                 // if the collection bcid doesn't exist for the expedition, create it
-                System.out.println("Creating bcid for expedition id: " + expedition_id);
+                System.out.println("Creating bcid for expedition id: " + expeditionId);
                 bcidMinter bcidMinter = new bcidMinter(false);
-                String prefix = bcidMinter.createEntityBcid((Integer) expeditions.get(expedition_id),
+                String prefix = bcidMinter.createEntityBcid((Integer) expeditions.get(expeditionId),
                         "http://purl.org/dc/dcmitype/Collection", null, null, null, false);
                 bcidMinter.close();
 
                 // Associate this bcid with this expedition
                 expeditionMinter expedition = new expeditionMinter();
-                expedition.attachReferenceToExpedition((Integer) expedition_id, prefix);
+                expedition.attachReferenceToExpedition((Integer) expeditionId, prefix);
                 expedition.close();
 
             }
         }
     }
 
-    private boolean expeditionHasBCID(Integer expedition_id ) {
+    private boolean expeditionHasBCID(Integer expeditionId ) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT count(*) FROM bcids b, expeditionsBCIDs eB " +
-                    "WHERE e.expedition_id = " + expedition_id + " AND b.bcids_id = eB.bcids_idAND b.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
+            String sql = "SELECT count(*) FROM bcids b, expeditionBcids eB " +
+                    "WHERE e.expeditionId = " + expeditionId + " AND b.bcidId = eB.bcidId AND b.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();

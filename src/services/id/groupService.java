@@ -1,6 +1,6 @@
 package services.id;
 
-import auth.oauth2.provider;
+import auth.oAuth2.provider;
 import bcid.bcid;
 import bcid.Renderer.JSONRenderer;
 import bcid.Renderer.Renderer;
@@ -46,7 +46,7 @@ public class groupService {
      * Create a data group
      *
      * @param doi
-     * @param webaddress
+     * @param webAddress
      * @param title
      * @param request
      *
@@ -56,7 +56,7 @@ public class groupService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response mint(@FormParam("doi") String doi,
-                         @FormParam("webaddress") String webaddress,
+                         @FormParam("webAddress") String webAddress,
                          @FormParam("graph") String graph,
                          @FormParam("title") String title,
                          @FormParam("resourceType") String resourceTypeString,
@@ -105,12 +105,12 @@ public class groupService {
         // Create a Bcid
         database db = new database();
         // Check for remote-user
-        Integer user_id = db.getUserId(username);
+        Integer userId = db.getUserId(username);
         db.close();
 
         // Mint the data group
         bcidMinter bcidMinter = new bcidMinter(suffixPassthrough);
-        String prefix = bcidMinter.createEntityBcid(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
+        String prefix = bcidMinter.createEntityBcid(userId, resourceTypeString, webAddress, graph, doi, finalCopy);
         bcidMinter.close();
 
         return Response.ok("{\"prefix\": \"" + prefix + "\"}").build();
@@ -234,7 +234,7 @@ public class groupService {
      * Service to update a bcid's configuration.
      *
      * @param doi
-     * @param webaddress
+     * @param webAddress
      * @param title
      * @param resourceTypeString
      * @param resourceTypesMinusDataset
@@ -248,7 +248,7 @@ public class groupService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response bcidUpdate(@FormParam("doi") String doi,
-                               @FormParam("webaddress") String webaddress,
+                               @FormParam("webAddress") String webAddress,
                                @FormParam("title") String title,
                                @FormParam("resourceType") String resourceTypeString,
                                @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
@@ -277,8 +277,8 @@ public class groupService {
         if (doi != null && (!config.containsKey("doi") || !config.get("doi").equals(doi))) {
             update.put("doi", doi);
         }
-        if (webaddress != null && (!config.containsKey("webaddress") || !config.get("webaddress").equals(webaddress))) {
-            update.put("webaddress", webaddress);
+        if (webAddress != null && (!config.containsKey("webAddress") || !config.get("webAddress").equals(webAddress))) {
+            update.put("webAddress", webAddress);
         }
         if (!config.containsKey("title") || !config.get("title").equals(title)) {
             update.put("title", title);

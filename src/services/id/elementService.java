@@ -88,7 +88,7 @@ public class elementService {
      * @param resourceType
      * @param data
      * @param doi
-     * @param webaddress
+     * @param webAddress
      * @param request
      * @return
      */
@@ -100,7 +100,7 @@ public class elementService {
                             @FormParam("resourceTypesMinusDataset") Integer resourceType,
                             @FormParam("data") String data,
                             @FormParam("doi") String doi,
-                            @FormParam("webaddress") String webaddress,
+                            @FormParam("webAddress") String webAddress,
                             @FormParam("graph") String graph,
                             @FormParam("suffixPassThrough") String stringSuffixPassThrough,
                             @Context HttpServletRequest request) {
@@ -115,8 +115,8 @@ public class elementService {
         // Initialize database
         db = new database();
 
-        // Get the user_id
-        Integer user_id = db.getUserId(username);
+        // Get the userId
+        Integer userId = db.getUserId(username);
 
         db.close();
 
@@ -146,13 +146,13 @@ public class elementService {
 
             // Create a new dataset
             dataset = new bcidMinter(true, suffixPassthrough);
-            // we don't know DOI or webaddress from this call, so we set them to NULL
+            // we don't know DOI or webAddress from this call, so we set them to NULL
             dataset.mint(
                     new Integer(sm.retrieveValue("bcidNAAN")),
-                    user_id,
+                    userId,
                     new ResourceTypes().get(resourceType).uri,
                     doi,
-                    webaddress,
+                    webAddress,
                     graph,
                     title,
                     false);
@@ -160,7 +160,7 @@ public class elementService {
         } else {
             dataset = new bcidMinter(bcidsId);
 
-            // TODO: check that dataset.users_id matches the user that is logged in!
+            // TODO: check that dataset.userId matches the user that is logged in!
 
         }
 

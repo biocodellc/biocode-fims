@@ -32,14 +32,14 @@ public class deepRootsReader {
 
     private static Logger logger = LoggerFactory.getLogger(deepRootsReader.class);
 
-    public deepRoots createRootData(Integer user_id, Integer project_id, String expedition_code) {
+    public deepRoots createRootData(Integer userId, Integer projectId, String expeditionCode) {
         try {
             // Get deepLinks json object
             expeditionMinter expeditionMinter = new expeditionMinter();
-            String json = expeditionMinter.getDeepRoots(expedition_code, project_id);
+            String json = expeditionMinter.getDeepRoots(expeditionCode, projectId);
             expeditionMinter.close();
             // Create the deepLinks.rootData Class
-            deepRoots rootData = new deepRoots(user_id, project_id, expedition_code);
+            deepRoots rootData = new deepRoots(userId, projectId, expeditionCode);
             // Create the Hashmap to store in the deepLinks.rootData class
             //HashMap<java.net.URI, String> data = new HashMap<java.net.URI, String>();
             HashMap<String, String> data = new HashMap<String, String>();

@@ -8,11 +8,11 @@ import java.util.Iterator;
  * The column class stores attributes of each column that we know about on a spreadsheet.   These are typically
  * defined by the worksheet class.
  */
-public class Column_trash {
+public class ColumnTrash {
     String uri;
     String name;
 
-    public Column_trash() {
+    public ColumnTrash() {
 
     }
 

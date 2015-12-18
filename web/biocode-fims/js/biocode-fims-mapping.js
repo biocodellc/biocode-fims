@@ -148,14 +148,14 @@ function displayMap(id, geoJSONData) {
     map.fitBounds(geoJSONLayer.getBounds());
 }
 
-function generateMap(id, project_id) {
+function generateMap(id, projectId) {
     if (map != undefined) {
         map.remove();
         map = undefined;
     }
     $('#' + id).html('Loading map...');
     // generate a map with markers for all sample points
-    $.getJSON("rest/utils/getLatLongColumns/" + project_id
+    $.getJSON("rest/utils/getLatLongColumns/" + projectId
         ).done(function(data) {
             getSampleCoordinates(data).done(function(geoJSONData) {
                 if (geoJSONData.features.length == 0) {

@@ -21,13 +21,13 @@ public class deepRoots {
     private String description;
     private String guid;
     private String date;
-    private Integer project_id;
-    private  String expedition_code;
-    private Integer user_id;
-    public deepRoots(Integer user_id, Integer project_id, String expedition_code) {
-        this.project_id = project_id;
-        this.expedition_code = expedition_code;
-        this.user_id = user_id;
+    private Integer projectId;
+    private  String expeditionCode;
+    private Integer userId;
+    public deepRoots(Integer userId, Integer projectId, String expeditionCode) {
+        this.projectId = projectId;
+        this.expeditionCode = expeditionCode;
+        this.userId = userId;
     }
 
     /**
@@ -146,11 +146,11 @@ public class deepRoots {
         // Mint the bcid
         bcidMinter bcidMinter = new bcidMinter(true);
 
-        String prefix = bcidMinter.createEntityBcid(user_id, entity.getConceptAlias(), "", null, null, false);
+        String prefix = bcidMinter.createEntityBcid(userId, entity.getConceptAlias(), "", null, null, false);
         bcidMinter.close();
         // Associate this bcid with this expedition
         expeditionMinter expedition = new expeditionMinter();
-        expedition.attachReferenceToExpedition(expedition_code, prefix, project_id);
+        expedition.attachReferenceToExpedition(expeditionCode, prefix, projectId);
         expedition.close();
 
         // Add this element to the data string so we don't keep trying to add it in the loop above

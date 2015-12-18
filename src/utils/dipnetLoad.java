@@ -18,7 +18,7 @@ public class dipnetLoad {
     // output directory for processing and temp files
     static String output_directory = "/Users/jdeck/IdeaProjects/biocode-fims/tripleOutput";
     // Project_id
-    static Integer project_id = 25;
+    static Integer projectId = 25;
     // Input directory storing all the loaded files
     static String input_directory = "/Users/jdeck/Google Drive/!DIPnet_DB/Repository/1-cleaned_QC2_mdfasta_files";
 
@@ -76,11 +76,11 @@ public class dipnetLoad {
     /**
      * Load dataset
      */
-    public static void loadDataset(String expedition_code, String input_file) {
+    public static void loadDataset(String expeditionCode, String input_file) {
         boolean readyToLoad = false;
         // Create the process controller object
-        processController pc = new processController(project_id, expedition_code);
-        pc.setUser_id(username);
+        processController pc = new processController(projectId, expeditionCode);
+        pc.setUserId(username);
 
         System.out.println("Initializing ...");
 

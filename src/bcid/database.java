@@ -85,14 +85,14 @@ public class database {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "Select user_id from users where username=?";
+            String sql = "Select userId from users where username=?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
 
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt("user_id");
+                return rs.getInt("userId");
             }
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error",
@@ -111,7 +111,7 @@ public class database {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT username FROM users WHERE user_id = ?";
+            String sql = "SELECT username FROM users WHERE userId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
 

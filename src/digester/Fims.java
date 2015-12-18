@@ -55,8 +55,8 @@ public class Fims implements RendererInterface {
      * @return
      */
     public void run(processController processController) {
-        Integer project_id = processController.getProject_id();
-        String expedition_code = processController.getExpeditionCode();
+        Integer projectId = processController.getProject_id();
+        String expeditionCode = processController.getExpeditionCode();
 
         uploader = new uploader(
                 metadata.getTarget(),
@@ -65,7 +65,7 @@ public class Fims implements RendererInterface {
         uploader.execute();
 
         bcidMinter bcidMinter = new bcidMinter(false);
-        bcidPrefix = bcidMinter.createEntityBcid(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
+        bcidPrefix = bcidMinter.createEntityBcid(processController.getUserId(), "http://purl.org/dc/dcmitype/Dataset",
                 uploader.getEndpoint(), uploader.getGraphID(), null, false);
         bcidMinter.close();
         // Create the BCID to use for upload service
@@ -76,11 +76,11 @@ public class Fims implements RendererInterface {
         processController.appendStatus(status1);
         // Inform cmd line users
         fimsPrinter.out.println(status1);
-        // Associate the expedition_code with this bcidPrefix
+        // Associate the expeditionCode with this bcidPrefix
         expeditionMinter expedition = new expeditionMinter();
-        expedition.attachReferenceToExpedition(expedition_code, bcidPrefix, project_id);
+        expedition.attachReferenceToExpedition(expeditionCode, bcidPrefix, projectId);
         expedition.close();
-        String status2 = "\t" + "Data Elements Root: " + expedition_code;
+        String status2 = "\t" + "Data Elements Root: " + expeditionCode;
         processController.appendStatus(status2);
         // Inform cmd line users
         fimsPrinter.out.println(status2);

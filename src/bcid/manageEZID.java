@@ -73,25 +73,25 @@ public class manageEZID extends bcidMinter {
     /**
      * Update EZID bcid metadata for this particular ID
      */
-    public void updateBcidsEZID(EZIDService ezid, int bcids_id) throws EZIDException {
+    public void updateBcidsEZID(EZIDService ezid, int bcidId) throws EZIDException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
 
             String sql = "SELECT " +
-                    "b.bcids_id as bcids_id," +
+                    "b.bcidId as bcidId," +
                     "b.prefix as prefix," +
                     "b.title as title," +
                     "b.ts as ts," +
                     "b.resourceType as type," +
                     "concat_ws('',CONCAT_WS(' ',u.firstName, u.lastName),' <',u.email,'>') as creator " +
                     "FROM bcids b,users u " +
-                    "WHERE ezidMade && b.users_id=u.USER_ID " +
-                    "AND b.bcids_id = ? " +
+                    "WHERE ezidMade && b.userId=u.userId " +
+                    "AND b.bcidId = ? " +
                     "LIMIT 1000";
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, bcids_id);
+            stmt.setInt(1, bcidId);
             rs = stmt.executeQuery();
 
             rs.next();
@@ -148,14 +148,14 @@ public class manageEZID extends bcidMinter {
         ResultSet rs = null;
         ArrayList<String> idSuccessList = new ArrayList();
         try {
-            String sql = "SELECT b.bcids_id as bcids_id," +
+            String sql = "SELECT b.bcidId as bcidId," +
                     "b.prefix as prefix," +
                     "b.ts as ts," +
                     "b.resourceType as type," +
                     "b.title as title," +
                     "concat_ws('',CONCAT_WS(' ',u.firstName, u.lastName),' <',u.email,'>') as creator " +
                     "FROM bcids b,users u " +
-                    "WHERE !ezidMade && ezidRequest && b.users_id=u.USER_ID && u.username != 'demo'" +
+                    "WHERE !ezidMade && ezidRequest && b.userId=u.userId && u.username != 'demo'" +
                     "LIMIT 1000";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
@@ -185,7 +185,7 @@ public class manageEZID extends bcidMinter {
                 // Register this as an EZID
                 try {
                     identifier = new URI(ezid.createIdentifier(myIdentifier, map));
-                    idSuccessList.add(rs.getString("bcids_id"));
+                    idSuccessList.add(rs.getString("bcidId"));
                     logger.info("{}", identifier.toString());
                 } catch (EZIDException e) {
                     // Adding this for debugging
@@ -193,7 +193,7 @@ public class manageEZID extends bcidMinter {
                     // Attempt to set Metadata if this is an Exception
                     try {
                         ezid.setMetadata(myIdentifier, map);
-                        idSuccessList.add(rs.getString("bcids_id"));
+                        idSuccessList.add(rs.getString("bcidId"));
                     } catch (EZIDException e1) {
                         //TODO should we silence this exception?
                         logger.warn("Exception thrown in attempting to create OR update EZID {}, a permission issue?", myIdentifier, e1);
@@ -239,7 +239,7 @@ public class manageEZID extends bcidMinter {
             String updateString = "" +
                     "UPDATE bcids " +
                     "SET ezidMade=true " +
-                    "WHERE bcids_id=? && !ezidMade";
+                    "WHERE bcidId=? && !ezidMade";
             updateStatement = conn.prepareStatement(updateString);
             Iterator ids = idSuccessList.iterator();
             int count = 0;

@@ -50,7 +50,7 @@ public class process {
     String outputPrefix;
     private processController processController;
     private static Logger logger = LoggerFactory.getLogger(process.class);
-    protected int project_id;
+    protected int projectId;
     private database db;
     protected Connection conn;
 
@@ -130,10 +130,10 @@ public class process {
      * @param configFile
      */
     public process(
-            int project_id,
+            int projectId,
             String outputFolder,
             File configFile) {
-        this.project_id = project_id;
+        this.projectId = projectId;
         this.outputFolder = outputFolder;
         this.configFile = configFile;
         this.outputPrefix = "output";
@@ -158,7 +158,7 @@ public class process {
     }
 
     public int getProject_id() {
-        return project_id;
+        return projectId;
     }
 
     /**
@@ -202,14 +202,14 @@ public class process {
             return true;
         }
 
-        if (processController.getUser_id() == null) {
+        if (processController.getUserId() == null) {
             throw new UnauthorizedRequestException("You must be logged in to check an expedition status");
         }
 
         expeditionMinter expeditionMinter = new expeditionMinter();
 
         String response = expeditionMinter.validateExpedition(processController.getExpeditionCode(), processController.getProject_id(),
-                ignore_user, processController.getUser_id());
+                ignore_user, processController.getUserId());
 
         JSONObject r = (JSONObject) JSONValue.parse(response);
        if (r.containsKey("update")) {
@@ -249,18 +249,18 @@ public class process {
                 "before loading each spreadsheet and may take a minute...\n";
         processController.appendStatus(status);
         fimsPrinter.out.println(status);
-        String expedition_title = processController.getExpeditionCode() + " spreadsheet";
+        String expeditionTitle = processController.getExpeditionCode() + " spreadsheet";
         if (processController.getAccessionNumber() != null) {
-            expedition_title += " (accession " + processController.getAccessionNumber() + ")";
+            expeditionTitle += " (accession " + processController.getAccessionNumber() + ")";
         }
         expeditionMinter expedition = new expeditionMinter();
         try {
             // Mint a expedition
             expedition.mint(
                     processController.getExpeditionCode(),
-                    expedition_title,
-                    processController.getUser_id(),
-                    project_id,
+                    expeditionTitle,
+                    processController.getUserId(),
+                    projectId,
                     processController.getPublicStatus()
             );
         } catch (FIMSException e) {
@@ -284,7 +284,7 @@ public class process {
                 // Mint the data group
                 bcidMinter bcidMinter = new bcidMinter(true);
 
-                String prefix = bcidMinter.createEntityBcid(processController.getUser_id(), entity.getConceptAlias(),
+                String prefix = bcidMinter.createEntityBcid(processController.getUserId(), entity.getConceptAlias(),
                         "", null, null, false);
                 bcidMinter.close();
                 // Associate this bcid with this expedition
@@ -346,8 +346,8 @@ public class process {
         if (triplifier || upload) {
 
             if (expeditionCheck) {
-                // make sure that the user is logged in and set the user_id in the process
-                if (processController.getUser_id() == null) {
+                // make sure that the user is logged in and set the userId in the process
+                if (processController.getUserId() == null) {
                     throw new UnauthorizedRequestException("You must be logged in to continue");
                 }
                 // Expedition Check Step
@@ -448,7 +448,7 @@ public class process {
             processController.appendStatus("<br>" + results);
             // Set the public status
             expeditionMinter expeditionMinter = new expeditionMinter();
-            expeditionMinter.updateExpeditionPublicStatus(processController.getUser_id(), processController.getExpeditionCode(),
+            expeditionMinter.updateExpeditionPublicStatus(processController.getUserId(), processController.getExpeditionCode(),
                     processController.getProject_id(), processController.getPublicStatus());
             expeditionMinter.close();
             //Html2Text parser = new Html2Text();
@@ -524,7 +524,7 @@ public class process {
         d.addCallMethod("fims/validation/lists/list/field", "setValue", 0);
 
         // Create column objects
-        d.addObjectCreate("fims/validation/worksheet/column", Column_trash.class);
+        d.addObjectCreate("fims/validation/worksheet/column", ColumnTrash.class);
         d.addSetProperties("fims/validation/worksheet/column");
         d.addSetNext("fims/validation/worksheet/column", "addColumn");
 
@@ -585,7 +585,7 @@ public class process {
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
         String username = "";
         String password = "";
-        Integer project_id = 0;
+        Integer projectId = 0;
         //System.out.print(defaultOutputDirectory);
 
         // Test configuration :
@@ -601,7 +601,7 @@ public class process {
         CommandLine cl;
 
         // The expedition code corresponds to a expedition recognized by BCID
-        String expedition_code = "";
+        String expeditionCode = "";
         // The configuration template
         //String configuration = "";
         // The input file
@@ -621,11 +621,11 @@ public class process {
         options.addOption("f", "format", true, "excel|html|json|cspace  specifying the return format for the query");
         options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
-        options.addOption("e", "expedition_code", true, "Expedition code.  You will need to obtain a data code before " +
+        options.addOption("e", "expeditionCode", true, "Expedition code.  You will need to obtain a data code before " +
                 "loading data");
         options.addOption("o", "output_directory", true, "Output Directory");
         options.addOption("i", "input_file", true, "Input Spreadsheet");
-        options.addOption("p", "project_id", true, "Project Identifier.  A numeric integer corresponding to your project");
+        options.addOption("p", "projectId", true, "Project Identifier.  A numeric integer corresponding to your project");
         options.addOption("configFile", true, "Use a local config file instead of getting from server");
 
         options.addOption("bcid", "triplify", false, "Triplify only (upload process triplifies)");
@@ -672,7 +672,7 @@ public class process {
             return;
         }
 
-        // Query option must also have project_id option
+        // Query option must also have projectId option
         if (cl.hasOption("q")) {
             if (!cl.hasOption("p")) {
                 helpf.printHelp("fims ", options, true);
@@ -695,17 +695,17 @@ public class process {
         // Sanitize project specification
         if (cl.hasOption("p")) {
             try {
-                project_id = new Integer(cl.getOptionValue("p"));
+                projectId = new Integer(cl.getOptionValue("p"));
             } catch (Exception e) {
-                fimsPrinter.out.println("Bad option for project_id");
+                fimsPrinter.out.println("Bad option for projectId");
                 helpf.printHelp("fims ", options, true);
                 return;
             }
         }
 
-        // Check for project_id when uploading data
-        if (cl.hasOption("u") && project_id < 1) {
-            fimsPrinter.out.println("Must specify a valid project_id when uploading data");
+        // Check for projectId when uploading data
+        if (cl.hasOption("u") && projectId < 1) {
+            fimsPrinter.out.println("Must specify a valid projectId when uploading data");
             return;
         }
 
@@ -717,9 +717,9 @@ public class process {
         if (cl.hasOption("o"))
             output_directory = cl.getOptionValue("o");
 
-        // Set expedition_code
+        // Set expeditionCode
         if (cl.hasOption("e"))
-            expedition_code = cl.getOptionValue("e");
+            expeditionCode = cl.getOptionValue("e");
 
         // Set triplify option
         if (cl.hasOption("bcid"))
@@ -757,10 +757,10 @@ public class process {
              */
             if (cl.hasOption("q")) {
 
-                File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
+                File file = new configurationFileFetcher(projectId, output_directory, true).getOutputFile();
 
                 process p = new process(
-                        project_id,
+                        projectId,
                         output_directory,
                         file
                 );
@@ -813,8 +813,8 @@ public class process {
 
                         // Now run the process
                         process p;
-                        processController processController = new processController(project_id, expedition_code);
-                        processController.setUser_id(username);
+                        processController processController = new processController(projectId, expeditionCode);
+                        processController.setUserId(username);
 
                         // use local configFile if specified
                         if (cl.hasOption("configFile")) {

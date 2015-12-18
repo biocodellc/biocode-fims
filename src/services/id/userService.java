@@ -65,7 +65,7 @@ public class userService {
                                @FormParam("lastName") String lastName,
                                @FormParam("email") String email,
                                @FormParam("institution") String institution,
-                               @FormParam("project_id") Integer projectId) {
+                               @FormParam("projectId") Integer projectId) {
 
         HttpSession session = request.getSession();
 
@@ -167,7 +167,7 @@ public class userService {
                 throw new BadRequestException("user: " + username + "not found");
             } else {
                 // Make the user change their password next time they login
-                update.put("set_password", "0");
+                update.put("hasSetPassword", "0");
             }
         }
 
@@ -247,9 +247,9 @@ public class userService {
                 if (!success) {
                     throw new ServerErrorException("Server Error", "User not found");
                 }
-                // Make sure that the set_password field is 1 (true) so they aren't asked to change their password after login
+                // Make sure that the hasSetPassword field is 1 (true) so they aren't asked to change their password after login
                 else {
-                    update.put("set_password", "1");
+                    update.put("hasSetPassword", "1");
                 }
             }
             else {
@@ -364,7 +364,7 @@ public class userService {
     }
 
     /**
-     * Service for oauth client apps to retrieve a user's profile information.
+     * Service for oAuth client apps to retrieve a user's profile information.
      * @param access_token
      * @return
      */

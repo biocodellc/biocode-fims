@@ -1,4 +1,4 @@
-package auth.oauth2;
+package auth.oAuth2;
 
 import bcid.database;
 import fimsExceptions.OAUTHException;
@@ -11,7 +11,7 @@ import utils.stringGenerator;
 import java.sql.*;
 
 /**
- * This class handles all aspects of Oauth2 support.
+ * This class handles all aspects of oAuth2 support.
  */
 public class provider {
     protected Connection conn;
@@ -36,7 +36,7 @@ public class provider {
      */
     public Boolean validClientId(String clientId) {
         try {
-            String selectString = "SELECT count(*) as count FROM oauthClients WHERE client_id = ?";
+            String selectString = "SELECT count(*) as count FROM oAuthClients WHERE clientId = ?";
             PreparedStatement stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, clientId);
@@ -46,7 +46,7 @@ public class provider {
                 return rs.getInt("count") >= 1;
             }
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "error validating clientId", 500, e);
+            throw new OAUTHException("server_error", "error validating client_id", 500, e);
         }
         return false;
     }
@@ -60,7 +60,7 @@ public class provider {
      */
     public String getCallback(String clientID) {
         try {
-            String selectString = "SELECT callback FROM oauthClients WHERE client_id = ?";
+            String selectString = "SELECT callback FROM oAuthClients WHERE clientId = ?";
             PreparedStatement stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, clientID);
@@ -70,7 +70,7 @@ public class provider {
                 return rs.getString("callback");
             }
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "SQLException while trying to retrieve callback url for oauth client_id: " + clientID, 500, e);
+            throw new OAUTHException("server_error", "SQLException while trying to retrieve callback url for oAuth client_id: " + clientID, 500, e);
         }
         return null;
     }
@@ -88,23 +88,23 @@ public class provider {
         stringGenerator sg = new stringGenerator();
         String code = sg.generateString(20);
 
-        Integer user_id = db.getUserId(username);
-        if (user_id == null) {
-            throw new OAUTHException("server_error", "null user_id returned for username: " + username, 500);
+        Integer userId = db.getUserId(username);
+        if (userId == null) {
+            throw new OAUTHException("server_error", "null userId returned for username: " + username, 500);
         }
 
         PreparedStatement stmt = null;
-        String insertString = "INSERT INTO oauthNonces (client_id, code, user_id, redirect_uri) VALUES(?, \"" + code + "\",?,?)";
+        String insertString = "INSERT INTO oAuthNonces (clientId, code, userId, redirectUri) VALUES(?, \"" + code + "\",?,?)";
         try {
             stmt = conn.prepareStatement(insertString);
 
             stmt.setString(1, clientID);
-            stmt.setInt(2, user_id);
+            stmt.setInt(2, userId);
             stmt.setString(3, redirectURL);
 
             stmt.execute();
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "error saving oauth nonce to db", 500, e);
+            throw new OAUTHException("server_error", "error saving oAuth nonce to db", 500, e);
         } finally {
             db.close(stmt, null);
         }
@@ -112,7 +112,7 @@ public class provider {
     }
 
     /**
-     * generate a new clientId for a oauth client app
+     * generate a new clientId for a oAuth client app
      *
      * @return
      */
@@ -122,7 +122,7 @@ public class provider {
     }
 
     /**
-     * generate a client secret for a oauth client app
+     * generate a client secret for a oAuth client app
      *
      * @return
      */
@@ -143,7 +143,7 @@ public class provider {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String selectString = "SELECT count(*) as count FROM oauthClients WHERE client_id = ? AND client_secret = ?";
+            String selectString = "SELECT count(*) as count FROM oAuthClients WHERE clientId = ? AND clientSecret = ?";
 
 //            System.out.println("clientId = \'" + clientId + "\' clientSecret=\'" + clientSecret + "\'");
 
@@ -157,7 +157,7 @@ public class provider {
                 return rs.getInt("count") >= 1;
             }
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "Server Error validating oauth client", 500, e);
+            throw new OAUTHException("server_error", "Server Error validating oAuth client", 500, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -178,7 +178,7 @@ public class provider {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String selectString = "SELECT current_timestamp() as current,ts FROM oauthNonces WHERE client_id = ? AND code = ? AND redirect_uri = ?";
+            String selectString = "SELECT current_timestamp() as current,ts FROM oAuthNonces WHERE clientId = ? AND code = ? AND redirectUri = ?";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, clientID);
@@ -200,7 +200,7 @@ public class provider {
                 }
             }
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "Server Error validating oauth code", 500, e);
+            throw new OAUTHException("server_error", "Server Error validating oAuth code", 500, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -208,7 +208,7 @@ public class provider {
     }
 
     /**
-     * get the id of the user that the given oauth code represents
+     * get the id of the user that the given oAuth code represents
      *
      * @param clientId
      * @param code
@@ -216,11 +216,11 @@ public class provider {
      * @return
      */
     private Integer getUserId(String clientId, String code) {
-        Integer user_id = null;
+        Integer userId = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String selectString = "SELECT user_id FROM oauthNonces WHERE client_id=? AND code=?";
+            String selectString = "SELECT userId FROM oAuthNonces WHERE clientId=? AND code=?";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, clientId);
@@ -228,21 +228,21 @@ public class provider {
 
             rs = stmt.executeQuery();
             if (rs.next()) {
-                user_id = rs.getInt("user_id");
+                userId = rs.getInt("userId");
             }
 
         } catch (SQLException e) {
             throw new ServerErrorException("server_error",
-                    "SQLException thrown while retrieving the userID that belongs to the oauth code: " + code, e);
+                    "SQLException thrown while retrieving the userID that belongs to the oAuth code: " + code, e);
         } finally {
             db.close(stmt, rs);
         }
-        return user_id;
+        return userId;
     }
 
     /**
-     * Remove the given oauth code from the db. This is called when the code is exchanged for an access token,
-     * as oauth codes are only usable once.
+     * Remove the given oAuth code from the db. This is called when the code is exchanged for an access token,
+     * as oAuth codes are only usable once.
      *
      * @param clientId
      * @param code
@@ -250,7 +250,7 @@ public class provider {
     private void deleteNonce(String clientId, String code) {
         PreparedStatement stmt = null;
         try {
-            String deleteString = "DELETE FROM oauthNonces WHERE client_id = ? AND code = ?";
+            String deleteString = "DELETE FROM oAuthNonces WHERE clientId = ? AND code = ?";
             stmt = conn.prepareStatement(deleteString);
 
             stmt.setString(1, clientId);
@@ -258,7 +258,7 @@ public class provider {
 
             stmt.execute();
         } catch (SQLException e) {
-            logger.warn("SQLException thrown while deleting oauth nonce with code: {}", code, e);
+            logger.warn("SQLException thrown while deleting oAuth nonce with code: {}", code, e);
         } finally {
             db.close(stmt, null);
         }
@@ -277,7 +277,7 @@ public class provider {
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String sql = "SELECT client_id, user_id FROM oauthTokens WHERE refresh_token = ?";
+        String sql = "SELECT clientId, userId FROM oAuthTokens WHERE refreshToken = ?";
         try {
             stmt = conn.prepareStatement(sql);
 
@@ -285,11 +285,11 @@ public class provider {
 
             rs = stmt.executeQuery();
             if (rs.next()) {
-                userId = rs.getInt("user_id");
-                clientId = rs.getString("client_id");
+                userId = rs.getInt("userId");
+                clientId = rs.getString("clientId");
             }
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "error retrieving oauth client information from db", 500, e);
+            throw new OAUTHException("server_error", "error retrieving oAuth client information from db", 500, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -312,17 +312,17 @@ public class provider {
      * @return
      */
     public String generateToken(String clientID, String state, String code) {
-        Integer user_id = getUserId(clientID, code);
+        Integer userId = getUserId(clientID, code);
         deleteNonce(clientID, code);
-        if (user_id == null) {
-            throw new OAUTHException("server_error", "userId was null for oauthNonce with code: " + code, 500);
+        if (userId == null) {
+            throw new OAUTHException("server_error", "userId was null for oAuthNonce with code: " + code, 500);
         }
 
-        return generateToken(clientID, user_id, state);
+        return generateToken(clientID, userId, state);
     }
 
     /**
-     * generate an oauth compliant JSON response with an access_token and refresh_token
+     * generate an oAuth compliant JSON response with an access_token and refreshToken
      *
      * @param clientID
      * @param userId
@@ -335,7 +335,7 @@ public class provider {
         String token = sg.generateString(20);
         String refreshToken = sg.generateString(20);
 
-        String insertString = "INSERT INTO oauthTokens (client_id, token, refresh_token, user_id) VALUE " +
+        String insertString = "INSERT INTO oAuthTokens (clientId, token, refreshToken, userId) VALUE " +
                 "(?, \"" + token + "\",\"" + refreshToken + "\", ?)";
         PreparedStatement stmt = null;
         try {
@@ -345,7 +345,7 @@ public class provider {
             stmt.setInt(2, userId);
             stmt.execute();
         } catch (SQLException e) {
-            throw new OAUTHException("server_error", "Server error while trying to save oauth access token to db.", 500, e);
+            throw new OAUTHException("server_error", "Server error while trying to save oAuth access token to db.", 500, e);
         } finally {
             db.close(stmt, null);
         }
@@ -365,21 +365,21 @@ public class provider {
     }
 
     /**
-     * delete an access_token. This is called when a refresh_token has been exchanged for a new access_token.
+     * delete an access_token. This is called when a refreshToken has been exchanged for a new access_token.
      *
      * @param refreshToken
      */
     public void deleteAccessToken(String refreshToken) {
         PreparedStatement stmt = null;
         try {
-            String deleteString = "DELETE FROM oauthTokens WHERE refresh_token = ?";
+            String deleteString = "DELETE FROM oAuthTokens WHERE refreshToken = ?";
             stmt = conn.prepareStatement(deleteString);
 
             stmt.setString(1, refreshToken);
 
             stmt.execute();
         } catch (SQLException e) {
-            logger.warn("SQLException while deleting oauth access token with the refreshToken: {}", refreshToken, e);
+            logger.warn("SQLException while deleting oAuth access token with the refreshToken: {}", refreshToken, e);
         } finally {
             db.close(stmt, null);
         }
@@ -396,7 +396,7 @@ public class provider {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT current_timestamp() as current,ts FROM oauthTokens WHERE refresh_token = ?";
+            String sql = "SELECT current_timestamp() as current,ts FROM oAuthTokens WHERE refreshToken = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, refreshToken);
@@ -437,7 +437,7 @@ public class provider {
         ResultSet rs = null;
         try {
             String selectString = "SELECT current_timestamp() as current,t.ts as ts, u.username as username " +
-                    "FROM oauthTokens t, users u WHERE t.token=? && u.user_id = t.user_id";
+                    "FROM oAuthTokens t, users u WHERE t.token=? && u.userId = t.userId";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, token);
@@ -466,7 +466,7 @@ public class provider {
     }
 
     /**
-     * Given a hostname, register a client app for oauth use. Will generate a new client id and client secret
+     * Given a hostname, register a client app for oAuth use. Will generate a new client id and client secret
      * for the client app
      *
      * @param args
@@ -501,13 +501,13 @@ public class provider {
         String clientSecret = generateClientSecret();
 
 
-        String insertString = "INSERT INTO oauthClients (client_id, client_secret, callback) VALUES (\""
+        String insertString = "INSERT INTO oAuthClients (clientId, clientSecret, callback) VALUES (\""
                 + clientId + "\",\"" + clientSecret + "\",\"" + host + "\")";
         System.out.println("Use the following insert string:");
         System.out.println(insertString);
-        System.out.println("Once that is done the oauth2 client app at host: " + host
-                + ".\n will need the following information:\n\nclient_id: "
-                + clientId + "\nclient_secret: " + clientSecret);
+        System.out.println("Once that is done the oAuth2 client app at host: " + host
+                + ".\n will need the following information:\n\nclientId: "
+                + clientId + "\nclientSecret: " + clientSecret);
 
         /*
         provider p = null;
@@ -518,22 +518,22 @@ public class provider {
             String clientId = p.generateClientId();
             String clientSecret = p.generateClientSecret();
 
-            String insertString = "INSERT INTO oauthClients (client_id, client_secret, callback) VALUES (\""
+            String insertString = "INSERT INTO oAuthClients (clientId, clientSecret, callback) VALUES (\""
                                   + clientId + "\",\"" + clientSecret + "\",?)";
 
 //            System.out.println("USE THE FOLLOWING INSERT STATEMENT IN YOUR DATABASE:\n\n");
-//            System.out.println("INSERT INTO oauthClients (client_id, client_secret, callback) VALUES (\""
+//            System.out.println("INSERT INTO oAuthClients (clientId, clientSecret, callback) VALUES (\""
 //                    + clientId + "\",\"" + clientSecret + "\",\"" + host + "\")");
-//            System.out.println(".\nYou will need the following information:\n\nclient_id: "
-//                    + clientId + "\nclient_secret: " + clientSecret);
+//            System.out.println(".\nYou will need the following information:\n\nclientId: "
+//                    + clientId + "\nclientSecret: " + clientSecret);
             stmt = p.conn.prepareStatement(insertString);
 
             stmt.setString(1, host);
             stmt.execute();
 
-            System.out.println("Successfully registered oauth2 client app at host: " + host
-                    + ".\nYou will need the following information:\n\nclient_id: "
-                    + clientId + "\nclient_secret: " + clientSecret);
+            System.out.println("Successfully registered oAuth2 client app at host: " + host
+                    + ".\nYou will need the following information:\n\nclientId: "
+                    + clientId + "\nclientSecret: " + clientSecret);
         } catch (Exception e) {
             e.printStackTrace();
             return;

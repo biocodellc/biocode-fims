@@ -27,8 +27,8 @@ public class processController {
     private Boolean validated = false;
     private String inputFilename;
     private String expeditionCode;
-    private Integer project_id;
-    private Integer user_id;
+    private Integer projectId;
+    private Integer userId;
     private Validation validation;
     private String worksheetName;
     private StringBuilder statusSB = new StringBuilder();
@@ -67,9 +67,9 @@ public class processController {
         statusSB.append(stringToHTMLJSON(s));
     }
 
-    public processController(Integer project_id, String expeditionCode) {
+    public processController(Integer projectId, String expeditionCode) {
         this.expeditionCode = expeditionCode;
-        this.project_id = project_id;
+        this.projectId = projectId;
     }
      public processController() {
 
@@ -129,7 +129,7 @@ public class processController {
 
 
     public Integer getProject_id() {
-        return project_id;
+        return projectId;
     }
 
     public Boolean isExpeditionAssignedToUserAndExists() {
@@ -167,7 +167,7 @@ public class processController {
                 validated &&
                 inputFilename != null &&
                 expeditionCode != null &&
-                project_id > 0)
+                projectId > 0)
             return true;
         else
             return false;
@@ -188,7 +188,7 @@ public class processController {
 
     public String printStatus() {
         String retVal = "";
-        retVal += "\tproject_id = " + project_id + "\n";
+        retVal += "\tprojectId = " + projectId + "\n";
         retVal += "\texpeditionCode = " + expeditionCode + "\n";
         retVal += "\tinputFilename = " + inputFilename + "\n";
 
@@ -271,24 +271,24 @@ public class processController {
         return finalCopy;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     /**
      * method for setting the userId when given a username
      * @param username
      */
-    public void setUser_id(String username) {
+    public void setUserId(String username) {
         database db = new database();
         Integer userId = db.getUserId(username);
         if (userId == null) {
             throw new ServerErrorException("invalid username");
         }
-        this.user_id = userId;
+        this.userId = userId;
     }
 }

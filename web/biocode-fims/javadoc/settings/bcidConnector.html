@@ -142,12 +142,12 @@ General purpose class for authenticating against BCID system and creating BCIDs.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../settings/bcidConnector.html#associateBCID(java.lang.Integer, java.lang.String, java.lang.String)">associateBCID</A></B>(java.lang.Integer&nbsp;project_id,
-              java.lang.String&nbsp;expedition_code,
+<TD><CODE><B><A HREF="../settings/bcidConnector.html#associateBCID(java.lang.Integer, java.lang.String, java.lang.String)">associateBCID</A></B>(java.lang.Integer&nbsp;projectId,
+              java.lang.String&nbsp;expeditionCode,
               java.lang.String&nbsp;bcid)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asscociate a expedition_code to a BCID</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asscociate a expeditionCode to a BCID</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -171,7 +171,7 @@ General purpose class for authenticating against BCID system and creating BCIDs.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../settings/bcidConnector.html#createDatasetBCID(java.lang.String, java.lang.String)">createDatasetBCID</A></B>(java.lang.String&nbsp;webaddress,
+<TD><CODE><B><A HREF="../settings/bcidConnector.html#createDatasetBCID(java.lang.String, java.lang.String)">createDatasetBCID</A></B>(java.lang.String&nbsp;webAddress,
                   java.lang.String&nbsp;graph)</CODE>
 
 <BR>
@@ -180,7 +180,7 @@ General purpose class for authenticating against BCID system and creating BCIDs.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../settings/bcidConnector.html#createEntityBCID(java.lang.String, java.lang.String, java.lang.String)">createEntityBCID</A></B>(java.lang.String&nbsp;webaddress,
+<TD><CODE><B><A HREF="../settings/bcidConnector.html#createEntityBCID(java.lang.String, java.lang.String, java.lang.String)">createEntityBCID</A></B>(java.lang.String&nbsp;webAddress,
                  java.lang.String&nbsp;resourceAlias,
                  java.lang.String&nbsp;resourceType)</CODE>
 
@@ -199,9 +199,9 @@ General purpose class for authenticating against BCID system and creating BCIDs.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../settings/bcidConnector.html#createExpedition(java.lang.String, java.lang.String, java.lang.Integer)">createExpedition</A></B>(java.lang.String&nbsp;expedition_code,
-                 java.lang.String&nbsp;expedition_title,
-                 java.lang.Integer&nbsp;project_id)</CODE>
+<TD><CODE><B><A HREF="../settings/bcidConnector.html#createExpedition(java.lang.String, java.lang.String, java.lang.Integer)">createExpedition</A></B>(java.lang.String&nbsp;expeditionCode,
+                 java.lang.String&nbsp;expeditionTitle,
+                 java.lang.Integer&nbsp;projectId)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;create a expedition</TD>
@@ -234,12 +234,12 @@ General purpose class for authenticating against BCID system and creating BCIDs.
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;java.lang.String</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../settings/bcidConnector.html#getArkFromDataset(java.lang.Integer, java.lang.String, java.lang.String)">getArkFromDataset</A></B>(java.lang.Integer&nbsp;project_id,
+<TD><CODE><B><A HREF="../settings/bcidConnector.html#getArkFromDataset(java.lang.Integer, java.lang.String, java.lang.String)">getArkFromDataset</A></B>(java.lang.Integer&nbsp;projectId,
                   java.lang.String&nbsp;dataset_code,
                   java.lang.String&nbsp;resource)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Given a project_id, dataset_code, and a resource give me an ARK</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Given a projectId, dataset_code, and a resource give me an ARK</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -371,12 +371,12 @@ public <B>bcidConnector</B>(java.lang.String&nbsp;accessToken,
 <A NAME="associateBCID(java.lang.Integer, java.lang.String, java.lang.String)"><!-- --></A><H3>
 associateBCID</H3>
 <PRE>
-public java.lang.String <B>associateBCID</B>(java.lang.Integer&nbsp;project_id,
-                                      java.lang.String&nbsp;expedition_code,
+public java.lang.String <B>associateBCID</B>(java.lang.Integer&nbsp;projectId,
+                                      java.lang.String&nbsp;expeditionCode,
                                       java.lang.String&nbsp;bcid)
                                throws java.lang.Exception</PRE>
 <DL>
-<DD>Asscociate a expedition_code to a BCID
+<DD>Asscociate a expeditionCode to a BCID
 <P>
 <DD><DL>
 
@@ -429,7 +429,7 @@ public boolean <B>checkExpedition</B>(<A HREF="../run/processController.html" ti
 <A NAME="createDatasetBCID(java.lang.String, java.lang.String)"><!-- --></A><H3>
 createDatasetBCID</H3>
 <PRE>
-public java.lang.String <B>createDatasetBCID</B>(java.lang.String&nbsp;webaddress,
+public java.lang.String <B>createDatasetBCID</B>(java.lang.String&nbsp;webAddress,
                                           java.lang.String&nbsp;graph)
                                    throws java.lang.Exception</PRE>
 <DL>
@@ -449,7 +449,7 @@ public java.lang.String <B>createDatasetBCID</B>(java.lang.String&nbsp;webaddres
 <A NAME="createEntityBCID(java.lang.String, java.lang.String, java.lang.String)"><!-- --></A><H3>
 createEntityBCID</H3>
 <PRE>
-public java.lang.String <B>createEntityBCID</B>(java.lang.String&nbsp;webaddress,
+public java.lang.String <B>createEntityBCID</B>(java.lang.String&nbsp;webAddress,
                                          java.lang.String&nbsp;resourceAlias,
                                          java.lang.String&nbsp;resourceType)
                                   throws java.lang.Exception</PRE>
@@ -483,9 +483,9 @@ public boolean <B>createExpedition</B>(<A HREF="../run/processController.html" t
 <A NAME="createExpedition(java.lang.String, java.lang.String, java.lang.Integer)"><!-- --></A><H3>
 createExpedition</H3>
 <PRE>
-public java.lang.String <B>createExpedition</B>(java.lang.String&nbsp;expedition_code,
-                                         java.lang.String&nbsp;expedition_title,
-                                         java.lang.Integer&nbsp;project_id)
+public java.lang.String <B>createExpedition</B>(java.lang.String&nbsp;expeditionCode,
+                                         java.lang.String&nbsp;expeditionTitle,
+                                         java.lang.Integer&nbsp;projectId)
                                   throws java.lang.Exception</PRE>
 <DL>
 <DD>create a expedition
@@ -548,15 +548,15 @@ public java.lang.String <B>getAccessToken</B>()</PRE>
 <A NAME="getArkFromDataset(java.lang.Integer, java.lang.String, java.lang.String)"><!-- --></A><H3>
 getArkFromDataset</H3>
 <PRE>
-public java.lang.String <B>getArkFromDataset</B>(java.lang.Integer&nbsp;project_id,
+public java.lang.String <B>getArkFromDataset</B>(java.lang.Integer&nbsp;projectId,
                                           java.lang.String&nbsp;dataset_code,
                                           java.lang.String&nbsp;resource)
                                    throws java.io.IOException</PRE>
 <DL>
-<DD>Given a project_id, dataset_code, and a resource give me an ARK
+<DD>Given a projectId, dataset_code, and a resource give me an ARK
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>project_id</CODE> - <DD><CODE>dataset_code</CODE> - <DD><CODE>resource</CODE> - 
+<DT><B>Parameters:</B><DD><CODE>projectId</CODE> - <DD><CODE>dataset_code</CODE> - <DD><CODE>resource</CODE> -
 <DT><B>Returns:</B><DD>
 <DT><B>Throws:</B>
 <DD><CODE>java.io.IOException</CODE></DL>

@@ -49,10 +49,10 @@ public class query {
     @Produces(MediaType.APPLICATION_JSON)
     public Response queryJson(
             @QueryParam("graphs") String graphs,
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("filter") String filter) {
 
-        File file = GETQueryResult(graphs, project_id, filter, "json");
+        File file = GETQueryResult(graphs, projectId, filter, "json");
 
         String response = readFile(file.getAbsolutePath());
 
@@ -108,11 +108,11 @@ public class query {
     @Produces("application/vnd.google-earth.kml+xml")
     public Response queryKml(
             @QueryParam("graphs") String graphs,
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("filter") String filter) {
 
         // Construct a file
-        File file = GETQueryResult(graphs, project_id, filter, "kml");
+        File file = GETQueryResult(graphs, projectId, filter, "kml");
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
@@ -174,11 +174,11 @@ public class query {
     @Produces(MediaType.APPLICATION_XML)
     public Response queryCspace(
             @QueryParam("graphs") String graphs,
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("filter") String filter) {
 
         // Construct a file
-        File file = GETQueryResult(graphs, project_id, filter, "cspace");
+        File file = GETQueryResult(graphs, projectId, filter, "cspace");
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
@@ -206,10 +206,10 @@ public class query {
     @Produces("application/vnd.ms-excel")
     public Response queryExcel(
             @QueryParam("graphs") String graphs,
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("filter") String filter) {
 
-        File file = GETQueryResult(graphs, project_id, filter, "excel");
+        File file = GETQueryResult(graphs, projectId, filter, "excel");
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
@@ -267,10 +267,10 @@ public class query {
     @Path("/tab/")
     public Response queryTab(
             @QueryParam("graphs") String graphs,
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("filter") String filter) {
 
-        File file = GETQueryResult(graphs, project_id, filter, "tab");
+        File file = GETQueryResult(graphs, projectId, filter, "tab");
 
         // Return file to client
         Response.ResponseBuilder response = Response.ok((Object) file);
@@ -328,7 +328,7 @@ public class query {
     private fimsQueryBuilder POSTQueryResult(MultivaluedMap<String, String> form) {
         Iterator entries = form.entrySet().iterator();
         String[] graphs = null;
-        Integer project_id = null;
+        Integer projectId = null;
 
         HashMap<String, String> filterMap = new HashMap<String, String>();
         ArrayList<fimsFilterCondition> filterConditionArrayList = new ArrayList<fimsFilterCondition>();
@@ -341,13 +341,13 @@ public class query {
             if (key.equalsIgnoreCase("graphs")) {
                 Object[] valueArray = value.toArray();
                 graphs = Arrays.copyOf(valueArray, valueArray.length, String[].class);
-            } else if (key.equalsIgnoreCase("project_id")) {
-                project_id = Integer.parseInt((String) value.get(0));
-                System.out.println("project_id_val=" + (String)value.get(0) );
-                System.out.println("project_id_int=" + project_id );
+            } else if (key.equalsIgnoreCase("projectId")) {
+                projectId = Integer.parseInt((String) value.get(0));
+                System.out.println("projectId_val=" + (String)value.get(0) );
+                System.out.println("projectId_int=" + projectId );
             } else if (key.equalsIgnoreCase("boolean")) {
                 /// AND|OR
-                //project_id = Integer.parseInt((String) value.get(0));
+                //projectId = Integer.parseInt((String) value.get(0));
             } else if (key.equalsIgnoreCase("submit")) {
                 // do nothing with this
             } else {
@@ -356,17 +356,17 @@ public class query {
             }
         }
 
-        // Make sure graphs and project_id are set
-        if (graphs != null && graphs.length < 1 && project_id != null) {
+        // Make sure graphs and projectId are set
+        if (graphs != null && graphs.length < 1 && projectId != null) {
             throw new FIMSRuntimeException("ERROR: incomplete arguments", 400);
         }
 
         if (graphs[0].equalsIgnoreCase("all")) {
-            graphs = getAllGraphs(project_id);
+            graphs = getAllGraphs(projectId);
         }
 
         // Create a process object here so we can look at uri/column values
-        process process = getProcess(project_id);
+        process process = getProcess(projectId);
 
         // Build the Query
         fimsQueryBuilder q = new fimsQueryBuilder(process, graphs, uploadPath());
@@ -392,12 +392,12 @@ public class query {
      * Get the query result as a file
      *
      * @param graphs
-     * @param project_id
+     * @param projectId
      * @param filter
      * @param format
      * @return
      */
-    private File GETQueryResult(String graphs, Integer project_id, String filter, String format) {
+    private File GETQueryResult(String graphs, Integer projectId, String filter, String format) {
         java.net.URLDecoder decoder = new java.net.URLDecoder();
         String[] graphsArray;
 
@@ -408,12 +408,12 @@ public class query {
         }
 
         if (graphs.equalsIgnoreCase("all")) {
-            graphsArray = getAllGraphs(project_id);
+            graphsArray = getAllGraphs(projectId);
         } else {
             graphsArray = graphs.split(",");
         }
 
-        process p = getProcess(project_id);
+        process p = getProcess(projectId);
 
         // Parse the GET filter
         fimsFilterCondition filterCondition = parseGETFilter(filter, p);
@@ -430,14 +430,14 @@ public class query {
         }
     }
 
-    private String[] getAllGraphs(Integer project_id) {
+    private String[] getAllGraphs(Integer projectId) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
         List<String> graphs = new ArrayList<String>();
 
         projectMinter project= new projectMinter();
 
-        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(project_id, username)));
+        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(projectId, username)));
         project.close();
         JSONArray jArray = ((JSONArray) response.get("data"));
         Iterator it = jArray.iterator();
@@ -450,12 +450,12 @@ public class query {
         return graphs.toArray(new String[graphs.size()]);
     }
 
-    private process getProcess(Integer project_id) {
-        File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+    private process getProcess(Integer projectId) {
+        File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
 
         // Create a process object
         process p = new process(
-                project_id,
+                projectId,
                 uploadPath(),
                 configFile
         );

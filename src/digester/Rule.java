@@ -1299,8 +1299,8 @@ public class Rule {
                     //msg += " <a  href='" + serviceRoot + "utils/getListFields/" + getList() + "/?" +
                     String groupMessage = "\"" + getColumnWorksheetName() + "\" contains invalid value <a  href=\"#\" onclick=\"list('" + urlPath + "utils/getListFields/" + getList() + "/?" +
                             "column_name=" + URLEncoder.encode(column, "utf-8") + "&" +
-                            "project_id=');\">see list</a>";
-                    //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&project_id=1');">link</a>
+                            "projectId=');\">see list</a>";
+                    //<a href="#" onclick="list('/biocode-fims/rest/utils/getListFields/phylum/?column_name=Phylum&projectId=1');">link</a>
 
                     addMessage(msg, groupMessage, rowNum);
                 }

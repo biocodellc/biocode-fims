@@ -35,7 +35,7 @@
 				    //input_string+='<input type="hidden" name="field'+index + '" value="' + $(this).val() + '" />';
 				    input_string+='<input type="hidden" name="fields" value="' + $(this).val() + '" />';
 			});
-			input_string+='<input type="hidden" name="project_id" value="' + getProjectID() + '" />';
+			input_string+='<input type="hidden" name="projectId" value="' + getProjectID() + '" />';
 
 			if (accessionNumber != null) {
 			    input_string += '<input type="hidden" name="accession_number" value="' + accessionNumber + '" />' +

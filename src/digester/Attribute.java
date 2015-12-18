@@ -3,7 +3,6 @@ package digester;
 import settings.fimsPrinter;
 
 import java.io.PrintWriter;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -14,14 +13,14 @@ public class Attribute implements Comparable {
 
     private String group;
     private String column;
-    private String column_internal;
+    private String columnInternal;
     private String uri;
-    private String defined_by;
-    private String datatype = "string";  // string is default type
+    private String definedBy;
+    private String dataType = "string";  // string is default type
     private String definition;
     private String synonyms;
-    private String dataformat;
-    private String delimited_by;
+    private String dataFormat;
+    private String delimitedBy;
     private String type;
 
     public String getColumn() {
@@ -40,20 +39,20 @@ public class Attribute implements Comparable {
 
     }
 
-    public String getColumn_internal() {
-        return column_internal;
+    public String getColumnInternal() {
+        return columnInternal;
     }
 
-    public void setColumn_internal(String column_internal) {
-        this.column_internal = column_internal;
+    public void setColumnInternal(String columnInternal) {
+        this.columnInternal = columnInternal;
     }
 
-    public String getDelimited_by() {
-        return delimited_by;
+    public String getDelimitedBy() {
+        return delimitedBy;
     }
 
-    public void setDelimited_by(String delimited_by) {
-        this.delimited_by = delimited_by;
+    public void setDelimitedBy(String delimitedBy) {
+        this.delimitedBy = delimitedBy;
     }
 
     public String getType() {
@@ -72,20 +71,20 @@ public class Attribute implements Comparable {
         this.group = group;
     }
 
-    public String getDefined_by() {
-        return defined_by;
+    public String getDefinedBy() {
+        return definedBy;
     }
 
-    public void setDefined_by(String defined_by) {
-        this.defined_by = defined_by;
+    public void setDefinedBy(String definedBy) {
+        this.definedBy = definedBy;
     }
 
-    public String getDatatype() {
-        return datatype;
+    public String getDataType() {
+        return dataType;
     }
 
-    public void setDatatype(String datatype) {
-        this.datatype = datatype;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
     public String getUri() {
@@ -113,11 +112,11 @@ public class Attribute implements Comparable {
     }
 
     public String getDataFormat() {
-        return dataformat;
+        return dataFormat;
     }
 
     public void addDataFormat(String dataFormat) {
-        this.dataformat = dataFormat;
+        this.dataFormat = dataFormat;
     }
 
     /**
@@ -127,9 +126,9 @@ public class Attribute implements Comparable {
         fimsPrinter.out.println("  Attribute:");
         fimsPrinter.out.println("    column=" + column);
         fimsPrinter.out.println("    uri=" + uri);
-        fimsPrinter.out.println("    datatype=" + datatype);
-        fimsPrinter.out.println("    isDefinedBy=" + defined_by);
-        fimsPrinter.out.println("    column_internal=" + column_internal);
+        fimsPrinter.out.println("    datatype=" + dataType);
+        fimsPrinter.out.println("    isDefinedBy=" + definedBy);
+        fimsPrinter.out.println("    column_internal=" + columnInternal);
     }
 
     /**
@@ -168,8 +167,8 @@ public class Attribute implements Comparable {
             // using the uri value if NO isDefinedBy is expressed.
             pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
             pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
-            if (defined_by != null) {
-                pw.println("\td2rq:propertyValue <" + defined_by + ">;");
+            if (definedBy != null) {
+                pw.println("\td2rq:propertyValue <" + definedBy + ">;");
             } else {
                 pw.println("\td2rq:propertyValue <" + uri + ">;");
             }
@@ -211,7 +210,7 @@ public class Attribute implements Comparable {
                 if (type.equals("all")) {
                     for (int i = 0; i < columns.length; i++) {
                         if (i != 0)
-                            result.append(" || '" + delimited_by + "' || ");
+                            result.append(" || '" + delimitedBy + "' || ");
                         // Set required function parameters
                         if (type.equals("all"))
                             pw.println("\td2rq:condition \"" + table + "." + columns[i] + " <> ''\";");
@@ -247,8 +246,8 @@ public class Attribute implements Comparable {
                 // using the uri value if NO isDefinedBy is expressed.
                 pw.println(classMapStringEquivalence + " a d2rq:AdditionalProperty;");
                 pw.println("\td2rq:propertyName <" + isDefinedByURIString + ">;");
-                if (defined_by != null) {
-                    pw.println("\td2rq:propertyValue <" + defined_by + ">;");
+                if (definedBy != null) {
+                    pw.println("\td2rq:propertyValue <" + definedBy + ">;");
                 } else {
                     pw.println("\td2rq:propertyValue <" + uri + ">;");
                 }

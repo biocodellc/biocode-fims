@@ -115,7 +115,7 @@ public class bcid {
 
 
     /**
-     * Internal functional for fetching the bcid given the bcids_id
+     * Internal functional for fetching the bcid given the bcidId
      *
      * @param pBcidsId
      */
@@ -137,8 +137,8 @@ public class bcid {
                 "b.graph as graph," +
                 "b.resourceType as resourceType" +
                 " FROM bcids b, users u " +
-                " WHERE b.bcids_id = ?" +
-                " AND b.users_id = u.user_id ";
+                " WHERE b.bcidId = ?" +
+                " AND b.userId = u.userId ";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -244,7 +244,7 @@ public class bcid {
         put("ark", getIdentifier());
         put("who", who);
         put("resourceType", resourceType);
-        put("webaddress", webAddress);
+        put("webAddress", webAddress);
         put("level", level);
         put("title", title);
         put("projectCode", projectCode);

@@ -18,9 +18,9 @@ function list(url) {
 // for template generator, get the definitions when the user clicks on DEF
 function populateDefinitions(column) {
  var e = document.getElementById('projects');
-    var project_id = e.options[e.selectedIndex].value;
+    var projectId = e.options[e.selectedIndex].value;
 
-    theUrl = "/biocode-fims/rest/templates/definition/?project_id=" + project_id + "&column_name=" + column;
+    theUrl = "/biocode-fims/rest/templates/definition/?projectId=" + projectId + "&column_name=" + column;
 
     $.ajax({
         type: "GET",
@@ -36,10 +36,10 @@ function populateColumns(targetDivId) {
     $(targetDivId).html("Loading ...");
 
     var e = document.getElementById('projects');
-    var project_id = e.options[e.selectedIndex].value;
+    var projectId = e.options[e.selectedIndex].value;
 
-    if (project_id != 0) {
-        theUrl = "/biocode-fims/rest/templates/attributes/?project_id=" + project_id;
+    if (projectId != 0) {
+        theUrl = "/biocode-fims/rest/templates/attributes/?projectId=" + projectId;
 
         var jqxhr = $.ajax( {
             url: theUrl,
@@ -65,9 +65,9 @@ function populateAbstract(targetDivId) {
     $(targetDivId).html("Loading ...");
 
     var e = document.getElementById('projects');
-    var project_id = e.options[e.selectedIndex].value;
+    var projectId = e.options[e.selectedIndex].value;
 
-    theUrl = "rest/templates/abstract/?project_id=" + project_id;
+    theUrl = "rest/templates/abstract/?projectId=" + projectId;
 
     var jqxhr = $.ajax( {
         url: theUrl,
@@ -90,7 +90,7 @@ function populateProjects() {
         var listItems = "";
         listItems+= "<option value='0'>Select a project ...</option>";
         $.each(data.projects,function(index,project) {
-            listItems+= "<option value='" + project.project_id + "'>" + project.project_title + "</option>";
+            listItems+= "<option value='" + project.projectId + "'>" + project.projectTitle + "</option>";
         });
         $("#projects").html(listItems);
         // Set to the first value in the list which should be "select one..."
@@ -111,15 +111,15 @@ function populateProjects() {
     });
 }
 
-// Get the graphs for a given project_id
-function populateGraphs(project_id) {
+// Get the graphs for a given projectId
+function populateGraphs(projectId) {
     $("#resultsContainer").hide();
     // Don't let this progress if this is the first option, then reset graphs message
     if ($("#projects").val() == 0)  {
 	    graphsMessage('Choose an project to see loaded spreadsheets');
 	    return;
     }
-    theUrl = "rest/utils/graphs/" + project_id;
+    theUrl = "rest/utils/graphs/" + projectId;
     var jqxhr = $.getJSON( theUrl, function(data) {
         // Check for empty object in response
         if (typeof data['data'][0] === "undefined") {
@@ -127,7 +127,7 @@ function populateGraphs(project_id) {
         } else {
 	        var listItems = "";
              $.each(data.data,function(index,graph) {
-                listItems+= "<option value='" + graph.graph + "'>" + graph.expedition_title + "</option>";
+                listItems+= "<option value='" + graph.graph + "'>" + graph.expeditionTitle + "</option>";
             });
             $("#graphs").html(listItems);
         }
@@ -225,9 +225,9 @@ function getProjectID() {
     return  e.options[e.selectedIndex].value;
 }
 
-// Get the project_id for a key/value expression
+// Get the projectId for a key/value expression
 function getProjectKeyValue() {
-    return "project_id=" + getProjectID();
+    return "projectId=" + getProjectID();
 }
 
 // Get the query graph URIs
@@ -268,7 +268,7 @@ $('#alerts').append(
 // handle displaying messages/results in the graphs(spreadsheets) select list
 function graphsMessage(message) {
         $('#graphs').empty();
-        $('#graphs').append('<option data-qrepeat="g data" data-qattr="value g.graph; text g.expedition_title"></option>');
+        $('#graphs').append('<option data-qrepeat="g data" data-qattr="value g.graph; text g.expeditionTitle"></option>');
         $('#graphs').find('option').first().text(message);
 }
 
@@ -302,8 +302,8 @@ function writeResults(message) {
     // Add some nice coloring
     message= message.replace(/Warning:/g,"<span style='color:orange;'>Warning:</span>");
     message= message.replace(/Error:/g,"<span style='color:red;'>Error:</span>");
-    // set the project key for any project_id expressions... these come from the validator to call REST services w/ extra data
-    message= message.replace(/project_id=/g,getProjectKeyValue());
+    // set the project key for any projectId expressions... these come from the validator to call REST services w/ extra data
+    message= message.replace(/projectId=/g,getProjectKeyValue());
 
     //$("#resultsContainer").html("<table><tr><td>" + message + "</td></tr></table>");
     $("#resultsContainer").html(message);
@@ -387,7 +387,7 @@ function failError(jqxhr) {
 }
 
 // Check that the validation form has a project id and if uploading, has an expedition code
-function validForm(expedition_code) {
+function validForm(expeditionCode) {
     if ($('#projects').val() == 0 || $("#upload").is(":checked")) {
         var message;
         var error = false;
@@ -398,9 +398,9 @@ function validForm(expedition_code) {
             error = true;
         } else if ($("#upload").is(":checked")) {
             // get the dataset code value
-            //var datasetcodeval = $("#expedition_code").val();
+            //var datasetcodeval = $("#expeditionCode").val();
             // if it doesn't pass the regexp test, then set error message and set error to true
-            if (!dRE.test(expedition_code)) {
+            if (!dRE.test(expeditionCode)) {
                 message = "<b>Expedition Code</b> must contain only numbers, letters, or underscores and be 4 to 50 characters long";
                 error = true;
             }
@@ -422,12 +422,12 @@ function validForm(expedition_code) {
 // submit dataset to be validated/uploaded
 function validatorSubmit() {
     // User wants to create a new expedition
-    if ($("#upload").is(":checked") && $("#expedition_code").val() == 0) {
+    if ($("#upload").is(":checked") && $("#expeditionCode").val() == 0) {
         createExpedition().done(function (e) {
 
             if (validForm(e)) {
                 // if the form is valid, update the dataset code value
-                $("#expedition_code").replaceWith("<input name='expedition_code' id='expedition_code' type='text' value=" + e + " />");
+                $("#expeditionCode").replaceWith("<input name='expeditionCode' id='expeditionCode' type='text' value=" + e + " />");
 
                 // Submit form
                 submitForm().done(function(data) {
@@ -437,7 +437,7 @@ function validatorSubmit() {
                 });
             }
         })
-    } else if (validForm($("#expedition_code").val())) {
+    } else if (validForm($("#expeditionCode").val())) {
         submitForm().done(function(data) {
             validationResults(data);
         }).fail(function(jqxhr) {
@@ -547,7 +547,7 @@ function uploadResults(data) {
         // reset the form to default state
         $('form').clearForm();
         $('.toggle-content#projects_toggle').hide(400);
-        $('.toggle-content#expedition_code_toggle').hide(400);
+        $('.toggle-content#expeditionCode_toggle').hide(400);
         $('.toggle-content#expedition_public_toggle').hide(400);
 
     } else {
@@ -583,7 +583,7 @@ function checkNAAN(spreadsheetNaan, naan) {
     }
 }
 
-// function to toggle the project_id and expedition_code inputs of the validation form
+// function to toggle the projectId and expeditionCode inputs of the validation form
 function validationFormToggle() {
     $('#dataset').change(function() {
         // Clear the resultsContainer
@@ -599,9 +599,9 @@ function validationFormToggle() {
             }
         });
 
-        $.when(parseSpreadsheet("~project_id=[0-9]+~", "Instructions")).done(function(project_id) {
-            if (project_id > 0) {
-                $('#projects').val(project_id);
+        $.when(parseSpreadsheet("~projectId=[0-9]+~", "Instructions")).done(function(projectId) {
+            if (projectId > 0) {
+                $('#projects').val(projectId);
                 $('#projects').prop('disabled', true);
                 $('#projects').trigger("change");
                 if ($('.toggle-content#projects_toggle').is(':hidden')) {
@@ -623,10 +623,10 @@ function validationFormToggle() {
 
     });
     $('#upload').change(function() {
-        if ($('.toggle-content#expedition_code_toggle').is(':hidden') && $('#upload').is(":checked")) {
-            $('.toggle-content#expedition_code_toggle').show(400);
+        if ($('.toggle-content#expeditionCode_toggle').is(':hidden') && $('#upload').is(":checked")) {
+            $('.toggle-content#expeditionCode_toggle').show(400);
         } else {
-            $('.toggle-content#expedition_code_toggle').hide(400);
+            $('.toggle-content#expeditionCode_toggle').hide(400);
         }
         if ($('.toggle-content#expedition_public_toggle').is(':hidden') && $('#upload').is(":checked")) {
             $('.toggle-content#expedition_public_toggle').show(400);
@@ -642,7 +642,7 @@ function validationFormToggle() {
 
         // only get expedition codes if a user is logged in
         if ($('*:contains("Logout")').length > 0) {
-            $("#expedition_code").replaceWith("<p id='expedition_code'>Loading ... </p>");
+            $("#expeditionCode").replaceWith("<p id='expeditionCode'>Loading ... </p>");
             getExpeditionCodes();
         }
     });
@@ -650,11 +650,11 @@ function validationFormToggle() {
 
 // update the checkbox to reflect the expedition's public status
 function updateExpeditionPublicStatus(expeditionList) {
-    $('#expedition_code').change(function() {
-        var code = $('#expedition_code').val();
+    $('#expeditionCode').change(function() {
+        var code = $('#expeditionCode').val();
         var public;
         $.each(expeditionList.expeditions, function(key, e) {
-            if (e.expedition_code == code) {
+            if (e.expeditionCode == code) {
                 public = e.public;
                 return false;
             }
@@ -673,17 +673,17 @@ function getExpeditionCodes() {
     var projectID = $("#projects").val();
     $.getJSON("rest/utils/expeditionCodes/" + projectID)
         .done(function(data) {
-            var select = "<select name='expedition_code' id='expedition_code' style='max-width:199px'>" +
+            var select = "<select name='expeditionCode' id='expeditionCode' style='max-width:199px'>" +
                 "<option value='0'>Create New Expedition</option>";
             $.each(data.expeditions, function(key, e) {
-                select += "<option value=" + e.expedition_code + ">" + e.expedition_code + " (" + e.expedition_title + ")</option>";
+                select += "<option value=" + e.expeditionCode + ">" + e.expeditionCode + " (" + e.expeditionTitle + ")</option>";
             });
 
             select += "</select>";
-            $("#expedition_code").replaceWith(select);
+            $("#expeditionCode").replaceWith(select);
             updateExpeditionPublicStatus(data);
         }).fail(function(jqxhr) {
-            $("#expedition_code").replaceWith('<input type="text" name="expedition_code" id="expedition_code" />');
+            $("#expeditionCode").replaceWith('<input type="text" name="expeditionCode" id="expeditionCode" />');
             $("#dialogContainer").addClass("error");
             var buttons = {
                 "Ok": function() {
@@ -734,7 +734,7 @@ function addFilter() {
 function getQueryPostParams() {
     var params = {
         graphs: getGraphURIs(),
-        project_id: getProjectID()
+        projectId: getProjectID()
     }
 
     var filterKeys = $("select[id=uri]");
@@ -785,7 +785,7 @@ function projectToggle(id) {
 }
 
 // function to edit an expedition
-function editExpedition(project_id, expedition_code, e) {
+function editExpedition(projectId, expeditionCode, e) {
     var currentPublic;
     var searchId = $(e).closest("div")[0].id.replace("-configuration", "");
     var title = "Editing " + $("a#" + searchId)[0].textContent.trim();
@@ -806,7 +806,7 @@ function editExpedition(project_id, expedition_code, e) {
         "Update": function() {
             var public = $("[name='public']")[0].checked;
 
-            $.get("/id/expeditionService/publicExpedition/" + project_id + "/" + expedition_code + "/" + public
+            $.get("/id/expeditionService/publicExpedition/" + projectId + "/" + expeditionCode + "/" + public
             ).done(function() {
                 var b = {
                     "Ok": function() {
@@ -863,12 +863,12 @@ function parseSpreadsheet(regExpression, sheetName) {
 
 var savedConfig;
 function saveTemplateConfig() {
-    var message = "<table><tr><td>Configuration Name:</td><td><input type='text' name='config_name' /></td></tr></table>";
+    var message = "<table><tr><td>Configuration Name:</td><td><input type='text' name='configName' /></td></tr></table>";
     var title = "Save Template Generator Configuration";
     var buttons = {
         "Save": function() {
             var checked = [];
-            var configName = $("input[name='config_name']").val();
+            var configName = $("input[name='configName']").val();
 
             if (configName.toUpperCase() == "Default".toUpperCase()) {
                 $("#dialogContainer").addClass("error");
@@ -884,7 +884,7 @@ function saveTemplateConfig() {
             $.post("/id/projectService/saveTemplateConfig/", $.param(
                                                             {"configName": configName,
                                                             "checkedOptions": checked,
-                                                            "project_id": $("#projects").val()
+                                                            "projectId": $("#projects").val()
                                                             }, true)
             ).done(function(data) {
                 if (data.error != null) {
@@ -917,14 +917,14 @@ function saveTemplateConfig() {
 
 
 function populateConfigs() {
-    var project_id = $("#projects").val();
-    if (project_id == 0) {
+    var projectId = $("#projects").val();
+    if (projectId == 0) {
         $("#configs").html("<option value=0>Select a Project</option>");
     } else {
         var el = $("#configs");
         el.empty();
         el.append($("<option></option>").attr("value", 0).text("Loading configs..."));
-        $.getJSON("/biocode-fims/rest/templates/getConfigs/" + project_id).done(function(data) {
+        $.getJSON("/biocode-fims/rest/templates/getConfigs/" + projectId).done(function(data) {
             var listItems = "";
 
             el.empty();

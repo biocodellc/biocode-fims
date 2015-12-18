@@ -411,7 +411,7 @@ public class configurationFileTester {
             System.out.println("Configuration File Testing For Project = " + project);
             try {
                 configurationFileTester cFT = new configurationFileTester();
-                //File file = new configurationFileFetcher(project_id, output_directory, true).getOutputFile();
+                //File file = new configurationFileFetcher(projectId, output_directory, true).getOutputFile();
                 File file = new File("/Users/jdeck/IdeaProjects/biocode-fims/web_nmnh/docs/" + project + ".xml");
                 System.out.println("Checking file " + file.toString());
                 cFT.init(file);

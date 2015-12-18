@@ -36,13 +36,13 @@ public class dashboardGenerator {
 
         // iterate over each project
         for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
-            String project_title = (String) it.next();
-            JSONArray projectDatasets = (JSONArray) projects.get(project_title);
+            String projectTitle = (String) it.next();
+            JSONArray projectDatasets = (JSONArray) projects.get(projectTitle);
             sb.append("<br>\\n<a class='expand-content' id='");
             sb.append("project" + projectCounter);
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='/biocode-fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
-            sb.append(project_title);
+            sb.append(projectTitle);
             sb.append("</a>\\n");
             sb.append("<div class='toggle-content' id='");
             sb.append("project" + projectCounter);
@@ -70,7 +70,7 @@ public class dashboardGenerator {
                 sb.append("\\t<tr>\\n");
 
                 sb.append("\\t\\t<td>");
-                sb.append((String) dataset.get("expedition_title"));
+                sb.append((String) dataset.get("expeditionTitle"));
                 sb.append("</td>\\n");
 
                 sb.append("\\t\\t<td class='align_center'>");
@@ -91,8 +91,8 @@ public class dashboardGenerator {
                 sb.append(serviceRoot);
                 sb.append("query/excel?graphs=");
                 sb.append((String) dataset.get("graph"));
-                sb.append("&project_id=");
-                sb.append((String) dataset.get("project_id"));
+                sb.append("&projectId=");
+                sb.append((String) dataset.get("projectId"));
                 sb.append("'>.xlsx</a>");
 
                 sb.append("&nbsp;&nbsp;");
@@ -102,17 +102,17 @@ public class dashboardGenerator {
                 sb.append(serviceRoot);
                 sb.append("query/tab?graphs=");
                 sb.append((String) dataset.get("graph"));
-                sb.append("&project_id=");
-                sb.append((String) dataset.get("project_id"));
+                sb.append("&projectId=");
+                sb.append((String) dataset.get("projectId"));
                 sb.append("'>.txt</a>");
 
                 sb.append("&nbsp;&nbsp;");
 
                 /*
-                // Demo user should have direct link to webaddress
+                // Demo user should have direct link to webAddress
                 if (username.equalsIgnoreCase("demo")) {
                     sb.append("<a href='");
-                    sb.append((String) dataset.get("webaddress"));
+                    sb.append((String) dataset.get("webAddress"));
                     sb.append("'>n3</a>");
                     // All other users will have ark which can redirect
                 } else {
@@ -126,9 +126,9 @@ public class dashboardGenerator {
                 sb.append("</td>\\n");
 
                 sb.append("<td><a href='#' onclick=\\\"editExpedition('");
-                sb.append(dataset.get("project_id"));
+                sb.append(dataset.get("projectId"));
                 sb.append("', '");
-                sb.append(dataset.get("expedition_code"));
+                sb.append(dataset.get("expeditionCode"));
                 sb.append("', this)\\\">edit</a></td>");
 
                 // Direct Link
@@ -169,26 +169,26 @@ public class dashboardGenerator {
 
         // iterate over each project
         for (Iterator it = projects.keySet().iterator(); it.hasNext(); ) {
-            String project_title = (String) it.next();
+            String projectTitle = (String) it.next();
             sb.append("<br>\\n<a class='expand-content' id='");
             sb.append("project" + projectCounter);
             sb.append("' href='javascript:void(0);'>\\n");
             sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
-            sb.append(project_title);
+            sb.append(projectTitle);
             sb.append("</a>\\n");
             sb.append("<div class='toggle-content' id='");
             sb.append("project" + projectCounter);
             sb.append("'>");
 
             // iterate over each expedition
-            for (Iterator it2 = ((JSONObject) projects.get(project_title)).keySet().iterator(); it2.hasNext(); ) {
-                String expedition_title = (String) it2.next();
-                JSONArray expeditionDatasets = (JSONArray) ((JSONObject) projects.get(project_title)).get(expedition_title);
+            for (Iterator it2 = ((JSONObject) projects.get(projectTitle)).keySet().iterator(); it2.hasNext(); ) {
+                String expeditionTitle = (String) it2.next();
+                JSONArray expeditionDatasets = (JSONArray) ((JSONObject) projects.get(projectTitle)).get(expeditionTitle);
                 sb.append("<br>\\n<a class='expand-content' id='");
                 sb.append("dataset" + datasetCounter);
                 sb.append("' href='javascript:void(0);'>\\n");
                 sb.append("\\t <img src='/fims/images/right-arrow.png' id='arrow' class='img-arrow'>");
-                sb.append(expedition_title);
+                sb.append(expeditionTitle);
                 sb.append("</a>\\n");
                 sb.append("<div class='toggle-content' id='");
                 sb.append("dataset" + datasetCounter);

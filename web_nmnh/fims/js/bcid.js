@@ -196,11 +196,11 @@ function listProjects(username, url, expedition) {
                             + '\t <img src="/fims/images/right-arrow.png" id="arrow" class="img-arrow">{text}'
                             + '</a>\n';
         $.each(data.projects, function(index, element) {
-            key=element.project_id;
-            val=element.project_title;
+            key=element.projectId;
+            val=element.projectTitle;
             var project = val.replace(new RegExp('[#. ]', 'g'), '_') + '_' + key;
 
-            html += expandTemplate.replace('{text}', element.project_title).replace('-{section}', '');
+            html += expandTemplate.replace('{text}', element.projectTitle).replace('-{section}', '');
             html += '<div id="{project}" class="toggle-content">';
             if (!expedition) {
                 html += expandTemplate.replace('{text}', 'Configuration').replace('{section}', 'config').replace('<br>\n', '');
@@ -228,16 +228,16 @@ function listProjects(username, url, expedition) {
 
         // store project id with element, so we don't have to retrieve project id later with an ajax call
         $.each(data.projects, function(index, element) {
-            key=element.project_id;
-            val=element.project_title;
+            key=element.projectId;
+            val=element.projectTitle;
             var project = val.replace(new RegExp('[#. ]', 'g'), '_') + '_' + key;
 
             if (!expedition) {
-                $('div#' + project +'-config').data('project_id', key);
-                $('div#' + project +'-users').data('project_id', key);
-                $('div#' + project + '-expeditions').data('project_id', key);
+                $('div#' + project +'-config').data('projectId', key);
+                $('div#' + project +'-users').data('projectId', key);
+                $('div#' + project + '-expeditions').data('projectId', key);
             } else {
-                $('div#' + project).data('project_id', key);
+                $('div#' + project).data('projectId', key);
             }
         });
     }).fail(function(jqxhr) {
@@ -355,7 +355,7 @@ function populateUsers(id, projectID) {
 // function to populate the subsections of the projects.jsp page. Populates the configuration, expeditions, and users
 // subsections
 function populateProjectSubsections(id) {
-    var projectID = $(id).data('project_id');
+    var projectID = $(id).data('projectId');
     var jqxhr;
     if (id.indexOf("config") != -1) {
         // load project config table from REST service
@@ -443,8 +443,8 @@ function expeditionsPublicSubmit(divId) {
     var inputs = $('form input[name]', divId);
     var data = '';
     inputs.each( function(index, element) {
-        if (element.name == 'project_id') {
-            data += '&project_id=' + element.value;
+        if (element.name == 'projectId') {
+            data += '&projectId=' + element.value;
             return true;
         }
         var expedition = '&' + element.name + '=' + element.checked;
@@ -463,15 +463,15 @@ function expeditionsPublicSubmit(divId) {
 function projectUserSubmit(id) {
     var divId = 'div#' + id + "-users";
     if ($('select option:selected', divId).val() == 0) {
-        var project_id = $("input[name='project_id']", divId).val()
+        var projectId = $("input[name='projectId']", divId).val()
         var jqxhr = populateDivFromService(
             '/id/userService/createFormAsTable',
             divId,
             'error fetching create user form'
         ).done(function() {
-            $("input[name=project_id]", divId).val(project_id);
+            $("input[name=projectId]", divId).val(projectId);
             $("#createFormButton", divId).click(function() {
-                createUserSubmit(project_id, divId);
+                createUserSubmit(projectId, divId);
             });
             $("#createFormCancelButton", divId).click(function() {
                 populateProjectSubsections(divId);
@@ -491,7 +491,7 @@ function projectUserSubmit(id) {
 }
 
 // function to submit the create user form.
-function createUserSubmit(project_id, divId) {
+function createUserSubmit(projectId, divId) {
     if ($(".label", "#pwindicator").text() == "weak") {
         $(".error", divId).html("password too weak");
     } else {
@@ -507,8 +507,8 @@ function createUserSubmit(project_id, divId) {
 
 // function to remove the user as a member of a project.
 function projectRemoveUser(e) {
-    var userId = $(e).data('user_id');
-    var projectId = $(e).closest('table').data('project_id');
+    var userId = $(e).data('userId');
+    var projectId = $(e).closest('table').data('projectId');
     var divId = 'div#' + $(e).closest('div').attr('id');
 
     var jqxhr = $.getJSON("/id/projectService/removeUser/" + projectId + "/" + userId
@@ -524,8 +524,8 @@ function projectRemoveUser(e) {
 }
 
 // function to submit the project configuration editor form
-function projectConfigSubmit(project_id, divId) {
-    var jqxhr = $.post("/id/projectService/updateConfig/" + project_id, $('form', divId).serialize()
+function projectConfigSubmit(projectId, divId) {
+    var jqxhr = $.post("/id/projectService/updateConfig/" + projectId, $('form', divId).serialize()
     ).done(function(data) {
         populateProjectSubsections(divId);
     }).fail(function(jqxhr) {
@@ -567,7 +567,7 @@ function loadExpeditions(id) {
 
 // retrieve the expeditions for a project and display them on the page
 function listExpeditions(divId) {
-    var projectID = $(divId).data('project_id');
+    var projectID = $(divId).data('projectId');
     var jqxhr = $.getJSON('/id/expeditionService/list/' + projectID)
         .done(function(data) {
             var html = '';
@@ -575,12 +575,12 @@ function listExpeditions(divId) {
                                 + '\t <img src="/fims/images/right-arrow.png" id="arrow" class="img-arrow">{text}'
                                 + '</a>\n';
             $.each(data['expeditions'], function(index, e) {
-                var expedition = e.expedition_title.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expedition_id;
+                var expedition = e.expeditionTitle.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expeditionId;
 
                 if (e.public == "true") {
-                    html += expandTemplate.replace('{text}', e.expedition_title + ' (public)').replace('-{section}', '');
+                    html += expandTemplate.replace('{text}', e.expeditionTitle + ' (public)').replace('-{section}', '');
                 } else {
-                    html += expandTemplate.replace('{text}', e.expedition_title + ' (private)').replace('-{section}', '');
+                    html += expandTemplate.replace('{text}', e.expeditionTitle + ' (private)').replace('-{section}', '');
                 }
                 html += '<div id="{expedition}" class="toggle-content">';
                 html += expandTemplate.replace('{text}', 'Resources').replace('{section}', 'resources').replace('<br>\n', '');
@@ -598,10 +598,10 @@ function listExpeditions(divId) {
             }
             $(divId).html(html);
             $.each(data['expeditions'], function(index, e) {
-                var expedition = e.expedition_title.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expedition_id;
+                var expedition = e.expeditionTitle.replace(new RegExp('[#. ]', 'g'), '_') + '_' + e.expeditionId;
 
-                $('div#' + expedition +'-resources').data('expedition_id', e.expedition_id);
-                $('div#' + expedition +'-datasets').data('expedition_id', e.expedition_id);
+                $('div#' + expedition +'-resources').data('expeditionId', e.expeditionId);
+                $('div#' + expedition +'-datasets').data('expeditionId', e.expeditionId);
             });
 
             // remove previous click event and attach toggle function to each project
@@ -618,7 +618,7 @@ function listExpeditions(divId) {
 // function to populate the expedition resources or datasets subsection of expeditions.jsp
 function populateResourcesOrDatasets(divId) {
     // load config table from REST service
-    var expeditionId= $(divId).data('expedition_id');
+    var expeditionId= $(divId).data('expeditionId');
     if (divId.indexOf("resources") != -1) {
         var jqxhr = populateDivFromService(
             '/id/expeditionService/resourcesAsTable/' + expeditionId,

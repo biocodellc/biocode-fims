@@ -70,12 +70,12 @@ public class resolver extends database {
     /**
      * Find the appropriate BCID ROOT for this expedition given an conceptAlias.
      *
-     * @param expedition_code defines the BCID expedition_code to lookup
+     * @param expeditionCode defines the BCID expeditionCode to lookup
      * @param conceptAlias    defines the alias to narrow this,  a one-word reference denoting a BCID
      *
      * @return returns the BCID for this expedition and conceptURI combination
      */
-    public resolver(String expedition_code, Integer project_id, String conceptAlias) {
+    public resolver(String expeditionCode, Integer projectId, String conceptAlias) {
         ResourceTypes resourceTypes = new ResourceTypes();
         ResourceType rt = resourceTypes.getByShortName(conceptAlias);
         String uri = rt.uri;
@@ -85,17 +85,17 @@ public class resolver extends database {
             String query = "select \n" +
                     "b.prefix as prefix \n" +
                     "from \n" +
-                    "bcids b, expeditionsBCIDs eb, expeditions p \n" +
+                    "bcids b, expeditionBcids eb, expeditions p \n" +
                     "where \n" +
-                    "b.bcids_id=eb.bcids_id&& \n" +
-                    "eb.expedition_id=p.expedition_id && \n" +
-                    "p.expedition_code= ? && \n" +
-                    "p.project_id = ? && \n" +
+                    "b.bcidId=eb.bcidId&& \n" +
+                    "eb.expeditionId=p.expeditionId && \n" +
+                    "p.expeditionCode= ? && \n" +
+                    "p.projectId = ? && \n" +
                     "(b.resourceType=? || b.resourceType= ?)";
             stmt = conn.prepareStatement(query);
 
-            stmt.setString(1, expedition_code);
-            stmt.setInt(2, project_id);
+            stmt.setString(1, expeditionCode);
+            stmt.setInt(2, projectId);
             stmt.setString(3, uri);
             stmt.setString(4, conceptAlias);
 
@@ -303,8 +303,8 @@ public class resolver extends database {
         if (bcidsId == null) {
             return false;
         } else {
-            // Now we need to figure out if this bcids_id exists or not in the database
-            String select = "SELECT count(*) as count FROM bcids where bcids_id = ?";
+            // Now we need to figure out if this bcidId exists or not in the database
+            String select = "SELECT count(*) as count FROM bcids where bcidId = ?";
             PreparedStatement stmt = null;
             ResultSet rs = null;
             try {
@@ -333,10 +333,10 @@ public class resolver extends database {
      * @param bcidsId
      */
     public String getProjectID(Integer bcidsId) {
-        String project_id = "";
-        String sql = "select p.project_id from projects p, expeditionsBCIDs eb, expeditions e, " +
-                "bcids b where b.bcids_id = eb.bcids_id and e.expedition_id=eb.`expedition_id` " +
-                "and e.`project_id`=p.`project_id` and b.bcids_id = ?";
+        String projectId = "";
+        String sql = "select p.projectId from projects p, expeditionBcids eb, expeditions e, " +
+                "bcids b where b.bcidId = eb.bcidId and e.expeditionId=eb.`expeditionId` " +
+                "and e.`projectId`=p.`projectId` and b.bcidId = ?";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -345,7 +345,7 @@ public class resolver extends database {
             stmt.setInt(1, bcidsId);
             rs = stmt.executeQuery();
             rs.next();
-            project_id = rs.getString("project_id");
+            projectId = rs.getString("projectId");
 
         } catch (SQLException e) {
             // catch the exception and log it
@@ -353,7 +353,7 @@ public class resolver extends database {
         } finally {
             close(stmt, rs);
         }
-        return project_id;
+        return projectId;
     }
 
     /**
@@ -395,7 +395,7 @@ public class resolver extends database {
             expected = "http://biscicol.org/id/metadata/ark:/21547/U264c82d19-6562-4174-a5ea-e342eae353e8";
             System.out.println(r.resolveARK());
                   */
-            // suffixPassthrough = 1; webaddress specified; has a Suffix
+            // suffixPassthrough = 1; webAddress specified; has a Suffix
             //r = new resolver("ark:/21547/R2");
             //System.out.println(r.printMetadata(new RDFRenderer()));
             //System.out.println(r.resolveARK());
@@ -409,22 +409,22 @@ public class resolver extends database {
            System.out.println(r.getArk());
            */
                  /*
-            // suffixPassthrough = 1; webaddress specified; no Suffix
+            // suffixPassthrough = 1; webAddress specified; no Suffix
             r = new resolver("ark:/21547/R2");
             expected = "http://biscicol.org/id/metadata/ark:/21547/R2";
             System.out.println(r.resolveARK());
 
-            // suffixPassthrough = 0; no webaddress specified; no Suffix
+            // suffixPassthrough = 0; no webAddress specified; no Suffix
             r = new resolver("ark:/21547/W2");
             expected = "http://biscicol.org/id/metadata/ark:/21547/W2";
             System.out.println(r.resolveARK());
 
-            // suffixPassthrough = 0; webaddress specified; no Suffix
+            // suffixPassthrough = 0; webAddress specified; no Suffix
             r = new resolver("ark:/21547/Gk2");
             expected =  "http://biscicol.org:3030/ds?graph=urn:uuid:77806834-a34f-499a-a29f-aaac51e6c9f8";
             System.out.println(r.resolveARK());
 
-               // suffixPassthrough = 0; webaddress specified;  suffix specified (still pass it through
+               // suffixPassthrough = 0; webAddress specified;  suffix specified (still pass it through
             r = new resolver("ark:/21547/Gk2FOO");
             expected =  "http://biscicol.org:3030/ds?graph=urn:uuid:77806834-a34f-499a-a29f-aaac51e6c9f8FOO";
             System.out.println(r.resolveARK());
@@ -473,34 +473,34 @@ public class resolver extends database {
      */
     public URI resolveArkAs(String format) throws URISyntaxException {
         // Example
-        //http://biscicol.org:8179/biocode-fims/rest/query/tab?graphs=urn:uuid:ec90c3b6-cc75-4090-b03d-cf3d76a27783&project_id=1
+        //http://biscicol.org:8179/biocode-fims/rest/query/tab?graphs=urn:uuid:ec90c3b6-cc75-4090-b03d-cf3d76a27783&projectId=1
 
         String contentResolutionRoot = sm.retrieveValue("contentResolutionRoot");
-        return new URI(contentResolutionRoot + format + "?graphs=" + graph + "&project_id=" + project);
+        return new URI(contentResolutionRoot + format + "?graphs=" + graph + "&projectId=" + project);
     }
 
     public String getExpeditionCode() {
-        String expedition_code = "";
+        String expeditionCode = "";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select e.expedition_code from expeditionsBCIDs eb, expeditions e, bcids b " +
-                    "where b.bcids_id = eb.bcids_id and e.expedition_id=eb.`expedition_id` and b.bcids_id = ?";
+            String sql = "select e.expeditionCode from expeditionBcids eb, expeditions e, bcids b " +
+                    "where b.bcidId = eb.bcidId and e.expeditionId=eb.`expeditionId` and b.bcidId = ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, bcidsId);
             rs = stmt.executeQuery();
             rs.next();
-            expedition_code = rs.getString("expedition_code");
+            expeditionCode = rs.getString("expeditionCode");
 
         } catch (SQLException e) {
             // catch the exception and log it
-            logger.warn("Exception retrieving expedition_code for bcid: " + bcidsId, e);
+            logger.warn("Exception retrieving expeditionCode for bcid: " + bcidsId, e);
         } finally {
             close(stmt, rs);
         }
-        return expedition_code;
+        return expeditionCode;
     }
 
     public Integer getExpeditionId() {
@@ -508,18 +508,18 @@ public class resolver extends database {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "select eb.expedition_id from expeditionsBCIDs eb, bcids b " +
-                    "where b.bcids_id = eb.bcids_id and b.bcids_id = ?";
+            String sql = "select eb.expeditionId from expeditionBcids eb, bcids b " +
+                    "where b.bcidId = eb.bcidId and b.bcidId = ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, bcidsId);
             rs = stmt.executeQuery();
             rs.next();
-            expeditionId = rs.getInt("eb.expedition_id");
+            expeditionId = rs.getInt("eb.expeditionId");
 
         } catch (SQLException e) {
             // catch the exception and log it
-            logger.warn("Exception retrieving expedition_id for bcid: " + bcidsId, e);
+            logger.warn("Exception retrieving expeditionId for bcid: " + bcidsId, e);
         } finally {
             close(stmt, rs);
         }

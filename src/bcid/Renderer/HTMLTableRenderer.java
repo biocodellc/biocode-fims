@@ -139,7 +139,7 @@ public class HTMLTableRenderer extends Renderer {
             outputSB.append(rootName);
             outputSB.append("query/excel?graphs=");
             outputSB.append(graph);
-            outputSB.append("&project_id=");
+            outputSB.append("&projectId=");
             outputSB.append(projectId);
             outputSB.append("'>.xlsx</a>");
 
@@ -150,7 +150,7 @@ public class HTMLTableRenderer extends Renderer {
             outputSB.append(rootName);
             outputSB.append("query/tab?graphs=");
             outputSB.append(graph);
-            outputSB.append("&project_id=");
+            outputSB.append("&projectId=");
             outputSB.append(projectId);
             outputSB.append("'>.txt</a>");
 
@@ -172,19 +172,19 @@ public class HTMLTableRenderer extends Renderer {
 
     private Boolean displayDatasets() {
         Boolean ignore_user = Boolean.getBoolean(sm.retrieveValue("ignore_user"));
-        Integer project_id = Integer.parseInt(resolver.getProjectID(resolver.getBcidId()));
+        Integer projectId = Integer.parseInt(resolver.getProjectID(resolver.getBcidId()));
         expeditionMinter expeditionMinter = new expeditionMinter();
 
         //if public expedition, return true
-        if (expeditionMinter.isPublic(resolver.getExpeditionCode(), project_id)) {
+        if (expeditionMinter.isPublic(resolver.getExpeditionCode(), projectId)) {
             return true;
         }
         // if ignore_user and user in project, return true
-        else if (ignore_user && expeditionMinter.userExistsInProject(userId, project_id)) {
+        else if (ignore_user && expeditionMinter.userExistsInProject(userId, projectId)) {
             return true;
         }
         // if !ignore_user and userOwnsExpedition, return true
-        else if (!ignore_user && expeditionMinter.userOwnsExpedition(userId, resolver.getExpeditionCode(), project_id)) {
+        else if (!ignore_user && expeditionMinter.userOwnsExpedition(userId, resolver.getExpeditionCode(), projectId)) {
             return true;
         }
 

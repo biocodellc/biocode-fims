@@ -76,9 +76,9 @@ public class EntrustIGAuthentication {
     /**
      * Returns the generic challenge for the user. This is used for 2-factor authentication.
      *
-     * @param userid The userid for which a challenge is requested
+     * @param userId The userid for which a challenge is requested
      */
-    public String[] getGenericChallenge(String userid) {
+    public String[] getGenericChallenge(String userId) {
         GenericChallengeParmsEx parms = new GenericChallengeParmsEx();
         // set the authtype to QA
         parms.setAuthenticationType(authtype);
@@ -89,7 +89,7 @@ public class EntrustIGAuthentication {
         try {
             GenericChallengeEx challengeSet =
                     getBinding().getGenericChallengeEx(
-                            new GetGenericChallengeExCallParms(userid, parms));
+                            new GetGenericChallengeExCallParms(userId, parms));
 
             if (challengeSet.getChallengeRequestResult().equals(
                     ChallengeRequestResult.CHALLENGE) &&
@@ -116,7 +116,7 @@ public class EntrustIGAuthentication {
      * getGenericChallenge method must * be called before invoking this
      * method.
      */
-    public boolean authenticateGenericChallange(String userid, String[] challengeResponse) {
+    public boolean authenticateGenericChallange(String userId, String[] challengeResponse) {
         GenericAuthenticateParmsEx parms = new GenericAuthenticateParmsEx();
         // set the authtype to QA
         parms.setAuthenticationType(authtype);
@@ -126,7 +126,7 @@ public class EntrustIGAuthentication {
             GenericAuthenticateResponseEx resp =
                     getBinding().authenticateGenericChallengeEx(
                             new AuthenticateGenericChallengeExCallParms(
-                                    userid,
+                                    userId,
                                     response,
                                     parms));
 

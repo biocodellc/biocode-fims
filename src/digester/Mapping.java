@@ -23,7 +23,7 @@ public class Mapping implements RendererInterface {
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
     private triplifier triplifier;
-    private String expedition_code;
+    private String expeditionCode;
     private List<String> colNames;
 
     public Mapping() {
@@ -185,14 +185,14 @@ public class Mapping implements RendererInterface {
         String status = "Converting Data Format ...";
         processController.appendStatus(status + "<br>");
         fimsPrinter.out.println(status);
-        this.expedition_code = processController.getExpeditionCode();
+        this.expeditionCode = processController.getExpeditionCode();
         this.colNames = processController.getValidation().getTabularDataReader().getColNames();
         triplifier = t;
 
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
         if (runDeepRoots) {
-            dRoots = new deepRootsReader().createRootData(processController.getUser_id(), processController.getProject_id(), expedition_code);
+            dRoots = new deepRootsReader().createRootData(processController.getUserId(), processController.getProject_id(), expeditionCode);
         }
 
         // Create a connection to a SQL Lite Instance

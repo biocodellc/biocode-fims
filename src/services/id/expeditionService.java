@@ -1,6 +1,6 @@
 package services.id;
 
-import auth.oauth2.provider;
+import auth.oAuth2.provider;
 import bcid.database;
 import bcid.expeditionMinter;
 import bcid.projectMinter;
@@ -41,17 +41,17 @@ public class expeditionService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/associate")
-    public Response mint(@FormParam("expedition_code") String expedition_code,
+    public Response mint(@FormParam("expeditionCode") String expeditionCode,
                          @FormParam("bcid") String bcid,
-                         @FormParam("project_id") Integer project_id) {
+                         @FormParam("projectId") Integer projectId) {
         expeditionMinter expedition;
         expedition = new expeditionMinter();
-        expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);
+        expedition.attachReferenceToExpedition(expeditionCode, bcid, projectId);
         expedition.close();
-        //String deepRootsString = expedition.getDeepRoots(expedition_code,project_id);
+        //String deepRootsString = expedition.getDeepRoots(expeditionCode,projectId);
 
         //return Response.ok("{\"success\": \"Data Elements Root: " + deepRootsString +"\"}").build();
-        return Response.ok("{\"success\": \"Data Elements Root: " + expedition_code +"\"}").build();
+        return Response.ok("{\"success\": \"Data Elements Root: " + expeditionCode +"\"}").build();
     }
 
     /**
@@ -59,8 +59,8 @@ public class expeditionService {
      * applications on whether this user owns the expedition and if it exists within an project or not.
      * Responses are error, update, or insert (first term followed by a colon)
      *
-     * @param expedition_code
-     * @param project_id
+     * @param expeditionCode
+     * @param projectId
      * @param accessToken
      * @param ignore_user     if specified as true then we don't perform a check on what user owns the expedition
      *
@@ -69,16 +69,16 @@ public class expeditionService {
     @GET
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/validateExpedition/{project_id}/{expedition_code}")
-    public Response mint(@PathParam("expedition_code") String expedition_code,
-                         @PathParam("project_id") Integer project_id,
+    @Path("/validateExpedition/{projectId}/{expeditionCode}")
+    public Response mint(@PathParam("expeditionCode") String expeditionCode,
+                         @PathParam("projectId") Integer projectId,
                          @QueryParam("access_token") String accessToken,
                          @QueryParam("ignore_user") Boolean ignore_user) {
         String username;
 
         // Decipher the expedition code
         try {
-            expedition_code = URLDecoder.decode(expedition_code, "utf-8");
+            expeditionCode = URLDecoder.decode(expeditionCode, "utf-8");
         } catch (UnsupportedEncodingException e) {
             logger.warn("UnsupportedEncodingException in expeditionService.mint method.", e);
         }
@@ -97,23 +97,23 @@ public class expeditionService {
             throw new UnauthorizedRequestException("your session has expired or you have not yet logged in.<br>You may "
                     + "have to logout and then re-login.");
         }
-        // Get the user_id
+        // Get the userId
         database db = new database();
-        Integer user_id = db.getUserId(username);
+        Integer userId = db.getUserId(username);
         db.close();
 
         // Create the expeditionMinter object so we can test and validate it
         expeditionMinter expedition = new expeditionMinter();
 
-        return Response.ok(expedition.validateExpedition(expedition_code, project_id, ignore_user, user_id)).build();
+        return Response.ok(expedition.validateExpedition(expeditionCode, projectId, ignore_user, userId)).build();
     }
 
     /**
      * Service for a user to mint a new expedition
      *
-     * @param expedition_code
-     * @param expedition_title
-     * @param project_id
+     * @param expeditionCode
+     * @param expeditionTitle
+     * @param projectId
      * @param isPublic
      * @param accessToken      (optional) the access token that represents the user who you are minting an expedition
      *                         on behalf.
@@ -123,9 +123,9 @@ public class expeditionService {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response mint(@FormParam("expedition_code") String expedition_code,
-                         @FormParam("expedition_title") String expedition_title,
-                         @FormParam("project_id") Integer project_id,
+    public Response mint(@FormParam("expeditionCode") String expeditionCode,
+                         @FormParam("expeditionTitle") String expeditionTitle,
+                         @FormParam("projectId") Integer projectId,
                          @FormParam("public") Boolean isPublic,
                          @QueryParam("access_token") String accessToken) {
         String username;
@@ -148,22 +148,22 @@ public class expeditionService {
             isPublic = true;
         }
 
-        // Get the user_id
+        // Get the userId
         database db = new database();
-        Integer user_id = db.getUserId(username);
+        Integer userId = db.getUserId(username);
         db.close();
 
-        Integer expedition_id = null;
+        Integer expeditionId = null;
         expeditionMinter expedition = null;
 
         try {
             // Mint a expedition
             expedition = new expeditionMinter();
-            expedition_id = expedition.mint(
-                    expedition_code,
-                    expedition_title,
-                    user_id,
-                    project_id,
+            expeditionId = expedition.mint(
+                    expeditionCode,
+                    expeditionTitle,
+                    userId,
+                    projectId,
                     isPublic
             );
 
@@ -179,12 +179,12 @@ public class expeditionService {
                     sm.retrieveValue("mailFrom"),
                     sm.retrieveValue("mailTo"),
                     "New Expedition",
-                    expedition.printMetadata(expedition_id));
+                    expedition.printMetadata(expeditionId));
             sendEmail.start();
             */
 
             return Response.ok("{\"success\": \"Succesfully created expedition:<br>" +
-                    expedition.printMetadataHTML(expedition_id) + "\"}").build();
+                    expedition.printMetadataHTML(expeditionId) + "\"}").build();
         } catch (FIMSException e) {
             throw new BadRequestException(e.getMessage());
         } finally {
@@ -218,10 +218,10 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("/{project_id}/{expedition}/{resourceAlias}")
+    @Path("/{projectId}/{expedition}/{resourceAlias}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchAlias(@PathParam("expedition") String expedition,
-                               @PathParam("project_id") Integer project_id,
+                               @PathParam("projectId") Integer projectId,
                                @PathParam("resourceAlias") String resourceAlias) {
         try {
             expedition = URLDecoder.decode(expedition, "utf-8");
@@ -229,7 +229,7 @@ public class expeditionService {
             logger.warn("UnsupportedEncodingException in expeditionService.fetchAlias method.", e);
         }
 
-        resolver r = new resolver(expedition, project_id, resourceAlias);
+        resolver r = new resolver(expedition, projectId, resourceAlias);
         String response = r.getArk();
         r.close();
         if (response == null) {
@@ -248,13 +248,13 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("/deepRoots/{project_id}/{expedition}")
+    @Path("/deepRoots/{projectId}/{expedition}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchDeepRoots(@PathParam("expedition") String expedition,
-                                   @PathParam("project_id") Integer project_id) {
+                                   @PathParam("projectId") Integer projectId) {
         expeditionMinter expeditionMinter = new expeditionMinter();
 
-        String response = expeditionMinter.getDeepRoots(expedition, project_id);
+        String response = expeditionMinter.getDeepRoots(expedition, projectId);
 
         expeditionMinter.close();
 
@@ -269,9 +269,9 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("/list/{project_id}")
+    @Path("/list/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listExpeditions(@PathParam("project_id") Integer projectId,
+    public Response listExpeditions(@PathParam("projectId") Integer projectId,
                                     @QueryParam("access_token") String accessToken) {
         String username;
 
@@ -305,9 +305,9 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("resourcesAsTable/{expedition_id}")
+    @Path("resourcesAsTable/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response listResourcesAsTable(@PathParam("expedition_id") Integer expeditionId) {
+    public Response listResourcesAsTable(@PathParam("expeditionId") Integer expeditionId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -331,9 +331,9 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("configurationAsTable/{expedition_id}")
+    @Path("configurationAsTable/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response listConfigurationAsTable(@PathParam("expedition_id") Integer expeditionId) {
+    public Response listConfigurationAsTable(@PathParam("expeditionId") Integer expeditionId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -355,9 +355,9 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("datasetsAsTable/{expedition_id}")
+    @Path("datasetsAsTable/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response listDatasetsAsTable(@PathParam("expedition_id") Integer expeditionId) {
+    public Response listDatasetsAsTable(@PathParam("expeditionId") Integer expeditionId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -379,9 +379,9 @@ public class expeditionService {
      * @return
      */
     @GET
-    @Path("/admin/listExpeditionsAsTable/{project_id}")
+    @Path("/admin/listExpeditionsAsTable/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response listExpeditionAsTable(@PathParam("project_id") Integer projectId) {
+    public Response listExpeditionAsTable(@PathParam("projectId") Integer projectId) {
         HttpSession session = request.getSession();
         Object admin = session.getAttribute("projectAdmin");
         Object username = session.getAttribute("user");
@@ -402,7 +402,7 @@ public class expeditionService {
 
     /**
      * Service to set/unset the public attribute of a set of expeditions specified in a MultivaluedMap
-     * The expedition_id's are specified simply by their internal expedition_id code
+     * The expeditionId's are specified simply by their internal expeditionId code
      *
      * @param data
      *
@@ -415,7 +415,7 @@ public class expeditionService {
     public Response publicExpeditions(MultivaluedMap<String, String> data) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
-        Integer projectId = new Integer(data.remove("project_id").get(0));
+        Integer projectId = new Integer(data.remove("projectId").get(0));
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
@@ -450,10 +450,10 @@ public class expeditionService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/publicExpedition/{project_id}/{expedition_code}/{public_status}")
+    @Path("/publicExpedition/{projectId}/{expeditionCode}/{public_status}")
     public Response publicExpedition(
-            @PathParam("project_id") Integer projectId,
-            @PathParam("expedition_code") String expeditionCode,
+            @PathParam("projectId") Integer projectId,
+            @PathParam("expeditionCode") String expeditionCode,
             @PathParam("public_status") Boolean publicStatus,
             @QueryParam("access_token") String accessToken) {
 

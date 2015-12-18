@@ -73,7 +73,7 @@ public class BCIDMetadataSchema {
                // } else if (bcidKey.equalsIgnoreCase("projectCode")) {
                     // Create mapping here for DOI if it only shows the prefix
                  //   dcPublisher = new metadataElement("dc:publisher", pairs.getValue().toString(), "The BCID project to which this resource belongs.");
-                } else if (bcidKey.equalsIgnoreCase("webaddress")) {
+                } else if (bcidKey.equalsIgnoreCase("webAddress")) {
                     dcHasVersion = new metadataElement("dcterms:hasVersion", pairs.getValue().toString(), "The redirection target for this bcid.");
                 } else if (bcidKey.equalsIgnoreCase("bcidsSuffixPassThrough")) {
                     bscSuffixPassthrough = new metadataElement("bsc:suffixPassthrough", pairs.getValue().toString(), "Indicates that this bcid supports suffixPassthrough.");

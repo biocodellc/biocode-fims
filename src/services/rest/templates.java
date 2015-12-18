@@ -42,14 +42,14 @@ public class templates {
     @Path("/attributes/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateCheckboxes(
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @Context HttpServletRequest request) {
 
         HttpSession session = request.getSession();
 
 
-        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
+        //File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+        templateProcessor t = new templateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
         String response = t.printCheckboxes();
@@ -68,10 +68,10 @@ public class templates {
      * @return
      */
     @GET
-    @Path("/getConfig/{project_id}/{config_name}")
+    @Path("/getConfig/{projectId}/{configName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getConfig(@PathParam("config_name") String configName,
-                          @PathParam("project_id") Integer projectId)
+    public void getConfig(@PathParam("configName") String configName,
+                          @PathParam("projectId") Integer projectId)
         throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfig/" +
@@ -86,9 +86,9 @@ public class templates {
      * @return
      */
     @GET
-    @Path("/getConfigs/{project_id}")
+    @Path("/getConfigs/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getConfigs(@PathParam("project_id") Integer projectId)
+    public void getConfigs(@PathParam("projectId") Integer projectId)
         throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfigs/" + projectId);
@@ -102,10 +102,10 @@ public class templates {
      * @return
      */
     @GET
-    @Path("/removeConfig/{project_id}/{config_name}")
+    @Path("/removeConfig/{projectId}/{configName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void removeConfig(@PathParam("project_id") Integer projectId,
-                             @PathParam("config_name") String configName)
+    public void removeConfig(@PathParam("projectId") Integer projectId,
+                             @PathParam("configName") String configName)
         throws IOException, ServletException {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/removeTemplateConfig/" +
@@ -123,10 +123,10 @@ public class templates {
     @Path("/abstract/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAbstract(
-            @QueryParam("project_id") Integer project_id) {
+            @QueryParam("projectId") Integer projectId) {
 
-        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
+        //File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+        templateProcessor t = new templateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
         String response = t.printAbstract();
@@ -144,14 +144,14 @@ public class templates {
     @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     public Response createExcel(
             @FormParam("fields") List<String> fields,
-            @FormParam("project_id") Integer project_id,
+            @FormParam("projectId") Integer projectId,
             @FormParam("accession_number") Integer accessionNumber,
             @FormParam("dataset_code") String expeditionCode,
             @FormParam("operation") String operation,
             @Context HttpServletRequest request) {
 
         // Create the configuration file
-        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
+        //File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
         if (accessionNumber != null || expeditionCode != null) {
             if (accessionNumber == null || expeditionCode == null) {
                 return Response.status(400).entity("{\"error\": \"" +
@@ -170,7 +170,7 @@ public class templates {
         }
 
         // Check if the project is an NMNH project
-        processController processController = new processController(project_id, expeditionCode);
+        processController processController = new processController(projectId, expeditionCode);
         processController.setAccessionNumber(accessionNumber);
 
 
@@ -194,7 +194,7 @@ public class templates {
                     if (username == null) {
                         throw new UnauthorizedRequestException("You must be logged in to create a new expedition.");
                     }
-                    processController.setUser_id(username);
+                    processController.setUserId(username);
                     p.runExpeditionCreate();
                 }
             }
@@ -204,13 +204,13 @@ public class templates {
         if (accessionNumber != null) {
             // Get the ARK associated with this expedition code
             // TODO: Resource may change in future... better to figure this out programatically at some point
-            resolver r = new resolver(expeditionCode, project_id, "Resource");
+            resolver r = new resolver(expeditionCode, projectId, "Resource");
             String ark = r.getArk();
             r.close();
 
             // Construct the new templateProcessor
             t = new templateProcessor(
-                    project_id,
+                    projectId,
                     uploadPath(),
                     true,
                     accessionNumber,
@@ -218,7 +218,7 @@ public class templates {
                     ark,
                     username);
         } else {
-            t = new templateProcessor(project_id, uploadPath(), true);
+            t = new templateProcessor(projectId, uploadPath(), true);
         }
 
         // Set the default sheet-name
@@ -247,11 +247,11 @@ public class templates {
     @Path("/definition/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDefinitions(
-            @QueryParam("project_id") Integer project_id,
+            @QueryParam("projectId") Integer projectId,
             @QueryParam("column_name") String column_name) {
 
-        //File configFile = new configurationFileFetcher(project_id, uploadPath(), true).getOutputFile();
-        templateProcessor t = new templateProcessor(project_id, uploadPath(), true);
+        //File configFile = new configurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+        templateProcessor t = new templateProcessor(projectId, uploadPath(), true);
 
         // Write the response to a String Variable
         String response = t.definition(column_name);

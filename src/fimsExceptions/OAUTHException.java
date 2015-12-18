@@ -1,7 +1,7 @@
 package fimsExceptions;
 
 /**
- * An exception that encapsulates errors from the biocode-fims oauth system.
+ * An exception that encapsulates errors from the biocode-fims oAuth system.
  */
 public class OAUTHException extends FIMSAbstractException {
 

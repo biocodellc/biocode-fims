@@ -59,7 +59,7 @@ public class inputFileParser {
      */
     public inputFileParser(String inputString, bcidMinter bcidMinter ) throws IOException, URISyntaxException {
 
-        // TODO: check that user_id can write to bcids_id
+        // TODO: check that userId can write to bcidId
 
         BufferedReader readbuffer = new BufferedReader(new StringReader(inputString));
         String strRead;

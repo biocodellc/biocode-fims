@@ -284,15 +284,15 @@ public class fimsQueryBuilder {
     public static void main(String[] args) {
         org.apache.log4j.Logger.getRootLogger().setLevel(Level.ERROR);
         String output_directory = System.getProperty("user.dir") + File.separator + "tripleOutput";
-         int project_id = 1;
+         int projectId = 1;
         ArrayList<fimsFilterCondition> filters = new ArrayList<fimsFilterCondition>();
         //String graphs;
 
         // configuration file
-        File file = new configurationFileFetcher(project_id, output_directory, false).getOutputFile();
+        File file = new configurationFileFetcher(projectId, output_directory, false).getOutputFile();
 
         run.process p = new process(
-                project_id,
+                projectId,
                 output_directory,
                 file
         );
@@ -326,14 +326,14 @@ public class fimsQueryBuilder {
 
     /**
      * Get a list of all graphs
-     * @param project_id
+     * @param projectId
      * @return
      */
-    private static String[] getAllGraphs(int project_id) {
+    private static String[] getAllGraphs(int projectId) {
         ArrayList<String> graphs = new ArrayList<String>();
         projectMinter project= new projectMinter();
 
-        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(project_id, null)));
+        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(projectId, null)));
         project.close();
         JSONArray jArray = ((JSONArray) response.get("data"));
         Iterator it = jArray.iterator();

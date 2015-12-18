@@ -295,8 +295,8 @@ public class SIServerSideSpreadsheetTools {
                 // We have to normalize some values found in attribute columns
                 if (c.getStringCellValue().replace("/", "").equalsIgnoreCase(attribute.getColumn().replace("_", " "))) {
                     Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
-                    //System.out.println("       :" + attribute.getColumn_internal());
-                    columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumn_internal()));
+                    //System.out.println("       :" + attribute.getColumnInternal());
+                    columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumnInternal()));
                 }
             }
         }

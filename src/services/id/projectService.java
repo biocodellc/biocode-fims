@@ -1,6 +1,6 @@
 package services.id;
 
-import auth.oauth2.provider;
+import auth.oAuth2.provider;
 import bcid.database;
 import bcid.projectMinter;
 import fimsExceptions.BadRequestException;
@@ -28,18 +28,18 @@ public class projectService {
     static HttpServletRequest request;
 
      /**
-     * Given a project_id, return the validationXML file
+     * Given a projectId, return the validationXML file
      *
-     * @param project_id
+     * @param projectId
      * @return
      */
     @GET
-    @Path("/validation/{project_id}")
+    @Path("/validation/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchAlias(@PathParam("project_id") Integer project_id) {
+    public Response fetchAlias(@PathParam("projectId") Integer projectId) {
 
         projectMinter project = new projectMinter();
-        String response = project.getValidationXML(project_id);
+        String response = project.getValidationXML(projectId);
         project.close();
 
         if (response == null) {
@@ -88,13 +88,13 @@ public class projectService {
     /**
      * Given an project bcid, get the latest graphs by expedition
      *
-     * @param project_id
+     * @param projectId
      * @return
      */
     @GET
-    @Path("/graphs/{project_id}")
+    @Path("/graphs/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLatestGraphsByExpedition(@PathParam("project_id") Integer project_id,
+    public Response getLatestGraphsByExpedition(@PathParam("projectId") Integer projectId,
                                                 @QueryParam("access_token") String accessToken) {
         String username;
 
@@ -109,7 +109,7 @@ public class projectService {
         }
         projectMinter project= new projectMinter();
 
-        String response = project.getLatestGraphs(project_id, username);
+        String response = project.getLatestGraphs(projectId, username);
         project.close();
 
         return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -204,13 +204,13 @@ public class projectService {
 
     /**
      * return an HTML table of a project's configuration.
-     * @param project_id
+     * @param projectId
      * @return
      */
     @GET
-    @Path("/configAsTable/{project_id}")
+    @Path("/configAsTable/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response getProjectConfig(@PathParam("project_id") Integer project_id) {
+    public Response getProjectConfig(@PathParam("projectId") Integer projectId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -218,7 +218,7 @@ public class projectService {
             throw new UnauthorizedRequestException("You must be this project's admin in order to view its configuration");
         }
         projectMinter project = new projectMinter();
-        String response = project.getProjectConfigAsTable(project_id, username.toString());
+        String response = project.getProjectConfigAsTable(projectId, username.toString());
         project.close();
         return Response.ok(response).build();
     }
@@ -229,9 +229,9 @@ public class projectService {
      * @return
      */
     @GET
-    @Path("/configEditorAsTable/{project_id}")
+    @Path("/configEditorAsTable/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public String getConfigEditorAsTable(@PathParam("project_id") Integer projectId) {
+    public String getConfigEditorAsTable(@PathParam("projectId") Integer projectId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -254,11 +254,11 @@ public class projectService {
      * @return
      */
     @POST
-    @Path("/updateConfig/{project_id}")
+    @Path("/updateConfig/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateConfig(@PathParam("project_id") Integer projectID,
+    public Response updateConfig(@PathParam("projectId") Integer projectID,
                                  @FormParam("title") String title,
-                                 @FormParam("validation_xml") String validationXML,
+                                 @FormParam("validationXml") String validationXML,
                                  @FormParam("public") String publicProject) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
@@ -281,10 +281,10 @@ public class projectService {
 
             if (title != null &&
                     !config.get("title").equals(title)) {
-                update.put("project_title", title);
+                update.put("projectTitle", title);
             }
-            if (!config.containsKey("validation_xml") || !config.get("validation_xml").equals(validationXML)) {
-                update.put("bioValidator_validation_xml", validationXML);
+            if (!config.containsKey("validationXml") || !config.get("validationXml").equals(validationXML)) {
+                update.put("validationXml", validationXML);
             }
             if ((publicProject != null && (publicProject.equals("on") || publicProject.equals("true")) && config.get("public").equals("false")) ||
                     (publicProject == null && config.get("public").equals("true"))) {
@@ -316,10 +316,10 @@ public class projectService {
      * @return
      */
     @GET
-    @Path("/removeUser/{project_id}/{user_id}")
+    @Path("/removeUser/{projectId}/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeUser(@PathParam("project_id") Integer projectId,
-                               @PathParam("user_id") Integer userId) {
+    public Response removeUser(@PathParam("projectId") Integer projectId,
+                               @PathParam("userId") Integer userId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -352,8 +352,8 @@ public class projectService {
     @POST
     @Path("/addUser")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(@FormParam("project_id") Integer projectId,
-                            @FormParam("user_id") Integer userId) {
+    public Response addUser(@FormParam("projectId") Integer projectId,
+                            @FormParam("userId") Integer userId) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
 
@@ -386,9 +386,9 @@ public class projectService {
      * @return
      */
     @GET
-    @Path("/listProjectUsersAsTable/{project_id}")
+    @Path("/listProjectUsersAsTable/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public String getSystemUsers(@PathParam("project_id") Integer projectId) {
+    public String getSystemUsers(@PathParam("projectId") Integer projectId) {
         HttpSession session = request.getSession();
 
         if (session.getAttribute("projectAdmin") == null) {
@@ -446,7 +446,7 @@ public class projectService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveTemplateConfig(@FormParam("checkedOptions") List<String> checkedOptions,
                                        @FormParam("configName") String configName,
-                                       @FormParam("project_id") Integer projectId,
+                                       @FormParam("projectId") Integer projectId,
                                        @QueryParam("access_token") String accessToken) {
 
         if (configName.equalsIgnoreCase("default")) {
@@ -493,9 +493,9 @@ public class projectService {
      * @return
      */
     @GET
-    @Path("/getTemplateConfigs/{project_id}")
+    @Path("/getTemplateConfigs/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTemplateConfigs(@PathParam("project_id") Integer projectId) {
+    public Response getTemplateConfigs(@PathParam("projectId") Integer projectId) {
         projectMinter p = new projectMinter();
         String response = p.getTemplateConfigs(projectId);
         p.close();

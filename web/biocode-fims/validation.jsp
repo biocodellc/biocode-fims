@@ -29,7 +29,7 @@
                 <tr class="toggle-content" id="projects_toggle">
                     <td align="right">Project&nbsp;&nbsp;</td>
                     <td>
-                        <select width=20 name="project_id" id="projects">
+                        <select width=20 name="projectId" id="projects">
                             <option value=0>Loading projects ...</option>
                         </select>
                     </td>
@@ -47,9 +47,9 @@
                     </td>
                 </tr>
 
-                <tr class="toggle-content" id="expedition_code_toggle">
+                <tr class="toggle-content" id="expeditionCode_toggle">
                     <td align="right">Dataset Code&nbsp;&nbsp;</td>
-                    <td><input type="text" name="expedition_code" id="expedition_code" /></td>
+                    <td><input type="text" name="expeditionCode" id="expeditionCode" /></td>
                 </tr>
 
                 <tr class="toggle-content" id="expedition_public_toggle">

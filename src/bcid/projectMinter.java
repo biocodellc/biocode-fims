@@ -45,26 +45,26 @@ public class projectMinter {
     /**
      * Find the BCID that denotes the validation file location for a particular expedition
      *
-     * @param project_id defines the project_id to lookup
+     * @param projectId defines the projectId to lookup
      * @return returns the BCID for this expedition and conceptURI combination
      */
-    public String getValidationXML(Integer project_id) {
+    public String getValidationXML(Integer projectId) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             String query = "select \n" +
-                    "biovalidator_validation_xml\n" +
+                    "validationXml\n" +
                     "from \n" +
                     " projects\n" +
                     "where \n" +
-                    "project_id=?";
+                    "projectId=?";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, project_id);
+            stmt.setInt(1, projectId);
 
             rs = stmt.executeQuery();
             rs.next();
-            return rs.getString("biovalidator_validation_xml");
+            return rs.getString("validationXml");
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "Trouble getting Configuration File", e);
         } finally {
@@ -84,10 +84,10 @@ public class projectMinter {
 
         try {
             String query = "SELECT \n" +
-                    "\tp.project_id,\n" +
-                    "\tp.project_code,\n" +
-                    "\tp.project_title,\n" +
-                    "\tp.biovalidator_validation_xml\n" +
+                    "\tp.projectId,\n" +
+                    "\tp.projectCode,\n" +
+                    "\tp.projectTitle,\n" +
+                    "\tp.validationXml\n" +
                     " FROM \n" +
                     "\tprojects p\n" +
                     " WHERE \n" +
@@ -97,16 +97,16 @@ public class projectMinter {
             if (userId != null) {
                 query += " UNION \n" +
                         " SELECT \n" +
-                        "\tp.project_id,\n" +
-                        "\tp.project_code,\n" +
-                        "\tp.project_title, \n" +
-                        "\tp.biovalidator_validation_xml\n" +
+                        "\tp.projectId,\n" +
+                        "\tp.projectCode,\n" +
+                        "\tp.projectTitle, \n" +
+                        "\tp.validationXml\n" +
                         " FROM \n" +
-                        "\tprojects p, usersProjects u\n" +
+                        "\tprojects p, userProjects u\n" +
                         " WHERE \n" +
-                        "\t(p.project_id = u.project_id AND u.users_id = ?)\n" +
+                        "\t(p.projectId = u.projectId AND u.userId = ?)\n" +
                         " ORDER BY \n" +
-                        "\tproject_id";
+                        "\tprojectId";
             }
             stmt = conn.prepareStatement(query);
 
@@ -119,10 +119,10 @@ public class projectMinter {
             sb.append("\t\"projects\": [\n");
             while (rs.next()) {
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"project_id\":\"" + rs.getString("project_id") + "\",\n");
-                sb.append("\t\t\t\"project_code\":\"" + rs.getString("project_code") + "\",\n");
-                sb.append("\t\t\t\"project_title\":\"" + rs.getString("project_title") + "\",\n");
-                sb.append("\t\t\t\"biovalidator_validation_xml\":\"" + rs.getString("biovalidator_validation_xml") + "\"\n");
+                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
+                sb.append("\t\t\t\"projectCode\":\"" + rs.getString("projectCode") + "\",\n");
+                sb.append("\t\t\t\"projectTitle\":\"" + rs.getString("projectTitle") + "\",\n");
+                sb.append("\t\t\t\"validationXml\":\"" + rs.getString("validationXml") + "\"\n");
                 sb.append("\t\t}");
                 if (!rs.isLast())
                     sb.append(",\n");
@@ -151,11 +151,11 @@ public class projectMinter {
            ResultSet rs = null;
 
            try {
-               String sql = "SELECT project_id FROM projects";
+               String sql = "SELECT projectId FROM projects";
                stmt = conn.prepareStatement(sql);
                rs = stmt.executeQuery();
                while (rs.next()) {
-                   projects.add(rs.getInt("project_id"));
+                   projects.add(rs.getInt("projectId"));
                }
                return projects;
            } catch (SQLException e) {
@@ -169,10 +169,10 @@ public class projectMinter {
      * A utility function to get the very latest graph loads for each expedition
      * This is a public accessible function from the REST service so it only returns results that are declared as public
      *
-     * @param project_id pass in an project bcid to limit the set of expeditions we are looking at
+     * @param projectId pass in an project bcid to limit the set of expeditions we are looking at
      * @return
      */
-    public String getLatestGraphs(int project_id, String username) {
+    public String getLatestGraphs(int projectId, String username) {
         StringBuilder sb = new StringBuilder();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -182,32 +182,32 @@ public class projectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select p.expedition_code as expedition_code,p.expedition_title,b1.graph as graph,b1.ts as ts, b1.webaddress as webaddress, b1.prefix as ark, b1.bcids_id as id, p.project_id as project_id \n" +
+            String sql = "select p.expeditionCode as expeditionCode,p.expeditionTitle,b1.graph as graph,b1.ts as ts, b1.webAddress as webAddress, b1.prefix as ark, b1.bcidId as id, p.projectId as projectId \n" +
                     "from bcids as b1, \n" +
-                    "(select p.expedition_code as expedition_code,b.graph as graph,max(b.ts) as maxts, b.webaddress as webaddress, b.prefix as ark, b.bcids_id as id, p.project_id as project_id \n" +
-                    "    \tfrom bcids b,expeditions p, expeditionsBCIDs eB\n" +
-                    "    \twhere eB.bcids_id=b.bcids_id\n" +
-                    "    \tand eB.expedition_id=p.expedition_id\n" +
+                    "(select p.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.prefix as ark, b.bcidId as id, p.projectId as projectId \n" +
+                    "    \tfrom bcids b,expeditions p, expeditionBcids eB\n" +
+                    "    \twhere eB.bcidId=b.bcidId\n" +
+                    "    \tand eB.expeditionId=p.expeditionId\n" +
                     " and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    "    and p.project_id = ?\n" +
-                    "    \tgroup by p.expedition_code) as  b2,\n" +
-                    "expeditions p,  expeditionsBCIDs eB\n" +
-                    "where p.expedition_code = b2.expedition_code and b1.ts = b2.maxts\n" +
-                    " and eB.bcids_id=b1.bcids_id\n" +
-                    " and eB.expedition_id=p.expedition_id\n" +
+                    "    and p.projectId = ?\n" +
+                    "    \tgroup by p.expeditionCode) as  b2,\n" +
+                    "expeditions p,  expeditionBcids eB\n" +
+                    "where p.expeditionCode = b2.expeditionCode and b1.ts = b2.maxts\n" +
+                    " and eB.bcidId=b1.bcidId\n" +
+                    " and eB.expeditionId=p.expeditionId\n" +
                     " and b1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    "    and p.project_id =?";
+                    "    and p.projectId =?";
 
             // Enforce restriction on viewing particular bcids -- this is important for protected bcids
             if (username != null) {
-                sql += "    and (p.public = 1 or p.users_id = ?)";
+                sql += "    and (p.public = 1 or p.userId = ?)";
             } else {
                 sql += "    and p.public = 1";
             }
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, project_id);
-            stmt.setInt(2, project_id);
+            stmt.setInt(1, projectId);
+            stmt.setInt(2, projectId);
 
             // Enforce restriction on viewing particular bcids -- this is important for protected bcids
             if (username != null) {
@@ -220,13 +220,13 @@ public class projectMinter {
             while (rs.next()) {
                 // Grap the prefixes and concepts associated with this
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"expedition_code\":\"" + rs.getString("expedition_code") + "\",\n");
-                sb.append("\t\t\t\"expedition_title\":\"" + rs.getString("expedition_title") + "\",\n");
+                sb.append("\t\t\t\"expeditionCode\":\"" + rs.getString("expeditionCode") + "\",\n");
+                sb.append("\t\t\t\"expeditionTitle\":\"" + rs.getString("expeditionTitle") + "\",\n");
                 sb.append("\t\t\t\"ts\":\"" + rs.getString("ts") + "\",\n");
                 sb.append("\t\t\t\"ark\":\"" + rs.getString("ark") + "\",\n");
-                sb.append("\t\t\t\"bcids_id\":\"" + rs.getString("id") + "\",\n");
-                sb.append("\t\t\t\"project_id\":\"" + rs.getString("project_id") + "\",\n");
-                sb.append("\t\t\t\"webaddress\":\"" + rs.getString("webaddress") + "\",\n");
+                sb.append("\t\t\t\"bcidId\":\"" + rs.getString("id") + "\",\n");
+                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
+                sb.append("\t\t\t\"webAddress\":\"" + rs.getString("webAddress") + "\",\n");
                 sb.append("\t\t\t\"graph\":\"" + rs.getString("graph") + "\"\n");
                 sb.append("\t\t}");
                 if (!rs.isLast())
@@ -264,9 +264,9 @@ public class projectMinter {
         ResultSet rs = null;
 
         try {
-            Integer user_id = db.getUserId(username);
+            Integer userId = db.getUserId(username);
 
-            String sql = "SELECT project_id, project_code, project_title, project_title, biovalidator_validation_xml FROM projects WHERE users_id = \"" + user_id + "\"";
+            String sql = "SELECT projectId, projectCode, projectTitle, projectTitle, validationXml FROM projects WHERE userId = \"" + userId + "\"";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();
@@ -275,10 +275,10 @@ public class projectMinter {
             sb.append("\t\"projects\": [\n");
             while (rs.next()) {
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"project_id\":\"" + rs.getString("project_id") + "\",\n");
-                sb.append("\t\t\t\"project_code\":\"" + rs.getString("project_code") + "\",\n");
-                sb.append("\t\t\t\"project_title\":\"" + rs.getString("project_title") + "\",\n");
-                sb.append("\t\t\t\"biovalidator_validation_xml\":\"" + rs.getString("biovalidator_validation_xml") + "\"\n");
+                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
+                sb.append("\t\t\t\"projectCode\":\"" + rs.getString("projectCode") + "\",\n");
+                sb.append("\t\t\t\"projectTitle\":\"" + rs.getString("projectTitle") + "\",\n");
+                sb.append("\t\t\t\"validationXml\":\"" + rs.getString("validationXml") + "\"\n");
                 sb.append("\t\t}");
                 if (!rs.isLast())
                     sb.append(",\n");
@@ -308,7 +308,7 @@ public class projectMinter {
         try {
             Integer userId = db.getUserId(username);
 
-            String sql = "SELECT p.project_id, p.project_code, p.project_title, p.biovalidator_validation_xml FROM projects p, usersProjects u WHERE p.project_id = u.project_id && u.users_id = \"" + userId + "\"";
+            String sql = "SELECT p.projectId, p.projectCode, p.projectTitle, p.validationXml FROM projects p, userProjects u WHERE p.projectId = u.projectId && u.userId = \"" + userId + "\"";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();
@@ -317,10 +317,10 @@ public class projectMinter {
             sb.append("\t\"projects\": [\n");
             while (rs.next()) {
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"project_id\":\"" + rs.getString("project_id") + "\",\n");
-                sb.append("\t\t\t\"project_code\":\"" + rs.getString("project_code") + "\",\n");
-                sb.append("\t\t\t\"project_title\":\"" + rs.getString("project_title") + "\",\n");
-                sb.append("\t\t\t\"biovalidator_validation_xml\":\"" + rs.getString("biovalidator_validation_xml") + "\"\n");
+                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
+                sb.append("\t\t\t\"projectCode\":\"" + rs.getString("projectCode") + "\",\n");
+                sb.append("\t\t\t\"projectTitle\":\"" + rs.getString("projectTitle") + "\",\n");
+                sb.append("\t\t\t\"validationXml\":\"" + rs.getString("validationXml") + "\"\n");
                 sb.append("\t\t}");
                 if (!rs.isLast())
                     sb.append(",\n");
@@ -340,13 +340,13 @@ public class projectMinter {
 
     /**
      * return an HTML table of a project's configuration.
-     * @param project_id
+     * @param projectId
      * @param username
      * @return
      */
-    public String getProjectConfigAsTable(Integer project_id, String username) {
+    public String getProjectConfigAsTable(Integer projectId, String username) {
         StringBuilder sb = new StringBuilder();
-        Hashtable<String, String> config = getProjectConfig(project_id, username);
+        Hashtable<String, String> config = getProjectConfig(projectId, username);
 
         sb.append("<table>\n");
         sb.append("\t<tbody>\n");
@@ -360,7 +360,7 @@ public class projectMinter {
         sb.append("\t\t<tr>\n");
         sb.append("\t\t\t<td>Configuration File:</td>\n");
         sb.append("\t\t\t<td>");
-        sb.append(config.get("validation_xml"));
+        sb.append(config.get("validationXml"));
         sb.append("</td>\n");
         sb.append("\t\t</tr>\n");
 
@@ -402,8 +402,8 @@ public class projectMinter {
 
         sb.append("\t\t<tr>\n");
         sb.append("\t\t\t<td>Configuration File</td>\n");
-        sb.append(("\t\t\t<td><input type=\"text\" class=\"project_config\" name=\"validation_xml\" value=\""));
-        sb.append(config.get("validation_xml"));
+        sb.append(("\t\t\t<td><input type=\"text\" class=\"project_config\" name=\"validationXml\" value=\""));
+        sb.append(config.get("validationXml"));
         sb.append("\"></td>\n\t\t</tr>\n");
 
         sb.append("\t\t<tr>\n");
@@ -447,7 +447,7 @@ public class projectMinter {
             if (e.hasMoreElements()) {
                 updateString += ", ";
             } else {
-                updateString += " WHERE project_id =\"" + projectId + "\";";
+                updateString += " WHERE projectId =\"" + projectId + "\";";
             }
         }
         PreparedStatement stmt = null;
@@ -489,7 +489,7 @@ public class projectMinter {
     }
 
     /**
-     * Return a hashTable of project configuration options for a given project_id and user_id
+     * Return a hashTable of project configuration options for a given projectId and userId
      * @param projectId
      * @param username
      * @return
@@ -500,20 +500,20 @@ public class projectMinter {
         ResultSet rs = null;
 
         try {
-            Integer user_id = db.getUserId(username);
+            Integer userId = db.getUserId(username);
 
-            String sql = "SELECT project_title as title, public, bioValidator_validation_xml as validation_xml FROM projects WHERE project_id=?"
-                    + " AND users_id= ?";
+            String sql = "SELECT projectTitle as title, public, validationXml as validationXml FROM projects WHERE projectId=?"
+                    + " AND userId= ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectId);
-            stmt.setInt(2, user_id);
+            stmt.setInt(2, userId);
 
             rs = stmt.executeQuery();
             if (rs.next()) {
                 config.put("title", rs.getString("title"));
                 config.put("public", String.valueOf(rs.getBoolean("public")));
-                if (rs.getString("validation_xml") != null) {
-                    config.put("validation_xml", rs.getString("validation_xml"));
+                if (rs.getString("validationXml") != null) {
+                    config.put("validationXml", rs.getString("validationXml"));
                 }
             } else {
                 throw new BadRequestException("You must be this project's admin in order to view its configuration.");
@@ -535,8 +535,8 @@ public class projectMinter {
         ResultSet rs = null;
         try {
             String sql = "SELECT count(*) as count " +
-                    "FROM users u, projects p, usersProjects uP " +
-                    "WHERE u.user_id=uP.users_id and uP.project_id = p.project_id and u.user_id = ? and p.project_id=?";
+                    "FROM users u, projects p, userProjects uP " +
+                    "WHERE u.userId=uP.userId and uP.projectId = p.projectId and u.userId = ? and p.projectId=?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
             stmt.setInt(2, projectId);
@@ -563,7 +563,7 @@ public class projectMinter {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT count(*) as count FROM projects WHERE users_id = ? AND project_id = ?";
+            String sql = "SELECT count(*) as count FROM projects WHERE userId = ? AND projectId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
             stmt.setInt(2, projectId);
@@ -588,7 +588,7 @@ public class projectMinter {
     public void removeUser(Integer userId, Integer projectId) {
         PreparedStatement stmt = null;
         try {
-            String sql = "DELETE FROM usersProjects WHERE users_id = ? AND project_id = ?";
+            String sql = "DELETE FROM userProjects WHERE userId = ? AND projectId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, userId);
             stmt.setInt(2, projectId);
@@ -611,7 +611,7 @@ public class projectMinter {
         PreparedStatement stmt = null;
 
         try {
-            String insertStatement = "INSERT INTO usersProjects (users_id, project_id) VALUES(?,?)";
+            String insertStatement = "INSERT INTO userProjects (userId, projectId) VALUES(?,?)";
             stmt = conn.prepareStatement(insertStatement);
 
             stmt.setInt(1, userId);
@@ -636,34 +636,34 @@ public class projectMinter {
         ResultSet rs = null;
 
         try {
-            String userProjectSql = "SELECT users_id FROM usersProjects WHERE project_id = \"" + projectId + "\"";
-            String userSql = "SELECT username, user_id FROM users";
-            String projectSql = "SELECT project_title FROM projects WHERE project_id = \"" + projectId + "\"";
+            String userProjectSql = "SELECT userId FROM userProjects WHERE projectId = \"" + projectId + "\"";
+            String userSql = "SELECT username, userId FROM users";
+            String projectSql = "SELECT projectTitle FROM projects WHERE projectId = \"" + projectId + "\"";
             List projectUsers = new ArrayList();
             stmt = conn.prepareStatement(projectSql);
 
             rs = stmt.executeQuery();
             rs.next();
-            String project_title = rs.getString("project_title");
+            String projectTitle = rs.getString("projectTitle");
 
             db.close(stmt, rs);
 
             sb.append("\t<form method=\"POST\">\n");
 
-            sb.append("<table data-project_id=\"" + projectId + "\" data-project_title=\"" + project_title + "\">\n");
+            sb.append("<table data-projectId=\"" + projectId + "\" data-projectTitle=\"" + projectTitle + "\">\n");
             sb.append("\t<tr>\n");
             stmt = conn.prepareStatement(userProjectSql);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Integer userId = rs.getInt("users_id");
+                Integer userId = rs.getInt("userId");
                 String username = db.getUserName(userId);
                 projectUsers.add(userId);
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
                 sb.append(username);
                 sb.append("</td>\n");
-                sb.append("\t\t<td><a id=\"remove_user\" data-user_id=\"" + userId + "\" data-username=\"" + username + "\" href=\"javascript:void();\">(remove)</a> ");
+                sb.append("\t\t<td><a id=\"remove_user\" data-userId=\"" + userId + "\" data-username=\"" + username + "\" href=\"javascript:void();\">(remove)</a> ");
                 sb.append("<a id=\"edit_profile\" data-username=\"" + username + "\" href=\"javascript:void();\">(edit)</a></td>\n");
                 sb.append("\t</tr>\n");
             }
@@ -671,7 +671,7 @@ public class projectMinter {
             sb.append("\t<tr>\n");
             sb.append("\t\t<td>Add User:</td>\n");
             sb.append("\t\t<td>");
-            sb.append("<select name=user_id>\n");
+            sb.append("<select name=userId>\n");
             sb.append("\t\t\t<option value=\"0\">Create New User</option>\n");
 
             db.close(stmt, rs);
@@ -680,7 +680,7 @@ public class projectMinter {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Integer userId = rs.getInt("user_id");
+                Integer userId = rs.getInt("userId");
                 if (!projectUsers.contains(userId)) {
                     sb.append("\t\t\t<option value=\"" + userId + "\">" + db.getUserName(userId) + "</option>\n");
                 }
@@ -694,8 +694,8 @@ public class projectMinter {
             sb.append("\t\t<td><div class=\"error\" align=\"center\"></div></td>\n");
             sb.append("\t</tr>\n");
             sb.append("\t<tr>\n");
-            sb.append("\t\t<td><input type=\"hidden\" name=\"project_id\" value=\"" + projectId + "\"></td>\n");
-            sb.append("\t\t<td><input type=\"button\" value=\"Submit\" onclick=\"projectUserSubmit(\'" + project_title.replaceAll(" ", "_") + '_' + projectId + "\')\"></td>\n");
+            sb.append("\t\t<td><input type=\"hidden\" name=\"projectId\" value=\"" + projectId + "\"></td>\n");
+            sb.append("\t\t<td><input type=\"button\" value=\"Submit\" onclick=\"projectUserSubmit(\'" + projectTitle.replaceAll(" ", "_") + '_' + projectId + "\')\"></td>\n");
             sb.append("\t</tr>\n");
 
             sb.append("</table>\n");
@@ -728,40 +728,40 @@ public class projectMinter {
 
 
         try {
-            String sql1 = "select e.expedition_title, p.project_title from expeditions e, projects p " +
-                    "where e.users_id = ? and p.project_id = e.project_id";
+            String sql1 = "select e.expeditionTitle, p.projectTitle from expeditions e, projects p " +
+                    "where e.userId = ? and p.projectId = e.projectId";
             stmt = conn.prepareStatement(sql1);
             stmt.setInt(1, userId);
 
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                String project_title = rs.getString("project_title");
-                String expedition_title = rs.getString("expedition_title");
+                String projectTitle = rs.getString("projectTitle");
+                String expeditionTitle = rs.getString("expeditionTitle");
 
-                if (project_title != null && !project_title.isEmpty()) {
+                if (projectTitle != null && !projectTitle.isEmpty()) {
                     // if the project isn't in the map, then add it
-                    if (!projectMap.containsKey(project_title)) {
-                        projectMap.put(project_title, new JSONObject());
+                    if (!projectMap.containsKey(projectTitle)) {
+                        projectMap.put(projectTitle, new JSONObject());
                     }
 
                     // if the expedition isn't in the project then add it
-                    JSONObject p = (JSONObject) projectMap.get(project_title);
-                    if (!p.containsKey(expedition_title)) {
-                        p.put(expedition_title, new JSONArray());
+                    JSONObject p = (JSONObject) projectMap.get(projectTitle);
+                    if (!p.containsKey(expeditionTitle)) {
+                        p.put(expeditionTitle, new JSONArray());
                     }
 
                 }
 
             }
 
-            String sql2 = "select e.expedition_code, e.expedition_title, b.ts, b.prefix as ark, b.bcids_id as id, b.finalCopy, e.project_id, p.project_title\n" +
-                    "from bcids b, expeditions e,  expeditionsBCIDs eB, projects p\n" +
-                    "where b.users_id = ? and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    " and eB.bcids_id=b.bcids_id\n" +
-                    " and e.expedition_id=eB.expedition_id\n" +
-                    " and p.project_id=e.project_id\n" +
-                    " order by project_id, expedition_code, ts desc";
+            String sql2 = "select e.expeditionCode, e.expeditionTitle, b.ts, b.prefix as ark, b.bcidId as id, b.finalCopy, e.projectId, p.projectTitle\n" +
+                    "from bcids b, expeditions e,  expeditionBcids eB, projects p\n" +
+                    "where b.userId = ? and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
+                    " and eB.bcidId=b.bcidId\n" +
+                    " and e.expeditionId=eB.expeditionId\n" +
+                    " and p.projectId=e.projectId\n" +
+                    " order by projectId, expeditionCode, ts desc";
 
             stmt = conn.prepareStatement(sql2);
             stmt.setInt(1, userId);
@@ -769,8 +769,8 @@ public class projectMinter {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 JSONObject dataset = new JSONObject();
-                String project_title = rs.getString("project_title");
-                String expedition_title = rs.getString("expedition_title");
+                String projectTitle = rs.getString("projectTitle");
+                String expeditionTitle = rs.getString("expeditionTitle");
 
                 // Grap the prefixes and concepts associated with this
                 dataset.put("ts", rs.getString("ts"));
@@ -778,8 +778,8 @@ public class projectMinter {
                 dataset.put("ark", rs.getString("ark"));
                 dataset.put("finalCopy", rs.getString("finalCopy"));
 
-                JSONObject p = (JSONObject) projectMap.get(project_title);
-                ((JSONArray) p.get(expedition_title)).add(dataset);
+                JSONObject p = (JSONObject) projectMap.get(projectTitle);
+                ((JSONArray) p.get(expeditionTitle)).add(dataset);
             }
 
             return JSONValue.toJSONString(projectMap);
@@ -807,7 +807,7 @@ public class projectMinter {
 
         for (Object p:  projects) {
             JSONObject project = (JSONObject) p;
-            projectMap.put(project.get("project_title"), new JSONArray());
+            projectMap.put(project.get("projectTitle"), new JSONArray());
         }
 
         // We need a username
@@ -820,21 +820,21 @@ public class projectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select e.expedition_code, e.expedition_title, b1.graph, b1.ts, b1.bcids_id as id, b1.webaddress as webaddress, b1.prefix as ark, e.project_id, e.public, p.project_title\n" +
+            String sql = "select e.expeditionCode, e.expeditionTitle, b1.graph, b1.ts, b1.bcidId as id, b1.webAddress as webAddress, b1.prefix as ark, e.projectId, e.public, p.projectTitle\n" +
                     "from bcids as b1, \n" +
-                    "(select e.expedition_code as expedition_code,b.graph as graph,max(b.ts) as maxts, b.webaddress as webaddress, b.prefix as ark, b.bcids_id as id, e.project_id as project_id \n" +
-                    "    \tfrom bcids b,expeditions e, expeditionsBCIDs eB\n" +
-                    "    \twhere eB.bcids_id=b.bcids_id\n" +
-                    "    \tand eB.expedition_id=e.expedition_id\n" +
+                    "(select e.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.prefix as ark, b.bcidId as id, e.projectId as projectId \n" +
+                    "    \tfrom bcids b,expeditions e, expeditionBcids eB\n" +
+                    "    \twhere eB.bcidId=b.bcidId\n" +
+                    "    \tand eB.expeditionId=e.expeditionId\n" +
                     " and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    "    \tgroup by e.expedition_code) as  b2,\n" +
-                    "expeditions e,  expeditionsBCIDs eB, projects p\n" +
-                    "where e.expedition_code = b2.expedition_code and b1.ts = b2.maxts\n" +
-                    " and eB.bcids_id=b1.bcids_id\n" +
-                    " and eB.expedition_id=e.expedition_id\n" +
-                    " and p.project_id=e.project_id\n" +
+                    "    \tgroup by e.expeditionCode) as  b2,\n" +
+                    "expeditions e,  expeditionBcids eB, projects p\n" +
+                    "where e.expeditionCode = b2.expeditionCode and b1.ts = b2.maxts\n" +
+                    " and eB.bcidId=b1.bcidId\n" +
+                    " and eB.expeditionId=e.expeditionId\n" +
+                    " and p.projectId=e.projectId\n" +
                     " and b1.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
-                    "    and e.users_id = ?";
+                    "    and e.userId = ?";
 
             stmt = conn.prepareStatement(sql);
             Integer userId = db.getUserId(username);
@@ -843,28 +843,28 @@ public class projectMinter {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 JSONObject dataset = new JSONObject();
-                String project_title = rs.getString("project_title");
+                String projectTitle = rs.getString("projectTitle");
 
                 // Grap the prefixes and concepts associated with this
-                dataset.put("expedition_code", rs.getString("expedition_code"));
-                dataset.put("expedition_title", rs.getString("expedition_title"));
+                dataset.put("expeditionCode", rs.getString("expeditionCode"));
+                dataset.put("expeditionTitle", rs.getString("expeditionTitle"));
                 dataset.put("ts", rs.getString("ts"));
                 dataset.put("bcidsId", rs.getString("id"));
-                dataset.put("project_id", rs.getString("project_id"));
+                dataset.put("projectId", rs.getString("projectId"));
                 dataset.put("graph", rs.getString("graph"));
                 dataset.put("public", rs.getString("public"));
                 dataset.put("ark", rs.getString("ark"));
-                dataset.put("webaddress", rs.getString("webaddress"));
+                dataset.put("webAddress", rs.getString("webAddress"));
 
 
-                if (project_title != null && !project_title.isEmpty()) {
-                    projectDatasets = (JSONArray) projectMap.get(project_title);
-                    // TODO What should we do if a project_title shows up that wasn't before fetched? ignore it? or add the project?
+                if (projectTitle != null && !projectTitle.isEmpty()) {
+                    projectDatasets = (JSONArray) projectMap.get(projectTitle);
+                    // TODO What should we do if a projectTitle shows up that wasn't before fetched? ignore it? or add the project?
                     if (projectDatasets == null) {
                         projectDatasets = new JSONArray();
                     }
                     projectDatasets.add(dataset);
-                    projectMap.put(project_title, projectDatasets);
+                    projectMap.put(projectTitle, projectDatasets);
                 }
             }
 
@@ -887,7 +887,7 @@ public class projectMinter {
         PreparedStatement stmt = null;
 
         try {
-            String insertStatement = "INSERT INTO templateConfigs (users_id, project_id, config_name, config) " +
+            String insertStatement = "INSERT INTO templateConfigs (userId, projectId, configName, config) " +
                     "VALUES(?,?,?,?)";
             stmt = conn.prepareStatement(insertStatement);
 
@@ -916,7 +916,7 @@ public class projectMinter {
         try {
             String sql = "SELECT count(*) as count " +
                     "FROM templateConfigs " +
-                    "WHERE config_name = ? and project_id = ?";
+                    "WHERE configName = ? and projectId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, configName);
             stmt.setInt(2, projectId);
@@ -944,7 +944,7 @@ public class projectMinter {
         try {
             String sql = "SELECT count(*) as count " +
                     "FROM templateConfigs " +
-                    "WHERE config_name = ? and project_id = ? and users_id = ?";
+                    "WHERE configName = ? and projectId = ? and userId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, configName);
             stmt.setInt(2, projectId);
@@ -979,13 +979,13 @@ public class projectMinter {
         configNames.add("Default");
 
         try {
-            String sql = "SELECT config_name FROM templateConfigs WHERE project_id = ?";
+            String sql = "SELECT configName FROM templateConfigs WHERE projectId = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectId);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                configNames.add(rs.getString("config_name"));
+                configNames.add(rs.getString("configName"));
             }
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "SQLException retrieving template configurations for projectID: " +
@@ -1010,7 +1010,7 @@ public class projectMinter {
         JSONObject obj = new JSONObject();
 
         try {
-            String sql = "SELECT config FROM templateConfigs WHERE project_id = ? AND config_name = ?";
+            String sql = "SELECT config FROM templateConfigs WHERE projectId = ? AND configName = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectId);
             stmt.setString(2, configName);
@@ -1035,7 +1035,7 @@ public class projectMinter {
 
         try {
             String updateStatement = "UPDATE templateConfigs SET config = ? WHERE " +
-                    "users_id = ? AND project_id = ? and config_name = ?";
+                    "userId = ? AND projectId = ? and configName = ?";
             stmt = conn.prepareStatement(updateStatement);
 
             stmt.setString(1, JSONValue.toJSONString(checkedOptions));
@@ -1055,7 +1055,7 @@ public class projectMinter {
         PreparedStatement stmt = null;
 
         try {
-            String sql = "DELETE FROM templateConfigs WHERE project_id = ? AND config_name = ?";
+            String sql = "DELETE FROM templateConfigs WHERE projectId = ? AND configName = ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectId);

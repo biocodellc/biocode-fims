@@ -83,15 +83,15 @@ public class run {
         sm.loadProperties();
 
         EZIDService ezidAccount = new EZIDService();
-        Integer user_id = 1;
+        Integer userId = 1;
         Integer ResourceType = ResourceTypes.PRESERVEDSPECIMEN;
         String doi = null;
-        String webaddress = null;
+        String webAddress = null;
 
         // Create a new bcid
         System.out.println("\nCreating a new bcid");
         bcidMinter = new bcidMinter(true, true);
-        bcidMinter.createEntityBcid(user_id, new ResourceTypes().get(ResourceType).uri, webaddress, null, doi, false);
+        bcidMinter.createEntityBcid(userId, new ResourceTypes().get(ResourceType).uri, webAddress, null, doi, false);
         bcidMinter.close();
 
         /*

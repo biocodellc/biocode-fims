@@ -3,7 +3,7 @@ package services.id;
 import auth.LDAPAuthentication;
 import auth.authenticator;
 import auth.authorizer;
-import auth.oauth2.provider;
+import auth.oAuth2.provider;
 import fimsExceptions.BadRequestException;
 import fimsExceptions.OAUTHException;
 import fimsExceptions.ServerErrorException;
@@ -272,20 +272,20 @@ public class authenticationService {
     @GET
     @Path("/logout")
     @Produces(MediaType.TEXT_HTML)
-    public Response logout(@QueryParam("redirect_uri") String redirect_uri,
+    public Response logout(@QueryParam("redirectUri") String redirectUri,
                            @Context HttpServletResponse res) {
 
         HttpSession session = request.getSession();
 
         session.invalidate();
 
-        if (redirect_uri != null && !redirect_uri.equals("")) {
+        if (redirectUri != null && !redirectUri.equals("")) {
             try {
                 return Response.status(307)
-                        .location(new URI(redirect_uri))
+                        .location(new URI(redirectUri))
                         .build();
             } catch (URISyntaxException e) {
-                throw new BadRequestException("invalid redirect_uri");
+                throw new BadRequestException("invalid redirectUri");
             }
         } else {
             try {
@@ -299,7 +299,7 @@ public class authenticationService {
     }
 
     /**
-     * Service for a client app to log a user into the bcid system via oauth.
+     * Service for a client app to log a user into the bcid system via oAuth.
      *
      * @param clientId
      * @param redirectURL
@@ -338,7 +338,7 @@ public class authenticationService {
                     p.close();
                     return Response.status(302).location(new URI(callback + "?error=invalid_request")).build();
                 } catch (URISyntaxException e) {
-                    logger.warn("Malformed callback URI for oauth client {} and callback {}", clientId, callback);
+                    logger.warn("Malformed callback URI for oAuth client {} and callback {}", clientId, callback);
                 }
             }
             p.close();
@@ -393,7 +393,7 @@ public class authenticationService {
     }
 
     /**
-     * Service for a client app to exchange an oauth code for an access token
+     * Service for a client app to exchange an oAuth code for an access token
      *
      * @param code
      * @param clientId
@@ -447,7 +447,7 @@ public class authenticationService {
     }
 
     /**
-     * Service for an oauth client app to exchange a refresh token for a valid access token.
+     * Service for an oAuth client app to exchange a refresh token for a valid access token.
      *
      * @param clientId
      * @param clientSecret

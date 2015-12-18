@@ -95,13 +95,13 @@ public class authenticator {
 
                 // enable this user for all projects
                 projectMinter p = new projectMinter();
-                // get the user_id for this username
-                int user_id = getUserId(username);
+                // get the userId for this username
+                int userId = getUserId(username);
                 // Loop projects and assign user to them
                 ArrayList<Integer> projects = p.getAllProjects();
                 Iterator projectsIt = projects.iterator();
                 while (projectsIt.hasNext()) {
-                    p.addUserToProject(user_id, (Integer) projectsIt.next());
+                    p.addUserToProject(userId, (Integer) projectsIt.next());
                 }
                 p.close();
             }
@@ -170,7 +170,7 @@ public class authenticator {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String selectString = "SELECT user_id id FROM users WHERE username = ?";
+            String selectString = "SELECT userId id FROM users WHERE username = ?";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, username);
@@ -236,7 +236,7 @@ public class authenticator {
         ResultSet rs = null;
         try {
             String username = null;
-            String sql = "SELECT username FROM users where pass_reset_token = ?";
+            String sql = "SELECT username FROM users where passwordResetToken = ?";
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, token);
@@ -247,7 +247,7 @@ public class authenticator {
             }
             if (username != null) {
                 db.close(stmt, null);
-                String updateSql = "UPDATE users SET pass_reset_token = null, pass_reset_expiration = null WHERE username = \"" + username + "\"";
+                String updateSql = "UPDATE users SET passwordResetToken = null, passwordResetExpiration = null WHERE username = \"" + username + "\"";
                 stmt = conn.prepareStatement(updateSql);
                 stmt.executeUpdate();
 
@@ -290,7 +290,7 @@ public class authenticator {
 
         try {
 
-            String insertString = "INSERT INTO users (username,set_password,institution,email,firstName,lastName,pass_reset_token,password,admin,IDlimit)" +
+            String insertString = "INSERT INTO users (username,hasSetPassword,institution,email,firstName,lastName,passwordResetToken,password,admin)" +
                     " VALUES(?,?,?,?,?,?,?,?,?,?)";
             stmt = conn.prepareStatement(insertString);
 
@@ -303,7 +303,6 @@ public class authenticator {
             stmt.setString(7, "");
             stmt.setString(8, "");
             stmt.setInt(9, 0);
-            stmt.setInt(10, 100000);
 
             stmt.execute();
             return true;
@@ -316,25 +315,25 @@ public class authenticator {
 
 
     /**
-     * return the user_id given a username
+     * return the userId given a username
      *
      * @param username
      *
      * @return
      */
     private Integer getUserId(String username) {
-        Integer user_id = null;
+        Integer userId = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String selectString = "SELECT user_id FROM users WHERE username=?";
+            String selectString = "SELECT userId FROM users WHERE username=?";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, LDAPAuthentication.showShortUserName(username));
 
             rs = stmt.executeQuery();
             if (rs.next()) {
-                user_id = rs.getInt("user_id");
+                userId = rs.getInt("userId");
             }
 
         } catch (SQLException e) {
@@ -342,7 +341,7 @@ public class authenticator {
         } finally {
             db.close(stmt, rs);
         }
-        return user_id;
+        return userId;
     }
 
     /**
@@ -385,8 +384,9 @@ public class authenticator {
     public Boolean userSetPass(String username) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Boolean hasSetPassword = false;
         try {
-            String selectString = "SELECT set_password FROM users WHERE username = ?";
+            String selectString = "SELECT hasSetPassword FROM users WHERE username = ?";
             stmt = conn.prepareStatement(selectString);
 
             stmt.setString(1, username);
@@ -394,17 +394,14 @@ public class authenticator {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Integer set_password = rs.getInt("set_password");
-                if (set_password == 1) {
-                    return true;
-                }
+                hasSetPassword = rs.getBoolean("hasSetPassword");
             }
         } catch (SQLException e) {
             logger.warn("SQLException thrown", e);
         } finally {
             db.close(stmt, rs);
         }
-        return false;
+        return hasSetPassword;
     }
 
     /**
@@ -439,8 +436,8 @@ public class authenticator {
                 Timestamp ts = new Timestamp(Calendar.getInstance().getTime().getTime() + (1000 * 60 * 60 * 24));
 
                 String updateSql = "UPDATE users SET " +
-                        "pass_reset_token = \"" + token + "\", " +
-                        "pass_reset_expiration = \"" + ts + "\" " +
+                        "passwordResetToken = \"" + token + "\", " +
+                        "passwordResetExpiration = \"" + ts + "\" " +
                         "WHERE username = ?";
                 stmt2 = conn.prepareStatement(updateSql);
 
@@ -539,14 +536,14 @@ public class authenticator {
             return;
         }
 
-        // change set_password field to 0 so user has to create new password next time they login
+        // change hasSetPassword field to 0 so user has to create new password next time they login
         Statement stmt = null;
         try {
             stmt = authenticator.conn.createStatement();
-            Integer result = stmt.executeUpdate("UPDATE users SET set_password=\"0\" WHERE username=\"" + username + "\"");
+            Integer result = stmt.executeUpdate("UPDATE users SET hasSetPassword=\"0\" WHERE username=\"" + username + "\"");
 
             if (result == 0) {
-                System.out.println("Error updating set_password value to 0 for " + username);
+                System.out.println("Error updating hasSetPassword value to 0 for " + username);
             }
         } catch (SQLException e) {
             e.printStackTrace();

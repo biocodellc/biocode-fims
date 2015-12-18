@@ -15,12 +15,12 @@ import java.util.Date;
  */
 public class configurationFileFetcher {
     private File outputFile;
-    private Integer project_id;
+    private Integer projectId;
     private String configFileName;
     private Integer hoursToHoldCache = 24;
 
     public Integer getProject_id() {
-        return project_id;
+        return projectId;
     }
 
     public File getOutputFile() {
@@ -56,14 +56,14 @@ public class configurationFileFetcher {
      *
      * @param defaultOutputDirectory
      */
-    public configurationFileFetcher(Integer project_id, String defaultOutputDirectory, Boolean useCache) {
-        this.project_id = project_id;
-        configFileName = "config." + project_id + ".xml";
+    public configurationFileFetcher(Integer projectId, String defaultOutputDirectory, Boolean useCache) {
+        this.projectId = projectId;
+        configFileName = "config." + projectId + ".xml";
 
         SettingsManager sm = SettingsManager.getInstance();
         sm.loadProperties();
 
-        String projectServiceString = sm.retrieveValue("project_lookup_uri") + project_id;
+        String projectServiceString = sm.retrieveValue("project_lookup_uri") + projectId;
         Boolean useCacheResults = false;
 
         // call cache operation if user wants it
@@ -75,14 +75,14 @@ public class configurationFileFetcher {
         if (!useCacheResults) {
             // Get the URL for this configuration File
             projectMinter project = new projectMinter();
-            String urlString = project.getValidationXML(project_id);
+            String urlString = project.getValidationXML(projectId);
             project.close();
             try {
                 // Initialize the connection
                 init(new URL(urlString), defaultOutputDirectory);
             } catch (MalformedURLException e) {
                 throw new FIMSRuntimeException("configuration file url: " + urlString + " returned from bcid system for project id: " +
-                        project_id + " is malformed.", 500, e);
+                        projectId + " is malformed.", 500, e);
             }
         }
     }

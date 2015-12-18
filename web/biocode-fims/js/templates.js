@@ -33,7 +33,7 @@
 			    //input_string+='<input type="hidden" name="field'+index + '" value="' + $(this).val() + '" />';
 				input_string+='<input type="hidden" name="fields" value="' + $(this).val() + '" />';
         });
-		input_string+='<input type="hidden" name="project_id" value="' + getProjectID() + '" />';
+		input_string+='<input type="hidden" name="projectId" value="' + getProjectID() + '" />';
 
 		// Pass the form to the server and submit
 		$('<form action="'+ url +'" method="post">'+input_string+'</form>').appendTo('body').submit().remove();

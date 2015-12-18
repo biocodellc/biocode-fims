@@ -59,17 +59,17 @@ public class templateProcessor {
     private static String errorMsg = "The value you entered is not from the recommended list. This will create an error upon validation.";
 
     static File configFile = null;
-    Integer project_id;
+    Integer projectId;
     private String username = null;
 
-    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache, XSSFWorkbook workbook) {
-        this.project_id = project_id;
-        configurationFileFetcher configFile = new configurationFileFetcher(project_id, outputFolder, useCache);
+    public templateProcessor(Integer projectId, String outputFolder, Boolean useCache, XSSFWorkbook workbook) {
+        this.projectId = projectId;
+        configurationFileFetcher configFile = new configurationFileFetcher(projectId, outputFolder, useCache);
         SettingsManager sm = SettingsManager.getInstance();
         naan = Integer.parseInt(sm.retrieveValue("naan"));
 
         // Instantiate the project output Folder
-        this.p = new process(project_id,outputFolder, configFile.getOutputFile());
+        this.p = new process(projectId,outputFolder, configFile.getOutputFile());
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);
 
@@ -106,7 +106,7 @@ public class templateProcessor {
     /**
      * Instantiate tempalateProcessor using a pre-defined configurationFile (don't fetch using projectID)
      * This is a private constructor as it is ONLY used for local testing.  Do not use on the Web or in production
-     * since we MUST know the project_id first
+     * since we MUST know the projectId first
      *
      * @param file
      * @param outputFolder
@@ -119,7 +119,7 @@ public class templateProcessor {
         naan = Integer.parseInt(sm.retrieveValue("naan"));
 
         // Instantiate the project output Folder
-        this.p = new process(project_id,outputFolder, configFile);
+        this.p = new process(projectId,outputFolder, configFile);
 
         mapping = new Mapping();
         p.addMappingRules(new Digester(), mapping);
@@ -159,13 +159,13 @@ public class templateProcessor {
     /**
      * Instantiate templateProcessor using a project ID (lookup configuration File from server)
      *
-     * @param project_id
+     * @param projectId
      * @param outputFolder
      * @param useCache
      */
-    public void instantiateTemplateProcessor(Integer project_id, String outputFolder, Boolean useCache) {
-        this.project_id = project_id;
-        configurationFileFetcher fetcher = new configurationFileFetcher(project_id, outputFolder, useCache);
+    public void instantiateTemplateProcessor(Integer projectId, String outputFolder, Boolean useCache) {
+        this.projectId = projectId;
+        configurationFileFetcher fetcher = new configurationFileFetcher(projectId, outputFolder, useCache);
         instantiateTemplateProcessor(fetcher.getOutputFile(), outputFolder, useCache);
     }
 
@@ -173,13 +173,13 @@ public class templateProcessor {
     /**
      * constructor for NMNH projects
      *
-     * @param project_id
+     * @param projectId
      * @param outputFolder
      * @param useCache
      * @param accessionNumber
      * @param datasetCode
      */
-    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache,
+    public templateProcessor(Integer projectId, String outputFolder, Boolean useCache,
                              Integer accessionNumber, String datasetCode, String ark, String username) {
         // we can't have a null value for accessionNumber or datasetCode if using this constructor
         if (accessionNumber == null || datasetCode == null) {
@@ -189,7 +189,7 @@ public class templateProcessor {
         this.accessionNumber = accessionNumber;
         this.datasetCode = datasetCode;
         this.ark = ark;
-        instantiateTemplateProcessor(project_id, outputFolder, useCache);
+        instantiateTemplateProcessor(projectId, outputFolder, useCache);
     }
 
     /**
@@ -213,8 +213,8 @@ public class templateProcessor {
         instantiateTemplateProcessor(file, outputFolder, useCache);
     }
 
-    public templateProcessor(Integer project_id, String outputFolder, Boolean useCache) {
-        instantiateTemplateProcessor(project_id, outputFolder, useCache);
+    public templateProcessor(Integer projectId, String outputFolder, Boolean useCache) {
+        instantiateTemplateProcessor(projectId, outputFolder, useCache);
     }
 
     public Mapping getMapping() {
@@ -261,10 +261,10 @@ public class templateProcessor {
                             "</a><br>\n");
                 }
                 // Defined_by
-                if (a.getDefined_by() != null) {
+                if (a.getDefinedBy() != null) {
                     output.append("Defined_by = " +
-                            "<a href='" + a.getDefined_by() + "' target='_blank'>" +
-                            a.getDefined_by() +
+                            "<a href='" + a.getDefinedBy() + "' target='_blank'>" +
+                            a.getDefinedBy() +
                             "</a><br>\n");
                 }
 
@@ -841,13 +841,13 @@ public class templateProcessor {
         //Fetch the project title from the BCID system
         // NOTE, getting this particular name from the BCID system throws a connection exception
         /* availableProjectsFetcher fetcher = new availableProjectsFetcher();
-        availableProject aP = fetcher.getProject(project_id);
-        String project_title = aP.getProject_title();
+        availableProject aP = fetcher.getProject(projectId);
+        String projectTitle = aP.getProject_title();
         */
         // Use the shortName
-        String project_title = getFims().getMetadata().getShortname();
+        String projectTitle = getFims().getMetadata().getShortname();
 
-        // Hide the project_id in the first row
+        // Hide the projectId in the first row
         row = instructionsSheet.createRow(rowIndex);
         rowIndex++;
         rowIndex++;
@@ -858,7 +858,7 @@ public class templateProcessor {
 
         // Hide Project_id in first row, second column
         cell = row.createCell(1);
-        cell.setCellValue("~project_id=" + project_id + "~");
+        cell.setCellValue("~projectId=" + projectId + "~");
 
         row.setZeroHeight(true);
 
@@ -867,7 +867,7 @@ public class templateProcessor {
         rowIndex++;
         cell = row.createCell(0);
         cell.setCellStyle(titleStyle);
-        cell.setCellValue(project_title);
+        cell.setCellValue(projectTitle);
 
         // if we have a datasetCode and accesstionNumber, hide them in the first row and make them visible
         // if we have one, we have all three.

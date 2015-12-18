@@ -35,8 +35,8 @@ public class validate {
     /**
      * service to validate a dataset against a project's rules
      *
-     * @param project_id
-     * @param expedition_code
+     * @param projectId
+     * @param expeditionCode
      * @param upload
      * @param is
      * @param fileData
@@ -47,8 +47,8 @@ public class validate {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public String validate(@FormDataParam("project_id") Integer project_id,
-                           @FormDataParam("expedition_code") String expedition_code,
+    public String validate(@FormDataParam("projectId") Integer projectId,
+                           @FormDataParam("expeditionCode") String expeditionCode,
                            @FormDataParam("upload") String upload,
                            @FormDataParam("public_status") String publicStatus,
                            @FormDataParam("final_copy") String finalCopy,
@@ -64,7 +64,7 @@ public class validate {
         String username = (String) session.getAttribute("user");
 
         // create a new processController
-        processController processController = new processController(project_id, expedition_code);
+        processController processController = new processController(projectId, expeditionCode);
 
         // place the processController in the session here so that we can track the status of the validation process
         // by calling rest/validate/status
@@ -137,7 +137,7 @@ public class validate {
                 if (username == null) {
                     throw new UnauthorizedRequestException("You must be logged in to upload.");
                 }
-                processController.setUser_id(username);
+                processController.setUserId(username);
                 // set public status to true in processController if user wants it on
                 if (publicStatus != null && publicStatus.equals("on")) {
                        processController.setPublicStatus(true);
@@ -213,7 +213,7 @@ public class validate {
         }
 
         // check if user is logged in
-        if (processController.getUser_id() == null) {
+        if (processController.getUserId() == null) {
             return "{\"error\": \"You must be logged in to upload.\"}";
         }
 
@@ -286,7 +286,7 @@ public class validate {
             return "{\"error\": \"No process was detected.\"}";
         }
 
-        if (processController.getUser_id() == null) {
+        if (processController.getUserId() == null) {
             throw new UnauthorizedRequestException("User is not authorized to create a new expedition.");
         }
 

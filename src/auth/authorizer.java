@@ -30,11 +30,11 @@ public class authorizer {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            Integer users_id = db.getUserId(username);
-            String selectString = "SELECT count(*) as count FROM projects WHERE users_id = ?";
+            Integer userId = db.getUserId(username);
+            String selectString = "SELECT count(*) as count FROM projects WHERE userId = ?";
 
             stmt = conn.prepareStatement(selectString);
-            stmt.setInt(1, users_id);
+            stmt.setInt(1, userId);
 
             rs = stmt.executeQuery();
             rs.next();
@@ -56,7 +56,7 @@ public class authorizer {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT pass_reset_expiration as ts FROM users WHERE pass_reset_token = ?";
+            String sql = "SELECT passwordResetExpiration as ts FROM users WHERE passwordResetToken = ?";
 
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, token);

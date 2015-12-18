@@ -31,7 +31,7 @@ public class Worksheet {
     // Store all messages related to this Worksheet
     private LinkedList<RowMessage> messages = new LinkedList<RowMessage>();
     // Store the reference for the columns associated with this worksheet
-    private final java.util.List<Column_trash> columns = new ArrayList<Column_trash>();
+    private final java.util.List<ColumnTrash> columns = new ArrayList<ColumnTrash>();
 
     private static Logger logger = LoggerFactory.getLogger(Worksheet.class);
     /**
@@ -39,7 +39,7 @@ public class Worksheet {
      *
      * @param column
      */
-    public void addColumn(Column_trash column) {
+    public void addColumn(ColumnTrash column) {
         columns.add(column);
     }
 
@@ -123,8 +123,8 @@ public class Worksheet {
         }
 
         fimsPrinter.out.println("  columns ... ");
-        for (Iterator<Column_trash> i = columns.iterator(); i.hasNext(); ) {
-            Column_trash c = i.next();
+        for (Iterator<ColumnTrash> i = columns.iterator(); i.hasNext(); ) {
+            ColumnTrash c = i.next();
             c.print();
         }
     }

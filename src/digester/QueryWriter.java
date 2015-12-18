@@ -169,7 +169,7 @@ public class QueryWriter {
             try {
                 if (attribute.getUri().equals(predicate)) {
                     colName = attribute.getColumn();
-                    datatype = attribute.getDatatype();
+                    datatype = attribute.getDataType();
                 }
 
             } catch (Exception e) {

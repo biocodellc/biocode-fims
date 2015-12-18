@@ -1,7 +1,7 @@
 package bcid;
 
 import auth.authenticator;
-import auth.oauth2.provider;
+import auth.oAuth2.provider;
 import fimsExceptions.BadRequestException;
 import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
@@ -100,7 +100,7 @@ public class userMinter {
         sb.append("\t\t\t<td></td>\n");
         sb.append("\t\t\t<td><input type=\"button\" id=\"createFormButton\" value=\"Submit\"><input type=\"button\" id=\"createFormCancelButton\" value=\"Cancel\"></td>\n");
         sb.append("\t\t</tr>\n");
-        sb.append("\t\t<input type=\"hidden\" name=\"project_id\">\n");
+        sb.append("\t\t<input type=\"hidden\" name=\"projectId\">\n");
 
         sb.append("</table>\n");
         sb.append("\t</form>\n");
@@ -339,7 +339,7 @@ public class userMinter {
     }
 
     /**
-     * return a JSON representation of a user's profile for oauth client apps
+     * return a JSON representation of a user's profile for oAuth client apps
      * @param token
      * @return
      */
@@ -349,7 +349,7 @@ public class userMinter {
         String username = p.validateToken(token);
         p.close();
         if (username != null) {
-            Integer user_id = db.getUserId(username);
+            Integer userId = db.getUserId(username);
 
             StringBuilder sb = new StringBuilder();
             sb.append("{\n");
@@ -358,7 +358,7 @@ public class userMinter {
             sb.append("\t\"last_name\": \"" + getLastName(username) + "\",\n");
             sb.append("\t\"email\": \"" + getEmail(username) + "\",\n");
             sb.append("\t\"institution\": \"" + getInstitution(username) + "\",\n");
-            sb.append("\t\"user_id\": \"" + user_id + "\",\n");
+            sb.append("\t\"userId\": \"" + userId + "\",\n");
             sb.append("\t\"username\": \"" + username + "\"\n");
 
             sb.append("}");
