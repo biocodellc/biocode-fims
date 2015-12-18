@@ -12,6 +12,10 @@ public class BadRequestException extends FIMSAbstractException {
         super(usrMessage,httpStatusCode);
     }
 
+    public BadRequestException(String usrMessage, Exception e) {
+        super(usrMessage, "", httpStatusCode, e);
+    }
+
     public BadRequestException(String usrMessage, String developerMessage) {
         super(usrMessage, developerMessage,httpStatusCode);
     }

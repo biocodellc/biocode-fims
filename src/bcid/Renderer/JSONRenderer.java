@@ -10,12 +10,12 @@ public class JSONRenderer extends TextRenderer {
 
     public void enter() {
         outputSB.append("{");
-        outputSB.append("\"" + identifier.getClass().getSimpleName() + "\":");
+        outputSB.append("\"" + this.bcid.getClass().getSimpleName() + "\":");
         outputSB.append("{");
     }
 
     public void printMetadata() {
-        Iterator iterator = identifier.getMetadata().entrySet().iterator();
+        Iterator iterator = this.bcid.getMetadata().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pairs = (Map.Entry) iterator.next();
             outputSB.append("\"" + pairs.getKey() + "\":\"" + pairs.getValue() + "\"");
@@ -30,7 +30,7 @@ public class JSONRenderer extends TextRenderer {
     }
 
     public boolean validIdentifier()  {
-        if (identifier == null) {
+        if (this.bcid == null) {
             outputSB.append("{\"Identifier\":{\"status\":\"not found\"}}");
             return false;
         } else {

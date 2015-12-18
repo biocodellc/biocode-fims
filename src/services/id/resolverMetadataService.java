@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * The resolver service searches for identifiers in the BCID system and in EZID and returns a JSON
- * representation of results containing identifier metadata.
+ * representation of results containing bcid metadata.
  * One can parse the JSON result for "Error" for non-responses or bad identifiers.
  * This service is open to ALL and does not require authentication.
  * <p/>
@@ -41,7 +41,7 @@ public class resolverMetadataService {
     }
 
     /**
-     * User passes in an identifier of the form scheme:/naan/shoulder_identifier
+     * User passes in an bcid of the form scheme:/naan/shoulder_identifier
      *
      * @param naan
      * @param shoulderPlusIdentifier
@@ -59,7 +59,7 @@ public class resolverMetadataService {
         scheme = scheme.trim();
         shoulderPlusIdentifier = shoulderPlusIdentifier.trim();
 
-        // Structure the identifier element from path parameters
+        // Structure the bcid element from path parameters
         String element = scheme + "/" + naan + "/" + shoulderPlusIdentifier;
 
         // Return an appropriate response based on the Accepts header that was passed in.

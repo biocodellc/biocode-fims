@@ -3,9 +3,9 @@ package bcid;
 import java.util.HashMap;
 
 /**
- * Represent an ezid identifier in our system
+ * Represent an ezid bcid in our system
  */
-public class ezid extends GenericIdentifier {
+public class ezid extends bcid {
 
     private HashMap<String,String> map;
     public ezid(HashMap<String,String> map) {

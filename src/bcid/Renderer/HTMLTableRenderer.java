@@ -27,7 +27,7 @@ public class HTMLTableRenderer extends Renderer {
     }
 
     public void enter() {
-        outputSB.append("<h1>" + identifier.identifier + " is a <a href=\"" + resource.getValue() + "\">" +
+        outputSB.append("<h1>" + bcid.getIdentifier() + " is a <a href=\"" + resource.getValue() + "\">" +
                 resource.getShortValue() + "</a></h1>\n\n");
         outputSB.append("<table>\n");
         outputSB.append("\t<tr>\n" +
@@ -58,8 +58,8 @@ public class HTMLTableRenderer extends Renderer {
     }
 
     public boolean validIdentifier() {
-        if (identifier == null) {
-            outputSB.append("<h1>Unable to find identifier</h1>");
+        if (this.bcid == null) {
+            outputSB.append("<h1>Unable to find bcid</h1>");
             return false;
         } else {
             return true;
@@ -129,7 +129,6 @@ public class HTMLTableRenderer extends Renderer {
             String rootName = sm.retrieveValue("rootName");
             String projectId = resolver.getProjectID(resolver.getBcidId());
             String graph = resolver.graph;
-            bcid bcid = (bcid) identifier;
 
             outputSB.append("<table>\n");
             outputSB.append("\t<tr>\n");
@@ -159,7 +158,7 @@ public class HTMLTableRenderer extends Renderer {
 
             // n3 option
             outputSB.append("<a href='");
-            outputSB.append(bcid.getWebAddressAsString());
+            outputSB.append(bcid.getWebAddress());
             outputSB.append("'>n3</a>");
 
             outputSB.append("&nbsp;&nbsp;");

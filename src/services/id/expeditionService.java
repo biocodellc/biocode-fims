@@ -439,7 +439,7 @@ public class expeditionService {
     }
 
     /**
-     * Service to update a single expedition identifier
+     * Service to update a single expedition bcid
      *
      * @param projectId
      * @param expeditionCode

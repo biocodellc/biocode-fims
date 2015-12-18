@@ -113,7 +113,7 @@ public class deepRoots {
      * Find the appropriate prefix for a concept contained in this file
      *
      * @param conceptAlias defines the alias to narrow this,  a one-word reference denoting a BCID
-     * @return returns the identifier for this conceptAlias in this DeepRoots file
+     * @return returns the bcid for this conceptAlias in this DeepRoots file
      */
     public String lookupPrefix(String conceptAlias) {
         Iterator it = data.entrySet().iterator();

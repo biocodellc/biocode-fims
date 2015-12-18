@@ -125,7 +125,7 @@ public class deepRoots {
     /**
      * Find the appropriate prefix for a concept contained in this file
      *
-     * @return returns the identifier for this conceptAlias in this DeepRoots file
+     * @return returns the bcid for this conceptAlias in this DeepRoots file
      */
     public String lookupPrefix(Entity entity) {
         // when viewing in graphviz.
@@ -141,27 +141,22 @@ public class deepRoots {
             }
         }
         fimsPrinter.out.println("\tWarning: " + entity.getConceptAlias() + " cannot be mapped in Deep Roots, attempting to create mapping");
-        String bcid = null;
         // Create a mapping in the deeproots system for this URI
-        fimsPrinter.out.println("\tCreating identifier root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
-        // Create the entity BCID
-        process p = new process();
-
-        // Mint the data group
+        fimsPrinter.out.println("\tCreating bcid root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
+        // Mint the bcid
         bcidMinter bcidMinter = new bcidMinter(true);
 
-        bcidMinter.createEntityBcid(user_id, entity.getConceptAlias(), "", null, null, false);
-        bcid = bcidMinter.getPrefix();
+        String prefix = bcidMinter.createEntityBcid(user_id, entity.getConceptAlias(), "", null, null, false);
         bcidMinter.close();
-        // Associate this identifier with this expedition
+        // Associate this bcid with this expedition
         expeditionMinter expedition = new expeditionMinter();
-        expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);
+        expedition.attachReferenceToExpedition(expedition_code, prefix, project_id);
         expedition.close();
 
         // Add this element to the data string so we don't keep trying to add it in the loop above
         //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
-        data.put(entity.getConceptAlias(),bcid);
-        System.out.println("\tNew prefix = " + bcid);
-        return bcid;
+        data.put(entity.getConceptAlias(), prefix);
+        System.out.println("\tNew prefix = " + prefix);
+        return prefix;
     }
 }

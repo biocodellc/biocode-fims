@@ -189,7 +189,7 @@ public final class TabularDataConverter {
                 Entity entity = (Entity) it.next();
                 if (entity.getWorksheetUniqueKey().contains("HASH")) {
 
-                    // Add this column identifier
+                    // Add this column bcid
                     String alter = "ALTER TABLE " + tname + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
                     stmt.executeUpdate(alter);
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 /**
  * An EZIDServiceRequest request represents the data needed for a single request
- * to the EZID identifier service packaged as a Runnable task that can be executed
+ * to the EZID bcid service packaged as a Runnable task that can be executed
  * within a thread pool, typically provided by an Executor service.  The request  
  * is used within a queue to temporarily store requests before they are processed 
  * by the EZID service. EZIDServiceRequests are created only by the EZIDClient,
@@ -80,7 +80,7 @@ public class EZIDServiceRequest implements Runnable
     }
 
     /**
-     * @return the identifier
+     * @return the bcid
      */
     public String getIdentifier() {
         return identifier;

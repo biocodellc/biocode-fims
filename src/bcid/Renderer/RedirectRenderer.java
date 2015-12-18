@@ -1,6 +1,6 @@
 package bcid.Renderer;
 
-import bcid.GenericIdentifier;
+import bcid.bcid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +15,11 @@ public class RedirectRenderer extends TextRenderer {
 
     private static Logger logger = LoggerFactory.getLogger(RedirectRenderer.class);
 
-    public void enter(GenericIdentifier identifier) {
+    public void enter(bcid bcid) {
     }
 
-    public void printMetadata(GenericIdentifier identifier) {
-        Iterator iterator = identifier.getMetadata().entrySet().iterator();
+    public void printMetadata(bcid bcid) {
+        Iterator iterator = bcid.getMetadata().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pairs = (Map.Entry) iterator.next();
             outputSB.append("\"" + pairs.getKey() + "\":\"" + pairs.getValue() + "\"");
@@ -27,18 +27,18 @@ public class RedirectRenderer extends TextRenderer {
                 outputSB.append(",");
             }
         }
-        try {
-            outputSB.append(identifier.getWebAddress());
-        } catch (URISyntaxException e) {
-            //TODO should we silence this exception?
-            logger.warn("URISyntaxException thrown", e);
-        }
+//        try {
+            outputSB.append(bcid.getWebAddress());
+//        } catch (URISyntaxException e) {
+//            TODO should we silence this exception?
+//            logger.warn("URISyntaxException thrown", e);
+//        }
     }
 
-    public void leave(GenericIdentifier identifier) {
+    public void leave(bcid bcid) {
     }
 
-    public boolean validIdentifier(GenericIdentifier identifier)  {
+    public boolean validIdentifier(bcid bcid)  {
         return true;
     }
 

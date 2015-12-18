@@ -1,7 +1,7 @@
 package bcid.Renderer;
 
 /**
- * Renders a BCID as RDF.  This is for machine negotiation of an identifier
+ * Renders a BCID as RDF.  This is for machine negotiation of an bcid
  */
 public class RDFRenderer extends Renderer {
 
@@ -12,7 +12,7 @@ public class RDFRenderer extends Renderer {
                 "\txmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" +
                 "\txmlns:bsc=\"http://biscicol.org/terms/index.html#\"\n" +
                 "\txmlns:dcterms=\"http://purl.org/dc/terms/\">\n");
-        outputSB.append("<rdf:Description rdf:about=\"" + identifier.toString() + "\">\n");
+        outputSB.append("<rdf:Description rdf:about=\"" + this.bcid.toString() + "\">\n");
     }
 
     public void printMetadata() {
@@ -36,8 +36,8 @@ public class RDFRenderer extends Renderer {
     }
 
     public boolean validIdentifier() {
-        if (identifier == null) {
-            outputSB.append("identifier is null");
+        if (this.bcid == null) {
+            outputSB.append("bcid is null");
             return false;
         } else {
             return true;

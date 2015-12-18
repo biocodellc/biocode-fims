@@ -84,16 +84,14 @@ public class run {
 
         EZIDService ezidAccount = new EZIDService();
         Integer user_id = 1;
-        Integer NAAN = new Integer(sm.retrieveValue("bcidNAAN"));
         Integer ResourceType = ResourceTypes.PRESERVEDSPECIMEN;
         String doi = null;
         String webaddress = null;
-        String title = "TEST Load from Java";
 
         // Create a new bcid
         System.out.println("\nCreating a new bcid");
         bcidMinter = new bcidMinter(true, true);
-        bcidMinter.mint(NAAN, user_id, new ResourceTypes().get(ResourceType).uri, doi, webaddress, null, title, false);
+        bcidMinter.createEntityBcid(user_id, new ResourceTypes().get(ResourceType).uri, webaddress, null, doi, false);
         bcidMinter.close();
 
         /*

@@ -320,7 +320,7 @@ public class Rule {
     /**
      * Checks that characters in a string can become a portion of a valid URI
      * This is necessary for cases where data is being triplified and constructed as a URI
-     * One approach is to encode all characters, however, this creates a mis-leading identifier
+     * One approach is to encode all characters, however, this creates a mis-leading bcid
      * and if used as part of a URI should be only valid characters.
      * <p/>
      * Characters that are disallowed are: %$&+,/:;=?@<>#%\

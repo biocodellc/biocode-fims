@@ -50,14 +50,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * EZIDService provides access to the EZID identifier service maintained by the
+ * EZIDService provides access to the EZID bcid service maintained by the
  * California Digital Library (<a href="http://n2t.net/ezid/doc/apidoc.html">EZID</a>).
  * The service includes methods for creating identifiers using several different
  * standards such as DOI, ARK, and others.  To use the service, you must have an
  * account with the EZID service, which is first used to login to the service.  Once
- * successfully authenticated, calls can be made to create an identifier, to mint an
- * identifier (same as create, but the EZID service creates a random identifier), to
- * delete an identifier, or to get or set the metadata associated with an identifier.
+ * successfully authenticated, calls can be made to create an bcid, to mint an
+ * bcid (same as create, but the EZID service creates a random bcid), to
+ * delete an bcid, or to get or set the metadata associated with an bcid.
  * <p/>
  * A typical interaction might proceed as follows:
  * <pre>
@@ -72,7 +72,7 @@ import java.util.Map;
  *     newId = ezid.createIdentifier("doi:10.5072/FK2/TEST/10101", metadata);
  *     metadata = ezid.getMetadata(newId);
  *     HashMap<String, String> moreMetadata = new HashMap<String, String>();
- *     moreMetadata.put("datacite.title", "This is a test identifier");
+ *     moreMetadata.put("datacite.title", "This is a test bcid");
  *     ezid.setMetadata(newId, moreMetadata);
  * } catch (EZIDException e) {
  *     // Handle the error
@@ -193,23 +193,23 @@ public class EZIDService {
     }
 
     /**
-     * Request that an identifier be created in the EZID system.  The identifier
-     * must be one of the identifier types supported by EZID, such as ARK, DOI,
+     * Request that an bcid be created in the EZID system.  The bcid
+     * must be one of the bcid types supported by EZID, such as ARK, DOI,
      * or URN, and for each type accounts may only create identifiers with prefixes
      * that are authorized for their EZID account.  For example, all identifiers
      * created by an account might need to start with the string "doi:10.5072/FK2", so
      * a request to create "doi:10.5072/FK2/MYID1" might succeed whereas a request
      * to create "doi:10.5072/MA/MYID1" might fail, depending on the account. Metadata
-     * elements can be passed as a HashMap and will be added when the identifier is created.
+     * elements can be passed as a HashMap and will be added when the bcid is created.
      * To omit setting metadata, pass 'null' as the metadata parameter. To have EZID
      * generate a unique ID itself, @see {@link edu.ucsb.nceas.ezid.EZIDService#mintIdentifier(String, HashMap)}
      *
      * @param identifier to be created
-     * @param metadata   a HashMap containing name/value pairs to be associated with the identifier
+     * @param metadata   a HashMap containing name/value pairs to be associated with the bcid
      *
-     * @return String identifier that was created
+     * @return String bcid that was created
      *
-     * @throws EZIDException if an error occurs while creating the identifier
+     * @throws EZIDException if an error occurs while creating the bcid
      */
     public String createIdentifier(String identifier, HashMap<String, String> metadata) throws EZIDException {
         String newId = null;
@@ -217,7 +217,7 @@ public class EZIDService {
 
         String anvl = serializeAsANVL(metadata);
 
-        //System.out.println("EZID Create identifier: " + identifier + ":"+metadata.toString());
+        //System.out.println("EZID Create bcid: " + bcid + ":"+metadata.toString());
 
         byte[] response = sendRequest(PUT, ezidEndpoint, anvl);
         String responseMsg = new String(response);
@@ -240,19 +240,19 @@ public class EZIDService {
     }
 
     /**
-     * Create a new, unique, opaque identifier by requesting EZID to generate the
-     * identifier itself within the "shoulder" prefix that is provided.  Each EZID account
+     * Create a new, unique, opaque bcid by requesting EZID to generate the
+     * bcid itself within the "shoulder" prefix that is provided.  Each EZID account
      * is authorized to mint identifiers that start with certain prefixes, called 'shoulders'
      * by EZID.  The identifiers created are guaranteed unique within the EZID service. Metadata
-     * elements can be passed as a HashMap and will be added when the identifier is created.
+     * elements can be passed as a HashMap and will be added when the bcid is created.
      * To omit setting metadata, pass 'null' as the metadata parameter.
      *
-     * @param shoulder to be used to prefix the identifier
-     * @param metadata a HashMap containing name/value pairs to be associated with the identifier
+     * @param shoulder to be used to prefix the bcid
+     * @param metadata a HashMap containing name/value pairs to be associated with the bcid
      *
-     * @return String identifier that was created
+     * @return String bcid that was created
      *
-     * @throws EZIDException if an error occurs while minting the identifier
+     * @throws EZIDException if an error occurs while minting the bcid
      */
     public String mintIdentifier(String shoulder, HashMap<String, String> metadata) throws EZIDException {
         String ezidEndpoint = MINT_SERVICE + "/" + shoulder;
@@ -266,7 +266,7 @@ public class EZIDService {
     }
 
     /**
-     * Return a HashMap containing the EZID metadata associated with an identifier as
+     * Return a HashMap containing the EZID metadata associated with an bcid as
      * a set of name/value pairs.  Each key and associated value in the HashMap
      * represents a single metadata property.
      *
@@ -290,7 +290,7 @@ public class EZIDService {
     }
 
     /**
-     * Set a series of metadata properties for the given identifier.  Metadata are
+     * Set a series of metadata properties for the given bcid.  Metadata are
      * passed in as a HashMap representing name/value pairs.  EZID defines a set of
      * keys to be used to associate metadata values with certain namespaces, such
      * as the 'datacite', 'dc', and other namespaces.  For example, the 'datacite.title'
@@ -313,9 +313,9 @@ public class EZIDService {
     }
 
     /**
-     * Delete an identifier from EZID.  This should be an unusual operation, and is
+     * Delete an bcid from EZID.  This should be an unusual operation, and is
      * only possible for identifiers that have been reserved but not yet made public (such
-     * as an internal, temporary identifier).  Identifiers for which the internal "_status"
+     * as an internal, temporary bcid).  Identifiers for which the internal "_status"
      * metadata field is set to "public" can not be deleted.
      *
      * @param identifier to be deleted
@@ -437,12 +437,12 @@ public class EZIDService {
     }
 
     /**
-     * Parse the response from EZID and extract out the identifier that is returned
+     * Parse the response from EZID and extract out the bcid that is returned
      * as part of the 'success' message.
      *
      * @param responseMsg the response from EZID
      *
-     * @return the identifier from the message
+     * @return the bcid from the message
      *
      * @throws EZIDException if the response contains an error message
      */

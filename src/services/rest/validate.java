@@ -361,14 +361,13 @@ public class validate {
         // be tracked in the mysql database.  They also get an ARK but that is probably not useful.
         // Create a dataset BCID
         bcidMinter bcidMinter = new bcidMinter(false);
-        bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Dataset", null, inputFile.getName(),
-                null, processController.getFinalCopy());
-        String datasetArk = bcidMinter.getPrefix();
+        String prefix = bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Dataset", null,
+                inputFile.getName(), null, processController.getFinalCopy());
         bcidMinter.close();
 
         // associate the BCID
         expeditionMinter expeditionMinter = new expeditionMinter();
-        expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), datasetArk, p.getProject_id());
+        expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), prefix, p.getProject_id());
         // Set the public status
         expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
                     processController.getProject_id(), processController.getPublicStatus());
@@ -383,7 +382,7 @@ public class validate {
         return "{\"done\": \"Successfully uploaded your spreadsheet to the server!<br>" +
                 //"server filename = " + outputFile.getName() + "<br>" +  \
                 "expedition code = " + processController.getExpeditionCode() + "<br>" +
-                "dataset ARK = " + datasetArk + "<br>" +
+                "dataset ARK = " + prefix + "<br>" +
                 "resource ARK = " + bcidRoot + "<br>" +
                 "Please maintain a local copy of your File!<br>" +
                 "Your file will be processed soon for ingestion into RCIS.\"}";

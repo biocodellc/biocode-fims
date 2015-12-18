@@ -34,7 +34,7 @@ import java.util.LinkedList;
 
 /**
  * Core class for running fims processes.  Here you specify the input file, configuration file, output folder, and
- * a expedition code, which is used to specify identifier roots in the BCID (http://code.google.com/p/bcid/) system.
+ * a expedition code, which is used to specify bcid roots in the BCID (http://code.google.com/p/bcid/) system.
  * The main class is configured to run this from the command-line while the class itself can be extended to run
  * in different situations, while specifying  fimsPrinter and fimsInputter classes for a variety of styles of output
  * and
@@ -276,7 +276,7 @@ public class process {
             while (it.hasNext()) {
                 Entity entity = (Entity) it.next();
 
-                String s = "\t\tCreating identifier root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
+                String s = "\t\tCreating bcid root for " + entity.getConceptAlias() + " and resource type = " + entity.getConceptURI() + "\n";
                 processController.appendStatus(s);
                 fimsPrinter.out.println(s);
                 // Create the entity BCID
@@ -284,11 +284,11 @@ public class process {
                 // Mint the data group
                 bcidMinter bcidMinter = new bcidMinter(true);
 
-                bcidMinter.createEntityBcid(processController.getUser_id(), entity.getConceptAlias(), "", null, null, false);
-                String bcid = bcidMinter.getPrefix();
+                String prefix = bcidMinter.createEntityBcid(processController.getUser_id(), entity.getConceptAlias(),
+                        "", null, null, false);
                 bcidMinter.close();
-                // Associate this identifier with this expedition
-                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), bcid, processController.getProject_id());
+                // Associate this bcid with this expedition
+                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), prefix, processController.getProject_id());
 
             }
         }

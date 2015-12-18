@@ -1,11 +1,16 @@
 package bcid;
 
+import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -14,28 +19,28 @@ import java.util.HashMap;
  * status of EZID creation, associated bcid calls, and any metadata.
  * It can include a data element or a data group.
  * There are several ways to construct an element, including creating it from scratch, or instantiating by looking
- * up an existing identifier from the database.
+ * up an existing bcid from the database.
  */
-public class bcid extends GenericIdentifier {
-    protected URI webAddress = null;        // URI for the webAddress, EZID calls this _target (e.g. http://biocode.berkeley.edu/specimens/MBIO56)
-    protected String suffix = null;       // Source or local identifier (e.g. MBIO056)
-    protected String what = null;           // erc.what
-    protected String when = null;           // erc.when
-    protected String who = null;            // erc.who
-    protected String title = null;            // erc.who\
-    public String projectCode = null;
-    protected Boolean bcidsEzidMade;
-    protected Boolean bcidsEzidRequest;
-    protected String bcidsPrefix;
-    protected String bcidsTs;
-    protected Boolean identifiersEzidRequest;
-    protected Boolean identifiersEzidMade;
-    protected Boolean bcidsSuffixPassthrough;
-    protected String identifiersTs;
-    //protected String ark;
+public class bcid {
+
+    protected String prefix;
+    protected String suffix;       // Source or local bcid (e.g. MBIO056)
+    protected URI webAddress;        // URI for the webAddress, EZID calls this _target (e.g. http://biocode.berkeley.edu/specimens/MBIO56)
+    protected String resourceType;           // erc.what
+    protected String who;            // erc.who
+    protected String title;            // erc.who\
+    protected String projectCode;
+    protected Boolean ezidMade;
+    protected Boolean ezidRequest;
+    protected String ts;
+    protected Boolean suffixPassThrough = false;
     protected String doi;
     protected Integer bcidsId;
-    protected String graph = null;
+    protected String graph;
+
+    protected String rights;
+    protected String resolverTargetPrefix;
+    protected String resolverMetadataPrefix;
 
     protected String level;
     final static String UNREGISTERED_ELEMENT = "Unregistered Element";
@@ -50,9 +55,13 @@ public class bcid extends GenericIdentifier {
 
     private static Logger logger = LoggerFactory.getLogger(bcid.class);
 
-    static {
+    protected bcid() {
         sm = SettingsManager.getInstance();
         sm.loadProperties();
+
+        rights = sm.retrieveValue("rights");
+        resolverTargetPrefix = sm.retrieveValue("resolverTargetPrefix");
+        resolverMetadataPrefix = sm.retrieveValue("resolverMetadataPrefix");
     }
 
     /**
@@ -61,27 +70,26 @@ public class bcid extends GenericIdentifier {
      * @param bcidsId
      */
     public bcid(Integer bcidsId) {
-        bcidMinter bcidMinter = setBcidsId(bcidsId);
-
-        bcidMinter.close();
+        getBcid(bcidsId);
     }
 
 
     /**
-     * Create an element given a source identifier, and a resource type identifier
+     * Create an element given a source bcid, and a resource type bcid
      *
      * @param suffix
      * @param bcidsId
      */
     public bcid(String suffix, Integer bcidsId) {
         this.suffix = suffix;
-        bcidMinter bcidMinter = setBcidsId(bcidsId);
+        getBcid(bcidsId);
+        bcidMinter bcidMinter = new bcidMinter();
         projectCode = bcidMinter.getProject(bcidsId);
         bcidMinter.close();
     }
 
     /**
-     * Create an element given a source identifier, web address for resolution, and a bcidsId
+     * Create an element given a source bcid, web address for resolution, and a bcidsId
      * This method is meant for CREATING bcids.
      *
      * @param suffix
@@ -90,7 +98,7 @@ public class bcid extends GenericIdentifier {
      */
     public bcid(String suffix, URI webAddress, Integer bcidsId) {
         this.suffix = suffix;
-        bcidMinter bcidMinter = setBcidsId(bcidsId);
+        getBcid(bcidsId);
         this.webAddress = webAddress;
 
         // Reformat webAddress in this constructor if there is a suffix
@@ -103,113 +111,69 @@ public class bcid extends GenericIdentifier {
                 logger.warn("URISyntaxException for uri: {}", webAddress + suffix, e);
             }
         }
-        bcidMinter.close();
     }
 
 
     /**
-     * Internal function for setting the source ID (local identifier that has been passed in)
-     *
-     * @param suffix
-     */
-    private void setSuffix(String suffix, bcidMinter bcidMinter) {
-        try {
-            if (suffix != null && !suffix.equals("")) {
-                identifier = new URI(bcidMinter.identifier + sm.retrieveValue("divider") + suffix);
-            } else {
-                identifier = bcidMinter.identifier;
-            }
-        } catch (URISyntaxException e) {
-            //TODO should we silence this exception?
-            logger.warn("URISyntaxException thrown", e);
-        }
-
-        // Reformat webAddress in this constructor if there is a suffix
-        if (suffix != null && webAddress != null && !suffix.toString().trim().equals("") && !webAddress.toString().trim().equals("")) {
-            //System.out.println("HERE" + webAddress);
-            try {
-                this.webAddress = new URI(webAddress + suffix);
-            } catch (URISyntaxException e) {
-                //TODO should we silence this exception?
-                logger.warn("URISyntaxException thrown", e);
-            }
-        }
-    }
-
-    /**
-     * Internal functional for setting the bcids_id that has been passed in
+     * Internal functional for fetching the bcid given the bcids_id
      *
      * @param pBcidsId
      */
-    private bcidMinter setBcidsId (Integer pBcidsId) {
-
-        // Create a bcid representation based on the bcidsId
-        bcidMinter bcidMinter = new bcidMinter(pBcidsId);
-        //when =  new dates().now();
-        when = bcidMinter.ts;
-
-        this.graph = bcidMinter.getGraph();
-        this.webAddress = bcidMinter.getWebAddress();
-        this.bcidsId = pBcidsId;
-        this.what = bcidMinter.getResourceType();
-        this.title = bcidMinter.title;
-        this.projectCode = bcidMinter.projectCode;
-        this.bcidsTs = bcidMinter.ts;
-        this.bcidsPrefix = bcidMinter.getPrefix();
-        this.doi = bcidMinter.doi;
-        this.level = this.UNREGISTERED_ELEMENT;
-        this.who = bcidMinter.who;
-        identifiersEzidRequest = false;
-        identifiersEzidMade = false;
-        bcidsEzidMade = bcidMinter.ezidMade;
-        bcidsEzidRequest = bcidMinter.ezidRequest;
-        bcidsSuffixPassthrough = bcidMinter.getSuffixPassThrough();
+    private void getBcid(Integer pBcidsId) {
+        database db = new database();
+        Connection conn = db.getConn();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT " +
+                "b.prefix as prefix," +
+                "b.ezidRequest as ezidRequest," +
+                "b.ezidMade as ezidMade," +
+                "b.suffixPassthrough as suffixPassthrough," +
+                "b.doi as doi," +
+                "b.title as title," +
+                "b.ts as ts, " +
+                "CONCAT_WS(' ',u.firstName, u.lastName) as who, " +
+                "b.webAddress as webAddress," +
+                "b.graph as graph," +
+                "b.resourceType as resourceType" +
+                " FROM bcids b, users u " +
+                " WHERE b.bcids_id = ?" +
+                " AND b.users_id = u.user_id ";
 
         try {
-            if (suffix != null && !suffix.equals("")) {
-                identifier = new URI(bcidMinter.identifier + sm.retrieveValue("divider") + suffix);
-            } else {
-                identifier = bcidMinter.identifier;
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, pBcidsId);
+
+            rs = stmt.executeQuery();
+            rs.next();
+
+            prefix = rs.getString("prefix");
+            ezidRequest = rs.getBoolean("ezidRequest");
+            ezidMade = rs.getBoolean("ezidMade");
+            doi = rs.getString("doi");
+            title = rs.getString("title");
+            ts = rs.getString("ts");
+            who = rs.getString("who");
+            suffixPassThrough = rs.getBoolean("suffixPassthrough");
+            resourceType = rs.getString("resourceType");
+            graph = rs.getString("graph");
+
+            String lWebAddress = rs.getString("webAddress");
+            if (lWebAddress != null && !lWebAddress.trim().equals("")) {
+                try {
+                    webAddress = new URI(lWebAddress);
+                } catch (URISyntaxException e) {
+                    logger.warn("URISyntaxException with uri: {} and bcidsId: {}", rs.getString("webAddress"),
+                            this.bcidsId, e);
+                }
             }
-            projectCode = bcidMinter.getProject(bcidsId);
-        } catch (URISyntaxException e) {
-            //TODO should we silence this exception?
-            logger.warn("URISyntaxException for uri: {}", bcidMinter.identifier + sm.retrieveValue("divider") + suffix, e);
+        } catch (SQLException e) {
+            throw new ServerErrorException(e);
+        } finally {
+            db.close(stmt, rs);
         }
 
-        return bcidMinter;
-
-    }
-
-    /**
-     * Convert the class variables to a HashMap of metadata.
-     *
-     * @return
-     */
-    public HashMap<String, String> getMetadata() {
-        put("ark", identifier);
-        put("who", who);
-        put("when", when);
-        put("what", what);
-        put("webaddress", webAddress);
-        put("level", level);
-        put("title", title);
-        put("projectCode", projectCode);
-        put("suffix", suffix);
-        put("doi", doi);
-        put("bcidsEzidMade", bcidsEzidMade);
-        put("bcidsSuffixPassThrough", bcidsSuffixPassthrough);
-        put("bcidsEzidRequest", bcidsEzidRequest);
-        put("bcidsPrefix", bcidsPrefix);
-        put("bcidsTs", bcidsTs);
-        put("identifiersEzidMade", identifiersEzidMade);
-        put("identifiersTs", identifiersTs);
-        put("rights", rights);
-        return map;
-    }
-
-    public String getWebAddressAsString() {
-        return webAddress.toString();
+        level = UNREGISTERED_ELEMENT;
     }
 
     public URI getWebAddress() {
@@ -218,9 +182,9 @@ public class bcid extends GenericIdentifier {
 
     public URI getMetadataTarget() throws URISyntaxException {
         // if (suffix != null)
-        //     return new URI(resolverMetadataPrefix + identifier + suffix);
+        //     return new URI(resolverMetadataPrefix + bcid + suffix);
         // else
-        return new URI(resolverMetadataPrefix + identifier);
+        return new URI(resolverMetadataPrefix + getIdentifier());
 
     }
 
@@ -240,11 +204,59 @@ public class bcid extends GenericIdentifier {
         }
     }
 
-    public String getGraph() {
-        return graph;
+    public Boolean getSuffixPassThrough() {
+        return suffixPassThrough;
     }
-    public Boolean getBcidsSuffixPassthrough() {
-        return bcidsSuffixPassthrough;
+    public String getPrefix() {
+        return prefix;
+    }
+
+    /**
+     * method to return the identifier of the bcid.
+     * @return prefix + suffix
+     */
+    public URI getIdentifier() {
+        URI identifier;
+
+        try {
+            if (suffix != null && !suffix.equals("")) {
+                identifier = new URI(prefix + sm.retrieveValue("divider") + suffix);
+            } else {
+                identifier = new URI(prefix);
+            }
+        } catch (URISyntaxException e) {
+            throw new ServerErrorException("Server Error","URISyntaxException from identifier: " + prefix +
+                    sm.retrieveValue("divider") + suffix + " from bcidsId: " + bcidsId, e);
+        }
+        return identifier;
+    }
+
+    public Integer getBcidsId() {
+        return bcidsId;
+    }
+
+    /**
+     * Convert the class variables to a HashMap of metadata.
+     *
+     * @return
+     */
+    public HashMap<String, String> getMetadata() {
+        put("ark", getIdentifier());
+        put("who", who);
+        put("resourceType", resourceType);
+        put("webaddress", webAddress);
+        put("level", level);
+        put("title", title);
+        put("projectCode", projectCode);
+        put("suffix", suffix);
+        put("doi", doi);
+        put("ezidMade", ezidMade);
+        put("bcidsSuffixPassThrough", suffixPassThrough);
+        put("ezidRequest", ezidRequest);
+        put("prefix", prefix);
+        put("ts", ts);
+        put("rights", rights);
+        return map;
     }
 }
 

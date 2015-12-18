@@ -26,7 +26,7 @@ public class SIServerSideSpreadsheetTools {
 
     /**
      * Create the guidIfier with everything it needs to accomplish its mission:
-     * reading an inputWoorkbook, using the locally unique identifier,
+     * reading an inputWoorkbook, using the locally unique bcid,
      * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
      * wait for the run() method to be called to actually write our output spreadsheet
      *
@@ -57,7 +57,7 @@ public class SIServerSideSpreadsheetTools {
     }
 
     /**
-     * Create the guidIfier with the SI-specific rules for guidifying an identifier.
+     * Create the guidIfier with the SI-specific rules for guidifying an bcid.
      * reading an inputWoorkbook, using the userID (as an argument), and appending the rowNum (based on sheet).
      * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
      * wait for the run() method to be called to actually write our output spreadsheet

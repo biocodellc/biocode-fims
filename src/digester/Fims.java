@@ -21,7 +21,7 @@ public class Fims implements RendererInterface {
     private Mapping mapping;
     private Validation validation;
     uploader uploader;
-    private String bcid;
+    private String bcidPrefix;
 
     /**
      * Validation is usually NULL, fill it in when running CSPACE queries
@@ -65,21 +65,20 @@ public class Fims implements RendererInterface {
         uploader.execute();
 
         bcidMinter bcidMinter = new bcidMinter(false);
-        bcidMinter.createEntityBcid(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
+        bcidPrefix = bcidMinter.createEntityBcid(processController.getUser_id(), "http://purl.org/dc/dcmitype/Dataset",
                 uploader.getEndpoint(), uploader.getGraphID(), null, false);
-        bcid = bcidMinter.getPrefix();
         bcidMinter.close();
         // Create the BCID to use for upload service
-        //String status1 = "\tCreated BCID " + bcid + " to represent your uploaded dataset\n";
-        //status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcid + "\n";
-        String status1 = "\n\nDataset Identifier: http://n2t.net/" + bcid + " (wait 15 minutes for resolution to become active)\n";
+        //String status1 = "\tCreated BCID " + bcidPrefix + " to represent your uploaded dataset\n";
+        //status1 += "\tDataset metadata available at http://ezid.cdlib.org/id/" + bcidPrefix + "\n";
+        String status1 = "\n\nDataset Identifier: http://n2t.net/" + bcidPrefix + " (wait 15 minutes for resolution to become active)\n";
 
         processController.appendStatus(status1);
         // Inform cmd line users
         fimsPrinter.out.println(status1);
-        // Associate the expedition_code with this bcid
+        // Associate the expedition_code with this bcidPrefix
         expeditionMinter expedition = new expeditionMinter();
-        expedition.attachReferenceToExpedition(expedition_code, bcid, project_id);
+        expedition.attachReferenceToExpedition(expedition_code, bcidPrefix, project_id);
         expedition.close();
         String status2 = "\t" + "Data Elements Root: " + expedition_code;
         processController.appendStatus(status2);
@@ -93,12 +92,12 @@ public class Fims implements RendererInterface {
      */
     public void print() {
         //fimsPrinter.out.println("\ttarget = " + metadata.getTarget());
-        //fimsPrinter.out.println("\tBCID =  " + bcid);
-        //fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcid);
+        //fimsPrinter.out.println("\tBCID =  " + bcidPrefix);
+        //fimsPrinter.out.println("\tTemporary named graph reference = http://biscicol.org/id/" + bcidPrefix);
         //fimsPrinter.out.println("\tGraph ID = " + uploader.getGraphID());
         //fimsPrinter.out.println("\tView results as ttl = " + uploader.getConnectionPoint());
 
-        //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcid);
+        //fimsPrinter.out.println("\tBCID (directs to graph endpoint) =  " + bcidPrefix);
     }
 
     /**
@@ -106,7 +105,7 @@ public class Fims implements RendererInterface {
      */
     public String results() {
         String retVal = "";
-        //retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcid + "\n";
+        //retVal += "\tTemporary named graph reference = http://biscicol.org/id/" + bcidPrefix + "\n";
         //retVal += "\tGraph ID = " + uploader.getGraphID() + "\n";
         //retVal += "\tView results as ttl = " + uploader.getConnectionPoint() + "\n";
         return retVal;

@@ -1,8 +1,7 @@
 package bcid.Renderer;
 
 import bcid.BCIDMetadataSchema;
-import bcid.GenericIdentifier;
-import bcid.database;
+import bcid.bcid;
 
 /**
  * Abstract class Renderer implements the visitor methods
@@ -11,17 +10,13 @@ import bcid.database;
 public abstract class Renderer extends BCIDMetadataSchema implements RendererInterface {
     protected StringBuilder outputSB;
 
-    GenericIdentifier identifier = null;
-
     /**
      * render an Identifier
      *
      * @return
      */
-    public String render(GenericIdentifier identifier) {
-        this.identifier = identifier;
-
-        BCIDMetadataInit(identifier);
+    public String render(bcid bcid) {
+        BCIDMetadataInit(bcid);
         outputSB = new StringBuilder();
 
         if (validIdentifier()) {

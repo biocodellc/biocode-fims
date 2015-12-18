@@ -27,26 +27,9 @@ public class bcidMinter extends bcidEncoder {
     // Mysql Connection
     protected Connection conn;
     database db;
-    protected String prefix = "";
     protected String bow = "";
     protected String scheme = "ark:";
     protected String shoulder = "";
-    protected String doi = "";
-    protected String title = "";
-    protected String ts = "";
-    private Boolean suffixPassThrough = false;
-    private Integer bcidsId = null;
-    protected boolean ezidRequest;
-    protected boolean ezidMade;
-    protected String who = "";
-    protected URI webAddress;
-    public String projectCode;
-
-
-
-    protected String graph;
-
-    public String getGraph() {return graph;}
 
     /**
      * Default to ezidRequest = false using default Constructor
@@ -54,19 +37,6 @@ public class bcidMinter extends bcidEncoder {
     public bcidMinter() {
         this(false, false);
     }
-
-    public Integer getBcidsId() {
-        return bcidsId;
-    }
-
-    public Boolean getSuffixPassThrough() {
-        return suffixPassThrough;
-    }
-
-    public URI getWebAddress() {
-        return webAddress;
-    }
-
 
     /**
      * Default constructor for data group uses the temporary ARK ark:/99999/fk4.  Values can be overridden in
@@ -106,104 +76,6 @@ public class bcidMinter extends bcidEncoder {
 
         bcidMinterSetup(suffixPassThrough, null, 99999);
     }
-
-    /**
-     * Constructor for a bcid value that already exists in database, used to setup element minting
-     *
-     * @param NAAN
-     * @param shoulder
-     * @param ezidRequest
-     */
-    public bcidMinter(Integer NAAN, String shoulder, boolean ezidRequest, Boolean suffixPassThrough) {
-        bcidMinterSetup(suffixPassThrough, shoulder, NAAN);
-        this.ezidRequest = ezidRequest;
-    }
-
-
-    /**
-     * create a bcidMinter object by passing in a bcidsId.  An integer database value that we get immediately
-     * after minting.
-     *
-     * @param bcidsId
-     */
-    public bcidMinter(Integer bcidsId) {
-        db = new database();
-        conn = db.getConn();
-        String sql = "SELECT " +
-                "b.prefix as prefix," +
-                "b.ezidRequest as ezidRequest," +
-                "b.ezidMade as ezidMade," +
-                "b.suffixPassthrough as suffixPassthrough," +
-                "b.doi as doi," +
-                "b.title as title," +
-                "b.ts as ts, " +
-                "CONCAT_WS(' ',u.firstName, u.lastName) as who, " +
-                "b.webAddress as webAddress," +
-                "b.graph as graph" +
-                // NOTE: the projectCode query here fails if bcid has not been associated yet.
-                // I removed the reference here so we can return just information on the bcids and
-                // not rely on any other dependencies.
-                //"p.project_code as projectCode" +
-                //" FROM bcids b, users u, projects p,expeditions e, expeditionsBCIDs eb " +
-                " FROM bcids b, users u " +
-                " WHERE b.bcids_id = ?" +
-                " AND b.users_id = u.user_id ";
-        //" AND b.`bcids_id`=eb.bcids_id " +
-        //" AND eb.expedition_id=e.expedition_id " +
-        //" AND e.project_id=p.project_id";
-
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, bcidsId);
-
-            rs = stmt.executeQuery();
-            rs.next();
-            prefix = rs.getString("prefix");
-            try {
-                identifier = new URI(prefix);
-            } catch (URISyntaxException e) {
-                throw new ServerErrorException("Server Error","URISyntaxException from prefix: " + prefix + " from bcidsId: " + bcidsId, e);
-
-            }
-            ezidRequest = rs.getBoolean("ezidRequest");
-            ezidMade = rs.getBoolean("ezidMade");
-            shoulder = encode(new BigInteger(bcidsId.toString()));
-            this.doi = rs.getString("doi");
-            this.title = rs.getString("title");
-            //this.projectCode = rs.getString("projectCode");
-            this.ts = rs.getString("ts");
-            this.who = rs.getString("who");
-            Integer naan = new Integer(prefix.split("/")[1]);
-            this.bcidsId = bcidsId;
-            this.suffixPassThrough = rs.getBoolean("suffixPassthrough");
-            setBow(naan);
-
-            try {
-                this.graph = rs.getString("graph");
-            } catch(Exception e) {
-                this.graph = null;
-            }
-
-            try {
-                this.webAddress = new URI(rs.getString("webAddress"));
-            } catch (NullPointerException e) {
-                logger.info("webAddress doesn't exist for bcidsId: {}", this.bcidsId, e);
-            }catch (URISyntaxException e) {
-                logger.warn("URISyntaxException with uri: {} and bcidsId: {}", rs.getString("webAddress"),
-                        this.bcidsId, e);
-            } finally {
-               // This was set to NULL-- very strange, should not be like this, i don't think
-               // this.webAddress = null;
-            }
-        } catch (SQLException e) {
-            throw new ServerErrorException(e);
-        } finally {
-            db.close(stmt, rs);
-        }
-    }
-
 
     /**
      * Get the projectCode given a bcidsId
@@ -249,15 +121,6 @@ public class bcidMinter extends bcidEncoder {
     }
 
     /**
-     * Tells us if the ezidRequest object is true or false
-     *
-     * @return true or false
-     */
-    public boolean isEzidRequest() {
-        return ezidRequest;
-    }
-
-    /**
      * Mint a bcid, providing information to insert into database
      *
      * @param NAAN
@@ -267,7 +130,7 @@ public class bcidMinter extends bcidEncoder {
      * @param webaddress
      * @param title
      */
-    public Integer mint(Integer NAAN, Integer who, String resourceType, String doi, String webaddress, String graph, String title, Boolean finalCopy) {
+    private String mint(Integer NAAN, Integer who, String resourceType, String doi, URI webaddress, String graph, String title, Boolean finalCopy) {
 
         // Never request EZID for user=demo
         if (db.getUserName(who).equalsIgnoreCase("demo")) {
@@ -282,7 +145,7 @@ public class bcidMinter extends bcidEncoder {
         PreparedStatement insertStatement = null;
         PreparedStatement updateStatement = null;
         try {
-            // Use auto increment in database to assign the actual identifier.. this is threadsafe this way
+            // Use auto increment in database to assign the actual bcid.. this is threadsafe this way
             String insertString = "INSERT INTO bcids (users_id, resourceType, doi, webaddress, graph, title, internalID, ezidRequest, suffixPassThrough, finalCopy) " +
                     "values (?,?,?,?,?,?,?,?,?,?)";
 
@@ -290,7 +153,7 @@ public class bcidMinter extends bcidEncoder {
             insertStatement.setInt(1, who);
             insertStatement.setString(2, resourceType);
             insertStatement.setString(3, doi);
-            insertStatement.setString(4, webaddress);
+            insertStatement.setString(4, webaddress.toString());
             insertStatement.setString(5, graph);
             insertStatement.setString(6, title);
             insertStatement.setString(7, internalID.toString());
@@ -300,7 +163,13 @@ public class bcidMinter extends bcidEncoder {
             insertStatement.execute();
 
             // Get the bcidsId that was assigned
-            bcidsId = getBcidIdentifier(internalID);
+            bcidsId = getBcidsId(internalID);
+
+            // Create the shoulder bcid (String bcid bcid)
+            shoulder = encode(new BigInteger(bcidsId.toString()));
+
+            // Create the prefix
+            prefix = bow + shoulder;
 
             // Update the shoulder, and hence prefix, now that we know the bcidsId
             String updateString = "UPDATE bcids" +
@@ -308,7 +177,7 @@ public class bcidMinter extends bcidEncoder {
                     " WHERE bcids_id = ?";
             updateStatement = conn.prepareStatement(updateString);
 
-            updateStatement.setString(1, bow.toString() + encode(new BigInteger(bcidsId.toString())));
+            updateStatement.setString(1, prefix);
             updateStatement.setInt(2, bcidsId);
 
             updateStatement.executeUpdate();
@@ -320,17 +189,11 @@ public class bcidMinter extends bcidEncoder {
             db.close(updateStatement, null);
         }
 
-        // Create the shoulder identifier (String bcid identifier)
-        shoulder = encode(new BigInteger(bcidsId.toString()));
-
-        // Create the prefix
-        prefix = bow + shoulder;
-
-        return bcidsId;
+        return prefix;
     }
 
     /**
-     * Return the bcid identifier given the internalID
+     * Return the bcidsId given the internalID
      *
      * @param bcidUUID
      *
@@ -338,7 +201,7 @@ public class bcidMinter extends bcidEncoder {
      *
      * @throws java.sql.SQLException
      */
-    private Integer getBcidIdentifier(UUID bcidUUID) throws SQLException {
+    private Integer getBcidsId(UUID bcidUUID) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -380,39 +243,11 @@ public class bcidMinter extends bcidEncoder {
         return bcidsId;
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
-
     /**
      * Close the SQL connection
      */
     public void close() {
         db.close();
-    }
-
-    /**
-     * Get the resourcetype defined for a particular bcid
-     *
-     * @return
-     */
-    public String getResourceType() {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            String sql = "select b.resourceType as resourceType from bcids b where b.bcids_id = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, bcidsId);
-
-            rs = stmt.executeQuery();
-            rs.next();
-            return rs.getString("resourceType");
-        } catch (SQLException e) {
-            throw new ServerErrorException("Server Error",
-                    "Error retrieving resourceType for bcidsId: " + bcidsId, e);
-        } finally {
-            db.close(stmt, rs);
-        }
     }
 
     /**
@@ -590,9 +425,8 @@ public class bcidMinter extends bcidEncoder {
     }
 
     public static void main(String args[]) {
-        bcidMinter b = new bcidMinter(913);
+        bcidMinter b = new bcidMinter();
         try {
-            //bcidMinter d = new bcidMinter();
             //System.out.println(d.bcidTable("biocode"));
             System.out.println(b.projectCode);
         } catch (Exception e) {
@@ -810,15 +644,24 @@ public class bcidMinter extends bcidEncoder {
      * @param graph
      * @param finalCopy
      */
-    public void createEntityBcid(int user_id, String resourceTypeString, String webaddress, String graph, String doi,
+    public String createEntityBcid(int user_id, String resourceTypeString, String webaddress, String graph, String doi,
                                  Boolean finalCopy) {
 
-        mint(
+        URI webAddressURI;
+        // check that the given webaddress is a valid URI before creating the bcid. This will prevent a
+        // URISyntaxException from being thrown when later retrieving the bcid.
+        try {
+            webAddressURI = new URI(webaddress);
+        } catch (URISyntaxException e) {
+            throw new BadRequestException("Malformed uri: " + webaddress, e);
+        }
+
+        String prefix = mint(
                 new Integer(sm.retrieveValue("bcidNAAN")),
                 user_id,
                 resourceTypeString,
                 doi,
-                webaddress,
+                webAddressURI,
                 graph,
                 resourceTypeString,
                 finalCopy
@@ -847,5 +690,6 @@ public class bcidMinter extends bcidEncoder {
                 creator.close();
             }
         }
+        return prefix;
     }
 }

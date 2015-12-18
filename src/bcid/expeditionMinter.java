@@ -84,7 +84,7 @@ public class expeditionMinter {
         // Generate an internal ID to track this submission
         UUID internalID = UUID.randomUUID();
 
-        // Use auto increment in database to assign the actual identifier.. this is threadsafe this way
+        // Use auto increment in database to assign the actual bcid.. this is threadsafe this way
         String insertString = "INSERT INTO expeditions " +
                 "(internalID, expedition_code, expedition_title, users_id, project_id,public) " +
                 "values (?,?,?,?,?,?)";
@@ -106,12 +106,13 @@ public class expeditionMinter {
 
             // upon successful expedition creation, create the expedition bcid
             bcidMinter bcidMinter = new bcidMinter(false);
-            bcidMinter.createEntityBcid(users_id, "http://purl.org/dc/dcmitype/Collection", null, null, null, false);
-
-            // Associate this identifier with this expedition
-            expeditionMinter expedition = new expeditionMinter();
-            expedition.attachReferenceToExpedition(expedition_id, bcidMinter.getPrefix());
+            String prefix = bcidMinter.createEntityBcid(users_id, "http://purl.org/dc/dcmitype/Collection", null, null,
+                    null, false);
             bcidMinter.close();
+
+            // Associate this bcid with this expedition
+            expeditionMinter expedition = new expeditionMinter();
+            expedition.attachReferenceToExpedition(expedition_id, prefix);
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
@@ -171,7 +172,7 @@ public class expeditionMinter {
     }
 
     /**
-     * Return the expedition identifier given the internalID
+     * Return the expedition bcid given the internalID
      *
      * @param expeditionUUID
      *

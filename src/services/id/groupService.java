@@ -8,7 +8,6 @@ import bcid.ResourceTypes;
 import bcid.bcidMinter;
 import bcid.database;
 import bcid.expeditionMinter;
-import bcid.GenericIdentifier;
 import fimsExceptions.BadRequestException;
 import fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
@@ -111,13 +110,10 @@ public class groupService {
 
         // Mint the data group
         bcidMinter bcidMinter = new bcidMinter(suffixPassthrough);
-
-        bcidMinter.createEntityBcid(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
-
-        String bcidPrefix = bcidMinter.getPrefix();
+        String prefix = bcidMinter.createEntityBcid(user_id, resourceTypeString, webaddress, graph, doi, finalCopy);
         bcidMinter.close();
 
-        return Response.ok("{\"prefix\": \"" + bcidPrefix + "\"}").build();
+        return Response.ok("{\"prefix\": \"" + prefix + "\"}").build();
     }
 
     /**
@@ -131,7 +127,7 @@ public class groupService {
     @Path("/metadata/{bcid_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String run(@PathParam("bcid_id") Integer bcid_id) {
-        GenericIdentifier bcid = new bcid(bcid_id);
+        bcid bcid = new bcid(bcid_id);
         Renderer renderer = new JSONRenderer();
 
         return "[" + renderer.render(bcid) + "]";

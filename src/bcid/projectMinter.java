@@ -169,7 +169,7 @@ public class projectMinter {
      * A utility function to get the very latest graph loads for each expedition
      * This is a public accessible function from the REST service so it only returns results that are declared as public
      *
-     * @param project_id pass in an project identifier to limit the set of expeditions we are looking at
+     * @param project_id pass in an project bcid to limit the set of expeditions we are looking at
      * @return
      */
     public String getLatestGraphs(int project_id, String username) {

@@ -86,7 +86,7 @@ public class projectService {
     }
 
     /**
-     * Given an project identifier, get the latest graphs by expedition
+     * Given an project bcid, get the latest graphs by expedition
      *
      * @param project_id
      * @return
@@ -116,7 +116,7 @@ public class projectService {
     }
 
     /**
-     * Given an project identifier, get the users latest datasets by expedition
+     * Given an project bcid, get the users latest datasets by expedition
      *
      * @return
      */

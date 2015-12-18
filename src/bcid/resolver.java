@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Resolves any incoming identifier to the BCID and/or EZID systems.
+ * Resolves any incoming bcid to the BCID and/or EZID systems.
  * Resolver first checks if this is a data group.  If so, it then checks if there is a decodable BCID.  If not,
  * then check if there is a suffix and if THAT is resolvable.
  */
@@ -26,7 +26,7 @@ public class resolver extends database {
     String scheme = "ark:";
     String naan = null;
     String shoulder = null;     // The data group
-    String suffix = null;        // The local identifier
+    String suffix = null;        // The local bcid
     BigInteger element_id = null;
     Integer bcidsId = null;
     public boolean forwardingResolution = false;
@@ -45,7 +45,7 @@ public class resolver extends database {
     private String project;
 
     /**
-     * Pass an ARK identifier to the resolver
+     * Pass an ARK bcid to the resolver
      *
      * @param ark
      */
@@ -117,7 +117,7 @@ public class resolver extends database {
     }
 
     /**
-     * Return an identifier representing a data set
+     * Return an bcid representing a data set
      *
      * @return
      */
@@ -126,7 +126,7 @@ public class resolver extends database {
     }
 
     /**
-     * Return an identifier representing a data element
+     * Return an bcid representing a data element
      *
      * @return
      */
@@ -175,14 +175,14 @@ public class resolver extends database {
 
         // First  option is check if bcid, then look at other options after this is determined
         if (!isValidBCID()) {
-            throw new BadRequestException("Invalid identifier.");
+            throw new BadRequestException("Invalid bcid.");
         }
 
         bcid = new bcid(suffix, bcidsId);
 
         // A resolution target is specified AND there is a suffix AND suffixPassThrough
         if (bcid.getWebAddress() != null && !bcid.getWebAddress().equals("") &&
-            suffix != null && !suffix.trim().equals("") && bcid.getBcidsSuffixPassthrough()) {
+            suffix != null && !suffix.trim().equals("") && bcid.getSuffixPassThrough()) {
             forwardingResolution = true;
 
             // Immediately return resolution result
@@ -202,7 +202,7 @@ public class resolver extends database {
      * @return JSON String with content for the interface
      */
     public String printMetadata(Renderer renderer) {
-        GenericIdentifier bcid = null;
+        bcid bcid = null;
 
         // First  option is check if bcid, then look at other options after this is determined
         if (setBcid()) {
@@ -216,14 +216,14 @@ public class resolver extends database {
             // Has a suffix, but not resolvable
             //else {
 //            graph =
-            try {
-                if (suffix != null && bcid.getWebAddress() != null) {
-                    bcid = new bcid(suffix, bcid.getWebAddress(), bcidsId);
-                }
-            } catch (URISyntaxException e) {
-                //TODO should we silence this exception?
-                logger.warn("URISyntaxException thrown", e);
+//            try {
+            if (suffix != null && bcid.getWebAddress() != null) {
+                bcid = new bcid(suffix, bcid.getWebAddress(), bcidsId);
             }
+//            } catch (URISyntaxException e) {
+//                TODO should we silence this exception?
+//                logger.warn("URISyntaxException thrown", e);
+//            }
             //}
 
         }
@@ -239,7 +239,7 @@ public class resolver extends database {
      */
     public String resolveEZID(EZIDService ezidService, Renderer renderer) {
         // First fetch from EZID, and populate a map
-        GenericIdentifier ezid = null;
+        ezid ezid = null;
 
         try {
             ezid = new ezid(ezidService.getMetadata(ark));

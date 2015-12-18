@@ -29,7 +29,7 @@ public class resolverService {
     private static Logger logger = LoggerFactory.getLogger(resolverService.class);
 
     /**
-     * User passes in an identifier of the form scheme:/naan/shoulder_identifier
+     * User passes in an bcid of the form scheme:/naan/shoulder_identifier
      *
      * @param naan
      * @param shoulderPlusIdentifier
@@ -46,7 +46,7 @@ public class resolverService {
 
         shoulderPlusIdentifier = shoulderPlusIdentifier.trim();
 
-        // Structure the identifier element from path parameters
+        // Structure the bcid element from path parameters
         String element = scheme + "/" + naan + "/" + shoulderPlusIdentifier;
 
         // When the Accept Header = "application/rdf+xml" return Metadata as RDF

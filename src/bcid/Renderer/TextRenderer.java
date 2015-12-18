@@ -10,11 +10,11 @@ public class TextRenderer extends Renderer {
 
 
     public void enter() {
-        outputSB.append("***" + identifier.getClass().getSimpleName() + "***\n");
+        outputSB.append("***" + this.bcid.getClass().getSimpleName() + "***\n");
     }
 
     public void printMetadata() {
-        Iterator iterator = identifier.getMetadata().entrySet().iterator();
+        Iterator iterator = this.bcid.getMetadata().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pairs = (Map.Entry) iterator.next();
             outputSB.append(pairs.getKey() + "=" + pairs.getValue() + "\n");
@@ -25,8 +25,8 @@ public class TextRenderer extends Renderer {
     }
 
     public boolean validIdentifier() {
-        if (identifier == null) {
-            outputSB.append("identifier is null");
+        if (this.bcid == null) {
+            outputSB.append("bcid is null");
             return false;
         } else {
             return true;

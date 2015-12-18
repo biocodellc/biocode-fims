@@ -64,7 +64,7 @@ public class FastaReader {
 
         // TODO:, see the following list to integrate FASTA sequence files into database
         // think about how to integrate this with larger run.process...
-        // 1. assign BCID to accession ID, making a globally unique identifier
+        // 1. assign BCID to accession ID, making a globally unique bcid
         // 2. assign some "hasSequence" property to the sequence itself
         // 3. create a triple file and upload to database (using upload script)
         // 4. create a sequence upload run.process (loop through files)

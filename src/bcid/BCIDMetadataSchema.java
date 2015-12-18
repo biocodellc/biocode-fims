@@ -29,65 +29,63 @@ public class BCIDMetadataSchema {
     public metadataElement bscSuffixPassthrough = null;
     public metadataElement dcPublisher = null;
 
+    public bcid bcid = null;
+
     private static Logger logger = LoggerFactory.getLogger(BCIDMetadataSchema.class);
-
-
-
-    public bcid identifier;
 
     public BCIDMetadataSchema() {
     }
 
-    public void BCIDMetadataInit(GenericIdentifier identifier) {
-        this.identifier = (bcid) identifier;
-        dcPublisher = new metadataElement("dc:publisher",this.identifier.projectCode , "The BCID project to which this resource belongs.");
+    public void BCIDMetadataInit(bcid bcid) {
+        this.bcid = bcid;
+        dcPublisher = new metadataElement("dc:publisher",bcid.projectCode , "The BCID project to which this resource belongs.");
 
         String ark = null;
-        Iterator iterator = identifier.getMetadata().entrySet().iterator();
+        Iterator iterator = bcid.getMetadata().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry pairs = (Map.Entry) iterator.next();
             String bcidKey = (String) pairs.getKey();
             try {
                 if (bcidKey.equalsIgnoreCase("ark")) {
                     ark = pairs.getValue().toString();
-                    about = new metadataElement("rdf:Description", identifier.resolverTargetPrefix + ark, "The current identifier resolution service.");
-                } else if (bcidKey.equalsIgnoreCase("what")) {
+                    about = new metadataElement("rdf:Description", bcid.resolverTargetPrefix + ark, "The current bcid resolution service.");
+                } else if (bcidKey.equalsIgnoreCase("resourceType")) {
                     resource = new metadataElement("rdf:type", pairs.getValue().toString(), "What is this object.");
-                } else if (bcidKey.equalsIgnoreCase("when")) {
-                    dcDate = new metadataElement("dc:date",  pairs.getValue().toString(), "Date that metadata was last updated for this identifier.");
+                } else if (bcidKey.equalsIgnoreCase("ts")) {
+                    dcDate = new metadataElement("dc:date",  pairs.getValue().toString(), "Date that metadata was last updated for this bcid.");
                 } else if (bcidKey.equalsIgnoreCase("who")) {
                     dcCreator = new metadataElement("dc:creator", pairs.getValue().toString(), "Who created the group definition.");
                 } else if (bcidKey.equalsIgnoreCase("title")) {
                     dcTitle = new metadataElement("dc:title", pairs.getValue().toString(), "Title");
                 } else if (bcidKey.equalsIgnoreCase("suffix")) {
-                    dcSource = new metadataElement("dc:source", pairs.getValue().toString(), "The locally-unique identifier.");
+                    dcSource = new metadataElement("dc:source", pairs.getValue().toString(), "The locally-unique bcid.");
                 } else if (bcidKey.equalsIgnoreCase("rights")) {
-                    dcRights = new metadataElement("dcterms:rights", pairs.getValue().toString(), "Rights applied to the metadata content describing this identifier.");
-                } else if (bcidKey.equalsIgnoreCase("bcidsPrefix")) {
+                    dcRights = new metadataElement("dcterms:rights", pairs.getValue().toString(), "Rights applied to the metadata content describing this bcid.");
+                } else if (bcidKey.equalsIgnoreCase("prefix")) {
                     //Don't print this line for the Test Account
-                    if (!identifier.getMetadata().get("who").equals("Test Account")) {
-                        dcIsReferencedBy = new metadataElement("dcterms:isReferencedBy", "http://n2t.net/" + pairs.getValue().toString(), "The group level identifier, registered with EZID.");
+                    if (!bcid.getMetadata().get("who").equals("Test Account")) {
+                        dcIsReferencedBy = new metadataElement("dcterms:isReferencedBy", "http://n2t.net/" + pairs.getValue().toString(), "The group level bcid, registered with EZID.");
                     }
                 } else if (bcidKey.equalsIgnoreCase("doi")) {
                     // Create mapping here for DOI if it only shows the prefix
                     String doi = pairs.getValue().toString().replace("doi:", "http://dx.doi.org/");
-                    dcIsPartOf = new metadataElement("dcterms:isReferencedBy", doi, "A DOI describing the dataset which this identifier belongs to.");
+                    dcIsPartOf = new metadataElement("dcterms:isReferencedBy", doi, "A DOI describing the dataset which this bcid belongs to.");
                // } else if (bcidKey.equalsIgnoreCase("projectCode")) {
                     // Create mapping here for DOI if it only shows the prefix
                  //   dcPublisher = new metadataElement("dc:publisher", pairs.getValue().toString(), "The BCID project to which this resource belongs.");
                 } else if (bcidKey.equalsIgnoreCase("webaddress")) {
-                    dcHasVersion = new metadataElement("dcterms:hasVersion", pairs.getValue().toString(), "The redirection target for this identifier.");
+                    dcHasVersion = new metadataElement("dcterms:hasVersion", pairs.getValue().toString(), "The redirection target for this bcid.");
                 } else if (bcidKey.equalsIgnoreCase("bcidsSuffixPassThrough")) {
-                    bscSuffixPassthrough = new metadataElement("bsc:suffixPassthrough", pairs.getValue().toString(), "Indicates that this identifier supports suffixPassthrough.");
+                    bscSuffixPassthrough = new metadataElement("bsc:suffixPassthrough", pairs.getValue().toString(), "Indicates that this bcid supports suffixPassthrough.");
                 }
             } catch (NullPointerException e) {
                 //TODO should we silence this exception?
-                logger.warn("NullPointerException thrown for identifier: {}", identifier);
+                logger.warn("NullPointerException thrown for bcid: {}", bcid);
             }
         }
         if (ark != null) {
             try {
-                dcMediator = new metadataElement("dcterms:mediator", identifier.getMetadataTarget().toString(), "Metadata mediator");
+                dcMediator = new metadataElement("dcterms:mediator", bcid.getMetadataTarget().toString(), "Metadata mediator");
             } catch (URISyntaxException e) {
                 //TODO should we silence this exception?
                 logger.warn("URISyntaxException thrown", e);
