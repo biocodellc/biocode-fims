@@ -42,11 +42,6 @@ public class bcid {
     protected String resolverTargetPrefix;
     protected String resolverMetadataPrefix;
 
-    protected String level;
-    final static String UNREGISTERED_ELEMENT = "Unregistered Element";
-    final static String ELEMENT = "BCID Data Element";
-    final static String GROUP = "BCID Data Group";
-
     // HashMap to store metadata values
     private HashMap<String, String> map = new HashMap<String, String>();
 
@@ -172,8 +167,6 @@ public class bcid {
         } finally {
             db.close(stmt, rs);
         }
-
-        level = UNREGISTERED_ELEMENT;
     }
 
     public URI getWebAddress() {
@@ -245,7 +238,6 @@ public class bcid {
         put("who", who);
         put("resourceType", resourceType);
         put("webAddress", webAddress);
-        put("level", level);
         put("title", title);
         put("projectCode", projectCode);
         put("suffix", suffix);
