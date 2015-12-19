@@ -128,7 +128,7 @@ public class processController {
     }
 
 
-    public Integer getProject_id() {
+    public Integer getProjectId() {
         return projectId;
     }
 

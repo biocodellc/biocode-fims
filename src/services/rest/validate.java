@@ -323,7 +323,7 @@ public class validate {
         * Copy Spreadsheet to a standard location
         */
         // Get the BCID Root
-        resolver r = new resolver(processController.getExpeditionCode(), processController.getProject_id(), "Resource");
+        resolver r = new resolver(processController.getExpeditionCode(), processController.getProjectId(), "Resource");
         String bcidRoot = r.getArk();
         r.close();
 
@@ -370,7 +370,7 @@ public class validate {
         expeditionMinter.attachReferenceToExpedition(p.getProcessController().getExpeditionCode(), prefix, p.getProject_id());
         // Set the public status
         expeditionMinter.updateExpeditionPublicStatus(userId, processController.getExpeditionCode(),
-                    processController.getProject_id(), processController.getPublicStatus());
+                    processController.getProjectId(), processController.getPublicStatus());
         expeditionMinter.close();
 
         // Remove the processController from the session

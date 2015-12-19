@@ -192,7 +192,7 @@ public class Mapping implements RendererInterface {
         // Create a deepRoots object based on results returned from the BCID deepRoots service
         // TODO: put this into a settings file
         if (runDeepRoots) {
-            dRoots = new deepRootsReader().createRootData(processController.getUserId(), processController.getProject_id(), expeditionCode);
+            dRoots = new deepRootsReader().createRootData(processController.getUserId(), processController.getProjectId(), expeditionCode);
         }
 
         // Create a connection to a SQL Lite Instance

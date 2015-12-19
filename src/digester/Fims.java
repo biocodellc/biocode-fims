@@ -55,7 +55,7 @@ public class Fims implements RendererInterface {
      * @return
      */
     public void run(processController processController) {
-        Integer projectId = processController.getProject_id();
+        Integer projectId = processController.getProjectId();
         String expeditionCode = processController.getExpeditionCode();
 
         uploader = new uploader(
@@ -123,13 +123,13 @@ public class Fims implements RendererInterface {
      */
     public fimsModel getFIMSModel(Model model, boolean getOnlySpecifiedProperties) {
 
-        // Set the default sheetname
-        String sheetname = mapping.getDefaultSheetName();
+        // Set the default sheetName
+        String sheetName = mapping.getDefaultSheetName();
 
         // Create a queryWriter object
         QueryWriter queryWriter = new QueryWriter(
-                mapping.getAllAttributes(sheetname),
-                sheetname,
+                mapping.getAllAttributes(sheetName),
+                sheetName,
                 validation);
 
         // Construct the FIMS model

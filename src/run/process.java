@@ -78,7 +78,7 @@ public class process {
         this.outputPrefix = processController.getExpeditionCode() + "_output";
 
         // Read the Configuration File
-        configFile = new configurationFileFetcher(processController.getProject_id(), outputFolder, false).getOutputFile();
+        configFile = new configurationFileFetcher(processController.getProjectId(), outputFolder, false).getOutputFile();
 
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
@@ -208,7 +208,7 @@ public class process {
 
         expeditionMinter expeditionMinter = new expeditionMinter();
 
-        String response = expeditionMinter.validateExpedition(processController.getExpeditionCode(), processController.getProject_id(),
+        String response = expeditionMinter.validateExpedition(processController.getExpeditionCode(), processController.getProjectId(),
                 ignore_user, processController.getUserId());
 
         JSONObject r = (JSONObject) JSONValue.parse(response);
@@ -288,7 +288,7 @@ public class process {
                         "", null, null, false);
                 bcidMinter.close();
                 // Associate this bcid with this expedition
-                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), prefix, processController.getProject_id());
+                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), prefix, processController.getProjectId());
 
             }
         }
@@ -449,7 +449,7 @@ public class process {
             // Set the public status
             expeditionMinter expeditionMinter = new expeditionMinter();
             expeditionMinter.updateExpeditionPublicStatus(processController.getUserId(), processController.getExpeditionCode(),
-                    processController.getProject_id(), processController.getPublicStatus());
+                    processController.getProjectId(), processController.getPublicStatus());
             expeditionMinter.close();
             //Html2Text parser = new Html2Text();
             //fimsPrinter.out.println(parser.convert(results));
