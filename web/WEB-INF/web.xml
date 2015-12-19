@@ -13,7 +13,7 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>services/rest;services/exceptionMapper</param-value>
+			<param-value>services/rest;services/FimsExceptionMapper</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -31,7 +31,7 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>services/id;services/exceptionMapper</param-value>
+            <param-value>services/id;services/FimsExceptionMapper</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -46,8 +46,6 @@
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
-        <welcome-file>index.jsp</welcome-file>
-
     </welcome-file-list>
 
     <filter>
@@ -72,22 +70,6 @@
     <filter-mapping>
         <filter-name>ClickjackFilterDeny</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <!-- use the SameOrigin version to allow your application to frame, but nobody else
-    <filter-mapping>
-        <filter-name>ClickjackFilterSameOrigin</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    -->
-
-    <filter>
-        <filter-name>SecureFilter</filter-name>
-        <filter-class>services.filters.SecureFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SecureFilter</filter-name>
-        <url-pattern>/biocode-fims/secure/*</url-pattern>
     </filter-mapping>
 
 </web-app>
