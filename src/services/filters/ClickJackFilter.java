@@ -1,4 +1,4 @@
-package utils;
+package services.filters;
 
 /**
  *  Software published by the Open Web Application Security Project (http://www.owasp.org)

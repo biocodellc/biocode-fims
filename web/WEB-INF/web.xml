@@ -52,7 +52,7 @@
 
     <filter>
         <filter-name>ClickjackFilterDeny</filter-name>
-        <filter-class>utils.ClickJackFilter</filter-class>
+        <filter-class>services.filters.ClickJackFilter</filter-class>
         <init-param>
             <param-name>mode</param-name>
             <param-value>DENY</param-value>
@@ -61,7 +61,7 @@
 
     <filter>
         <filter-name>ClickjackFilterSameOrigin</filter-name>
-        <filter-class>utils.ClickJackFilter</filter-class>
+        <filter-class>services.filters.ClickJackFilter</filter-class>
         <init-param>
             <param-name>mode</param-name>
             <param-value>SAMEORIGIN</param-value>
@@ -83,7 +83,7 @@
 
     <filter>
         <filter-name>SecureFilter</filter-name>
-        <filter-class>auth.SecureFilter</filter-class>
+        <filter-class>services.filters.SecureFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecureFilter</filter-name>

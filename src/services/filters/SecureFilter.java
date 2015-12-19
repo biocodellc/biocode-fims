@@ -1,4 +1,4 @@
-package auth;
+package services.filters;
 
 import utils.SettingsManager;
 
