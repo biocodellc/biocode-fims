@@ -72,12 +72,12 @@
     </welcome-file-list>
 
     <filter>
-        <filter-name>secureFilter</filter-name>
-        <filter-class>auth.secureFilter</filter-class>
+        <filter-name>SecureFilter</filter-name>
+        <filter-class>auth.SecureFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>secureFilter</filter-name>
+        <filter-name>SecureFilter</filter-name>
         <url-pattern>/fims/secure/*</url-pattern>
     </filter-mapping>
 

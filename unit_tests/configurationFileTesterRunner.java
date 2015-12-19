@@ -3,26 +3,26 @@ package unit_tests;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import run.configurationFileTester;
+import run.ConfigurationFileTester;
 
 import java.io.File;
 
 
 /**
- * Test SI configuration files that were automatically generated using tools.siConverter Class
+ * Test SI configuration files that were automatically generated using tools.SiConverter Class
  */
 
 public class configurationFileTesterRunner {
 
-    private configurationFileTester tester;
+    private ConfigurationFileTester tester;
      String name;
 
     /**
-     * Setup the tester framework by creating a configurationFileTester object and calling its initializer
+     * Setup the tester framework by creating a ConfigurationFileTester object and calling its initializer
      *
      */
     public configurationFileTesterRunner() {
-        tester = new configurationFileTester();
+        tester = new ConfigurationFileTester();
         tester.init( new File("http://ucjeps.berkeley.edu/ucjeps_fims.xml"));
     }
 

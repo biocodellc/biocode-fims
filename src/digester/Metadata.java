@@ -1,6 +1,6 @@
 package digester;
 
-import settings.fimsPrinter;
+import settings.FimsPrinter;
 
 /**
  * Metadata defines metadata for this FIMS installation
@@ -13,7 +13,7 @@ public class Metadata {
     private String queryTarget;
     private String nmnh;
 
-    private String text_abstract;
+    private String textAbstract;
 
     public String getTarget() {
         return target;
@@ -64,20 +64,20 @@ public class Metadata {
     }
 
 
-    public String getText_abstract() {
-        return text_abstract;
+    public String getTextAbstract() {
+        return textAbstract;
     }
 
-    public void addText_abstract(String text_abstract) {
-        this.text_abstract = text_abstract;
+    public void addTextAbstract(String textAbstract) {
+        this.textAbstract = textAbstract;
     }
 
     public void print() {
-        fimsPrinter.out.println("\tMetadata");
-        fimsPrinter.out.println("\t\tdoi = " + doi);
-        fimsPrinter.out.println("\t\tshortname = " + shortname);
-        fimsPrinter.out.println("\t\teml_locaiton = " + eml_location);
-        fimsPrinter.out.println("\t\ttarget = " + target);
-        fimsPrinter.out.println("\t\ttext_abstract = " + text_abstract);
+        FimsPrinter.out.println("\tMetadata");
+        FimsPrinter.out.println("\t\tdoi = " + doi);
+        FimsPrinter.out.println("\t\tshortName = " + shortname);
+        FimsPrinter.out.println("\t\teml_locaiton = " + eml_location);
+        FimsPrinter.out.println("\t\ttarget = " + target);
+        FimsPrinter.out.println("\t\ttextAbstract = " + textAbstract);
     }
 }

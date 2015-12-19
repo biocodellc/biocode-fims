@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Filter which checks for the user in the session, if no user is present, the redirect to login page
  */
-public class secureFilter implements Filter {
+public class SecureFilter implements Filter {
     private FilterConfig fc = null;
 
     private static SettingsManager sm;

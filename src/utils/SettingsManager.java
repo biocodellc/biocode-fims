@@ -1,6 +1,6 @@
 package utils;
 
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 
 import java.io.*;
 import java.util.Properties;
@@ -18,10 +18,10 @@ public class SettingsManager {
     private static SettingsManager instance = null;
 
     private Properties props;
-    private String propsfile;
+    private String propsFile;
 
-    protected SettingsManager(String propsfile) {
-        this.propsfile = propsfile;
+    protected SettingsManager(String propsFile) {
+        this.propsFile = propsFile;
     }
 
     /**
@@ -80,7 +80,7 @@ public class SettingsManager {
      * @return The path of the properties file used by this utils.SettingsManager.
      */
     public String getPropertiesFile() {
-        return propsfile;
+        return propsFile;
     }
 
     /**
@@ -89,7 +89,7 @@ public class SettingsManager {
      * @param propsfile The path to a properties file.
      */
     public void setPropertiesFile(String propsfile) {
-        this.propsfile = propsfile;
+        this.propsFile = propsfile;
     }
 
     /**
@@ -100,15 +100,15 @@ public class SettingsManager {
     public void loadProperties() {
         try {
             props = new Properties();
-            FileInputStream in = new FileInputStream(propsfile);
+            FileInputStream in = new FileInputStream(propsFile);
 
             props.load(in);
             in.close();
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException("Unable to find settings file " + propsfile +
+            throw new FimsRuntimeException("Unable to find settings file " + propsFile +
                     ". Make sure you have included this file in the root class of your deployed application!", 500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException("Error while loading the settings file " + propsfile + ". Is the file correct?",
+            throw new FimsRuntimeException("Error while loading the settings file " + propsFile + ". Is the file correct?",
                     500, e);
         }
     }

@@ -41,13 +41,13 @@ import java.util.concurrent.Executors;
 public class EZIDClient  {
     private String USERNAME = "apitest";
     private String PASSWORD = "apitest";
-    private EZIDService ezid = null;
+    private EzidService ezid = null;
     private ExecutorService executor = null;
 
     protected static Log log = LogFactory.getLog(EZIDClient.class);
 
     public EZIDClient() {
-        ezid = new EZIDService();
+        ezid = new EzidService();
         startExecutorLoop();
     }
         
@@ -65,17 +65,17 @@ public class EZIDClient  {
     }
     
     public void create(String identifier, HashMap<String, String> metadata) throws InterruptedException {
-        EZIDServiceRequest request = new EZIDServiceRequest(ezid, EZIDServiceRequest.CREATE, identifier, metadata);
+        EzidServiceRequest request = new EzidServiceRequest(ezid, EzidServiceRequest.CREATE, identifier, metadata);
         executor.execute(request);
     }
 
     public void delete(String identifier) throws InterruptedException {
-        EZIDServiceRequest request = new EZIDServiceRequest(ezid, EZIDServiceRequest.DELETE, identifier);
+        EzidServiceRequest request = new EzidServiceRequest(ezid, EzidServiceRequest.DELETE, identifier);
         executor.execute(request);
     }
 
     public void setMetadata(String identifier, HashMap<String, String> metadata) throws InterruptedException {
-        EZIDServiceRequest request = new EZIDServiceRequest(ezid, EZIDServiceRequest.SETMETADATA, identifier, metadata);
+        EzidServiceRequest request = new EzidServiceRequest(ezid, EzidServiceRequest.SETMETADATA, identifier, metadata);
         executor.execute(request);
 
     }

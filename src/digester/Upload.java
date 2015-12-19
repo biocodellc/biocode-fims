@@ -1,8 +1,8 @@
 package digester;
 
+import fims.Uploader;
 import renderers.RendererInterface;
-import fims.uploader;
-import settings.fimsPrinter;
+import settings.FimsPrinter;
 
 /**
  * Upload target specification
@@ -11,7 +11,7 @@ public class Upload implements RendererInterface {
     private String target;
     private Mapping mapping;
     private String graph;
-    uploader uploader;
+    Uploader uploader;
 
     public Upload(Mapping mapping) {
         this.mapping = mapping;
@@ -29,15 +29,15 @@ public class Upload implements RendererInterface {
      * Print output
      */
     public void print() {
-        fimsPrinter.out.println("Upload ...");
-        fimsPrinter.out.println("\tdoes this do anything??");
+        FimsPrinter.out.println("Upload ...");
+        FimsPrinter.out.println("\tdoes this do anything??");
     }
 
     /**
      * Object details for this object
      */
     public void printObject() {
-        fimsPrinter.out.println("Upload object target = " + target);
+        FimsPrinter.out.println("Upload object target = " + target);
     }
 
     public boolean run() {

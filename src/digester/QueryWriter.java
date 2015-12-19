@@ -1,5 +1,6 @@
 package digester;
 
+import fimsExceptions.FimsRuntimeException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -9,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import fimsExceptions.FIMSRuntimeException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -169,7 +169,7 @@ public class QueryWriter {
             try {
                 if (attribute.getUri().equals(predicate)) {
                     colName = attribute.getColumn();
-                    datatype = attribute.getDataType();
+                    datatype = attribute.getDatatype();
                 }
 
             } catch (Exception e) {
@@ -255,9 +255,9 @@ public class QueryWriter {
             fileOut.close();
             return file.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 
@@ -826,9 +826,9 @@ public class QueryWriter {
             fileOut.close();
             return file.getAbsolutePath();
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 }

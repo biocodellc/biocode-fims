@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import renderers.Message;
 import renderers.RowMessage;
-import settings.fimsPrinter;
+import settings.FimsPrinter;
 import utils.SettingsManager;
 
 import java.lang.reflect.InvocationTargetException;
@@ -114,15 +114,15 @@ public class Worksheet {
     }
 
     public void print() {
-        fimsPrinter.out.println("  sheetname=" + sheetname);
+        FimsPrinter.out.println("  sheetname=" + sheetname);
 
-        fimsPrinter.out.println("  rules ... ");
+        FimsPrinter.out.println("  rules ... ");
         for (Iterator<Rule> i = rules.iterator(); i.hasNext(); ) {
             Rule r = i.next();
             r.print();
         }
 
-        fimsPrinter.out.println("  columns ... ");
+        FimsPrinter.out.println("  columns ... ");
         for (Iterator<ColumnTrash> i = columns.iterator(); i.hasNext(); ) {
             ColumnTrash c = i.next();
             c.print();
@@ -268,7 +268,7 @@ public class Worksheet {
                     if (method != null) {
                         method.invoke(r);
                     } else {
-                        fimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumnWorksheetName() + ")");
+                        FimsPrinter.out.println("\tNo method " + r.getType() + " (" + r.getColumnWorksheetName() + ")");
                     }
 
                     // Close the connection

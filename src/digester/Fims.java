@@ -1,14 +1,14 @@
 package digester;
 
-import bcid.bcidMinter;
-import bcid.expeditionMinter;
+import bcid.BcidMinter;
+import bcid.ExpeditionMinter;
 import com.hp.hpl.jena.rdf.model.Model;
-import fims.fimsModel;
+import fims.FimsModel;
+import fims.Uploader;
 import org.apache.log4j.Level;
 import renderers.RendererInterface;
-import fims.uploader;
-import run.processController;
-import settings.fimsPrinter;
+import run.ProcessController;
+import settings.FimsPrinter;
 
 import java.io.File;
 import java.lang.String;
@@ -20,7 +20,7 @@ public class Fims implements RendererInterface {
     private Metadata metadata;
     private Mapping mapping;
     private Validation validation;
-    uploader uploader;
+    Uploader uploader;
     private String bcidPrefix;
 
     /**
@@ -45,7 +45,7 @@ public class Fims implements RendererInterface {
         return metadata;
     }
 
-    public uploader getUploader() {
+    public Uploader getUploader() {
         return uploader;
     }
 
@@ -54,17 +54,17 @@ public class Fims implements RendererInterface {
      *
      * @return
      */
-    public void run(processController processController) {
+    public void run(ProcessController processController) {
         Integer projectId = processController.getProjectId();
         String expeditionCode = processController.getExpeditionCode();
 
-        uploader = new uploader(
+        uploader = new Uploader(
                 metadata.getTarget(),
                 new File(mapping.getTriplifier().getTripleOutputFile()));
 
         uploader.execute();
 
-        bcidMinter bcidMinter = new bcidMinter(false);
+        BcidMinter bcidMinter = new BcidMinter(false);
         bcidPrefix = bcidMinter.createEntityBcid(processController.getUserId(), "http://purl.org/dc/dcmitype/Dataset",
                 uploader.getEndpoint(), uploader.getGraphID(), null, false);
         bcidMinter.close();
@@ -75,15 +75,15 @@ public class Fims implements RendererInterface {
 
         processController.appendStatus(status1);
         // Inform cmd line users
-        fimsPrinter.out.println(status1);
+        FimsPrinter.out.println(status1);
         // Associate the expeditionCode with this bcidPrefix
-        expeditionMinter expedition = new expeditionMinter();
+        ExpeditionMinter expedition = new ExpeditionMinter();
         expedition.attachReferenceToExpedition(expeditionCode, bcidPrefix, projectId);
         expedition.close();
         String status2 = "\t" + "Data Elements Root: " + expeditionCode;
         processController.appendStatus(status2);
         // Inform cmd line users
-        fimsPrinter.out.println(status2);
+        FimsPrinter.out.println(status2);
         return;
     }
 
@@ -119,9 +119,9 @@ public class Fims implements RendererInterface {
     }
 
     /**
-     * Create a fimsModel to store the results from this query
+     * Create a FimsModel to store the results from this query
      */
-    public fimsModel getFIMSModel(Model model, boolean getOnlySpecifiedProperties) {
+    public FimsModel getFIMSModel(Model model, boolean getOnlySpecifiedProperties) {
 
         // Set the default sheetName
         String sheetName = mapping.getDefaultSheetName();
@@ -133,7 +133,7 @@ public class Fims implements RendererInterface {
                 validation);
 
         // Construct the FIMS model
-        fimsModel fimsModel = new fimsModel(
+        FimsModel fimsModel = new FimsModel(
                 model,
                 queryWriter,
                 mapping,
@@ -142,7 +142,7 @@ public class Fims implements RendererInterface {
         // Read rows starting at the Resource node
         fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
 
-        // Return the fimsModel
+        // Return the FimsModel
         return fimsModel;
     }
 
@@ -159,11 +159,11 @@ public class Fims implements RendererInterface {
 
         //Just used for testing
         /*Model model = FileManager.get().loadModel("http://localhost:3030/ds/data?graph=urn:uuid:75959876-c944-4ad6-a173-d605f176bfae");
-        fimsModel fimsModel = new fimsModel(model);
+        FimsModel FimsModel = new FimsModel(model);
         // Read the rows starting with a specified class, Note: the assumption here is that row level metadata is a "Resource"
-        fimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
+        FimsModel.readRows("http://www.w3.org/2000/01/rdf-schema#Resource");
         // Write output to JSON
-        fimsPrinter.out.println(fimsModel.toJSON());
+        fimsPrinter.out.println(FimsModel.toJSON());
          */
 
     }

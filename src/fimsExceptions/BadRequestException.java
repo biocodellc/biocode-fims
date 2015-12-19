@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 /**
  * An exception that encapsulates bad requests
  */
-public class BadRequestException extends FIMSAbstractException {
+public class BadRequestException extends FimsAbstractException {
     private static Integer httpStatusCode = Response.Status.BAD_REQUEST.getStatusCode();
 
     public BadRequestException(String usrMessage) {

@@ -6,10 +6,10 @@ import java.io.PrintWriter;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 import de.fuberlin.wiwiss.d2rq.map.Database;
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 
 /**
- * Represents a database connection, can be used to generate a JDBC URL, 
+ * Represents a Database connection, can be used to generate a JDBC URL,
  * make a new D2RQ Database or generate a D2RQ Mapping entry.
  */
 public class Connection {
@@ -26,7 +26,7 @@ public class Connection {
 
 	/**
 	 * Create Connection to a sqlite file, where
-	 * database = file name, host = path
+	 * Database = file name, host = path
 	 */
 	public Connection(File sqliteFile) {
 		system = DBsystem.sqlite;
@@ -57,7 +57,7 @@ public class Connection {
 	}
 	
 	/**
-	 * Create D2RQ Database from the database connection.
+	 * Create D2RQ Database from the Database connection.
 	 * 
      * @return D2RQ Database.
 	 */
@@ -93,7 +93,7 @@ public class Connection {
      */
 	public void verifyFile() {
 		if (system.equals(DBsystem.sqlite) && !new File(host + File.separator + database).exists())
-			throw new FIMSRuntimeException("Data Source file not available.", 500);
+			throw new FimsRuntimeException("Data Source file not available.", 500);
 	}
 	
 }

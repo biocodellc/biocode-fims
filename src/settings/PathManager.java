@@ -1,6 +1,6 @@
 package settings;
 
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 
 import java.io.File;
 
@@ -58,7 +58,7 @@ public class PathManager {
             boolean result = theDir.mkdirs();
 
             if (!result) {
-                throw new FIMSRuntimeException("Unable to create directory " + theDir.getAbsolutePath(), 500);
+                throw new FimsRuntimeException("Unable to create directory " + theDir.getAbsolutePath(), 500);
             }
         }
         return theDir;
@@ -110,7 +110,7 @@ public class PathManager {
         try {
             //fimsPrinter.out.println(pm.setFile("sampledata/biocode_template.xls").getName());
             //fimsPrinter.out.println(pm.setFile("../../../sampledata/biocode_template.xls"));
-            fimsPrinter.out.println(pm.setDirectory("/Users/jdeck/tripleOutput/").toString());
+            FimsPrinter.out.println(pm.setDirectory("/Users/jdeck/tripleOutput/").toString());
             //fimsPrinter.out.println(pm.setDirectory("."));
         } catch (Exception e) {
             e.printStackTrace();

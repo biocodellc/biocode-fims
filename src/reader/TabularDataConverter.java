@@ -7,23 +7,23 @@ import java.util.Random;
 
 import digester.Attribute;
 import digester.Entity;
+import fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
-import fimsExceptions.FIMSRuntimeException;
-import settings.hasher;
-import utils.sqlLiteNameCleaner;
+import settings.Hasher;
+import utils.SqlLiteNameCleaner;
 
 
 /**
  * Takes a data source represented by a TabularDataReader and converts it to a
- * SQLite database.  Each table in the source data is converted to a matching
- * table in the SQLite database.
+ * SQLite Database.  Each table in the source data is converted to a matching
+ * table in the SQLite Database.
  */
 public final class TabularDataConverter {
     TabularDataReader source;
     String dest;
-    String tablename;
+    String tableName;
 
     private static Logger logger = LoggerFactory.getLogger(TabularDataConverter.class);
     /**
@@ -37,7 +37,7 @@ public final class TabularDataConverter {
 
     /**
      * Constructs a new TabularDataConverter for the specified source and
-     * destination database connection.
+     * destination Database connection.
      *
      * @param source A TabularDataReader with an open data source.
      * @param dest   A valid SQLIte JDBC connection string.
@@ -58,7 +58,7 @@ public final class TabularDataConverter {
      */
     public final void setSource(TabularDataReader source) {
         this.source = source;
-        tablename = "";
+        tableName = "";
     }
 
     /**
@@ -71,7 +71,7 @@ public final class TabularDataConverter {
     }
 
     /**
-     * Get the JDBC connection string for the destination SQLite database.
+     * Get the JDBC connection string for the destination SQLite Database.
      *
      * @return The JDBC connection string.
      */
@@ -81,14 +81,14 @@ public final class TabularDataConverter {
 
     /**
      * Specify a table name to use for storing the converted data in the
-     * destination database.  This will only apply to the first table in a data
+     * destination Database.  This will only apply to the first table in a data
      * source, and is intended for data sources that don't explicitly provide a
      * meaningful table name, such as CSV files.
      *
-     * @param tablename A valid SQLite table name.
+     * @param tableName A valid SQLite table name.
      */
-    public void setTableName(String tablename) {
-        this.tablename = tablename;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     /**
@@ -97,7 +97,7 @@ public final class TabularDataConverter {
      * @return The table name string.
      */
     public String getTableName() {
-        return tablename;
+        return tableName;
     }
 
     /**
@@ -107,21 +107,21 @@ public final class TabularDataConverter {
      * digit, an underscore is added to the beginning of the name.  Any other
      * non-alphanumeric characters are removed.
      *
-     * @param tname The table name to fix, if needed.
+     * @param tName The table name to fix, if needed.
      * @return The corrected table name.
      */
-    private String fixSQLiteIdentifierName(String tname) {
-        sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
-        return cleaner.fixNames(tname);
+    private String fixSQLiteIdentifierName(String tName) {
+        SqlLiteNameCleaner cleaner = new SqlLiteNameCleaner();
+        return cleaner.fixNames(tName);
     }
 
     /**
-     * Reads the source data and converts it to tables in a Sqlite database.
-     * Uses the database connection string provided in the constructor or in a
+     * Reads the source data and converts it to tables in a Sqlite Database.
+     * Uses the Database connection string provided in the constructor or in a
      * call to setDestination().  The name to use for the FIRST table in the
-     * database can be specified by calling setTableName().  Otherwise, and for
+     * Database can be specified by calling setTableName().  Otherwise, and for
      * all remaining tables, the table names are taken from the source data
-     * reader.  Any tables that already exist in the destination database will
+     * reader.  Any tables that already exist in the destination Database will
      * be DROPPED.  Destination tables will have columns matching the names and
      * number of elements in the first row of each table in the source data.
      * All rows from the source are copied to the new table.
@@ -133,13 +133,13 @@ public final class TabularDataConverter {
         //int tablecnt = 0;
         Connection connection = null;
         try {
-            String tname = source.getCurrentTableName();
+            String tName = source.getCurrentTableName();
             connection = DriverManager.getConnection(dest);
 
             if (source.tableHasNextRow()) {
-                String fixedtname = fixSQLiteIdentifierName(tname);
-                buildTable(connection, fixedtname);
-                buildHashes(connection, mapping, fixedtname);
+                String fixedtName = fixSQLiteIdentifierName(tName);
+                buildTable(connection, fixedtName);
+                buildHashes(connection, mapping, fixedtName);
             }
 
             // TODO: loop tables as the original triplifier did (see commented code below).  For now, we just name one table
@@ -150,17 +150,17 @@ public final class TabularDataConverter {
               // If the user supplied a name for the first table in the data
               // source, use it.  Otherwise, take the table name from the data
               // source.
-              if ((tablecnt == 1) && !tablename.equals(""))
-                  tname = tablename;
+              if ((tablecnt == 1) && !tableName.equals(""))
+                  tName = tableName;
               else
-                  tname = source.getCurrentTableName();
+                  tName = source.getCurrentTableName();
 
               if (source.tableHasNextRow())
-                  buildTable(conn, fixSQLiteIdentifierName(tname));
+                  buildTable(conn, fixSQLiteIdentifierName(tName));
           }  */
         } catch (SQLException e) {
             // If we through an excaption here, it could be ANYTHING that SQLlite doesn't like, including duplicate columnnames
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } finally {
             try {
                 if (connection != null)
@@ -177,7 +177,7 @@ public final class TabularDataConverter {
      * @param connection
      * @param mapping
      */
-    private void buildHashes(Connection connection, digester.Mapping mapping, String tname) {
+    private void buildHashes(Connection connection, digester.Mapping mapping, String tName) {
         // Loop through entities and find which ones define HASH
         LinkedList<Entity> entities = mapping.getEntities();
         Iterator it = entities.iterator();
@@ -189,8 +189,8 @@ public final class TabularDataConverter {
                 Entity entity = (Entity) it.next();
                 if (entity.getWorksheetUniqueKey().contains("HASH")) {
 
-                    // Add this column bcid
-                    String alter = "ALTER TABLE " + tname + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
+                    // Add this column Bcid
+                    String alter = "ALTER TABLE " + tName + " ADD COLUMN " + entity.getWorksheetUniqueKey() + " text";
                     stmt.executeUpdate(alter);
 
                     LinkedList<Attribute> attributes = entity.getAttributes();
@@ -203,15 +203,15 @@ public final class TabularDataConverter {
                         if (attributesIt.hasNext())
                             sb.append(" || ");
                     }
-                    sb.append(" AS toHash FROM " + tname);
+                    sb.append(" AS toHash FROM " + tName);
                     //System.out.println(sb.toString());
                     ResultSet rs = stmt.executeQuery(sb.toString());
 
                     Statement updateStatement = connection.createStatement();
-                    hasher hasher = new hasher();
+                    Hasher hasher = new Hasher();
                     updateStatement.execute("BEGIN TRANSACTION");
                     while (rs.next()) {
-                        String update = "UPDATE " + tname +
+                        String update = "UPDATE " + tName +
                                 " SET " + entity.getWorksheetUniqueKey() + " = \"" +
                                 hasher.hasherDigester(rs.getString("toHash")) + "\" " +
                                 " WHERE rowid = " + rs.getString("rowid");
@@ -222,7 +222,7 @@ public final class TabularDataConverter {
                 }
             }
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } finally {
             try {
                 stmt.close();
@@ -233,18 +233,18 @@ public final class TabularDataConverter {
     }
 
     /**
-     * Creates a single table in the destination database using the current
+     * Creates a single table in the destination Database using the current
      * table in the data source.  If the specified table name already exists in
-     * the database, IT IS DROPPED.  A new table with columns matching the names
+     * the Database, IT IS DROPPED.  A new table with columns matching the names
      * and number of elements in the first row of the source data is created,
      * and all rows from the source are copied to the new table.  If a data
      * source returns a blank column name, then a machine-generated column name
      * will be used.
      *
-     * @param conn  A valid connection to a destination database.
-     * @param tname The name to use for the table in the destination database.
+     * @param conn  A valid connection to a destination Database.
+     * @param tName The name to use for the table in the destination Database.
      */
-    private void buildTable(Connection conn, String tname) {
+    private void buildTable(Connection conn, String tName) {
         int colcnt, cnt;
         Statement stmt = null;
         try {
@@ -263,20 +263,20 @@ public final class TabularDataConverter {
                 alphindex = randgen.nextInt(alphabet.length());
                 rand_prefix_arr[cnt] = alphabet.charAt(alphindex);
             }
-            String rand_prefix = String.copyValueOf(rand_prefix_arr);
+            String randPrefix = String.copyValueOf(rand_prefix_arr);
 
             // if this table exists, drop it
-            stmt.executeUpdate("DROP TABLE IF EXISTS [" + tname + "]");
+            stmt.executeUpdate("DROP TABLE IF EXISTS [" + tName + "]");
 
             // set up the table definition query
-            String query = "CREATE TABLE [" + tname + "] (";
+            String query = "CREATE TABLE [" + tName + "] (";
             colcnt = 0;
             for (String colname : source.tableGetNextRow()) {
                 if (colcnt++ > 0)
                     query += ", ";
                 // If the column name is blank, generate a suitable name.
                 if (colname.trim().equals("")) {
-                    colname = tname + "_" + rand_prefix + "_" + col_cnt;
+                    colname = tName + "_" + randPrefix + "_" + col_cnt;
                     col_cnt++;
                 }
                 colname = fixSQLiteIdentifierName(colname);
@@ -289,7 +289,7 @@ public final class TabularDataConverter {
             stmt.executeUpdate(query);
 
             // create a prepared statement for insert queries
-            query = "INSERT INTO [" + tname + "] VALUES (";
+            query = "INSERT INTO [" + tName + "] VALUES (";
             for (cnt = 0; cnt < colcnt; cnt++) {
                 if (cnt > 0)
                     query += ", ";
@@ -325,7 +325,7 @@ public final class TabularDataConverter {
 
                 // Only execute this portion of the strinbuilder identified ANY datavalues for this row
                 if (!sb.toString().equals("")) {
-                    // add the row to the database
+                    // add the row to the Database
                     insstmt.executeUpdate();
                 }
             }
@@ -339,7 +339,7 @@ public final class TabularDataConverter {
             // end the transaction
             stmt.execute("COMMIT");
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } finally {
             try {
                 stmt.close();

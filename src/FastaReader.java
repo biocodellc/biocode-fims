@@ -2,14 +2,14 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import fimsExceptions.FimsRuntimeException;
 import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.io.FastaReaderHelper;
-import fimsExceptions.FIMSRuntimeException;
-import settings.fimsPrinter;
+import settings.FimsPrinter;
 
 public class FastaReader {
      int limit;
-    File file;
+     File file;
      File sqliteFile;
 
     public FastaReader(String filename, int limit) {
@@ -26,13 +26,13 @@ public class FastaReader {
         try {
             a = FastaReaderHelper.readFastaProteinSequence(file);
         } catch (Exception e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
         int count = 0;
         for (Entry<String, ProteinSequence> entry : a.entrySet()) {
-            fimsPrinter.out.println( count + " of " +a.size() + " for " + file.getName());
-            fimsPrinter.out.println("\tAccessionID = " + entry.getValue().getAccession().getID());
-            fimsPrinter.out.println("\tSequence = " + entry.getValue().getSequenceAsString());
+            FimsPrinter.out.println( count + " of " +a.size() + " for " + file.getName());
+            FimsPrinter.out.println("\tAccessionID = " + entry.getValue().getAccession().getID());
+            FimsPrinter.out.println("\tSequence = " + entry.getValue().getSequenceAsString());
             count++;
             if (count > limit) break;
         }
@@ -62,11 +62,11 @@ public class FastaReader {
     public static void main(String[] args) {
         FastaReader fastaReader = new FastaReader("sampledata/A.doe.CO1.fasta",2);
 
-        // TODO:, see the following list to integrate FASTA sequence files into database
+        // TODO:, see the following list to integrate FASTA sequence files into Database
         // think about how to integrate this with larger run.process...
-        // 1. assign BCID to accession ID, making a globally unique bcid
+        // 1. assign BCID to accession ID, making a globally unique Bcid
         // 2. assign some "hasSequence" property to the sequence itself
-        // 3. create a triple file and upload to database (using upload script)
+        // 3. create a triple file and upload to Database (using upload script)
         // 4. create a sequence upload run.process (loop through files)
 
         /*

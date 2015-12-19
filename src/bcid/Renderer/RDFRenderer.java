@@ -1,7 +1,7 @@
 package bcid.Renderer;
 
 /**
- * Renders a BCID as RDF.  This is for machine negotiation of an bcid
+ * Renders a BCID as RDF.  This is for machine negotiation of an Bcid
  */
 public class RDFRenderer extends Renderer {
 

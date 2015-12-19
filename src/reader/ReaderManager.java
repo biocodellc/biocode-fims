@@ -8,10 +8,10 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
-import fimsExceptions.FIMSRuntimeException;
 
 
 /**
@@ -55,13 +55,13 @@ public class ReaderManager implements Iterable<TabularDataReader> {
         // get location of the plugins package
         URL rsc = cl.getResource(PACKAGE_PATH);
         if (rsc == null)
-            throw new FIMSRuntimeException("Could not locate plugins directory.", 500);
+            throw new FimsRuntimeException("Could not locate plugins directory.", 500);
 
         File pluginsdir = new File(rsc.getFile());
 
         // make sure the location is a valid directory
         if (!pluginsdir.exists() || !pluginsdir.isDirectory())
-            throw new FIMSRuntimeException("Could not locate plugins directory.", 500);
+            throw new FimsRuntimeException("Could not locate plugins directory.", 500);
 
         // createEZID a simple filter to only look at compiled class files
         FilenameFilter filter = new FilenameFilter() {
@@ -70,34 +70,34 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                 return (name.endsWith(".class") && !name.endsWith("TabularDataReader.class"));
             }
         };
-        File[] classfiles = pluginsdir.listFiles(filter);
+        File[] classFiles = pluginsdir.listFiles(filter);
 
-        String classname;
-        Class newclass;
-        Object newreader;
+        String className;
+        Class newClass;
+        Object newReader;
 
         // run.process each class file
-        for (File classfile : classfiles) {
-            classname = classfile.getName();
-            classname = classname.substring(0, classname.length() - 6);
+        for (File classFile : classFiles) {
+            className = classFile.getName();
+            className = className.substring(0, className.length() - 6);
             //fimsPrinter.out.println(classname);
 
             try {
                 // load the class file and instantiate the class
-                newclass = cl.loadClass(getClassNameWithReaderPluginsPackage(classname));
-                newreader = newclass.newInstance();
+                newClass = cl.loadClass(getClassNameWithReaderPluginsPackage(className));
+                newReader = newClass.newInstance();
 
                 // make sure this class implements the reader interface
-                if (newreader instanceof TabularDataReader) {
+                if (newReader instanceof TabularDataReader) {
                     // add it to the list of valid readers
-                    readers.add((TabularDataReader) newreader);
+                    readers.add((TabularDataReader) newReader);
                 }
             } catch (ClassNotFoundException e) {
-                throw new FIMSRuntimeException(500, e);
+                throw new FimsRuntimeException(500, e);
             } catch (InstantiationException e) {
-                throw new FIMSRuntimeException(500, e);
+                throw new FimsRuntimeException(500, e);
             } catch (IllegalAccessException e) {
-                throw new FIMSRuntimeException(500, e);
+                throw new FimsRuntimeException(500, e);
             }
         }
     }
@@ -128,20 +128,20 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                         readers.add((TabularDataReader) newInstance);
                     }
                 } catch (ClassNotFoundException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 } catch (InstantiationException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 } catch (IllegalAccessException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 }
             }
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 
-    private String getClassNameWithReaderPluginsPackage(String classname) {
-        return PACKAGE_PATH.replace("/", ".") + "." + classname;
+    private String getClassNameWithReaderPluginsPackage(String className) {
+        return PACKAGE_PATH.replace("/", ".") + "." + className;
     }
 
     /**
@@ -166,12 +166,12 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * of the reader.  If a reader matching the file format is found, a new
      * instance of the reader is created and returned.
      *
-     * @param formatstring The input file format.
+     * @param formatString The input file format.
      * @return A new instance of the reader supporting the specified format.
      */
-    public TabularDataReader getReader(String formatstring) {
+    public TabularDataReader getReader(String formatString) {
         for (TabularDataReader reader : readers) {
-            if (reader.getFormatString().equals(formatstring)) {
+            if (reader.getFormatString().equals(formatString)) {
                 try {
                     return reader.getClass().newInstance();
                 } catch (IllegalAccessException e){
@@ -221,9 +221,9 @@ public class ReaderManager implements Iterable<TabularDataReader> {
                     // Set input file
                     return newreader;
                 } catch (InstantiationException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 } catch (IllegalAccessException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 }
             }
         }
@@ -248,13 +248,13 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * and returned after opening the file.
      *
      * @param filepath     The path of the data file to open.
-     * @param formatstring The format of the input file.
+     * @param formatString The format of the input file.
      * @return A new instance of a reader if a reader for the format is
      *         available and opens the file successfully. Otherwise, returns null.
      */
-    public TabularDataReader openFile(String filepath, String formatstring) {
+    public TabularDataReader openFile(String filepath, String formatString) {
         // get the reader for the specified file format
-        TabularDataReader reader = getReader(formatstring);
+        TabularDataReader reader = getReader(formatString);
 
         if (reader != null) {
             // if a matching reader was found, try to open the specified file
@@ -281,22 +281,22 @@ public class ReaderManager implements Iterable<TabularDataReader> {
      * if we need to do more complex things within the iterator itself.
      */
     private class ReaderIterator implements Iterator<TabularDataReader> {
-        private LinkedList<TabularDataReader> readerlist;
+        private LinkedList<TabularDataReader> readerList;
         private int index;
 
-        public ReaderIterator(LinkedList<TabularDataReader> readerlist) {
-            this.readerlist = readerlist;
+        public ReaderIterator(LinkedList<TabularDataReader> readerList) {
+            this.readerList = readerList;
             index = 0;
         }
 
         public boolean hasNext() {
-            return index < readerlist.size();
+            return index < readerList.size();
         }
 
         public TabularDataReader next() {
             if (hasNext()) {
                 index++;
-                return readerlist.get(index - 1);
+                return readerList.get(index - 1);
             } else
                 throw new NoSuchElementException();
         }

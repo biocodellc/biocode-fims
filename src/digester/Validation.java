@@ -3,15 +3,15 @@ package digester;
 import static ch.lambdaj.Lambda.*;
 
 import ch.lambdaj.group.Group;
-import fimsExceptions.FIMSException;
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsException;
+import fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.TabularDataConverter;
 import reader.plugins.TabularDataReader;
 import renderers.RendererInterface;
 import renderers.RowMessage;
-import run.processController;
+import run.ProcessController;
 import settings.*;
 import utils.Html2Text;
 
@@ -111,11 +111,11 @@ public class Validation implements RendererInterface {
     }
 
     /**
-     * Create a SQLLite database instance
+     * Create a SQLLite Database instance
      *
      * @return
      */
-    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws FIMSException {
+    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws FimsException {
         PathManager pm = new PathManager();
         File processDirectory = null;
 
@@ -125,7 +125,7 @@ public class Validation implements RendererInterface {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
-            throw new FIMSRuntimeException("could not load the SQLite JDBC driver.", 500, ex);
+            throw new FimsRuntimeException("could not load the SQLite JDBC driver.", 500, ex);
         }
 
         // Create SQLite file
@@ -137,7 +137,7 @@ public class Validation implements RendererInterface {
         try {
             tdc.convert(mapping);
         } catch (Exception e) {
-            throw new FIMSException(e);
+            throw new FimsException(e);
         }
         tabularDataReader.closeFile();
 
@@ -146,7 +146,7 @@ public class Validation implements RendererInterface {
             Connection localConnection = new Connection(sqliteFile);
             connection = java.sql.DriverManager.getConnection(localConnection.getJdbcUrl());
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("Trouble finding SQLLite Connection", 500, e);
+            throw new FimsRuntimeException("Trouble finding SQLLite Connection", 500, e);
         }
 
     }
@@ -155,7 +155,7 @@ public class Validation implements RendererInterface {
      * Loop through worksheets and print out object data
      */
     public void printObject() {
-        fimsPrinter.out.println("Validate");
+        FimsPrinter.out.println("Validate");
 
         for (Iterator<Worksheet> i = worksheets.iterator(); i.hasNext(); ) {
             Worksheet w = i.next();
@@ -173,7 +173,7 @@ public class Validation implements RendererInterface {
     /**
      * Print output for the commandline
      */
-    public processController printMessages(processController processController) {
+    public ProcessController printMessages(ProcessController processController) {
         StringBuilder warningSB = new StringBuilder();
         // Create a simplified output stream just for commandline printing.
         StringBuilder commandLineWarningSB = new StringBuilder();
@@ -259,7 +259,7 @@ public class Validation implements RendererInterface {
      * @return
      */
     public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) {
-        fimsPrinter.out.println("Validate ...");
+        FimsPrinter.out.println("Validate ...");
         this.mapping = mapping;
 
         // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
@@ -271,7 +271,7 @@ public class Validation implements RendererInterface {
             sheet = worksheets.get(0);
             sheetName = sheet.getSheetname();
             tabularDataReader.setTable(sheetName);
-        } catch (FIMSException e) {
+        } catch (FimsException e) {
             // An error here means the sheetname was not found, throw an application message
             sheet.getMessages().addLast(new RowMessage("Unable to find a required worksheet named '" + sheetName + "' (no quotes)", "Spreadsheet check", RowMessage.ERROR));
             return false;
@@ -285,7 +285,7 @@ public class Validation implements RendererInterface {
         // processing data, such as worksheets containing duplicate column names, which will fail the data load.
         try {
             createSqlLite(filenamePrefix, outputFolder, mapping);
-        }   catch (FIMSException e) {
+        }   catch (FimsException e) {
             errorFree = false;
             sheet.getMessages().addLast(new RowMessage(
                     "Unable to parse spreadsheet.  This is most likely caused by having two columns with the same " +

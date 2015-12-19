@@ -1,6 +1,6 @@
 package digester;
 
-import settings.fimsPrinter;
+import settings.FimsPrinter;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -72,11 +72,11 @@ public class Entity {
     }
 
     /*public String getBcid() {
-        return bcid;
+        return Bcid;
     }
 
-    public void setBcid(String bcid) {
-        this.bcid = bcid;
+    public void setBcid(String Bcid) {
+        this.Bcid = Bcid;
     }*/
 
     /**
@@ -101,12 +101,12 @@ public class Entity {
      * Basic Text printer
      */
     public void print() {
-        fimsPrinter.out.println("  EntityId:" + entityId);
-        fimsPrinter.out.println("    worksheet=" + worksheet);
-        fimsPrinter.out.println("    worksheetUniqueKey=" + worksheetUniqueKey);
-        fimsPrinter.out.println("    conceptName=" + conceptAlias);
-        fimsPrinter.out.println("    conceptURI=" + conceptURI);
-        //fimsPrinter.out.println("    bcid=" + bcid);
+        FimsPrinter.out.println("  EntityId:" + entityId);
+        FimsPrinter.out.println("    worksheet=" + worksheet);
+        FimsPrinter.out.println("    worksheetUniqueKey=" + worksheetUniqueKey);
+        FimsPrinter.out.println("    conceptName=" + conceptAlias);
+        FimsPrinter.out.println("    conceptURI=" + conceptURI);
+        //fimsPrinter.out.println("    Bcid=" + Bcid);
          if (attributes.size() > 0) {
             for (Attribute attribute : attributes)
                 attribute.print();

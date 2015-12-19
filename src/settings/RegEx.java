@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
  * Facilitate regular expressions
  */
 public class RegEx {
-
-
     /**
      * Method used to emulate Perl type regex's
      *
@@ -34,7 +32,7 @@ public class RegEx {
     }
 
     public static void main(String[] args) {
-          fimsPrinter.out.println(run("<.xml version=.1.0. encoding=.utf-8...>","<?xml version=\"1.0\" encoding=\"utf-8\"?>hallo"));
+          FimsPrinter.out.println(run("<.xml version=.1.0. encoding=.utf-8...>","<?xml version=\"1.0\" encoding=\"utf-8\"?>hallo"));
          /*if($well_number96 =~ /(^[A-Ha-h])(\d+)$/) {
             my $letter = $1;
             my $number = $2;

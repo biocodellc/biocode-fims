@@ -1,7 +1,7 @@
 package settings;
 
 /**
- * Enumerates supported database systems with their JDBC drivers.
+ * Enumerates supported Database systems with their JDBC drivers.
  * Needs the driver jars in path.
  */
 public enum DBsystem {

@@ -1,6 +1,6 @@
 package utils;
 
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 
 import java.io.*;
 import javax.swing.text.html.*;
@@ -28,7 +28,7 @@ public class Html2Text extends HTMLEditorKit.ParserCallback {
         try {
             delegator.parse(in, this, Boolean.TRUE);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 

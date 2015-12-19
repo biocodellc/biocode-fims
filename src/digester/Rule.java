@@ -1,15 +1,15 @@
 package digester;
 
+import fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
 import renderers.RowMessage;
-import fimsExceptions.FIMSException;
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsException;
 import settings.RegEx;
-import settings.fimsPrinter;
-import utils.encodeURIcomponent;
-import utils.sqlLiteNameCleaner;
+import settings.FimsPrinter;
+import utils.EncodeURIcomponent;
+import utils.SqlLiteNameCleaner;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.String;
@@ -45,7 +45,7 @@ public class Rule {
     // A reference to the validation object this rule belongs to
     //private Validation validation;
     // A reference to the worksheet object this rule belongs to
-    // TODO: Remove the remaining references to worksheet.  We are transitioning to using a SQLlite database connection
+    // TODO: Remove the remaining references to worksheet.  We are transitioning to using a SQLlite Database connection
     private TabularDataReader worksheet;
     private Worksheet digesterWorksheet;
     // Now a reference to a SQLLite connection
@@ -97,8 +97,8 @@ public class Rule {
         //fimsPrinter.out.println("setting to "+ digesterWorksheet.getSheetname());
         try {
             worksheet.setTable(digesterWorksheet.getSheetname());
-        } catch (FIMSException e) {
-            throw new FIMSRuntimeException(500, e);
+        } catch (FimsException e) {
+            throw new FimsRuntimeException(500, e);
         }
     }
 
@@ -196,7 +196,7 @@ public class Rule {
         if (column == null) {
             return null;
         } else {
-            return new sqlLiteNameCleaner().fixNames(column);
+            return new SqlLiteNameCleaner().fixNames(column);
             //return column.replace(" ", "_");
         }
     }
@@ -211,7 +211,7 @@ public class Rule {
         if (otherColumn == null) {
             return null;
         } else {
-            return new sqlLiteNameCleaner().fixNames(otherColumn);
+            return new SqlLiteNameCleaner().fixNames(otherColumn);
             //return column.replace(" ", "_");
         }
     }
@@ -256,7 +256,7 @@ public class Rule {
 
         for (Iterator i = fields.iterator(); i.hasNext(); ) {
             String field = (String) i.next();
-            fimsPrinter.out.println("      field data : " + field);
+            FimsPrinter.out.println("      field data : " + field);
         }
     }
 
@@ -320,7 +320,7 @@ public class Rule {
     /**
      * Checks that characters in a string can become a portion of a valid URI
      * This is necessary for cases where data is being triplified and constructed as a URI
-     * One approach is to encode all characters, however, this creates a mis-leading bcid
+     * One approach is to encode all characters, however, this creates a mis-leading Bcid
      * and if used as part of a URI should be only valid characters.
      * <p/>
      * Characters that are disallowed are: %$&+,/:;=?@<>#%\
@@ -333,7 +333,7 @@ public class Rule {
         Statement statement = null;
         ResultSet rs = null;
         String groupMessage = "Non-valid URI characters";
-        utils.encodeURIcomponent encodeURIcomponent = new encodeURIcomponent();
+        EncodeURIcomponent encodeURIcomponent = new EncodeURIcomponent();
 
         // Extract all unique Values from SQL
         try {
@@ -365,7 +365,7 @@ public class Rule {
 
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("SQL exception processing uniqueValue rule", 500, e);
+            throw new FimsRuntimeException("SQL exception processing uniqueValue rule", 500, e);
         } finally {
             try {
                 if (statement != null)
@@ -423,7 +423,7 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("SQL exception processing uniqueValue rule", 500, e);
+            throw new FimsRuntimeException("SQL exception processing uniqueValue rule", 500, e);
         } finally {
             try {
                 if (statement != null)
@@ -559,7 +559,7 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("minimumMaximumCheck exception", 500, e);
+            throw new FimsRuntimeException("minimumMaximumCheck exception", 500, e);
         }
     }
 
@@ -816,7 +816,7 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("SQL exception processing requiredValueFromOtherColumn rule", 500, e);
+            throw new FimsRuntimeException("SQL exception processing requiredValueFromOtherColumn rule", 500, e);
         } finally {
             try {
                 if (statement != null)
@@ -1008,9 +1008,9 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (UnsupportedEncodingException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 
@@ -1054,7 +1054,7 @@ public class Rule {
                 validNumber = false;
             }
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
         return validNumber;
     }
@@ -1187,9 +1187,9 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (UnsupportedEncodingException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 
@@ -1307,11 +1307,11 @@ public class Rule {
             }
 
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("SQL exception processing checkInXMLFields rule", 500, e);
+            throw new FimsRuntimeException("SQL exception processing checkInXMLFields rule", 500, e);
         } catch (MalformedURLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (UnsupportedEncodingException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } finally {
             try {
                 if (statement != null)
@@ -1354,7 +1354,7 @@ public class Rule {
 
             String fieldNameSQLLite = "", msg = "", fieldNameWorksheet = "";
             ArrayList<String> notFoundArray = new ArrayList<String>();
-            sqlLiteNameCleaner cleaner = new sqlLiteNameCleaner();
+            SqlLiteNameCleaner cleaner = new SqlLiteNameCleaner();
             boolean booFound = false;
             // Create a hashset of column names for easy lookup
             Set<String> hashset = new HashSet<String>(worksheet.getColNames());
@@ -1393,7 +1393,7 @@ public class Rule {
                 addMessage(msg, groupMessage);
             }
         } catch (SQLException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } finally {
             try {
                 if (statement != null)
@@ -1496,7 +1496,7 @@ public class Rule {
     }
 
     /**
-     * A simple check to see if a column exists in the SQLLite database
+     * A simple check to see if a column exists in the SQLLite Database
      *
      * @param column
      *
@@ -1512,7 +1512,7 @@ public class Rule {
             else
                 return false;
         } catch (SQLException e) {
-            throw new FIMSRuntimeException("SQLException checking if " + column + " column exists", 500, e);
+            throw new FimsRuntimeException("SQLException checking if " + column + " column exists", 500, e);
         }
     }
 

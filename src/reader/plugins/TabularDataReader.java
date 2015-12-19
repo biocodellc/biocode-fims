@@ -2,7 +2,7 @@ package reader.plugins;
 
 
 import org.apache.poi.ss.usermodel.Sheet;
-import fimsExceptions.FIMSException;
+import fimsExceptions.FimsException;
 
 import java.io.File;
 
@@ -31,7 +31,7 @@ public interface TabularDataReader {
 
     public Integer getColumnPosition(String colName);
 
-    public void setTable(String table) throws FIMSException;
+    public void setTable(String table) throws FimsException;
     /**
      * Get a short string identifying the file format(s) supported by this
      * reader.  This string can be treated as a constant that is used to request

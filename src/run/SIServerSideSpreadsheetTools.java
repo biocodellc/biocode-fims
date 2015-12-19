@@ -2,11 +2,11 @@ package run;
 
 import digester.Attribute;
 import digester.Mapping;
+import fimsExceptions.FimsRuntimeException;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import fimsExceptions.FIMSRuntimeException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class SIServerSideSpreadsheetTools {
 
     /**
      * Create the guidIfier with everything it needs to accomplish its mission:
-     * reading an inputWoorkbook, using the locally unique bcid,
+     * reading an inputWoorkbook, using the locally unique Bcid,
      * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
      * wait for the run() method to be called to actually write our output spreadsheet
      *
@@ -45,9 +45,9 @@ public class SIServerSideSpreadsheetTools {
             FileInputStream fis = new FileInputStream(sourceFile);
             this.workbook = new XSSFWorkbook(fis);
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
         this.sheet = workbook.getSheet(sheetName);
         this.bcidRoot = bcidRoot;
@@ -57,7 +57,7 @@ public class SIServerSideSpreadsheetTools {
     }
 
     /**
-     * Create the guidIfier with the SI-specific rules for guidifying an bcid.
+     * Create the guidIfier with the SI-specific rules for guidifying an Bcid.
      * reading an inputWoorkbook, using the userID (as an argument), and appending the rowNum (based on sheet).
      * and appending it onto an ARKRoot and writing it to the last column of the specified sheet.
      * wait for the run() method to be called to actually write our output spreadsheet
@@ -77,9 +77,9 @@ public class SIServerSideSpreadsheetTools {
             FileInputStream fis = new FileInputStream(sourceFile);
             this.workbook = new XSSFWorkbook(fis);
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
         this.sheet = workbook.getSheet(sheetName);
         this.bcidRoot = bcidRoot;
@@ -218,7 +218,7 @@ public class SIServerSideSpreadsheetTools {
             workbook.write(fileOut);
             fileOut.close();
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
     }
 
@@ -236,9 +236,9 @@ public class SIServerSideSpreadsheetTools {
 
         try {
             File configFile = new File(inputConfigFile);
-            processController pc = new processController();
+            ProcessController pc = new ProcessController();
 
-            process p = new process(
+            Process p = new Process(
                     inputSpreadsheet,
                     outputDir,
                     pc,
@@ -295,8 +295,8 @@ public class SIServerSideSpreadsheetTools {
                 // We have to normalize some values found in attribute columns
                 if (c.getStringCellValue().replace("/", "").equalsIgnoreCase(attribute.getColumn().replace("_", " "))) {
                     Cell columnInternalCell = columnInternalRow.createCell(c.getColumnIndex());
-                    //System.out.println("       :" + attribute.getColumnInternal());
-                    columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumnInternal()));
+                    //System.out.println("       :" + attribute.getColumn_internal());
+                    columnInternalCell.setCellValue(StringEscapeUtils.unescapeXml(attribute.getColumn_internal()));
                 }
             }
         }

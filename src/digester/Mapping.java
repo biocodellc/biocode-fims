@@ -2,11 +2,11 @@ package digester;
 
 import java.net.URI;
 
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 import renderers.RendererInterface;
-import run.processController;
+import run.ProcessController;
 import settings.*;
-import triplify.triplifier;
+import triplify.Triplifier;
 
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
@@ -19,10 +19,10 @@ import java.util.List;
 public class Mapping implements RendererInterface {
     public Connection connection;
 
-    protected deepRoots dRoots = null;
+    protected DeepRoots dRoots = null;
     private final LinkedList<Entity> entities = new LinkedList<Entity>();
     private final LinkedList<Relation> relations = new LinkedList<Relation>();
-    private triplifier triplifier;
+    private Triplifier triplifier;
     private String expeditionCode;
     private List<String> colNames;
 
@@ -34,7 +34,7 @@ public class Mapping implements RendererInterface {
         return colNames;
     }
 
-    public triplifier getTriplifier() {
+    public Triplifier getTriplifier() {
         return triplifier;
     }
 
@@ -122,7 +122,7 @@ public class Mapping implements RendererInterface {
         columnName = "@@" + entity.getColumn() + "@@";
         //}
 
-        // Use the deepRoots System to lookup Key
+        // Use the DeepRoots System to lookup Key
         String bcid = null;
         if (dRoots != null) {
             bcid = dRoots.lookupPrefix(entity);
@@ -133,7 +133,7 @@ public class Mapping implements RendererInterface {
             bcid = "urn:x-biscicol:" + entity.getConceptAlias() + ":";
         }
 
-        //System.out.println("\td2rq:uriPattern \"" + bcid + columnName + "\";");
+        //System.out.println("\td2rq:uriPattern \"" + Bcid + columnName + "\";");
         return "\td2rq:uriPattern \"" + bcid + columnName + "\";";
     }
 
@@ -180,19 +180,19 @@ public class Mapping implements RendererInterface {
      * Run the triplifier using this class
      *
      */
-    public boolean run(triplifier t, processController processController, Boolean runDeepRoots) {
+    public boolean run(Triplifier t, ProcessController processController, Boolean runDeepRoots) {
 
         String status = "Converting Data Format ...";
         processController.appendStatus(status + "<br>");
-        fimsPrinter.out.println(status);
+        FimsPrinter.out.println(status);
         this.expeditionCode = processController.getExpeditionCode();
         this.colNames = processController.getValidation().getTabularDataReader().getColNames();
         triplifier = t;
 
-        // Create a deepRoots object based on results returned from the BCID deepRoots service
+        // Create a DeepRoots object based on results returned from the BCID DeepRoots service
         // TODO: put this into a settings file
         if (runDeepRoots) {
-            dRoots = new deepRootsReader().createRootData(processController.getUserId(), processController.getProjectId(), expeditionCode);
+            dRoots = new DeepRootsReader().createRootData(processController.getUserId(), processController.getProjectId(), expeditionCode);
         }
 
         // Create a connection to a SQL Lite Instance
@@ -205,7 +205,7 @@ public class Mapping implements RendererInterface {
      * Just tell us where the file is stored...
      */
     public void print() {
-        fimsPrinter.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
+        FimsPrinter.out.println("\ttriple output file = " + triplifier.getTripleOutputFile());
         //fimsPrinter.out.println("\tsparql update file = " + triplifier.getUpdateOutputFile());
     }
 
@@ -213,7 +213,7 @@ public class Mapping implements RendererInterface {
      * Loop through the entities and relations we have defined...
      */
     public void printObject() {
-        fimsPrinter.out.println("Mapping has " + entities.size() + " entries");
+        FimsPrinter.out.println("Mapping has " + entities.size() + " entries");
 
         for (Iterator<Entity> i = entities.iterator(); i.hasNext(); ) {
             Entity e = i.next();
@@ -257,7 +257,7 @@ public class Mapping implements RendererInterface {
                 try {
                     return new URI(a.getUri());
                 } catch (URISyntaxException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 }
             }
         }
@@ -280,7 +280,7 @@ public class Mapping implements RendererInterface {
                try {
                     return new URI(a.getUri());
                 } catch (URISyntaxException e) {
-                    throw new FIMSRuntimeException(500, e);
+                    throw new FimsRuntimeException(500, e);
                 }
             }
         }

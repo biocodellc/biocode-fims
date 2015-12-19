@@ -15,7 +15,7 @@ public interface RendererInterface  {
     public void enter();
 
     /**
-     * Print an bcid's metadata
+     * Print an Bcid's metadata
      */
     public void printMetadata();
 
@@ -25,7 +25,7 @@ public interface RendererInterface  {
     public void leave();
 
     /**
-     * Need to always check the bcid and provide a consistent method for returning
+     * Need to always check the Bcid and provide a consistent method for returning
      * error messages if it is bad.
      */
     public boolean validIdentifier();

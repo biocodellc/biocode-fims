@@ -8,7 +8,7 @@ import utils.SettingsManager;
  */
 public class HTMLTableRenderer extends Renderer {
     private Integer userId = null;
-    private resolver resolver = null;
+    private Resolver resolver = null;
     static SettingsManager sm;
 
     static {
@@ -20,8 +20,8 @@ public class HTMLTableRenderer extends Renderer {
      * constructor for displaying private dataset information
      * @param username
      */
-    public HTMLTableRenderer(String username, resolver resolver) {
-        database db = new database();
+    public HTMLTableRenderer(String username, Resolver resolver) {
+        Database db = new Database();
         userId = db.getUserId(username);
         this.resolver = resolver;
     }
@@ -118,7 +118,7 @@ public class HTMLTableRenderer extends Renderer {
     }
 
     private void appendExpeditionDatasets() {
-        expeditionMinter expeditionMinter = new expeditionMinter();
+        ExpeditionMinter expeditionMinter = new ExpeditionMinter();
         if (displayDatasets()) {
             outputSB.append(expeditionMinter.listExpeditionDatasetsAsTable(resolver.getExpeditionId()));
         }
@@ -173,7 +173,7 @@ public class HTMLTableRenderer extends Renderer {
     private Boolean displayDatasets() {
         Boolean ignore_user = Boolean.getBoolean(sm.retrieveValue("ignore_user"));
         Integer projectId = Integer.parseInt(resolver.getProjectID(resolver.getBcidId()));
-        expeditionMinter expeditionMinter = new expeditionMinter();
+        ExpeditionMinter expeditionMinter = new ExpeditionMinter();
 
         //if public expedition, return true
         if (expeditionMinter.isPublic(resolver.getExpeditionCode(), projectId)) {

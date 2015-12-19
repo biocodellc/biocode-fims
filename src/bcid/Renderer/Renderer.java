@@ -1,13 +1,13 @@
 package bcid.Renderer;
 
-import bcid.BCIDMetadataSchema;
-import bcid.bcid;
+import bcid.BcidMetadataSchema;
+import bcid.Bcid;
 
 /**
  * Abstract class Renderer implements the visitor methods
  * and controls all renderer subClasses for rendering bcids
  */
-public abstract class Renderer extends BCIDMetadataSchema implements RendererInterface {
+public abstract class Renderer extends BcidMetadataSchema implements RendererInterface {
     protected StringBuilder outputSB;
 
     /**
@@ -15,7 +15,7 @@ public abstract class Renderer extends BCIDMetadataSchema implements RendererInt
      *
      * @return
      */
-    public String render(bcid bcid) {
+    public String render(Bcid bcid) {
         BCIDMetadataInit(bcid);
         outputSB = new StringBuilder();
 

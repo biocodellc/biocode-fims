@@ -1,15 +1,13 @@
 package unit_tests;
 
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import run.configurationFileTester;
-import tools.siConverter;
-import tools.siProjects;
+import run.ConfigurationFileTester;
+import tools.SiConverter;
+import tools.SiProjects;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -18,21 +16,21 @@ import static org.junit.Assert.assertTrue;
 
 
 /**
- * Test SI configuration files that were automatically generated using tools.siConverter Class
+ * Test SI configuration files that were automatically generated using tools.SiConverter Class
  */
 @RunWith(value = Parameterized.class)
 public class SIValidationTesterRunner {
 
-    private configurationFileTester tester;
+    private ConfigurationFileTester tester;
      String name;
 
     /**
-     * Setup the tester framework by creating a configurationFileTester object and calling its initializer
+     * Setup the tester framework by creating a ConfigurationFileTester object and calling its initializer
      *
      * @param file
      */
     public SIValidationTesterRunner(String name, File file) {
-        tester = new configurationFileTester();
+        tester = new ConfigurationFileTester();
         tester.init(file);
         this.name = name;
     }
@@ -47,17 +45,17 @@ public class SIValidationTesterRunner {
         Collection<Object[]> data = new ArrayList<Object[]>();
 
         // Create a converter object so we can initialize each of the SI projects
-        siConverter si = null;
-        si = new siConverter();
+        SiConverter si = null;
+        si = new SiConverter();
         si.init();
         // Loop each of the projects
         Iterator projectsIt = si.projects.iterator();
         int count = 0;
         while (projectsIt.hasNext()) {
-            siProjects project = (siProjects) projectsIt.next();
+            SiProjects project = (SiProjects) projectsIt.next();
             // Write the actual file
             File configFile = new File(
-                    si.output_directory.getAbsolutePath() +
+                    si.outputDirectory.getAbsolutePath() +
                             System.getProperty("file.separator") +
                             project.abbreviation +
                             ".xml");

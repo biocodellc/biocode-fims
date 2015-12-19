@@ -1,23 +1,24 @@
 package unit_tests;
 
+import fimsExceptions.FimsException;
 import run.*;
-import fimsExceptions.FIMSException;
+import run.Process;
 
 import java.io.*;
 import java.util.*;
 
 /**
  * The publicly accessible tests return or true or false, with true indicating success and false indicating that
- * the encodeURIcomponent was failed.  All messages are managed by the configurationFileErrorMessager class and can be
+ * the encodeURIcomponent was failed.  All messages are managed by the ConfigurationFileErrorMessager class and can be
  * retrieved at any point to display any explanatory information regarding why a particular encodeURIcomponent failed.   If all
- * tests pass then no messages are written to the configurationFileErrorMessager
+ * tests pass then no messages are written to the ConfigurationFileErrorMessager
  */
 public class SIValidationTester {
 
     private StringBuilder expectedSB = new StringBuilder();
     private StringBuilder actualSB = new StringBuilder();
 
-    private configurationFileErrorMessager messages = new configurationFileErrorMessager();
+    private ConfigurationFileErrorMessager messages = new ConfigurationFileErrorMessager();
     String output_directory = System.getProperty("user.dir") + File.separator + "sampledata" + File.separator;
 
 
@@ -28,10 +29,10 @@ public class SIValidationTester {
         return messages.printMessages();
     }
 
-    public void init(String inputFile, File configFile, File testFile) throws FIMSException, IOException {
-        processController processController = new processController(0, null);
+    public void init(String inputFile, File configFile, File testFile) throws FimsException, IOException {
+        ProcessController processController = new ProcessController(0, null);
 
-        process p = new process(
+        Process p = new Process(
                 inputFile,
                 output_directory,
                 processController,
@@ -67,7 +68,7 @@ public class SIValidationTester {
      *
      * @param args
      *
-     * @throws run.configurationFileError
+     * @throws ConfigurationFileError
      */
     public static void main(String[] args) throws Exception {
 

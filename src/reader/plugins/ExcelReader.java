@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import fimsExceptions.FimsException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import fimsExceptions.FIMSException;
-import fimsExceptions.FIMSRuntimeException;
+import fimsExceptions.FimsRuntimeException;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003
@@ -32,21 +32,21 @@ import fimsExceptions.FIMSRuntimeException;
  */
 public class ExcelReader implements TabularDataReader {
     // iterator for moving through the active worksheet
-    protected Iterator<Row> rowiter = null;
-    protected boolean hasnext = false;
+    protected Iterator<Row> rowIterator = null;
+    protected boolean hasNext = false;
 
     private static Logger logger = LoggerFactory.getLogger(ExcelReader.class);
 
-    protected Row nextrow;
+    protected Row nextRow;
 
     // The number of columns in the active worksheet (set by the first row).
-    protected int numcols;
+    protected int numCols;
 
     // The index for the active worksheet.
-    protected int currsheet;
+    protected int currSheet;
 
     // The entire workbook (e.g., spreadsheet file).
-    protected Workbook excelwb;
+    protected Workbook excelWb;
 
     // DataFormatter and FormulaEvaluator for dealing with cells with formulas.
     protected DataFormatter df;
@@ -121,9 +121,9 @@ public class ExcelReader implements TabularDataReader {
         }
 
         try {
-            excelwb = WorkbookFactory.create(is);
+            excelWb = WorkbookFactory.create(is);
 
-            currsheet = 0;
+            currSheet = 0;
         } catch (InvalidFormatException e) {
             logger.warn("invalid format", e);
             return false;
@@ -135,7 +135,7 @@ public class ExcelReader implements TabularDataReader {
         // Create a new DataFormatter and FormulaEvaluator to use for cells with
         // formulas.
         df = new DataFormatter();
-        fe = excelwb.getCreationHelper().createFormulaEvaluator();
+        fe = excelWb.getCreationHelper().createFormulaEvaluator();
 
         // Set the input file
         inputFile = new File(filepath);
@@ -144,43 +144,43 @@ public class ExcelReader implements TabularDataReader {
     }
 
     public boolean hasNextTable() {
-        if (excelwb == null)
+        if (excelWb == null)
             return false;
         else
-            return (currsheet < excelwb.getNumberOfSheets());
+            return (currSheet < excelWb.getNumberOfSheets());
     }
 
-    public void setTable(String worksheet) throws FIMSException {
-        Sheet exsheet = excelwb.getSheet(worksheet);
+    public void setTable(String worksheet) throws FimsException {
+        Sheet exsheet = excelWb.getSheet(worksheet);
 
         if (exsheet == null) {
-            throw new FIMSException("Unable to find worksheet " + worksheet);
+            throw new FimsException("Unable to find worksheet " + worksheet);
         }
-        currsheet = excelwb.getSheetIndex(worksheet) + 1;
-        rowiter = exsheet.rowIterator();
-        numcols = -1;
+        currSheet = excelWb.getSheetIndex(worksheet) + 1;
+        rowIterator = exsheet.rowIterator();
+        numCols = -1;
         testNext();
     }
 
     public void moveToNextTable() {
         if (hasNextTable()) {
-            Sheet exsheet = excelwb.getSheetAt(currsheet++);
-            rowiter = exsheet.rowIterator();
-            numcols = -1;
+            Sheet exsheet = excelWb.getSheetAt(currSheet++);
+            rowIterator = exsheet.rowIterator();
+            numCols = -1;
             testNext();
         } else
             throw new NoSuchElementException();
     }
 
     public String getCurrentTableName() {
-        return excelwb.getSheetName(currsheet - 1);
+        return excelWb.getSheetName(currSheet - 1);
     }
 
     public boolean tableHasNextRow() {
-        if (rowiter == null)
+        if (rowIterator == null)
             return false;
         else
-            return hasnext;
+            return hasNext;
     }
 
     /**
@@ -191,12 +191,12 @@ public class ExcelReader implements TabularDataReader {
      */
     protected void testNext() {
         int lastcellnum = 0;
-        while (rowiter.hasNext() && lastcellnum < 1) {
-            nextrow = rowiter.next();
-            lastcellnum = nextrow.getLastCellNum();
+        while (rowIterator.hasNext() && lastcellnum < 1) {
+            nextRow = rowIterator.next();
+            lastcellnum = nextRow.getLastCellNum();
         }
 
-        hasnext = lastcellnum > 0;
+        hasNext = lastcellnum > 0;
     }
 
     /**
@@ -205,7 +205,7 @@ public class ExcelReader implements TabularDataReader {
      * @return List of Column names
      */
     public java.util.List<String> getColNames() {
-        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+        Sheet wsh = excelWb.getSheet(getCurrentTableName());
 
         java.util.List<String> listColumnNames = new ArrayList<String>();
         Iterator<Row> rows = wsh.rowIterator();
@@ -239,7 +239,7 @@ public class ExcelReader implements TabularDataReader {
      * @return
      */
     public Sheet getSheet() {
-        return excelwb.getSheet(getCurrentTableName());
+        return excelWb.getSheet(getCurrentTableName());
     }
 
     /**
@@ -251,7 +251,7 @@ public class ExcelReader implements TabularDataReader {
      */
     public Integer getNumRows() {
 
-        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+        Sheet wsh = excelWb.getSheet(getCurrentTableName());
         Integer numRows;
 
         Iterator it = wsh.rowIterator();
@@ -303,7 +303,7 @@ public class ExcelReader implements TabularDataReader {
      * @return
      */
     public String getStringValue(int col, int row) {
-        Sheet wsh = excelwb.getSheet(getCurrentTableName());
+        Sheet wsh = excelWb.getSheet(getCurrentTableName());
         row = row + this.numHeaderRows;
 
         Row hrow = wsh.getRow(row);
@@ -388,21 +388,21 @@ public class ExcelReader implements TabularDataReader {
         if (!tableHasNextRow())
             throw new NoSuchElementException();
 
-        Row row = nextrow;
+        Row row = nextRow;
         Cell cell;
 
         // If this is the first row in the sheet, use it to determine how many
         // columns this sheet has.  This is necessary to make sure that all rows
         // have the same number of cells for SQLite.
-        if (numcols < 0)
-            numcols = row.getLastCellNum();
+        if (numCols < 0)
+            numCols = row.getLastCellNum();
 
-        String[] ret = new String[numcols];
+        String[] ret = new String[numCols];
 
         // Unfortunately, we can't use a cell iterator here because, as
         // currently implemented in POI, iterating over cells in a row will
         // silently skip blank cells.
-        for (int cnt = 0; cnt < numcols; cnt++) {
+        for (int cnt = 0; cnt < numCols; cnt++) {
             cell = row.getCell(cnt, Row.CREATE_NULL_AS_BLANK);
             // inspect the data type of this cell and act accordingly
             switch (cell.getCellType()) {
@@ -461,7 +461,7 @@ public class ExcelReader implements TabularDataReader {
                     } catch (Exception e) {
                         //TODO should we be catching Exception?
                         int rowNum = cell.getRowIndex() + 1;
-                        throw new FIMSRuntimeException("There was an issue processing a formula on this sheet.\n" +
+                        throw new FimsRuntimeException("There was an issue processing a formula on this sheet.\n" +
                                 "\tWhile standard formulas are allowed, formulas with references to external sheets cannot be read!\n" +
                                 "\tCell = " + CellReference.convertNumToColString(cnt) + rowNum + "\n" +
                                 "\tUnreadable Formula = " + cell + "\n" +

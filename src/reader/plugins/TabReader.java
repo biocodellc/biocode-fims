@@ -1,11 +1,11 @@
 package reader.plugins;
 
+import fimsExceptions.FimsRuntimeException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reader.characterCleaner;
-import fimsExceptions.FIMSRuntimeException;
+import reader.CharacterCleaner;
 import settings.PathManager;
 
 import java.io.*;
@@ -40,16 +40,16 @@ import java.util.LinkedList;
  */
 public class TabReader extends ExcelReader {
     private StreamTokenizer st;
-    private boolean hasnext = false;
-    private LinkedList<String> reclist;
-    private int currtable;
+    private boolean hasNext = false;
+    private LinkedList<String> recList;
+    private int currTable;
 
     private static Logger logger = LoggerFactory.getLogger(TabReader.class);
 
     private String sheetName = "Samples";
 
     public TabReader() {
-        reclist = new LinkedList<String>();
+        recList = new LinkedList<String>();
     }
 
     public String getFormatString() {
@@ -104,12 +104,12 @@ public class TabReader extends ExcelReader {
             this.sheetName = defaultSheetName;
         }
         if (outputFolder == null) {
-            throw new FIMSRuntimeException("No outputfolder specified for tab format conversion", 500);
+            throw new FimsRuntimeException("No outputfolder specified for tab format conversion", 500);
         }
 
-        excelwb = new HSSFWorkbook();
-        Sheet sheet1 = excelwb.createSheet(this.sheetName);
-        currsheet = 0;
+        excelWb = new HSSFWorkbook();
+        Sheet sheet1 = excelWb.createSheet(this.sheetName);
+        currSheet = 0;
 
         int i = 0;
         int field = 0;
@@ -122,8 +122,8 @@ public class TabReader extends ExcelReader {
 
             String line;
             while ((line = br.readLine()) != null) {
-                // Clean input according to rules in the characterCleaner class
-                line = characterCleaner.getOnlyGoodChars(line);
+                // Clean input according to rules in the CharacterCleaner class
+                line = CharacterCleaner.getOnlyGoodChars(line);
                 row = sheet1.createRow(rowNum);
                 String[] vals = line.split("\t");
                 for (int j = 0; j < vals.length; j++) {
@@ -138,16 +138,16 @@ public class TabReader extends ExcelReader {
             }
 
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException("Trouble converting TAB format", 500, e);
+            throw new FimsRuntimeException("Trouble converting TAB format", 500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException(500, e);
+            throw new FimsRuntimeException(500, e);
         }
-        currtable = -1;
+        currTable = -1;
 
         // Create a new DataFormatter and FormulaEvaluator to use for cells with
         // formulas.
         df = new DataFormatter();
-        fe = excelwb.getCreationHelper().createFormulaEvaluator();
+        fe = excelWb.getCreationHelper().createFormulaEvaluator();
 
         // Write the output to a file
         try {
@@ -156,7 +156,7 @@ public class TabReader extends ExcelReader {
                System.out.println("writing to " + inputFile.getAbsolutePath());
             FileOutputStream fileOut = new FileOutputStream(inputFile);
 
-            excelwb.write(fileOut);
+            excelWb.write(fileOut);
 
             try {
                 fileOut.close();
@@ -165,9 +165,9 @@ public class TabReader extends ExcelReader {
             }
 
         } catch (FileNotFoundException e) {
-            throw new FIMSRuntimeException("Trouble saving file", 500, e);
+            throw new FimsRuntimeException("Trouble saving file", 500, e);
         } catch (IOException e) {
-            throw new FIMSRuntimeException("Trouble saving file", 500, e);
+            throw new FimsRuntimeException("Trouble saving file", 500, e);
         }
 
         return true;

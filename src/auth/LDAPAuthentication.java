@@ -1,6 +1,6 @@
 package auth;
 
-import bcid.database;
+import bcid.Database;
 import fimsExceptions.ServerErrorException;
 import com.unboundid.ldap.sdk.*;
 import com.unboundid.util.ssl.SSLUtil;
@@ -40,7 +40,7 @@ public class LDAPAuthentication {
     private String shortUsername;
     private String longUsername;
 
-    database db;
+    Database db;
     protected Connection conn;
 
     /**
@@ -64,7 +64,7 @@ public class LDAPAuthentication {
           return username.split("@")[0] + "@" + defaultLdapDomain;
     }
     public LDAPAuthentication() {
-        db = new database();
+        db = new Database();
         conn = db.getConn();
     }
 
@@ -90,7 +90,7 @@ public class LDAPAuthentication {
 
             if (rs.next()) {
                 Timestamp ts = rs.getTimestamp("ts");
-                // Get the current time from the database (in case the application server is in a different timezone)
+                // Get the current time from the Database (in case the application server is in a different timezone)
                 Timestamp currentTs = rs.getTimestamp("current");
                 // convert minutes to miliseconds
                 Timestamp expiredTs = new Timestamp(currentTs.getTime() - (ldapTimeout * 60 * 1000));
@@ -165,7 +165,7 @@ public class LDAPAuthentication {
      */
     public LDAPAuthentication(String username, String password, Boolean recognizeDemo) {
 
-        db = new database();
+        db = new Database();
         conn = db.getConn();
         
         // strip any domain extension that the user provided (we DON't want to store this)

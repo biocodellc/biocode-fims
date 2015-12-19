@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 /**
  * An exception that encapsulates server errors
  */
-public class ServerErrorException extends FIMSAbstractException {
+public class ServerErrorException extends FimsAbstractException {
     private static Integer httpStatusCode = Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
 
     public ServerErrorException(String usrMessage, Throwable cause) {

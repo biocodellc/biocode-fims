@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 /**
  * An exception that encapsulates unauthorized requests
  */
-public class UnauthorizedRequestException extends FIMSAbstractException {
+public class UnauthorizedRequestException extends FimsAbstractException {
     private static Integer httpStatusCode = Response.Status.UNAUTHORIZED.getStatusCode();
 
     public UnauthorizedRequestException(String usrMessage) {
