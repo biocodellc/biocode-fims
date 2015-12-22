@@ -61,13 +61,13 @@ public class ExpeditionUpdater {
                 // if the collection Bcid doesn't exist for the expedition, create it
                 System.out.println("Creating bcid for expedition id: " + expeditionId);
                 BcidMinter bcidMinter = new BcidMinter(false);
-                String prefix = bcidMinter.createEntityBcid((Integer) expeditions.get(expeditionId),
+                String identifier = bcidMinter.createEntityBcid((Integer) expeditions.get(expeditionId),
                         "http://purl.org/dc/dcmitype/Collection", null, null, null, false);
                 bcidMinter.close();
 
                 // Associate this Bcid with this expedition
                 ExpeditionMinter expedition = new ExpeditionMinter();
-                expedition.attachReferenceToExpedition((Integer) expeditionId, prefix);
+                expedition.attachReferenceToExpedition((Integer) expeditionId, identifier);
                 expedition.close();
 
             }

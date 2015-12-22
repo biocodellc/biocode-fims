@@ -83,7 +83,7 @@ public class Resolver extends Database {
         ResultSet rs = null;
         try {
             String query = "select \n" +
-                    "b.prefix as prefix \n" +
+                    "b.identifier as identifier \n" +
                     "from \n" +
                     "bcids b, expeditionBcids eb, expeditions p \n" +
                     "where \n" +
@@ -103,7 +103,7 @@ public class Resolver extends Database {
             //System.out.println("Resolver query = " + query);
             rs = stmt.executeQuery();
             rs.next();
-            this.identifier = rs.getString("prefix");
+            this.identifier = rs.getString("identifier");
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {

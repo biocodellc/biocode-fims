@@ -18,7 +18,7 @@ public class DeepRoots {
     private String date;
 
     /**
-     * stores the links between the concept (as URI) and prefix (as String)
+     * stores the links between the concept (as URI) and identifier (as String)
      *
      * @return
      */
@@ -27,7 +27,7 @@ public class DeepRoots {
     }
 
     /**
-     * sets the links between the concept (as URI) and prefix (as String)
+     * sets the links between the concept (as URI) and identifier (as String)
      *
      * @param data
      */
@@ -110,7 +110,7 @@ public class DeepRoots {
     }
 
     /**
-     * Find the appropriate prefix for a concept contained in this file
+     * Find the appropriate identifier for a concept contained in this file
      *
      * @param conceptAlias defines the alias to narrow this,  a one-word reference denoting a BCID
      * @return returns the Bcid for this conceptAlias in this DeepRoots file

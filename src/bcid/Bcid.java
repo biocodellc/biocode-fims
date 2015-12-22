@@ -23,7 +23,8 @@ import java.util.HashMap;
  */
 public class Bcid {
 
-    protected String prefix;
+    protected URI prefix;        // if the bcid object supports suffixPassThrough and there is a suffix, this is the bcid identifier
+    protected URI identifier;
     protected String suffix;       // Source or local Bcid (e.g. MBIO056)
     protected URI webAddress;        // URI for the webAddress, EZID calls this _target (e.g. http://biocode.berkeley.edu/specimens/MBIO56)
     protected String resourceType;           // erc.what
@@ -120,7 +121,7 @@ public class Bcid {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String sql = "SELECT " +
-                "b.prefix as prefix," +
+                "b.identifier as identifier," +
                 "b.ezidRequest as ezidRequest," +
                 "b.ezidMade as ezidMade," +
                 "b.suffixPassthrough as suffixPassthrough," +
@@ -142,7 +143,7 @@ public class Bcid {
             rs = stmt.executeQuery();
             rs.next();
 
-            prefix = rs.getString("prefix");
+            identifier = new URI(rs.getString("identifier"));
             ezidRequest = rs.getBoolean("ezidRequest");
             ezidMade = rs.getBoolean("ezidMade");
             doi = rs.getString("doi");
@@ -152,6 +153,14 @@ public class Bcid {
             suffixPassThrough = rs.getBoolean("suffixPassthrough");
             resourceType = rs.getString("resourceType");
             graph = rs.getString("graph");
+
+            // set the prefix
+            if (suffixPassThrough && suffix != null && !suffix.equals("")) {
+                prefix = identifier;
+                identifier = new URI(prefix + sm.retrieveValue("divider") + suffix);
+            } else {
+                prefix = identifier;
+            }
 
             String lWebAddress = rs.getString("webAddress");
             if (lWebAddress != null && !lWebAddress.trim().equals("")) {
@@ -164,6 +173,9 @@ public class Bcid {
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
+        } catch (URISyntaxException e) {
+            throw new ServerErrorException("Server Error","URISyntaxException from identifier: " + prefix +
+                    sm.retrieveValue("divider") + suffix + " from bcidsId: " + bcidsId, e);
         } finally {
             db.close(stmt, rs);
         }
@@ -200,27 +212,12 @@ public class Bcid {
     public Boolean getSuffixPassThrough() {
         return suffixPassThrough;
     }
-    public String getPrefix() {
-        return prefix;
-    }
 
     /**
      * method to return the identifier of the Bcid.
-     * @return prefix + suffix
+     * @return
      */
     public URI getIdentifier() {
-        URI identifier;
-
-        try {
-            if (suffix != null && !suffix.equals("")) {
-                identifier = new URI(prefix + sm.retrieveValue("divider") + suffix);
-            } else {
-                identifier = new URI(prefix);
-            }
-        } catch (URISyntaxException e) {
-            throw new ServerErrorException("Server Error","URISyntaxException from identifier: " + prefix +
-                    sm.retrieveValue("divider") + suffix + " from bcidsId: " + bcidsId, e);
-        }
         return identifier;
     }
 
@@ -234,7 +231,7 @@ public class Bcid {
      * @return
      */
     public HashMap<String, String> getMetadata() {
-        put("identifier", getIdentifier());
+        put("identifier", identifier);
         put("who", who);
         put("resourceType", resourceType);
         put("webAddress", webAddress);

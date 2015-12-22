@@ -107,10 +107,10 @@ public class GroupService {
 
         // Mint the data group
         BcidMinter bcidMinter = new BcidMinter(suffixPassthrough);
-        String prefix = bcidMinter.createEntityBcid(userId, resourceTypeString, webAddress, graph, doi, finalCopy);
+        String identifier = bcidMinter.createEntityBcid(userId, resourceTypeString, webAddress, graph, doi, finalCopy);
         bcidMinter.close();
 
-        return Response.ok("{\"prefix\": \"" + prefix + "\"}").build();
+        return Response.ok("{\"identifier\": \"" + identifier + "\"}").build();
     }
 
     /**
@@ -201,14 +201,14 @@ public class GroupService {
     /**
      * returns an HTML table used to edit a Bcid's configuration.
      *
-     * @param prefix
+     * @param identifier
      *
      * @return
      */
     @GET
     @Path("/dataGroupEditorAsTable")
     @Produces(MediaType.TEXT_HTML)
-    public Response bcidEditorAsTable(@QueryParam("ark") String prefix,
+    public Response bcidEditorAsTable(@QueryParam("ark") String identifier,
                                       @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
@@ -217,12 +217,12 @@ public class GroupService {
             throw new UnauthorizedRequestException("You must be logged in to edit your BCID's configuration.");
         }
 
-        if (prefix == null) {
+        if (identifier == null) {
             throw new BadRequestException("You must provide an \"ark\" query parameter.");
         }
 
         BcidMinter d = new BcidMinter();
-        String response = d.bcidEditorAsTable(username, prefix);
+        String response = d.bcidEditorAsTable(username, identifier);
         d.close();
         return Response.ok(response).build();
     }
@@ -236,7 +236,7 @@ public class GroupService {
      * @param resourceTypeString
      * @param resourceTypesMinusDataset
      * @param stringSuffixPassThrough
-     * @param prefix
+     * @param identifier
      *
      * @return
      */
@@ -250,7 +250,7 @@ public class GroupService {
                                @FormParam("resourceType") String resourceTypeString,
                                @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
                                @FormParam("suffixPassThrough") String stringSuffixPassThrough,
-                               @FormParam("prefix") String prefix,
+                               @FormParam("identifier") String identifier,
                                @Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object username = session.getAttribute("user");
@@ -264,7 +264,7 @@ public class GroupService {
         // get this BCID's config
 
         BcidMinter b = new BcidMinter();
-        config = b.getBcidConfig(prefix, username.toString());
+        config = b.getBcidConfig(identifier, username.toString());
 
         if (resourceTypesMinusDataset != null && resourceTypesMinusDataset > 0) {
             resourceTypeString = new ResourceTypes().get(resourceTypesMinusDataset).string;
@@ -296,7 +296,7 @@ public class GroupService {
             b.close();
             return Response.ok("{\"success\": \"Nothing needed to be updated.\"}").build();
         // try to update the config by calling d.updateBcidConfig
-        } else if (b.updateBcidConfig(update, prefix, username.toString())) {
+        } else if (b.updateBcidConfig(update, identifier, username.toString())) {
             b.close();
             return Response.ok("{\"success\": \"BCID successfully updated.\"}").build();
         } else {

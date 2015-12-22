@@ -30,7 +30,7 @@ public class DeepRoots {
     }
 
     /**
-     * stores the links between the concept (as URI) and prefix (as String)
+     * stores the links between the concept (as URI) and identifier (as String)
      *
      * @return
      */
@@ -39,7 +39,7 @@ public class DeepRoots {
     }
 
     /**
-     * sets the links between the concept (as URI) and prefix (as String)
+     * sets the links between the concept (as URI) and identifier (as String)
      *
      * @param data
      */
@@ -122,7 +122,7 @@ public class DeepRoots {
     }
 
     /**
-     * Find the appropriate prefix for a concept contained in this file
+     * Find the appropriate identifier for a concept contained in this file
      *
      * @return returns the Bcid for this conceptAlias in this DeepRoots file
      */
@@ -145,17 +145,17 @@ public class DeepRoots {
         // Mint the Bcid
         BcidMinter bcidMinter = new BcidMinter(true);
 
-        String prefix = bcidMinter.createEntityBcid(userId, entity.getConceptAlias(), "", null, null, false);
+        String identifier = bcidMinter.createEntityBcid(userId, entity.getConceptAlias(), "", null, null, false);
         bcidMinter.close();
         // Associate this Bcid with this expedition
         ExpeditionMinter expedition = new ExpeditionMinter();
-        expedition.attachReferenceToExpedition(expeditionCode, prefix, projectId);
+        expedition.attachReferenceToExpedition(expeditionCode, identifier, projectId);
         expedition.close();
 
         // Add this element to the data string so we don't keep trying to add it in the loop above
         //data.put(new URI(entity.getConceptURI()),entity.getConceptAlias());
-        data.put(entity.getConceptAlias(), prefix);
-        System.out.println("\tNew prefix = " + prefix);
-        return prefix;
+        data.put(entity.getConceptAlias(), identifier);
+        System.out.println("\tNew identifier = " + identifier);
+        return identifier;
     }
 }

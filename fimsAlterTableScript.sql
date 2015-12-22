@@ -20,6 +20,7 @@ RENAME TABLE datasets TO bcids;
 ALTER TABLE bcids CHANGE datasets_id bcidId INT(11);
 ALTER TABLE bcids CHANGE internalID internalId char(36);
 ALTER TABLE bcids CHANGE users_id userId INT(11);
+ALTER TABLE bcids CHANGE prefix identifier VARCHAR(255);
 ALTER TABLE bcids CHANGE webaddress webAddress text;
 
 ALTER TABLE expeditions CHANGE expedition_id expeditionId INT(11);

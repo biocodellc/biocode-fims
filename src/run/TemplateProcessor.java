@@ -1203,7 +1203,7 @@ public class TemplateProcessor {
         font.setColor(IndexedColors.RED.getIndex());
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
         font.setFontHeightInPoints((short) 14);
-        //String prefix = "Accession Number: ";
+        //String identifier = "Accession Number: ";
         XSSFRichTextString totalRichTextString = new XSSFRichTextString(key + value);
         Integer start = key.toString().length();
         Integer end = totalRichTextString.toString().length();

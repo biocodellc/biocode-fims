@@ -105,7 +105,7 @@ public class Mapping implements RendererInterface {
     }
 
     /**
-     * Sets the URI as a prefix to a column, or not, according to D2RQ conventions
+     * Sets the URI as a identifier to a column, or not, according to D2RQ conventions
      *
      * @param entity
      *

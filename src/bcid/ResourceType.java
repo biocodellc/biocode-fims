@@ -38,7 +38,7 @@ public class ResourceType {
     }
 
     /**
-     * Return the prefix of the "string". So, for "string" = "dwcterms:PreservedSpecimen", this would return "dwcterms"
+     * Return the identifier of the "string". So, for "string" = "dwcterms:PreservedSpecimen", this would return "dwcterms"
      *
      * @return
      */
@@ -47,7 +47,7 @@ public class ResourceType {
     }
 
     /**
-     * Return the prefix of the "string". So, for "string" = "dwcterms:PreservedSpecimen", this would return "PreservedSpecimen"
+     * Return the identifier of the "string". So, for "string" = "dwcterms:PreservedSpecimen", this would return "PreservedSpecimen"
      *
      * @return
      */

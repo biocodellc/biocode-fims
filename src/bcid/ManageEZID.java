@@ -80,7 +80,7 @@ public class ManageEZID extends BcidMinter {
 
             String sql = "SELECT " +
                     "b.bcidId as bcidId," +
-                    "b.prefix as prefix," +
+                    "b.identifier as identifier," +
                     "b.title as title," +
                     "b.ts as ts," +
                     "b.resourceType as type," +
@@ -103,7 +103,7 @@ public class ManageEZID extends BcidMinter {
 
             // Build the hashmap to pass to ezid
             HashMap<String, String> map = dcMap(
-                    resolverTargetPrefix + rs.getString("prefix"),
+                    resolverTargetPrefix + rs.getString("identifier"),
                     creator,
                     rs.getString("title"),
                     publisher,
@@ -112,7 +112,7 @@ public class ManageEZID extends BcidMinter {
             map.put("_profile", "dc");
 
             // The ID string to register with EZID
-            String myIdentifier = rs.getString("prefix");
+            String myIdentifier = rs.getString("identifier");
 
             try {
                 ezid.setMetadata(myIdentifier, map);
@@ -149,7 +149,7 @@ public class ManageEZID extends BcidMinter {
         ArrayList<String> idSuccessList = new ArrayList();
         try {
             String sql = "SELECT b.bcidId as bcidId," +
-                    "b.prefix as prefix," +
+                    "b.identifier as identifier," +
                     "b.ts as ts," +
                     "b.resourceType as type," +
                     "b.title as title," +
@@ -171,7 +171,7 @@ public class ManageEZID extends BcidMinter {
 
                 // Dublin Core metadata profile element
                 HashMap<String, String> map = dcMap(
-                        resolverTargetPrefix + rs.getString("prefix"),
+                        resolverTargetPrefix + rs.getString("identifier"),
                         creator,
                         rs.getString("title"),
                         publisher,
@@ -180,7 +180,7 @@ public class ManageEZID extends BcidMinter {
                 map.put("_profile", "dc");
 
                 // The ID string to register with ezid
-                String myIdentifier = rs.getString("prefix");
+                String myIdentifier = rs.getString("identifier");
 
                 // Register this as an EZID
                 try {

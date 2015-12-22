@@ -67,11 +67,11 @@ public class BcidMetadataSchema {
                         dcIsReferencedBy = new metadataElement("dcterms:isReferencedBy", "http://n2t.net/" + pairs.getValue().toString(), "The group level bcid, registered with EZID.");
                     }
                 } else if (bcidKey.equalsIgnoreCase("doi")) {
-                    // Create mapping here for DOI if it only shows the prefix
+                    // Create mapping here for DOI if it only shows the identifier
                     String doi = pairs.getValue().toString().replace("doi:", "http://dx.doi.org/");
                     dcIsPartOf = new metadataElement("dcterms:isReferencedBy", doi, "A DOI describing the dataset which this bcid belongs to.");
                // } else if (bcidKey.equalsIgnoreCase("projectCode")) {
-                    // Create mapping here for DOI if it only shows the prefix
+                    // Create mapping here for DOI if it only shows the identifier
                  //   dcPublisher = new metadataElement("dc:publisher", pairs.getValue().toString(), "The BCID project to which this resource belongs.");
                 } else if (bcidKey.equalsIgnoreCase("webAddress")) {
                     dcHasVersion = new metadataElement("dcterms:hasVersion", pairs.getValue().toString(), "The redirection target for this bcid.");

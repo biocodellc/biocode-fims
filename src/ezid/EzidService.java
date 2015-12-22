@@ -236,13 +236,13 @@ public class EzidService {
 
     /**
      * Create a new, unique, opaque identifier by requesting EZID to generate the
-     * identifier itself within the "shoulder" prefix that is provided.  Each EZID account
+     * identifier itself within the "shoulder" identifier that is provided.  Each EZID account
      * is authorized to mint identifiers that start with certain prefixes, called 'shoulders'
      * by EZID.  The identifiers created are guaranteed unique within the EZID service. Metadata
      * elements can be passed as a HashMap and will be added when the identifier is created.
      * To omit setting metadata, pass 'null' as the metadata parameter.
      *
-     * @param shoulder to be used to prefix the identifier
+     * @param shoulder to be used to identifier the identifier
      * @param metadata a HashMap containing name/value pairs to be associated with the identifier
      *
      * @return String identifier that was created

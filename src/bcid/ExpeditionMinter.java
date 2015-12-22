@@ -106,13 +106,13 @@ public class ExpeditionMinter {
 
             // upon successful expedition creation, create the expedition Bcid
             BcidMinter bcidMinter = new BcidMinter(false);
-            String prefix = bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Collection", null, null,
+            String identifier = bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Collection", null, null,
                     null, false);
             bcidMinter.close();
 
             // Associate this Bcid with this expedition
             ExpeditionMinter expedition = new ExpeditionMinter();
-            expedition.attachReferenceToExpedition(expeditionId, prefix);
+            expedition.attachReferenceToExpedition(expeditionId, identifier);
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
@@ -408,7 +408,7 @@ public class ExpeditionMinter {
             // Construct the query
             String sql =
                     "SELECT " +
-                            " b.prefix, " +
+                            " b.identifier, " +
                             " b.resourceType as resourceType," +
                             " b.title as alias, " +
                             " a.expeditionTitle as expeditionTitle " +
@@ -424,7 +424,7 @@ public class ExpeditionMinter {
             stmt.setString(1, expeditionCode);
             stmt.setInt(2, projectId);
 
-            // Write the concept/prefix elements section
+            // Write the concept/identifier elements section
             sb.append("[\n{\n\t\"data\": [\n");
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -434,7 +434,7 @@ public class ExpeditionMinter {
 
                 // Grap the prefixes and concepts associated with this
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"prefix\":\"" + rs.getString("b.prefix") + "\",\n");
+                sb.append("\t\t\t\"identifier\":\"" + rs.getString("b.identifier") + "\",\n");
                 sb.append("\t\t\t\"concept\":\"" + rs.getString("resourceType") + "\",\n");
                 sb.append("\t\t\t\"alias\":\"" + rs.getString("alias") + "\"\n");
                 sb.append("\t\t}");
@@ -491,7 +491,7 @@ public class ExpeditionMinter {
                             " u.username as username_generator, " +
                             " u2.username as username_upload," +
                             " b.ts as timestamp," +
-                            " b.prefix, " +
+                            " b.identifier, " +
                             " b.resourceType as resourceType," +
                             " b.finalCopy as finalCopy," +
                             " a.expeditionCode as expeditionCode, " +
@@ -509,7 +509,7 @@ public class ExpeditionMinter {
 
             stmt.setString(1, graphName);
             //System.out.println(sql);
-            // Write the concept/prefix elements section
+            // Write the concept/identifier elements section
             sb.append("{\n\t\"data\": [\n");
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -524,7 +524,7 @@ public class ExpeditionMinter {
                 sb.append("\t\t\t\"username_generator\":\"" + rs.getString("username_generator") + "\",\n");
                 sb.append("\t\t\t\"username_upload\":\"" + rs.getString("username_upload") + "\",\n");
                 sb.append("\t\t\t\"timestamp\":\"" + rs.getString("timestamp") + "\",\n");
-                sb.append("\t\t\t\"bcid\":\"" + rs.getString("b.prefix") + "\",\n");
+                sb.append("\t\t\t\"bcid\":\"" + rs.getString("b.identifier") + "\",\n");
                 sb.append("\t\t\t\"resourceType\":\"" + rs.getString("resourceType") + "\",\n");
                 sb.append("\t\t\t\"finalCopy\":\"" + rs.getBoolean("finalCopy") + "\",\n");
                 sb.append("\t\t\t\"public\":\"" + rs.getBoolean("public") + "\",\n");
@@ -558,7 +558,7 @@ public class ExpeditionMinter {
                     "   a.expeditionId as expeditionId," +
                     "   a.expeditionCode as expeditionCode," +
                     "   a.expeditionTitle as expeditionTitle," +
-                    "   b.prefix," +
+                    "   b.identifier," +
                     "   b.resourceType as resourceType " +
                     "FROM " +
                     "   expeditions a,expeditionBcids eB, bcids b,users u " +
@@ -617,8 +617,8 @@ public class ExpeditionMinter {
                 }
 
 
-                sb.append("\t\t\t\t<tr><td><a href='" + resolverTargetPrefix + rs.getString("b.prefix") + "'>" +
-                        rs.getString("b.prefix") + "</a></td>" +
+                sb.append("\t\t\t\t<tr><td><a href='" + resolverTargetPrefix + rs.getString("b.identifier") + "'>" +
+                        rs.getString("b.identifier") + "</a></td>" +
                         "<td>is_a</td><td>" +
                         rtString +
                         "</td></tr>\n");
@@ -822,7 +822,7 @@ public class ExpeditionMinter {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT b.prefix, e.public, e.expeditionCode, e.projectId " +
+            String sql = "SELECT b.identifier, e.public, e.expeditionCode, e.projectId " +
                     "FROM bcids b, expeditionBcids eB, expeditions e " +
                     "WHERE b.bcidId = eB.bcidId && eB.expeditionId = e.expeditionId && e.expeditionId = ? and " +
                     "b.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
@@ -839,9 +839,9 @@ public class ExpeditionMinter {
                 sb.append("\t\t</td>\n");
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("\">");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("</a>");
                 sb.append("\t\t</td>\n");
                 sb.append("\t</tr>\n");
@@ -898,7 +898,7 @@ public class ExpeditionMinter {
         ResourceTypes rts = new ResourceTypes();
 
         try {
-            String sql = "SELECT b.prefix, b.resourceType " +
+            String sql = "SELECT b.identifier, b.resourceType " +
                     "FROM bcids b, expeditionBcids eB " +
                     "WHERE b.bcidId = eB.bcidId && eB.expeditionId = ?";
             stmt = conn.prepareStatement(sql);
@@ -925,9 +925,9 @@ public class ExpeditionMinter {
                 sb.append("\t<tr>\n");
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("\">");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("</a>");
                 sb.append("</td>\n");
                 sb.append("\t\t<td>");
@@ -971,7 +971,7 @@ public class ExpeditionMinter {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT b.ts, b.prefix, b.webAddress, b.graph, e.projectId " +
+            String sql = "SELECT b.ts, b.identifier, b.webAddress, b.graph, e.projectId " +
                     "FROM bcids b, expeditionBcids eB, expeditions e " +
                     "WHERE b.bcidId = eB.bcidId && eB.expeditionId = ? && e.expeditionId = eB.expeditionId " +
                     "AND b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
@@ -988,9 +988,9 @@ public class ExpeditionMinter {
 
                 sb.append("\t\t<td>");
                 sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("\">");
-                sb.append(rs.getString("b.prefix"));
+                sb.append(rs.getString("b.identifier"));
                 sb.append("</a>");
                 sb.append("\t\t</td>");
                 sb.append("\t</tr>\n");

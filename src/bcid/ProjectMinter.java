@@ -182,9 +182,9 @@ public class ProjectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select p.expeditionCode as expeditionCode,p.expeditionTitle,b1.graph as graph,b1.ts as ts, b1.webAddress as webAddress, b1.prefix as identifier, b1.bcidId as id, p.projectId as projectId \n" +
+            String sql = "select p.expeditionCode as expeditionCode,p.expeditionTitle,b1.graph as graph,b1.ts as ts, b1.webAddress as webAddress, b1.identifier as identifier, b1.bcidId as id, p.projectId as projectId \n" +
                     "from bcids as b1, \n" +
-                    "(select p.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.prefix as identifer, b.bcidId as id, p.projectId as projectId \n" +
+                    "(select p.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.identifier as identifer, b.bcidId as id, p.projectId as projectId \n" +
                     "    \tfrom bcids b,expeditions p, expeditionBcids eB\n" +
                     "    \twhere eB.bcidId=b.bcidId\n" +
                     "    \tand eB.expeditionId=p.expeditionId\n" +
@@ -755,7 +755,7 @@ public class ProjectMinter {
 
             }
 
-            String sql2 = "select e.expeditionCode, e.expeditionTitle, b.ts, b.prefix as identifier, b.bcidId as id, b.finalCopy, e.projectId, p.projectTitle\n" +
+            String sql2 = "select e.expeditionCode, e.expeditionTitle, b.ts, b.identifier as identifier, b.bcidId as id, b.finalCopy, e.projectId, p.projectTitle\n" +
                     "from bcids b, expeditions e,  expeditionBcids eB, projects p\n" +
                     "where b.userId = ? and b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\"\n" +
                     " and eB.bcidId=b.bcidId\n" +
@@ -820,9 +820,9 @@ public class ProjectMinter {
             // This query is built to give us a groupwise maximum-- we want the graphs that correspond to the
             // maximum timestamp (latest) loaded for a particular expedition.
             // Help on solving this problem came from http://jan.kneschke.de/expeditions/mysql/groupwise-max/
-            String sql = "select e.expeditionCode, e.expeditionTitle, b1.graph, b1.ts, b1.bcidId as id, b1.webAddress as webAddress, b1.prefix as identifier, e.projectId, e.public, p.projectTitle\n" +
+            String sql = "select e.expeditionCode, e.expeditionTitle, b1.graph, b1.ts, b1.bcidId as id, b1.webAddress as webAddress, b1.identifier as identifier, e.projectId, e.public, p.projectTitle\n" +
                     "from bcids as b1, \n" +
-                    "(select e.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.prefix as identifier, b.bcidId as id, e.projectId as projectId \n" +
+                    "(select e.expeditionCode as expeditionCode,b.graph as graph,max(b.ts) as maxts, b.webAddress as webAddress, b.identifier as identifier, b.bcidId as id, e.projectId as projectId \n" +
                     "    \tfrom bcids b,expeditions e, expeditionBcids eB\n" +
                     "    \twhere eB.bcidId=b.bcidId\n" +
                     "    \tand eB.expeditionId=e.expeditionId\n" +

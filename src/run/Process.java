@@ -284,11 +284,11 @@ public class Process {
                 // Mint the data group
                 BcidMinter bcidMinter = new BcidMinter(true);
 
-                String prefix = bcidMinter.createEntityBcid(processController.getUserId(), entity.getConceptAlias(),
+                String identifier = bcidMinter.createEntityBcid(processController.getUserId(), entity.getConceptAlias(),
                         "", null, null, false);
                 bcidMinter.close();
                 // Associate this Bcid with this expedition
-                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), prefix, processController.getProjectId());
+                expedition.attachReferenceToExpedition(processController.getExpeditionCode(), identifier, processController.getProjectId());
 
             }
         }

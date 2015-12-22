@@ -52,9 +52,9 @@ public class DeepRootsReader {
                         JSONObject dataObject = (JSONObject) dataIt.next();
                         java.net.URI concept = new java.net.URI((String) dataObject.get("concept"));
                         String alias = (String) dataObject.get("alias");
-                        String prefix = (String) dataObject.get("prefix");
-                        //data.put(concept, prefix);
-                        data.put(alias, prefix);
+                        String identifier = (String) dataObject.get("identifier");
+                        //data.put(concept, identifier);
+                        data.put(alias, identifier);
                     }
                 } else if (outputObject.containsKey("metadata")) {
                     JSONObject metadataObject = (JSONObject) outputObject.values().toArray()[0];
