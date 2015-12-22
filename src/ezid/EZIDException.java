@@ -22,17 +22,17 @@ package ezid;
 /**
  * An exception that encapsulates errors from the EZID service.
  */
-public class EZIDException extends Exception {
+public class EzidException extends Exception {
 
-    public EZIDException(String msg) {
+    public EzidException(String msg) {
         super(msg);
     }
 
-    public EZIDException(String msg, Throwable cause) {
+    public EzidException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
-    public EZIDException(Throwable cause) {
+    public EzidException(Throwable cause) {
         super(cause);
     }
 }

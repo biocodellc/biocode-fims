@@ -3,7 +3,7 @@ package services.id;
 import bcid.ResourceTypes;
 import ezid.EzidService;
 import fimsExceptions.BadRequestException;
-import ezid.EZIDException;
+import ezid.EzidException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -38,9 +38,9 @@ public class ElementService {
         try {
             // Setup EZID account/login information
             ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
-        } catch (EZIDException e) {
+        } catch (EzidException e) {
             //TODO should we silence this exception?
-            logger.warn("EZIDException trying to login.", e);
+            logger.warn("EzidException trying to login.", e);
         }
     }
 

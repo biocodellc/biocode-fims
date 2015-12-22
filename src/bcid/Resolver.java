@@ -5,7 +5,7 @@ import bcid.Renderer.Renderer;
 import ezid.EzidService;
 import fimsExceptions.BadRequestException;
 import fimsExceptions.ServerErrorException;
-import ezid.EZIDException;
+import ezid.EzidException;
 import utils.SettingsManager;
 import utils.Timer;
 
@@ -243,7 +243,7 @@ public class Resolver extends Database {
 
         try {
             ezid = new Ezid(ezidService.getMetadata(identifier));
-        } catch (EZIDException e) {
+        } catch (EzidException e) {
             //TODO should we silence this exception?
             logger.warn("URISyntaxException thrown", e);
         }

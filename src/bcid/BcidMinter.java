@@ -5,7 +5,7 @@ import fimsExceptions.BadRequestException;
 import fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ezid.EZIDException;
+import ezid.EzidException;
 
 import java.math.BigInteger;
 import java.net.URI;
@@ -684,7 +684,7 @@ public class BcidMinter extends BcidEncoder {
                 // Setup EZID account/login information
                 ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
                 creator.createBcidsEZIDs(ezidAccount);
-            } catch (EZIDException e) {
+            } catch (EzidException e) {
                 logger.warn("EZID NOT CREATED FOR BCID = " + getPrefix(), e);
             } finally {
                 creator.close();

@@ -74,7 +74,7 @@ import java.util.Map;
  *     HashMap<String, String> moreMetadata = new HashMap<String, String>();
  *     moreMetadata.put("datacite.title", "This is a test identifier");
  *     ezid.setMetadata(newId, moreMetadata);
- * } catch (EZIDException e) {
+ * } catch (EzidException e) {
  *     // Handle the error
  * }
  * }
@@ -118,9 +118,9 @@ public class EzidService {
      * @param username to identify the user account from EZID
      * @param password the secret password for this account
      *
-     * @throws EZIDException if authentication fails for any reason
+     * @throws EzidException if authentication fails for any reason
      */
-    public void login(String username, String password) throws EZIDException {
+    public void login(String username, String password) throws EzidException {
         String msg;
         try {
             URI serviceUri = new URI(LOGIN_SERVICE);
@@ -166,13 +166,13 @@ public class EzidService {
 
         } catch (URISyntaxException e) {
             //System.out.println("URI SyntaxError Exception in LOGIN");
-            throw new EZIDException("Bad syntax for uri: " + LOGIN_SERVICE, e);
+            throw new EzidException("Bad syntax for uri: " + LOGIN_SERVICE, e);
         } catch (ClientProtocolException e) {
             //System.out.println("ClientProtocol Exception in LOGIN");
-            throw new EZIDException(e);
+            throw new EzidException(e);
         } catch (IOException e) {
             //System.out.println("IO Exception in LOGIN");
-            throw new EZIDException(e);
+            throw new EzidException(e);
         }
         //System.out.println("Seems to be a successful LOGIN, msg= " + msg.toString());
     }
@@ -180,7 +180,7 @@ public class EzidService {
     /**
      * Log out of the EZID service, invalidating the current session.
      */
-    public void logout() throws EZIDException {
+    public void logout() throws EzidException {
         String ezidEndpoint = LOGOUT_SERVICE;
         byte[] response = sendRequest(GET, ezidEndpoint);
         String message = new String(response);
@@ -204,9 +204,9 @@ public class EzidService {
      *
      * @return String identifier that was created
      *
-     * @throws EZIDException if an error occurs while creating the identifier
+     * @throws EzidException if an error occurs while creating the identifier
      */
-    public String createIdentifier(String identifier, HashMap<String, String> metadata) throws EZIDException {
+    public String createIdentifier(String identifier, HashMap<String, String> metadata) throws EzidException {
         String newId = null;
         String ezidEndpoint = ID_SERVICE + "/" + identifier;
 
@@ -247,9 +247,9 @@ public class EzidService {
      *
      * @return String identifier that was created
      *
-     * @throws EZIDException if an error occurs while minting the identifier
+     * @throws EzidException if an error occurs while minting the identifier
      */
-    public String mintIdentifier(String shoulder, HashMap<String, String> metadata) throws EZIDException {
+    public String mintIdentifier(String shoulder, HashMap<String, String> metadata) throws EzidException {
         String ezidEndpoint = MINT_SERVICE + "/" + shoulder;
 
         String anvl = serializeAsANVL(metadata);
@@ -269,9 +269,9 @@ public class EzidService {
      *
      * @return HashMap of name/value pairs of metadata properties
      *
-     * @throws EZIDException if EZID produces an error during the service call
+     * @throws EzidException if EZID produces an error during the service call
      */
-    public HashMap<String, String> getMetadata(String identifier) throws EZIDException {
+    public HashMap<String, String> getMetadata(String identifier) throws EzidException {
         String ezidEndpoint = ID_SERVICE + "/" + identifier;
         byte[] response = sendRequest(GET, ezidEndpoint);
         String anvl = new String(response);
@@ -294,9 +294,9 @@ public class EzidService {
      * @param identifier of the resource for which metadata is being set
      * @param metadata   HashMap containing name/value metadata pairs
      *
-     * @throws EZIDException if the EZID service returns an error on setting metadata
+     * @throws EzidException if the EZID service returns an error on setting metadata
      */
-    public void setMetadata(String identifier, HashMap<String, String> metadata) throws EZIDException {
+    public void setMetadata(String identifier, HashMap<String, String> metadata) throws EzidException {
         String ezidEndpoint = ID_SERVICE + "/" + identifier;
 
         String anvl = serializeAsANVL(metadata);
@@ -315,9 +315,9 @@ public class EzidService {
      *
      * @param identifier to be deleted
      *
-     * @throws EZIDException if the delete operation fails with an error from EZID
+     * @throws EzidException if the delete operation fails with an error from EZID
      */
-    public void deleteIdentifier(String identifier) throws EZIDException {
+    public void deleteIdentifier(String identifier) throws EzidException {
         String ezidEndpoint = ID_SERVICE + "/" + identifier;
         byte[] response = sendRequest(DELETE, ezidEndpoint);
         String responseMsg = new String(response);
@@ -348,7 +348,7 @@ public class EzidService {
      *
      * @return byte[] containing the response body
      */
-    private byte[] sendRequest(int requestType, String uri) throws EZIDException {
+    private byte[] sendRequest(int requestType, String uri) throws EzidException {
         return sendRequest(requestType, uri, null);
     }
 
@@ -361,7 +361,7 @@ public class EzidService {
      *
      * @return byte[] containing the response body
      */
-    private byte[] sendRequest(int requestType, String uri, String requestBody) throws EZIDException {
+    private byte[] sendRequest(int requestType, String uri, String requestBody) throws EzidException {
         HttpUriRequest request = null;
         log.debug("Trying uri: " + uri);
         System.out.println("uri = " + uri);
@@ -377,7 +377,7 @@ public class EzidService {
                         StringEntity myEntity = new StringEntity(requestBody, "UTF-8");
                         ((HttpPut) request).setEntity(myEntity);
                     } catch (UnsupportedEncodingException e) {
-                        throw new EZIDException(e);
+                        throw new EzidException(e);
                     }
                 }
                 break;
@@ -390,7 +390,7 @@ public class EzidService {
                         StringEntity myEntity = new StringEntity(requestBody, "UTF-8");
                         ((HttpPost) request).setEntity(myEntity);
                     } catch (UnsupportedEncodingException e) {
-                        throw new EZIDException(e);
+                        throw new EzidException(e);
                     }
                 }
                 break;
@@ -398,7 +398,7 @@ public class EzidService {
                 request = new HttpDelete(uri);
                 break;
             default:
-                throw new EZIDException("Unrecognized HTTP method requested.");
+                throw new EzidException("Unrecognized HTTP method requested.");
         }
         request.addHeader("Accept", "text/plain");
 
@@ -423,9 +423,9 @@ public class EzidService {
         try {
             body = httpClient.execute(request, handler);
         } catch (ClientProtocolException e) {
-            throw new EZIDException(e);
+            throw new EzidException(e);
         } catch (IOException e) {
-            throw new EZIDException(e);
+            throw new EzidException(e);
         }
 
         return body;
@@ -439,9 +439,9 @@ public class EzidService {
      *
      * @return the identifier from the message
      *
-     * @throws EZIDException if the response contains an error message
+     * @throws EzidException if the response contains an error message
      */
-    private String parseIdentifierResponse(String responseMsg) throws EZIDException {
+    private String parseIdentifierResponse(String responseMsg) throws EzidException {
         String newId;
         String[] responseArray = responseMsg.split(":", 2);
         String resultCode = unescape(responseArray[0]).trim();
@@ -451,7 +451,7 @@ public class EzidService {
             return newId;
         } else {
             String msg = unescape(responseArray[1]).trim();
-            throw new EZIDException(msg);
+            throw new EzidException(msg);
         }
     }
 

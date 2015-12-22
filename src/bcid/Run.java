@@ -1,6 +1,6 @@
 package bcid;
 
-import ezid.EZIDException;
+import ezid.EzidException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,7 +144,7 @@ public class Run {
             // Setup EZID account/login information
             ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
 
-        } catch (EZIDException e) {
+        } catch (EzidException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

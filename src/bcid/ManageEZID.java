@@ -1,7 +1,7 @@
 package bcid;
 
+import ezid.EzidException;
 import fimsExceptions.ServerErrorException;
-import ezid.EZIDException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +73,7 @@ public class ManageEZID extends BcidMinter {
     /**
      * Update EZID Bcid metadata for this particular ID
      */
-    public void updateBcidsEZID(EzidService ezid, int bcidId) throws EZIDException {
+    public void updateBcidsEZID(EzidService ezid, int bcidId) throws EzidException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -117,10 +117,10 @@ public class ManageEZID extends BcidMinter {
             try {
                 ezid.setMetadata(myIdentifier, map);
                 logger.info("  Updated Metadata for " + myIdentifier);
-            } catch (EZIDException e1) {
+            } catch (EzidException e1) {
                 // After attempting to set the Metadata, if another exception is thrown then who knows,
                 // probably just a permissions issue.
-                throw new EZIDException("  Exception thrown in attempting to create EZID " + myIdentifier + ", likely a permission issue", e1);
+                throw new EzidException("  Exception thrown in attempting to create EZID " + myIdentifier + ", likely a permission issue", e1);
             }
 
 
@@ -142,7 +142,7 @@ public class ManageEZID extends BcidMinter {
      *
      * @throws java.net.URISyntaxException
      */
-    public void createBcidsEZIDs(EzidService ezid) throws EZIDException {
+    public void createBcidsEZIDs(EzidService ezid) throws EzidException {
         // Grab a row where ezid is false
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -187,20 +187,20 @@ public class ManageEZID extends BcidMinter {
                     identifier = new URI(ezid.createIdentifier(myIdentifier, map));
                     idSuccessList.add(rs.getString("bcidId"));
                     logger.info("{}", identifier.toString());
-                } catch (EZIDException e) {
+                } catch (EzidException e) {
                     // Adding this for debugging
                     //e.printStackTrace();
                     // Attempt to set Metadata if this is an Exception
                     try {
                         ezid.setMetadata(myIdentifier, map);
                         idSuccessList.add(rs.getString("bcidId"));
-                    } catch (EZIDException e1) {
+                    } catch (EzidException e1) {
                         //TODO should we silence this exception?
                         logger.warn("Exception thrown in attempting to create OR update EZID {}, a permission issue?", myIdentifier, e1);
                     }
 
                 } catch (URISyntaxException e) {
-                    throw new EZIDException("Bad uri syntax for " + myIdentifier + ", " + map, e);
+                    throw new EzidException("Bad uri syntax for " + myIdentifier + ", " + map, e);
                 }
 
             }
