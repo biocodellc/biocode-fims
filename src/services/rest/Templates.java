@@ -39,20 +39,16 @@ public class Templates {
      * @return
      */
     @GET
-    @Path("/attributes/")
+    @Path("/attributes/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTemplateCheckboxes(
-            @QueryParam("projectId") Integer projectId,
+    public Response getTemplateAttributes(
+            @PathParam("projectId") Integer projectId,
             @Context HttpServletRequest request) {
 
-        HttpSession session = request.getSession();
-
-
-        //File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
         TemplateProcessor t = new TemplateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
-        String response = t.printCheckboxes();
+        String response = t.getAttributesByGroup();
 
         // Return response
         if (response == null) {

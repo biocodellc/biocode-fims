@@ -7,6 +7,8 @@ import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.PathManager;
@@ -471,6 +473,71 @@ public class TemplateProcessor {
             count++;
         }
         return output.toString();
+    }
+
+    /**
+     * Generate checkBoxes/Column Names for the mappings in a template
+     *
+     * @return
+     */
+    public String getAttributesByGroup() {
+        LinkedList<String> requiredColumns = getRequiredColumns("error");
+        LinkedList<String> desiredColumns = getRequiredColumns("warning");
+        JSONObject attributesByGroup = new JSONObject();
+
+        // A list of names we've already added
+        ArrayList addedNames = new ArrayList();
+        Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
+
+        while (attributes.hasNext()) {
+            Attribute a = (Attribute) attributes.next();
+
+            // Set the column and group
+            String aColumn = a.getColumn();
+            String aGroup = a.getGroup();
+
+            // set the default group
+            if (aGroup == null || aGroup.equals("")) {
+                aGroup = "Default Group";
+            }
+
+            // Check that this name hasn't been read already.  This is necessary in some situations where
+            // column names are repeated for different entities in the configuration file
+            if (!addedNames.contains(aColumn)) {
+                JSONObject columnMetadata = new JSONObject();
+                JSONObject column = new JSONObject();
+
+                // Determine if this is a required or desired column
+                if (requiredColumns != null && requiredColumns.contains(aColumn)) {
+                    columnMetadata.put("level", "required");
+                } else if (desiredColumns == null && desiredColumns.contains(aColumn)) {
+                    columnMetadata.put("level", "desired");
+                } else {
+                    columnMetadata.put("level", "default");
+                }
+
+                // add column metadata (uri & level)
+                columnMetadata.put("uri", a.getUri());
+
+                // add column metadata to the column object
+                column.put(aColumn, columnMetadata);
+
+                if (!attributesByGroup.containsKey(aGroup)) {
+                    JSONArray columns = new JSONArray();
+                    columns.add(column);
+                    attributesByGroup.put(aGroup, columns);
+                } else {
+                    JSONArray columns = (JSONArray) attributesByGroup.get(aGroup);
+                    columns.add(column);
+                }
+
+            }
+
+            // Now that we've added this to the output, add it to the ArrayList so we don't add it again
+            addedNames.add(aColumn);
+        }
+
+        return attributesByGroup.toJSONString();
     }
 
     /**
