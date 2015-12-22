@@ -2,6 +2,7 @@ package services.rest;
 
 import bcid.Resolver;
 import fimsExceptions.UnauthorizedRequestException;
+import org.json.simple.JSONObject;
 import run.Process;
 import run.ProcessController;
 import run.TemplateProcessor;
@@ -116,23 +117,18 @@ public class Templates {
      * @return
      */
     @GET
-    @Path("/abstract/")
+    @Path("/abstract/{projectId")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAbstract(
-            @QueryParam("projectId") Integer projectId) {
+            @PathParam("projectId") Integer projectId) {
 
-        //File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+        JSONObject obj = new JSONObject();
         TemplateProcessor t = new TemplateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
-        String response = t.printAbstract();
+        obj.put("abstract", t.printAbstract());
 
-        // Return response
-        if (response == null) {
-            return Response.status(204).build();
-        } else {
-            return Response.ok(response).build();
-        }
+        return Response.ok(obj.toJSONString()).build();
     }
 
     @POST
