@@ -3,6 +3,8 @@ package services.rest;
 import digester.Attribute;
 import digester.Mapping;
 import org.apache.commons.digester3.Digester;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import run.ConfigurationFileFetcher;
 import run.Process;
 
@@ -44,22 +46,19 @@ public class MappingService {
         p.addMappingRules(new Digester(), mapping);
         ArrayList<Attribute> attributeArrayList = mapping.getAllAttributes(mapping.getDefaultSheetName());
 
-        StringBuilder json = new StringBuilder();
-        json.append("{\n\"attributes\": {\n");
+        JSONArray attributes = new JSONArray();
 
         Iterator it = attributeArrayList.iterator();
         while (it.hasNext()) {
             Attribute a = (Attribute) it.next();
-            json.append("\t\"" + a.getColumn() + "\":");
-            json.append("\"" + a.getUri() + "\"");
-            if (it.hasNext()) {
-                json.append(",");
-            }
-            json.append("\n");
-        }
-        json.append("\t}\n}");
+            JSONObject attribute = new JSONObject();
+            attribute.put("column", a.getColumn());
+            attribute.put("uri", a.getUri());
 
-        return json.toString();
+            attributes.add(attribute);
+        }
+
+        return attributes.toJSONString();
     }
 
     /**
