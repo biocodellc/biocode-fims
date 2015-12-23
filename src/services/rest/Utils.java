@@ -7,7 +7,9 @@ import digester.Field;
 import digester.Mapping;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import run.ConfigurationFileFetcher;
 import run.Process;
 import run.ProcessController;
@@ -45,24 +47,6 @@ public class Utils {
     static HttpServletRequest request;
 
     /**
-     * Refresh the configuration File cache
-     *
-     * @return
-     */
-    @GET
-    @Path("/refreshCache/{projectId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response queryJson(
-            @QueryParam("projectId") Integer projectId) {
-
-        new ConfigurationFileFetcher(projectId, uploadPath(), false).getOutputFile();
-
-        return Response.ok("").build();
-
-    }
-
-
-    /**
      * Get real path of the uploads folder from context.
      * Needs context to have been injected before.
      *
@@ -73,8 +57,7 @@ public class Utils {
     }
 
     /**
-     * Retrieve a user's expeditions in a given project from Bcid. This uses an access token to access the
-     * Bcid service.
+     * Retrieve a user's expeditions in a given project.
      *
      * @param projectId
      *
@@ -92,8 +75,7 @@ public class Utils {
     }
 
     /**
-     * Retrieve a user's graphs in a given project from Bcid. This uses an access token to access the
-     * Bcid service.
+     * Retrieve a user's graphs in a given project.
      *
      * @param projectId
      *
@@ -111,8 +93,7 @@ public class Utils {
     }
 
     /**
-     * Check whether or not an expedition code is valid by calling the BCID ExpeditionService/validateExpedition
-     * Service
+     * Check whether or not an expedition code is valid.
      * Should return update, insert, or error
      *
      * @param projectId
@@ -136,21 +117,25 @@ public class Utils {
 
 
     /**
-     * Retrieve a user's expeditions in a given project from Bcid. This uses an access token to access the
-     * Bcid service.
+     * Retrieve the list of acceptable values for a given column/listName in a project
      *
      * @param projectId
      *
      * @return
      */
     @GET
-    @Path("/getListFields/{list_name}/")
-    @Produces(MediaType.TEXT_HTML)
-    public Response getListFields(@QueryParam("projectId") Integer projectId,
-                                  @PathParam("list_name") String list_name,
-                                  @QueryParam("column_name") String column_name) {
+    @Path("/getListFields/{projectId}/{listName}/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListFields(@PathParam("projectId") Integer projectId,
+                                  @PathParam("listName") String listName,
+                                  @QueryParam("column_name") String columnName) {
 
         File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
+
+        String name = listName;
+        if (columnName != null && !columnName.trim().equals("")) {
+            name = columnName;
+        }
 
         // Create a process object
         Process p = new Process(
@@ -161,32 +146,27 @@ public class Utils {
 
         Validation validation = new Validation();
         p.addValidationRules(new Digester(), validation);
-        digester.List results = (digester.List) validation.findList(list_name);
-        // NO results mean no list has been defined!
-        if (results == null) {
-            return Response.ok("No list has been defined for \"" + column_name + "\" but there is a rule saying it exists.  " +
-                    "Please talk to your FIMS data manager to fix this").build();
-        }
-        Iterator it = results.getFields().iterator();
-        StringBuilder sb = new StringBuilder();
+        digester.List results = validation.findList(listName);
+        JSONObject list = new JSONObject();
 
-        if (column_name != null && !column_name.trim().equals("")) {
-            try {
-                sb.append("<b>Acceptable values for " + URLDecoder.decode(column_name, "utf-8") + "</b><br>\n");
-            } catch (UnsupportedEncodingException e) {
-                throw new FimsRuntimeException(500, e);
+        if (results != null) {
+            Iterator it = results.getFields().iterator();
+            JSONArray fields = new JSONArray();
+
+            // Get field values
+            while (it.hasNext()) {
+                Field f = (Field)it.next();
+                fields.add(f.getValue());
             }
+
+            list.put(name, fields);
         } else {
-            sb.append("<b>Acceptable values for " + list_name + "</b><br>\n");
+            // NO results mean no list has been defined!
+            list.put("error", JSONValue.escape("No list has been defined for \"" + name + "\" but there is a rule saying it exists.  " +
+                    "Please talk to your FIMS data manager to fix this"));
         }
 
-        // Get field values
-        while (it.hasNext()) {
-            Field f = (Field)it.next();
-            sb.append("<li>" + f.getValue() + "</li>\n");
-        }
-
-        return Response.ok(sb.toString()).build();
+        return Response.ok(list.toJSONString()).build();
     }
 
     @GET
