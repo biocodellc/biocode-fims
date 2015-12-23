@@ -1,6 +1,8 @@
 package digester;
 
 import fimsExceptions.FimsRuntimeException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
@@ -1525,30 +1527,25 @@ public class Rule {
     }
 
     /**
-     * Print ruleMetadata
+     * get ruleMetadata
      *
      * @param sList We pass in a List of fields we want to associate with this rule
      *
      * @return
      */
-    public String printRuleMetadata(List sList) {
-        StringBuilder output = new StringBuilder();
-        output.append("<li>\n");
-        //
-        String prettyTypeName = this.type;
-        if (this.type.equals("checkInXMLFields")) {
-            this.type = "Lookup Value From List";
-        }
-        // Display the Rule type
-        output.append("\t<li>type: " + this.type + "</li>\n");
-        // Display warning levels
-        output.append("\t<li>level: " + this.level + "</li>\n");
-        // Display values
+    public JSONObject getRuleMetadata(List sList) {
+        JSONObject ruleMetadata = new JSONObject();
+        JSONArray list = new JSONArray();
+
+        ruleMetadata.put("type", this.type);
+        // warning level
+        ruleMetadata.put("level", this.level);
+
         if (value != null) {
             try {
-                output.append("\t<li>value: " + URLDecoder.decode(this.value, "utf-8") + "</li>\n");
+                ruleMetadata.put("value", URLDecoder.decode(this.value, "utf-8"));
             } catch (UnsupportedEncodingException e) {
-                output.append("\t<li>value: " + this.value + "</li>\n");
+                ruleMetadata.put("value", this.value);
                 logger.warn("UnsupportedEncodingException", e);
             }
         }
@@ -1560,34 +1557,16 @@ public class Rule {
         } else {
             listFields = getFields();
         }
-        Iterator it = null;
-        try {
-            it = listFields.iterator();
-        } catch (NullPointerException e) {
-            logger.warn("NullPointerException", e);
-            return output.toString();
-        }
-        // One or the other types of list need data
-        if (!it.hasNext())
-            return output.toString();
-
-        output.append("\t<li>list: \n");
-
-        // Look at the Fields
-        output.append("\t\t<ul>\n");
-
-        if (it != null) {
+        if (listFields != null) {
+            Iterator it = listFields.iterator();
+            // One or the other types of list need data
             while (it.hasNext()) {
                 String field = ((Field) it.next()).getValue();
-                //String field = (String) it.next();
-                output.append("\t\t\t<li>" + field + "</li>\n");
+                list.add(field);
             }
         }
-        output.append("\t\t</ul>\n");
-        output.append("\t</li>\n");
-
-        output.append("</li>\n");
-        return output.toString();
+        ruleMetadata.put("list", list);
+        return ruleMetadata;
     }
 
 }

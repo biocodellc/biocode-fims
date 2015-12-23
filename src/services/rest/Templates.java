@@ -3,6 +3,7 @@ package services.rest;
 import bcid.Resolver;
 import fimsExceptions.UnauthorizedRequestException;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import run.Process;
 import run.ProcessController;
 import run.TemplateProcessor;
@@ -42,21 +43,14 @@ public class Templates {
     @GET
     @Path("/attributes/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTemplateAttributes(
-            @PathParam("projectId") Integer projectId,
-            @Context HttpServletRequest request) {
+    public Response getTemplateAttributes(@PathParam("projectId") Integer projectId) {
 
         TemplateProcessor t = new TemplateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
-        String response = t.getAttributesByGroup();
+        JSONObject attributes = t.getAttributesByGroup();
 
-        // Return response
-        if (response == null) {
-            return Response.status(204).build();
-        } else {
-            return Response.ok(response).build();
-        }
+        return Response.ok(attributes.toJSONString()).build();
     }
 
     /**
@@ -117,7 +111,7 @@ public class Templates {
      * @return
      */
     @GET
-    @Path("/abstract/{projectId")
+    @Path("/abstract/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAbstract(
             @PathParam("projectId") Integer projectId) {
@@ -126,7 +120,7 @@ public class Templates {
         TemplateProcessor t = new TemplateProcessor(projectId, uploadPath(), true);
 
         // Write the all of the checkbox definitions to a String Variable
-        obj.put("abstract", t.printAbstract());
+        obj.put("abstract", JSONValue.escape(t.printAbstract()));
 
         return Response.ok(obj.toJSONString()).build();
     }
@@ -236,24 +230,16 @@ public class Templates {
      * @return
      */
     @GET
-    @Path("/definition/")
+    @Path("/definition/{projectId}/{columnName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDefinitions(
-            @QueryParam("projectId") Integer projectId,
-            @QueryParam("column_name") String column_name) {
+            @PathParam("projectId") Integer projectId,
+            @PathParam("columnName") String columnName) {
 
-        //File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
         TemplateProcessor t = new TemplateProcessor(projectId, uploadPath(), true);
+        JSONObject response = t.getDefinition(columnName);
 
-        // Write the response to a String Variable
-        String response = t.definition(column_name);
-
-        // Return response
-        if (response == null) {
-            return Response.status(204).build();
-        } else {
-            return Response.ok(response).build();
-        }
+        return Response.ok(response.toJSONString()).build();
     }
 
     /**
