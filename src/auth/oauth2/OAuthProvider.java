@@ -4,6 +4,7 @@ import bcid.Database;
 import fimsExceptions.OAuthException;
 import fimsExceptions.ServerErrorException;
 import org.apache.commons.cli.*;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.StringGenerator;
@@ -265,13 +266,26 @@ public class OAuthProvider {
     }
 
     /**
+     * generate a new access token given a username
+     *
+     * @param clientId
+     * @param username
+     * @return
+     */
+    public JSONObject generateToken(String clientId, String username) {
+        Integer userId = db.getUserId(username);
+
+        return generateToken(clientId, userId, null);
+    }
+
+    /**
      * generate a new access token given a refresh token
      *
      * @param refreshToken
      *
      * @return
      */
-    public String generateToken(String refreshToken) {
+    public JSONObject generateToken(String refreshToken) {
         Integer userId = null;
         String clientId = null;
 
@@ -311,7 +325,7 @@ public class OAuthProvider {
      *
      * @return
      */
-    public String generateToken(String clientID, String state, String code) {
+    public JSONObject generateToken(String clientID, String state, String code) {
         Integer userId = getUserId(clientID, code);
         deleteNonce(clientID, code);
         if (userId == null) {
@@ -330,7 +344,8 @@ public class OAuthProvider {
      *
      * @return
      */
-    private String generateToken(String clientID, Integer userId, String state) {
+    private JSONObject generateToken(String clientID, Integer userId, String state) {
+        JSONObject accessToken = new JSONObject();
         StringGenerator sg = new StringGenerator();
         String token = sg.generateString(20);
         String refreshToken = sg.generateString(20);
@@ -350,18 +365,15 @@ public class OAuthProvider {
             db.close(stmt, null);
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        sb.append("\"access_token\":\"" + token + "\",\n");
-        sb.append("\"refresh_token\":\"" + refreshToken + "\",\n");
-        sb.append("\"token_type\":\"bearer\",\n");
-        sb.append("\"expires_in\":3600\n");
+        accessToken.put("access_token", token);
+        accessToken.put("refresh_token", refreshToken);
+        accessToken.put("token_type", "bearer");
+        accessToken.put("expires_in", "3600");
         if (state != null) {
-            sb.append(("\"state\":\"" + state + "\""));
+            accessToken.put("state", state);
         }
-        sb.append("}");
 
-        return sb.toString();
+        return accessToken;
     }
 
     /**

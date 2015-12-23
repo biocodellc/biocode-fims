@@ -7,6 +7,7 @@ import auth.oauth2.OAuthProvider;
 import fimsExceptions.BadRequestException;
 import fimsExceptions.OAuthException;
 import fimsExceptions.ServerErrorException;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -265,41 +266,7 @@ public class AuthenticationService {
     }
 
     /**
-     * Service to log a user out of the Bcid system
-     *
-     * @throws IOException
-     */
-    @GET
-    @Path("/logout")
-    @Produces(MediaType.TEXT_HTML)
-    public Response logout(@QueryParam("redirectUri") String redirectUri,
-                           @Context HttpServletResponse res) {
-
-        HttpSession session = request.getSession();
-
-        session.invalidate();
-
-        if (redirectUri != null && !redirectUri.equals("")) {
-            try {
-                return Response.status(307)
-                        .location(new URI(redirectUri))
-                        .build();
-            } catch (URISyntaxException e) {
-                throw new BadRequestException("invalid redirectUri");
-            }
-        } else {
-            try {
-                return Response.status(307)
-                        .location(new URI("../" + rootName + "/index.jsp"))
-                        .build();
-            } catch (URISyntaxException e) {
-                throw new ServerErrorException(e);
-            }
-        }
-    }
-
-    /**
-     * Service for a client app to log a user into the Bcid system via oAuth.
+     * Service for a client app to log a user into the system via oAuth.
      *
      * @param clientId
      * @param redirectURL
@@ -410,39 +377,44 @@ public class AuthenticationService {
                                  @FormParam("client_id") String clientId,
                                  @FormParam("client_secret") String clientSecret,
                                  @FormParam("redirect_uri") String redirectURL,
+                                 @FormParam("grant_type") @DefaultValue("authorization_code") String grantType,
+                                 @FormParam("username") String username,
+                                 @FormParam("password") String password,
                                  @FormParam("state") String state) {
-//        System.out.println("BCID oauth/access_token method START");
-        OAuthProvider p = null;
-        p = new OAuthProvider();
-        if (redirectURL == null) {
-            throw new BadRequestException("invalid_request", "redirect_uri is null");
-        }
-        URI url = null;
-        try {
-            url = new URI(redirectURL);
-        } catch (URISyntaxException e) {
-            logger.warn("URISyntaxException for the following url: {}", redirectURL, e);
-            p.close();
-            throw new BadRequestException("invalid_request", "URISyntaxException thrown with the following redirect_uri: " + redirectURL);
-        }
+        OAuthProvider p = new OAuthProvider();
+        JSONObject accessToken;
 
         if (clientId == null || clientSecret == null || !p.validateClient(clientId, clientSecret)) {
             p.close();
             throw new BadRequestException("invalid_client");
         }
 
-        if (code == null || !p.validateCode(clientId, code, redirectURL)) {
-            p.close();
-            throw new BadRequestException("invalid_grant", "Either code was null or the code doesn't match the clientId");
+        if (grantType.equalsIgnoreCase("authorization_code")) {
+            if (redirectURL == null) {
+                throw new BadRequestException("invalid_request", "redirect_uri is null");
+            }
+
+            if (code == null || !p.validateCode(clientId, code, redirectURL)) {
+                p.close();
+                throw new BadRequestException("invalid_grant", "Either code was null or the code doesn't match the " +
+                        "clientId or the redirect_uri didn't match the redirect_uri sent with the authorization_code request");
+            }
+            accessToken = p.generateToken(clientId, state, code);
+        } else if (grantType.equalsIgnoreCase("password")) {
+            Authenticator authenticator = new Authenticator();
+            if (username == null || password == null || !authenticator.login(username, password)) {
+                throw new BadRequestException("invalid_request", "the supplied username and/or password are incorrect");
+            }
+
+            accessToken = p.generateToken(clientId, username);
+        } else {
+            throw new BadRequestException("unsupported_grant_type", "invalid grant_type was requested");
         }
-        String response = p.generateToken(clientId, state, code);
         p.close();
 
-//        System.out.println("BCID oauth/access_token method END");
-        return Response.ok(response)
+        return Response.ok(accessToken.toJSONString())
                 .header("Cache-Control", "no-store")
                 .header("Pragma", "no-cache")
-                .location(url)
                 .build();
     }
 
@@ -473,13 +445,13 @@ public class AuthenticationService {
             throw new BadRequestException("invalid_grant", "refresh_token is invalid");
         }
 
-        String accessToken = p.generateToken(refreshToken);
+        JSONObject accessToken = p.generateToken(refreshToken);
 
         // refresh tokens are only good once, so delete the old access token so the refresh token can no longer be used
         p.deleteAccessToken(refreshToken);
         p.close();
 
-        return Response.ok(accessToken)
+        return Response.ok(accessToken.toJSONString())
                 .header("Cache-Control", "no-store")
                 .header("Pragma", "no-cache")
                 .build();
