@@ -1,7 +1,6 @@
 package services.rest;
 
 import fimsExceptions.FimsRuntimeException;
-import fimsExceptions.UnauthorizedRequestException;
 import digester.Attribute;
 import digester.Field;
 import digester.Mapping;
@@ -14,22 +13,18 @@ import run.ConfigurationFileFetcher;
 import run.Process;
 import run.ProcessController;
 import utils.SettingsManager;
-import utils.DashboardGenerator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -202,28 +197,6 @@ public class Utils {
         String naan = sm.retrieveValue("naan");
 
         return Response.ok("{\"naan\": \"" + naan + "\"}").build();
-    }
-
-    @GET
-    @Path("/getDatasetDashboard")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasetDashboard(@QueryParam("isNMNH") @DefaultValue("false") Boolean isNMNH) {
-        HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("user");
-        String dashboard;
-
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view your dashboard.");
-        }
-
-        DashboardGenerator dashboardGenerator = new DashboardGenerator(username);
-        if (isNMNH) {
-            dashboard = dashboardGenerator.getNMNHDashboard();
-        } else {
-            dashboard = dashboardGenerator.getDashboard();
-        }
-
-        return Response.ok("{\"dashboard\": \"" + dashboard + "\"}").build();
     }
 
     @GET
