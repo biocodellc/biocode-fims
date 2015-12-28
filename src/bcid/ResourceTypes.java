@@ -1,5 +1,8 @@
 package bcid;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -210,27 +213,25 @@ public class ResourceTypes {
      *
      * @return
      */
-    public String getAllAsJSON() {
-        StringBuilder json = new StringBuilder();
-        json.append("{");
+    public JSONArray getAllAsJSON() {
+        JSONArray rts = new JSONArray();
         Iterator it = list.iterator();
-        int count = 0;
         while (it.hasNext()) {
             ResourceType rt = (ResourceType) it.next();
-            if (count == 0) {
-                json.append("\"0\":\"Select a Concept\"");
-            }
-            json.append(",");
+            JSONObject resource = new JSONObject();
 
+            // TODO: validate that nobody selects this option in the interface!
+            resource.put("resourceType", rt.resourceType);
+            resource.put("uri", rt.uri);
+            resource.put("description", rt.description);
             if (rt.string.equals("spacer")) {
-                json.append("\"" + rt.resourceType + "\":\"---\"");
+                resource.put("string", "---");
             } else {
-                json.append("\"" + rt.resourceType + "\":\"" + rt.string + "\"");
+                resource.put("string", rt.string);
             }
-            count++;
+            rts.add(resource);
         }
-        json.append("}");
-        return json.toString();
+        return rts;
     }
 
     /**
@@ -240,31 +241,27 @@ public class ResourceTypes {
      *
      * @return
      */
-    public String getAllButDatasetAsJSON() {
-        StringBuilder json = new StringBuilder();
-        json.append("{");
+    public JSONArray getAllButDatasetAsJSON() {
+        JSONArray rts = new JSONArray();
         Iterator it = list.iterator();
-        int count = 0;
         while (it.hasNext()) {
             ResourceType rt = (ResourceType) it.next();
-
-            if (count == 0) {
-                json.append("\"0\":\"Select a Concept\"");
-            }
-            json.append(",");
+            JSONObject resource = new JSONObject();
 
             if (rt.resourceType != this.DATASET) {
                 // TODO: validate that nobody selects this option in the interface!
+                resource.put("resourceType", rt.resourceType);
+                resource.put("uri", rt.uri);
+                resource.put("description", rt.description);
                 if (rt.string.equals("spacer")) {
-                    json.append("\"" + rt.resourceType + "\":\"---\"");
+                    resource.put("string", "---");
                 } else {
-                    json.append("\"" + rt.resourceType + "\":\"" + rt.string + "\"");
+                    resource.put("string", rt.string);
                 }
-                count++;
+                rts.add(resource);
             }
         }
-        json.append("}");
-        return json.toString();
+        return rts;
     }
 
     public static void main(String args[]) {
@@ -272,34 +269,5 @@ public class ResourceTypes {
         System.out.println(rts.get("http://purl.obolibrary.org/obo/IAO_0000030").string);
         //System.out.println(rts.getAllAsJSON());
 
-    }
-
-    /**
-     * Create an HTML table respresentation of resourceTypes
-     *
-     * @return
-     */
-    public String getResourceTypesAsTable() {
-        StringBuilder output = new StringBuilder();
-        Iterator it = list.iterator();
-
-        output.append("<table>");
-        output.append("<tr>");
-        output.append("<td><b>Name/URI</b></td>");
-        output.append("<td><b>Description</b></td>");
-        output.append("</tr>");
-
-        while (it.hasNext()) {
-            ResourceType rt = (ResourceType) it.next();
-            if (!rt.string.equals("spacer")) {
-                output.append("<tr>");
-                output.append("<td><a href=\"" + rt.uri + "\">" + rt.string + "</a></td>");
-                output.append("<td>" + rt.description + "</td>");
-                output.append("</tr>");
-            }
-        }
-
-        output.append("</table>");
-        return output.toString();
     }
 }
