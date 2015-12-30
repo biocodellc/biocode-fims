@@ -8,6 +8,7 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
@@ -374,9 +375,9 @@ public class UserService {
     public Response getUserData(@QueryParam("access_token") String access_token) {
         if (access_token != null) {
             UserMinter u = new UserMinter();
-            String response = u.getOauthProfile(access_token);
+            JSONObject response = u.getOauthProfile(access_token);
             u.close();
-            return Response.ok(response).build();
+            return Response.ok(response.toString()).build();
         }
         throw new BadRequestException("invalid_grant", "access_token was null");
     }

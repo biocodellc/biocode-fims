@@ -4,6 +4,7 @@ import auth.Authenticator;
 import auth.oauth2.OAuthProvider;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -343,27 +344,40 @@ public class UserMinter {
      * @param token
      * @return
      */
-    public String getOauthProfile(String token) {
+    public JSONObject getOauthProfile(String token) {
         OAuthProvider p = new OAuthProvider();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
         String username = p.validateToken(token);
         p.close();
         if (username != null) {
             Integer userId = db.getUserId(username);
+            try {
+                String sql = "SELECT lastName, firstName, email, institution, hasSetPassword " +
+                        "FROM users WHERE userId = ?";
+                stmt = conn.prepareStatement(sql);
 
-            StringBuilder sb = new StringBuilder();
-            sb.append("{\n");
+                stmt.setInt(1, userId);
+                rs = stmt.executeQuery();
 
-            sb.append("\t\"first_name\": \"" + getFirstName(username) + "\",\n");
-            sb.append("\t\"last_name\": \"" + getLastName(username) + "\",\n");
-            sb.append("\t\"email\": \"" + getEmail(username) + "\",\n");
-            sb.append("\t\"institution\": \"" + getInstitution(username) + "\",\n");
-            sb.append("\t\"userId\": \"" + userId + "\",\n");
-            sb.append("\t\"username\": \"" + username + "\"\n");
+                if (rs.next()) {
+                    JSONObject profile = new JSONObject();
+                    profile.put("first_name", rs.getString("firstName"));
+                    profile.put("last_name", rs.getString("lastName"));
+                    profile.put("email", rs.getString("email"));
+                    profile.put("institution", rs.getString("institution"));
+                    profile.put("hasSetPassword", rs.getString("hasSetPassword"));
+                    profile.put("userId", userId);
+                    profile.put("username", username);
 
-            sb.append("}");
-
-            return sb.toString();
+                    return profile;
+                }
+            } catch (SQLException e) {
+                throw new ServerErrorException(e);
+            } finally {
+                db.close(stmt, rs);
+            }
         }
 
         throw new BadRequestException("invalid_grant", "access token is not valid");
