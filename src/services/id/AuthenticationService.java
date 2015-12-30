@@ -521,12 +521,8 @@ public class AuthenticationService {
             throw new BadRequestException("User not found.", "username is null");
         }
         Authenticator a = new Authenticator();
-        String email = a.sendResetToken(username);
+        JSONObject resetToken = a.generateResetToken(username);
         a.close();
-        if (email != null) {
-            return Response.ok("{\"success\": \"" + email + "\"}").build();
-        } else {
-            throw new BadRequestException("User not found.");
-        }
+        return Response.ok(resetToken.toJSONString()).build();
     }
 }

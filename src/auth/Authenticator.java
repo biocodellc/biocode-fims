@@ -2,12 +2,13 @@ package auth;
 
 import bcid.Database;
 import bcid.ProjectMinter;
+import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.apache.commons.cli.*;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;
-import utils.SendEmail;
 import utils.StringGenerator;
 
 import java.security.NoSuchAlgorithmException;
@@ -406,14 +407,15 @@ public class Authenticator {
 
     /**
      * In the case where a user has forgotten their password, generate a token that can be used to create a new
-     * password. This method will send to the user's registered email a link that can be used to change their password.
+     * password.
      *
      * @param username
      *
-     * @return
+     * @return JSONObject containing the user's email and the resetToken
      */
-    public String sendResetToken(String username) {
+    public JSONObject generateResetToken(String username) {
         String email = null;
+        JSONObject resetToken = new JSONObject();
         String sql = "SELECT email FROM users WHERE username = ?";
 
         PreparedStatement stmt = null;
@@ -429,52 +431,35 @@ public class Authenticator {
                 email = rs.getString("email");
             }
 
-            if (email != null) {
-                StringGenerator sg = new StringGenerator();
-                String token = sg.generateString(20);
-                // set for 24hrs in future
-                Timestamp ts = new Timestamp(Calendar.getInstance().getTime().getTime() + (1000 * 60 * 60 * 24));
-
-                String updateSql = "UPDATE users SET " +
-                        "passwordResetToken = \"" + token + "\", " +
-                        "passwordResetExpiration = \"" + ts + "\" " +
-                        "WHERE username = ?";
-                stmt2 = conn.prepareStatement(updateSql);
-
-                stmt2.setString(1, username);
-
-                stmt2.executeUpdate();
-
-                // Reset token path
-                String resetToken = sm.retrieveValue("resetToken") + token;
-
-                String emailBody = "You requested a password reset for your Biocode-Fims account.\n\n" +
-                        "Use the following link within the next 24 hrs to reset your password.\n\n" +
-                        resetToken + "\n\n" +
-                        "Thanks";
-
-                // Initialize settings manager
-                SettingsManager sm = SettingsManager.getInstance();
-                sm.loadProperties();
-
-                // Send an Email that this completed
-                SendEmail sendEmail = new SendEmail(
-                        sm.retrieveValue("mailUser"),
-                        sm.retrieveValue("mailPassword"),
-                        sm.retrieveValue("mailFrom"),
-                        email,
-                        "Reset Password",
-                        emailBody);
-                sendEmail.start();
+            if (email == null) {
+                throw new BadRequestException("User not found", "email is null for user: " + username);
             }
+            StringGenerator sg = new StringGenerator();
+            String token = sg.generateString(20);
+            // set for 24hrs in future
+            Timestamp ts = new Timestamp(Calendar.getInstance().getTime().getTime() + (1000 * 60 * 60 * 24));
+
+            String updateSql = "UPDATE users SET " +
+                    "passwordResetToken = \"" + token + "\", " +
+                    "passwordResetExpiration = \"" + ts + "\" " +
+                    "WHERE username = ?";
+            stmt2 = conn.prepareStatement(updateSql);
+
+            stmt2.setString(1, username);
+
+            stmt2.executeUpdate();
+
+            resetToken.put("email", email);
+            resetToken.put("resetToken", token);
+
+            return resetToken;
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error while sending reset token.", "db error retrieving email for user "
+            throw new ServerErrorException("Server Error while generating reset token.", "db error retrieving email for user "
                     + username, e);
         } finally {
             db.close(stmt, rs);
             db.close(stmt2, null);
         }
-        return email;
     }
 
     /**
