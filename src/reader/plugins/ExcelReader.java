@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 
 /**
  * TabularDataReader for Excel-format spreadsheet files.  Both Excel 97-2003

@@ -1,6 +1,6 @@
 package unit_tests;
 
-import fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsException;
 import run.*;
 import run.Process;
 

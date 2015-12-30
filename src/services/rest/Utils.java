@@ -1,6 +1,6 @@
 package services.rest;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import digester.Attribute;
 import digester.Field;
 import digester.Mapping;

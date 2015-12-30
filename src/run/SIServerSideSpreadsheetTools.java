@@ -2,7 +2,7 @@ package run;
 
 import digester.Attribute;
 import digester.Mapping;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;

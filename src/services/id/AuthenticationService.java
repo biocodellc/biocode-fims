@@ -4,15 +4,16 @@ import auth.Authenticator;
 import auth.LDAPAuthentication;
 import auth.Authorizer;
 import auth.oauth2.OAuthProvider;
-import fimsExceptions.BadRequestException;
-import fimsExceptions.OAuthException;
-import fimsExceptions.ServerErrorException;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
-import utils.ErrorInfo;
 import utils.QueryParams;
+
+import utils.SettingsManager;
+import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.OAuthException;
+import biocode.fims.fimsExceptions.ServerErrorException;
+import biocode.fims.ErrorInfo;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

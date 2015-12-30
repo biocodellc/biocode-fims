@@ -1,7 +1,7 @@
 package auth;
 
 import bcid.Database;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

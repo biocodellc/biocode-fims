@@ -1,10 +1,10 @@
 package bcid;
 
 import ezid.EzidService;
-import fimsExceptions.BadRequestException;
-import fimsExceptions.FimsException;
-import fimsExceptions.ForbiddenRequestException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.ForbiddenRequestException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.SettingsManager;

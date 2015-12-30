@@ -1,8 +1,8 @@
 package bcid;
 
 import ezid.EzidService;
-import fimsExceptions.BadRequestException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ezid.EzidException;

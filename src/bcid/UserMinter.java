@@ -2,8 +2,8 @@ package bcid;
 
 import auth.Authenticator;
 import auth.oauth2.OAuthProvider;
-import fimsExceptions.BadRequestException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

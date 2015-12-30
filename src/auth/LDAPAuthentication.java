@@ -1,7 +1,7 @@
 package auth;
 
 import bcid.Database;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import com.unboundid.ldap.sdk.*;
 import com.unboundid.util.ssl.SSLUtil;
 import com.unboundid.util.ssl.TrustAllTrustManager;

@@ -1,13 +1,13 @@
 package digester;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;
 import renderers.RowMessage;
-import fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsException;
 import settings.RegEx;
 import settings.FimsPrinter;
 import utils.EncodeURIcomponent;

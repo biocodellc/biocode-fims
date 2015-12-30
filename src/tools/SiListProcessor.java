@@ -1,6 +1,6 @@
 package tools;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.MultiMap;
 import org.apache.commons.io.input.BOMInputStream;

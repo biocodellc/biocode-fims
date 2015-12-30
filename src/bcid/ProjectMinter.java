@@ -1,7 +1,7 @@
 package bcid;
 
-import fimsExceptions.BadRequestException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

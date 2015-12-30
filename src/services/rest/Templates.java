@@ -1,7 +1,7 @@
 package services.rest;
 
 import bcid.Resolver;
-import fimsExceptions.UnauthorizedRequestException;
+import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import run.Process;

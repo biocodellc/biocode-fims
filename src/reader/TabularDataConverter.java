@@ -7,7 +7,7 @@ import java.util.Random;
 
 import digester.Attribute;
 import digester.Entity;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.plugins.TabularDataReader;

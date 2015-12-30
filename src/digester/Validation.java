@@ -3,8 +3,8 @@ package digester;
 import static ch.lambdaj.Lambda.*;
 
 import ch.lambdaj.group.Group;
-import fimsExceptions.FimsException;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reader.TabularDataConverter;

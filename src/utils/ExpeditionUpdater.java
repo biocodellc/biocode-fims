@@ -3,7 +3,7 @@ package utils;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

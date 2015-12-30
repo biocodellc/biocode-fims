@@ -1,8 +1,8 @@
 package auth.oauth2;
 
 import bcid.Database;
-import fimsExceptions.OAuthException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.OAuthException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import org.apache.commons.cli.*;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

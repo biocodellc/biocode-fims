@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 import de.fuberlin.wiwiss.d2rq.map.Database;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 
 /**
  * Represents a Database connection, can be used to generate a JDBC URL,

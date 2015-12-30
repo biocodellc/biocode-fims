@@ -2,7 +2,7 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.io.FastaReaderHelper;
 import settings.FimsPrinter;

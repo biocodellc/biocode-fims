@@ -1,7 +1,7 @@
 package run;
 
 import bcid.ProjectMinter;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import settings.PathManager;
 import utils.SettingsManager;
 import utils.UrlFreshener;

@@ -2,7 +2,7 @@ package digester;
 
 import java.net.URI;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import renderers.RendererInterface;
 import run.ProcessController;
 import settings.*;

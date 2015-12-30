@@ -1,6 +1,6 @@
 package bcid;
 
-import fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsException;
 
 import java.math.BigInteger;
 

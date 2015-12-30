@@ -1,6 +1,6 @@
 package settings;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 
 import java.io.File;
 

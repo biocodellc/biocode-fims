@@ -1,7 +1,7 @@
 package run;
 
 import digester.*;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.digester3.Digester;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;

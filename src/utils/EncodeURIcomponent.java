@@ -1,7 +1,7 @@
 package utils;
 
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

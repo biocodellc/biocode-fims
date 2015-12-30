@@ -5,7 +5,7 @@ import digester.Attribute;
 import digester.Mapping;
 import fims.FimsFilterCondition;
 import fims.FimsQueryBuilder;
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.digester3.Digester;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

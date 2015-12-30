@@ -1,6 +1,6 @@
 package utils;
 
-import fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 
 import java.io.*;
 import java.util.Properties;

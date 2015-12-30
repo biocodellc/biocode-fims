@@ -2,7 +2,7 @@ package reader.plugins;
 
 
 import org.apache.poi.ss.usermodel.Sheet;
-import fimsExceptions.FimsException;
+import biocode.fims.fimsExceptions.FimsException;
 
 import java.io.File;
 

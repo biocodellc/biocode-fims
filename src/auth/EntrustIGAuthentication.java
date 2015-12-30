@@ -1,7 +1,7 @@
 package auth;
 
-import fimsExceptions.FimsRuntimeException;
-import fimsExceptions.ServerErrorException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
+import biocode.fims.fimsExceptions.ServerErrorException;
 import com.entrust.identityGuard.authenticationManagement.wsv9.*;
 import com.entrust.identityGuard.common.ws.TestConnectionImpl;
 import com.entrust.identityGuard.common.ws.TimeInterval;

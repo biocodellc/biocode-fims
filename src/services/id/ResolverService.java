@@ -1,7 +1,7 @@
 package services.id;
 
 import bcid.Resolver;
-import fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
