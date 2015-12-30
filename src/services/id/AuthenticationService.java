@@ -4,6 +4,7 @@ import auth.Authenticator;
 import auth.LDAPAuthentication;
 import auth.Authorizer;
 import auth.oauth2.OAuthProvider;
+import com.entrust.identityGuard.common.ws.URIFailoverFactory;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -470,38 +471,35 @@ public class AuthenticationService {
     @POST
     @Path("/reset")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.TEXT_HTML)
-    public void resetPassword(@FormParam("password") String password,
-                              @FormParam("token") String token,
-                              @Context HttpServletResponse response)
-        throws IOException {
-        if (token == null) {
-            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Invalid Reset Token");
-            return;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response resetPassword(@FormParam("password") String password,
+                                  @FormParam("token") String token,
+                                  @Context HttpServletResponse response) {
+        if (token == null || token.isEmpty()) {
+            throw new BadRequestException("Invalid Reset Token");
         }
 
         if (password.isEmpty()) {
-            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Invalid Password");
-            return;
+            throw new BadRequestException("Password must not be empty");
         }
 
         Authorizer authorizer = new Authorizer();
         Authenticator authenticator = new Authenticator();
 
         if (!authorizer.validResetToken(token)) {
-            response.sendRedirect("/" + rootName + "/resetPass.jsp?error=Expired Reset Token");
             authenticator.close();
             authorizer.close();
-            return;
+            throw new BadRequestException("Expired Reset Token");
         }
-        authorizer.close();
 
-        if (authenticator.resetPass(token, password)) {
-            response.sendRedirect("/" + rootName + "/login.jsp");
-            authenticator.close();
-            return;
-        }
+        Boolean resetPass = authenticator.resetPass(token, password);
+        authorizer.close();
         authenticator.close();
+
+        if (!resetPass) {
+            throw new ServerErrorException("Server Error", "Error while updating user's password");
+        }
+        return Response.ok("{\"success\":\"Successfully updated your password\"}").build();
     }
 
     /**
