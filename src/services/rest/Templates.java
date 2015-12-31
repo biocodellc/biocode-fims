@@ -8,9 +8,7 @@ import run.Process;
 import run.ProcessController;
 import run.TemplateProcessor;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,58 +49,6 @@ public class Templates {
         JSONObject attributes = t.getAttributesByGroup();
 
         return Response.ok(attributes.toJSONString()).build();
-    }
-
-    /**
-     * get a specific template generator configuration
-     * @param configName
-     * @return
-     */
-    @GET
-    @Path("/getConfig/{projectId}/{configName}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void getConfig(@PathParam("configName") String configName,
-                          @PathParam("projectId") Integer projectId)
-        throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfig/" +
-                projectId + "/" + configName);
-        dispatcher.forward(request, response);
-        return;
-    }
-
-    /**
-     * Get the template generator configurations for a given project
-     * @param projectId
-     * @return
-     */
-    @GET
-    @Path("/getConfigs/{projectId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void getConfigs(@PathParam("projectId") Integer projectId)
-        throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/getTemplateConfigs/" + projectId);
-        dispatcher.forward(request, response);
-        return;
-    }
-
-    /**
-     * Remove the template generator configuration
-     * @param projectId
-     * @return
-     */
-    @GET
-    @Path("/removeConfig/{projectId}/{configName}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void removeConfig(@PathParam("projectId") Integer projectId,
-                             @PathParam("configName") String configName)
-        throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/id/projectService/removeTemplateConfig/" +
-                projectId + "/" + configName);
-        dispatcher.forward(request, response);
-        return;
     }
 
     /**

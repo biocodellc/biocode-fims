@@ -6,6 +6,7 @@ import bcid.ProjectMinter;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import org.json.simple.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -497,10 +498,10 @@ public class ProjectService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTemplateConfigs(@PathParam("projectId") Integer projectId) {
         ProjectMinter p = new ProjectMinter();
-        String response = p.getTemplateConfigs(projectId);
+        JSONArray configs = p.getTemplateConfigs(projectId);
         p.close();
 
-        return Response.ok(response).build();
+        return Response.ok(configs.toJSONString()).build();
     }
 
     /**
@@ -536,16 +537,10 @@ public class ProjectService {
             return Response.ok("{\"error\": \"To remove the default config, talk to the project admin.\"}").build();
         }
 
-        String username;
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
+
         Database db = new Database();
         Integer userId = db.getUserId(username);
         db.close();

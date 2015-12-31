@@ -969,11 +969,10 @@ public class ProjectMinter {
      * @param projectId
      * @return
      */
-    public String getTemplateConfigs(Integer projectId) {
+    public JSONArray getTemplateConfigs(Integer projectId) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        JSONObject obj = new JSONObject();
         JSONArray configNames = new JSONArray();
 
         configNames.add("Default");
@@ -993,8 +992,7 @@ public class ProjectMinter {
         } finally {
             db.close(stmt, rs);
         }
-        obj.put("configNames", configNames);
-        return obj.toJSONString();
+        return configNames;
     }
 
     /**
