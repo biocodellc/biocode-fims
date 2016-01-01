@@ -433,21 +433,20 @@ public class Query {
     private String[] getAllGraphs(Integer projectId) {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
-        List<String> graphs = new ArrayList<String>();
+        List<String> graphsList = new ArrayList<String>();
 
         ProjectMinter project= new ProjectMinter();
 
-        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(projectId, username)));
+        JSONArray graphs = project.getLatestGraphs(projectId, username);
         project.close();
-        JSONArray jArray = ((JSONArray) response.get("data"));
-        Iterator it = jArray.iterator();
+        Iterator it = graphs.iterator();
 
         while (it.hasNext()) {
             JSONObject obj = (JSONObject) it.next();
-            graphs.add((String) obj.get("graph"));
+            graphsList.add((String) obj.get("graph"));
         }
 
-        return graphs.toArray(new String[graphs.size()]);
+        return graphsList.toArray(new String[graphsList.size()]);
     }
 
     private Process getProcess(Integer projectId) {

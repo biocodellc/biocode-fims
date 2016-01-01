@@ -31,7 +31,7 @@ public class MappingService {
     @GET
     @Path("/filterOptions/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getFilterOptions(@PathParam("projectId") Integer projectID) {
+    public Response getFilterOptions(@PathParam("projectId") Integer projectID) {
 
         File configFile = new ConfigurationFileFetcher(projectID, uploadPath(), true).getOutputFile();
 
@@ -58,7 +58,7 @@ public class MappingService {
             attributes.add(attribute);
         }
 
-        return attributes.toJSONString();
+        return Response.ok(attributes.toJSONString()).build();
     }
 
     /**

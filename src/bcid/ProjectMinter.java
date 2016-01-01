@@ -172,8 +172,9 @@ public class ProjectMinter {
      * @param projectId pass in an project Bcid to limit the set of expeditions we are looking at
      * @return
      */
-    public String getLatestGraphs(int projectId, String username) {
+    public JSONArray getLatestGraphs(int projectId, String username) {
         StringBuilder sb = new StringBuilder();
+        JSONArray graphs = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -215,27 +216,23 @@ public class ProjectMinter {
                 stmt.setInt(3, userId);
             }
 
-            sb.append("{\n\t\"data\": [\n");
             rs = stmt.executeQuery();
             while (rs.next()) {
+                JSONObject graph = new JSONObject();
                 // Grap the prefixes and concepts associated with this
                 sb.append("\t\t{\n");
-                sb.append("\t\t\t\"expeditionCode\":\"" + rs.getString("expeditionCode") + "\",\n");
-                sb.append("\t\t\t\"expeditionTitle\":\"" + rs.getString("expeditionTitle") + "\",\n");
-                sb.append("\t\t\t\"ts\":\"" + rs.getString("ts") + "\",\n");
-                sb.append("\t\t\t\"identifier\":\"" + rs.getString("identifier") + "\",\n");
-                sb.append("\t\t\t\"bcidId\":\"" + rs.getString("id") + "\",\n");
-                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
-                sb.append("\t\t\t\"webAddress\":\"" + rs.getString("webAddress") + "\",\n");
-                sb.append("\t\t\t\"graph\":\"" + rs.getString("graph") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",");
+                graph.put("expeditionCode", rs.getString("expeditionCode"));
+                graph.put("expeditionTitle", rs.getString("expeditionTitle"));
+                graph.put("ts", rs.getString("ts"));
+                graph.put("identifier", rs.getString("identifier"));
+                graph.put("bcidId", rs.getString("id"));
+                graph.put("projectId", rs.getString("projectId"));
+                graph.put("webAddress", rs.getString("webAddress"));
+                graph.put("graph", rs.getString("graph"));
 
-                sb.append("\n");
+                graphs.add(graph);
             }
-            sb.append("\t]\n}\n");
-            return sb.toString();
+            return graphs;
         } catch (SQLException e) {
             throw new ServerErrorException("Server Error", "Trouble getting latest graphs.", e);
         } finally {

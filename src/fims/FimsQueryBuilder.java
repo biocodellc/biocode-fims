@@ -330,20 +330,19 @@ public class FimsQueryBuilder {
      * @return
      */
     private static String[] getAllGraphs(int projectId) {
-        ArrayList<String> graphs = new ArrayList<String>();
+        ArrayList<String> graphsList = new ArrayList<String>();
         ProjectMinter project= new ProjectMinter();
 
-        JSONObject response = ((JSONObject) JSONValue.parse(project.getLatestGraphs(projectId, null)));
+        JSONArray graphs = project.getLatestGraphs(projectId, null);
         project.close();
-        JSONArray jArray = ((JSONArray) response.get("data"));
-        Iterator it = jArray.iterator();
+        Iterator it = graphs.iterator();
 
         while (it.hasNext()) {
             JSONObject obj = (JSONObject) it.next();
-            graphs.add((String) obj.get("graph"));
+            graphsList.add((String) obj.get("graph"));
         }
 
-        return graphs.toArray(new String[graphs.size()]);
+        return graphsList.toArray(new String[graphs.size()]);
     }
 
 
