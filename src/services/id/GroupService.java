@@ -30,7 +30,7 @@ public class GroupService {
     final static Logger logger = LoggerFactory.getLogger(GroupService.class);
 
     @Context
-    static ServletContext context;
+    ServletContext context;
     static String bcidShoulder;
     static String doiShoulder;
     //static SettingsManager sm;

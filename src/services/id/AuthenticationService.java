@@ -35,12 +35,12 @@ import java.net.URISyntaxException;
 public class AuthenticationService {
 
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
     private static Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     static SettingsManager sm;
     @Context
-    static ServletContext context;
+    ServletContext context;
     private static String rootName;
 
     /**

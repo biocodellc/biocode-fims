@@ -4,9 +4,9 @@ import bcid.BcidMinter;
 import bcid.ExpeditionMinter;
 import bcid.Resolver;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
 import digester.Mapping;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONObject;
 import run.ConfigurationFileTester;
 import biocode.fims.fimsExceptions.FimsRuntimeException;
@@ -30,7 +30,7 @@ import java.nio.channels.FileChannel;
 public class Validate {
 
     @Context
-    static ServletContext context;
+    ServletContext context;
 
     /**
      * service to validate a dataset against a project's rules
@@ -409,7 +409,7 @@ public class Validate {
         return "{\"status\": \"" + processController.getStatusSB().toString() + "\"}";
     }
 
-    static String uploadpath() {
+    private String uploadpath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 

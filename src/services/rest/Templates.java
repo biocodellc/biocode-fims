@@ -27,11 +27,11 @@ import javax.ws.rs.core.Context;
 @Path("templates")
 public class Templates {
     @Context
-    static ServletContext context;
+    ServletContext context;
     @Context
-    static HttpServletResponse response;
+    HttpServletResponse response;
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
 
     /**
      * Return the available attributes for a particular graph
@@ -194,7 +194,7 @@ public class Templates {
      *
      * @return Real path of the uploads folder with ending slash.
      */
-    static String uploadPath() {
+    private String uploadPath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 

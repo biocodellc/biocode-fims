@@ -35,11 +35,11 @@ import java.util.Iterator;
 @Path("utils/")
 public class Utils {
     @Context
-    static ServletContext context;
+    ServletContext context;
     @Context
-    static HttpServletResponse response;
+    HttpServletResponse response;
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
 
     /**
      * Get real path of the uploads folder from context.
@@ -47,7 +47,7 @@ public class Utils {
      *
      * @return Real path of the uploads folder with ending slash.
      */
-    static String uploadPath() {
+    private String uploadPath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 

@@ -34,9 +34,9 @@ public class Query {
     private static Logger logger = LoggerFactory.getLogger(Query.class);
 
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
     @Context
-    static ServletContext context;
+    ServletContext context;
 
     /**
      * Return JSON for a graph query.
@@ -468,7 +468,7 @@ public class Query {
      *
      * @return Real path of the uploads folder with ending slash.
      */
-    private static String uploadPath() {
+    private String uploadPath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 

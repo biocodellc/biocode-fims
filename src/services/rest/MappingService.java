@@ -1,5 +1,6 @@
 package services.rest;
 
+import biocode.fims.fimsExceptions.BadRequestException;
 import digester.Attribute;
 import digester.Mapping;
 import org.apache.commons.digester3.Digester;
@@ -20,7 +21,7 @@ import java.util.*;
 @Path("mapping")
 public class MappingService {
     @Context
-    static ServletContext context;
+    ServletContext context;
 
     /**
      * return the column name uri's for a given project
@@ -67,7 +68,7 @@ public class MappingService {
      *
      * @return Real path of the uploads folder with ending slash.
      */
-    private static String uploadPath() {
+    private String uploadPath() {
         return context.getRealPath("tripleOutput") + File.separator;
     }
 

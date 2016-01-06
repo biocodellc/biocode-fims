@@ -26,7 +26,7 @@ import java.util.List;
 public class ProjectService {
 
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
 
      /**
      * Given a projectId, return the validationXML file

@@ -22,9 +22,9 @@ public class ResolverService {
 
     String scheme = "ark:";
     @Context
-    static ServletContext context;
+    ServletContext context;
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
 
     private static Logger logger = LoggerFactory.getLogger(ResolverService.class);
 

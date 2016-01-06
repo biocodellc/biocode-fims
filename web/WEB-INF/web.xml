@@ -15,18 +15,18 @@
 
     <servlet>
         <servlet-name>Jersey Web Application 1</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <!--<init-param>-->
-            <!--<param-name>javax.ws.rs.core.Application</param-name>-->
-            <!--<param-value>biocode.fims.FimsApplication</param-value>-->
-        <!--</init-param>-->
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>biocode.fims.FimsApplication</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>services.exceptionMapper.BiocodeFimsExceptionMapper;org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+        </init-param>
 		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>services/rest;services/exceptionMapper</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-			<param-value>true</param-value>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>services/rest</param-value>
 		</init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -37,18 +37,18 @@
 
     <servlet>
         <servlet-name>Jersey Web Application 2</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <!--<init-param>-->
-            <!--<param-name>javax.ws.rs.core.Application</param-name>-->
-            <!--<param-value>biocode.fims.FimsApplication</param-value>-->
-        <!--</init-param>-->
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>services/id;services/exceptionMapper</param-value>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>biocode.fims.FimsApplication</param-value>
         </init-param>
         <init-param>
-            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-            <param-value>true</param-value>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>services.exceptionMapper.BiocodeFimsExceptionMapper</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>services/id</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>

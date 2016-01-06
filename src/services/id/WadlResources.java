@@ -1,9 +1,9 @@
 package services.id;
 
-import com.sun.jersey.server.wadl.ApplicationDescription;
-import com.sun.jersey.server.wadl.WadlApplicationContext;
-import com.sun.jersey.spi.resource.Singleton;
+import org.glassfish.jersey.server.wadl.WadlApplicationContext;
+import org.glassfish.jersey.server.wadl.internal.ApplicationDescription;
 
+import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,7 +39,7 @@ public final class WadlResources {
     public synchronized Response getWadl(@Context UriInfo uriInfo) {
 
         String styleSheetUrl = uriInfo.getBaseUri().toString() + "../wadl.xsl";
-        ApplicationDescription ae = wadlContext.getApplication(uriInfo);
+        ApplicationDescription ae = wadlContext.getApplication(uriInfo, true);
         this.application = ae.getApplication();
 
         try {

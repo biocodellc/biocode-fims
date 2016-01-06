@@ -31,7 +31,7 @@ import java.net.URLDecoder;
 public class ExpeditionService {
 
     @Context
-    static ServletContext context;
+    ServletContext context;
     @Context
     HttpServletRequest request;
 

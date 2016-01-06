@@ -26,7 +26,7 @@ public class ResolverMetadataService {
 
     static SettingsManager sm;
     @Context
-    static ServletContext context;
+    ServletContext context;
 
     /**
      * Load settings manager

@@ -30,7 +30,7 @@ public class ElementService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response jsonSelectOptions() {
         ResourceTypes rts = new ResourceTypes();
-        return Response.ok(rts.getAllButDatasetAsJSON()).build();
+        return Response.ok(rts.getAllButDatasetAsJSON().toJSONString()).build();
     }
 
     /**
@@ -43,6 +43,6 @@ public class ElementService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response resourceTypes() {
         ResourceTypes rts = new ResourceTypes();
-        return Response.ok(rts.getAllAsJSON()).build();
+        return Response.ok(rts.getAllAsJSON().toJSONString()).build();
     }
 }

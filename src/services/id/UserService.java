@@ -29,7 +29,7 @@ import java.util.Hashtable;
 public class UserService {
 
     @Context
-    static HttpServletRequest request;
+    HttpServletRequest request;
 
     private static Logger logger = LoggerFactory.getLogger(UserService.class);
     private static SettingsManager sm;
