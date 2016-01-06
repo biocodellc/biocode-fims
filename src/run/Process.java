@@ -23,7 +23,7 @@ import reader.ReaderManager;
 import reader.plugins.TabularDataReader;
 import settings.*;
 import triplify.Triplifier;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -232,7 +232,6 @@ public class Process {
      */
     public void runExpeditionCreate() {
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         Boolean ignoreUser = Boolean.parseBoolean(sm.retrieveValue("ignore_user"));
 

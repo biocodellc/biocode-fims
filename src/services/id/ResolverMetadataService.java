@@ -2,7 +2,7 @@ package services.id;
 
 import bcid.Renderer.*;
 import bcid.Resolver;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,6 @@ public class ResolverMetadataService {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
     }
 
     /**

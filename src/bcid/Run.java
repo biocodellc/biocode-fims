@@ -4,7 +4,7 @@ import ezid.EzidException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -80,7 +80,6 @@ public class Run {
         // Initialize variables
         BcidMinter bcidMinter;
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         EzidService ezidAccount = new EzidService();
         Integer userId = 1;
@@ -132,12 +131,7 @@ public class Run {
         EzidService ezidAccount = new EzidService();
 
         // Initialize settings manager
-        SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SettingsManager sm = SettingsManager.getInstance("biocode-fims.props");
 
         // Initialize ezid account
         try {

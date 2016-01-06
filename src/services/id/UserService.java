@@ -11,7 +11,7 @@ import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +41,6 @@ public class UserService {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         rootName = sm.retrieveValue("rootName");
     }

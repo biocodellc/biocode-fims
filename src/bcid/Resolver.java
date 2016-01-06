@@ -6,7 +6,7 @@ import ezid.EzidService;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import ezid.EzidException;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 import utils.Timer;
 
 import java.math.BigInteger;
@@ -39,7 +39,6 @@ public class Resolver extends Database {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
     }
 
     private String project;
@@ -363,12 +362,7 @@ public class Resolver extends Database {
      */
     public static void main(String args[]) {
         Resolver r = null;
-        SettingsManager sm = SettingsManager.getInstance();
-        try {
-            sm.loadProperties();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SettingsManager sm = SettingsManager.getInstance("biocode-fims.props");
 
         try {
             //r = new Resolver("ark:/21547/S2MBIO56");

@@ -6,7 +6,7 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import ezid.EzidException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;

@@ -1,7 +1,7 @@
 package bcid.Renderer;
 
 import bcid.*;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 /**
  * HTMLTableRenderer renders Identifier results as an HTMLTable
@@ -13,7 +13,6 @@ public class HTMLTableRenderer extends Renderer {
 
     static {
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
     }
 
     /**

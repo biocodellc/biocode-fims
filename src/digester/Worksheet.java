@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import renderers.Message;
 import renderers.RowMessage;
 import settings.FimsPrinter;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -228,7 +228,6 @@ public class Worksheet {
     public boolean run(Object parent) {
         SettingsManager sm = SettingsManager.getInstance();
         //SettingsManager sm = SettingsManager.getInstance("/Users/rjewing/IdeaProjects/biocode-fims/biocode-fims.props");
-        sm.loadProperties();
 
         // Set a reference to the validation parent
         validation = (Validation) parent;

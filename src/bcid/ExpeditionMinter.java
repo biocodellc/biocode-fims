@@ -7,7 +7,7 @@ import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.ws.rs.core.MultivaluedMap;
 import java.sql.*;
@@ -41,7 +41,6 @@ public class ExpeditionMinter {
 
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         resolverTargetPrefix = sm.retrieveValue("resolverTargetPrefix");
         resolverMetadataPrefix = sm.retrieveValue("resolverMetadataPrefix");

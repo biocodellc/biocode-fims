@@ -5,7 +5,7 @@ import biocode.fims.fimsExceptions.ServerErrorException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,7 +29,6 @@ public class ManageEZID extends BcidMinter {
     public ManageEZID() {
         super();
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         publisher = sm.retrieveValue("publisher");
         if (publisher == null || publisher.trim().equalsIgnoreCase("")) {

@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.sql.*;
 import java.util.*;
@@ -36,7 +36,6 @@ public class ProjectMinter {
 
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
     }
 
     public void close() {

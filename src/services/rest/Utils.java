@@ -12,7 +12,7 @@ import org.json.simple.JSONValue;
 import run.ConfigurationFileFetcher;
 import run.Process;
 import run.ProcessController;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -193,7 +193,6 @@ public class Utils {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNAAN() {
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
         String naan = sm.retrieveValue("naan");
 
         return Response.ok("{\"naan\": \"" + naan + "\"}").build();
@@ -238,7 +237,6 @@ public class Utils {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMapboxToken() {
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
         String token = sm.retrieveValue("mapboxAccessToken");
 
         return Response.ok("{\"accessToken\": \"" + token + "\"}").build();

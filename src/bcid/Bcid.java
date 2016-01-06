@@ -3,7 +3,7 @@ package bcid;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,7 +53,6 @@ public class Bcid {
 
     protected Bcid() {
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         rights = sm.retrieveValue("rights");
         resolverTargetPrefix = sm.retrieveValue("resolverTargetPrefix");

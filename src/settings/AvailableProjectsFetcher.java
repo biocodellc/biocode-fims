@@ -11,7 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 
 /**
@@ -28,7 +28,6 @@ public class AvailableProjectsFetcher {
         JSONParser parser = new JSONParser();
         try {
             SettingsManager sm = SettingsManager.getInstance();
-            sm.loadProperties();
             String project_service_uri = sm.retrieveValue("project_service_uri");
 
             Object obj = parser.parse(readJsonFromUrl(project_service_uri));

@@ -8,7 +8,7 @@ import com.entrust.identityGuard.common.ws.TimeInterval;
 import com.entrust.identityGuard.common.ws.URIFailoverFactory;
 import com.entrust.identityGuard.failover.wsv9.AuthenticationFailoverService_ServiceLocator;
 import com.entrust.identityGuard.failover.wsv9.FailoverCallConfigurator;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.xml.rpc.ServiceException;
 import java.rmi.RemoteException;
@@ -57,7 +57,6 @@ public class EntrustIGAuthentication {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
         // Get the IG servers from property file
         String igURIs = sm.retrieveValue("igServers");
         if (igURIs.contains(",")) igURLs = igURIs.split(",");

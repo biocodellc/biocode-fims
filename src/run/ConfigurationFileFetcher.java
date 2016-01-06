@@ -3,7 +3,7 @@ package run;
 import bcid.ProjectMinter;
 import biocode.fims.fimsExceptions.FimsRuntimeException;
 import settings.PathManager;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 import utils.UrlFreshener;
 import java.io.*;
 import java.net.*;
@@ -61,7 +61,6 @@ public class ConfigurationFileFetcher {
         configFileName = "config." + projectId + ".xml";
 
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         Boolean useCacheResults = false;
 
