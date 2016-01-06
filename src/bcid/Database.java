@@ -3,13 +3,13 @@ package bcid;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.sql.*;
 
 /**
  * Creates the connection for the backend Bcid Database.
- * Settings come from the utils.SettingsManager/Property file defining the user/password/url/class
+ * Settings come from the biocode.fims.SettingsManager/Property file defining the user/password/url/class
  * for the mysql Database where the data lives.
  */
 public class Database {
@@ -24,7 +24,6 @@ public class Database {
     public Database() {
         try {
             SettingsManager sm = SettingsManager.getInstance();
-            sm.loadProperties();
             String bcidUser = sm.retrieveValue("bcidUser");
             String bcidPassword = sm.retrieveValue("bcidPassword");
             String bcidUrl = sm.retrieveValue("bcidUrl");

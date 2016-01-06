@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.QueryParams;
 
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.OAuthException;
 import biocode.fims.fimsExceptions.ServerErrorException;
@@ -49,7 +49,6 @@ public class AuthenticationService {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         rootName = sm.retrieveValue("rootName");
     }

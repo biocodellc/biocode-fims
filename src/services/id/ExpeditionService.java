@@ -11,7 +11,7 @@ import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -169,7 +169,6 @@ public class ExpeditionService {
 
             // Initialize settings manager
             SettingsManager sm = SettingsManager.getInstance();
-            sm.loadProperties();
 
             // Send an Email that this completed
             // Not all clients have sendMail on... turning this off for now.  Need more secure way to monitor anyway

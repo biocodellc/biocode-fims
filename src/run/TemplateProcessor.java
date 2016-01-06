@@ -14,7 +14,7 @@ import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import settings.PathManager;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -8,7 +8,7 @@ import org.apache.commons.cli.*;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 import utils.StringGenerator;
 
 import java.security.NoSuchAlgorithmException;
@@ -40,7 +40,6 @@ public class Authenticator {
 
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
     }
 
     public static LDAPAuthentication getLdapAuthentication() {

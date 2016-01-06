@@ -9,7 +9,7 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +97,6 @@ public class GroupService {
 
         // Initialize settings manager
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         // Create a Bcid
         Database db = new Database();

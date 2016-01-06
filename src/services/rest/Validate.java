@@ -13,7 +13,7 @@ import biocode.fims.fimsExceptions.FimsRuntimeException;
 import run.Process;
 import run.ProcessController;
 import run.SIServerSideSpreadsheetTools;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -279,7 +279,6 @@ public class Validate {
 
         // Initialize Settings
         SettingsManager sm = SettingsManager.getInstance();
-        sm.loadProperties();
 
         // if no processController is found, we can't do anything
         if (processController == null) {

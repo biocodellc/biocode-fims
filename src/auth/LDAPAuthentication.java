@@ -8,7 +8,7 @@ import com.unboundid.util.ssl.TrustAllTrustManager;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.SettingsManager;
+import biocode.fims.SettingsManager;
 
 import javax.net.ssl.SSLSocketFactory;
 import javax.servlet.ServletContext;
@@ -49,7 +49,6 @@ public class LDAPAuthentication {
     static {
         // Initialize settings manager
         sm = SettingsManager.getInstance();
-        sm.loadProperties();
         // Get the LDAP servers from property file
         // Property file format looks like "ldapServers = my    secureLDAPserver.net:636,myfailoverLDAPServer.net:636"
         ldapURI = sm.retrieveValue("ldapServers");
