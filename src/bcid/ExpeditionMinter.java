@@ -5,6 +5,8 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.FimsException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import biocode.fims.SettingsManager;
@@ -948,6 +950,46 @@ public class ExpeditionMinter {
         sb.append("\t</tbody>\n");
         sb.append("</table>\n");
         return sb.toString();
+    }
+
+   /**
+    * return the expedition's datasets
+    *
+    * @param expeditionId
+    *
+    * @return
+    */
+   public JSONArray getExpeditionsDatasets(Integer expeditionId) {
+       JSONArray datasets = new JSONArray();
+       String rootName = sm.retrieveValue("rootName");
+       StringBuilder sb = new StringBuilder();
+
+       PreparedStatement stmt = null;
+       ResultSet rs = null;
+
+       try {
+           String sql = "SELECT b.ts, b.identifier, b.webAddress, b.graph, e.projectId " +
+                   "FROM bcids b, expeditionBcids eB, expeditions e " +
+                   "WHERE b.bcidId = eB.bcidId && eB.expeditionId = ? && e.expeditionId = eB.expeditionId " +
+                   "AND b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
+                   "ORDER BY b.ts DESC";
+           stmt = conn.prepareStatement(sql);
+           stmt.setInt(1, expeditionId);
+
+           rs = stmt.executeQuery();
+           while (rs.next()) {
+               JSONObject dataset = new JSONObject();
+               dataset.put("ts", rs.getTimestamp("b.ts").toString());
+               dataset.put("identifier", rs.getString("b.identifier"));
+               datasets.add(dataset);
+           }
+       } catch (SQLException e) {
+           throw new ServerErrorException(e);
+       } finally {
+           db.close(stmt, rs);
+       }
+
+       return datasets;
     }
 
     /**

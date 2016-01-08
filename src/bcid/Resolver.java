@@ -180,12 +180,11 @@ public class Resolver extends Database {
         bcid = new Bcid(suffix, bcidsId);
 
         // A resolution target is specified AND there is a suffix AND suffixPassThrough
-        if (bcid.getWebAddress() != null && !bcid.getWebAddress().equals("") &&
-            suffix != null && !suffix.trim().equals("") && bcid.getSuffixPassThrough()) {
+        if (bcid.forwardingResolution) {
             forwardingResolution = true;
 
             // Immediately return resolution result
-            resolution = new URI(bcid.getWebAddress() + suffix);
+            resolution = bcid.resolutionTarget;
         } else {
             resolution = bcid.getMetadataTarget();
 
