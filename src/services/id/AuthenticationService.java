@@ -54,88 +54,6 @@ public class AuthenticationService {
     }
 
     /**
-     * Service to log a user into the Bcid system
-     *
-     * @param usr
-     * @param pass
-     * @param return_to the url to return to after login
-     *
-     * @throws IOException
-     */
-    @POST
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@FormParam("username") String usr,
-                          @FormParam("password") String pass,
-                          @QueryParam("return_to") String return_to,
-                          @Context HttpServletResponse res) {
-
-        if (!usr.isEmpty() && !pass.isEmpty()) {
-            Authenticator authenticator = new Authenticator();
-            Boolean isAuthenticated;
-
-            // Verify that the entered and stored passwords match
-            isAuthenticated = authenticator.login(usr, pass);
-            HttpSession session = request.getSession();
-
-//            logger.debug("BCID SESS_DEBUG login: sessionid=" + session.getId());
-
-            if (isAuthenticated) {
-                // Place the user in the session
-                session.setAttribute("user", usr);
-                Authorizer myAuthorizer = null;
-
-                myAuthorizer = new Authorizer();
-
-                // Check if the user is an admin for any projects
-                if (myAuthorizer.userProjectAdmin(usr)) {
-                    session.setAttribute("projectAdmin", true);
-                }
-
-                myAuthorizer.close();
-
-                // Check if the user has created their own password, if they are just using the temporary password, inform the user to change their password
-                if (!authenticator.userSetPass(usr)) {
-                    // don't need authenticator anymore
-                    authenticator.close();
-
-                    return Response.ok("{\"url\": \"secure/profile.jsp?error=Update Your Password" +
-                                    new QueryParams().getQueryParams(request.getParameterMap(), false) + "\"}")
-                                    .build();
-                } else {
-                    // don't need authenticator anymore
-                    authenticator.close();
-                }
-
-                // Redirect to return_to uri if provided
-                if (return_to != null) {
-
-                    // check to see if oAuthLogin is in the session and set to true is so.
-                    Object oAuthLogin = session.getAttribute("oAuthLogin");
-                    if (oAuthLogin != null) {
-                        session.setAttribute("oAuthLogin", true);
-                    }
-
-                    return Response.ok("{\"url\": \"" + return_to +
-                                new QueryParams().getQueryParams(request.getParameterMap(), true) + "\"}")
-                            .build();
-                } else {
-                    return Response.ok("{\"url\": \"index.jsp\"}").build();
-                }
-            }
-            // stored and entered passwords don't match, invalidate the session to be sure that a user is not in the session
-            else {
-                session.invalidate();
-                authenticator.close();
-            }
-        }
-
-        return Response.status(400)
-                .entity(new ErrorInfo("Bad Credentials", 400).toJSON())
-                .build();
-    }
-
-    /**
      * Service to log a user into the Bcid system with 2-factor authentication using LDAP & Entrust Identity Guard
      *
      * @param usr
@@ -145,6 +63,7 @@ public class AuthenticationService {
     @POST
     @Path("/loginLDAP")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response loginLDAP(@FormParam("username") String usr,
                               @FormParam("password") String pass,
                               @Context HttpServletResponse res) {
@@ -212,6 +131,7 @@ public class AuthenticationService {
     @POST
     @Path("/entrustChallenge")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response entrustChallenge(@QueryParam("return_to") String return_to,
                                      @FormParam("question_1") String question1,
                                      @FormParam("question_2") String question2,
@@ -374,6 +294,7 @@ public class AuthenticationService {
     @POST
     @Path("/oauth/access_token")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response access_token(@FormParam("code") String code,
                                  @FormParam("client_id") String clientId,
                                  @FormParam("client_secret") String clientSecret,
@@ -431,6 +352,7 @@ public class AuthenticationService {
     @POST
     @Path("/oauth/refresh")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response refresh(@FormParam("client_id") String clientId,
                             @FormParam("client_secret") String clientSecret,
                             @FormParam("refresh_token") String refreshToken) {
