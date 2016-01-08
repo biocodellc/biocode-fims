@@ -20,6 +20,7 @@
             <rule type='validForURI' column='fieldNumber' level='error'></rule>
 
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>fieldNumber</field>
                 <field>diseaseTested</field>
                 <field>sampleType</field>
                 <field>diseaseDetected</field>
