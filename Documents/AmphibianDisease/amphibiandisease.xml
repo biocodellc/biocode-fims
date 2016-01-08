@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="Amphibian Disease"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+        <![CDATA[Descriptive Text / Abstract for Amphibian Disease.]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='fieldNumber' level='error'></rule>
+            <rule type='validForURI' column='fieldNumber' level='error'></rule>
+
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>diseaseTested</field>
+                <field>sampleType</field>
+                <field>diseaseDetected</field>
+                <field>fatal</field>
+                <field>genus</field>
+                <field>specificEpithet</field>
+                <field>dateCollected</field>
+                <field>decimalLatitude</field>
+                <field>decimalLongitude</field>
+                <field>elevation</field>
+                <field>coordinateUncertaintyInMeters</field>
+                <field>Collector</field>
+                <field>ContactName</field>
+            </rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+                <field>quantityDetected</field>
+                <field>dilutionFactor</field>
+                <field>cycleTimeFirstDetection</field>
+            </rule>
+
+            <rule type='controlledVocabulary' column='basisOfRecord' list='controlledVocabulary' level='error'></rule>
+            <rule type='controlledVocabulary' column='diseaseTested' list='diseaseTested' level='error'></rule>
+            <rule type='controlledVocabulary' column='sampleType' list='sampleType' level='error'></rule>
+            <rule type='controlledVocabulary' column='specimenDisposition' list='specimenDisposition' level='error'></rule>
+            <rule type='controlledVocabulary' column='originalsource' list='originalsource' level='error'></rule>
+            <rule type='controlledVocabulary' column='diseaseDetected' list='diseaseDetected' level='error'></rule>
+            <rule type='controlledVocabulary' column='fatal' list='trueFalse' level='error'></rule>
+            <rule type='controlledVocabulary' column='Test_Method' list='Test_Method' level='error'></rule>
+
+        </worksheet>
+
+        <lists>
+
+            <list alias='basisOfRecord' caseInsensitive='true'>
+                <field>PreservedSpecimen</field>
+                <field>LivingSpecimen</field>
+            </list>
+            <list alias='diseaseTested' caseInsensitive='true'>
+                <field>Bd</field>
+                <field>Bsal</field>
+                <field>Other</field>
+            </list>
+            <list alias='sampleType' caseInsensitive='true'>
+                <field>external Swab</field>
+                <field>tissue</field>
+                <field>toe clip</field>
+                <field>blood</field>
+                <field>other</field>
+            </list>
+            <list alias='specimenDisposition' caseInsensitive="true">
+                <field>released</field>
+                <field>collected</field>
+                <field>preserved</field>
+                <field>captive</field>
+                <field>captive-preserved</field>
+            </list>
+
+            <list alias='originalsource' caseInsensitive='true'>
+                <field>wild</field>
+                <field>captive</field>
+            </list>
+            <list alias='diseaseDetected' caseInsensitive='true'>
+                <field>TRUE</field>
+                <field>FALSE</field>
+                <field>NO_CONFIDENCE</field>
+            </list>
+            <list alias='trueFalse' caseInsensitive='true'>
+                <field>TRUE</field>
+                <field>FALSE</field>
+            </list>
+            <list alias='Test_Method' caseInsensitive='true'>
+                <field>traditional PCR</field>
+                <field>quantitative PCR</field>
+                <field>realtime PCR</field>
+                <field>histology</field>
+                <field>Other</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="fieldNumber"
+                conceptAlias="Resource"
+                conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                entityId="1">
+            <attribute column='basisOfRecord' uri='urn:basisOfRecord' defined_by='http://rs.tdwg.org/dwc/terms/basisOfRecord'>Sample is from a PreservedSpecimen or LivingSpecimen</attribute>
+            <attribute column='occurrenceID' uri='urn:occurrenceID' defined_by='http://rs.tdwg.org/dwc/terms/occurrenceID'>May be a URN, LSID, URI if exists</attribute>
+            <attribute column='institutionCode' uri='urn:institutionCode' defined_by='http://rs.tdwg.org/dwc/terms/institutionCode'>Institution acronym (e.g., MVZ, CAS, etc)</attribute>
+            <attribute column='collectionCode' uri='urn:collectionCode' defined_by='http://rs.tdwg.org/dwc/terms/collectionCode'>Institution's collection code (e.g., Herpetology)</attribute>
+            <attribute column='catalogNumber' uri='urn:catalogNumber' defined_by='http://rs.tdwg.org/dwc/terms/catalogNumber'>If PreservedSpecimen, the catalog number</attribute>
+            <attribute column='labNumber' uri='urn:labNumber' defined_by=''>unique number assigned in the lab</attribute>
+            <attribute column='fieldNumber' uri='urn:fieldNumber' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>unique number assigned in the field, include initials (e.g., DBW 1234)</attribute>
+            <attribute column='diseaseTested' uri='urn:diseaseTested' defined_by=''>Controlled vocabulary: Bd, Bsal, Bd+Bsal, Other</attribute>
+            <attribute column='diseaseStrain' uri='urn:diseaseStrain' defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>Specific genetic strain detected (if available) NCBI URI (.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)</attribute>
+            <attribute column='sampleType' uri='urn:sampleType' defined_by=''>Type of sample tested: eg, swabbing, blood, skin, liver</attribute>
+            <attribute column='specimenDisposition' uri='urn:specimenDisposition' defined_by=''>Post-sampling status: [released|collected|preserved|captive|captive-preserved]</attribute>
+            <attribute column='originalsource' uri='urn:originalsource' defined_by=''>Relevant if organism is alive at time of sampling. Assumed 'wild' if a preserved voucher specimen, unless noted otherwise</attribute>
+            <attribute column='diseaseDetected' uri='urn:diseaseDetected' defined_by=''>Result of disease testing: True=Positive, False=Negative, No Confidence=Ambiguous</attribute>
+            <attribute column='fatal' uri='urn:fatal' defined_by=''>At time of sampling, presumed cause of death to be diseaseTested, mark [FALSE] if unknown</attribute>
+            <attribute column=' genus' uri='urn: genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
+            <attribute column=' specificEpithet' uri='urn: specificEpithet' defined_by='http://rs.tdwg.org/dwc/terms/specificEpithet'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
+            <attribute column=' infraspecificEpithet' uri='urn: infraspecificEpithet' defined_by='http://rs.tdwg.org/dwc/terms/infraspecificEpithet'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
+            <attribute column=' lifeStage' uri='urn: lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>Controlled vocabulary: egg, larva, juvenile, adult</attribute>
+            <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>Controlled vocabulary: male, female, not determined</attribute>
+            <attribute column='dateCollected' uri='urn:dateCollected' defined_by='http://rs.tdwg.org/dwc/terms/eventDate'>The date of sampling, preferably in ISO format (e.g., 2015-01-31)</attribute>
+            <attribute column='decimalLatitude' uri='urn:decimalLatitude' defined_by='http://rs.tdwg.org/dwc/terms/decimalLatitude'></attribute>
+            <attribute column='decimalLongitude' uri='urn:decimalLongitude' defined_by='http://rs.tdwg.org/dwc/terms/decimalLongitude'></attribute>
+            <attribute column='datum' uri='urn:datum' defined_by='http://rs.tdwg.org/dwc/terms/geodeticDatum'>If no other information available, assumed to be WGS84</attribute>
+            <attribute column='georeferenceSource' uri='urn:georeferenceSource' defined_by='http://rs.tdwg.org/dwc/terms/georeferenceSources'>E.g., GPS (make), Google Earth, etc</attribute>
+            <attribute column='elevation' uri='urn:elevation' defined_by='http://rs.tdwg.org/dwc/terms/verbatimElevation'></attribute>
+            <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters' defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>If latitude and longitude from GPS unit and no other information gathered, assume 30 m coordinateUncertaintyinMeters</attribute>
+            <attribute column='depth' uri='urn:depth' defined_by='http://rs.tdwg.org/dwc/terms/verbatimDepth'>Depth below local surface water in meters.</attribute>
+            <attribute column='Collector' uri='urn:Collector' defined_by='http://rs.tdwg.org/dwc/terms/recordedBy'>Full name of primary Collector (no initials please!)</attribute>
+            <attribute column='ContactName' uri='urn:ContactName' defined_by=''>Usually same as primary Collector; if different, include here.</attribute>
+            <attribute column='Collector2' uri='urn:Collector2' defined_by=''>Additional collector, if needed</attribute>
+            <attribute column='Collector3' uri='urn:Collector3' defined_by=''>Additional collector, if needed</attribute>
+            <attribute column='verbatimLocality' uri='urn:verbatimLocality' defined_by='http://rs.tdwg.org/dwc/terms/verbatimLocality'></attribute>
+            <attribute column='Habitat' uri='urn:Habitat' defined_by='http://rs.tdwg.org/dwc/terms/habitat'></attribute>
+            <attribute column='Test_Method' uri='urn:Test_Method' defined_by=''>Controlled vocabulary: [traditional PCR][quantitative PCR][realtime PCR][histology][Other]</attribute>
+            <attribute column='eventRemarks' uri='urn:eventRemarks' defined_by='http://rs.tdwg.org/dwc/terms/eventRemarks'>Additional remarks in locality, habitat, or specimen not captured in above fields.</attribute>
+            <attribute column='quantityDetected' uri='urn:quantityDetected' defined_by=''>Number of zoospore detected. Needed to calculate Zoospore Equivalent Score (ZEscore), a measure of infection intensity (see Vredenburg et al 2010 doi: 10.1073/pnas.0914111107)</attribute>
+            <attribute column='dilutionFactor' uri='urn:dilutionFactor' defined_by=''>sampleType (see sampleType field) dilution factor. Needed to calculate Zoospore Equivalent Score (ZEscore), a measure of infection intensity (see Vredenburg et al 2010 doi: 10.1073/pnas.0914111107)</attribute>
+            <attribute column='cycleTimeFirstDetection' uri='urn:cycleTimeFirstDetection' defined_by=''>Cycle number ("c(t)") at which the qPCR machine first detects a positive for chytrid ( a measure of the amount of Bd or Bsal present)</attribute>
+        </entity>
+    </mapping>
+
+</fims>
+
