@@ -103,18 +103,17 @@ public class JSONRenderer extends Renderer {
     private void appendDataset() {
         if (displayDatasets()) {
             JSONObject download = new JSONObject();
-            String rootName = sm.retrieveValue("rootName");
+            String fimsServiceRoot = sm.retrieveValue("fims_service_root");
             String projectId = resolver.getProjectID(resolver.getBcidId());
-            String graph = resolver.graph;
 
             // Excel option
-            download.put("excel", rootName + "query/excel?graphs=" + graph + "&projectId=" + projectId);
+            download.put("excel", fimsServiceRoot + "query/excel?graphs=" + bcid.getGraph() + "&projectId=" + projectId);
 
             // TAB delimited option
-            download.put("tab", rootName + "query/tab?graphs=" + graph + "&projectId=" + projectId);
+            download.put("tab", fimsServiceRoot + "query/tab?graphs=" + bcid.getGraph() + "&projectId=" + projectId);
 
             // n3 option
-            download.put("n3", bcid.getWebAddress());
+            download.put("n3", bcid.getWebAddress().toASCIIString());
 
             json.put("download", download);
         }

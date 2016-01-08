@@ -37,6 +37,11 @@ public class Bcid {
     protected Boolean suffixPassThrough = false;
     protected String doi;
     protected Integer bcidsId;
+
+    public String getGraph() {
+        return graph;
+    }
+
     protected String graph;
     protected Boolean forwardingResolution = false;
     protected URI resolutionTarget;
