@@ -50,57 +50,6 @@ public class UserMinter {
     }
 
     /**
-     * return a HTML table of the user's profile
-     * @param username
-     * @return
-     */
-    public String getProfileHTML(String username) {
-        StringBuilder sb = new StringBuilder();
-        String firstName = getFirstName(username);
-        String lastName = getLastName(username);
-        String email = getEmail(username);
-        String institution = getInstitution(username);
-
-        sb.append("<table id=\"profile\">\n");
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>First Name:</td>\n");
-        sb.append("\t\t<td>");
-        sb.append(firstName);
-        sb.append("</td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>Last Name:</td>\n");
-        sb.append("\t\t<td>");
-        sb.append(lastName);
-        sb.append("</td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>Email:</td>\n");
-        sb.append("\t\t<td>");
-        sb.append(email);
-        sb.append("</td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td>Institution:</td>\n");
-        sb.append("\t\t<td>");
-        sb.append(institution);
-        sb.append("</td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<td></td>\n");
-        sb.append("\t\t<td><a href=\"javascript:void(0)\">Edit Profile</a></td>\n");
-        sb.append("\t</tr>\n");
-
-        sb.append("\t</tr>\n</table>\n");
-
-        return sb.toString();
-    }
-
-    /**
      * retrieve a user's profile information
      * @param username
      * @return
@@ -263,8 +212,8 @@ public class UserMinter {
 
                 if (rs.next()) {
                     JSONObject profile = new JSONObject();
-                    profile.put("first_name", rs.getString("firstName"));
-                    profile.put("last_name", rs.getString("lastName"));
+                    profile.put("firstName", rs.getString("firstName"));
+                    profile.put("lastName", rs.getString("lastName"));
                     profile.put("email", rs.getString("email"));
                     profile.put("institution", rs.getString("institution"));
                     profile.put("hasSetPassword", rs.getString("hasSetPassword"));
