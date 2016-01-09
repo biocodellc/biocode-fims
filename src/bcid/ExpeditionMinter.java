@@ -656,7 +656,7 @@ public class ExpeditionMinter {
             //System.out.println(expedition.getGraphMetadata("_qNK_fuHVbRSTNvA_8pG.xlsx"));
            System.out.println("starting ...");
 //            System.out.println(expedition.listExpeditionsAsTable(9,"trizna"));
-            System.out.println(expedition.listExpeditionDatasetsAsTable(30));
+            System.out.println(expedition.getDatasets(30));
             System.out.println("ending ...");
             //System.out.println(expedition.listExpeditions(8,"mwangiwangui25@gmail.com"));
             //expedition.checkExpeditionCodeValid("JBD_foo-))");
@@ -764,13 +764,11 @@ public class ExpeditionMinter {
      *
      * @return
      */
-    public String listExpeditions(Integer projectId, String username) {
-        StringBuilder sb = new StringBuilder();
+    public JSONArray listExpeditions(Integer projectId, String username) {
+        JSONArray expeditions = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        sb.append("{\n");
-        sb.append("\t\"expeditions\": [\n");
         Integer userId = db.getUserId(username);
 
         try {
@@ -784,41 +782,30 @@ public class ExpeditionMinter {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                sb.append("\t\t{\n");
-                sb.append("\t\t\t\"expeditionId\":\"" + rs.getString("expeditionId") + "\",\n");
-                sb.append("\t\t\t\"expeditionCode\":\"" + rs.getString("expeditionCode") + "\",\n");
-                sb.append("\t\t\t\"expeditionTitle\":\"" + rs.getString("expeditionTitle") + "\",\n");
-                sb.append("\t\t\t\"public\":\"" + rs.getBoolean("public") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",\n");
-                else
-                    sb.append("\n");
+                JSONObject expedition = new JSONObject();
+                expedition.put("expeditionId", rs.getString("expeditionId"));
+                expedition.put("expeditionCode", rs.getString("expeditionCode"));
+                expedition.put("expeditionTitle", rs.getString("expeditionTitle"));
+                expedition.put("public", rs.getString("public"));
+                expeditions.add(expedition);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
-
-        sb.append("\t]\n}");
-
-        return sb.toString();
+        return expeditions;
     }
 
    /**
-     * Return an HTML table of an expedition's configuration
+     * Return the expedition's metadata
      *
      * @param expeditionId
      *
      * @return
      */
-    public String listExpeditionConfigurationAsTable(Integer expeditionId) {
-        String rootName = sm.retrieveValue("rootName");
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
-        sb.append("\t<tbody>\n");
-
+    public JSONObject getMetadata(Integer expeditionId) {
+        JSONObject metadata = new JSONObject();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -832,67 +819,29 @@ public class ExpeditionMinter {
             stmt.setInt(1, expeditionId);
 
             rs = stmt.executeQuery();
-            while (rs.next()) {
-
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append("Identifier:");
-                sb.append("\t\t</td>\n");
-                sb.append("\t\t<td>");
-                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("\">");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("</a>");
-                sb.append("\t\t</td>\n");
-                sb.append("\t</tr>\n");
-
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append("Public Expedition:");
-                sb.append("\t\t</td>");
-                sb.append("\t\t<td>");
-                if (rs.getBoolean("e.public")) {
-                    sb.append("yes");
-                } else {
-                    sb.append("no");
-                }
-                sb.append("&nbsp;&nbsp;");
-                sb.append("<a href='#' onclick=\"editExpedition('");
-                sb.append(rs.getInt("e.projectId"));
-                sb.append("', '");
-                sb.append(rs.getString("e.expeditionCode"));
-                sb.append("', this)\">edit</a>");
-                sb.append("\t\t</td>");
-                sb.append("\t</tr>\n");
+            if (rs.next()) {
+                metadata.put("identifier", rs.getString("b.identifier"));
+                metadata.put("public", rs.getBoolean("e.public"));
+                metadata.put("expeditionCode", rs.getString("e.expeditionCode"));
+                metadata.put("projectId", rs.getString("e.projectId"));
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
-
-        sb.append("\t</tbody>\n");
-        sb.append("</table>\n");
-        return sb.toString();
+        return metadata;
     }
 
     /**
-     * Return an HTML table of an expedition's resources
+     * get the expedition's resources
      *
      * @param expeditionId
      *
      * @return
      */
-    public String listExpeditionResourcesAsTable(Integer expeditionId) {
-        String rootName = sm.retrieveValue("rootName");
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
-        sb.append("\t<tbody>\n");
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Identifier</th>\n");
-        sb.append("\t\t<th>Resource Type</th>\n");
-        sb.append("\t</tr>\n");
+    public JSONArray getResources(Integer expeditionId) {
+        JSONArray resources = new JSONArray();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -911,6 +860,7 @@ public class ExpeditionMinter {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 String rtString;
+                JSONObject resource = new JSONObject();
                 ResourceType resourceType = rt.get(rs.getString("b.resourceType"));
                 if (resourceType != null) {
                     rtString = resourceType.string;
@@ -923,33 +873,22 @@ public class ExpeditionMinter {
                     continue;
                 }
 
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("\">");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("</a>");
-                sb.append("</td>\n");
-                sb.append("\t\t<td>");
-                // only display a hyperlink if http: is specified under resource type
+                resource.put("identifier", rs.getString("b.identifier"));
+                resource.put("resourceType", rtString);
+                // only add the resourceTypeUri if http: is specified under resource type
                 if (rs.getString("b.resourceType").contains("http:")) {
-                    sb.append("<a href=\"" + rs.getString("b.resourceType") + "\">" + rtString + "</a>");
+                    resource.put("resourceTypeUri", rs.getString("b.resourceType"));
                 } else {
-                    sb.append(rtString);
+                    resource.put("resourceTypeUri", "");
                 }
-                sb.append("</td>\n");
-                sb.append("\t</tr>\n");
+                resources.add(resource);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
-
-        sb.append("\t</tbody>\n");
-        sb.append("</table>\n");
-        return sb.toString();
+        return resources;
     }
 
    /**
@@ -993,21 +932,14 @@ public class ExpeditionMinter {
     }
 
     /**
-     * return an HTML table of an expedition's datasets
+     * retrieve the expedition's datasets
      *
      * @param expeditionId
      *
      * @return
      */
-    public String listExpeditionDatasetsAsTable(Integer expeditionId) {
-        String rootName = sm.retrieveValue("rootName");
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Date</th>\n");
-        sb.append("\t\t<th>Identifier</th>\n");
-        sb.append("\t</tr>\n");
-
+    public JSONArray getDatasets(Integer expeditionId) {
+        JSONArray datasets = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -1022,28 +954,17 @@ public class ExpeditionMinter {
 
             rs = stmt.executeQuery();
             while (rs.next()) {
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append(rs.getTimestamp("b.ts").toString());
-                sb.append("\t\t</td>");
-
-                sb.append("\t\t<td>");
-                sb.append("<a href=\"/" + rootName + "/lookup.jsp?id=");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("\">");
-                sb.append(rs.getString("b.identifier"));
-                sb.append("</a>");
-                sb.append("\t\t</td>");
-                sb.append("\t</tr>\n");
+                JSONObject dataset = new JSONObject();
+                dataset.put("ts", rs.getTimestamp("b.ts").toString());
+                dataset.put("identifier", rs.getString("b.identifier"));
+                datasets.add(dataset);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
-
-        sb.append("</table>\n");
-        return sb.toString();
+        return datasets;
     }
 
     /**

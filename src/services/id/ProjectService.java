@@ -404,26 +404,18 @@ public class ProjectService {
     @Path("/listUserProjects")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserProjects(@QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("authorization_error");
         }
 
         ProjectMinter p = new ProjectMinter();
-        String response = p.listUsersProjects(username);
+        JSONArray projects = p.listUsersProjects(username);
         p.close();
-        return Response.ok(response).build();
+        return Response.ok(projects.toJSONString()).build();
     }
 
     /**

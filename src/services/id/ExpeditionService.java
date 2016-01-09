@@ -9,6 +9,8 @@ import biocode.fims.fimsExceptions.FimsException;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import biocode.fims.SettingsManager;
@@ -272,43 +274,36 @@ public class ExpeditionService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listExpeditions(@PathParam("projectId") Integer projectId,
                                     @QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view your expeditions.");
         }
 
         ExpeditionMinter e = new ExpeditionMinter();
-
-        String response = e.listExpeditions(projectId, username.toString());
-
+        JSONArray expeditions = e.listExpeditions(projectId, username.toString());
         e.close();
-        return Response.ok(response).build();
+
+        return Response.ok(expeditions.toJSONString()).build();
     }
 
     /**
-     * Returns an HTML table of an expedition's resources
+     * Returns the expedition's resources
      *
      * @param expeditionId
      *
      * @return
      */
     @GET
-    @Path("resourcesAsTable/{expeditionId}")
+    @Path("resources/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response listResourcesAsTable(@PathParam("expeditionId") Integer expeditionId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+    public Response getResources(@PathParam("expeditionId") Integer expeditionId,
+                                 @QueryParam("access_token") String accessToken) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view this expedition's resources.");
@@ -316,58 +311,62 @@ public class ExpeditionService {
 
         ExpeditionMinter e = new ExpeditionMinter();
 
-        String response = e.listExpeditionResourcesAsTable(expeditionId);
+        JSONArray resources = e.getResources(expeditionId);
 
         e.close();
-        return Response.ok(response).build();
+        return Response.ok(resources.toJSONString()).build();
     }
 
    /**
-     * Service to retrieve an expedition's configuration as an HTML table.
+     * Service to retrieve an expedition's metadata
      *
      * @param expeditionId
      *
      * @return
      */
     @GET
-    @Path("configurationAsTable/{expeditionId}")
-    @Produces(MediaType.TEXT_HTML)
-    public Response listConfigurationAsTable(@PathParam("expeditionId") Integer expeditionId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+    @Path("metadata/{expeditionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMetadata(@PathParam("expeditionId") Integer expeditionId,
+                                @QueryParam("access_token") String accessToken) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view this expedition's configuration.");
         }
 
         ExpeditionMinter e = new ExpeditionMinter();
-        String results = e.listExpeditionConfigurationAsTable(expeditionId);
+        JSONObject metadata = e.getMetadata(expeditionId);
         e.close();
-        return Response.ok(results).build();
+        return Response.ok(metadata.toJSONString()).build();
     }
 
     /**
-     * Service to retrieve an expedition's datasets as an HTML table.
+     * Service to retrieve an expedition's datasets
      *
      * @param expeditionId
      *
      * @return
      */
     @GET
-    @Path("datasetsAsTable/{expeditionId}")
-    @Produces(MediaType.TEXT_HTML)
-    public Response listDatasetsAsTable(@PathParam("expeditionId") Integer expeditionId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+    @Path("datasets/{expeditionId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDatasets(@PathParam("expeditionId") Integer expeditionId,
+                                @QueryParam("access_token") String accessToken) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view this expedition's datasets.");
         }
 
         ExpeditionMinter e = new ExpeditionMinter();
-        String results = e.listExpeditionDatasetsAsTable(expeditionId);
+        JSONArray datasets = e.getDatasets(expeditionId);
         e.close();
-        return Response.ok(results).build();
+        return Response.ok(datasets.toJSONString()).build();
     }
 
     /**
@@ -449,24 +448,16 @@ public class ExpeditionService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/publicExpedition/{projectId}/{expeditionCode}/{public_status}")
+    @Path("/publicExpedition/{projectId}/{expeditionCode}/{publicStatus}")
     public Response publicExpedition(
             @PathParam("projectId") Integer projectId,
             @PathParam("expeditionCode") String expeditionCode,
-            @PathParam("public_status") Boolean publicStatus,
+            @PathParam("publicStatus") Boolean publicStatus,
             @QueryParam("access_token") String accessToken) {
 
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
