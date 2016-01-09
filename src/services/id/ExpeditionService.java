@@ -377,24 +377,27 @@ public class ExpeditionService {
      * @return
      */
     @GET
-    @Path("/admin/listExpeditionsAsTable/{projectId}")
-    @Produces(MediaType.TEXT_HTML)
-    public Response listExpeditionAsTable(@PathParam("projectId") Integer projectId) {
-        HttpSession session = request.getSession();
-        Object admin = session.getAttribute("projectAdmin");
-        Object username = session.getAttribute("user");
+    @Path("/admin/list/{projectId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getExpeditions(@PathParam("projectId") Integer projectId,
+                                   @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view this project's expeditions.");
         }
-        if (admin == null) {
+
+        ProjectMinter projectMinter = new ProjectMinter();
+        if (!projectMinter.isProjectAdmin(username, projectId)) {
             throw new ForbiddenRequestException("You must be this project's admin in order to view its expeditions.");
         }
 
         ExpeditionMinter e = new ExpeditionMinter();
-        String response = e.listExpeditionsAsTable(projectId, username.toString());
+        JSONArray expeditions = e.getExpeditions(projectId, username);
         e.close();
-        return Response.ok(response).build();
+        return Response.ok(expeditions.toJSONString()).build();
     }
 
 
@@ -410,20 +413,19 @@ public class ExpeditionService {
     @Path("/admin/publicExpeditions")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response publicExpeditions(MultivaluedMap<String, String> data) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+    public Response publicExpeditions(MultivaluedMap<String, String> data,
+                                      @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
         Integer projectId = new Integer(data.remove("projectId").get(0));
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
         }
 
-        Database db = new Database();
         ProjectMinter p = new ProjectMinter();
-        Integer userId = db.getUserId(username.toString());
-        Boolean projectAdmin = p.userProjectAdmin(userId, projectId);
-        db.close();
+        Boolean projectAdmin = p.isProjectAdmin(username, projectId);
         p.close();
 
         if (!projectAdmin) {

@@ -7,6 +7,7 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -180,62 +181,44 @@ public class ProjectService {
     @GET
     @Path("/admin/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserAdminProjects() {
+    public Response getUserAdminProjects(@QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
         HttpSession session = request.getSession();
 
-        if (session.getAttribute("projectAdmin") == null) {
-            throw new ForbiddenRequestException("You must be the project's admin.");
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to view your projects");
         }
-        String username = session.getAttribute("user").toString();
 
         ProjectMinter project= new ProjectMinter();
-        String response = project.listUserAdminProjects(username);
+        JSONArray projects = project.getAdminProjects(username);
         project.close();
 
-        return Response.ok(response).build();
+        return Response.ok(projects.toJSONString()).build();
     }
 
     /**
-     * return an HTML table of a project's configuration.
+     * service to retrieve a project's metadata
      * @param projectId
      * @return
      */
     @GET
-    @Path("/configAsTable/{projectId}")
+    @Path("/metadata/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response getProjectConfig(@PathParam("projectId") Integer projectId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+    public Response getMetadata(@PathParam("projectId") Integer projectId,
+                                @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be this project's admin in order to view its configuration");
         }
         ProjectMinter project = new ProjectMinter();
-        String response = project.getProjectConfigAsTable(projectId, username.toString());
+        JSONObject metadata = project.getMetadata(projectId, username);
         project.close();
-        return Response.ok(response).build();
-    }
-
-    /**
-     * return an HTML table used for editing a project's configuration.
-     * @param projectId
-     * @return
-     */
-    @GET
-    @Path("/configEditorAsTable/{projectId}")
-    @Produces(MediaType.TEXT_HTML)
-    public String getConfigEditorAsTable(@PathParam("projectId") Integer projectId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
-
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must be this project's admin in order to edit its configuration");
-        }
-
-        ProjectMinter project = new ProjectMinter();
-        String response = project.getProjectConfigEditorAsTable(projectId, username.toString());
-        project.close();
-        return response;
+        return Response.ok(metadata.toJSONString()).build();
     }
 
     /**
@@ -249,12 +232,15 @@ public class ProjectService {
     @POST
     @Path("/updateConfig/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response updateConfig(@PathParam("projectId") Integer projectID,
                                  @FormParam("title") String title,
                                  @FormParam("validationXml") String validationXML,
-                                 @FormParam("public") String publicProject) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+                                 @FormParam("public") String publicProject,
+                                 @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to edit a project's config.");
@@ -265,22 +251,22 @@ public class ProjectService {
         db.close();
 
         try {
-            if (!p.userProjectAdmin(userId, projectID)) {
+            if (!p.isProjectAdmin(userId, projectID)) {
                 throw new ForbiddenRequestException("You must be this project's admin in order to edit the config");
             }
 
-            Hashtable config = p.getProjectConfig(projectID, username.toString());
+            JSONObject metadata = p.getMetadata(projectID, username.toString());
             Hashtable<String, String> update = new Hashtable<String, String>();
 
             if (title != null &&
-                    !config.get("title").equals(title)) {
+                    !metadata.get("title").equals(title)) {
                 update.put("projectTitle", title);
             }
-            if (!config.containsKey("validationXml") || !config.get("validationXml").equals(validationXML)) {
+            if (!metadata.containsKey("validationXml") || !metadata.get("validationXml").equals(validationXML)) {
                 update.put("validationXml", validationXML);
             }
-            if ((publicProject != null && (publicProject.equals("on") || publicProject.equals("true")) && config.get("public").equals("false")) ||
-                    (publicProject == null && config.get("public").equals("true"))) {
+            if ((publicProject != null && (publicProject.equals("on") || publicProject.equals("true")) && metadata.get("public").equals("false")) ||
+                    (publicProject == null && metadata.get("public").equals("true"))) {
                 if (publicProject != null && (publicProject.equals("on") || publicProject.equals("true"))) {
                     update.put("public", "true");
                 } else {
@@ -312,21 +298,17 @@ public class ProjectService {
     @Path("/removeUser/{projectId}/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeUser(@PathParam("projectId") Integer projectId,
-                               @PathParam("userId") Integer userId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
-
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must login.");
-        }
-
+                               @PathParam("userId") Integer userId,
+                               @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
         ProjectMinter p = new ProjectMinter();
 
-        Database db = new Database();
-        Integer loggedInUserId = db.getUserId(username.toString());
-        db.close();
-        if (!p.userProjectAdmin(loggedInUserId, projectId)) {
-            p.close();
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must login");
+        }
+        if (!p.isProjectAdmin(username, projectId)) {
             throw new ForbiddenRequestException("You are not this project's admin.");
         }
 
@@ -345,25 +327,26 @@ public class ProjectService {
     @POST
     @Path("/addUser")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response addUser(@FormParam("projectId") Integer projectId,
-                            @FormParam("userId") Integer userId) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+                            @FormParam("userId") Integer userId,
+                            @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must login to access this service.");
+        }
 
         // userId of 0 means create new user, using ajax to create user, shouldn't ever receive userId of 0
         if (userId == 0) {
             throw new BadRequestException("invalid userId");
         }
 
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must login to access this service.");
-        }
-        Database db = new Database();
-        Integer lodedInUserId = db.getUserId(username.toString());
-        db.close();
 
         ProjectMinter p = new ProjectMinter();
-        if (!p.userProjectAdmin(lodedInUserId, projectId)) {
+        if (!p.isProjectAdmin(username, projectId)) {
             p.close();
             throw new ForbiddenRequestException("You are not this project's admin");
         }
@@ -374,25 +357,31 @@ public class ProjectService {
     }
 
     /**
-     * return an HTML table listing all members of a project
+     * retrieve all members of a project
      * @param projectId
      * @return
      */
     @GET
-    @Path("/listProjectUsersAsTable/{projectId}")
-    @Produces(MediaType.TEXT_HTML)
-    public String getSystemUsers(@PathParam("projectId") Integer projectId) {
-        HttpSession session = request.getSession();
+    @Path("/getUsers/{projectId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProjectUsers(@PathParam("projectId") Integer projectId,
+                                    @QueryParam("access_token") String accessToken) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
+        ProjectMinter p = new ProjectMinter();
 
-        if (session.getAttribute("projectAdmin") == null) {
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must login");
+        }
+        if (!p.isProjectAdmin(username, projectId)) {
             // only display system users to project admins
             throw new ForbiddenRequestException("You are not an admin to this project");
         }
 
-        ProjectMinter p = new ProjectMinter();
-        String response = p.listProjectUsersAsTable(projectId);
+        JSONObject response = p.getProjectUsers(projectId);
         p.close();
-        return response;
+        return Response.ok(response.toJSONString()).build();
     }
 
     /**
@@ -429,6 +418,7 @@ public class ProjectService {
     @POST
     @Path("/saveTemplateConfig")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response saveTemplateConfig(@FormParam("checkedOptions") List<String> checkedOptions,
                                        @FormParam("configName") String configName,
                                        @FormParam("projectId") Integer projectId,

@@ -655,7 +655,7 @@ public class ExpeditionMinter {
             ExpeditionMinter expedition = new ExpeditionMinter();
             //System.out.println(expedition.getGraphMetadata("_qNK_fuHVbRSTNvA_8pG.xlsx"));
            System.out.println("starting ...");
-//            System.out.println(expedition.listExpeditionsAsTable(9,"trizna"));
+//            System.out.println(expedition.getExpeditionss(9,"trizna"));
             System.out.println(expedition.getDatasets(30));
             System.out.println("ending ...");
             //System.out.println(expedition.listExpeditions(8,"mwangiwangui25@gmail.com"));
@@ -968,7 +968,7 @@ public class ExpeditionMinter {
     }
 
     /**
-     * Return an HTML Table of the expeditions associated with a project. Includes who owns the expedition,
+     * Return an JSONArray of the expeditions associated with a project. Includes who owns the expedition,
      * the expedition title, and whether the expedition is public.  This information is returned as information
      * typically viewed by an Admin who wants to see details about what datasets are as part of an expedition
      *
@@ -977,16 +977,8 @@ public class ExpeditionMinter {
      *
      * @return
      */
-    public String listExpeditionsAsTable(Integer projectId, String username) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<form method=\"POST\">\n");
-        sb.append("<table>\n");
-        sb.append("<tbody>\n");
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Username</th>\n");
-        sb.append("\t\t<th>Expedition Title</th>\n");
-        sb.append("\t\t<th>Public</th>\n");
-        sb.append("\t</tr>\n");
+    public JSONArray getExpeditions(Integer projectId, String username) {
+        JSONArray expeditions = new JSONArray();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -995,7 +987,7 @@ public class ExpeditionMinter {
         try {
             Integer userId = db.getUserId(username);
 
-            if (!p.userProjectAdmin(userId, projectId)) {
+            if (!p.isProjectAdmin(userId, projectId)) {
                 throw new ForbiddenRequestException("You must be this project's admin to view its expeditions.");
             }
 
@@ -1014,28 +1006,13 @@ public class ExpeditionMinter {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append(rs.getString("u.username"));
-                sb.append("</td>\n");
-                sb.append("\t\t<td>");
-                sb.append(rs.getString("e.expeditionTitle"));
-                sb.append("</td>\n");
-                sb.append("\t\t<td><input name=\"");
-                sb.append(rs.getInt("e.expeditionId"));
-                sb.append("\" type=\"checkbox\"");
-                if (rs.getBoolean("e.public")) {
-                    sb.append(" checked=\"checked\"");
-                }
-                sb.append("/></td>\n");
-                sb.append("\t</tr>\n");
+                JSONObject expedition = new JSONObject();
+                expedition.put("username", rs.getString("u.username"));
+                expedition.put("expeditionTitle", rs.getString("e.expeditionTitle"));
+                expedition.put("expeditionId", rs.getString("e.expeditionId"));
+                expedition.put("public", rs.getBoolean("e.public"));
+                expeditions.add(expedition);
             }
-
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td></td>\n");
-            sb.append("\t\t<td><input type=\"hidden\" name=\"projectId\" value=\"" + projectId + "\" /></td>\n");
-            sb.append("\t\t<td><input id=\"expeditionForm\" type=\"button\" value=\"Submit\"></td>\n");
-            sb.append("\t</tr>\n");
 
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -1043,11 +1020,7 @@ public class ExpeditionMinter {
             p.close();
             db.close(stmt, rs);
         }
-
-        sb.append("</tbody>\n");
-        sb.append("</table>\n");
-        sb.append("</form>\n");
-        return sb.toString();
+        return expeditions;
     }
 
     /**
@@ -1114,7 +1087,6 @@ public class ExpeditionMinter {
                         " public = CASE WHEN public ='0' THEN '1' WHEN public = '1' THEN '0' END" +
                         " WHERE expeditionId IN (" + updateExpeditions.toString().replaceAll("[\\[\\]]", "") + ")";
 
-//                System.out.print(updateString);
                 db.close(stmt, null);
                 stmt = conn.prepareStatement(updateString);
 

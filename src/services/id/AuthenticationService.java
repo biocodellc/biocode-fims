@@ -325,7 +325,7 @@ public class AuthenticationService {
         } else if (grantType.equalsIgnoreCase("password")) {
             Authenticator authenticator = new Authenticator();
             if (username == null || password == null || !authenticator.login(username, password)) {
-                throw new BadRequestException("invalid_request", "the supplied username and/or password are incorrect");
+                throw new BadRequestException("the supplied username and/or password are incorrect", "invalid_request");
             }
 
             accessToken = p.generateToken(clientId, username);
