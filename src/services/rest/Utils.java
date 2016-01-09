@@ -232,14 +232,5 @@ public class Utils {
         return Response.ok(response.toJSONString()).build();
     }
 
-    @GET
-    @Path("/getMapboxToken")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMapboxToken() {
-        SettingsManager sm = SettingsManager.getInstance();
-        String token = sm.retrieveValue("mapboxAccessToken");
-
-        return Response.ok("{\"accessToken\": \"" + token + "\"}").build();
-    }
 }
 

@@ -20,8 +20,6 @@ debug = false
 # first row of the spreadsheet.
 replaceHeader = false
 
-# get you're access token by visiting https://www.mapbox.com/account/apps/
-mapboxAccessToken = your_access_token
 
 # RDF Terms to use -- Be Careful modifying these terms!
 type = http://www.w3.org/1999/02/22-rdf-syntax-ns#type
