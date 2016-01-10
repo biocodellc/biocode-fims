@@ -4,17 +4,21 @@ import auth.oauth2.OAuthProvider;
 import bcid.Database;
 import bcid.ProjectMinter;
 import biocode.fims.fimsExceptions.BadRequestException;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import digester.Attribute;
+import digester.Mapping;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import run.Process;
+import run.ProcessController;
+import services.BiocodeFimsService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -24,10 +28,7 @@ import java.util.List;
  * manually by an administrator
  */
 @Path("projectService")
-public class ProjectService {
-
-    @Context
-    HttpServletRequest request;
+public class ProjectService extends BiocodeFimsService{
 
      /**
      * Given a projectId, return the validationXML file
@@ -62,16 +63,13 @@ public class ProjectService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchList(@QueryParam("access_token") String accessToken) {
         Integer userId = null;
-        String username;
+        String username = null;
 
         // if accessToken != null, then OAuth client is accessing on behalf of a user
         if (accessToken != null) {
             OAuthProvider p = new OAuthProvider();
             username = p.validateToken(accessToken);
             p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
         }
 
         if (username != null) {
@@ -118,17 +116,9 @@ public class ProjectService {
     @Path("/myGraphs/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMyLatestGraphs(@QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must login to retrieve you're graphs.");
@@ -151,17 +141,9 @@ public class ProjectService {
     @Path("/myDatasets/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDatasets(@QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must login to retrieve you're graphs.");
@@ -174,6 +156,7 @@ public class ProjectService {
 
         return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
     }
+
     /**
      * Return a json representation to be used for select options of the projects that a user is an admin to
      * @return
@@ -185,7 +168,6 @@ public class ProjectService {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
-        HttpSession session = request.getSession();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view your projects");
@@ -428,36 +410,30 @@ public class ProjectService {
             return Response.ok("{\"error\": \"To change the default config, talk to the project admin.\"}").build();
         }
 
-        String username;
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to save a configuration.");
         }
+
         Database db = new Database();
         Integer userId = db.getUserId(username);
         db.close();
 
-        if (userId == null) {
-            throw new UnauthorizedRequestException("You must be logged in to save a configuration.");
-        }
+        ProjectMinter projectMinter = new ProjectMinter();
 
-        ProjectMinter p = new ProjectMinter();
-
-        if (p.configExists(configName, projectId)) {
-            if (p.usersConfig(configName, projectId, userId)) {
-                p.updateTemplateConfig(configName, projectId, userId, checkedOptions);
+        if (projectMinter.configExists(configName, projectId)) {
+            if (projectMinter.usersConfig(configName, projectId, userId)) {
+                projectMinter.updateTemplateConfig(configName, projectId, userId, checkedOptions);
             } else {
                 return Response.ok("{\"error\": \"A configuration with that name already exists, and you are not the owner.\"}").build();
             }
         } else {
-            p.saveTemplateConfig(configName, projectId, userId, checkedOptions);
+            projectMinter.saveTemplateConfig(configName, projectId, userId, checkedOptions);
         }
-        p.close();
+        projectMinter.close();
 
         return Response.ok("{\"success\": \"Successfully saved template configuration.\"}").build();
     }
@@ -532,5 +508,39 @@ public class ProjectService {
         p.close();
 
         return Response.ok("{\"success\": \"Successfully removed template configuration.\"}").build();
+    }
+
+    @GET
+    @Path("/getLatLongColumns/{projectId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLatLongColumns(@PathParam("projectId") int projectId) {
+        String decimalLatDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLatitude";
+        String decimalLongDefinedBy = "http://rs.tdwg.org/dwc/terms/decimalLongitude";
+        JSONObject response = new JSONObject();
+
+        try {
+            ProcessController pc = new ProcessController(projectId, null);
+            Process p = new Process(null, uploadPath(), pc);
+
+            Mapping mapping = p.getMapping();
+            String defaultSheet = mapping.getDefaultSheetName();
+            ArrayList<Attribute> attributeList = mapping.getAllAttributes(defaultSheet);
+
+            response.put("data_sheet", defaultSheet);
+
+            for (Attribute attribute : attributeList) {
+                // when we find the column corresponding to the definedBy for lat and long, add them to the response
+                if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
+                    response.put("lat_column", attribute.getColumn());
+                } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
+                    response.put("long_column", attribute.getColumn());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FimsRuntimeException(500, e);
+        }
+        return Response.ok(response.toJSONString()).build();
     }
 }

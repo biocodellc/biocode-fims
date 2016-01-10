@@ -1,14 +1,11 @@
 package services.id;
 
+import auth.oauth2.OAuthProvider;
 import bcid.Renderer.*;
 import bcid.Resolver;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,19 +19,7 @@ import javax.ws.rs.core.Response;
  * Data Element with a suffix.
  */
 @Path("metadata")
-public class ResolverMetadataService {
-
-    static SettingsManager sm;
-    @Context
-    ServletContext context;
-
-    /**
-     * Load settings manager
-     */
-    static {
-        // Initialize settings manager
-        sm = SettingsManager.getInstance();
-    }
+public class ResolverMetadataService extends BiocodeFimsService {
 
     /**
      * User passes in an Bcid of the form scheme:/naan/shoulder_identifier
@@ -50,7 +35,7 @@ public class ResolverMetadataService {
                         @PathParam("naan") String naan,
                         @PathParam("shoulderPlusIdentifier") String shoulderPlusIdentifier,
                         @HeaderParam("Accept") String accept,
-                        @Context HttpServletRequest request) {
+                        @QueryParam("access_token") String accessToken) {
         // Clean up input
         scheme = scheme.trim();
         shoulderPlusIdentifier = shoulderPlusIdentifier.trim();
@@ -68,8 +53,9 @@ public class ResolverMetadataService {
             return Response.ok(response).build();
         } else {
             // Get the username. This is needed to display private datasets
-            HttpSession session = request.getSession();
-            String username = (String) session.getAttribute("user");
+            OAuthProvider provider = new OAuthProvider();
+            String username = provider.validateToken(accessToken);
+            provider.close();
 
             String response = r.printMetadata(new JSONRenderer(username, r));
             r.close();

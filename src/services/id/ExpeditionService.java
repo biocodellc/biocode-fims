@@ -13,13 +13,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -30,12 +26,7 @@ import java.net.URLDecoder;
  * REST interface calls for working with expeditions.  This includes creating, updating and deleting expeditions.
  */
 @Path("expeditionService")
-public class ExpeditionService {
-
-    @Context
-    ServletContext context;
-    @Context
-    HttpServletRequest request;
+public class ExpeditionService extends BiocodeFimsService {
 
     private static Logger logger = LoggerFactory.getLogger(ExpeditionService.class);
 
@@ -76,8 +67,6 @@ public class ExpeditionService {
                          @PathParam("projectId") Integer projectId,
                          @QueryParam("access_token") String accessToken,
                          @QueryParam("ignore_user") Boolean ignore_user) {
-        String username;
-
         // Decipher the expedition code
         try {
             expeditionCode = URLDecoder.decode(expeditionCode, "utf-8");
@@ -85,15 +74,9 @@ public class ExpeditionService {
             logger.warn("UnsupportedEncodingException in ExpeditionService.mint method.", e);
         }
 
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("your session has expired or you have not yet logged in.<br>You may "
@@ -130,17 +113,9 @@ public class ExpeditionService {
                          @FormParam("projectId") Integer projectId,
                          @FormParam("public") Boolean isPublic,
                          @QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("User is not authorized to create a new expedition.");
@@ -170,7 +145,6 @@ public class ExpeditionService {
             );
 
             // Initialize settings manager
-            SettingsManager sm = SettingsManager.getInstance();
 
             // Send an Email that this completed
             // Not all clients have sendMail on... turning this off for now.  Need more secure way to monitor anyway

@@ -2,16 +2,13 @@ package services.rest;
 
 import bcid.Resolver;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import run.Process;
 import run.ProcessController;
 import run.TemplateProcessor;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,21 +16,12 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.List;
 
-import javax.ws.rs.core.Context;
-
 
 /**
  * Query interface for Biocode-fims expedition
  */
 @Path("templates")
-public class Templates {
-    @Context
-    ServletContext context;
-    @Context
-    HttpServletResponse response;
-    @Context
-    HttpServletRequest request;
-
+public class Templates extends BiocodeFimsService {
     /**
      * Return the available attributes for a particular graph
      *
@@ -80,8 +68,7 @@ public class Templates {
             @FormParam("projectId") Integer projectId,
             @FormParam("accession_number") Integer accessionNumber,
             @FormParam("dataset_code") String expeditionCode,
-            @FormParam("operation") String operation,
-            @Context HttpServletRequest request) {
+            @FormParam("operation") String operation) {
 
         // Create the configuration file
         //File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
@@ -188,17 +175,5 @@ public class Templates {
 
         return Response.ok(response.toJSONString()).build();
     }
-
-    /**
-     * Get real path of the uploads folder from context.
-     * Needs context to have been injected before.
-     *
-     * @return Real path of the uploads folder with ending slash.
-     */
-    private String uploadPath() {
-        return context.getRealPath("tripleOutput") + File.separator;
-    }
-
-
 }
 

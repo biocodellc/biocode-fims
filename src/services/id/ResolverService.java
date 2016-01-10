@@ -4,11 +4,9 @@ import bcid.Resolver;
 import biocode.fims.fimsExceptions.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -18,13 +16,9 @@ import java.net.URISyntaxException;
  * This is the core Resolver Service for BCIDs.  It returns URIs
  */
 @Path("ark:")
-public class ResolverService {
+public class ResolverService extends BiocodeFimsService{
 
     String scheme = "ark:";
-    @Context
-    ServletContext context;
-    @Context
-    HttpServletRequest request;
 
     private static Logger logger = LoggerFactory.getLogger(ResolverService.class);
 

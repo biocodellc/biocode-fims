@@ -9,14 +9,12 @@ import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.digester3.Digester;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import run.ConfigurationFileFetcher;
 import run.Process;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -30,13 +28,8 @@ import java.util.*;
  * Query interface for Biocode-fims expedition
  */
 @Path("query")
-public class Query {
+public class Query extends BiocodeFimsService {
     private static Logger logger = LoggerFactory.getLogger(Query.class);
-
-    @Context
-    HttpServletRequest request;
-    @Context
-    ServletContext context;
 
     /**
      * Return JSON for a graph query.
@@ -398,7 +391,6 @@ public class Query {
      * @return
      */
     private File GETQueryResult(String graphs, Integer projectId, String filter, String format) {
-        java.net.URLDecoder decoder = new java.net.URLDecoder();
         String[] graphsArray;
 
         try {
@@ -459,17 +451,6 @@ public class Query {
                 configFile
         );
         return p;
-    }
-
-
-    /**
-     * Get real path of the uploads folder from context.
-     * Needs context to have been injected before.
-     *
-     * @return Real path of the uploads folder with ending slash.
-     */
-    private String uploadPath() {
-        return context.getRealPath("tripleOutput") + File.separator;
     }
 
     /**

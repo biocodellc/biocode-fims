@@ -13,24 +13,16 @@ import biocode.fims.fimsExceptions.FimsRuntimeException;
 import run.Process;
 import run.ProcessController;
 import run.SIServerSideSpreadsheetTools;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.*;
-import java.nio.channels.FileChannel;
 
 /**
  */
 @Path("validate")
-public class Validate {
-
-    @Context
-    ServletContext context;
+public class Validate extends BiocodeFimsService {
 
     /**
      * service to validate a dataset against a project's rules
@@ -40,7 +32,6 @@ public class Validate {
      * @param upload
      * @param is
      * @param fileData
-     * @param request
      *
      * @return
      */
@@ -53,14 +44,12 @@ public class Validate {
                            @FormDataParam("public_status") String publicStatus,
                            @FormDataParam("final_copy") String finalCopy,
                            @FormDataParam("dataset") InputStream is,
-                           @FormDataParam("dataset") FormDataContentDisposition fileData,
-                           @Context HttpServletRequest request) {
+                           @FormDataParam("dataset") FormDataContentDisposition fileData) {
         StringBuilder retVal = new StringBuilder();
         Boolean removeController = true;
         Boolean deleteInputFile = true;
         String input_file;
 
-        HttpSession session = request.getSession();
         String username = (String) session.getAttribute("user");
 
         // create a new processController
@@ -95,7 +84,7 @@ public class Validate {
         Process p = null;
         p = new Process(
                 input_file,
-                uploadpath(),
+                uploadPath(),
                 processController
         );
 
@@ -195,16 +184,13 @@ public class Validate {
      * Service to upload a dataset to an expedition. The validate service must be called before this service.
      *
      * @param createExpedition
-     * @param request
      *
      * @return
      */
     @GET
     @Path("/continue")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
-                         @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String upload(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition) {
         ProcessController processController = (ProcessController) session.getAttribute("processController");
 
         // if no processController is found, we can't do anything
@@ -226,7 +212,7 @@ public class Validate {
         Process p = null;
         p = new Process(
                 processController.getInputFilename(),
-                uploadpath(),
+                uploadPath(),
                 processController
         );
 
@@ -265,20 +251,14 @@ public class Validate {
      * Service to upload a dataset to an expedition. The validate service must be called before this service.
      *
      * @param createExpedition
-     * @param request
      *
      * @return
      */
     @GET
     @Path("/{a: (continue_nmnh|continue_spreadsheet) }")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition,
-                                     @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String upload_spreadsheet(@QueryParam("createExpedition") @DefaultValue("false") Boolean createExpedition) {
         ProcessController processController = (ProcessController) session.getAttribute("processController");
-
-        // Initialize Settings
-        SettingsManager sm = SettingsManager.getInstance();
 
         // if no processController is found, we can't do anything
         if (processController == null) {
@@ -296,7 +276,7 @@ public class Validate {
         // Create the process object --- this is done each time to orient the application
         Process p = new Process(
                 processController.getInputFilename(),
-                uploadpath(),
+                uploadPath(),
                 processController
         );
 
@@ -390,16 +370,12 @@ public class Validate {
     /**
      * Service used for getting the current status of the dataset validation/upload.
      *
-     * @param request
-     *
      * @return
      */
     @GET
     @Path("/status")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public String status(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
-
+    public String status() {
         ProcessController processController = (ProcessController) session.getAttribute("processController");
         if (processController == null) {
             return "{\"error\": \"Waiting for validation to process...\"}";
@@ -407,45 +383,6 @@ public class Validate {
 
         return "{\"status\": \"" + processController.getStatusSB().toString() + "\"}";
     }
-
-    private String uploadpath() {
-        return context.getRealPath("tripleOutput") + File.separator;
-    }
-
-    /**
-     * Copying files utility for organizing loaded spreadsheets on server if needed
-     *
-     * @param sourceFile
-     * @param destFile
-     */
-    public static void copyFile(File sourceFile, File destFile) {
-        try {
-            if (!destFile.exists()) {
-                destFile.createNewFile();
-            }
-
-            FileChannel source = null;
-            FileChannel destination = null;
-
-            try {
-                source = new FileInputStream(sourceFile).getChannel();
-                destination = new FileOutputStream(destFile).getChannel();
-                destination.transferFrom(source, 0, source.size());
-            } finally {
-                if (source != null) {
-                    source.close();
-                }
-                if (destination != null) {
-                    destination.close();
-                }
-            }
-            // Not real clean but need to be able to allow others on the system to see file
-            Runtime.getRuntime().exec("chmod 775 " + destFile);
-        } catch (IOException e) {
-            throw new FimsRuntimeException(500, e);
-        }
-    }
-
 }
 
 

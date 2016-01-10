@@ -11,13 +11,9 @@ import biocode.fims.fimsExceptions.ServerErrorException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Hashtable;
@@ -26,10 +22,7 @@ import java.util.Hashtable;
  * The REST Interface for dealing with users. Includes user creation and profile updating.
  */
 @Path("userService")
-public class UserService {
-
-    @Context
-    HttpServletRequest request;
+public class UserService extends BiocodeFimsService {
 
     @GET
     @Path("/list")

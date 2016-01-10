@@ -1,6 +1,5 @@
 package services.rest;
 
-import biocode.fims.fimsExceptions.BadRequestException;
 import digester.Attribute;
 import digester.Mapping;
 import org.apache.commons.digester3.Digester;
@@ -8,8 +7,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import run.ConfigurationFileFetcher;
 import run.Process;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.*;
@@ -19,9 +18,7 @@ import java.util.*;
  * MappingService rest interface for Biocode-fims expedition
  */
 @Path("mapping")
-public class MappingService {
-    @Context
-    ServletContext context;
+public class MappingService extends BiocodeFimsService {
 
     /**
      * return the column name uri's for a given project
@@ -61,15 +58,4 @@ public class MappingService {
 
         return Response.ok(attributes.toJSONString()).build();
     }
-
-    /**
-     * Get real path of the uploads folder from context.
-     * Needs context to have been injected before.
-     *
-     * @return Real path of the uploads folder with ending slash.
-     */
-    private String uploadPath() {
-        return context.getRealPath("tripleOutput") + File.separator;
-    }
-
 }
