@@ -1,5 +1,6 @@
 package bcid;
 
+import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ public class Bcid {
     protected String doi;
     protected Integer bcidsId;
     protected Boolean isPublic;
+    protected Integer userId;
+    protected Boolean finalCopy;
 
     public String getGraph() {
         return graph;
@@ -69,6 +72,26 @@ public class Bcid {
     }
 
     protected Bcid() {
+    }
+
+    /**
+     * constructor used for creating a new bcid
+     */
+    public Bcid(Integer userId, String resourceType, String webAddress, String graph, String doi, Boolean finalCopy, Boolean suffixPassThrough) {
+        this.userId = userId;
+        this.resourceType = resourceType;
+        this.suffixPassThrough = suffixPassThrough;
+        this.doi = doi;
+        if (webAddress != null) {
+            try {
+                this.webAddress = new URI(webAddress);
+            } catch (URISyntaxException e) {
+                throw new BadRequestException("Malformed uri: " + webAddress, e);
+            }
+        }
+        this.graph = graph;
+        this.title = resourceType;
+        this.finalCopy = finalCopy;
     }
 
     /**

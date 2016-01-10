@@ -57,7 +57,7 @@ public class InputFileParser {
      * @throws java.io.IOException
      * @throws java.net.URISyntaxException
      */
-    public InputFileParser(String inputString, BcidMinter bcidMinter ) throws IOException, URISyntaxException {
+    public InputFileParser(String inputString, Bcid bcid ) throws IOException, URISyntaxException {
 
         // TODO: check that userId can write to bcidId
 
@@ -85,7 +85,7 @@ public class InputFileParser {
                 count++;
             }
 
-            elementArrayList.add(new Bcid(suffix, webAddress, bcidMinter.getBcidsId()));
+            elementArrayList.add(new Bcid(suffix, webAddress, bcid.getBcidsId()));
         }
     }
 

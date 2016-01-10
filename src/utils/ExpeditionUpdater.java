@@ -1,5 +1,6 @@
 package utils;
 
+import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
@@ -19,9 +20,12 @@ public class ExpeditionUpdater {
 
     protected static Database db;
     protected static Connection conn;
+    private static SettingsManager sm;
 
     static {
+        sm = SettingsManager.getInstance();
     }
+
     /**
      * Return a JSON response of the user's expeditions in a project
      *
@@ -62,9 +66,9 @@ public class ExpeditionUpdater {
             if (!expeditionUpdater.expeditionHasBCID((Integer) expeditionId)) {
                 // if the collection Bcid doesn't exist for the expedition, create it
                 System.out.println("Creating bcid for expedition id: " + expeditionId);
-                BcidMinter bcidMinter = new BcidMinter(false);
-                String identifier = bcidMinter.createEntityBcid((Integer) expeditions.get(expeditionId),
-                        "http://purl.org/dc/dcmitype/Collection", null, null, null, false);
+                BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+                String identifier = bcidMinter.createEntityBcid(new Bcid((Integer) expeditions.get(expeditionId),
+                        "http://purl.org/dc/dcmitype/Collection", null, null, null, false, false));
                 bcidMinter.close();
 
                 // Associate this Bcid with this expedition

@@ -1,6 +1,7 @@
 package run;
 
 import auth.Authenticator;
+import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
@@ -53,6 +54,11 @@ public class Process {
     protected int projectId;
     private Database db;
     protected Connection conn;
+
+    private static SettingsManager sm;
+    static {
+        sm = SettingsManager.getInstance();
+    }
 
     /**
      * Setup class variables for processing FIMS data.
@@ -281,10 +287,10 @@ public class Process {
                 // Create the entity BCID
 
                 // Mint the data group
-                BcidMinter bcidMinter = new BcidMinter(true);
+                BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
 
-                String identifier = bcidMinter.createEntityBcid(processController.getUserId(), entity.getConceptAlias(),
-                        "", null, null, false);
+                String identifier = bcidMinter.createEntityBcid(new Bcid(processController.getUserId(), entity.getConceptAlias(),
+                        "", null, null, false, true));
                 bcidMinter.close();
                 // Associate this Bcid with this expedition
                 expedition.attachReferenceToExpedition(processController.getExpeditionCode(), identifier, processController.getProjectId());

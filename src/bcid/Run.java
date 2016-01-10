@@ -29,7 +29,7 @@ public class Run {
 
     }
 
-    public Run(String path, BcidMinter bcidMinter) {
+    public Run(String path, Bcid bcid) {
         // Set this to the TEST Bcid
 
         // Create test data
@@ -42,7 +42,7 @@ public class Run {
           */
 
         try {
-            testDatafile = new InputFileParser(readFile(path), bcidMinter).elementArrayList;
+            testDatafile = new InputFileParser(readFile(path), bcid).elementArrayList;
         } catch (IOException e) {
             //TODO should we silence this exception?
             logger.warn("IOException thrown", e);
@@ -89,8 +89,8 @@ public class Run {
 
         // Create a new Bcid
         System.out.println("\nCreating a new bcid");
-        bcidMinter = new BcidMinter(true, true);
-        bcidMinter.createEntityBcid(userId, new ResourceTypes().get(ResourceType).uri, webAddress, null, doi, false);
+        bcidMinter = new BcidMinter(true);
+        bcidMinter.createEntityBcid(new Bcid(userId, new ResourceTypes().get(ResourceType).uri, webAddress, null, doi, false, true));
         bcidMinter.close();
 
         /*

@@ -1,5 +1,6 @@
 package services.rest;
 
+import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.ExpeditionMinter;
 import bcid.Resolver;
@@ -339,9 +340,9 @@ public class Validate extends BiocodeFimsService {
         // gives us a way to track what spreadsheets are uploaded into the system as they can
         // be tracked in the mysql Database.  They also get an ARK but that is probably not useful.
         // Create a dataset BCID
-        BcidMinter bcidMinter = new BcidMinter(false);
-        String identifier = bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Dataset", null,
-                inputFile.getName(), null, processController.getFinalCopy());
+        BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+        String identifier = bcidMinter.createEntityBcid(new Bcid(userId, "http://purl.org/dc/dcmitype/Dataset", null,
+                inputFile.getName(), null, processController.getFinalCopy(), false));
         bcidMinter.close();
 
         // associate the BCID

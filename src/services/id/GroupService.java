@@ -84,8 +84,9 @@ public class GroupService extends BiocodeFimsService {
         db.close();
 
         // Mint the data group
-        BcidMinter bcidMinter = new BcidMinter(suffixPassthrough);
-        String identifier = bcidMinter.createEntityBcid(userId, resourceTypeString, webAddress, graph, doi, finalCopy);
+        BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+        String identifier = bcidMinter.createEntityBcid(new Bcid(userId, resourceTypeString,
+                webAddress, graph, doi, finalCopy, suffixPassthrough));
         bcidMinter.close();
 
         return Response.ok("{\"identifier\": \"" + identifier + "\"}").build();
@@ -235,7 +236,7 @@ public class GroupService extends BiocodeFimsService {
         // get this BCID's config
 
         BcidMinter b = new BcidMinter();
-        config = b.getBcidConfig(identifier, username.toString());
+        config = b.getBcidMetadata(identifier, username.toString());
 
         if (resourceTypesMinusDataset != null && resourceTypesMinusDataset > 0) {
             resourceTypeString = new ResourceTypes().get(resourceTypesMinusDataset).string;
@@ -266,8 +267,8 @@ public class GroupService extends BiocodeFimsService {
         if (update.isEmpty()) {
             b.close();
             return Response.ok("{\"success\": \"Nothing needed to be updated.\"}").build();
-        // try to update the config by calling d.updateBcidConfig
-        } else if (b.updateBcidConfig(update, identifier, username.toString())) {
+        // try to update the config by calling d.updateBcidMetadata
+        } else if (b.updateBcidMetadata(update, identifier, username.toString())) {
             b.close();
             return Response.ok("{\"success\": \"BCID successfully updated.\"}").build();
         } else {

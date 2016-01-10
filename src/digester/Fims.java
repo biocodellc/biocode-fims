@@ -1,7 +1,9 @@
 package digester;
 
+import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.ExpeditionMinter;
+import biocode.fims.SettingsManager;
 import com.hp.hpl.jena.rdf.model.Model;
 import fims.FimsModel;
 import fims.Uploader;
@@ -22,6 +24,11 @@ public class Fims implements RendererInterface {
     private Validation validation;
     Uploader uploader;
     private String bcidPrefix;
+
+    private static SettingsManager sm;
+    static {
+        sm = SettingsManager.getInstance();
+    }
 
     /**
      * Validation is usually NULL, fill it in when running CSPACE queries
@@ -64,9 +71,9 @@ public class Fims implements RendererInterface {
 
         uploader.execute();
 
-        BcidMinter bcidMinter = new BcidMinter(false);
-        bcidPrefix = bcidMinter.createEntityBcid(processController.getUserId(), "http://purl.org/dc/dcmitype/Dataset",
-                uploader.getEndpoint(), uploader.getGraphID(), null, false);
+        BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+        bcidPrefix = bcidMinter.createEntityBcid(new Bcid(processController.getUserId(), "http://purl.org/dc/dcmitype/Dataset",
+                uploader.getEndpoint(), uploader.getGraphID(), null, false, false));
         bcidMinter.close();
         // Create the BCID to use for upload service
         //String status1 = "\tCreated BCID " + bcidPrefix + " to represent your uploaded dataset\n";

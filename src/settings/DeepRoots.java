@@ -1,7 +1,9 @@
 package settings;
 
+import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.ExpeditionMinter;
+import biocode.fims.SettingsManager;
 import digester.Entity;
 
 import java.util.HashMap;
@@ -23,6 +25,12 @@ public class DeepRoots {
     private Integer projectId;
     private  String expeditionCode;
     private Integer userId;
+    private static SettingsManager sm;
+
+    static {
+        sm = SettingsManager.getInstance();
+    }
+
     public DeepRoots(Integer userId, Integer projectId, String expeditionCode) {
         this.projectId = projectId;
         this.expeditionCode = expeditionCode;
@@ -143,9 +151,9 @@ public class DeepRoots {
         // Create a mapping in the deeproots system for this URI
         FimsPrinter.out.println("\tCreating bcid root for " + entity.getConceptAlias() + " with resource type = " + entity.getConceptURI());
         // Mint the Bcid
-        BcidMinter bcidMinter = new BcidMinter(true);
+        BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
 
-        String identifier = bcidMinter.createEntityBcid(userId, entity.getConceptAlias(), "", null, null, false);
+        String identifier = bcidMinter.createEntityBcid(new Bcid(userId, entity.getConceptAlias(), "", null, null, false, true));
         bcidMinter.close();
         // Associate this Bcid with this expedition
         ExpeditionMinter expedition = new ExpeditionMinter();
