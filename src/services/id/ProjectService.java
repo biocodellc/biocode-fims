@@ -61,7 +61,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchList(@QueryParam("access_token") String accessToken) {
+    public Response fetchList() {
         Integer userId = null;
         String username = null;
 
@@ -94,8 +94,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/graphs/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getLatestGraphsByExpedition(@PathParam("projectId") Integer projectId,
-                                                @QueryParam("access_token") String accessToken) {
+    public Response getLatestGraphsByExpedition(@PathParam("projectId") Integer projectId) {
         OAuthProvider p = new OAuthProvider();
         ProjectMinter project= new ProjectMinter();
         String username = p.validateToken(accessToken);
@@ -115,7 +114,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/myGraphs/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMyLatestGraphs(@QueryParam("access_token") String accessToken) {
+    public Response getMyLatestGraphs() {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -140,7 +139,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/myDatasets/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasets(@QueryParam("access_token") String accessToken) {
+    public Response getDatasets() {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -164,7 +163,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/admin/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserAdminProjects(@QueryParam("access_token") String accessToken) {
+    public Response getUserAdminProjects() {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -188,8 +187,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/metadata/{projectId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response getMetadata(@PathParam("projectId") Integer projectId,
-                                @QueryParam("access_token") String accessToken) {
+    public Response getMetadata(@PathParam("projectId") Integer projectId) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -218,8 +216,7 @@ public class ProjectService extends BiocodeFimsService{
     public Response updateConfig(@PathParam("projectId") Integer projectID,
                                  @FormParam("title") String title,
                                  @FormParam("validationXml") String validationXML,
-                                 @FormParam("public") String publicProject,
-                                 @QueryParam("access_token") String accessToken) {
+                                 @FormParam("public") String publicProject) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -280,8 +277,7 @@ public class ProjectService extends BiocodeFimsService{
     @Path("/removeUser/{projectId}/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeUser(@PathParam("projectId") Integer projectId,
-                               @PathParam("userId") Integer userId,
-                               @QueryParam("access_token") String accessToken) {
+                               @PathParam("userId") Integer userId) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -311,8 +307,7 @@ public class ProjectService extends BiocodeFimsService{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response addUser(@FormParam("projectId") Integer projectId,
-                            @FormParam("userId") Integer userId,
-                            @QueryParam("access_token") String accessToken) {
+                            @FormParam("userId") Integer userId) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -346,8 +341,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/getUsers/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProjectUsers(@PathParam("projectId") Integer projectId,
-                                    @QueryParam("access_token") String accessToken) {
+    public Response getProjectUsers(@PathParam("projectId") Integer projectId) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -374,7 +368,7 @@ public class ProjectService extends BiocodeFimsService{
     @GET
     @Path("/listUserProjects")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserProjects(@QueryParam("access_token") String accessToken) {
+    public Response getUserProjects() {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -394,7 +388,6 @@ public class ProjectService extends BiocodeFimsService{
      * @param checkedOptions
      * @param configName
      * @param projectId
-     * @param accessToken
      * @return
      */
     @POST
@@ -403,8 +396,7 @@ public class ProjectService extends BiocodeFimsService{
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response saveTemplateConfig(@FormParam("checkedOptions") List<String> checkedOptions,
                                        @FormParam("configName") String configName,
-                                       @FormParam("projectId") Integer projectId,
-                                       @QueryParam("access_token") String accessToken) {
+                                       @FormParam("projectId") Integer projectId) {
 
         if (configName.equalsIgnoreCase("default")) {
             return Response.ok("{\"error\": \"To change the default config, talk to the project admin.\"}").build();
@@ -481,8 +473,7 @@ public class ProjectService extends BiocodeFimsService{
     @Path("/removeTemplateConfig/{projectId}/{configName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeConfig(@PathParam("configName") String configName,
-                                 @PathParam("projectId") Integer projectId,
-                                 @QueryParam("access_token") String accessToken) {
+                                 @PathParam("projectId") Integer projectId) {
         if (configName.equalsIgnoreCase("default")) {
             return Response.ok("{\"error\": \"To remove the default config, talk to the project admin.\"}").build();
         }

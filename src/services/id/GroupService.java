@@ -38,7 +38,6 @@ public class GroupService extends BiocodeFimsService {
      * @param doi
      * @param webAddress
      * @param title
-     * @param request
      *
      * @return
      */
@@ -52,8 +51,7 @@ public class GroupService extends BiocodeFimsService {
                          @FormParam("resourceType") String resourceTypeString,
                          @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
                          @FormParam("suffixPassThrough") String stringSuffixPassThrough,
-                         @FormParam("finalCopy") @DefaultValue("false") Boolean finalCopy,
-                         @QueryParam("access_token") String accessToken) {
+                         @FormParam("finalCopy") @DefaultValue("false") Boolean finalCopy) {
 
         // If resourceType is specified by an integer, then use that to set the String resourceType.
         // If the user omits

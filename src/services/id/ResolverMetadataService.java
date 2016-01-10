@@ -34,8 +34,7 @@ public class ResolverMetadataService extends BiocodeFimsService {
     public Response run(@PathParam("scheme") String scheme,
                         @PathParam("naan") String naan,
                         @PathParam("shoulderPlusIdentifier") String shoulderPlusIdentifier,
-                        @HeaderParam("Accept") String accept,
-                        @QueryParam("access_token") String accessToken) {
+                        @HeaderParam("Accept") String accept) {
         // Clean up input
         scheme = scheme.trim();
         shoulderPlusIdentifier = shoulderPlusIdentifier.trim();

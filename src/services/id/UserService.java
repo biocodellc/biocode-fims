@@ -26,7 +26,7 @@ public class UserService extends BiocodeFimsService {
 
     @GET
     @Path("/list")
-    public Response getUsers(@QueryParam("access_token") String accessToken) {
+    public Response getUsers() {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -68,8 +68,7 @@ public class UserService extends BiocodeFimsService {
                                @FormParam("lastName") String lastName,
                                @FormParam("email") String email,
                                @FormParam("institution") String institution,
-                               @FormParam("projectId") Integer projectId,
-                               @QueryParam("access_token") String accessToken) {
+                               @FormParam("projectId") Integer projectId) {
         OAuthProvider provider = new OAuthProvider();
         String aUser = provider.validateToken(accessToken);
         provider.close();
@@ -146,8 +145,7 @@ public class UserService extends BiocodeFimsService {
                                   @FormParam("old_password") String old_password,
                                   @FormParam("new_password") String new_password,
                                   @FormParam("username") String username,
-                                  @QueryParam("return_to") String returnTo,
-                                  @QueryParam("access_token") String accessToken) {
+                                  @QueryParam("return_to") String returnTo) {
         OAuthProvider provider = new OAuthProvider();
         String aUser = provider.validateToken(accessToken);
         provider.close();
@@ -257,8 +255,7 @@ public class UserService extends BiocodeFimsService {
     @GET
     @Path("/profile/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsersProfile(@PathParam("username") String username,
-                                    @QueryParam("access_token") String accessToken) {
+    public Response getUsersProfile(@PathParam("username") String username) {
         OAuthProvider provider = new OAuthProvider();
         String admin = provider.validateToken(accessToken);
         provider.close();
@@ -280,16 +277,15 @@ public class UserService extends BiocodeFimsService {
 
     /**
      * Service for oAuth client apps to retrieve a user's profile information.
-     * @param access_token
      * @return
      */
     @GET
     @Path("/profile")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserData(@QueryParam("access_token") String access_token) {
-        if (access_token != null) {
+    public Response getUserData() {
+        if (accessToken != null) {
             UserMinter u = new UserMinter();
-            JSONObject response = u.getOauthProfile(access_token);
+            JSONObject response = u.getOauthProfile(accessToken);
             u.close();
             return Response.ok(response.toJSONString()).build();
         }

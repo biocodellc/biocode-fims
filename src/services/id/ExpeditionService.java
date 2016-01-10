@@ -65,7 +65,6 @@ public class ExpeditionService extends BiocodeFimsService {
     @Path("/validateExpedition/{projectId}/{expeditionCode}")
     public Response mint(@PathParam("expeditionCode") String expeditionCode,
                          @PathParam("projectId") Integer projectId,
-                         @QueryParam("access_token") String accessToken,
                          @QueryParam("ignore_user") Boolean ignore_user) {
         // Decipher the expedition code
         try {
@@ -100,8 +99,6 @@ public class ExpeditionService extends BiocodeFimsService {
      * @param expeditionTitle
      * @param projectId
      * @param isPublic
-     * @param accessToken      (optional) the access token that represents the user who you are minting an expedition
-     *                         on behalf.
      *
      * @return
      */
@@ -111,8 +108,7 @@ public class ExpeditionService extends BiocodeFimsService {
     public Response mint(@FormParam("expeditionCode") String expeditionCode,
                          @FormParam("expeditionTitle") String expeditionTitle,
                          @FormParam("projectId") Integer projectId,
-                         @FormParam("public") Boolean isPublic,
-                         @QueryParam("access_token") String accessToken) {
+                         @FormParam("public") Boolean isPublic) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -246,8 +242,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @GET
     @Path("/list/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listExpeditions(@PathParam("projectId") Integer projectId,
-                                    @QueryParam("access_token") String accessToken) {
+    public Response listExpeditions(@PathParam("projectId") Integer projectId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -273,8 +268,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @GET
     @Path("resources/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response getResources(@PathParam("expeditionId") Integer expeditionId,
-                                 @QueryParam("access_token") String accessToken) {
+    public Response getResources(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -301,8 +295,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @GET
     @Path("metadata/{expeditionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMetadata(@PathParam("expeditionId") Integer expeditionId,
-                                @QueryParam("access_token") String accessToken) {
+    public Response getMetadata(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -327,8 +320,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @GET
     @Path("datasets/{expeditionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasets(@PathParam("expeditionId") Integer expeditionId,
-                                @QueryParam("access_token") String accessToken) {
+    public Response getDatasets(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -353,8 +345,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @GET
     @Path("/admin/list/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpeditions(@PathParam("projectId") Integer projectId,
-                                   @QueryParam("access_token") String accessToken) {
+    public Response getExpeditions(@PathParam("projectId") Integer projectId) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -387,8 +378,7 @@ public class ExpeditionService extends BiocodeFimsService {
     @Path("/admin/publicExpeditions")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response publicExpeditions(MultivaluedMap<String, String> data,
-                                      @QueryParam("access_token") String accessToken) {
+    public Response publicExpeditions(MultivaluedMap<String, String> data) {
         OAuthProvider provider = new OAuthProvider();
         String username = provider.validateToken(accessToken);
         provider.close();
@@ -428,8 +418,7 @@ public class ExpeditionService extends BiocodeFimsService {
     public Response publicExpedition(
             @PathParam("projectId") Integer projectId,
             @PathParam("expeditionCode") String expeditionCode,
-            @PathParam("publicStatus") Boolean publicStatus,
-            @QueryParam("access_token") String accessToken) {
+            @PathParam("publicStatus") Boolean publicStatus) {
 
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
