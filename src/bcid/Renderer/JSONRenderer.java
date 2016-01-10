@@ -52,6 +52,7 @@ public class JSONRenderer extends Renderer {
         appender(dcPublisher);
         appender(forwardingResolution);
         appender(resolutionTarget);
+        appender(isPublic);
         appendExpeditionOrDatasetData(resource);
     }
 

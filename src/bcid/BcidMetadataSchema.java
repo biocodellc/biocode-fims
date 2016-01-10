@@ -31,6 +31,7 @@ public class BcidMetadataSchema {
     public metadataElement forwardingResolution;
     public metadataElement resolutionTarget;
     public metadataElement identifier;
+    public metadataElement isPublic;
 
     public Bcid bcid = null;
 
@@ -66,6 +67,8 @@ public class BcidMetadataSchema {
                     dcSource.setValue(pairs.getValue().toString());
                 } else if (bcidKey.equalsIgnoreCase("rights")) {
                     dcRights.setValue(pairs.getValue().toString());
+                } else if (bcidKey.equalsIgnoreCase("isPublic")) {
+                    isPublic.setValue(pairs.getValue().toString());
                 } else if (bcidKey.equalsIgnoreCase("prefix")) {
                     //Don't print this line for the Test Account
                     if (!bcid.getMetadata().get("who").equals("Test Account")) {
@@ -118,10 +121,11 @@ public class BcidMetadataSchema {
         dcIsPartOf = new metadataElement("dcterms:isPartOf", "", "A DOI describing the dataset which this bcid belongs to.");
         dcHasVersion = new metadataElement("dcterms:hasVersion", "", "The redirection target for this bcid.");
         bscSuffixPassthrough = new metadataElement("bsc:suffixPassThrough", "", "Indicates that this bcid supports suffixPassthrough.");
-        forwardingResolution = new metadataElement("forwardingResolution", "", "Indicates that this bcid has a suffix and should be forwarded to the fowardingResolutionTarget.");
-        resolutionTarget = new metadataElement("resolutionTarget", "", "The target uri for the locally-unique bcid.");
+        forwardingResolution = new metadataElement("urn:forwardingResolution", "", "Indicates that this bcid has a suffix and should be forwarded to the fowardingResolutionTarget.");
+        resolutionTarget = new metadataElement("urn:resolutionTarget", "", "The target uri for the locally-unique bcid.");
         identifier = new metadataElement("identifier", "", "The identifier this metadata represents.");
         dcMediator = new metadataElement("dcterms:mediator", "", "Metadata mediator");
+        isPublic = new metadataElement("urn:isPublic", "", "If this bcid is publicly viewable");
     }
 
     /**
