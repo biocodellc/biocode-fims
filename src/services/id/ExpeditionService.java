@@ -225,11 +225,11 @@ public class ExpeditionService extends BiocodeFimsService {
                                    @PathParam("projectId") Integer projectId) {
         ExpeditionMinter expeditionMinter = new ExpeditionMinter();
 
-        String response = expeditionMinter.getDeepRoots(expedition, projectId);
+        JSONObject response = expeditionMinter.getDeepRoots(expedition, projectId);
 
         expeditionMinter.close();
 
-        return Response.ok(response).build();
+        return Response.ok(response.toJSONString()).build();
     }
 
     /**

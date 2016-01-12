@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import renderers.Message;
 import renderers.RowMessage;
-import settings.FimsPrinter;
+import biocode.fims.settings.FimsPrinter;
 import biocode.fims.SettingsManager;
 
 import java.lang.reflect.InvocationTargetException;

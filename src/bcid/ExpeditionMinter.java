@@ -394,11 +394,13 @@ public class ExpeditionMinter {
      *
      * @return
      */
-    public String getDeepRoots(String expeditionCode, Integer projectId) {
+    public JSONObject getDeepRoots(String expeditionCode, Integer projectId) {
         // Get todays's date
         DateFormat dateFormat;
         dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
+        JSONObject deepRoots = new JSONObject();
+        JSONArray data = new JSONArray();
         String expeditionTitle = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -426,23 +428,18 @@ public class ExpeditionMinter {
             stmt.setInt(2, projectId);
 
             // Write the concept/identifier elements section
-            sb.append("[\n{\n\t\"data\": [\n");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                // Grap the expeditionTitle in the query
+                JSONObject d = new JSONObject();
+                // Grab the expeditionTitle in the query
                 if (expeditionTitle == null & !rs.getString("expeditionTitle").equals(""))
                     expeditionTitle = rs.getString("expeditionTitle");
 
-                // Grap the prefixes and concepts associated with this
-                sb.append("\t\t{\n");
-                sb.append("\t\t\t\"identifier\":\"" + rs.getString("b.identifier") + "\",\n");
-                sb.append("\t\t\t\"concept\":\"" + rs.getString("resourceType") + "\",\n");
-                sb.append("\t\t\t\"alias\":\"" + rs.getString("alias") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",");
-
-                sb.append("\n");
+                // Grab the prefixes and concepts associated with this
+                d.put("identifier", rs.getString("b.identifier"));
+                d.put("concept", rs.getString("resourceType"));
+                d.put("alias", rs.getString("alias"));
+                data.add(d);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -450,19 +447,16 @@ public class ExpeditionMinter {
             db.close(stmt, rs);
         }
 
-        sb.append("\t]\n},\n");
-
         // Write the metadata section
-        sb.append("{\n");
-        sb.append("\t\"metadata\": {\n");
-        sb.append("\t\t\"name\": \" " + expeditionCode + "\",\n");
+        JSONObject metadata = new JSONObject();
+        metadata.put("name", expeditionCode);
         if (expeditionTitle != null)
-            sb.append("\t\t\"description\": \"" + expeditionTitle + "\",\n");
-        sb.append("\t\t\"date\": \" " + dateFormat.format(date) + "\"\n");
-        sb.append("\t}\n");
-        sb.append("}\n");
-        sb.append("]\n");
-        return sb.toString();
+            metadata.put("description", expeditionTitle);
+        metadata.put("date", dateFormat.format(date));
+
+        deepRoots.put("data", data);
+        deepRoots.put("metadata", metadata);
+        return deepRoots;
     }
 
     /**

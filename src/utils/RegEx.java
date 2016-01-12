@@ -1,4 +1,6 @@
-package settings;
+package utils;
+
+import biocode.fims.settings.FimsPrinter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

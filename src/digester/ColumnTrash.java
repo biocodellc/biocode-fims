@@ -1,6 +1,6 @@
 package digester;
 
-import settings.FimsPrinter;
+import biocode.fims.settings.FimsPrinter;
 
 /**
  * The column class stores attributes of each column that we know about on a spreadsheet.   These are typically

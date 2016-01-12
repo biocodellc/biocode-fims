@@ -1,17 +1,18 @@
 package run;
 
-import auth.Authenticator;
 import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
-import fims.FimsQueryBuilder;
+import biocode.fims.config.ConfigurationFileFetcher;
+import biocode.fims.digester.Mapping;
 import biocode.fims.fimsExceptions.FimsException;
 import biocode.fims.fimsExceptions.BadRequestException;
-import biocode.fims.fimsExceptions.FimsRuntimeException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import biocode.fims.settings.FimsPrinter;
+import biocode.fims.settings.StandardPrinter;
 import digester.*;
-import fims.FimsFilterCondition;
+import biocode.fims.digester.*;
 import org.apache.commons.cli.*;
 import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Level;
@@ -19,16 +20,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
-import reader.ReaderManager;
-import reader.plugins.TabularDataReader;
-import settings.*;
-import triplify.Triplifier;
+import biocode.fims.reader.ReaderManager;
+import biocode.fims.reader.plugins.TabularDataReader;
 import biocode.fims.SettingsManager;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -57,7 +53,7 @@ public class Process {
 
     private static SettingsManager sm;
     static {
-        sm = SettingsManager.getInstance();
+        sm = SettingsManager.getInstance("biocode-fims.props");
     }
 
     /**
@@ -89,7 +85,7 @@ public class Process {
 
         // Parse the Mapping object (this object is used extensively in downstream functions!)
         mapping = new Mapping();
-        addMappingRules(new Digester(), mapping);
+        mapping.addMappingRules(new Digester(), configFile);
 
         // Initialize Database
         this.db = new Database();
@@ -123,10 +119,9 @@ public class Process {
         // Read the Configuration File
         this.configFile = configFile;
 
-
         // Parse the Mapping object (this object is used extensively in downstream functions!)
         mapping = new Mapping();
-        addMappingRules(new Digester(), mapping);
+        mapping.addMappingRules(new Digester(), configFile);
     }
 
     /**
@@ -173,10 +168,7 @@ public class Process {
      * @return
      */
     public Boolean isNMNHProject() {
-        Fims fims = new Fims(mapping, null);
-        addFimsRules(new Digester(), fims);
-
-        String nmnh = fims.getMetadata().getNmnh();
+        String nmnh = mapping.getMetadata().getNmnh();
         if (nmnh == null || !nmnh.equalsIgnoreCase("true"))
             return false;
         else
@@ -275,6 +267,7 @@ public class Process {
         //fimsPrinter.out.println("\t" + output);
 
         // Loop the mapping file and create a BCID for every entity that we specified there!
+        // TODO does this need to be done on the expedition or project level?
         if (mapping != null) {
             LinkedList<Entity> entities = mapping.getEntities();
             Iterator it = entities.iterator();
@@ -308,15 +301,10 @@ public class Process {
      * runAll method is designed to go through the FIMS process for a local application.  The REST services
      * would handle user input/output differently
      *
-     * @param triplifier
-     * @param upload
-     * @param expeditionCheck -- only set to FALSE for testing and debugging usually, or local triplify usage.
      */
-    public void runAllLocally(Boolean triplifier, Boolean upload, Boolean expeditionCheck, Boolean forceAll) {
+    public void runAllLocally() {
         // Set whether this is a NMNH project or not
-        Fims fims = new Fims(mapping, null);
-        addFimsRules(new Digester(), fims);
-        processController.setNMNH(fims.getMetadata().getNmnh());
+        processController.setNMNH(mapping.getMetadata().getNmnh());
         if (processController.getNMNH()) {
             System.out.println("\tthis is a NMNH designated project");
         }
@@ -331,64 +319,10 @@ public class Process {
         }
         // Run the validation step
         if (!processController.isValidated() && processController.getHasWarnings()) {
-            Boolean continueOperation = false;
-            if (forceAll) {
-                continueOperation = true;
-            } else {
-                String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getCommandLineSB().toString();
-                // In LOCAL version convert HTML tags to readable Text
-                // the FimsInputter isn't working correctly, just using the StandardInputter for now
-                //Boolean continueOperation = FimsInputter.in.continueOperation(message);
-                continueOperation = new StandardInputter().continueOperation(message);
-            }
-            if (!continueOperation)
-                return;
+            String message = "\tWarnings found on " + mapping.getDefaultSheetName() + " worksheet.\n" + processController.getCommandLineSB().toString();
+            FimsPrinter.out.println(message);
             processController.setClearedOfWarnings(true);
             processController.setValidated(true);
-        }
-
-        // We only need to check on assigning Expedition if the user wants to triplify or upload data
-        if (triplifier || upload) {
-
-            if (expeditionCheck) {
-                // make sure that the user is logged in and set the userId in the process
-                if (processController.getUserId() == null) {
-                    throw new UnauthorizedRequestException("You must be logged in to continue");
-                }
-                // Expedition Check Step
-                if (!processController.isExpeditionAssignedToUserAndExists())
-                    runExpeditionCheck(false);
-                // if an expedition creation is required, get feedback from user
-                if (processController.isExpeditionCreateRequired()) {
-                    if (forceAll) {
-                        runExpeditionCreate();
-                    } else {
-                        String message = "\nThe expedition code \"" + processController.getExpeditionCode() + "\" does not exist.  " +
-                                "Do you wish to create it now?" +
-                                "\nIf you choose to continue, your data will be associated with this new expedition code.";
-                        Boolean continueOperation = FimsInputter.in.continueOperation(message);
-                        if (!continueOperation)
-                            return;
-                        else
-                            runExpeditionCreate();
-                    }
-
-                }
-
-                // Triplify OR Upload -- not ever both
-                if (triplifier)
-                    runTriplifier();
-                else if (upload)
-                    runUpload();
-                // If we don't run the expedition check then we DO NOT assign any ARK roots or special expedition information
-                // In other, words, this is typically used for local debug & test modes
-            } else {
-                Triplifier t = new Triplifier("test", this.outputFolder);
-                mapping.run(t, processController, false);
-                mapping.print();
-            }
-
-
         }
     }
 
@@ -410,7 +344,7 @@ public class Process {
         }
         // Load validation rules
         validation = new Validation();
-        addValidationRules(new Digester(), validation);
+        validation.addValidationRules(new Digester(), configFile);
 
         // Run the validation
         validation.run(tdr, outputPrefix, outputFolder, mapping);
@@ -420,165 +354,62 @@ public class Process {
         processController.setValidation(validation);
         processController.setDefaultSheetUniqueKey(mapping.getDefaultSheetUniqueKey());
     }
+//
+//    /**
+//     * Run the triplification engine
+//     *
+//     * @return
+//     */
+//    public boolean runTriplifier() {
+//        // If Validation passed, we can go ahead and triplify
+//        Boolean triplifyGood = false;
+//        if (processController.isValidated()) {
+//            triplifyGood = mapping.run(
+//                    new Triplifier(outputPrefix, outputFolder),
+//                    processController,
+//                    true
+//            );
+//
+//            mapping.print();
+//        }
+//
+//        return triplifyGood;
+//    }
+//
+//    // uploading
+//    public void runUpload() {
+//        // If the triplification was good and the user wants to upload, then proceed
+//        if (processController.isReadyToUpload() &&
+//                runTriplifier()) {
+//            Fims fims = new Fims(mapping, null);
+//            addFimsRules(new Digester(), fims);
+//            fims.run(processController);
+//            String results = fims.results();
+//            processController.appendStatus("<br>" + results);
+//            // Set the public status
+//            ExpeditionMinter expeditionMinter = new ExpeditionMinter();
+//            expeditionMinter.updateExpeditionPublicStatus(processController.getUserId(), processController.getExpeditionCode(),
+//                    processController.getProjectId(), processController.getPublicStatus());
+//            expeditionMinter.close();
+//            //Html2Text parser = new Html2Text();
+//            //fimsPrinter.out.println(parser.convert(results));
+//            FimsPrinter.out.println(results);
+//        }
+//    }
 
-    /**
-     * Run the triplification engine
-     *
-     * @return
-     */
-    public boolean runTriplifier() {
-        // If Validation passed, we can go ahead and triplify
-        Boolean triplifyGood = false;
-        if (processController.isValidated()) {
-            triplifyGood = mapping.run(
-                    new Triplifier(outputPrefix, outputFolder),
-                    processController,
-                    true
-            );
 
-            mapping.print();
-        }
-
-        return triplifyGood;
-    }
-
-    public void runUpload() {
-        // If the triplification was good and the user wants to upload, then proceed
-        if (processController.isReadyToUpload() &&
-                runTriplifier()) {
-            Fims fims = new Fims(mapping, null);
-            addFimsRules(new Digester(), fims);
-            fims.run(processController);
-            String results = fims.results();
-            processController.appendStatus("<br>" + results);
-            // Set the public status
-            ExpeditionMinter expeditionMinter = new ExpeditionMinter();
-            expeditionMinter.updateExpeditionPublicStatus(processController.getUserId(), processController.getExpeditionCode(),
-                    processController.getProjectId(), processController.getPublicStatus());
-            expeditionMinter.close();
-            //Html2Text parser = new Html2Text();
-            //fimsPrinter.out.println(parser.convert(results));
-            FimsPrinter.out.println(results);
-        }
-    }
-
-
-    /**
-     * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
-     * fetching results
-     */
-    public String query(String[] graphs, String format, ArrayList<FimsFilterCondition> filter) {
-        // Build the Query Object by passing this object and an array of graph objects, separated by commas
-        FimsQueryBuilder q = new FimsQueryBuilder(this, graphs, outputFolder);
-        // Add our filter conditions
-        q.addFilter(filter);
-        // Run the query, passing in a format and returning the location of the output file
-        return q.run(format);
-    }
-
-    /**
-     * Process metadata component rules
-     *
-     * @param d
-     */
-    public synchronized void addFimsRules(Digester d, Fims fims) {
-        d.push(fims);
-        d.addObjectCreate("fims/metadata", Metadata.class);
-        d.addSetProperties("fims/metadata");
-        d.addCallMethod("fims/metadata", "addTextAbstract", 0);
-        d.addSetNext("fims/metadata", "addMetadata");
-
-        try {
-            d.parse(configFile);
-        } catch (IOException e) {
-            throw new FimsRuntimeException(500, e);
-        } catch (SAXException e) {
-            throw new FimsRuntimeException(500, e);
-        }
-    }
-
-    /**
-     * Process validation component rules
-     *
-     * @param d
-     */
-    public synchronized void addValidationRules(Digester d, Validation validation) {
-        d.push(validation);
-
-        // Create worksheet objects
-        d.addObjectCreate("fims/validation/worksheet", Worksheet.class);
-        d.addSetProperties("fims/validation/worksheet");
-        d.addSetNext("fims/validation/worksheet", "addWorksheet");
-
-        // Create rule objects
-        d.addObjectCreate("fims/validation/worksheet/rule", Rule.class);
-        d.addSetProperties("fims/validation/worksheet/rule");
-        d.addSetNext("fims/validation/worksheet/rule", "addRule");
-        d.addCallMethod("fims/validation/worksheet/rule/field", "addField", 0);
-
-        // Create list objects
-        d.addObjectCreate("fims/validation/lists/list", List.class);
-        d.addSetProperties("fims/validation/lists/list");
-        d.addSetNext("fims/validation/lists/list", "addList");
-        //d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
-
-        // Create field objects
-        d.addObjectCreate("fims/validation/lists/list/field", Field.class);
-        d.addSetProperties("fims/validation/lists/list/field");
-        d.addSetNext("fims/validation/lists/list/field", "addField");
-        d.addCallMethod("fims/validation/lists/list/field", "setValue", 0);
-
-        // Create column objects
-        d.addObjectCreate("fims/validation/worksheet/column", ColumnTrash.class);
-        d.addSetProperties("fims/validation/worksheet/column");
-        d.addSetNext("fims/validation/worksheet/column", "addColumn");
-
-        try {
-            d.parse(configFile);
-        } catch (IOException e) {
-            throw new FimsRuntimeException(500, e);
-        } catch (SAXException e) {
-            throw new FimsRuntimeException(500, e);
-        }
-    }
-
-    /**
-     * Process mapping component rules
-     *
-     * @param d
-     */
-    public synchronized void addMappingRules(Digester d, Mapping mapping) {
-        d.push(mapping);
-
-        // Create entity objects
-        d.addObjectCreate("fims/mapping/entity", Entity.class);
-        d.addSetProperties("fims/mapping/entity");
-        d.addSetNext("fims/mapping/entity", "addEntity");
-
-        // Add attributes associated with this entity
-        d.addObjectCreate("fims/mapping/entity/attribute", Attribute.class);
-        d.addSetProperties("fims/mapping/entity/attribute");
-        d.addCallMethod("fims/mapping/entity/attribute", "addDefinition", 0);
-        // Next two lines are newer, may not appear in all configuration files
-        d.addCallMethod("fims/mapping/entity/attribute/synonyms", "addSynonyms", 0);
-        d.addCallMethod("fims/mapping/entity/attribute/dataFormat", "addDataFormat", 0);
-        d.addSetNext("fims/mapping/entity/attribute", "addAttribute");
-
-        // Create relation objects
-        d.addObjectCreate("fims/mapping/relation", Relation.class);
-        d.addSetNext("fims/mapping/relation", "addRelation");
-        d.addCallMethod("fims/mapping/relation/subject", "addSubject", 0);
-        d.addCallMethod("fims/mapping/relation/predicate", "addPredicate", 0);
-        d.addCallMethod("fims/mapping/relation/object", "addObject", 0);
-
-        try {
-            d.parse(configFile);
-        } catch (IOException e) {
-            throw new FimsRuntimeException(500, e);
-        } catch (SAXException e) {
-            throw new FimsRuntimeException(500, e);
-        }
-    }
+//    /**
+//     * Run a query from the command-line. This is not meant to be a full-featured query service but a simple way of
+//     * fetching results
+//     */
+//    public String query(String[] graphs, String format, ArrayList<FimsFilterCondition> filter) {
+//        // Build the Query Object by passing this object and an array of graph objects, separated by commas
+//        FimsQueryBuilder q = new FimsQueryBuilder(this, graphs, outputFolder);
+//        // Add our filter conditions
+//        q.addFilter(filter);
+//        // Run the query, passing in a format and returning the location of the output file
+//        return q.run(format);
+//    }
 
     /**
      * Run the program from the command-line
@@ -588,8 +419,7 @@ public class Process {
     public static void main(String args[]) {
         //processController processController = new processController();
         String defaultOutputDirectory = System.getProperty("user.dir") + File.separator + "tripleOutput";
-        String username = "";
-        String password = "";
+        SettingsManager.getInstance("biocode-fims.props");
         Integer projectId = 0;
         //System.out.print(defaultOutputDirectory);
 
@@ -613,18 +443,11 @@ public class Process {
         String inputFile = "";
         // The directory that we write all our files to
         String outputDirectory = "tripleOutput";
-        // Write spreadsheet content back to a spreadsheet file, for testing
-        Boolean triplify = false;
-        Boolean upload = false;
-        Boolean local = false;
-
 
         // Define our commandline options
         Options options = new Options();
         options.addOption("h", "help", false, "print this help message and exit");
-        options.addOption("q", "query", true, "Run a query and pass in graph UUIDs to look at for this query -- Use this along with options C and S");
         options.addOption("f", "format", true, "excel|html|json|cspace  specifying the return format for the query");
-        options.addOption("F", "filter", true, "Filter results based on a keyword search");
 
         options.addOption("e", "expeditionCode", true, "Expedition code.  You will need to obtain a data code before " +
                 "loading data");
@@ -632,16 +455,6 @@ public class Process {
         options.addOption("i", "input_file", true, "Input Spreadsheet");
         options.addOption("p", "projectId", true, "Project Identifier.  A numeric integer corresponding to your project");
         options.addOption("configFile", true, "Use a local config file instead of getting from server");
-
-        options.addOption("bcid", "triplify", false, "Triplify only (upload process triplifies)");
-        options.addOption("l", "local", false, "Local option operates purely locally and does not create proper globally unique identifiers.  Running the local option means you don't need a username and password.");
-
-        options.addOption("u", "upload", false, "Upload");
-
-        options.addOption("U", "username", true, "Username (for uploading data)");
-        options.addOption("P", "password", true, "Password (for uploading data)");
-        options.addOption("y", "yes", false, "Answer 'y' to all questions");
-
 
         // Create the commands parser and parse the command line arguments.
         try {
@@ -654,39 +467,8 @@ public class Process {
             return;
         }
 
-        // Set the input format
-        if (cl.hasOption("y")) {
-            FimsInputter.in = new ForceInputter();
-        } else {
-            FimsInputter.in = new StandardInputter();
-        }
-
-        // Set username
-        if (cl.hasOption("U")) {
-            username = cl.getOptionValue("U");
-        }
-
-        // Set password
-        if (cl.hasOption("P")) {
-            password = cl.getOptionValue("P");
-        }
-
-        // Check username and password
-        if (cl.hasOption("u") && (username.equals("") || password.equals(""))) {
-            FimsPrinter.out.println("Must specify a valid username or password for uploading data!");
-            return;
-        }
-
-        // Query option must also have projectId option
-        if (cl.hasOption("q")) {
-            if (!cl.hasOption("p")) {
-                helpf.printHelp("fims ", options, true);
-                return;
-            }
-
-        }
         // Help
-        else if (cl.hasOption("h")) {
+        if (cl.hasOption("h")) {
             helpf.printHelp("fims ", options, true);
             return;
         }
@@ -708,12 +490,6 @@ public class Process {
             }
         }
 
-        // Check for projectId when uploading data
-        if (cl.hasOption("u") && projectId < 1) {
-            FimsPrinter.out.println("Must specify a valid projectId when uploading data");
-            return;
-        }
-
         // Set input file
         if (cl.hasOption("i"))
             inputFile = cl.getOptionValue("i");
@@ -725,18 +501,6 @@ public class Process {
         // Set expeditionCode
         if (cl.hasOption("e"))
             expeditionCode = cl.getOptionValue("e");
-
-        // Set triplify option
-        if (cl.hasOption("bcid"))
-            triplify = true;
-
-        // Set the "local" option
-        if (cl.hasOption("l"))
-            local = true;
-
-        // Set upload option
-        if (cl.hasOption("u"))
-            upload = true;
 
         // Set default output directory if one is not specified
         if (!cl.hasOption("o")) {
@@ -756,105 +520,30 @@ public class Process {
         }
 
         // Run the command
-        try {
-            /*
-            Run a query
-             */
-            if (cl.hasOption("q")) {
+        ProcessController processController = new ProcessController(projectId, expeditionCode);
+        Process p;
 
-                File file = new ConfigurationFileFetcher(projectId, outputDirectory, true).getOutputFile();
-
-                Process p = new Process(
-                        projectId,
-                        outputDirectory,
-                        file
-                );
-
-                //p.query(cl.getOptionValue("q"), cl.getOptionValue("f"), cl.getOptionValue("F"));
-                // TODO: construct filter statements from arguments passed in on command-line
-                System.out.println(p.query(cl.getOptionValue("q").split(","), cl.getOptionValue("f"), null));
-            }
-            /*
-           Run the validator
-            */
-            else {
-                // if we only want to triplify and not upload, then we operate in LOCAL mode
-                if (local && triplify) {
-                    ProcessController pc = new ProcessController();
-                    pc.appendStatus("Triplifying using LOCAL only options, useful for debugging\n");
-                    pc.appendStatus("Does not construct GUIDs, use Deep Roots, or connect to project-specific configurationFiles");
-
-                    Process p = new Process(inputFile, outputDirectory, pc, new File(cl.getOptionValue("configFile")));
-                    p.runAllLocally(true, false, false, false);
-                    /*p.runValidation();
-                    triplifier t = new triplifier("test", outputDirectory);
-                    p.mapping.run(t, pc);
-                    p.mapping.print();  */
-
-                } else {
-                    // Create the appropritate connection string depending on options
-                    if (triplify || upload) {
-                        if (username == null || username.equals("") || password == null || password.equals("")) {
-                            FimsPrinter.out.println("Need valid username / password for uploading");
-                            helpf.printHelp("fims ", options, true);
-                            return;
-                        } else {
-                            Authenticator authenticator = new Authenticator();
-                            FimsPrinter.out.println("Authenticating ...");
-
-                            if (!authenticator.login(username, password)) {
-                                FimsPrinter.out.println("Unable to authenticate " + username +
-                                        " using the supplied credentials!");
-                                return;
-                            }
-
-                            // Check that a expedition code has been entered
-                            if (!cl.hasOption("e")) {
-                                FimsPrinter.out.println("Need to enter a expedition code before  uploading");
-                                helpf.printHelp("fims ", options, true);
-                                return;
-                            }
-                        }
-
-                        // Now run the process
-                        Process p;
-                        ProcessController processController = new ProcessController(projectId, expeditionCode);
-                        processController.setUserId(username);
-
-                        // use local configFile if specified
-                        if (cl.hasOption("configFile")) {
-                            System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
-                            p = new Process(
-                                    inputFile,
-                                    outputDirectory,
-                                    processController,
-                                    new File(cl.getOptionValue("configFile")));
-                        } else {
-                            p = new Process(
-                                    inputFile,
-                                    outputDirectory,
-                                    processController
-                            );
-                        }
-
-                        FimsPrinter.out.println("Initializing ...");
-                        FimsPrinter.out.println("\tinputFilename = " + inputFile);
-
-                        // Run the processor
-                        p.runAllLocally(triplify, upload, true, false);
-                    }
-                }
-
-            }
-        } catch (
-                Exception e
-                )
-
-        {
-            FimsPrinter.out.println("\nError: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(-1);
+        // use local configFile if specified
+        if (cl.hasOption("configFile")) {
+            System.out.println("using local config file = " + cl.getOptionValue("configFile").toString());
+            p = new Process(
+                    inputFile,
+                    outputDirectory,
+                    processController,
+                    new File(cl.getOptionValue("configFile")));
+        } else {
+            p = new Process(
+                    inputFile,
+                    outputDirectory,
+                    processController
+            );
         }
+
+        FimsPrinter.out.println("Initializing ...");
+        FimsPrinter.out.println("\tinputFilename = " + inputFile);
+
+        // Run the processor
+        p.runAllLocally();
     }
 
 }

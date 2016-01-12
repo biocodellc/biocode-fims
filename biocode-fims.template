@@ -3,6 +3,7 @@ naan = 21547
 fims_service_root = http://biscicol.org/biocode-fims/rest/
 rootName = biocode-fims
 appRoot = http://localhost:8080/
+projectValidationUrl = http://localhost:8080/id/projectService/validation/
 
 # location to save spreadsheets to filesystem
 serverRoot = /opt/jetty-files/

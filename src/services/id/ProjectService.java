@@ -3,12 +3,14 @@ package services.id;
 import auth.oauth2.OAuthProvider;
 import bcid.Database;
 import bcid.ProjectMinter;
+import biocode.fims.config.ConfigurationFileFetcher;
+import biocode.fims.digester.Attribute;
+import biocode.fims.digester.Mapping;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.FimsRuntimeException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
-import digester.Attribute;
-import digester.Mapping;
+import org.apache.commons.digester3.Digester;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import run.Process;
@@ -18,6 +20,7 @@ import services.BiocodeFimsService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -362,7 +365,6 @@ public class ProjectService extends BiocodeFimsService{
 
     /**
      * Service used to retrieve a JSON representation of the project's a user is a member of.
-     * @param accessToken
      * @return
      */
     @GET
@@ -510,10 +512,10 @@ public class ProjectService extends BiocodeFimsService{
         JSONObject response = new JSONObject();
 
         try {
-            ProcessController pc = new ProcessController(projectId, null);
-            Process p = new Process(null, uploadPath(), pc);
+            File configFile = new ConfigurationFileFetcher(projectId, uploadPath(), true).getOutputFile();
 
-            Mapping mapping = p.getMapping();
+            Mapping mapping = new Mapping();
+            mapping.addMappingRules(new Digester(), configFile);
             String defaultSheet = mapping.getDefaultSheetName();
             ArrayList<Attribute> attributeList = mapping.getAllAttributes(defaultSheet);
 
@@ -521,9 +523,9 @@ public class ProjectService extends BiocodeFimsService{
 
             for (Attribute attribute : attributeList) {
                 // when we find the column corresponding to the definedBy for lat and long, add them to the response
-                if (attribute.getDefined_by().equalsIgnoreCase(decimalLatDefinedBy)) {
+                if(decimalLatDefinedBy.equalsIgnoreCase(attribute.getDefined_by())) {
                     response.put("lat_column", attribute.getColumn());
-                } else if (attribute.getDefined_by().equalsIgnoreCase(decimalLongDefinedBy)) {
+                } else if (decimalLongDefinedBy.equalsIgnoreCase(attribute.getDefined_by())) {
                     response.put("long_column", attribute.getColumn());
                 }
             }

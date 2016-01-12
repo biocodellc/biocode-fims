@@ -1,5 +1,7 @@
 package run;
 
+import biocode.fims.config.ConfigurationFileFetcher;
+import biocode.fims.digester.*;
 import digester.*;
 import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.apache.commons.digester3.Digester;
@@ -13,7 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import settings.PathManager;
+import biocode.fims.settings.PathManager;
 import biocode.fims.SettingsManager;
 
 import java.io.File;
@@ -33,7 +35,6 @@ public class TemplateProcessor {
 
     private Process p;
     private Mapping mapping;
-    private Fims fims;
     private Validation validation;
     private Integer accessionNumber;
     private String datasetCode;
@@ -75,13 +76,10 @@ public class TemplateProcessor {
         // Instantiate the project output Folder
         this.p = new Process(projectId,outputFolder, configFile.getOutputFile());
         mapping = new Mapping();
-        p.addMappingRules(new Digester(), mapping);
-
-        fims = new Fims(mapping, null);
-        p.addFimsRules(new Digester(), fims);
+        mapping.addMappingRules(new Digester(), configFile.getOutputFile());
 
         validation = new Validation();
-        p.addValidationRules(new Digester(), validation);
+        validation.addValidationRules(new Digester(), configFile.getOutputFile());
         this.workbook = (XSSFWorkbook) workbook;
         // Set the default heading style
         headingStyle = workbook.createCellStyle();
@@ -126,13 +124,10 @@ public class TemplateProcessor {
         this.p = new Process(projectId,outputFolder, configFile);
 
         mapping = new Mapping();
-        p.addMappingRules(new Digester(), mapping);
-
-        fims = new Fims(mapping, null);
-        p.addFimsRules(new Digester(), fims);
+        mapping.addMappingRules(new Digester(), configFile);
 
         validation = new Validation();
-        p.addValidationRules(new Digester(), validation);
+        validation.addValidationRules(new Digester(), configFile);
 
         // Create the workbook
         workbook = new XSSFWorkbook();
@@ -225,10 +220,6 @@ public class TemplateProcessor {
         return mapping;
     }
 
-    public Fims getFims() {
-        return fims;
-    }
-
     public Validation getValidation() {
         return validation;
     }
@@ -241,6 +232,7 @@ public class TemplateProcessor {
      * @return
      */
     public JSONObject getDefinition(String columnName) {
+        //TODO should this be in mapping?
         Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
         // Get a list of rules for the first digester.Worksheet instance
         Worksheet sheet = this.validation.getWorksheets().get(0);
@@ -580,7 +572,7 @@ public class TemplateProcessor {
             LinkedList<Entity> entities = mapping.getEntities();
             Iterator entitiesIt = entities.iterator();
             while (entitiesIt.hasNext()) {
-                digester.Entity e = (digester.Entity) entitiesIt.next();
+                Entity e = (Entity) entitiesIt.next();
 
                 // Loop attributes
                 Iterator attributesIt = ((LinkedList<Attribute>) e.getAttributes()).iterator();
@@ -729,7 +721,7 @@ public class TemplateProcessor {
         String projectTitle = aP.getProjectTitle();
         */
         // Use the shortName
-        String projectTitle = getFims().getMetadata().getShortname();
+        String projectTitle = mapping.getMetadata().getShortname();
 
         // Hide the projectId in the first row
         row = instructionsSheet.createRow(rowIndex);
@@ -920,8 +912,8 @@ public class TemplateProcessor {
         String filename = null;
         if (this.datasetCode != null && !this.datasetCode.equals("")) {
             filename = this.datasetCode;
-        } else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
-            filename = getFims().getMetadata().getShortname().replace(" ", "_");
+        } else if (mapping.getMetadata().getShortname() != null && !mapping.getMetadata().getShortname().equals("")) {
+            filename = mapping.getMetadata().getShortname().replace(" ", "_");
         } else {
             filename = "output";
         }
@@ -978,8 +970,8 @@ public class TemplateProcessor {
         String filename = null;
         if (this.datasetCode != null && !this.datasetCode.equals("")) {
             filename = this.datasetCode;
-        } else if (getFims().getMetadata().getShortname() != null && !getFims().getMetadata().getShortname().equals("")) {
-            filename = getFims().getMetadata().getShortname().replace(" ", "_");
+        } else if (mapping.getMetadata().getShortname() != null && !mapping.getMetadata().getShortname().equals("")) {
+            filename = mapping.getMetadata().getShortname().replace(" ", "_");
         } else {
             filename = "output";
         }
@@ -1004,7 +996,7 @@ public class TemplateProcessor {
      * @return
      */
     public String printAbstract() {
-        return getFims().getMetadata().getTextAbstract();
+        return mapping.getMetadata().getTextAbstract();
     }
 
     /**

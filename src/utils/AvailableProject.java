@@ -1,4 +1,4 @@
-package settings;
+package utils;
 
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;

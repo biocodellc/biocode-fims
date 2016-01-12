@@ -3,7 +3,6 @@ package unit_tests;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import run.ConfigurationFileTester;
 
 import java.io.File;
 

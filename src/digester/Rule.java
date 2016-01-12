@@ -5,13 +5,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reader.plugins.TabularDataReader;
+import biocode.fims.reader.plugins.TabularDataReader;
 import renderers.RowMessage;
 import biocode.fims.fimsExceptions.FimsException;
-import settings.RegEx;
-import settings.FimsPrinter;
+import utils.RegEx;
+import biocode.fims.settings.FimsPrinter;
 import utils.EncodeURIcomponent;
-import utils.SqlLiteNameCleaner;
+import biocode.fims.utils.SqlLiteNameCleaner;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.String;

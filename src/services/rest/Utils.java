@@ -1,12 +1,12 @@
 package services.rest;
 
+import biocode.fims.config.ConfigurationFileFetcher;
 import digester.Field;
 import digester.Validation;
 import org.apache.commons.digester3.Digester;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import run.ConfigurationFileFetcher;
 import run.Process;
 import services.BiocodeFimsService;
 
@@ -51,7 +51,7 @@ public class Utils extends BiocodeFimsService {
         );
 
         Validation validation = new Validation();
-        p.addValidationRules(new Digester(), validation);
+        validation.addValidationRules(new Digester(), configFile);
         digester.List results = validation.findList(listName);
         JSONObject list = new JSONObject();
 

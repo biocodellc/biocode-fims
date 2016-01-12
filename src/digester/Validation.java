@@ -2,20 +2,23 @@ package digester;
 
 import static ch.lambdaj.Lambda.*;
 
+import biocode.fims.digester.Mapping;
+import biocode.fims.fimsExceptions.FimsRuntimeException;
 import ch.lambdaj.group.Group;
 import biocode.fims.fimsExceptions.FimsException;
-import biocode.fims.fimsExceptions.FimsRuntimeException;
+import org.apache.commons.digester3.Digester;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reader.TabularDataConverter;
-import reader.plugins.TabularDataReader;
+import biocode.fims.reader.plugins.TabularDataReader;
+import org.xml.sax.SAXException;
 import renderers.RendererInterface;
 import renderers.RowMessage;
 import run.ProcessController;
-import settings.*;
+import biocode.fims.settings.FimsPrinter;
 import utils.Html2Text;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -29,8 +32,6 @@ public class Validation implements RendererInterface {
     private final LinkedList<List> lists = new LinkedList<List>();
     // Create a tabularDataReader for reading the data source associated with the validation element
     private TabularDataReader tabularDataReader = null;
-    // File reference for a sqlite Database
-    private File sqliteFile;
     // A SQL Lite connection is mainted by the validation class so we can run through the various rules
     private java.sql.Connection connection = null;
     private static Logger logger = LoggerFactory.getLogger(Validation.class);
@@ -45,24 +46,7 @@ public class Validation implements RendererInterface {
 
     }
 
-    /**
-     * Return the tabularDataReader object
-     *
-     * @return the tabularDataReader object associated with the validation element
-     */
-    public TabularDataReader getTabularDataReader() {
-        return tabularDataReader;
-    }
-
-    /**
-     * The reference to the SQLite instance
-     *
-     * @return
-     */
-    public File getSqliteFile() {
-        return sqliteFile;
-    }
-
+    public TabularDataReader getTabularDataReader() {return tabularDataReader;}
     /**
      * Add a worksheet to the validation component
      *
@@ -108,47 +92,6 @@ public class Validation implements RendererInterface {
                 return l;
         }
         return null;
-    }
-
-    /**
-     * Create a SQLLite Database instance
-     *
-     * @return
-     */
-    private void createSqlLite(String filenamePrefix, String outputFolder, Mapping mapping) throws FimsException {
-        PathManager pm = new PathManager();
-        File processDirectory = null;
-
-        processDirectory = pm.setDirectory(outputFolder);
-
-        // Load the SQLite JDBC driver.
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException ex) {
-            throw new FimsRuntimeException("could not load the SQLite JDBC driver.", 500, ex);
-        }
-
-        // Create SQLite file
-        //String pathPrefix = processDirectory + File.separator + inputFile.getName();
-        String pathPrefix = processDirectory + File.separator + filenamePrefix;
-        sqliteFile = PathManager.createUniqueFile(pathPrefix + ".sqlite", outputFolder);
-
-        TabularDataConverter tdc = new TabularDataConverter(tabularDataReader, "jdbc:sqlite:" + sqliteFile.getAbsolutePath());
-        try {
-            tdc.convert(mapping);
-        } catch (Exception e) {
-            throw new FimsException(e);
-        }
-        tabularDataReader.closeFile();
-
-        // Create the SQLLite connection
-        try {
-            Connection localConnection = new Connection(sqliteFile);
-            connection = java.sql.DriverManager.getConnection(localConnection.getJdbcUrl());
-        } catch (SQLException e) {
-            throw new FimsRuntimeException("Trouble finding SQLLite Connection", 500, e);
-        }
-
     }
 
     /**
@@ -261,8 +204,6 @@ public class Validation implements RendererInterface {
     public boolean run(TabularDataReader tabularDataReader, String filenamePrefix, String outputFolder, Mapping mapping) {
         FimsPrinter.out.println("Validate ...");
         this.mapping = mapping;
-
-        // Default the tabularDataReader to the first sheet defined by the digester Worksheet instance
         this.tabularDataReader = tabularDataReader;
 
         Worksheet sheet = null;
@@ -284,7 +225,7 @@ public class Validation implements RendererInterface {
         // Exceptions generated here are most likely useful to the user and the result of SQL exceptions when
         // processing data, such as worksheets containing duplicate column names, which will fail the data load.
         try {
-            createSqlLite(filenamePrefix, outputFolder, mapping);
+            connection = mapping.createSqlLite(filenamePrefix, outputFolder, mapping, tabularDataReader);
         }   catch (FimsException e) {
             errorFree = false;
             sheet.getMessages().addLast(new RowMessage(
@@ -325,5 +266,50 @@ public class Validation implements RendererInterface {
 
     public java.sql.Connection getConnection() {
         return connection;
+    }
+
+    /**
+     * Process validation component rules
+     *
+     * @param d
+     */
+    public synchronized void addValidationRules(Digester d, File configFile) {
+        d.push(this);
+
+        // Create worksheet objects
+        d.addObjectCreate("fims/validation/worksheet", Worksheet.class);
+        d.addSetProperties("fims/validation/worksheet");
+        d.addSetNext("fims/validation/worksheet", "addWorksheet");
+
+        // Create rule objects
+        d.addObjectCreate("fims/validation/worksheet/rule", Rule.class);
+        d.addSetProperties("fims/validation/worksheet/rule");
+        d.addSetNext("fims/validation/worksheet/rule", "addRule");
+        d.addCallMethod("fims/validation/worksheet/rule/field", "addField", 0);
+
+        // Create list objects
+        d.addObjectCreate("fims/validation/lists/list", List.class);
+        d.addSetProperties("fims/validation/lists/list");
+        d.addSetNext("fims/validation/lists/list", "addList");
+        //d.addCallMethod("fims/validation/lists/list/field", "addField", 0);
+
+        // Create field objects
+        d.addObjectCreate("fims/validation/lists/list/field", Field.class);
+        d.addSetProperties("fims/validation/lists/list/field");
+        d.addSetNext("fims/validation/lists/list/field", "addField");
+        d.addCallMethod("fims/validation/lists/list/field", "setValue", 0);
+
+        // Create column objects
+        d.addObjectCreate("fims/validation/worksheet/column", ColumnTrash.class);
+        d.addSetProperties("fims/validation/worksheet/column");
+        d.addSetNext("fims/validation/worksheet/column", "addColumn");
+
+        try {
+            d.parse(configFile);
+        } catch (IOException e) {
+            throw new FimsRuntimeException(500, e);
+        } catch (SAXException e) {
+            throw new FimsRuntimeException(500, e);
+        }
     }
 }
