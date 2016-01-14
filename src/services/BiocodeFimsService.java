@@ -1,6 +1,6 @@
 package services;
 
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

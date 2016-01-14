@@ -4,7 +4,7 @@ import bcid.Bcid;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 import biocode.fims.fimsExceptions.ServerErrorException;
 
 import java.sql.PreparedStatement;

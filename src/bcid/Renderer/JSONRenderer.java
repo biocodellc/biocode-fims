@@ -1,7 +1,7 @@
 package bcid.Renderer;
 
 import bcid.*;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 import org.json.simple.JSONObject;
 
 /**
@@ -97,7 +97,7 @@ public class JSONRenderer extends Renderer {
     private void appendExpeditionDatasets() {
         ExpeditionMinter expeditionMinter = new ExpeditionMinter();
         if (displayDatasets()) {
-            json.put("datasets", expeditionMinter.getExpeditionsDatasets(resolver.getExpeditionId()));
+            json.put("datasets", expeditionMinter.getDatasets(resolver.getExpeditionId()));
         }
     }
 

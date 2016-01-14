@@ -1,6 +1,6 @@
 package bcid;
 
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 import ezid.EzidService;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;

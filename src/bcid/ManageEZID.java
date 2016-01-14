@@ -5,7 +5,7 @@ import biocode.fims.fimsExceptions.ServerErrorException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -8,7 +8,7 @@ import com.unboundid.util.ssl.TrustAllTrustManager;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import javax.net.ssl.SSLSocketFactory;
 import javax.servlet.ServletContext;

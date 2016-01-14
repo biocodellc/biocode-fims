@@ -285,6 +285,30 @@ public class ExpeditionService extends BiocodeFimsService {
         return Response.ok(resources.toJSONString()).build();
     }
 
+    /**
+     * Service to retrieve an expedition's metadata given the projectId and expeditionCode
+     *
+     * @return
+     */
+    @GET
+    @Path("metadata/{projectId}/{expeditionCode}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMetadata(@PathParam("projectId") Integer projectId,
+                                @PathParam("expeditionCode") String expeditionCode) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to view this expedition's configuration.");
+        }
+
+        ExpeditionMinter e = new ExpeditionMinter();
+        JSONObject metadata = e.getMetadata(projectId, expeditionCode);
+        e.close();
+        return Response.ok(metadata.toJSONString()).build();
+    }
+
    /**
      * Service to retrieve an expedition's metadata
      *

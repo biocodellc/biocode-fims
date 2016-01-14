@@ -8,8 +8,8 @@ import org.apache.commons.cli.*;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
-import utils.StringGenerator;
+import biocode.fims.settings.SettingsManager;
+import biocode.fims.utils.StringGenerator;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
