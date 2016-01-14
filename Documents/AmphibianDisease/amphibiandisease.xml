@@ -109,13 +109,13 @@
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
+            <attribute column='fieldNumber' uri='urn:fieldNumber' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>unique number assigned in the field, include initials (e.g., DBW 1234)</attribute>
             <attribute column='basisOfRecord' uri='urn:basisOfRecord' defined_by='http://rs.tdwg.org/dwc/terms/basisOfRecord'>Sample is from a PreservedSpecimen or LivingSpecimen</attribute>
             <attribute column='occurrenceID' uri='urn:occurrenceID' defined_by='http://rs.tdwg.org/dwc/terms/occurrenceID'>May be a URN, LSID, URI if exists</attribute>
             <attribute column='institutionCode' uri='urn:institutionCode' defined_by='http://rs.tdwg.org/dwc/terms/institutionCode'>Institution acronym (e.g., MVZ, CAS, etc)</attribute>
             <attribute column='collectionCode' uri='urn:collectionCode' defined_by='http://rs.tdwg.org/dwc/terms/collectionCode'>Institution's collection code (e.g., Herpetology)</attribute>
             <attribute column='catalogNumber' uri='urn:catalogNumber' defined_by='http://rs.tdwg.org/dwc/terms/catalogNumber'>If PreservedSpecimen, the catalog number</attribute>
             <attribute column='labNumber' uri='urn:labNumber' defined_by=''>unique number assigned in the lab</attribute>
-            <attribute column='fieldNumber' uri='urn:fieldNumber' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>unique number assigned in the field, include initials (e.g., DBW 1234)</attribute>
             <attribute column='diseaseTested' uri='urn:diseaseTested' defined_by=''>Controlled vocabulary: Bd, Bsal, Bd+Bsal, Other</attribute>
             <attribute column='diseaseStrain' uri='urn:diseaseStrain' defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>Specific genetic strain detected (if available) NCBI URI (.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)</attribute>
             <attribute column='sampleType' uri='urn:sampleType' defined_by=''>Type of sample tested: eg, swabbing, blood, skin, liver</attribute>
