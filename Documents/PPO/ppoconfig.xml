@@ -45,8 +45,10 @@
                 conceptAlias="observationProcessEvent"
                 conceptURI="http://purl.obolibrary.org/obo/BCO_0000065"
                 uri="bco:observation_process">
-            <attribute column="Site_Name" uri="http://rs.tdwg.org/dwc/terms/minimumElevationInMeters"/>
-            <attribute column="Observation_Date" uri="http://rs.tdwg.org/dwc/terms/eventdate"/>
+            <attribute column="Site_Name" uri="http://rs.tdwg.org/dwc/terms/locality"/>
+             <attribute column="Latitude" uri="http://rs.tdwg.org/dwc/terms/Latitude"/>
+              <attribute column="Longitude" uri="http://rs.tdwg.org/dwc/terms/Longitude"/>
+            <attribute column="Observation_Date" uri="http://rs.tdwg.org/dwc/terms/eventDate"/>
         </entity>
         <entity
                 worksheet="Samples"
