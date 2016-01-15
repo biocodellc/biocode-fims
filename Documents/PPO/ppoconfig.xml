@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<fims>
+
+    <metadata
+            doi="a doi"
+            shortname="plantPhenologyOntology"
+            eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds">
+
+        <![CDATA[This is for testing the conversion of spreadsheets into instance data using the plant phenology ontology.]]>
+    </metadata>
+
+    <validation>
+
+        <worksheet sheetname='Samples'>
+
+            <rule type='duplicateColumnNames' level='error'></rule>
+            <rule type='uniqueValue' column='Observation_ID' level='error'></rule>
+            <rule type='RequiredColumns' column='RequiredColumns' level='error'>
+                <field>Observation_ID</field>
+            </rule>
+        </worksheet>
+
+        <lists>
+            <list alias='status'>
+                <field>0</field>
+                <field>1</field>
+                <field>-1</field>
+            </list>
+        </lists>
+
+    </validation>
+
+    <mapping>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="occurrenceID"
+                conceptAlias="occurrence"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0100051"
+                uri="bco:materialSample">
+            <attribute column="occurrenceID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+        </entity>
+
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="materialSamplingProcessEventHASH"
+                conceptAlias="materialSamplingProcessEvent"
+                conceptURI="http://purl.obolibrary.org/obo/OBI_0000659"
+                uri="bco:materialSamplingProcess">
+            <attribute column="minimumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters"/>
+            <attribute column="maximumDepthInMeters" uri="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters"/>
+            <attribute column="decimalLatitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
+            <attribute column="decimalLongitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+            <attribute column="coordinateUncertaintyInMeters"
+                       uri="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters"/>
+            <attribute column="country" uri="http://rs.tdwg.org/dwc/terms/country"/>
+            <attribute column="stateProvince" uri="http://rs.tdwg.org/dwc/terms/stateProvince"/>
+            <attribute column="locality" uri="http://rs.tdwg.org/dwc/terms/locality"/>
+        </entity>
+
+        <relation>
+            <subject>materialSamplingProcessEvent</subject>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000299</predicate>
+            <uri>obi:has_specified_output</uri>
+            <object>occurrence</object>
+        </relation>
+
+        <relation>
+            <subject>destructedTissueSample</subject>
+            <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
+            <uri>obi:is_specified_output_of</uri>
+            <object>materialSamplingProcessDestructive</object>
+        </relation>
+
+       
+    </mapping>
+
+</fims>
