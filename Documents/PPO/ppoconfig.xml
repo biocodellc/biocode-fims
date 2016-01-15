@@ -23,48 +23,52 @@
                 <field>Phenophase_ID</field>
                 <field>Latitude</field>
                 <field>Longitude</field>
+                <field>Site_Name</field>
                 <field>Observation_Date</field>
             </rule>
         </worksheet>
 
     </validation>
 
-    <mapping>
-
+       <mapping>
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="Observation_ID"
                 conceptAlias="observation"
                 conceptURI="http://rs.tdwg.org/dwc/terms/occurrenceID"
-                uri="http://rs.tdwg.org/dwc/terms/occurrenceID">
+                uri="dwc:occurrence">
             <attribute column="Observation_ID" uri="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
         </entity>
-
         <entity
                 worksheet="Samples"
                 worksheetUniqueKey="observationProcessEventHASH"
                 conceptAlias="observationProcessEvent"
                 conceptURI="http://purl.obolibrary.org/obo/BCO_0000065"
-                uri="http://purl.obolibrary.org/obo/BCO_0000065">
-            <attribute column="Elevation_in_Meters" uri="http://rs.tdwg.org/dwc/terms/minimumElevationInMeters"/>
-            <attribute column="Latitude" uri="http://rs.tdwg.org/dwc/terms/decimalLatitude"/>
-            <attribute column="Longitude" uri="http://rs.tdwg.org/dwc/terms/decimalLongitude"/>
+                uri="bco:observation_process">
+            <attribute column="Site_Name" uri="http://rs.tdwg.org/dwc/terms/minimumElevationInMeters"/>
+            <attribute column="Observation_Date" uri="http://rs.tdwg.org/dwc/terms/eventdate"/>
         </entity>
-
+        <entity
+                worksheet="Samples"
+                worksheetUniqueKey="Phenophase_ID"
+                conceptAlias="phenophase"
+                conceptURI="http://purl.obolibrary.org/obo/PO_0007033"
+                uri="dwc:occurrence">
+            <attribute column="Phenophase_ID" uri="phenophase_id"/>
+            <attribute column="Phenophase_Description" uri="urn:phenophase_description"/>
+        </entity>
         <relation>
             <subject>observationProcessEvent</subject>
             <predicate>http://purl.obolibrary.org/obo/OBI_0000299</predicate>
             <uri>obi:has_specified_output</uri>
             <object>observation</object>
         </relation>
-
         <relation>
-            <subject>destructedTissueSample</subject>
+            <subject>phenophase</subject>
             <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
             <uri>obi:is_specified_output_of</uri>
-            <object>materialSamplingProcessDestructive</object>
+            <object>observation</object>
         </relation>
-
     </mapping>
 
 </fims>
