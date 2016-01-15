@@ -43,7 +43,7 @@
                 worksheet="Samples"
                 worksheetUniqueKey="observationProcessEventHASH"
                 conceptAlias="observationProcessEvent"
-                conceptURI="http://purl.obolibrary.org/obo/BCO_0000065"
+                conceptURI="bco:observation_process"
                 uri="bco:observation_process">
             <attribute column="Site_Name" uri="http://rs.tdwg.org/dwc/terms/locality"/>
              <attribute column="Latitude" uri="http://rs.tdwg.org/dwc/terms/Latitude"/>
@@ -54,21 +54,21 @@
                 worksheet="Samples"
                 worksheetUniqueKey="Phenophase_ID"
                 conceptAlias="phenophase"
-                conceptURI="http://purl.obolibrary.org/obo/PO_0007033"
+                conceptURI="ppo:plant_phenological_stage"
                 uri="dwc:occurrence">
             <attribute column="Phenophase_ID" uri="phenophase_id"/>
             <attribute column="Phenophase_Description" uri="urn:phenophase_description"/>
         </entity>
         <relation>
             <subject>observationProcessEvent</subject>
-            <predicate>http://purl.obolibrary.org/obo/OBI_0000299</predicate>
-            <uri>obi:has_specified_output</uri>
+            <predicate>obi:has_specified_output</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000299</uri>
             <object>observation</object>
         </relation>
         <relation>
             <subject>phenophase</subject>
-            <predicate>http://purl.obolibrary.org/obo/OBI_0000312</predicate>
-            <uri>obi:is_specified_output_of</uri>
+            <predicate>obi:is_specified_output_of</predicate>
+            <uri>http://purl.obolibrary.org/obo/OBI_0000312</uri>
             <object>observation</object>
         </relation>
     </mapping>
