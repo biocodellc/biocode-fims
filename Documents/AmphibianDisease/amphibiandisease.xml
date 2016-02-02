@@ -8,7 +8,10 @@
             eml_location="eml_location"
             target="http://data.biscicol.org/ds/data"
             queryTarget="http://data.biscicol.org/ds">
-        <![CDATA[Descriptive Text / Abstract for Amphibian Disease.]]>
+        <![CDATA[Amphibian Disease portal users may generate a template for recording Bd and 
+        Bsal sampling and lab results then upload to a  Project on the portal (set public/private 
+        permissions in the Project here: https://amphibiandisease.org).  
+        Contact for questions about this template: amphibiaweb@berkeley.edu]]>
     </metadata>
 
     <validation>
