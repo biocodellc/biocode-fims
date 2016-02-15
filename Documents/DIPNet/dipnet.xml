@@ -549,6 +549,8 @@
                 <![CDATA[Other identifiers for this tissue.  E.g. tissue originated in another institution.]]></attribute>
             <attribute column='tissueStorageID' uri='urn:tissueStorageID' defined_by='urn:tissueStorageID'>
                 <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
+            <attribute column='sequence' uri='urn:sequence' defined_by='urn:sequence'>
+                <![CDATA[Sequence data for the material sample.]]></attribute>
         </entity>
     </mapping>
 
