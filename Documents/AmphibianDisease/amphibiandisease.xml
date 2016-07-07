@@ -68,6 +68,7 @@
             </list>
             <list alias='sampleType' caseInsensitive='true'>
                 <field>external Swab</field>
+                <field>swabbing</field>
                 <field>tissue</field>
                 <field>toe clip</field>
                 <field>blood</field>
