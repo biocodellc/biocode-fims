@@ -19,8 +19,6 @@
         <worksheet sheetname='Samples'>
 
             <rule type='duplicateColumnNames' level='error'></rule>
-            <rule type='uniqueValue' column='fieldNumber' level='error'></rule>
-            <rule type='validForURI' column='fieldNumber' level='error'></rule>
 
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
                 <field>fieldNumber</field>
