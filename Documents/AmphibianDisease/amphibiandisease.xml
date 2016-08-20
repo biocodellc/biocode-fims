@@ -19,11 +19,11 @@
         <worksheet sheetname='Samples'>
 
             <rule type='duplicateColumnNames' level='error'></rule>
-            <rule type='uniqueValue' column='fieldNumber' level='warn'></rule>
-            <rule type='validForURI' column='fieldNumber' level='warn'></rule>
+            <rule type='uniqueValue' column='sampleID' level='error'></rule>
+            <rule type='validForURI' column='sampleID' level='error'></rule>
 
             <rule type='RequiredColumns' column='RequiredColumns' level='error'>
-                <field>fieldNumber</field>
+                <field>sampleID</field>
                 <field>diseaseTested</field>
                 <field>sampleType</field>
                 <field>diseaseDetected</field>
@@ -109,11 +109,11 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="fieldNumber"
+                worksheetUniqueKey="sampleID"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
-            <attribute column='fieldNumber' uri='urn:fieldNumber' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>unique number assigned in the field, include initials (e.g., DBW 1234)</attribute>
+            <attribute column='sampleID' uri='urn:sampleID' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>Must be a unique identifier (may be numbers and letters), such as a lab sample number or field number. No null values allowed.</attribute>
             <attribute column='basisOfRecord' uri='urn:basisOfRecord' defined_by='http://rs.tdwg.org/dwc/terms/basisOfRecord'>Sample is from a PreservedSpecimen or LivingSpecimen</attribute>
             <attribute column='occurrenceID' uri='urn:occurrenceID' defined_by='http://rs.tdwg.org/dwc/terms/occurrenceID'>May be a URN, LSID, URI if exists</attribute>
             <attribute column='institutionCode' uri='urn:institutionCode' defined_by='http://rs.tdwg.org/dwc/terms/institutionCode'>Institution acronym (e.g., MVZ, CAS, etc)</attribute>
@@ -137,7 +137,7 @@
             <attribute column='decimalLongitude' uri='urn:decimalLongitude' defined_by='http://rs.tdwg.org/dwc/terms/decimalLongitude'></attribute>
             <attribute column='datum' uri='urn:datum' defined_by='http://rs.tdwg.org/dwc/terms/geodeticDatum'>If no other information available, assumed to be WGS84</attribute>
             <attribute column='georeferenceSource' uri='urn:georeferenceSource' defined_by='http://rs.tdwg.org/dwc/terms/georeferenceSources'>E.g., GPS (make), Google Earth, etc</attribute>
-            <attribute column='elevation' uri='urn:elevation' defined_by='http://rs.tdwg.org/dwc/terms/verbatimElevation'></attribute>
+            <attribute column='elevation' uri='urn:elevation' defined_by='http://rs.tdwg.org/dwc/terms/verbatimElevation'>Values in meters only. If estimate or range, note in eventRemarks.</attribute>
             <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters' defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>If latitude and longitude from GPS unit and no other information gathered, assume 30 m coordinateUncertaintyinMeters</attribute>
             <attribute column='depth' uri='urn:depth' defined_by='http://rs.tdwg.org/dwc/terms/verbatimDepth'>Depth below local surface water in meters.</attribute>
             <attribute column='Collector' uri='urn:Collector' defined_by='http://rs.tdwg.org/dwc/terms/recordedBy'>Full name of primary Collector (no initials please!)</attribute>
@@ -151,6 +151,14 @@
             <attribute column='quantityDetected' uri='urn:quantityDetected' defined_by=''>Number of zoospore detected. Needed to calculate Zoospore Equivalent Score (ZEscore), a measure of infection intensity (see Vredenburg et al 2010 doi: 10.1073/pnas.0914111107)</attribute>
             <attribute column='dilutionFactor' uri='urn:dilutionFactor' defined_by=''>sampleType (see sampleType field) dilution factor. Needed to calculate Zoospore Equivalent Score (ZEscore), a measure of infection intensity (see Vredenburg et al 2010 doi: 10.1073/pnas.0914111107)</attribute>
             <attribute column='cycleTimeFirstDetection' uri='urn:cycleTimeFirstDetection' defined_by=''>Cycle number ("c(t)") at which the qPCR machine first detects a positive for chytrid ( a measure of the amount of Bd or Bsal present)</attribute>
+            <attribute column='diagnosticLab' uri='urn:diagnosticLab' defined_by=''>Record the diagnostic lab if different than the diagnostic lab listed in the Project details or if more than one are used.</attribute>
+            <attribute column='fieldNumber' uri='urn:fieldNumber' defined_by='http://rs.tdwg.org/dwc/terms/recordNumber'>Generally a unique number assigned in the field, include initials (e.g., DBW 1234)</attribute>
+            <attribute column='ZEscore' uri='urn:ZEscore' defined_by=''>If present, these values may be entered (otherwise it will be calculated from the quantityDetected and dilutionFactor).</attribute>
+            <attribute column='month' uri='urn:month' defined_by='http://rs.tdwg.org/dwc/terms/month'>As an integer (MM).</attribute>
+            <attribute column='day' uri='urn:day' defined_by='http://rs.tdwg.org/dwc/terms/day'>As an integer (DD).</attribute>
+            <attribute column='year' uri='urn:year' defined_by='http://rs.tdwg.org/dwc/terms/year'>As an integer (YYYY).</attribute>
+            <attribute column='country' uri='urn:country' defined_by='http://rs.tdwg.org/dwc/terms/country'>Optional otherwise computed from geocoordinates.</attribute>
+            <attribute column='state_province' uri='urn:state_province' defined_by='http://rs.tdwg.org/dwc/terms/stateProvince'>Optional otherwise computed from geocoordinates.</attribute>
         </entity>
     </mapping>
 
