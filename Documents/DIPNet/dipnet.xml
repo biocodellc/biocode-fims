@@ -23,9 +23,17 @@
                 <field>materialSampleID</field>
                 <field>principalInvestigator</field>
                 <field>phylum</field>
+                <field>country</field>
+                <field>genus</field>
+                <field>species</field>
+                <field>sex</field>
+                <field>geneticTissueType</field>
+                <field>lifeStage</field>
+                <field>yearCollected</field>
             </rule>
             <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
-                <field>yearCollected</field>
+                <field>monthCollected</field>
+                <field>dayCollected</field>
                 <field>permitInformation</field>
                 <field>locality</field>
                 <field>decimalLatitude</field>
@@ -33,8 +41,6 @@
                 <field>coordinateUncertaintyInMeters</field>
                 <field>georeferenceProtocol</field>
                 <field>basisOfIdentification</field>
-                <field>genus</field>
-                <field>species</field>
             </rule>
 
             <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
@@ -45,17 +51,174 @@
             <rule type='isNumber' column='weight' level='error'></rule>
             <rule type='isNumber' column='length' level='error'></rule>
 
-            <rule type='checkInXMLFields' column='phylum' list='phylum' level='error'></rule>
-            <rule type='checkInXMLFields' column='habitat' list='habitat' level='warning'></rule>
-            <rule type='checkInXMLFields' column='basisOfIdentification' list='basisOfIdentification'
+            <rule type='controlledVocabulary' column='phylum' list='phylum' level='error'></rule>
+            <rule type='controlledVocabulary' column='habitat' list='habitat' level='warning'></rule>
+            <rule type='controlledVocabulary' column='basisOfIdentification' list='basisOfIdentification'
                   level='warning'></rule>
-            <rule type='checkInXMLFields' column='sex' list='sex' level='warning'></rule>
-            <rule type='checkInXMLFields' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
-            <rule type='checkInXMLFields' column='lifeStage' list='lifeStage' level='warning'></rule>
-            <rule type='checkInXMLFields' column='country' list='country' level='warning'></rule>
+            <rule type='controlledVocabulary' column='sex' list='sex' level='warning'></rule>
+            <rule type='controlledVocabulary' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
+            <rule type='controlledVocabulary' column='lifeStage' list='lifeStage' level='warning'></rule>
+            <rule type='controlledVocabulary' column='country' list='country' level='error'></rule>
         </worksheet>
 
         <lists>
+
+            <list alias="libraryLayout">
+                <field>single</field>
+                <field>paired</field>
+            </list>
+
+            <list alias="libraryStrategy">
+                <field>WGA</field>
+                <field>WGS</field>
+                <field>WXS</field>
+                <field>RNA-Seq</field>
+                <field>miRNA-Seq</field>
+                <field>WCS</field>
+                <field>CLONE</field>
+                <field>POOLCLONE</field>
+                <field>AMPLICON</field>
+                <field>CLONEEND</field>
+                <field>FINISHING</field>
+                <field>ChIP-Seq</field>
+                <field>MNase-Seq</field>
+                <field>DNase-Hypersensitivity</field>
+                <field>Bisulfite-Seq</field>
+                <field>Tn-Seq</field>
+                <field>EST</field>
+                <field>FL-cDNA</field>
+                <field>CTS</field>
+                <field>MRE-Seq</field>
+                <field>MeDIP-Seq</field>
+                <field>MBD-Seq</field>
+                <field>Synthetic-Long-Read</field>
+                <field>OTHER</field>
+            </list>
+
+            <list alias="librarySource">
+                <field>GENOMIC</field>
+                <field>TRANSCRIPTOMIC</field>
+                <field>METAGENOMIC</field>
+                <field>METATRANSCRIPTOMIC</field>
+                <field>SYNTHETIC</field>
+                <field>VIRAL RNA</field>
+                <field>OTHER</field>
+            </list>
+
+            <list alias="librarySelection">
+                <field>RANDOM</field>
+                <field>PCR</field>
+                <field>RANDOM PCR</field>
+                <field>RT-PCR</field>
+                <field>HMPR</field>
+                <field>MF</field>
+                <field>CF-S</field>
+                <field>CF-M</field>
+                <field>CF-H</field>
+                <field>CF-T</field>
+                <field>MDA</field>
+                <field>MSLL</field>
+                <field>cDNA</field>
+                <field>ChIP</field>
+                <field>MNase</field>
+                <field>DNAse</field>
+                <field>Hybrid Selection</field>
+                <field>Reduced Representation</field>
+                <field>Restriction Digest</field>
+                <field>5-methylcytidine antibody</field>
+                <field>MBD2 protein methyl-CpG binding domain</field>
+                <field>CAGE</field>
+                <field>RACE</field>
+                <field>size fractionation</field>
+                <field>Padlock probes capture method</field>
+                <field>other</field>
+                <field>unspecified</field>
+            </list>
+
+            <list alias="platform">
+                <field>_LS454</field>
+                <field>ILLUMINA</field>
+                <field>HELICOS</field>
+                <field>ABI_SOLID</field>
+                <field>COMPLETE_GENOMICS</field>
+                <field>PACBIO_SMRT</field>
+                <field>ION_TORRENT</field>
+                <field>CAPILLARY</field>
+                <field>OXFORD_NANOPORE</field>
+            </list>
+
+            <list alias="_LS454">
+                <field>454 GS</field>
+                <field>454 GS 20</field>
+                <field>454 GS FLX</field>
+                <field>454 GS FLX+</field>
+                <field>454 GS FLX Titanium</field>
+                <field>454 GS Junior</field>
+            </list>
+
+            <list alias="ILLUMINA">
+                <field>Illumina Genome Analyzer</field>
+                <field>Illumina Genome Analyzer II</field>
+                <field>Illumina Genome Analyzer IIx</field>
+                <field>Illumina HiSeq 2500</field>
+                <field>Illumina HiSeq 2000</field>
+                <field>Illumina HiSeq 1000</field>
+                <field>Illumina MiSeq</field>
+                <field>Illumina HiScanSQ</field>
+                <field>NextSeq 500</field>
+                <field>HiSeq X Ten</field>
+                <field>HiSeq X Five</field>
+                <field>Illumina HiSeq 1500</field>
+                <field>Illumina HiSeq 3000</field>
+                <field>Illumina HiSeq 4000</field>
+                <field>NextSeq 550</field>
+            </list>
+
+            <list alias="HELICOS">
+                <field>Helicos HeliScope</field>
+            </list>
+
+            <list alias="ABI_SOLID">
+                <field>AB SOLiD System</field>
+                <field>AB SOLiD System 2.0</field>
+                <field>AB SOLiD System 3.0</field>
+                <field>AB SOLiD 4 System</field>
+                <field>AB SOLiD 4hq System</field>
+                <field>AB SOLiD PI System</field>
+                <field>AB 5500 Genetic Analyzer</field>
+                <field>AB 5500xl Genetic Analyzer</field>
+                <field>AB 5500x-Wl Genetic Analyzer</field>
+                <field>AB SOLiD 3 Plus System</field>
+            </list>
+
+            <list alias="COMPLETE_GENOMICS">
+                <field>Complete Genomics</field>
+            </list>
+
+            <list alias="PACBIO_SMRT">
+                <field>PacBio RS</field>
+                <field>PacBio RS II</field>
+            </list>
+
+            <list alias="ION_TORRENT">
+                <field>Ion Torrent PGM</field>
+                <field>Ion Torrent Proton</field>
+            </list>
+
+            <list alias="CAPILLARY">
+                <field>AB 3730xL Genetic Analyzer</field>
+                <field>AB 3730 Genetic Analyzer</field>
+                <field>AB 3500xL Genetic Analyzer</field>
+                <field>AB 3500 Genetic Analyzer</field>
+                <field>AB 3130xL Genetic Analyzer</field>
+                <field>AB 3130 Genetic Analyzer</field>
+                <field>AB 310 Genetic Analyzer</field>
+            </list>
+
+            <list alias="OXFORD_NANOPORE">
+                <field>GridION</field>
+                <field>MinION</field>
+            </list>
 
             <list alias='habitat' caseInsensitive='true'>
                 <field>Coral Reef</field>
@@ -79,11 +242,16 @@
                 <field>Other</field>
             </list>
             <list alias='sex' caseInsensitive='true'>
-                <field>Male</field>
-                <field>Female</field>
-                <field>Simultaneous Hermaphrodite</field>
-                <field>Protogynous</field>
-                <field>Protandrous</field>
+                <field>male</field>
+                <field>female</field>
+                <field>pooled male and female</field>
+                <field>neuter</field>
+                <field>hermaphrodite</field>
+                <field>intersex</field>
+                <field>not determined</field>
+                <field>missing</field>
+                <field>not applicable</field>
+                <field>not collected</field>
             </list>
             <list alias='establishmentMeans' caseInsensitive="true">
                 <field>native</field>
@@ -97,6 +265,8 @@
                 <field>larva</field>
                 <field>juvenile</field>
                 <field>adult</field>
+                <field>Not Collected</field>
+                <field>Not Applicable</field>
             </list>
             <list alias='phylum' caseInsensitive='true'>
                 <field>Acoelomorpha</field>
@@ -136,253 +306,282 @@
             </list>
 
             <list alias='country' caseInsensitive='true'>
-                <field>Aruba</field>
                 <field>Afghanistan</field>
+                <field>Albania</field>
+                <field>Algeria</field>
+                <field>American Samoa</field>
+                <field>Andorra</field>
                 <field>Angola</field>
                 <field>Anguilla</field>
-                <field>Aland Islands</field>
-                <field>Albania</field>
-                <field>Andorra</field>
-                <field>United Arab Emirates</field>
+                <field>Antarctica</field>
+                <field>Antigua and Barbuda</field>
+                <field>Arctic Ocean</field>
                 <field>Argentina</field>
                 <field>Armenia</field>
-                <field>American Samoa</field>
-                <field>Antarctica</field>
-                <field>French Southern Territories</field>
-                <field>Antigua and Barbuda</field>
+                <field>Aruba</field>
+                <field>Ashmore and Cartier Islands</field>
+                <field>Atlantic Ocean</field>
                 <field>Australia</field>
                 <field>Austria</field>
                 <field>Azerbaijan</field>
-                <field>Burundi</field>
-                <field>Belgium</field>
-                <field>Benin</field>
-                <field>Bonaire, Sint Eustatius and Saba</field>
-                <field>Burkina Faso</field>
-                <field>Bangladesh</field>
-                <field>Bulgaria</field>
-                <field>Bahrain</field>
                 <field>Bahamas</field>
-                <field>Bosnia and Herzegovina</field>
-                <field>Saint Barthélemy</field>
-                <field>Belarus</field>
-                <field>Belize</field>
-                <field>Bermuda</field>
-                <field>Bolivia, Plurinational State of</field>
-                <field>Brazil</field>
+                <field>Bahrain</field>
+                <field>Baltic Sea</field>
+                <field>Baker Island</field>
+                <field>Bangladesh</field>
                 <field>Barbados</field>
-                <field>Brunei Darussalam</field>
+                <field>Bassas da India</field>
+                <field>Belarus</field>
+                <field>Belgium</field>
+                <field>Belize</field>
+                <field>Benin</field>
+                <field>Bermuda</field>
                 <field>Bhutan</field>
-                <field>Bouvet Island</field>
+                <field>Bolivia</field>
+                <field>Borneo</field>
+                <field>Bosnia and Herzegovina</field>
                 <field>Botswana</field>
-                <field>Central African Republic</field>
+                <field>Bouvet Island</field>
+                <field>Brazil</field>
+                <field>British Virgin Islands</field>
+                <field>Brunei</field>
+                <field>Bulgaria</field>
+                <field>Burkina Faso</field>
+                <field>Burundi</field>
+                <field>Cambodia</field>
+                <field>Cameroon</field>
                 <field>Canada</field>
-                <field>Cocos (Keeling) Islands</field>
-                <field>Switzerland</field>
+                <field>Cape Verde</field>
+                <field>Cayman Islands</field>
+                <field>Central African Republic</field>
+                <field>Chad</field>
                 <field>Chile</field>
                 <field>China</field>
-                <field>Cote d'Ivoire</field>
-                <field>Cameroon</field>
-                <field>Congo, the Democratic Republic of the</field>
-                <field>Congo</field>
-                <field>Cook Islands</field>
+                <field>Christmas Island</field>
+                <field>Clipperton Island</field>
+                <field>Cocos Islands</field>
                 <field>Colombia</field>
                 <field>Comoros</field>
-                <field>Cabo Verde</field>
+                <field>Cook Islands</field>
+                <field>Coral Sea Islands</field>
                 <field>Costa Rica</field>
+                <field>Cote d'Ivoire</field>
+                <field>Croatia</field>
                 <field>Cuba</field>
                 <field>Curacao</field>
-                <field>Christmas Island</field>
-                <field>Cayman Islands</field>
                 <field>Cyprus</field>
                 <field>Czech Republic</field>
-                <field>Germany</field>
+                <field>Democratic Republic of the Congo</field>
+                <field>Denmark</field>
                 <field>Djibouti</field>
                 <field>Dominica</field>
-                <field>Denmark</field>
                 <field>Dominican Republic</field>
-                <field>Algeria</field>
+                <field>East Timor</field>
                 <field>Ecuador</field>
                 <field>Egypt</field>
+                <field>El Salvador</field>
+                <field>Equatorial Guinea</field>
                 <field>Eritrea</field>
-                <field>Western Sahara</field>
-                <field>Spain</field>
                 <field>Estonia</field>
                 <field>Ethiopia</field>
-                <field>Finland</field>
-                <field>Fiji</field>
-                <field>Falkland Islands (Malvinas)</field>
-                <field>France</field>
+                <field>Europa Island</field>
+                <field>Falkland Islands (Islas Malvinas)</field>
                 <field>Faroe Islands</field>
-                <field>Micronesia</field>
+                <field>Fiji</field>
+                <field>Finland</field>
+                <field>France</field>
+                <field>French Guiana</field>
+                <field>French Polynesia</field>
+                <field>French Southern and Antarctic Lands</field>
                 <field>Gabon</field>
-                <field>United Kingdom</field>
+                <field>Gambia</field>
+                <field>Gaza Strip</field>
                 <field>Georgia</field>
-                <field>Guernsey</field>
+                <field>Germany</field>
                 <field>Ghana</field>
                 <field>Gibraltar</field>
-                <field>Guinea</field>
-                <field>Guadeloupe</field>
-                <field>Gambia</field>
-                <field>Guinea-Bissau</field>
-                <field>Equatorial Guinea</field>
+                <field>Glorioso Islands</field>
                 <field>Greece</field>
-                <field>Grenada</field>
                 <field>Greenland</field>
-                <field>Guatemala</field>
-                <field>French Guiana</field>
+                <field>Grenada</field>
+                <field>Guadeloupe</field>
                 <field>Guam</field>
+                <field>Guatemala</field>
+                <field>Guernsey</field>
+                <field>Guinea</field>
+                <field>Guinea-Bissau</field>
                 <field>Guyana</field>
-                <field>Hong Kong</field>
+                <field>Haiti</field>
                 <field>Heard Island and McDonald Islands</field>
                 <field>Honduras</field>
-                <field>Croatia</field>
-                <field>Haiti</field>
+                <field>Hong Kong</field>
+                <field>Howland Island</field>
                 <field>Hungary</field>
-                <field>Indonesia</field>
-                <field>Isle of Man</field>
-                <field>India</field>
-                <field>British Indian Ocean Territory</field>
-                <field>Ireland</field>
-                <field>Iran, Islamic Republic of</field>
-                <field>Iraq</field>
                 <field>Iceland</field>
+                <field>India</field>
+                <field>Indian Ocean</field>
+                <field>Indonesia</field>
+                <field>Iran</field>
+                <field>Iraq</field>
+                <field>Ireland</field>
+                <field>Isle of Man</field>
                 <field>Israel</field>
                 <field>Italy</field>
                 <field>Jamaica</field>
-                <field>Jersey</field>
-                <field>Jordan</field>
+                <field>Jan Mayen</field>
                 <field>Japan</field>
+                <field>Jarvis Island</field>
+                <field>Jersey</field>
+                <field>Johnston Atoll</field>
+                <field>Jordan</field>
+                <field>Juan de Nova Island</field>
                 <field>Kazakhstan</field>
                 <field>Kenya</field>
-                <field>Kyrgyzstan</field>
-                <field>Cambodia</field>
+                <field>Kerguelen Archipelago</field>
+                <field>Kingman Reef</field>
                 <field>Kiribati</field>
-                <field>Saint Kitts and Nevis</field>
-                <field>Korea, Republic of</field>
+                <field>Kosovo</field>
                 <field>Kuwait</field>
-                <field>Lao People's Democratic Republic</field>
+                <field>Kyrgyzstan</field>
+                <field>Laos</field>
+                <field>Latvia</field>
                 <field>Lebanon</field>
+                <field>Lesotho</field>
                 <field>Liberia</field>
                 <field>Libya</field>
-                <field>Saint Lucia</field>
                 <field>Liechtenstein</field>
-                <field>Sri Lanka</field>
-                <field>Lesotho</field>
+                <field>Line Islands</field>
                 <field>Lithuania</field>
                 <field>Luxembourg</field>
-                <field>Latvia</field>
-                <field>Macao</field>
-                <field>Saint Martin (French part)</field>
-                <field>Morocco</field>
-                <field>Monaco</field>
-                <field>Moldova, Republic of</field>
+                <field>Macau</field>
+                <field>Macedonia</field>
                 <field>Madagascar</field>
-                <field>Maldives</field>
-                <field>Mexico</field>
-                <field>Marshall Islands</field>
-                <field>Macedonia, the former Yugoslav Republic of</field>
-                <field>Mali</field>
-                <field>Malta</field>
-                <field>Myanmar</field>
-                <field>Montenegro</field>
-                <field>Mongolia</field>
-                <field>Northern Mariana Islands</field>
-                <field>Mozambique</field>
-                <field>Mauritania</field>
-                <field>Montserrat</field>
-                <field>Martinique</field>
-                <field>Mauritius</field>
                 <field>Malawi</field>
                 <field>Malaysia</field>
+                <field>Maldives</field>
+                <field>Mali</field>
+                <field>Malta</field>
+                <field>Marshall Islands</field>
+                <field>Martinique</field>
+                <field>Mauritania</field>
+                <field>Mauritius</field>
                 <field>Mayotte</field>
+                <field>Mediterranean Sea</field>
+                <field>Mexico</field>
+                <field>Micronesia</field>
+                <field>Midway Islands</field>
+                <field>Moldova</field>
+                <field>Monaco</field>
+                <field>Mongolia</field>
+                <field>Montenegro</field>
+                <field>Montserrat</field>
+                <field>Morocco</field>
+                <field>Mozambique</field>
+                <field>Myanmar</field>
                 <field>Namibia</field>
-                <field>New Caledonia</field>
-                <field>Niger</field>
-                <field>Norfolk Island</field>
-                <field>Nigeria</field>
-                <field>Nicaragua</field>
-                <field>Niue</field>
-                <field>Netherlands</field>
-                <field>Norway</field>
-                <field>Nepal</field>
                 <field>Nauru</field>
+                <field>Navassa Island</field>
+                <field>Nepal</field>
+                <field>Netherlands</field>
+                <field>New Caledonia</field>
                 <field>New Zealand</field>
+                <field>Nicaragua</field>
+                <field>Niger</field>
+                <field>Nigeria</field>
+                <field>Niue</field>
+                <field>Norfolk Island</field>
+                <field>North Korea</field>
+                <field>North Sea</field>
+                <field>Northern Mariana Islands</field>
+                <field>Norway</field>
                 <field>Oman</field>
+                <field>Pacific Ocean</field>
                 <field>Pakistan</field>
+                <field>Palau</field>
+                <field>Palmyra Atoll</field>
                 <field>Panama</field>
-                <field>Pitcairn</field>
+                <field>Papua New Guinea</field>
+                <field>Paracel Islands</field>
+                <field>Paraguay</field>
                 <field>Peru</field>
                 <field>Philippines</field>
-                <field>Palau</field>
-                <field>Papua New Guinea</field>
+                <field>Pitcairn Islands</field>
                 <field>Poland</field>
-                <field>Puerto Rico</field>
-                <field>Korea, Democratic People's Republic of</field>
                 <field>Portugal</field>
-                <field>Paraguay</field>
-                <field>Palestine, State of</field>
-                <field>French Polynesia</field>
+                <field>Puerto Rico</field>
                 <field>Qatar</field>
+                <field>Republic of the Congo</field>
                 <field>Reunion</field>
                 <field>Romania</field>
-                <field>Russian Federation</field>
+                <field>Ross Sea</field>
+                <field>Russia</field>
                 <field>Rwanda</field>
-                <field>Saudi Arabia</field>
-                <field>Sudan</field>
-                <field>Senegal</field>
-                <field>Singapore</field>
-                <field>South Georgia and the South Sandwich Islands</field>
-                <field>Saint Helena, Ascension and Tristan da Cunha</field>
-                <field>Svalbard and Jan Mayen</field>
-                <field>Solomon Islands</field>
-                <field>Sierra Leone</field>
-                <field>El Salvador</field>
-                <field>San Marino</field>
-                <field>Somalia</field>
+                <field>Saint Helena</field>
+                <field>Saint Kitts and Nevis</field>
+                <field>Saint Lucia</field>
                 <field>Saint Pierre and Miquelon</field>
-                <field>Serbia</field>
-                <field>South Sudan</field>
+                <field>Saint Vincent and the Grenadines</field>
+                <field>Samoa</field>
+                <field>San Marino</field>
                 <field>Sao Tome and Principe</field>
-                <field>Suriname</field>
+                <field>Saudi Arabia</field>
+                <field>Senegal</field>
+                <field>Serbia</field>
+                <field>Seychelles</field>
+                <field>Sierra Leone</field>
+                <field>Singapore</field>
+                <field>Sint Maarten</field>
                 <field>Slovakia</field>
                 <field>Slovenia</field>
-                <field>Sweden</field>
+                <field>Solomon Islands</field>
+                <field>Somalia</field>
+                <field>South Africa</field>
+                <field>South Georgia and the South Sandwich Islands</field>
+                <field>South Korea</field>
+                <field>South Sudan</field>
+                <field>Southern Ocean</field>
+                <field>Spain</field>
+                <field>Spratly Islands</field>
+                <field>Sri Lanka</field>
+                <field>State of Palestine</field>
+                <field>Sudan</field>
+                <field>Suriname</field>
+                <field>Svalbard</field>
                 <field>Swaziland</field>
-                <field>Sint Maarten (Dutch part)</field>
-                <field>Seychelles</field>
-                <field>Syrian Arab Republic</field>
-                <field>Turks and Caicos Islands</field>
-                <field>Chad</field>
-                <field>Togo</field>
-                <field>Thailand</field>
+                <field>Sweden</field>
+                <field>Switzerland</field>
+                <field>Syria</field>
+                <field>Taiwan</field>
                 <field>Tajikistan</field>
+                <field>Tanzania</field>
+                <field>Tasman Sea</field>
+                <field>Thailand</field>
+                <field>Togo</field>
                 <field>Tokelau</field>
-                <field>Turkmenistan</field>
-                <field>Timor L'este</field>
                 <field>Tonga</field>
                 <field>Trinidad and Tobago</field>
+                <field>Tromelin Island</field>
                 <field>Tunisia</field>
                 <field>Turkey</field>
+                <field>Turkmenistan</field>
+                <field>Turks and Caicos Islands</field>
                 <field>Tuvalu</field>
-                <field>Taiwan</field>
-                <field>Tanzania</field>
+                <field>USA</field>
                 <field>Uganda</field>
                 <field>Ukraine</field>
-                <field>United States Minor Outlying Islands</field>
+                <field>United Arab Emirates</field>
+                <field>United Kingdom</field>
                 <field>Uruguay</field>
-                <field>United States of America</field>
                 <field>Uzbekistan</field>
-                <field>Holy See (Vatican City State)</field>
-                <field>Saint Vincent and the Grenadines</field>
-                <field>Venezuela, Bolivarian Republic of</field>
-                <field>Virgin Islands, British</field>
-                <field>Virgin Islands, U.S.</field>
-                <field>Vietnam</field>
                 <field>Vanuatu</field>
+                <field>Venezuela</field>
+                <field>Viet Nam</field>
+                <field>Virgin Islands</field>
+                <field>Wake Island</field>
                 <field>Wallis and Futuna</field>
-                <field>Samoa</field>
+                <field>West Bank</field>
+                <field>Western Sahara</field>
                 <field>Yemen</field>
-                <field>South Africa</field>
                 <field>Zambia</field>
                 <field>Zimbabwe</field>
             </list>
@@ -419,11 +618,11 @@
             <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
                        defined_by='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
                 <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
-            <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected'>
+            <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected' datatype="date" dataformat="YYYY">
                 <![CDATA[YYYY (the year collected)]]></attribute>
-            <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'>
+            <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected' datatype="integer">
                 <![CDATA[MM (the month collected)]]></attribute>
-            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected'>
+            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="integer">
                 <![CDATA[DD (the day collected)]]></attribute>
             <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>
                 <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
