@@ -65,6 +65,16 @@
 
         <lists>
 
+            <list alias="markers">
+                <field>CYB</field>
+                <field>CO1</field>
+                <field>CO2</field>
+                <field>CR</field>
+                <field>A68</field>
+                <field>ND2</field>
+                <field>16S</field>
+            </list>
+
             <list alias="libraryLayout">
                 <field>single</field>
                 <field>paired</field>
