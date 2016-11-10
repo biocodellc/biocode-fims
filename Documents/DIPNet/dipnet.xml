@@ -8,9 +8,9 @@
             eml_location="eml_location"
             target="http://data.biscicol.org/ds/data"
             queryTarget="http://data.biscicol.org/ds">
-        <![CDATA[Although there are a lot of field options, only  materialSampleID, principalInvestigator, phylum, geneticTissueType, sex, lifeStage,
-            species, genus, yearCollected, principalInvestigator, and EITHER decimalLatitude AND decimalLongitude OR
-            locality (lat/longs are preferred) are required. Six additional fields are recommended, and thus automatically checked in the default template.]]>
+        <![CDATA[Although there are a lot of field options, only  materialSampleID, principalInvestigator, phylum and
+        EITHER decimalLatitude AND decimalLongitude OR locality (lat/longs are preferred) are required. Thirteen additional
+        fields are recommended, and thus automatically checked in the default template.]]>
     </metadata>
 
     <validation>
@@ -25,15 +25,9 @@
                 <field>materialSampleID</field>
                 <field>principalInvestigator</field>
                 <field>phylum</field>
-                <field>country</field>
-                <field>genus</field>
-                <field>species</field>
-                <field>sex</field>
-                <field>geneticTissueType</field>
-                <field>lifeStage</field>
-                <field>yearCollected</field>
             </rule>
             <rule type='RequiredColumns' column='RequiredColumns' level='warning'>
+                <field>yearCollected</field>
                 <field>monthCollected</field>
                 <field>dayCollected</field>
                 <field>permitInformation</field>
@@ -43,6 +37,12 @@
                 <field>coordinateUncertaintyInMeters</field>
                 <field>georeferenceProtocol</field>
                 <field>basisOfIdentification</field>
+                <field>genus</field>
+                <field>species</field>
+                <field>country</field>
+                <field>sex</field>
+                <field>geneticTissueType</field>
+                <field>lifeStage</field>
             </rule>
 
             <rule type='minimumMaximumNumberCheck' column='minimumDepthInMeters,maximumDepthInMeters'
@@ -58,7 +58,8 @@
             <rule type='controlledVocabulary' column='basisOfIdentification' list='basisOfIdentification'
                   level='warning'></rule>
             <rule type='controlledVocabulary' column='sex' list='sex' level='warning'></rule>
-            <rule type='controlledVocabulary' column='establishmentMeans' list='establishmentMeans' level='warning'></rule>
+            <rule type='controlledVocabulary' column='establishmentMeans' list='establishmentMeans'
+                  level='warning'></rule>
             <rule type='controlledVocabulary' column='lifeStage' list='lifeStage' level='warning'></rule>
             <rule type='controlledVocabulary' column='country' list='country' level='error'></rule>
         </worksheet>
@@ -243,7 +244,7 @@
                 <field>Continental shelf</field>
                 <field>Pelagic</field>
                 <field>Planktonic</field>
-                 <field>River</field>
+                <field>River</field>
                 <field>Rock</field>
                 <field>Sand</field>
                 <field>Seagrass</field>
@@ -630,9 +631,11 @@
             <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
                        defined_by='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
                 <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
-            <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected' datatype="date" dataformat="YYYY">
+            <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected' datatype="date"
+                       dataformat="YYYY">
                 <![CDATA[YYYY (the year collected)]]></attribute>
-            <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected' datatype="integer">
+            <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'
+                       datatype="integer">
                 <![CDATA[MM (the month collected)]]></attribute>
             <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="integer">
                 <![CDATA[DD (the day collected)]]></attribute>
