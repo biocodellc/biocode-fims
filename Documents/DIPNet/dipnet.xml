@@ -619,13 +619,13 @@
                 <![CDATA[Local name of site. Something that could be found by Google, e.g. city, town, ocean, etc. You must enter a value for this to the best level of precision that you are confident about. A site name like "Sanur" is good. "Indonesia" is fine if that is all you know, or "The Pacific Ocean". If you have no idea where the sample came from, please enter "Earth". Required.]]></attribute>
             <attribute column='phylum' uri='urn:phylum' defined_by='http://rs.tdwg.org/dwc/terms/phylum'>
                 <![CDATA[The full scientific name of the phylum in which the taxon is classified. Required.]]></attribute>
-            <attribute column='decimalLatitude' uri='urn:decimalLatitude'
+            <attribute column='decimalLatitude' uri='urn:decimalLatitude' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/decimalLatitude'>
                 <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
-            <attribute column='decimalLongitude' uri='urn:decimalLongitude'
+            <attribute column='decimalLongitude' uri='urn:decimalLongitude' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/decimalLongitude'>
                 <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
-            <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters'
+            <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters' datatype="integer"
                        defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
                 <![CDATA[In meters.]]></attribute>
             <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
@@ -635,9 +635,9 @@
                        dataformat="YYYY">
                 <![CDATA[YYYY (the year collected)]]></attribute>
             <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'
-                       datatype="integer">
+                       datatype="date" dataformat="MM">
                 <![CDATA[MM (the month collected)]]></attribute>
-            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="integer">
+            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="date" dataformat="DD">
                 <![CDATA[DD (the day collected)]]></attribute>
             <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>
                 <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
@@ -680,9 +680,9 @@
                 <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
             <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
                 <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
-            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128'>
+            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128' datatype="float">
                 <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
-            <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122'>
+            <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122' datatype="float">
                 <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
             <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>
                 <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
@@ -705,16 +705,16 @@
             <attribute column='samplingProtocol' uri='urn:samplingProtocol'
                        defined_by='http://rs.tdwg.org/dwc/terms/samplingProtocol'>
                 <![CDATA[Brief description of how the sample was taken. From Darwincore: The name of, reference to, or description of the method or protocol used during an Event.]]></attribute>
-            <attribute column='minimumDepthInMeters' uri='urn:minimumDepthInMeters'
+            <attribute column='minimumDepthInMeters' uri='urn:minimumDepthInMeters' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/minimumDepthInMeters'>
                 <![CDATA[In Meters. Use with maximum depth to bracket the range of depth at which the sample was taken. In meters (positive values below surface)]]></attribute>
-            <attribute column='maximumDepthInMeters' uri='urn:maximumDepthInMeters'
+            <attribute column='maximumDepthInMeters' uri='urn:maximumDepthInMeters' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'>
                 <![CDATA[In Meters. Use with minimum depth to bracket the range of depth at which the sample was taken. In meters (positive values below surface)]]></attribute>
-            <attribute column='minimumDistanceAboveSurfaceInMeters' uri='urn:minimumDistanceAboveSurfaceInMeters'
+            <attribute column='minimumDistanceAboveSurfaceInMeters' uri='urn:minimumDistanceAboveSurfaceInMeters' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters'>
                 <![CDATA[In Meters. Use with maximum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
-            <attribute column='maximumDistanceAboveSurfaceInMeters' uri='urn:maximumDistanceAboveSurfaceInMeters'
+            <attribute column='maximumDistanceAboveSurfaceInMeters' uri='urn:maximumDistanceAboveSurfaceInMeters' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters'>
                 <![CDATA[In Meters. Use with minimum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
             <attribute column='associatedTaxa' uri='urn:associatedTaxa'
@@ -730,11 +730,11 @@
             <attribute column='identifiedBy' uri='urn:identifiedBy'
                        defined_by='http://rs.tdwg.org/dwc/terms/identifiedBy'>
                 <![CDATA[Full Name (A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject.)]]></attribute>
-            <attribute column='yearIdentified' uri='urn:yearIdentified' defined_by='urn:yearIdentified'>
+            <attribute column='yearIdentified' uri='urn:yearIdentified' defined_by='urn:yearIdentified' datatype="date" dataformat="YYYY">
                 <![CDATA[YYYY]]></attribute>
-            <attribute column='monthIdentified' uri='urn:monthIdentified' defined_by='urn:monthIdentified'>
+            <attribute column='monthIdentified' uri='urn:monthIdentified' defined_by='urn:monthIdentified' datatype="date" dataformat="MM">
                 <![CDATA[MM]]></attribute>
-            <attribute column='dayIdentified' uri='urn:dayIdentified' defined_by='urn:dayIdentified'>
+            <attribute column='dayIdentified' uri='urn:dayIdentified' defined_by='urn:dayIdentified' datatype="date" dataformat="DD">
                 <![CDATA[DD]]></attribute>
             <attribute column='class' uri='urn:class' defined_by='http://rs.tdwg.org/dwc/terms/class'>
                 <![CDATA[The full scientific name of the class in which the taxon is classified.]]></attribute>
@@ -765,6 +765,13 @@
                 <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
             <attribute column='sequence' uri='urn:sequence' defined_by='urn:sequence'>
                 <![CDATA[Sequence data for the material sample.]]></attribute>
+        </entity>
+        <entity
+            conceptAlias="fastaSequence"
+            conceptURI="urn:fastqSequence"
+            esNestedObject="true">
+            <attribute column="sequence" uri="urn:sequence"/>
+            <attribute column="marker" uri="urn:marker"/>
         </entity>
     </mapping>
 
