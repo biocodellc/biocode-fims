@@ -62,6 +62,15 @@
                   level='warning'></rule>
             <rule type='controlledVocabulary' column='lifeStage' list='lifeStage' level='warning'></rule>
             <rule type='controlledVocabulary' column='country' list='country' level='error'></rule>
+            <rule type="requiredValueFromOtherColumn" column="decimalLatitude" otherColumn="decimalLongitude"
+                  level="error"></rule>
+            <rule type="requiredValueFromOtherColumn" column="decimalLongitude" otherColumn="decimalLatitude"
+                  level="error"></rule>
+            <rule type="requiredColumnInGroup" level="error">
+                <field>locality</field>
+                <field>decimalLatitude</field>
+                <field>decimalLongitude</field>
+            </rule>
         </worksheet>
 
         <lists>
@@ -605,7 +614,7 @@
     <mapping>
         <entity
                 worksheet="Samples"
-                worksheetUniqueKey="materialSampleID"
+                uniqueKey="materialSampleID"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
                 entityId="1">
@@ -635,9 +644,9 @@
                        dataformat="YYYY">
                 <![CDATA[YYYY (the year collected)]]></attribute>
             <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'
-                       datatype="date" dataformat="MM">
+                       datatype="integer">
                 <![CDATA[MM (the month collected)]]></attribute>
-            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="date" dataformat="DD">
+            <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="integer">
                 <![CDATA[DD (the day collected)]]></attribute>
             <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>
                 <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
@@ -680,9 +689,11 @@
                 <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
             <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
                 <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
-            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128' datatype="float">
+            <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128'
+                       datatype="float">
                 <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
-            <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122' datatype="float">
+            <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122'
+                       datatype="float">
                 <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
             <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>
                 <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
@@ -711,10 +722,12 @@
             <attribute column='maximumDepthInMeters' uri='urn:maximumDepthInMeters' datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/maximumDepthInMeters'>
                 <![CDATA[In Meters. Use with minimum depth to bracket the range of depth at which the sample was taken. In meters (positive values below surface)]]></attribute>
-            <attribute column='minimumDistanceAboveSurfaceInMeters' uri='urn:minimumDistanceAboveSurfaceInMeters' datatype="float"
+            <attribute column='minimumDistanceAboveSurfaceInMeters' uri='urn:minimumDistanceAboveSurfaceInMeters'
+                       datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/minimumDistanceAboveSurfaceInMeters'>
                 <![CDATA[In Meters. Use with maximum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
-            <attribute column='maximumDistanceAboveSurfaceInMeters' uri='urn:maximumDistanceAboveSurfaceInMeters' datatype="float"
+            <attribute column='maximumDistanceAboveSurfaceInMeters' uri='urn:maximumDistanceAboveSurfaceInMeters'
+                       datatype="float"
                        defined_by='http://rs.tdwg.org/dwc/terms/maximumDistanceAboveSurfaceInMeters'>
                 <![CDATA[In Meters. Use with minimum distance above surface to bracket the range of height at which the sample was taken in meters (positive values above surface)]]></attribute>
             <attribute column='associatedTaxa' uri='urn:associatedTaxa'
@@ -730,11 +743,13 @@
             <attribute column='identifiedBy' uri='urn:identifiedBy'
                        defined_by='http://rs.tdwg.org/dwc/terms/identifiedBy'>
                 <![CDATA[Full Name (A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject.)]]></attribute>
-            <attribute column='yearIdentified' uri='urn:yearIdentified' defined_by='urn:yearIdentified' datatype="date" dataformat="YYYY">
+            <attribute column='yearIdentified' uri='urn:yearIdentified' defined_by='urn:yearIdentified' datatype="date"
+                       dataformat="YYYY">
                 <![CDATA[YYYY]]></attribute>
-            <attribute column='monthIdentified' uri='urn:monthIdentified' defined_by='urn:monthIdentified' datatype="date" dataformat="MM">
+            <attribute column='monthIdentified' uri='urn:monthIdentified' defined_by='urn:monthIdentified'
+                       datatype="integer">
                 <![CDATA[MM]]></attribute>
-            <attribute column='dayIdentified' uri='urn:dayIdentified' defined_by='urn:dayIdentified' datatype="date" dataformat="DD">
+            <attribute column='dayIdentified' uri='urn:dayIdentified' defined_by='urn:dayIdentified' datatype="integer">
                 <![CDATA[DD]]></attribute>
             <attribute column='class' uri='urn:class' defined_by='http://rs.tdwg.org/dwc/terms/class'>
                 <![CDATA[The full scientific name of the class in which the taxon is classified.]]></attribute>
@@ -763,17 +778,21 @@
                 <![CDATA[Other identifiers for this tissue.  E.g. tissue originated in another institution.]]></attribute>
             <attribute column='tissueStorageID' uri='urn:tissueStorageID' defined_by='urn:tissueStorageID'>
                 <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
-            <attribute column='sequence' uri='urn:sequence' defined_by='urn:sequence'>
-                <![CDATA[Sequence data for the material sample.]]></attribute>
         </entity>
         <entity
-            conceptAlias="fastaSequence"
-            conceptURI="urn:fastqSequence"
-            esNestedObject="true">
-            <attribute column="sequence" uri="urn:sequence"/>
+                conceptAlias="fastaSequence"
+                conceptURI="urn:fastaSequence"
+                uniqueKey="marker"
+                esNestedObject="true">
+            <attribute column="sequence" uri="urn:sequence">
+                <![CDATA[Sequence data for the material sample.]]></attribute>
             <attribute column="marker" uri="urn:marker"/>
         </entity>
+        <relation>
+            <subject>fastaSequence</subject>
+            <predicate>subClassOf</predicate>
+            <object>Resource</object>
+        </relation>
     </mapping>
 
 </fims>
-
