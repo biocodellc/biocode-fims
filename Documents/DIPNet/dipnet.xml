@@ -8,7 +8,7 @@
             eml_location="eml_location"
             target="http://data.biscicol.org/ds/data"
             queryTarget="http://data.biscicol.org/ds">
-        <![CDATA[Although there are a lot of field options, only  materialSampleID, principalInvestigator, phylum and
+        <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
         EITHER decimalLatitude AND decimalLongitude OR locality (lat/longs are preferred) are required. Thirteen additional
         fields are recommended, and thus automatically checked in the default template.]]>
     </metadata>
@@ -76,13 +76,58 @@
         <lists>
 
             <list alias="markers">
-                <field>CYB</field>
-                <field>CO1</field>
-                <field>CO2</field>
-                <field>CR</field>
-                <field>A68</field>
-                <field>ND2</field>
-                <field>16S</field>
+                <field>
+                    CYB
+                    <definition><![CDATA[mitochondrial cytocrhome B]]></definition>
+                </field>
+                <field>
+                    CO1
+                    <definition><![CDATA[mitochondrial cytochrome c oxidase subunit 1]]></definition>
+                </field>
+                <field>
+                    CO2
+                    <definition><![CDATA[mitochondrial cytochrome c oxidase subunit 2]]></definition>
+                </field>
+                <field>
+                    CR
+                    <definition><![CDATA[mitochondrial control region]]></definition>
+                </field>
+                <field>
+                    A68
+                    <definition><![CDATA[]]></definition>
+                </field>
+                <field>
+                    ND2
+                    <definition><![CDATA[mitochondiral ND2 protein ]]></definition>
+                </field>
+                <field>
+                    16S
+                    <definition><![CDATA[mitochondrial 16S ribosomal RNA]]></definition>
+                </field>
+                <field>
+                    18S
+                    <definition><![CDATA[18S ribosomal RNA]]></definition>
+                </field>
+                <field>
+                    S7
+                    <definition><![CDATA[S7 ribosomal protein gene]]></definition>
+                </field>
+                <field>
+                    RAG
+                    <definition><![CDATA[recombination-activating gene]]></definition>
+                </field>
+                <field>
+                    TMO
+                    <definition><![CDATA[TMO 4C4 gene]]></definition>
+                </field>
+                <field>
+                    GnRH
+                    <definition><![CDATA[gonadotropin-releasing hormone gene]]></definition>
+                </field>
+                <field>
+                    NEW_MARKER
+                    <definition><![CDATA[marker not listed]]></definition>
+                </field>
             </list>
 
             <list alias="libraryLayout">
@@ -91,70 +136,197 @@
             </list>
 
             <list alias="libraryStrategy">
-                <field>WGA</field>
-                <field>WGS</field>
-                <field>WXS</field>
-                <field>RNA-Seq</field>
-                <field>miRNA-Seq</field>
-                <field>WCS</field>
-                <field>CLONE</field>
-                <field>POOLCLONE</field>
-                <field>AMPLICON</field>
-                <field>CLONEEND</field>
-                <field>FINISHING</field>
-                <field>ChIP-Seq</field>
-                <field>MNase-Seq</field>
-                <field>DNase-Hypersensitivity</field>
-                <field>Bisulfite-Seq</field>
-                <field>Tn-Seq</field>
-                <field>EST</field>
-                <field>FL-cDNA</field>
-                <field>CTS</field>
-                <field>MRE-Seq</field>
-                <field>MeDIP-Seq</field>
-                <field>MBD-Seq</field>
-                <field>Synthetic-Long-Read</field>
-                <field>OTHER</field>
+                <field>WGA
+                    <definition>
+                        <![CDATA[Random sequencing of the whole genome following non-pcr amplification]]></definition>
+                </field>
+                <field>WGS
+                    <definition><![CDATA[Random sequencing of the whole genome]]></definition>
+                </field>
+                <field>WXS
+                    <definition><![CDATA[Random sequencing of exonic regions selected from the genome]]></definition>
+                </field>
+                <field>RNA-Seq
+                    <definition><![CDATA[Random sequencing of whole transcriptome]]></definition>
+                </field>
+                <field>miRNA-Seq
+                    <definition><![CDATA[Random sequencing of small miRNAs]]></definition>
+                </field>
+                <field>WCS
+                    <definition>
+                        <![CDATA[Random sequencing of a whole chromosome or other replicon isolated from a genome]]></definition>
+                </field>
+                <field>CLONE
+                    <definition><![CDATA[Genomic clone based (hierarchical) sequencing]]></definition>
+                </field>
+                <field>POOLCLONE
+                    <definition><![CDATA[Shotgun of pooled clones (usually BACs and Fosmids)]]></definition>
+                </field>
+                <field>AMPLICON
+                    <definition><![CDATA[Sequencing of overlapping or distinct PCR or RT-PCR products]]></definition>
+                </field>
+                <field>CLONEEND
+                    <definition><![CDATA[Clone end (5', 3', or both) sequencing]]></definition>
+                </field>
+                <field>FINISHING
+                    <definition><![CDATA[Sequencing intended to finish (close) gaps in existing coverage]]></definition>
+                </field>
+                <field>ChIP-Seq
+                    <definition><![CDATA[Direct sequencing of chromatin immunoprecipitates]]></definition>
+                </field>
+                <field>MNase-Seq
+                    <definition><![CDATA[Direct sequencing following MNase digestion]]></definition>
+                </field>
+                <field>DNase-Hypersensitivity
+                    <definition>
+                        <![CDATA[Sequencing of hypersensitive sites, or segments of open chromatin that are more readily cleaved by DNaseI]]></definition>
+                </field>
+                <field>Bisulfite-Seq
+                    <definition>
+                        <![CDATA[Sequencing following treatment of DNA with bisulfite to convert cytosine residues to uracil depending on methylation status]]></definition>
+                </field>
+                <field>Tn-Seq
+                    <definition><![CDATA[Sequencing from transposon insertion sites]]></definition>
+                </field>
+                <field>EST
+                    <definition><![CDATA[Single pass sequencing of cDNA templates]]></definition>
+                </field>
+                <field>FL-cDNA
+                    <definition><![CDATA[Full-length sequencing of cDNA templates]]></definition>
+                </field>
+                <field>CTS
+                    <definition><![CDATA[Concatenated Tag Sequencing]]></definition>
+                </field>
+                <field>MRE-Seq
+                    <definition><![CDATA[Methylation-Sensitive Restriction Enzyme Sequencing strategy]]></definition>
+                </field>
+                <field>MeDIP-Seq
+                    <definition><![CDATA[Methylated DNA Immunoprecipitation Sequencing strategy]]></definition>
+                </field>
+                <field>MBD-Seq
+                    <definition><![CDATA[Direct sequencing of methylated fractions sequencing strategy]]></definition>
+                </field>
+                <field>Synthetic-Long-Read
+                    <definition><![CDATA[]]></definition>
+                </field>
+                <field>OTHER
+                    <definition>
+                        <![CDATA[Library strategy not listed (please include additional info in the “design description”)]]></definition>
+                </field>
             </list>
 
             <list alias="librarySource">
-                <field>GENOMIC</field>
-                <field>TRANSCRIPTOMIC</field>
-                <field>METAGENOMIC</field>
-                <field>METATRANSCRIPTOMIC</field>
-                <field>SYNTHETIC</field>
-                <field>VIRAL RNA</field>
-                <field>OTHER</field>
+                <field>GENOMIC
+                    <definition><![CDATA[Genomic DNA (includes PCR products from genomic DNA)]]></definition>
+                </field>
+                <field>TRANSCRIPTOMIC
+                    <definition>
+                        <![CDATA[Transcription products or non genomic DNA (EST, cDNA, RT-PCR, screened libraries)]]></definition>
+                </field>
+                <field>METAGENOMIC
+                    <definition><![CDATA[Mixed material from metagenome]]></definition>
+                </field>
+                <field>METATRANSCRIPTOMIC
+                    <definition><![CDATA[Transcription products from community targets]]></definition>
+                </field>
+                <field>SYNTHETIC
+                    <definition><![CDATA[Synthetic DNA]]></definition>
+                </field>
+                <field>VIRAL RNA
+                    <definition><![CDATA[Viral RNA]]></definition>
+                </field>
+                <field>OTHER
+                    <definition>
+                        <![CDATA[Other, unspecified, or unknown library source material (please include additional info in the “design description”)]]></definition>
+                </field>
             </list>
 
             <list alias="librarySelection">
-                <field>RANDOM</field>
-                <field>PCR</field>
-                <field>RANDOM PCR</field>
-                <field>RT-PCR</field>
-                <field>HMPR</field>
-                <field>MF</field>
-                <field>CF-S</field>
-                <field>CF-M</field>
-                <field>CF-H</field>
-                <field>CF-T</field>
-                <field>MDA</field>
-                <field>MSLL</field>
-                <field>cDNA</field>
-                <field>ChIP</field>
-                <field>MNase</field>
-                <field>DNAse</field>
-                <field>Hybrid Selection</field>
-                <field>Reduced Representation</field>
-                <field>Restriction Digest</field>
-                <field>5-methylcytidine antibody</field>
-                <field>MBD2 protein methyl-CpG binding domain</field>
-                <field>CAGE</field>
-                <field>RACE</field>
-                <field>size fractionation</field>
-                <field>Padlock probes capture method</field>
-                <field>other</field>
-                <field>unspecified</field>
+                <field>RANDOM
+                    <definition><![CDATA[Random selection by shearing or other method]]></definition>
+                </field>
+                <field>PCR
+                    <definition><![CDATA[Source material was selected by designed primers]]></definition>
+                </field>
+                <field>RANDOM PCR
+                    <definition><![CDATA[Source material was selected by randomly generated primers]]></definition>
+                </field>
+                <field>RT-PCR
+                    <definition><![CDATA[Source material was selected by reverse transcription PCR]]></definition>
+                </field>
+                <field>HMPR
+                    <definition><![CDATA[Hypo-methylated partial restriction digest]]></definition>
+                </field>
+                <field>MF
+                    <definition><![CDATA[Methyl Filtrated]]></definition>
+                </field>
+                <field>CF-S
+                    <definition><![CDATA[Cot-filtered single/low-copy genomic DNA]]></definition>
+                </field>
+                <field>CF-M
+                    <definition><![CDATA[Cot-filtered moderately repetitive genomic DNA]]></definition>
+                </field>
+                <field>CF-H
+                    <definition><![CDATA[Cot-filtered highly repetitive genomic DNA]]></definition>
+                </field>
+                <field>CF-T
+                    <definition><![CDATA[Cot-filtered theoretical single-copy genomic DNA]]></definition>
+                </field>
+                <field>MDA
+                    <definition><![CDATA[Multiple displacement amplification]]></definition>
+                </field>
+                <field>MSLL
+                    <definition><![CDATA[Methylation Spanning Linking Library]]></definition>
+                </field>
+                <field>cDNA
+                    <definition><![CDATA[complementary DNA]]></definition>
+                </field>
+                <field>ChIP
+                    <definition><![CDATA[Chromatin immunoprecipitation]]></definition>
+                </field>
+                <field>MNase
+                    <definition><![CDATA[Micrococcal Nuclease (MNase) digestion]]></definition>
+                </field>
+                <field>DNAse
+                    <definition><![CDATA[Deoxyribonuclease (MNase) digestion]]></definition>
+                </field>
+                <field>Hybrid Selection
+                    <definition><![CDATA[Selection by hybridization in array or solution]]></definition>
+                </field>
+                <field>Reduced Representation
+                    <definition>
+                        <![CDATA[Reproducible genomic subsets, often generated by restriction fragment size selection, containing a manageable number of loci to facilitate re-sampling]]></definition>
+                </field>
+                <field>Restriction Digest
+                    <definition><![CDATA[DNA fractionation using restriction enzymes]]></definition>
+                </field>
+                <field>5-methylcytidine antibody
+                    <definition>
+                        <![CDATA[Selection of methylated DNA fragments using an antibody raised against 5-methylcytosine or 5-methylcytidine (m5C)]]></definition>
+                </field>
+                <field>MBD2 protein methyl-CpG binding domain
+                    <definition><![CDATA[Enrichment by methyl-CpG binding domain]]></definition>
+                </field>
+                <field>CAGE
+                    <definition><![CDATA[Cap-analysis gene expression]]></definition>
+                </field>
+                <field>RACE
+                    <definition><![CDATA[Rapid Amplification of cDNA Ends]]></definition>
+                </field>
+                <field>size fractionation
+                    <definition><![CDATA[Physical selection of size appropriate targets]]></definition>
+                </field>
+                <field>Padlock probes capture method
+                    <definition><![CDATA[Circularized oligonucleotide probes]]></definition>
+                </field>
+                <field>other
+                    <definition>
+                        <![CDATA[Other library enrichment, screening, or selection process (please include additional info in the “design description”)]]></definition>
+                </field>
+                <field>unspecified
+                    <definition>
+                        <![CDATA[Library enrichment, screening, or selection is not specified (please include additional info in the “design description”)]]></definition>
+                </field>
             </list>
 
             <list alias="platform">
@@ -790,6 +962,26 @@
         </entity>
         <relation>
             <subject>fastaSequence</subject>
+            <predicate>subClassOf</predicate>
+            <object>Resource</object>
+        </relation>
+
+        <entity
+                conceptAlias="fastqMetadata"
+                conceptURI="urn:fastqMetadata">
+            <attribute column="libraryLayout" uri="urn:libraryLayout"/>
+            <attribute column="libraryStrategy" uri="urn:libraryStrategy"/>
+            <attribute column="librarySource" uri="urn:librarySource"/>
+            <attribute column="librarySelection" uri="urn:librarySelection"/>
+            <attribute column="platform" uri="urn:platform"/>
+            <attribute column="instrumentModel" uri="urn:instrumentModel"/>
+            <attribute column="designDescription" uri="urn:designDescription"/>
+            <attribute column="filenames" uri="urn:filenames">
+                <![CDATA[List of filenames to be uploaded to NCBI Genbank SRA]]>
+            </attribute>
+        </entity>
+        <relation>
+            <subject>fastqMetadata</subject>
             <predicate>subClassOf</predicate>
             <object>Resource</object>
         </relation>
