@@ -828,10 +828,16 @@
                 <![CDATA[Please include any permit information (agency, permit#, etc) as a text string]]></attribute>
             <attribute column='basisOfIdentification' uri='urn:basisOfIdentification' defined_by='urn:basisOfID'>
                 <![CDATA[Morphology, Genetic, Other.]]></attribute>
-            <attribute column='wormsID' uri='urn:wormsID' defined_by='urn:wormsID'>
-                <![CDATA[Identification # (AphiaID) for Worms database (http://www.marinespecies.org/). Please try to provide this or the genus/species.]]></attribute>
             <attribute column='country' uri='urn:country' defined_by='http://rs.tdwg.org/dwc/terms/country'>
                 <![CDATA[The country where the sample was found. Must be found in associated list in "lists" tab.]]></attribute>
+            <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
+                <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
+            <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>
+                <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
+            <attribute column='geneticTissueType' uri='urn:geneticTissueType' defined_by='urn:geneticTissueType'>
+                <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
+            <attribute column='wormsID' uri='urn:wormsID' defined_by='urn:wormsID'>
+                <![CDATA[Identification # (AphiaID) for Worms database (http://www.marinespecies.org/). Please try to provide this or the genus/species.]]></attribute>
             <attribute column='stateProvince' uri='urn:stateProvince'
                        defined_by='http://rs.tdwg.org/dwc/terms/stateProvince'>
                 <![CDATA[The state or province where the sample was found.]]></attribute>
@@ -859,16 +865,12 @@
             <attribute column='previousIdentifications' uri='urn:previousIdentifications'
                        defined_by='http://rs.tdwg.org/dwc/terms/previousIdentifications'>
                 <![CDATA[A list (concatenated and separated) of previous assignments of names to the Occurrence.]]></attribute>
-            <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>
-                <![CDATA[The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary.]]></attribute>
             <attribute column='weight' uri='urn:weight' defined_by='http://purl.obolibrary.org/obo/PATO_0000128'
                        datatype="float">
                 <![CDATA[In Grams. Referring to the weight of the organism from which the sample was derived]]></attribute>
             <attribute column='length' uri='urn:length' defined_by='http://purl.obolibrary.org/obo/PATO_0000122'
                        datatype="float">
                 <![CDATA[In Centimeters. Referring to the length of the organism from which the sample was derived]]></attribute>
-            <attribute column='sex' uri='urn:sex' defined_by='http://rs.tdwg.org/dwc/terms/sex'>
-                <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
             <attribute column='establishmentMeans' uri='urn:establishmentMeans'
                        defined_by='http://rs.tdwg.org/dwc/terms/establishmentMeans'>
                 <![CDATA[The process by which the biological individual(s) represented in the Occurrence became established at the location. Recommended best practice is to use a controlled vocabulary. See associated list in "lists" tab.]]></attribute>
@@ -938,8 +940,6 @@
             <attribute column='taxonRemarks' uri='urn:taxonRemarks'
                        defined_by='http://rs.tdwg.org/dwc/terms/taxonRemarks'>
                 <![CDATA[Comments or notes about the taxon or name.]]></attribute>
-            <attribute column='geneticTissueType' uri='urn:geneticTissueType' defined_by='urn:geneticTissueType'>
-                <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
             <attribute column='plateID' uri='urn:plateID' defined_by='urn:plateID'>
                 <![CDATA[A platename where the DNA extract is stored]]></attribute>
             <attribute column='wellID' uri='urn:wellID' defined_by='urn:wellID'>
