@@ -4,24 +4,18 @@ import auth.Authenticator;
 import auth.LDAPAuthentication;
 import auth.Authorizer;
 import auth.oauth2.OAuthProvider;
-import com.entrust.identityGuard.common.ws.URIFailoverFactory;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.BiocodeFimsService;
 import utils.QueryParams;
 
-import biocode.fims.SettingsManager;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.OAuthException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import biocode.fims.ErrorInfo;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -32,24 +26,12 @@ import java.net.URISyntaxException;
  * REST interface for handling user authentication
  */
 @Path("authenticationService")
-public class AuthenticationService {
-
-    @Context
-    HttpServletRequest request;
+public class AuthenticationService extends BiocodeFimsService {
     private static Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
-    static SettingsManager sm;
-    @Context
-    ServletContext context;
     private static String rootName;
 
-    /**
-     * Load settings manager
-     */
     static {
-        // Initialize settings manager
-        sm = SettingsManager.getInstance();
-
         rootName = sm.retrieveValue("rootName");
     }
 
@@ -65,8 +47,7 @@ public class AuthenticationService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response loginLDAP(@FormParam("username") String usr,
-                              @FormParam("password") String pass,
-                              @Context HttpServletResponse res) {
+                              @FormParam("password") String pass) {
         LDAPAuthentication ldapAuthentication = new LDAPAuthentication();
         Integer numLdapAttemptsAllowed = Integer.parseInt(sm.retrieveValue("ldapAttempts"));
         Integer ldapLockout = Integer.parseInt(sm.retrieveValue("ldapLockedAccountTimeout"));
@@ -140,7 +121,6 @@ public class AuthenticationService {
 
         if (userid != null && question1 != null && question2 != null) {
             Authenticator authenticator = new Authenticator();
-            HttpSession session = request.getSession();
 
             // verify with the entrust IG server that the correct responses were provided to the challenge questions
             // If so, then the user is logged in
@@ -199,9 +179,7 @@ public class AuthenticationService {
     @Produces(MediaType.TEXT_HTML)
     public Response authorize(@QueryParam("client_id") String clientId,
                               @QueryParam("redirect_uri") String redirectURL,
-                              @QueryParam("state") String state,
-                              @Context HttpServletResponse response) {
-        HttpSession session = request.getSession();
+                              @QueryParam("state") String state) {
         Object username = session.getAttribute("user");
         Object sessionoAuthLogin = session.getAttribute("oAuthLogin");
         Boolean oAuthLogin = false;
@@ -325,7 +303,7 @@ public class AuthenticationService {
         } else if (grantType.equalsIgnoreCase("password")) {
             Authenticator authenticator = new Authenticator();
             if (username == null || password == null || !authenticator.login(username, password)) {
-                throw new BadRequestException("invalid_request", "the supplied username and/or password are incorrect");
+                throw new BadRequestException("the supplied username and/or password are incorrect", "invalid_request");
             }
 
             accessToken = p.generateToken(clientId, username);
@@ -385,7 +363,6 @@ public class AuthenticationService {
      *
      * @param password
      * @param token
-     * @param response
      *
      * @throws IOException
      */
@@ -394,8 +371,7 @@ public class AuthenticationService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response resetPassword(@FormParam("password") String password,
-                                  @FormParam("token") String token,
-                                  @Context HttpServletResponse response) {
+                                  @FormParam("token") String token) {
         if (token == null || token.isEmpty()) {
             throw new BadRequestException("Invalid Reset Token");
         }

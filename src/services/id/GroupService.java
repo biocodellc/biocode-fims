@@ -9,13 +9,9 @@ import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Hashtable;
@@ -25,15 +21,12 @@ import java.util.Hashtable;
  * groups by user associated with them, and JSON representation of group metadata.
  */
 @Path("groupService")
-public class GroupService {
+public class GroupService extends BiocodeFimsService {
 
     final static Logger logger = LoggerFactory.getLogger(GroupService.class);
 
-    @Context
-    ServletContext context;
     static String bcidShoulder;
     static String doiShoulder;
-    //static SettingsManager sm;
 
     /**
      * Load settings manager, set ontModelSpec.
@@ -45,7 +38,6 @@ public class GroupService {
      * @param doi
      * @param webAddress
      * @param title
-     * @param request
      *
      * @return
      */
@@ -59,9 +51,7 @@ public class GroupService {
                          @FormParam("resourceType") String resourceTypeString,
                          @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
                          @FormParam("suffixPassThrough") String stringSuffixPassThrough,
-                         @FormParam("finalCopy") @DefaultValue("false") Boolean finalCopy,
-                         @QueryParam("access_token") String accessToken,
-                         @Context HttpServletRequest request) {
+                         @FormParam("finalCopy") @DefaultValue("false") Boolean finalCopy) {
 
         // If resourceType is specified by an integer, then use that to set the String resourceType.
         // If the user omits
@@ -74,17 +64,9 @@ public class GroupService {
                     "There was an error retrieving the resource type uri. Did you provide a valid resource type?");
         }
 
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to create a data group.");
@@ -95,9 +77,6 @@ public class GroupService {
         suffixPassthrough = !stringSuffixPassThrough.isEmpty() && (stringSuffixPassThrough.equalsIgnoreCase("true") ||
                 stringSuffixPassThrough.equalsIgnoreCase("on"));
 
-        // Initialize settings manager
-        SettingsManager sm = SettingsManager.getInstance();
-
         // Create a Bcid
         Database db = new Database();
         // Check for remote-user
@@ -105,8 +84,9 @@ public class GroupService {
         db.close();
 
         // Mint the data group
-        BcidMinter bcidMinter = new BcidMinter(suffixPassthrough);
-        String identifier = bcidMinter.createEntityBcid(userId, resourceTypeString, webAddress, graph, doi, finalCopy);
+        BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+        String identifier = bcidMinter.createEntityBcid(new Bcid(userId, resourceTypeString,
+                webAddress, graph, doi, finalCopy, suffixPassthrough));
         bcidMinter.close();
 
         return Response.ok("{\"identifier\": \"" + identifier + "\"}").build();
@@ -137,8 +117,7 @@ public class GroupService {
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response bcidList(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public Response bcidList() {
         String username = (String) session.getAttribute("user");
 
         if (username == null) {
@@ -160,8 +139,7 @@ public class GroupService {
     @GET
     @Path("/listUserBCIDsAsTable")
     @Produces(MediaType.TEXT_HTML)
-    public Response listUserBCIDsAsTable(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public Response listUserBCIDsAsTable() {
         String username = (String) session.getAttribute("user");
 
         if (username == null) {
@@ -183,8 +161,7 @@ public class GroupService {
     @GET
     @Path("/listUserExpeditionsAsTable")
     @Produces(MediaType.TEXT_HTML)
-    public Response listUserExpeditionsAsTable(@Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public Response listUserExpeditionsAsTable() {
         String username = (String) session.getAttribute("user");
 
         if (username == null) {
@@ -207,9 +184,7 @@ public class GroupService {
     @GET
     @Path("/dataGroupEditorAsTable")
     @Produces(MediaType.TEXT_HTML)
-    public Response bcidEditorAsTable(@QueryParam("ark") String identifier,
-                                      @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public Response bcidEditorAsTable(@QueryParam("ark") String identifier) {
         String username = (String) session.getAttribute("user");
 
         if (username == null) {
@@ -249,9 +224,7 @@ public class GroupService {
                                @FormParam("resourceType") String resourceTypeString,
                                @FormParam("resourceTypesMinusDataset") Integer resourceTypesMinusDataset,
                                @FormParam("suffixPassThrough") String stringSuffixPassThrough,
-                               @FormParam("identifier") String identifier,
-                               @Context HttpServletRequest request) {
-        HttpSession session = request.getSession();
+                               @FormParam("identifier") String identifier) {
         Object username = session.getAttribute("user");
         Hashtable<String, String> config;
         Hashtable<String, String> update = new Hashtable<String, String>();
@@ -263,7 +236,7 @@ public class GroupService {
         // get this BCID's config
 
         BcidMinter b = new BcidMinter();
-        config = b.getBcidConfig(identifier, username.toString());
+        config = b.getBcidMetadata(identifier, username.toString());
 
         if (resourceTypesMinusDataset != null && resourceTypesMinusDataset > 0) {
             resourceTypeString = new ResourceTypes().get(resourceTypesMinusDataset).string;
@@ -294,8 +267,8 @@ public class GroupService {
         if (update.isEmpty()) {
             b.close();
             return Response.ok("{\"success\": \"Nothing needed to be updated.\"}").build();
-        // try to update the config by calling d.updateBcidConfig
-        } else if (b.updateBcidConfig(update, identifier, username.toString())) {
+        // try to update the config by calling d.updateBcidMetadata
+        } else if (b.updateBcidMetadata(update, identifier, username.toString())) {
             b.close();
             return Response.ok("{\"success\": \"BCID successfully updated.\"}").build();
         } else {

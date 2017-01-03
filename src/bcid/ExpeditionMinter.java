@@ -9,7 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import javax.ws.rs.core.MultivaluedMap;
 import java.sql.*;
@@ -106,9 +106,9 @@ public class ExpeditionMinter {
             expeditionId = getExpeditionIdentifier(internalId);
 
             // upon successful expedition creation, create the expedition Bcid
-            BcidMinter bcidMinter = new BcidMinter(false);
-            String identifier = bcidMinter.createEntityBcid(userId, "http://purl.org/dc/dcmitype/Collection", null, null,
-                    null, false);
+            BcidMinter bcidMinter = new BcidMinter(Boolean.valueOf(sm.retrieveValue("ezidRequests")));
+            String identifier = bcidMinter.createEntityBcid(new Bcid(userId, "http://purl.org/dc/dcmitype/Collection", null, null,
+                    null, false, false));
             bcidMinter.close();
 
             // Associate this Bcid with this expedition
@@ -394,11 +394,10 @@ public class ExpeditionMinter {
      *
      * @return
      */
-    public String getDeepRoots(String expeditionCode, Integer projectId) {
-        // Get todays's date
-        DateFormat dateFormat;
-        dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
+    public JSONObject getDeepRoots(String expeditionCode, Integer projectId) {
+
+        JSONObject deepRoots = new JSONObject();
+        JSONArray data = new JSONArray();
         String expeditionTitle = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -426,23 +425,18 @@ public class ExpeditionMinter {
             stmt.setInt(2, projectId);
 
             // Write the concept/identifier elements section
-            sb.append("[\n{\n\t\"data\": [\n");
             rs = stmt.executeQuery();
             while (rs.next()) {
-                // Grap the expeditionTitle in the query
+                JSONObject d = new JSONObject();
+                // Grab the expeditionTitle in the query
                 if (expeditionTitle == null & !rs.getString("expeditionTitle").equals(""))
                     expeditionTitle = rs.getString("expeditionTitle");
 
-                // Grap the prefixes and concepts associated with this
-                sb.append("\t\t{\n");
-                sb.append("\t\t\t\"identifier\":\"" + rs.getString("b.identifier") + "\",\n");
-                sb.append("\t\t\t\"concept\":\"" + rs.getString("resourceType") + "\",\n");
-                sb.append("\t\t\t\"alias\":\"" + rs.getString("alias") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",");
-
-                sb.append("\n");
+                // Grab the prefixes and concepts associated with this
+                d.put("identifier", rs.getString("b.identifier"));
+                d.put("concept", rs.getString("resourceType"));
+                d.put("alias", rs.getString("alias"));
+                data.add(d);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -450,19 +444,16 @@ public class ExpeditionMinter {
             db.close(stmt, rs);
         }
 
-        sb.append("\t]\n},\n");
-
         // Write the metadata section
-        sb.append("{\n");
-        sb.append("\t\"metadata\": {\n");
-        sb.append("\t\t\"name\": \" " + expeditionCode + "\",\n");
+        JSONObject metadata = new JSONObject();
+        metadata.put("name", expeditionCode);
         if (expeditionTitle != null)
-            sb.append("\t\t\"description\": \"" + expeditionTitle + "\",\n");
-        sb.append("\t\t\"date\": \" " + dateFormat.format(date) + "\"\n");
-        sb.append("\t}\n");
-        sb.append("}\n");
-        sb.append("]\n");
-        return sb.toString();
+            metadata.put("description", expeditionTitle);
+//        metadata.put("date", dateFormat.format(date));
+
+        deepRoots.put("data", data);
+        deepRoots.put("metadata", metadata);
+        return deepRoots;
     }
 
     /**
@@ -655,7 +646,7 @@ public class ExpeditionMinter {
             ExpeditionMinter expedition = new ExpeditionMinter();
             //System.out.println(expedition.getGraphMetadata("_qNK_fuHVbRSTNvA_8pG.xlsx"));
            System.out.println("starting ...");
-//            System.out.println(expedition.listExpeditionsAsTable(9,"trizna"));
+//            System.out.println(expedition.getExpeditionss(9,"trizna"));
             System.out.println(expedition.getDatasets(30));
             System.out.println("ending ...");
             //System.out.println(expedition.listExpeditions(8,"mwangiwangui25@gmail.com"));
@@ -797,6 +788,44 @@ public class ExpeditionMinter {
         return expeditions;
     }
 
+    /**
+     * return the expedition metadata given the projectId and expeditionCode
+     * @param projectId
+     * @param expeditionCode
+     * @return
+     */
+    public JSONObject getMetadata(Integer projectId, String expeditionCode) {
+        JSONObject metadata = new JSONObject();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT b.identifier, e.public, e.expeditionId, e.expeditionTitle " +
+                    "FROM bcids b, expeditionBcids eB, expeditions e " +
+                    "WHERE b.bcidId = eB.bcidId && eB.expeditionId = e.expeditionId && e.expeditionCode = ? and e.projectId = ? and" +
+                    "b.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, expeditionCode);
+            stmt.setInt(2, projectId);
+
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                metadata.put("identifier", rs.getString("b.identifier"));
+                metadata.put("public", rs.getBoolean("e.public"));
+                metadata.put("expeditionCode", expeditionCode);
+                metadata.put("projectId", projectId);
+                metadata.put("expeditionTitle", rs.getString("e.expeditionTitle"));
+                metadata.put("expeditionId", rs.getString("e.expeditionId"));
+            }
+        } catch (SQLException e) {
+            throw new ServerErrorException(e);
+        } finally {
+            db.close(stmt, rs);
+        }
+        return metadata;
+    }
+
    /**
      * Return the expedition's metadata
      *
@@ -810,7 +839,7 @@ public class ExpeditionMinter {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT b.identifier, e.public, e.expeditionCode, e.projectId " +
+            String sql = "SELECT b.identifier, e.public, e.expeditionCode, e.projectId, e.expeditionTitle " +
                     "FROM bcids b, expeditionBcids eB, expeditions e " +
                     "WHERE b.bcidId = eB.bcidId && eB.expeditionId = e.expeditionId && e.expeditionId = ? and " +
                     "b.resourceType = \"http://purl.org/dc/dcmitype/Collection\"";
@@ -824,6 +853,8 @@ public class ExpeditionMinter {
                 metadata.put("public", rs.getBoolean("e.public"));
                 metadata.put("expeditionCode", rs.getString("e.expeditionCode"));
                 metadata.put("projectId", rs.getString("e.projectId"));
+                metadata.put("expeditionTitle", rs.getString("e.expeditionTitle"));
+                metadata.put("expeditionId", expeditionId);
             }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -891,46 +922,6 @@ public class ExpeditionMinter {
         return resources;
     }
 
-   /**
-    * return the expedition's datasets
-    *
-    * @param expeditionId
-    *
-    * @return
-    */
-   public JSONArray getExpeditionsDatasets(Integer expeditionId) {
-       JSONArray datasets = new JSONArray();
-       String rootName = sm.retrieveValue("rootName");
-       StringBuilder sb = new StringBuilder();
-
-       PreparedStatement stmt = null;
-       ResultSet rs = null;
-
-       try {
-           String sql = "SELECT b.ts, b.identifier, b.webAddress, b.graph, e.projectId " +
-                   "FROM bcids b, expeditionBcids eB, expeditions e " +
-                   "WHERE b.bcidId = eB.bcidId && eB.expeditionId = ? && e.expeditionId = eB.expeditionId " +
-                   "AND b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
-                   "ORDER BY b.ts DESC";
-           stmt = conn.prepareStatement(sql);
-           stmt.setInt(1, expeditionId);
-
-           rs = stmt.executeQuery();
-           while (rs.next()) {
-               JSONObject dataset = new JSONObject();
-               dataset.put("ts", rs.getTimestamp("b.ts").toString());
-               dataset.put("identifier", rs.getString("b.identifier"));
-               datasets.add(dataset);
-           }
-       } catch (SQLException e) {
-           throw new ServerErrorException(e);
-       } finally {
-           db.close(stmt, rs);
-       }
-
-       return datasets;
-    }
-
     /**
      * retrieve the expedition's datasets
      *
@@ -944,7 +935,7 @@ public class ExpeditionMinter {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT b.ts, b.identifier, b.webAddress, b.graph, e.projectId " +
+            String sql = "SELECT b.ts, b.identifier, b.resourceType, b.title " +
                     "FROM bcids b, expeditionBcids eB, expeditions e " +
                     "WHERE b.bcidId = eB.bcidId && eB.expeditionId = ? && e.expeditionId = eB.expeditionId " +
                     "AND b.resourceType = \"http://purl.org/dc/dcmitype/Dataset\" " +
@@ -957,6 +948,8 @@ public class ExpeditionMinter {
                 JSONObject dataset = new JSONObject();
                 dataset.put("ts", rs.getTimestamp("b.ts").toString());
                 dataset.put("identifier", rs.getString("b.identifier"));
+                dataset.put("resourceType", rs.getString("resourceType"));
+                dataset.put("title", rs.getString("title"));
                 datasets.add(dataset);
             }
         } catch (SQLException e) {
@@ -968,7 +961,7 @@ public class ExpeditionMinter {
     }
 
     /**
-     * Return an HTML Table of the expeditions associated with a project. Includes who owns the expedition,
+     * Return an JSONArray of the expeditions associated with a project. Includes who owns the expedition,
      * the expedition title, and whether the expedition is public.  This information is returned as information
      * typically viewed by an Admin who wants to see details about what datasets are as part of an expedition
      *
@@ -977,16 +970,8 @@ public class ExpeditionMinter {
      *
      * @return
      */
-    public String listExpeditionsAsTable(Integer projectId, String username) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<form method=\"POST\">\n");
-        sb.append("<table>\n");
-        sb.append("<tbody>\n");
-        sb.append("\t<tr>\n");
-        sb.append("\t\t<th>Username</th>\n");
-        sb.append("\t\t<th>Expedition Title</th>\n");
-        sb.append("\t\t<th>Public</th>\n");
-        sb.append("\t</tr>\n");
+    public JSONArray getExpeditions(Integer projectId, String username) {
+        JSONArray expeditions = new JSONArray();
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -995,7 +980,7 @@ public class ExpeditionMinter {
         try {
             Integer userId = db.getUserId(username);
 
-            if (!p.userProjectAdmin(userId, projectId)) {
+            if (!p.isProjectAdmin(userId, projectId)) {
                 throw new ForbiddenRequestException("You must be this project's admin to view its expeditions.");
             }
 
@@ -1014,28 +999,13 @@ public class ExpeditionMinter {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append(rs.getString("u.username"));
-                sb.append("</td>\n");
-                sb.append("\t\t<td>");
-                sb.append(rs.getString("e.expeditionTitle"));
-                sb.append("</td>\n");
-                sb.append("\t\t<td><input name=\"");
-                sb.append(rs.getInt("e.expeditionId"));
-                sb.append("\" type=\"checkbox\"");
-                if (rs.getBoolean("e.public")) {
-                    sb.append(" checked=\"checked\"");
-                }
-                sb.append("/></td>\n");
-                sb.append("\t</tr>\n");
+                JSONObject expedition = new JSONObject();
+                expedition.put("username", rs.getString("u.username"));
+                expedition.put("expeditionTitle", rs.getString("e.expeditionTitle"));
+                expedition.put("expeditionId", rs.getString("e.expeditionId"));
+                expedition.put("public", rs.getBoolean("e.public"));
+                expeditions.add(expedition);
             }
-
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td></td>\n");
-            sb.append("\t\t<td><input type=\"hidden\" name=\"projectId\" value=\"" + projectId + "\" /></td>\n");
-            sb.append("\t\t<td><input id=\"expeditionForm\" type=\"button\" value=\"Submit\"></td>\n");
-            sb.append("\t</tr>\n");
 
         } catch (SQLException e) {
             throw new ServerErrorException(e);
@@ -1043,11 +1013,7 @@ public class ExpeditionMinter {
             p.close();
             db.close(stmt, rs);
         }
-
-        sb.append("</tbody>\n");
-        sb.append("</table>\n");
-        sb.append("</form>\n");
-        return sb.toString();
+        return expeditions;
     }
 
     /**
@@ -1114,7 +1080,6 @@ public class ExpeditionMinter {
                         " public = CASE WHEN public ='0' THEN '1' WHEN public = '1' THEN '0' END" +
                         " WHERE expeditionId IN (" + updateExpeditions.toString().replaceAll("[\\[\\]]", "") + ")";
 
-//                System.out.print(updateString);
                 db.close(stmt, null);
                 stmt = conn.prepareStatement(updateString);
 

@@ -1,5 +1,6 @@
 package bcid;
 
+import biocode.fims.settings.SettingsManager;
 import ezid.EzidService;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
@@ -23,6 +24,9 @@ import java.util.UUID;
 public class BcidMinter extends BcidEncoder {
 
     final static Logger logger = LoggerFactory.getLogger(BcidMinter.class);
+    private Boolean ezidRequest;
+
+    private static SettingsManager sm;
 
     // Mysql Connection
     protected Connection conn;
@@ -31,27 +35,30 @@ public class BcidMinter extends BcidEncoder {
     protected String scheme = "ark:";
     protected String shoulder = "";
 
+    static {
+        sm = SettingsManager.getInstance();
+    }
+
     /**
      * Default to ezidRequest = false using default Constructor
      */
     public BcidMinter() {
-        this(false, false);
+        this(false);
     }
 
     /**
      * Default constructor for data group uses the temporary identifier ark:/99999/fk4.  Values can be overridden in
      * the mint method.
      */
-    public BcidMinter(boolean ezidRequest, Boolean suffixPassThrough) {
-        bcidMinterSetup(suffixPassThrough, null, 99999);
+    public BcidMinter(boolean ezidRequest) {
+        bcidMinterSetup(null, 99999);
         this.ezidRequest = ezidRequest;
     }
 
     /**
      * general BcidMinter setup used by the constructors
-     * @param suffixPassThrough
      */
-    private void bcidMinterSetup (Boolean suffixPassThrough, String shoulder, Integer NAAN) {
+    private void bcidMinterSetup (String shoulder, Integer NAAN) {
         db = new Database();
         conn = db.getConn();
         // Generate defaults in constructor, these will be overridden later
@@ -62,23 +69,11 @@ public class BcidMinter extends BcidEncoder {
         }
         setBow(NAAN);
         try {
-            identifier = new URI(bow + this.shoulder);
+            URI identifier = new URI(bow + this.shoulder);
+            getBcidsId(identifier.toString());
         } catch (URISyntaxException e) {
             throw new ServerErrorException("Server Error", bow + this.shoulder + " is not a valid URI", e);
         }
-        bcidsId = this.getBcidsId(identifier.toString());
-        this.suffixPassThrough = suffixPassThrough;
-    }
-
-    public BcidMinter(Boolean suffixPassThrough) {
-
-        if (sm.retrieveValue("ezidRequests").equalsIgnoreCase("false")) {
-            ezidRequest = false;
-        } else {
-            ezidRequest = true;
-        }
-
-        bcidMinterSetup(suffixPassThrough, null, 99999);
     }
 
     /**
@@ -125,19 +120,15 @@ public class BcidMinter extends BcidEncoder {
     }
 
     /**
-     * Mint a Bcid, providing information to insert into Database
+     * Mint a Bcid, providing a Bcid to insert into Database
      *
      * @param NAAN
-     * @param who
-     * @param resourceType
-     * @param doi
-     * @param webAddress
-     * @param title
      */
-    private String mint(Integer NAAN, Integer who, String resourceType, String doi, URI webAddress, String graph, String title, Boolean finalCopy) {
+    private String mint(Integer NAAN, Bcid bcid) {
 
+        URI identifier;
         // Never request EZID for user=demo
-        if (db.getUserName(who).equalsIgnoreCase("demo")) {
+        if (db.getUserName(bcid.userId).equalsIgnoreCase("demo")) {
             ezidRequest = false;
         }
         this.bow = scheme + "/" + NAAN + "/";
@@ -154,23 +145,23 @@ public class BcidMinter extends BcidEncoder {
                     "values (?,?,?,?,?,?,?,?,?,?)";
 
             insertStatement = conn.prepareStatement(insertString);
-            insertStatement.setInt(1, who);
-            insertStatement.setString(2, resourceType);
-            insertStatement.setString(3, doi);
-            if (webAddress != null)
-                insertStatement.setString(4, webAddress.toString());
+            insertStatement.setInt(1, bcid.userId);
+            insertStatement.setString(2, bcid.resourceType);
+            insertStatement.setString(3, bcid.doi);
+            if (bcid.webAddress != null)
+                insertStatement.setString(4, bcid.webAddress.toString());
              else
                 insertStatement.setString(4, null);
-            insertStatement.setString(5, graph);
-            insertStatement.setString(6, title);
+            insertStatement.setString(5, bcid.graph);
+            insertStatement.setString(6, bcid.title);
             insertStatement.setString(7, internalId.toString());
             insertStatement.setBoolean(8, ezidRequest);
-            insertStatement.setBoolean(9, suffixPassThrough);
-            insertStatement.setBoolean(10, finalCopy);
+            insertStatement.setBoolean(9, bcid.suffixPassThrough);
+            insertStatement.setBoolean(10, bcid.finalCopy);
             insertStatement.execute();
 
             // Get the bcidsId that was assigned
-            bcidsId = getBcidsId(internalId);
+            Integer bcidsId = getBcidsId(internalId);
 
             // Create the shoulder Bcid (String Bcid Bcid)
             shoulder = encode(new BigInteger(bcidsId.toString()));
@@ -190,7 +181,7 @@ public class BcidMinter extends BcidEncoder {
             updateStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new ServerErrorException("Server Error", "SQLException while creating a bcid for user: " + who, e);
+            throw new ServerErrorException("Server Error", "SQLException while creating a bcid for user: " + bcid.userId, e);
         } catch (URISyntaxException e) {
             throw new ServerErrorException("Server Error", bow + shoulder + " is not a valid URI", e);
         } finally {
@@ -436,8 +427,7 @@ public class BcidMinter extends BcidEncoder {
     public static void main(String args[]) {
         BcidMinter b = new BcidMinter();
         try {
-            //System.out.println(d.bcidTable("biocode"));
-            System.out.println(b.projectCode);
+            System.out.println(b.bcidTable("biocode"));
         } catch (Exception e) {
             b.close();
             e.printStackTrace();
@@ -447,15 +437,15 @@ public class BcidMinter extends BcidEncoder {
     }
 
     /**
-     * fetch a BCID's configuration given a identifier and username
+     * fetch a BCID's metadata given a identifier and username
      *
      * @param identifier
      * @param username
      *
      * @return
      */
-    public Hashtable<String, String> getBcidConfig (String identifier, String username) {
-        Hashtable<String, String> config = new Hashtable<String, String>();
+    public Hashtable<String, String> getBcidMetadata(String identifier, String username) {
+        Hashtable<String, String> metadata = new Hashtable<String, String>();
         ResourceTypes rts = new ResourceTypes();
         Integer userId = db.getUserId(username);
 
@@ -470,22 +460,22 @@ public class BcidMinter extends BcidEncoder {
 
             rs = stmt.executeQuery();
             if (rs.next()) {
-                config.put("suffix", String.valueOf(rs.getBoolean("suffix")));
+                metadata.put("suffix", String.valueOf(rs.getBoolean("suffix")));
                 if (rs.getString("doi") != null) {
-                    config.put("doi", rs.getString("doi"));
+                    metadata.put("doi", rs.getString("doi"));
                 }
                 if (rs.getString("title") != null) {
-                    config.put("title", rs.getString("title"));
+                    metadata.put("title", rs.getString("title"));
                 }
                 if (rs.getString("webAddress") != null) {
-                    config.put("webAddress", rs.getString("webAddress"));
+                    metadata.put("webAddress", rs.getString("webAddress"));
                 }
 
                 ResourceType resourceType = rts.get(rs.getString("resourceType"));
                 if (resourceType != null) {
-                    config.put("resourceType", resourceType.string);
+                    metadata.put("resourceType", resourceType.string);
                 } else {
-                    config.put("resourceType", rs.getString("resourceType"));
+                    metadata.put("resourceType", rs.getString("resourceType"));
                 }
 
             } else {
@@ -497,32 +487,32 @@ public class BcidMinter extends BcidEncoder {
         } finally {
             db.close(stmt, rs);
         }
-        return config;
+        return metadata;
     }
 
     /**
-     * update a Bcid's configuration
+     * update a Bcid's metadata
      *
-     * @param config a Hashtable<String, String> which has the bcids table fields to be updated as key, new value
+     * @param metadata a Hashtable<String, String> which has the bcids table fields to be updated as key, new value
      *               pairs
      * @param identifier the ark:// for the BICD
      *
      * @return
      */
-    public Boolean updateBcidConfig (Hashtable<String, String> config, String identifier, String username) {
+    public Boolean updateBcidMetadata(Hashtable<String, String> metadata, String identifier, String username) {
         PreparedStatement stmt = null;
         try {
             Integer userId = db.getUserId(username);
             String sql = "UPDATE bcids SET ";
 
             // update resourceTypeString to the correct uri
-            if (config.containsKey("resourceTypeString")) {
-                config.put("resourceType", new ResourceTypes().getByName(config.get("resourceTypeString")).uri);
-                config.remove("resourceTypeString");
+            if (metadata.containsKey("resourceTypeString")) {
+                metadata.put("resourceType", new ResourceTypes().getByName(metadata.get("resourceTypeString")).uri);
+                metadata.remove("resourceTypeString");
             }
 
             // Dynamically create our UPDATE statement depending on which fields the user wants to update
-            for (Enumeration e = config.keys(); e.hasMoreElements(); ) {
+            for (Enumeration e = metadata.keys(); e.hasMoreElements(); ) {
                 String key = e.nextElement().toString();
                 sql += key + " = ?";
 
@@ -538,18 +528,18 @@ public class BcidMinter extends BcidEncoder {
             // place the parametrized values into the SQL statement
             {
                 int i = 1;
-                for (Enumeration e = config.keys(); e.hasMoreElements(); ) {
+                for (Enumeration e = metadata.keys(); e.hasMoreElements(); ) {
                     String key = e.nextElement().toString();
                     if (key.equals("suffixPassthrough")) {
-                        if (config.get(key).equalsIgnoreCase("true")) {
+                        if (metadata.get(key).equalsIgnoreCase("true")) {
                             stmt.setBoolean(i, true);
                         } else {
                             stmt.setBoolean(i, false);
                         }
-                    } else if (config.get(key).equals("")) {
+                    } else if (metadata.get(key).equals("")) {
                         stmt.setString(i, null);
                     } else {
-                        stmt.setString(i, config.get(key));
+                        stmt.setString(i, metadata.get(key));
                     }
                     i++;
                 }
@@ -581,7 +571,7 @@ public class BcidMinter extends BcidEncoder {
      */
     public String bcidEditorAsTable(String username, String identifier) {
         StringBuilder sb = new StringBuilder();
-        Hashtable<String, String> config = getBcidConfig(identifier, username);
+        Hashtable<String, String> config = getBcidMetadata(identifier, username);
 
         sb.append("<form method=\"POST\" id=\"bcidEditForm\">\n");
         sb.append("\t<input type=hidden name=resourceTypes id=resourceTypes value=\"Dataset\">\n");
@@ -647,35 +637,12 @@ public class BcidMinter extends BcidEncoder {
 
     /**
      * create Bcid's corresponding to expeditions
-     * @param userId
-     * @param resourceTypeString
-     * @param webAddress
-     * @param graph
-     * @param finalCopy
      */
-    public String createEntityBcid(int userId, String resourceTypeString, String webAddress, String graph, String doi,
-                                 Boolean finalCopy) {
-
-        URI webAddressURI = null;
-        // check that the given webAddress is a valid URI before creating the Bcid. This will prevent a
-        // URISyntaxException from being thrown when later retrieving the Bcid.
-        if (webAddress != null) {
-            try {
-                webAddressURI = new URI(webAddress);
-            } catch (URISyntaxException e) {
-                throw new BadRequestException("Malformed uri: " + webAddress, e);
-            }
-        }
+    public String createEntityBcid(Bcid bcid) {
 
         String identifier = mint(
                 new Integer(sm.retrieveValue("bcidNAAN")),
-                userId,
-                resourceTypeString,
-                doi,
-                webAddressURI,
-                graph,
-                resourceTypeString,
-                finalCopy
+                bcid
         );
 
         // Create EZIDs right away for Bcid level Identifiers
@@ -684,7 +651,7 @@ public class BcidMinter extends BcidEncoder {
         // a separate mechanism on the server side to check creation of EZIDs.  This is easy enough to do
         // in the Database.
         // Never request EZID for user=demo
-        if (db.getUserName(userId).equalsIgnoreCase("demo")) {
+        if (db.getUserName(bcid.userId).equalsIgnoreCase("demo")) {
             ezidRequest = false;
         }
 
@@ -696,7 +663,7 @@ public class BcidMinter extends BcidEncoder {
                 ezidAccount.login(sm.retrieveValue("eziduser"), sm.retrieveValue("ezidpass"));
                 creator.createBcidsEZIDs(ezidAccount);
             } catch (EzidException e) {
-                logger.warn("EZID NOT CREATED FOR BCID = " + getIdentifier(), e);
+                logger.warn("EZID NOT CREATED FOR BCID = " + identifier, e);
             } finally {
                 creator.close();
             }

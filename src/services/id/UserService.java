@@ -1,23 +1,19 @@
 package services.id;
 
 import auth.Authenticator;
-import bcid.Database;
+import auth.Authorizer;
+import auth.oauth2.OAuthProvider;
 import bcid.ProjectMinter;
 import bcid.UserMinter;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ForbiddenRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import biocode.fims.fimsExceptions.UnauthorizedRequestException;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Hashtable;
@@ -26,23 +22,29 @@ import java.util.Hashtable;
  * The REST Interface for dealing with users. Includes user creation and profile updating.
  */
 @Path("userService")
-public class UserService {
+public class UserService extends BiocodeFimsService {
 
-    @Context
-    HttpServletRequest request;
+    @GET
+    @Path("/list")
+    public Response getUsers() {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
-    private static Logger logger = LoggerFactory.getLogger(UserService.class);
-    private static SettingsManager sm;
-    private static String rootName;
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must login to access this service.");
+        }
+        Authorizer authorizer = new Authorizer();
+        if (!authorizer.userProjectAdmin(username)) {
+            throw new ForbiddenRequestException("You must be a project admin to view the users.");
+        }
+        authorizer.close();
 
-    /**
-     * Load settings manager
-     */
-    static {
-        // Initialize settings manager
-        sm = SettingsManager.getInstance();
+        UserMinter userMinter = new UserMinter();
+        JSONArray users = userMinter.getUsers();
+        userMinter.close();
 
-        rootName = sm.retrieveValue("rootName");
+        return Response.ok(users.toJSONString()).build();
     }
 
     /**
@@ -59,6 +61,7 @@ public class UserService {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response createUser(@FormParam("username") String username,
                                @FormParam("password") String password,
                                @FormParam("firstName") String firstName,
@@ -66,13 +69,20 @@ public class UserService {
                                @FormParam("email") String email,
                                @FormParam("institution") String institution,
                                @FormParam("projectId") Integer projectId) {
+        OAuthProvider provider = new OAuthProvider();
+        String aUser = provider.validateToken(accessToken);
+        provider.close();
 
-        HttpSession session = request.getSession();
+        if (aUser == null) {
+            throw new UnauthorizedRequestException("You must be logged in.");
+        }
 
-        if (session.getAttribute("projectAdmin") == null) {
+        Authorizer authorizer = new Authorizer();
+        if (!authorizer.userProjectAdmin(aUser)) {
             // only project admins are able to create users
             throw new ForbiddenRequestException("Only project admins are able to create users.");
         }
+        authorizer.close();
 
         if ((username == null || username.isEmpty()) ||
                 (password == null || password.isEmpty()) ||
@@ -99,110 +109,17 @@ public class UserService {
         UserMinter u = new UserMinter();
         ProjectMinter p = new ProjectMinter();
         try {
-            String admin = session.getAttribute("user").toString();
-            Database db = new Database();
-            Integer adminId = db.getUserId(admin);
-            db.close();
-
             if (u.checkUsernameExists(username)) {
                 throw new BadRequestException("username already exists");
             }
             // check if the user is this project's admin
-            if (!p.userProjectAdmin(adminId, projectId)) {
+            if (!p.isProjectAdmin(aUser, projectId)) {
                 throw new ForbiddenRequestException("You can't add a user to a project that you're not an admin.");
             }
             return Response.ok(u.createUser(userInfo, projectId)).build();
         } finally {
             u.close();
             p.close();
-        }
-    }
-
-    /**
-     * Returns an HTML table in order to create a user.
-     * @return
-     */
-    @GET
-    @Path("/createFormAsTable")
-    @Produces(MediaType.TEXT_HTML)
-    public String createFormAsTable() {
-        UserMinter u = new UserMinter();
-        String response = u.getCreateForm();
-        u.close();
-        return response;
-    }
-
-    /**
-     * Service for a project admin to update a member user's profile
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param institution
-     * @param new_password
-     * @param username
-     * @return
-     */
-    @POST
-    @Path("/profile/update/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response adminUpdateProfile(@FormParam("firstName") String firstName,
-                                       @FormParam("lastName") String lastName,
-                                       @FormParam("email") String email,
-                                       @FormParam("institution") String institution,
-                                       @FormParam("new_password") String new_password,
-                                       @PathParam("username") String username) {
-        HttpSession session = request.getSession();
-        Hashtable<String, String> update = new Hashtable<String, String>();
-
-        if (session.getAttribute("projectAdmin") == null) {
-            throw new ForbiddenRequestException("You must be a project admin to edit another user's profile");
-        }
-
-        // set new password if given
-        if (!new_password.isEmpty()) {
-            Authenticator authenticator = new Authenticator();
-            Boolean success = authenticator.setHashedPass(username, new_password);
-            authenticator.close();
-            if (!success) {
-                throw new BadRequestException("user: " + username + "not found");
-            } else {
-                // Make the user change their password next time they login
-                update.put("hasSetPassword", "0");
-            }
-        }
-
-        // Check if any other fields should be updated
-        UserMinter u = new UserMinter();
-
-        try {
-            if (!firstName.equals(u.getFirstName(username))) {
-                update.put("firstName", firstName);
-            }
-            if (!lastName.equals(u.getLastName(username))) {
-                update.put("lastName", lastName);
-            }
-            if (!email.equals(u.getEmail(username))) {
-                // check that a valid email is given
-                if (email.toUpperCase().matches("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}")) {
-                    update.put("email", email);
-                } else {
-                    throw new BadRequestException("Please enter a valid email.");
-                }
-            }
-            if (!institution.equals(u.getInstitution(username))) {
-                update.put("institution", institution);
-            }
-
-
-            if (!update.isEmpty()) {
-                Boolean success = u.updateProfile(update, username);
-                if (!success) {
-                    throw new BadRequestException("user: " + username + "not found");
-                }
-            }
-            return Response.ok("{\"success\": \"true\"}").build();
-        } finally {
-            u.close();
         }
     }
 
@@ -214,7 +131,7 @@ public class UserService {
      * @param institution
      * @param old_password
      * @param new_password
-     * @param return_to
+     * @param returnTo
      * @returns either error message or the url to redirect to upon success
      */
     @POST
@@ -227,38 +144,68 @@ public class UserService {
                                   @FormParam("institution") String institution,
                                   @FormParam("old_password") String old_password,
                                   @FormParam("new_password") String new_password,
-                                  @QueryParam("return_to") String return_to,
-                                  @Context HttpServletResponse response) {
+                                  @FormParam("username") String username,
+                                  @QueryParam("return_to") String returnTo) {
+        OAuthProvider provider = new OAuthProvider();
+        String aUser = provider.validateToken(accessToken);
+        provider.close();
 
-        HttpSession session = request.getSession();
-        String username = session.getAttribute("user").toString();
-//        String error = "";
+        if (aUser == null) {
+            throw new UnauthorizedRequestException("You must login");
+        }
+
+        Authorizer authorizer = new Authorizer();
+
+        if (!aUser.equals(username.trim()) && !authorizer.userProjectAdmin(aUser)) {
+            throw new ForbiddenRequestException("You must be a project admin to update someone else's profile.");
+        }
+
+        Boolean adminAccess = false;
+        if (!aUser.equals(username.trim()) && authorizer.userProjectAdmin(aUser))
+            adminAccess = true;
+
+        authorizer.close();
+
         Hashtable<String, String> update = new Hashtable<String, String>();
 
-        // Only update user's password if both old_password and new_password fields contain values
-        if (!old_password.isEmpty() && !new_password.isEmpty()) {
-            Authenticator myAuth = new Authenticator();
-            // Call the login function to verify the user's old_password
-            Boolean valid_pass = myAuth.login(username, old_password);
+        // Only update user's password if both old_password and new_password fields contain values and the user is updating
+        // their own profile
+        if (!adminAccess) {
+            if (!old_password.isEmpty() && !new_password.isEmpty()) {
+                Authenticator myAuth = new Authenticator();
+                // Call the login function to verify the user's old_password
+                Boolean valid_pass = myAuth.login(username, old_password);
 
-            // If user's old_password matches stored pass, then update the user's password to the new value
-            if (valid_pass) {
-                Boolean success = myAuth.setHashedPass(username, new_password);
+                // If user's old_password matches stored pass, then update the user's password to the new value
+                if (valid_pass) {
+                    Boolean success = myAuth.setHashedPass(username, new_password);
+                    if (!success) {
+                        throw new ServerErrorException("Server Error", "User not found");
+                    }
+                    // Make sure that the hasSetPassword field is 1 (true) so they aren't asked to change their password after login
+                    else {
+                        update.put("hasSetPassword", "1");
+                    }
+                } else {
+                    throw new BadRequestException("Wrong Password");
+                }
+                myAuth.close();
+
+            }
+        } else {
+            // set new password if given
+            if (!new_password.isEmpty()) {
+                Authenticator authenticator = new Authenticator();
+                Boolean success = authenticator.setHashedPass(username, new_password);
+                authenticator.close();
                 if (!success) {
-                    throw new ServerErrorException("Server Error", "User not found");
-                }
-                // Make sure that the hasSetPassword field is 1 (true) so they aren't asked to change their password after login
-                else {
-                    update.put("hasSetPassword", "1");
+                    throw new BadRequestException("user: " + username + "not found");
+                } else {
+                    // Make the user change their password next time they login
+                    update.put("hasSetPassword", "0");
                 }
             }
-            else {
-                throw new BadRequestException("Wrong Password");
-            }
-            myAuth.close();
-
         }
-        Database db;
 
         // Check if any other fields should be updated
         UserMinter u = new UserMinter();
@@ -289,94 +236,58 @@ public class UserService {
                 }
             }
 
-            if (return_to != null) {
-                return Response.ok("{\"success\": \"" + return_to + "\"}").build();
-            } else {
-                return Response.ok("{\"success\": \"/" + rootName + "/secure/profile.jsp\"}").build();
+            JSONObject response = new JSONObject();
+            response.put("adminAccess", adminAccess);
+            if (returnTo != null) {
+                response.put("returnTo", returnTo);
             }
+            return Response.ok(response.toJSONString()).build();
         } finally {
             u.close();
         }
     }
 
     /**
-     * Returns an HTML table for editing a user's profile. Project admin use only.
+     * retrieves the user's profile. Project admin use only.
      * @param username
      * @return
      */
     @GET
-    @Path("/profile/listEditorAsTable/{username}")
-    @Produces(MediaType.TEXT_HTML)
-    public String getUsersProfile(@PathParam("username") String username) {
-        HttpSession session = request.getSession();
+    @Path("/profile/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsersProfile(@PathParam("username") String username) {
+        OAuthProvider provider = new OAuthProvider();
+        String admin = provider.validateToken(accessToken);
+        provider.close();
 
-        if (session.getAttribute("projectAdmin") == null) {
+        if (admin == null) {
+            throw new UnauthorizedRequestException("You must login.");
+        }
+        Authorizer authorizer = new Authorizer();
+
+        if (!authorizer.userProjectAdmin(admin)) {
             throw new ForbiddenRequestException("You must be a project admin to edit a user's profile");
         }
 
         UserMinter u = new UserMinter();
-        String response = u.getProfileEditorAsTable(username, true);
+        JSONObject profile = u.getUserProfile(username);
         u.close();
-        return response;
-    }
-
-    /**
-     * returns an HTML table for editing a user's profile.
-     * @return
-     */
-    @GET
-    @Path("/profile/listEditorAsTable")
-    @Produces(MediaType.TEXT_HTML)
-    public String getProfile() {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
-
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view your profile.");
-        }
-
-        UserMinter u = new UserMinter();
-        String response = u.getProfileEditorAsTable(username.toString(), false);
-        u.close();
-        return response;
-    }
-
-    /**
-     * Return a HTML table displaying the user's profile
-     *
-     * @return String with HTML response
-     */
-    @GET
-    @Path("/profile/listAsTable")
-    @Produces(MediaType.TEXT_HTML)
-    public String listUserProfile() {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
-
-        if (username == null) {
-            throw new UnauthorizedRequestException("You must be logged in to view your profile.");
-        }
-
-        UserMinter u = new UserMinter();
-        String response = u.getProfileHTML(username.toString());
-        u.close();
-        return response;
+        return Response.ok(profile.toJSONString()).build();
     }
 
     /**
      * Service for oAuth client apps to retrieve a user's profile information.
-     * @param access_token
      * @return
      */
     @GET
-    @Path("/oauth")
+    @Path("/profile")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserData(@QueryParam("access_token") String access_token) {
-        if (access_token != null) {
+    public Response getUserData() {
+        if (accessToken != null) {
             UserMinter u = new UserMinter();
-            JSONObject response = u.getOauthProfile(access_token);
+            JSONObject response = u.getOauthProfile(accessToken);
             u.close();
-            return Response.ok(response.toString()).build();
+            return Response.ok(response.toJSONString()).build();
         }
         throw new BadRequestException("invalid_grant", "access_token was null");
     }

@@ -1,9 +1,10 @@
 package bcid;
 
+import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,6 +38,9 @@ public class Bcid {
     protected Boolean suffixPassThrough = false;
     protected String doi;
     protected Integer bcidsId;
+    protected Boolean isPublic;
+    protected Integer userId;
+    protected Boolean finalCopy;
 
     public String getGraph() {
         return graph;
@@ -68,6 +72,26 @@ public class Bcid {
     }
 
     protected Bcid() {
+    }
+
+    /**
+     * constructor used for creating a new bcid
+     */
+    public Bcid(Integer userId, String resourceType, String webAddress, String graph, String doi, Boolean finalCopy, Boolean suffixPassThrough) {
+        this.userId = userId;
+        this.resourceType = resourceType;
+        this.suffixPassThrough = suffixPassThrough;
+        this.doi = doi;
+        if (webAddress != null) {
+            try {
+                this.webAddress = new URI(webAddress);
+            } catch (URISyntaxException e) {
+                throw new BadRequestException("Malformed uri: " + webAddress, e);
+            }
+        }
+        this.graph = graph;
+        this.title = resourceType;
+        this.finalCopy = finalCopy;
     }
 
     /**
@@ -189,11 +213,42 @@ public class Bcid {
                 // Set the resolution target
                 resolutionTarget = new URI(webAddress + suffix);
             }
+            bcidsId = pBcidsId;
+            setIsPublic();
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } catch (URISyntaxException e) {
             throw new ServerErrorException("Server Error","URISyntaxException from identifier: " + prefix +
                     sm.retrieveValue("divider") + suffix + " from bcidsId: " + bcidsId, e);
+        } finally {
+            db.close(stmt, rs);
+        }
+    }
+
+    /**
+     * method to set the bcid isPublic variable. We can't do this with the getBcid query as it was returning null whne
+     * a bcid isn't associated with an expedition
+     */
+    private void setIsPublic() {
+        Database db = new Database();
+        Connection conn = db.getConn();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT " +
+                "e.public" +
+                " FROM expeditions e, expeditionBcids eb" +
+                " WHERE eb.bcidId = ?" +
+                " AND e.expeditionId = eb.expeditionId";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, bcidsId);
+
+            rs = stmt.executeQuery();
+            if (rs.next())
+                isPublic = rs.getBoolean("e.public");
+        } catch (SQLException e) {
+            throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
@@ -264,6 +319,10 @@ public class Bcid {
         put("ts", ts);
         put("rights", rights);
         put("forwardingResolution", forwardingResolution);
+        if (isPublic != null)
+            put("isPublic", isPublic);
+        else
+            put("isPublic", "null");
         if (resolutionTarget != null) {
             put("resolutionTarget", resolutionTarget);
         } else {

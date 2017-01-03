@@ -18,7 +18,7 @@ import java.util.HashMap;
  * If we have 3 letters in the shoulder including 1 digit this gives 1,217,727 possible permutations.
  * 4 letters and 1 digit will give 74,549,800 possible permutations.
  */
-public class BcidEncoder extends Bcid implements Encoder {
+public class BcidEncoder implements Encoder {
     private boolean debug = false;
     int[] endDigits = {1};
 

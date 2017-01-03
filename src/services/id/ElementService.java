@@ -1,16 +1,9 @@
 package services.id;
 
 import bcid.ResourceTypes;
-import ezid.EzidService;
-import biocode.fims.fimsExceptions.BadRequestException;
-import ezid.EzidException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,7 +11,7 @@ import javax.ws.rs.core.Response;
  * REST interface for creating elements, to be called from the interface or other consuming applications.
  */
 @Path("elementService")
-public class ElementService {
+public class ElementService extends BiocodeFimsService {
 
     /**
      * get all resourceTypes minus Dataset

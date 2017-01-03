@@ -13,13 +13,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import services.BiocodeFimsService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -30,12 +26,7 @@ import java.net.URLDecoder;
  * REST interface calls for working with expeditions.  This includes creating, updating and deleting expeditions.
  */
 @Path("expeditionService")
-public class ExpeditionService {
-
-    @Context
-    ServletContext context;
-    @Context
-    HttpServletRequest request;
+public class ExpeditionService extends BiocodeFimsService {
 
     private static Logger logger = LoggerFactory.getLogger(ExpeditionService.class);
 
@@ -74,10 +65,7 @@ public class ExpeditionService {
     @Path("/validateExpedition/{projectId}/{expeditionCode}")
     public Response mint(@PathParam("expeditionCode") String expeditionCode,
                          @PathParam("projectId") Integer projectId,
-                         @QueryParam("access_token") String accessToken,
                          @QueryParam("ignore_user") Boolean ignore_user) {
-        String username;
-
         // Decipher the expedition code
         try {
             expeditionCode = URLDecoder.decode(expeditionCode, "utf-8");
@@ -85,15 +73,9 @@ public class ExpeditionService {
             logger.warn("UnsupportedEncodingException in ExpeditionService.mint method.", e);
         }
 
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("your session has expired or you have not yet logged in.<br>You may "
@@ -117,8 +99,6 @@ public class ExpeditionService {
      * @param expeditionTitle
      * @param projectId
      * @param isPublic
-     * @param accessToken      (optional) the access token that represents the user who you are minting an expedition
-     *                         on behalf.
      *
      * @return
      */
@@ -128,19 +108,10 @@ public class ExpeditionService {
     public Response mint(@FormParam("expeditionCode") String expeditionCode,
                          @FormParam("expeditionTitle") String expeditionTitle,
                          @FormParam("projectId") Integer projectId,
-                         @FormParam("public") Boolean isPublic,
-                         @QueryParam("access_token") String accessToken) {
-        String username;
-
-        // if accessToken != null, then OAuth client is accessing on behalf of a user
-        if (accessToken != null) {
-            OAuthProvider p = new OAuthProvider();
-            username = p.validateToken(accessToken);
-            p.close();
-        } else {
-            HttpSession session = request.getSession();
-            username = (String) session.getAttribute("user");
-        }
+                         @FormParam("public") Boolean isPublic) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("User is not authorized to create a new expedition.");
@@ -170,7 +141,6 @@ public class ExpeditionService {
             );
 
             // Initialize settings manager
-            SettingsManager sm = SettingsManager.getInstance();
 
             // Send an Email that this completed
             // Not all clients have sendMail on... turning this off for now.  Need more secure way to monitor anyway
@@ -255,11 +225,11 @@ public class ExpeditionService {
                                    @PathParam("projectId") Integer projectId) {
         ExpeditionMinter expeditionMinter = new ExpeditionMinter();
 
-        String response = expeditionMinter.getDeepRoots(expedition, projectId);
+        JSONObject response = expeditionMinter.getDeepRoots(expedition, projectId);
 
         expeditionMinter.close();
 
-        return Response.ok(response).build();
+        return Response.ok(response.toJSONString()).build();
     }
 
     /**
@@ -272,8 +242,7 @@ public class ExpeditionService {
     @GET
     @Path("/list/{projectId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listExpeditions(@PathParam("projectId") Integer projectId,
-                                    @QueryParam("access_token") String accessToken) {
+    public Response listExpeditions(@PathParam("projectId") Integer projectId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -299,8 +268,7 @@ public class ExpeditionService {
     @GET
     @Path("resources/{expeditionId}")
     @Produces(MediaType.TEXT_HTML)
-    public Response getResources(@PathParam("expeditionId") Integer expeditionId,
-                                 @QueryParam("access_token") String accessToken) {
+    public Response getResources(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -317,6 +285,30 @@ public class ExpeditionService {
         return Response.ok(resources.toJSONString()).build();
     }
 
+    /**
+     * Service to retrieve an expedition's metadata given the projectId and expeditionCode
+     *
+     * @return
+     */
+    @GET
+    @Path("metadata/{projectId}/{expeditionCode}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMetadata(@PathParam("projectId") Integer projectId,
+                                @PathParam("expeditionCode") String expeditionCode) {
+        OAuthProvider p = new OAuthProvider();
+        String username = p.validateToken(accessToken);
+        p.close();
+
+        if (username == null) {
+            throw new UnauthorizedRequestException("You must be logged in to view this expedition's configuration.");
+        }
+
+        ExpeditionMinter e = new ExpeditionMinter();
+        JSONObject metadata = e.getMetadata(projectId, expeditionCode);
+        e.close();
+        return Response.ok(metadata.toJSONString()).build();
+    }
+
    /**
      * Service to retrieve an expedition's metadata
      *
@@ -327,8 +319,7 @@ public class ExpeditionService {
     @GET
     @Path("metadata/{expeditionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMetadata(@PathParam("expeditionId") Integer expeditionId,
-                                @QueryParam("access_token") String accessToken) {
+    public Response getMetadata(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -353,8 +344,7 @@ public class ExpeditionService {
     @GET
     @Path("datasets/{expeditionId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDatasets(@PathParam("expeditionId") Integer expeditionId,
-                                @QueryParam("access_token") String accessToken) {
+    public Response getDatasets(@PathParam("expeditionId") Integer expeditionId) {
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);
         p.close();
@@ -377,24 +367,26 @@ public class ExpeditionService {
      * @return
      */
     @GET
-    @Path("/admin/listExpeditionsAsTable/{projectId}")
-    @Produces(MediaType.TEXT_HTML)
-    public Response listExpeditionAsTable(@PathParam("projectId") Integer projectId) {
-        HttpSession session = request.getSession();
-        Object admin = session.getAttribute("projectAdmin");
-        Object username = session.getAttribute("user");
+    @Path("/admin/list/{projectId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getExpeditions(@PathParam("projectId") Integer projectId) {
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to view this project's expeditions.");
         }
-        if (admin == null) {
+
+        ProjectMinter projectMinter = new ProjectMinter();
+        if (!projectMinter.isProjectAdmin(username, projectId)) {
             throw new ForbiddenRequestException("You must be this project's admin in order to view its expeditions.");
         }
 
         ExpeditionMinter e = new ExpeditionMinter();
-        String response = e.listExpeditionsAsTable(projectId, username.toString());
+        JSONArray expeditions = e.getExpeditions(projectId, username);
         e.close();
-        return Response.ok(response).build();
+        return Response.ok(expeditions.toJSONString()).build();
     }
 
 
@@ -411,19 +403,17 @@ public class ExpeditionService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response publicExpeditions(MultivaluedMap<String, String> data) {
-        HttpSession session = request.getSession();
-        Object username = session.getAttribute("user");
+        OAuthProvider provider = new OAuthProvider();
+        String username = provider.validateToken(accessToken);
+        provider.close();
         Integer projectId = new Integer(data.remove("projectId").get(0));
 
         if (username == null) {
             throw new UnauthorizedRequestException("You must be logged in to update an expedition's public status.");
         }
 
-        Database db = new Database();
         ProjectMinter p = new ProjectMinter();
-        Integer userId = db.getUserId(username.toString());
-        Boolean projectAdmin = p.userProjectAdmin(userId, projectId);
-        db.close();
+        Boolean projectAdmin = p.isProjectAdmin(username, projectId);
         p.close();
 
         if (!projectAdmin) {
@@ -452,8 +442,7 @@ public class ExpeditionService {
     public Response publicExpedition(
             @PathParam("projectId") Integer projectId,
             @PathParam("expeditionCode") String expeditionCode,
-            @PathParam("publicStatus") Boolean publicStatus,
-            @QueryParam("access_token") String accessToken) {
+            @PathParam("publicStatus") Boolean publicStatus) {
 
         OAuthProvider p = new OAuthProvider();
         String username = p.validateToken(accessToken);

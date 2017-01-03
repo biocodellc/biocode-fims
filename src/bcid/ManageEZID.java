@@ -5,10 +5,11 @@ import biocode.fims.fimsExceptions.ServerErrorException;
 import ezid.EzidService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,15 +21,24 @@ import java.util.Iterator;
  * Class to work with EZID creation from the Bcid Database.  requests to this class are controlled by
  * switches in the Database indicating whether the intention is to create EZIDS for particular identifiers.
  */
-public class ManageEZID extends BcidMinter {
+public class ManageEZID {
 
     private String publisher;
     private String creator;
+    private Database db;
+    private Connection conn;
+    private static SettingsManager sm;
+    private static String resolverTargetPrefix;
     private static Logger logger = LoggerFactory.getLogger(ManageEZID.class);
 
+    static {
+        sm = SettingsManager.getInstance();
+        resolverTargetPrefix = sm.retrieveValue("resolverTargetPrefix");
+    }
+
     public ManageEZID() {
-        super();
-        SettingsManager sm = SettingsManager.getInstance();
+        db = new Database();
+        conn = db.getConn();
 
         publisher = sm.retrieveValue("publisher");
         if (publisher == null || publisher.trim().equalsIgnoreCase("")) {
@@ -39,6 +49,13 @@ public class ManageEZID extends BcidMinter {
         if (creator.trim().equalsIgnoreCase("")) {
             creator = null;
         }
+    }
+
+    /**
+     * Close the SQL connection
+     */
+    public void close() {
+        db.close();
     }
 
     public HashMap<String, String> ercMap(String target, String what, String who, String when) {

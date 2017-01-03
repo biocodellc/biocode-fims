@@ -6,7 +6,7 @@ import ezid.EzidService;
 import biocode.fims.fimsExceptions.BadRequestException;
 import biocode.fims.fimsExceptions.ServerErrorException;
 import ezid.EzidException;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 import utils.Timer;
 
 import java.math.BigInteger;

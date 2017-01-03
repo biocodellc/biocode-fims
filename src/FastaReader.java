@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import biocode.fims.fimsExceptions.FimsRuntimeException;
 import org.biojava3.core.sequence.ProteinSequence;
 import org.biojava3.core.sequence.io.FastaReaderHelper;
-import settings.FimsPrinter;
+import biocode.fims.settings.FimsPrinter;
 
 public class FastaReader {
      int limit;

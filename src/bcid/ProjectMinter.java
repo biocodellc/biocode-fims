@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import biocode.fims.SettingsManager;
+import biocode.fims.settings.SettingsManager;
 
 import java.sql.*;
 import java.util.*;
@@ -254,8 +254,8 @@ public class ProjectMinter {
      * @param username
      * @return
      */
-    public String listUserAdminProjects(String username) {
-        StringBuilder sb = new StringBuilder();
+    public JSONArray getAdminProjects(String username) {
+        JSONArray projects = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -267,23 +267,16 @@ public class ProjectMinter {
 
             rs = stmt.executeQuery();
 
-            sb.append("{\n");
-            sb.append("\t\"projects\": [\n");
             while (rs.next()) {
-                sb.append("\t\t{\n");
-                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
-                sb.append("\t\t\t\"projectCode\":\"" + rs.getString("projectCode") + "\",\n");
-                sb.append("\t\t\t\"projectTitle\":\"" + rs.getString("projectTitle") + "\",\n");
-                sb.append("\t\t\t\"validationXml\":\"" + rs.getString("validationXml") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",\n");
-                else
-                    sb.append("\n");
+                JSONObject project = new JSONObject();
+                project.put("projectId", rs.getString("projectId"));
+                project.put("projectCode", rs.getString("projectCode"));
+                project.put("projectTitle", rs.getString("projectTitle"));
+                project.put("validationXml", rs.getString("validationXml"));
+                projects.add(project);
             }
-            sb.append("\t]\n}");
 
-            return sb.toString();
+            return projects;
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
@@ -324,98 +317,6 @@ public class ProjectMinter {
         }
 
         return projects;
-    }
-
-    /**
-     * return an HTML table of a project's configuration.
-     * @param projectId
-     * @param username
-     * @return
-     */
-    public String getProjectConfigAsTable(Integer projectId, String username) {
-        StringBuilder sb = new StringBuilder();
-        Hashtable<String, String> config = getProjectConfig(projectId, username);
-
-        sb.append("<table>\n");
-        sb.append("\t<tbody>\n");
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Title:</td>\n");
-        sb.append("\t\t\t<td>");
-        sb.append(config.get("title"));
-        sb.append("</td>\n");
-        sb.append("\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Configuration File:</td>\n");
-        sb.append("\t\t\t<td>");
-        sb.append(config.get("validationXml"));
-        sb.append("</td>\n");
-        sb.append("\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Public Project</td>\n");
-        sb.append("\t\t\t<td>\n");
-        sb.append(config.get("public"));
-        sb.append("</td>\n");
-        sb.append("\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td></td>\n");
-        sb.append("\t\t\t<td><a href=\"javascript:void()\" id=\"edit_config\">Edit Configuration</a></td>\n");
-        sb.append("\t\t</tr>\n");
-
-        sb.append("\t</tbody>\n</table>\n");
-
-        return sb.toString();
-    }
-
-    /**
-     * return an HTML table in order to edit a project's configuration
-     * @param projectId
-     * @param username
-     * @return
-     */
-    public String getProjectConfigEditorAsTable(Integer projectId, String username) {
-        StringBuilder sb = new StringBuilder();
-        Hashtable<String, String> config = getProjectConfig(projectId, username);
-
-        sb.append("<form id=\"submitForm\" method=\"POST\">\n");
-        sb.append("<table>\n");
-        sb.append("\t<tbody>\n");
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Title</td>\n");
-        sb.append(("\t\t\t<td><input type=\"text\" class=\"project_config\" name=\"title\" value=\""));
-        sb.append(config.get("title"));
-        sb.append("\"></td>\n\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Configuration File</td>\n");
-        sb.append(("\t\t\t<td><input type=\"text\" class=\"project_config\" name=\"validationXml\" value=\""));
-        sb.append(config.get("validationXml"));
-        sb.append("\"></td>\n\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td>Public Project</td>\n");
-        sb.append("\t\t\t<td><input type=\"checkbox\" name=\"public\"");
-        if (config.get("public").equalsIgnoreCase("true")) {
-            sb.append(" checked=\"checked\"");
-        }
-        sb.append("></td>\n\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td></td>\n");
-        sb.append("\t\t\t<td class=\"error\" align=\"center\">");
-        sb.append("</td>\n\t\t</tr>\n");
-
-        sb.append("\t\t<tr>\n");
-        sb.append("\t\t\t<td></td>\n");
-        sb.append(("\t\t\t<td><input id=\"configSubmit\" type=\"button\" value=\"Submit\">"));
-        sb.append("</td>\n\t\t</tr>\n");
-        sb.append("\t</tbody>\n");
-        sb.append("</table>\n");
-        sb.append("</form>\n");
-
-        return sb.toString();
     }
 
     /**
@@ -477,13 +378,13 @@ public class ProjectMinter {
     }
 
     /**
-     * Return a hashTable of project configuration options for a given projectId and userId
+     * retrieve the project metadata for a given projectId and userId
      * @param projectId
      * @param username
      * @return
      */
-    public Hashtable<String, String> getProjectConfig(Integer projectId, String username) {
-        Hashtable<String, String> config = new Hashtable<String, String>();
+    public JSONObject getMetadata(Integer projectId, String username) {
+        JSONObject metadata = new JSONObject();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -498,11 +399,9 @@ public class ProjectMinter {
 
             rs = stmt.executeQuery();
             if (rs.next()) {
-                config.put("title", rs.getString("title"));
-                config.put("public", String.valueOf(rs.getBoolean("public")));
-                if (rs.getString("validationXml") != null) {
-                    config.put("validationXml", rs.getString("validationXml"));
-                }
+                metadata.put("title", rs.getString("title"));
+                metadata.put("public", String.valueOf(rs.getBoolean("public")));
+                metadata.put("validationXml", (rs.getString("validationXml") != null) ? rs.getString("validationXml"):"");
             } else {
                 throw new BadRequestException("You must be this project's admin in order to view its configuration.");
             }
@@ -512,7 +411,7 @@ public class ProjectMinter {
         } finally {
             db.close(stmt, rs);
         }
-        return config;
+        return metadata;
     }
 
     /**
@@ -541,13 +440,18 @@ public class ProjectMinter {
         }
     }
 
+    public Boolean isProjectAdmin(String username, Integer projectId) {
+        int userId = db.getUserId(username);
+        return isProjectAdmin(userId, projectId);
+    }
+
     /**
      * Check if a user is a given project's admin
      * @param userId
      * @param projectId
      * @return
      */
-    public Boolean userProjectAdmin(Integer userId, Integer projectId) {
+    public Boolean isProjectAdmin(Integer userId, Integer projectId) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
@@ -614,82 +518,40 @@ public class ProjectMinter {
     }
 
     /**
-     * return an HTML table of all the members of a given project.
+     * retrieve all the members of a given project.
      * @param projectId
      * @return
      */
-    public String listProjectUsersAsTable(Integer projectId) {
-        StringBuilder sb = new StringBuilder();
+    public JSONObject getProjectUsers(Integer projectId) {
+        JSONObject response = new JSONObject();
+        JSONArray users = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
             String userProjectSql = "SELECT userId FROM userProjects WHERE projectId = \"" + projectId + "\"";
-            String userSql = "SELECT username, userId FROM users";
             String projectSql = "SELECT projectTitle FROM projects WHERE projectId = \"" + projectId + "\"";
-            List projectUsers = new ArrayList();
             stmt = conn.prepareStatement(projectSql);
 
             rs = stmt.executeQuery();
             rs.next();
-            String projectTitle = rs.getString("projectTitle");
+            response.put("projectTitle", rs.getString("projectTitle"));
 
             db.close(stmt, rs);
 
-            sb.append("\t<form method=\"POST\">\n");
-
-            sb.append("<table data-projectId=\"" + projectId + "\" data-projectTitle=\"" + projectTitle + "\">\n");
-            sb.append("\t<tr>\n");
             stmt = conn.prepareStatement(userProjectSql);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Integer userId = rs.getInt("userId");
-                String username = db.getUserName(userId);
-                projectUsers.add(userId);
-                sb.append("\t<tr>\n");
-                sb.append("\t\t<td>");
-                sb.append(username);
-                sb.append("</td>\n");
-                sb.append("\t\t<td><a id=\"remove_user\" data-userId=\"" + userId + "\" data-username=\"" + username + "\" href=\"javascript:void();\">(remove)</a> ");
-                sb.append("<a id=\"edit_profile\" data-username=\"" + username + "\" href=\"javascript:void();\">(edit)</a></td>\n");
-                sb.append("\t</tr>\n");
+                JSONObject user = new JSONObject();
+                int userId = rs.getInt("userId");
+                user.put("userId", userId);
+                user.put("username", db.getUserName(userId));
+                users.add(user);
             }
+            response.put("users", users);
 
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td>Add User:</td>\n");
-            sb.append("\t\t<td>");
-            sb.append("<select name=userId>\n");
-            sb.append("\t\t\t<option value=\"0\">Create New User</option>\n");
-
-            db.close(stmt, rs);
-
-            stmt = conn.prepareStatement(userSql);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Integer userId = rs.getInt("userId");
-                if (!projectUsers.contains(userId)) {
-                    sb.append("\t\t\t<option value=\"" + userId + "\">" + db.getUserName(userId) + "</option>\n");
-                }
-            }
-            db.close(stmt, rs);
-
-            sb.append("\t\t</select></td>\n");
-            sb.append("\t</tr>\n");
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td></td>\n");
-            sb.append("\t\t<td><div class=\"error\" align=\"center\"></div></td>\n");
-            sb.append("\t</tr>\n");
-            sb.append("\t<tr>\n");
-            sb.append("\t\t<td><input type=\"hidden\" name=\"projectId\" value=\"" + projectId + "\"></td>\n");
-            sb.append("\t\t<td><input type=\"button\" value=\"Submit\" onclick=\"projectUserSubmit(\'" + projectTitle.replaceAll(" ", "_") + '_' + projectId + "\')\"></td>\n");
-            sb.append("\t</tr>\n");
-
-            sb.append("</table>\n");
-            sb.append("\t</form>\n");
-
-            return sb.toString();
+            return response;
         } catch (SQLException e) {
             throw new ServerErrorException("Server error retrieving project users.", e);
         } finally {
