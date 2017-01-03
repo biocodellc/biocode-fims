@@ -234,15 +234,13 @@ public class TemplateProcessor {
     }
 
     /**
-     * Get a definition for a particular column name
+     * Get definitions for a particular column name
      *
      * @param columnName
      *
      * @return
      */
     public JSONObject getDefinition(String columnName) {
-        JSONObject definition = new JSONObject();
-
         Iterator attributes = mapping.getAllAttributes(mapping.getDefaultSheetName()).iterator();
         // Get a list of rules for the first digester.Worksheet instance
         Worksheet sheet = this.validation.getWorksheets().get(0);
@@ -255,7 +253,9 @@ public class TemplateProcessor {
             String column = a.getColumn();
 
             if (columnName.trim().equals(column.trim())) {
+                JSONObject definition = new JSONObject();
 
+                definition.put("columnName", column);
                 definition.put("uri", (a.getUri() != null) ? a.getUri() : "");
                 definition.put("defined_by", (a.getDefined_by() != null) ? a.getDefined_by() : "");
                 definition.put("definition", (a.getDefinition() != null) ? a.getDefinition() : "No custom definition available.");
@@ -286,10 +286,10 @@ public class TemplateProcessor {
                     }
                 }
                 definition.put("rules", ruleValidations);
-
+                return definition;
             }
         }
-        return definition;
+        return new JSONObject();
     }
 
     /**

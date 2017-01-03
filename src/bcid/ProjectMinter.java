@@ -296,8 +296,8 @@ public class ProjectMinter {
      * @param username
      * @return
      */
-    public String listUsersProjects(String username) {
-        StringBuilder sb = new StringBuilder();
+    public JSONArray listUsersProjects(String username) {
+        JSONArray projects = new JSONArray();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -309,29 +309,21 @@ public class ProjectMinter {
 
             rs = stmt.executeQuery();
 
-            sb.append("{\n");
-            sb.append("\t\"projects\": [\n");
             while (rs.next()) {
-                sb.append("\t\t{\n");
-                sb.append("\t\t\t\"projectId\":\"" + rs.getString("projectId") + "\",\n");
-                sb.append("\t\t\t\"projectCode\":\"" + rs.getString("projectCode") + "\",\n");
-                sb.append("\t\t\t\"projectTitle\":\"" + rs.getString("projectTitle") + "\",\n");
-                sb.append("\t\t\t\"validationXml\":\"" + rs.getString("validationXml") + "\"\n");
-                sb.append("\t\t}");
-                if (!rs.isLast())
-                    sb.append(",\n");
-                else
-                    sb.append("\n");
+                JSONObject project = new JSONObject();
+                project.put("projectId", rs.getString("projectId"));
+                project.put("projectCode", rs.getString("projectCode"));
+                project.put("projectTitle", rs.getString("projectTitle"));
+                project.put("validationXml", rs.getString("validationXml"));
+                projects.add(project);
             }
-            sb.append("\t]\n}");
-
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } finally {
             db.close(stmt, rs);
         }
 
-        return sb.toString();
+        return projects;
     }
 
     /**
@@ -798,8 +790,7 @@ public class ProjectMinter {
         HashMap projectMap = new HashMap();
         JSONArray projectDatasets;
 
-        JSONObject projectResponse = ((JSONObject) JSONValue.parse(listUsersProjects(username)));
-        JSONArray projects = ((JSONArray) projectResponse.get("projects"));
+        JSONArray projects = listUsersProjects(username);
 
         for (Object p:  projects) {
             JSONObject project = (JSONObject) p;

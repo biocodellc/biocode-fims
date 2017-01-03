@@ -45,7 +45,7 @@ public class ResolverMetadataService {
      */
     @GET
     @Path("/{scheme}/{naan}/{shoulderPlusIdentifier}")
-    @Produces({MediaType.TEXT_HTML, "application/rdf+xml"})
+    @Produces({MediaType.APPLICATION_JSON, "application/rdf+xml"})
     public Response run(@PathParam("scheme") String scheme,
                         @PathParam("naan") String naan,
                         @PathParam("shoulderPlusIdentifier") String shoulderPlusIdentifier,
@@ -71,7 +71,7 @@ public class ResolverMetadataService {
             HttpSession session = request.getSession();
             String username = (String) session.getAttribute("user");
 
-            String response = r.printMetadata(new HTMLTableRenderer(username, r));
+            String response = r.printMetadata(new JSONRenderer(username, r));
             r.close();
             return Response.ok(response).build();
         }

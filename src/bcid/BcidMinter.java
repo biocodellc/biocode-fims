@@ -157,7 +157,10 @@ public class BcidMinter extends BcidEncoder {
             insertStatement.setInt(1, who);
             insertStatement.setString(2, resourceType);
             insertStatement.setString(3, doi);
-            insertStatement.setString(4, webAddress.toString());
+            if (webAddress != null)
+                insertStatement.setString(4, webAddress.toString());
+             else
+                insertStatement.setString(4, null);
             insertStatement.setString(5, graph);
             insertStatement.setString(6, title);
             insertStatement.setString(7, internalId.toString());
@@ -653,13 +656,15 @@ public class BcidMinter extends BcidEncoder {
     public String createEntityBcid(int userId, String resourceTypeString, String webAddress, String graph, String doi,
                                  Boolean finalCopy) {
 
-        URI webAddressURI;
+        URI webAddressURI = null;
         // check that the given webAddress is a valid URI before creating the Bcid. This will prevent a
         // URISyntaxException from being thrown when later retrieving the Bcid.
-        try {
-            webAddressURI = new URI(webAddress);
-        } catch (URISyntaxException e) {
-            throw new BadRequestException("Malformed uri: " + webAddress, e);
+        if (webAddress != null) {
+            try {
+                webAddressURI = new URI(webAddress);
+            } catch (URISyntaxException e) {
+                throw new BadRequestException("Malformed uri: " + webAddress, e);
+            }
         }
 
         String identifier = mint(

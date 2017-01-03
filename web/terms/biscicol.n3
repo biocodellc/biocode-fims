@@ -1,0 +1,23 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ro: <http://www.obofoundry.org/ro/ro.owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+ro:derives_from a owl:ObjectProperty .
+ro:derives_from a owl:TransitiveProperty .
+ro:derives_from rdfs:comment "Physical material that is substantially derived from other physical material. See the Relations Ontology site for more information.  For example, Tissue derived from a Specimen" .
+ro:derives_from rdfs:seeAlso "http://biscicol.org/terms/index.html#derives_from" .
+
+<http://biscicol.org/terms/biscicol.owl#depends_on> a owl:ObjectProperty .
+<http://biscicol.org/terms/biscicol.owl#depends_on> rdfs:comment "An entity whose existence depends on another entity. For example, Specimen depends on a collecting event (or, Collecting is the source of a Specimen)" .
+<http://biscicol.org/terms/biscicol.owl#depends_on> rdfs:seeAlso <http://biscicol.org/terms/index.html#depends_on> .
+
+<http://biscicol.org/terms/biscicol.owl#related_to> a owl:ObjectProperty .
+<http://biscicol.org/terms/biscicol.owl#related_to> a owl:SymmetricProperty .
+<http://biscicol.org/terms/biscicol.owl#related_to> rdfs:comment "An entity whose existence does not solely depend on another entity.  For example, Agent (Person) related to Agent (Institution). Event related to Feature." .
+<http://biscicol.org/terms/biscicol.owl#related_to> rdfs:seeAlso <http://biscicol.org/terms/index.html#related_to> .
+
+<http://biscicol.org/terms/biscicol.owl#alias_of> a owl:ObjectProperty .
+<http://biscicol.org/terms/biscicol.owl#alias_of> a owl:SymmetricProperty .
+<http://biscicol.org/terms/biscicol.owl#alias_of> a owl:TransitiveProperty .
+<http://biscicol.org/terms/biscicol.owl#alias_of> rdfs:comment "Two instances that are understood to be the same thing.  For example, ID1 and ID2 both refer to specimenX" .
+<http://biscicol.org/terms/biscicol.owl#alias_of> rdfs:seeAlso <http://biscicol.org/terms/index.html#alias_of> .

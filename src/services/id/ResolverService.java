@@ -38,7 +38,7 @@ public class ResolverService {
      */
     @GET
     @Path("/{naan}/{shoulderPlusIdentifier}")
-    @Produces({MediaType.TEXT_HTML, "application/rdf+xml"})
+    @Produces({MediaType.APPLICATION_JSON, "application/rdf+xml"})
     public Response run(
             @PathParam("naan") String naan,
             @PathParam("shoulderPlusIdentifier") String shoulderPlusIdentifier,

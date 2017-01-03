@@ -3,6 +3,7 @@ package utils;
 import bcid.BcidMinter;
 import bcid.Database;
 import bcid.ExpeditionMinter;
+import biocode.fims.SettingsManager;
 import biocode.fims.fimsExceptions.ServerErrorException;
 
 import java.sql.PreparedStatement;
@@ -20,8 +21,6 @@ public class ExpeditionUpdater {
     protected static Connection conn;
 
     static {
-        db = new Database();
-        conn = db.getConn();
     }
     /**
      * Return a JSON response of the user's expeditions in a project
@@ -52,6 +51,9 @@ public class ExpeditionUpdater {
     }
 
     public static void main(String args[]) {
+        SettingsManager.getInstance("biocode-fims.props");
+        db = new Database();
+        conn = db.getConn();
         ExpeditionUpdater expeditionUpdater = new ExpeditionUpdater();
         HashMap expeditions = expeditionUpdater.getAllExpeditions();
 
@@ -80,7 +82,7 @@ public class ExpeditionUpdater {
 
         try {
             String sql = "SELECT count(*) FROM bcids b, expeditionBcids eB " +
-                    "WHERE e.expeditionId = " + expeditionId + " AND b.bcidId = eB.bcidId AND b.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
+                    "WHERE eB.expeditionId = " + expeditionId + " AND b.bcidId = eB.bcidId AND b.resourceType = " + "\"http://purl.org/dc/dcmitype/Collection\"";
             stmt = conn.prepareStatement(sql);
 
             rs = stmt.executeQuery();

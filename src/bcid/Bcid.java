@@ -37,11 +37,18 @@ public class Bcid {
     protected Boolean suffixPassThrough = false;
     protected String doi;
     protected Integer bcidsId;
-    protected String graph;
 
-    protected String rights;
-    protected String resolverTargetPrefix;
-    protected String resolverMetadataPrefix;
+    public String getGraph() {
+        return graph;
+    }
+
+    protected String graph;
+    protected Boolean forwardingResolution = false;
+    protected URI resolutionTarget;
+
+    protected static String rights;
+    protected static String resolverTargetPrefix;
+    protected static String resolverMetadataPrefix;
 
     // HashMap to store metadata values
     private HashMap<String, String> map = new HashMap<String, String>();
@@ -51,12 +58,16 @@ public class Bcid {
 
     private static Logger logger = LoggerFactory.getLogger(Bcid.class);
 
-    protected Bcid() {
+    static {
         sm = SettingsManager.getInstance();
 
         rights = sm.retrieveValue("rights");
         resolverTargetPrefix = sm.retrieveValue("resolverTargetPrefix");
         resolverMetadataPrefix = sm.retrieveValue("resolverMetadataPrefix");
+
+    }
+
+    protected Bcid() {
     }
 
     /**
@@ -170,6 +181,14 @@ public class Bcid {
                             this.bcidsId, e);
                 }
             }
+            // A resolution target is specified AND there is a suffix AND suffixPassThrough
+            if (webAddress != null && !webAddress.equals("") &&
+                    suffix != null && !suffix.trim().equals("") && suffixPassThrough) {
+                forwardingResolution = true;
+
+                // Set the resolution target
+                resolutionTarget = new URI(webAddress + suffix);
+            }
         } catch (SQLException e) {
             throw new ServerErrorException(e);
         } catch (URISyntaxException e) {
@@ -244,6 +263,12 @@ public class Bcid {
         put("prefix", prefix);
         put("ts", ts);
         put("rights", rights);
+        put("forwardingResolution", forwardingResolution);
+        if (resolutionTarget != null) {
+            put("resolutionTarget", resolutionTarget);
+        } else {
+            put("resolutionTarget", "");
+        }
         return map;
     }
 }
