@@ -7,9 +7,7 @@
             shortname="DIPNet"
             eml_location="eml_location"
             expeditionForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}"
-            datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}"
-            target="http://data.biscicol.org/ds/data"
-            queryTarget="http://data.biscicol.org/ds">
+            datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}">
         <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
         EITHER decimalLatitude AND decimalLongitude OR locality (lat/longs are preferred) are required. Thirteen additional
         fields are recommended, and thus automatically checked in the default template.]]>
