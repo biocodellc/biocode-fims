@@ -6,6 +6,8 @@
             doi="a doi"
             shortname="DIPNet"
             eml_location="eml_location"
+            expeditionForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}"
+            datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}"
             target="http://data.biscicol.org/ds/data"
             queryTarget="http://data.biscicol.org/ds">
         <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
@@ -789,6 +791,7 @@
                 uniqueKey="materialSampleID"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
+                conceptForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}2{suffix}">
                 entityId="1">
             <attribute column='materialSampleID' uri='urn:materialSampleID'
                        defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
