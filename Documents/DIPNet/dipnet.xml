@@ -10,7 +10,7 @@
             datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}">
         <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
         EITHER decimalLatitude AND decimalLongitude OR locality (lat/longs are preferred) are required. Thirteen additional
-        fields are recommended, and thus automatically checked in the default template.]]>
+        fields are recommended, and thus automatically checked in the default template. TESTING]]>
     </metadata>
 
     <validation>
