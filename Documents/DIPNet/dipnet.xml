@@ -10,7 +10,7 @@
             datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}">
         <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
         EITHER decimalLatitude AND decimalLongitude OR locality (lat/longs are preferred) are required. Thirteen additional
-        fields are recommended, and thus automatically checked in the default template. TESTING]]>
+        fields are recommended, and thus automatically checked in the default template.]]>
     </metadata>
 
     <validation>
@@ -789,7 +789,7 @@
                 uniqueKey="materialSampleID"
                 conceptAlias="Resource"
                 conceptURI="http://www.w3.org/2000/01/rdf-schema#Resource"
-                conceptForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}2{suffix}">
+                conceptForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}{suffix}">
                 entityId="1">
             <attribute column='materialSampleID' uri='urn:materialSampleID'
                        defined_by='http://rs.tdwg.org/dwc/terms/MaterialSampleID'>
