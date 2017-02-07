@@ -6,6 +6,8 @@
             doi="a doi"
             shortname="DIPNet"
             eml_location="eml_location"
+            target="http://data.biscicol.org/ds/data"
+            queryTarget="http://data.biscicol.org/ds"
             expeditionForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}"
             datasetForwardingAddress="http://biscicol.org/dipnet/bcids/metadata/{ark}">
         <![CDATA[Although there are a lot of field options, only four are <u>REQUIRED</u>:  materialSampleID, principalInvestigator, phylum and
