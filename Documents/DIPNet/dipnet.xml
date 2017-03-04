@@ -876,7 +876,7 @@
             <attribute column='establishmentMeans' uri='urn:establishmentMeans' group="Other"
                        defined_by='http://rs.tdwg.org/dwc/terms/establishmentMeans'>
                 <![CDATA[The process by which the biological individual(s) represented in the Occurrence became established at the location. Recommended best practice is to use a controlled vocabulary. See associated list in "lists" tab.]]></attribute>
-            <attribute column='associatedSequences' uri='urn:associatedSequences' group="Labratory"
+            <attribute column='associatedSequences' uri='urn:associatedSequences' group="Laboratory"
                        defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>
                 <![CDATA[A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of genetic sequence information associated with the Occurrence. Links to Genbank or DRYAD entries.]]></attribute>
             <attribute column='occurrenceRemarks' uri='urn:occurrenceRemarks' group="Other"
@@ -889,7 +889,7 @@
             <attribute column='substratum' uri='urn:substratum' group="Locality Info"
                        defined_by='http://purl.obolibrary.org/obo/ENVO_00010483'>
                 <![CDATA[Substrate from which the individual was sampled. This could be abiotic or biotic (host organism).]]></attribute>
-            <attribute column='samplingProtocol' uri='urn:samplingProtocol' group="Labratory"
+            <attribute column='samplingProtocol' uri='urn:samplingProtocol' group="Laboratory"
                        defined_by='http://rs.tdwg.org/dwc/terms/samplingProtocol'>
                 <![CDATA[Brief description of how the sample was taken. From Darwincore: The name of, reference to, or description of the method or protocol used during an Event.]]></attribute>
             <attribute column='minimumDepthInMeters' uri='urn:minimumDepthInMeters' datatype="float" group="Locality Info"
@@ -942,15 +942,15 @@
             <attribute column='taxonRemarks' uri='urn:taxonRemarks' group="Taxonomic"
                        defined_by='http://rs.tdwg.org/dwc/terms/taxonRemarks'>
                 <![CDATA[Comments or notes about the taxon or name.]]></attribute>
-            <attribute column='plateID' uri='urn:plateID' group="Labratory" defined_by='urn:plateID'>
+            <attribute column='plateID' uri='urn:plateID' group="Laboratory" defined_by='urn:plateID'>
                 <![CDATA[A platename where the DNA extract is stored]]></attribute>
-            <attribute column='wellID' uri='urn:wellID' group="Labratory" defined_by='urn:wellID'>
+            <attribute column='wellID' uri='urn:wellID' group="Laboratory" defined_by='urn:wellID'>
                 <![CDATA[The well on the plate where the DNA extract is stored]]></attribute>
-            <attribute column='extractionID' uri='urn:extractionID' group="Labratory" defined_by='urn:extractionID'>
+            <attribute column='extractionID' uri='urn:extractionID' group="Laboratory" defined_by='urn:extractionID'>
                 <![CDATA[A unique identifier for the extraction (other than plate or well)]]></attribute>
-            <attribute column='previousTissueID' uri='urn:previousTissueID' group="Labratory" defined_by='urn:previousTissueID'>
+            <attribute column='previousTissueID' uri='urn:previousTissueID' group="Laboratory" defined_by='urn:previousTissueID'>
                 <![CDATA[Other identifiers for this tissue.  E.g. tissue originated in another institution.]]></attribute>
-            <attribute column='tissueStorageID' uri='urn:tissueStorageID' group="Labratory" defined_by='urn:tissueStorageID'>
+            <attribute column='tissueStorageID' uri='urn:tissueStorageID' group="Laboratory" defined_by='urn:tissueStorageID'>
                 <![CDATA[A list (concatenated and separated) of further identifiers for the container which holds the material sample.]]></attribute>
         </entity>
         <entity
