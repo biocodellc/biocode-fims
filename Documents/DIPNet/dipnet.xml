@@ -953,7 +953,7 @@
             <attribute column='establishmentMeans' uri='urn:establishmentMeans' group="Locality and Habitat"
                        defined_by='http://rs.tdwg.org/dwc/terms/establishmentMeans'>
                 <![CDATA[The process by which the biological individual(s) represented in the Occurrence became established at the location. Recommended best practice is to use a controlled vocabulary. See associated list in "lists" tab.]]></attribute>
-            <attribute column='habitat' uri='urn:habitat' defined_by='http://purl.obolibrary.org/obo/ENVO_00002036' group="Locality and Habitat">
+            <attribute column='habitat' uri='urn:habitat' defined_by='http://purl.obolibrary.org/obo/ENVO_01000739' group="Locality and Habitat">
                 <![CDATA[Habitat from which the sample was collected. Please pick from the associated list in "lists" tab.]]></attribute>
             <attribute column='microHabitat' uri='urn:microHabitat' defined_by='urn:microHabitat' group="Locality and Habitat">
                 <![CDATA[Information about the microhabitat from which the sample was collected. E.g. Forereef, coral head]]></attribute>
