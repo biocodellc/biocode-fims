@@ -58,20 +58,123 @@
         <lists>
 
             <list alias='habitat' caseInsensitive='true'>
-                <field>Coral Reef</field>
-                <field>Estuary</field>
-                <field>Intertidal</field>
-                <field>Fouling</field>
-                <field>Macroalgae</field>
-                <field>Mangrove</field>
-                <field>Mud</field>
-                <field>Continental shelf</field>
-                <field>Pelagic</field>
-                <field>Planktonic</field>
-                 <field>River</field>
-                <field>Rock</field>
-                <field>Sand</field>
-                <field>Seagrass</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000219'>anthropogenic terrestrial biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00002030'>aquatic biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000197'>broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000004'>concentration basin mediterranean sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000196'>coniferous forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000245'>cropland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000248'>dense settlement biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000179'>desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000128'>dilution basin mediterranean sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000045'>epeiric sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000020'>estuarine biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000195'>flooded grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000190'>flooded savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000174'>forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000873'>freshwater biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000252'>freshwater lake biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000253'>freshwater river biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000177'>grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000316'>intertidal zone</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000891'>large lake biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000887'>large river biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000889'>large river delta biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000888'>large river headwater biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000181'>mangrove biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000046'>marginal sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000027'>marine abyssal zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000054'>marine basaltic hydrothermal vent biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000026'>marine bathyal zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000024'>marine benthic biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000447'>marine biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000051'>marine black smoker biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000127'>marine cold seep biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000049'>marine coral reef biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000028'>marine hadal zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000030'>marine hydrothermal vent biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000025'>marine neritic benthic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000023'>marine pelagic biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000029'>marine reef biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000022'>marine salt marsh biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000123'>marine sponge reef biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000050'>marine subtidal rocky reef biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000053'>marine ultramafic hydrothermal vent biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000858'>marine upwelling biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000052'>marine white smoker biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000199'>mediterranean forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000224'>mediterranean grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000229'>mediterranean savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000047'>mediterranean sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000217'>mediterranean shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000208'>mediterranean woodland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000198'>mixed forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000185'>montane desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000194'>montane grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000223'>montane savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000216'>montane shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000042'>neritic epipelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000043'>neritic mesopelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000032'>neritic pelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000041'>neritic sea surface microlayer biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000048'>ocean biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000038'>oceanic abyssopelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000037'>oceanic bathypelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000040'>oceanic benthopelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000035'>oceanic epipelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000039'>oceanic hadal pelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000036'>oceanic mesopelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000033'>oceanic pelagic zone biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000034'>oceanic sea surface microlayer biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000063'>planktonic material</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000339'>polar biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000186'>polar desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000247'>rangeland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000022'>river</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000178'>savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000059'>sea grass bed</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000176'>shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000892'>small lake biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000890'>small river biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000250'>subpolar coniferous forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000201'>subtropical broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000209'>subtropical coniferous forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000184'>subtropical desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000225'>subtropical dry broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000191'>subtropical grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000226'>subtropical moist broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000187'>subtropical savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000213'>subtropical shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000222'>subtropical woodland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000202'>temperate broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000211'>temperate coniferous forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000182'>temperate desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000193'>temperate grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000856'>temperate marginal sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000860'>temperate marine upwelling biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000857'>temperate mediterranean sea biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000212'>temperate mixed forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000189'>temperate savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000215'>temperate shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000221'>temperate woodland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000446'>terrestrial biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000200'>tropical broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000210'>tropical coniferous forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000183'>tropical desert biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000227'>tropical dry broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000192'>tropical grassland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000854'>tropical marine coral reef biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000859'>tropical marine upwelling biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000228'>tropical moist broadleaf forest biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000188'>tropical savanna biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000214'>tropical shrubland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000220'>tropical woodland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000180'>tundra biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000249'>urban biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000246'>village biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000175'>woodland biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_00000893'>xeric basin biome</field>
+		    <field defined_by='http://purl.obolibrary.org/obo/ENVO_01000218'>xeric shrubland biome</field>
             </list>
             <list alias='basisOfIdentification' caseInsensitive='true'>
                 <field>Genetics</field>
