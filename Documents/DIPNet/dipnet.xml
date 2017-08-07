@@ -56,7 +56,7 @@
             <rule type='isNumber' column='length' level='error'></rule>
 
             <rule type='controlledVocabulary' column='phylum' list='phylum' level='error'></rule>
-            <rule type='controlledVocabulary' column='habitat' list='habitat' level='warning'></rule>
+            <rule type='controlledVocabulary' column='habitat' list='habitat' level='error'></rule>
             <rule type='controlledVocabulary' column='basisOfIdentification' list='basisOfIdentification'
                   level='warning'></rule>
             <rule type='controlledVocabulary' column='sex' list='sex' level='warning'></rule>
