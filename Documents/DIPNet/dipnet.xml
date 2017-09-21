@@ -1010,7 +1010,10 @@
                 <![CDATA[Granting body and grant number, can be in a delimited list.]]></attribute>
             <attribute column='occurrenceID' uri='urn:occurrenceID' group="Record and Owner Details"
                        defined_by='http://rs.tdwg.org/dwc/terms/occurrenceID'>
-                <![CDATA[Specimen voucher ID]]></attribute>
+                <![CDATA[If your sample has already been assigned an identifier by another data, for instance, a collections management database, use the occurrenceID field to store this identifier.]]></attribute>
+	    <attribute column='catalogNumber' uri='urn:catalogNumber' group="Record and Owner Details"
+                       defined_by='http://rs.tdwg.org/dwc/terms/catalogNumber'>
+                <![CDATA[An identifier (preferably unique) for the record within the data set or collection.]]></attribute>
             <attribute column='associatedSequences' uri='urn:associatedSequences' group="Record and Owner Details"
                        defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>
                 <![CDATA[A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of genetic sequence information associated with the Occurrence. Links to Genbank or DRYAD entries.]]></attribute>
