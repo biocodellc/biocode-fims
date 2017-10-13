@@ -44,7 +44,7 @@
                 <field>cycleTimeFirstDetection</field>
             </rule>
 
-            <rule type='checkInXMLFields' column='basisOfRecord' list='checkInXMLFields' level='error'></rule>
+            <rule type='checkInXMLFields' column='basisOfRecord' list='basisOfRecord' level='error'></rule>
             <rule type='checkInXMLFields' column='diseaseTested' list='diseaseTested' level='error'></rule>
             <rule type='checkInXMLFields' column='sampleType' list='sampleType' level='error'></rule>
             <rule type='checkInXMLFields' column='specimenDisposition' list='specimenDisposition' level='error'></rule>
