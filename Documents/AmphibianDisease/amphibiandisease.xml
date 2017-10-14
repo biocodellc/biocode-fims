@@ -33,7 +33,6 @@
                 <field>dateCollected</field>
                 <field>decimalLatitude</field>
                 <field>decimalLongitude</field>
-                <field>elevation</field>
                 <field>coordinateUncertaintyInMeters</field>
                 <field>Collector</field>
                 <field>ContactName</field>
@@ -42,6 +41,7 @@
                 <field>quantityDetected</field>
                 <field>dilutionFactor</field>
                 <field>cycleTimeFirstDetection</field>
+                <field>elevation</field>
             </rule>
 
             <rule type='checkInXMLFields' column='basisOfRecord' list='basisOfRecord' level='error'></rule>
