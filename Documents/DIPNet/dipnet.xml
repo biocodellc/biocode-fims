@@ -914,18 +914,18 @@
                 <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
             <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters' datatype="integer"
                        defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
-                <![CDATA[In meters.]]></attribute>
+                <![CDATA[Coordinate uncertainy in meters.  For pooled data include the greatest distance in meters over which pooled samples were collected.]]></attribute>
             <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
                        defined_by='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
                 <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
             <attribute column='yearCollected' uri='urn:yearCollected' defined_by='urn:yearCollected' datatype="date"
                        dataformat="YYYY">
-                <![CDATA[YYYY (the year collected)]]></attribute>
+                <![CDATA[YYYY (the year collected). For pooled samples this is the earliest month of collection.]]></attribute>
             <attribute column='monthCollected' uri='urn:monthCollected' defined_by='urn:monthCollected'
                        datatype="integer">
-                <![CDATA[MM (the month collected)]]></attribute>
+                <![CDATA[MM (the month collected).  For pooled samples this is the earliest month of collection.]]></attribute>
             <attribute column='dayCollected' uri='urn:dayCollected' defined_by='urn:dayCollected' datatype="integer">
-                <![CDATA[DD (the day collected)]]></attribute>
+                <![CDATA[DD (the day collected). For pooled samples this is the earliest month of collection.]]></attribute>
             <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>
                 <![CDATA[The full scientific name of the genus in which the taxon is classified.]]></attribute>
             <attribute column='species' uri='urn:species' defined_by='http://rs.tdwg.org/dwc/terms/specificEpithet'>
@@ -942,7 +942,9 @@
                 <![CDATA[The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. See associated list on "lists" tab.]]></attribute>
             <attribute column='geneticTissueType' uri='urn:geneticTissueType' defined_by='urn:geneticTissueType'>
                 <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
-
+            <attribute column='individualCount' uri='urn:individualCount' defined_by='http://rs.tdwg.org/dwc/terms/individualCount'>
+                <![CDATA[The number of individuals represented in the material sample.  An individual count greater than 1 indicates this is a pooled sample.]]></attribute>
+		
             <attribute column='stateProvince' uri='urn:stateProvince' group="Locality and Habitat"
                        defined_by='http://rs.tdwg.org/dwc/terms/stateProvince'>
                 <![CDATA[The state or province where the sample was found.]]></attribute>
