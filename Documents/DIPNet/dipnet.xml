@@ -914,7 +914,7 @@
                 <![CDATA[Decimal Degrees. If you don't have this information, you must enter something into the locality field to the best known precision.]]></attribute>
             <attribute column='coordinateUncertaintyInMeters' uri='urn:coordinateUncertaintyInMeters' datatype="integer"
                        defined_by='http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters'>
-                <![CDATA[Coordinate uncertainy in meters.  For pooled data include the greatest distance in meters over which pooled samples were collected.]]></attribute>
+                <![CDATA[Coordinate uncertainy in meters. For pooled data include the greatest distance in meters over which pooled samples were collected with the decimal latitude and decimal longitude representing the mid point.]]></attribute>
             <attribute column='georeferenceProtocol' uri='urn:georeferenceProtocol'
                        defined_by='http://rs.tdwg.org/dwc/terms/georeferenceProtocol'>
                 <![CDATA[A description or reference to the methods used to determine the spatial footprint, coordinates, and uncertainties (e.g. GPS, Approximated from Google Maps, Based on locality name search in Google Maps (Ben Morris' script) etc.)]]></attribute>
@@ -943,7 +943,7 @@
             <attribute column='geneticTissueType' uri='urn:geneticTissueType' defined_by='urn:geneticTissueType'>
                 <![CDATA[A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them]]></attribute>
             <attribute column='individualCount' uri='urn:individualCount' defined_by='http://rs.tdwg.org/dwc/terms/individualCount'>
-                <![CDATA[The number of individuals represented in the material sample.  An individual count greater than 1 indicates this is a pooled sample.]]></attribute>
+                <![CDATA[The number of individuals represented in the material sample. The default is 1.  An individual count greater than 1 indicates this is a pooled sample.]]></attribute>
 		
             <attribute column='stateProvince' uri='urn:stateProvince' group="Locality and Habitat"
                        defined_by='http://rs.tdwg.org/dwc/terms/stateProvince'>
