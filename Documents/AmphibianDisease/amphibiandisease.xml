@@ -127,7 +127,7 @@
             <attribute column='originalsource' uri='urn:originalsource' defined_by=''>Relevant if organism is alive at time of sampling. Assumed 'wild' if a preserved voucher specimen, unless noted otherwise</attribute>
             <attribute column='diseaseDetected' uri='urn:diseaseDetected' defined_by=''>Result of disease testing: True=Positive, False=Negative, No Confidence=Ambiguous</attribute>
             <attribute column='fatal' uri='urn:fatal' defined_by=''>At time of sampling, presumed cause of death to be diseaseTested, mark [FALSE] if unknown</attribute>
-            <attribute column='genus' uri='urn: genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
+            <attribute column='genus' uri='urn:genus' defined_by='http://rs.tdwg.org/dwc/terms/genus'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
             <attribute column='specificEpithet' uri='urn:specificEpithet' defined_by='http://rs.tdwg.org/dwc/terms/specificEpithet'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
             <attribute column='infraspecificEpithet' uri='urn:infraspecificEpithet' defined_by='http://rs.tdwg.org/dwc/terms/infraspecificEpithet'>Taxonomic names will be validated with AmphibiaWeb taxonomy (http://amphibiaweb.org/taxonomy/index.html)</attribute>
             <attribute column='lifeStage' uri='urn:lifeStage' defined_by='http://rs.tdwg.org/dwc/terms/lifeStage'>Controlled vocabulary: egg, larva, juvenile, adult</attribute>
