@@ -1071,9 +1071,13 @@
         </entity>
         <entity
                 conceptAlias="fastaSequence"
+		type="Fasta"
+		recordType="biocode.fims.fasta.FastaRecord"
+		parentEntity="Resource"
                 conceptURI="urn:fastaSequence"
                 uniqueKey="marker"
                 esNestedObject="true">
+	    <attribute column='materialSampleID' uri='urn:materialSampleID'/>
             <attribute column="sequence" uri="urn:sequence">
                 <![CDATA[Sequence data for the material sample.]]></attribute>
             <attribute column="marker" uri="urn:marker"/>
@@ -1086,7 +1090,11 @@
 
         <entity
                 conceptAlias="fastqMetadata"
+		type="Fastq"
+		recordType="biocode.fims.fastq.FastqRecord"
+		parentEntity="Resource"
                 conceptURI="urn:fastqMetadata">
+	    <attribute column='materialSampleID' uri='urn:materialSampleID'/>
             <attribute column="libraryLayout" uri="urn:libraryLayout"/>
             <attribute column="libraryStrategy" uri="urn:libraryStrategy"/>
             <attribute column="librarySource" uri="urn:librarySource"/>
