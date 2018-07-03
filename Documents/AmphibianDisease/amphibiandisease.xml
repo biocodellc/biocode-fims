@@ -127,7 +127,6 @@
             <attribute column='sequenceURI' uri='urn:sequenceURI' defined_by=''><![CDATA[Sequence data URI if posted on another repository.]]></attribute>
             
             <attribute column='diseaseTested' uri='urn:diseaseTested' defined_by=''>Controlled vocabulary: Bd, Bsal, Bd+Bsal, Other</attribute>
-            <attribute column='diseaseStrain' uri='urn:diseaseStrain' defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>Specific genetic strain detected (if available) NCBI URI (.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)</attribute>
             <attribute column='sampleType' uri='urn:sampleType' defined_by=''>Type of sample tested: eg, swabbing, blood, skin, liver</attribute>
             <attribute column='specimenDisposition' uri='urn:specimenDisposition' defined_by=''>Post-sampling status: [released|collected|preserved|captive|captive-preserved]</attribute>
             <attribute column='originalsource' uri='urn:originalsource' defined_by=''>Relevant if organism is alive at time of sampling. Assumed 'wild' if a preserved voucher specimen, unless noted otherwise</attribute>
