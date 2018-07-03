@@ -124,7 +124,7 @@
            
             <attribute column='diseaseLineage' uri='urn:diseaseLineage' defined_by=''><![CDATA[Specific genetic lineage detected (if available) NCBI URI (e.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)]]></attribute>
             <attribute column='genotypeMethod' uri='urn:genotypeMethod' defined_by=''><![CDATA[Genotyping methods used to determine diseaseLineage if present (e.g., whole genome sequencing, ITS sequencing, multilocus nuclear sequencing).]]></attribute>
-            <attribute column='sequenceURI' uri='urn:genotypeMethod' defined_by=''><![CDATA[Sequence data URI if posted on another repository]]></attribute>
+            <attribute column='sequenceURI' uri='urn:sequenceURI' defined_by=''><![CDATA[Sequence data URI if posted on another repository.]]></attribute>
             
             <attribute column='diseaseTested' uri='urn:diseaseTested' defined_by=''>Controlled vocabulary: Bd, Bsal, Bd+Bsal, Other</attribute>
             <attribute column='diseaseStrain' uri='urn:diseaseStrain' defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>Specific genetic strain detected (if available) NCBI URI (.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)</attribute>
