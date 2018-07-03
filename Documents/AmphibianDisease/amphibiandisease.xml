@@ -60,6 +60,7 @@
             <list alias='basisOfRecord' caseInsensitive='true'>
                 <field>PreservedSpecimen</field>
                 <field>LivingSpecimen</field>
+                <field>Literature</field>
             </list>
             <list alias='diseaseTested' caseInsensitive='true'>
                 <field>Bd</field>
@@ -120,6 +121,11 @@
             <attribute column='collectionCode' uri='urn:collectionCode' defined_by='http://rs.tdwg.org/dwc/terms/collectionCode'>Institution's collection code (e.g., Herpetology)</attribute>
             <attribute column='catalogNumber' uri='urn:catalogNumber' defined_by='http://rs.tdwg.org/dwc/terms/catalogNumber'>If PreservedSpecimen, the catalog number</attribute>
             <attribute column='labNumber' uri='urn:labNumber' defined_by=''>unique number assigned in the lab</attribute>
+           
+            <attribute column='diseaseLineage' uri='urn:diseaseLineage' defined_by=''><![CDATA[Specific genetic lineage detected (if available) NCBI URI (e.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)]]></attribute>
+            <attribute column='genotypeMethod' uri='urn:genotypeMethod' defined_by=''><![CDATA[Genotyping methods used to determine diseaseLineage if present (e.g., whole genome sequencing, ITS sequencing, multilocus nuclear sequencing).]]></attribute>
+            <attribute column='sequenceURI' uri='urn:genotypeMethod' defined_by=''><![CDATA[Sequence data URI if posted on another repository]]></attribute>
+            
             <attribute column='diseaseTested' uri='urn:diseaseTested' defined_by=''>Controlled vocabulary: Bd, Bsal, Bd+Bsal, Other</attribute>
             <attribute column='diseaseStrain' uri='urn:diseaseStrain' defined_by='http://rs.tdwg.org/dwc/terms/associatedSequences'>Specific genetic strain detected (if available) NCBI URI (.g., http://www.ncbi.nlm.nih.gov/biosample/xxxxxxx)</attribute>
             <attribute column='sampleType' uri='urn:sampleType' defined_by=''>Type of sample tested: eg, swabbing, blood, skin, liver</attribute>
